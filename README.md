@@ -24,6 +24,8 @@ I think to add:
 - support to the main productor features (ex. Samsung popup);
 - things received from feedback.
 
+I would also remove unused files to make the app lighter.
+
 I'm looking for a feedback!
 Anyone can help me, I'm open to collaboration!
 
