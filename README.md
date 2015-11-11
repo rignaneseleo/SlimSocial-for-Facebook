@@ -16,6 +16,7 @@ In the first version of the app I've put only:
 and nothing else.
 
 I think to add:
+- use share button to pubblish post;
 - upload of the photo;
 - geolocalizzation;
 - custom allert;
