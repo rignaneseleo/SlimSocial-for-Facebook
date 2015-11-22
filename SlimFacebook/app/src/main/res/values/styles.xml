@@ -1,9 +1,0 @@
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="SlimFacebookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blueSlimFacebook</item>
-        <item name="colorPrimaryDark">@color/darkBlueSlimFacebook</item>
-    </style>
-
-</resources>
