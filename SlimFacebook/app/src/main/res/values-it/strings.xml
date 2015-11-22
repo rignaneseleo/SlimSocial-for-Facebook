@@ -1,0 +1,23 @@
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+
+    <string name="urlFacebookMobile">https://m.facebook.com</string>
+
+    <!--menu string-->
+    <string name="openInBrowser">Apri nel browser</string>
+    <string name="settings">Impostazioni</string>
+    <string name="information">Informazioni</string>
+
+    <string name="titleNoConnection">Ops, c\'è un problema!</string>
+    <string name="descriptionNoConnection">Controlla la connessione e ricarica.</string>
+
+    <string name="awards">Questa applicazione è Open Source.</string>
+    <string name="refresh">Ricarica</string>
+    <string name="share">Condividi quest\'app</string>
+    <string name="downloadInstruction">Per scaricare SlimFacebook devi:\n 1. ISCRIVITI ALLA BETA:\n - Apri
+        https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook\n - Accedi a Google\n - Accetta le condizioni\n 2. SCARICA L\'APP: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+
+</resources>
