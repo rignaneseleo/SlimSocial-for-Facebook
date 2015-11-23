@@ -3,3 +3,11 @@ v1.0.0
 
 v1.1.0
 - Add Samsung Multiwindows Support
+
+v1.2
+- Add share button
+- Fixed the refresh after rotate
+
+v1.3
+- Fix share button
+- Minify the app (now is 600kb)

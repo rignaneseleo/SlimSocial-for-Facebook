@@ -4,11 +4,12 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.rignanese.leo.slimfacebook">
+<manifest
+    package="it.rignanese.leo.slimfacebook"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--Permissions-->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application
@@ -24,31 +25,46 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         android:versionName="1.2"
         ><!--the official version is wrote in build.gradle-->
 
-    <activity
+
+        <!--the main activity-->
+        <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
             >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
 
                 <!--compatibility to samsung multiwindows-->
-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-            </intent-filter>
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
 
-            <intent-filter><!--to start app when facebook site is called-->
-                <action android:name="android.intent.action.VIEW" />
+                <!--to start app when facebook site is called-->
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
+                <!--to open the facebook link with this app-->
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
                 <data
                     android:host="m.facebook.com"
-                    android:scheme="https" />
+                    android:scheme="https"/>
+                <data
+                    android:host="touch.facebook.com"
+                    android:scheme="https"/>
             </intent-filter>
         </activity>
+
+
+        <!--settings activity-->
+        <activity android:name=".ShowSettingsActivity">
+
+            <intent-filter>
+                <!--to Manage Network Usage-->
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
 
         <!-- uses the Multi Window library -->
         <uses-library
@@ -58,21 +74,21 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         <!--to indicate your application is Multi Window compatible-->
         <meta-data
             android:name="com.sec.android.support.multiwindow"
-            android:value="true" />
+            android:value="true"/>
 
         <!--set the size of the window-->
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
-            android:resource="@dimen/app_defaultsize_w" />
+            android:resource="@dimen/app_defaultsize_w"/>
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
-            android:resource="@dimen/app_defaultsize_h" />
+            android:resource="@dimen/app_defaultsize_h"/>
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
-            android:resource="@dimen/app_minimumsize_w" />
+            android:resource="@dimen/app_minimumsize_w"/>
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
-            android:resource="@dimen/app_minimumsize_h" />
+            android:resource="@dimen/app_minimumsize_h"/>
     </application>
 
 </manifest>

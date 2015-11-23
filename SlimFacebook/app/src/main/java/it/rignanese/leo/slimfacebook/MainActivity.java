@@ -126,13 +126,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.share: {//share this app
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, R.string.downloadInstruction);
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share)));
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.share));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.downloadInstruction));
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share)));
                 break;
             }
+//            case R.id.settings: {//share this app
+//                startActivity(new Intent(this, ShowSettingsActivity.class));
+//                return true;
+//            }
+
             default:
                 break;
         }
