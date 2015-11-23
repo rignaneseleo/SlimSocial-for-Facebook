@@ -14,7 +14,7 @@ Just made, anyone who has saw it want to download it so I've decided to upload i
 
 In the first version of the app I've put only:
 
-   go to the home;
+    go to the home;
     refresh the page;
     go on the top;
     open the actual page on the browser;
