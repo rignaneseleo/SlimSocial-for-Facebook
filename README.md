@@ -38,6 +38,6 @@ I would also remove unused files to make the app lighter.
 I'm looking for a feedback!
 Anyone can help me, I'm open to collaboration!
 
-
+XDA: http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
 
 
