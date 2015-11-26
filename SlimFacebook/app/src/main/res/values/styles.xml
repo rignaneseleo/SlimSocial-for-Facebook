@@ -1,9 +1,21 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Standard theme. -->
     <style name="SlimFacebookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blueSlimFacebook</item>
-        <item name="colorPrimaryDark">@color/darkBlueSlimFacebook</item>
+        <item name="colorPrimary">@color/blueSlimFacebookTheme</item>
+        <item name="colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
     </style>
 
+    <!-- Dark Theme-->
+    <style name="SlimFacebookThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blueSlimFacebookThemeDark</item>
+        <item name="colorPrimaryDark">@color/darkBlueSlimFacebookThemeDark</item>
+    </style>
+
+    <!-- Light Theme-->
+    <style name="SlimFacebookThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blueSlimFacebookThemeLight</item>
+        <item name="colorPrimaryDark">@color/darkBlueSlimFacebookThemeLight</item>
+    </style>
+<!--http://stackoverflow.com/questions/31137357/primarydark-is-not-setting-statusbar-color-in-android-->
 </resources>

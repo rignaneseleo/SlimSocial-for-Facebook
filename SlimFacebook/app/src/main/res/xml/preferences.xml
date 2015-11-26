@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="prefCat_key_fb_settings"
+        android:title="@string/prefCat_fb_settings_title">
+
+        <!--Set the homepage news order: recent or popular -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+
+            android:key="pref_recentNewsFirst"
+            android:summary="@string/summary_recentNewsFirst"
+            android:title="@string/title_recentNewsFirst"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_app_settings"
+        android:title="@string/prefCat_app_settings_title">
+
+        <!--<ListPreference //toast after click on the theme-->
+            <!--android:key="pref_key_theme"-->
+            <!--android:title="@string/title_selectTheme"-->
+            <!--android:summary=""-->
+            <!--android:defaultValue="2131361965"-->
+            <!--android:entries="@array/listThemes"-->
+            <!--android:entryValues="@array/listValuesThemes"/>-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_app_information"
+        android:title="@string/prefCat_app_information_title">
+
+        <PreferenceScreen
+            android:key="pref_key_version"
+            android:summary="1.0"
+            android:title="@string/version">
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+</PreferenceScreen>

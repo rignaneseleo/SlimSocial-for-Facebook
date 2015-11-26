@@ -11,3 +11,18 @@ v1.2
 v1.3
 - Fix share button
 - Minify the app (now is 600kb)
+- Add opening to "touch.facebook.com"
+
+v1.3.1
+- Fix the launch icon
+
+v1.4
+- add swipe to refresh
+- added settings:
+	- order by newest feed
+	- show version
+	
+- fix the utf8 in the offline page
+- fix the refresh when there is no connection
+- photos are opened with the browser
+

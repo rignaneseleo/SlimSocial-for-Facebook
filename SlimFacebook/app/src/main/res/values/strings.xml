@@ -5,7 +5,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
 <resources>
     <string name="app_name" translatable="false">SlimFacebook</string>
 
-    <string name="urlFacebookMobile">https://m.facebook.com</string>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
 
     <!--menu string-->
     <string name="home" translatable="false">Home</string>
@@ -26,5 +26,10 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_fb_settings_title">Facebook Settings</string>
     <string name="prefCat_app_settings_title">App Settings</string>
     <string name="title_networkUsage">Network Usage</string>
+    <string name="version">Version</string>
+    <string name="title_selectTheme">Select the Theme</string>
+    <string name="summary_selectTheme">choose your favourite theme</string>
+    <string name="prefCat_app_information_title">App Information</string>
+    <string name="thanks">Thanks.</string>
 
 </resources>

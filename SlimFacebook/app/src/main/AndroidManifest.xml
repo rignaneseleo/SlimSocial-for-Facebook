@@ -9,6 +9,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--Permissions-->
+    <!--to connect to the Internet-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
@@ -21,8 +22,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         android:theme="@style/SlimFacebookTheme"
 
 
-        android:versionCode="3"
-        android:versionName="1.2"
+        android:versionCode="6"
+        android:versionName="1.4"
         ><!--the official version is wrote in build.gradle-->
 
 
@@ -35,7 +36,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-
+            </intent-filter>
+            <intent-filter>
                 <!--compatibility to samsung multiwindows-->
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
 
@@ -45,6 +47,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
                 <!--to open the facebook link with this app-->
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+
                 <data
                     android:host="m.facebook.com"
                     android:scheme="https"/>
@@ -56,11 +59,12 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
 
 
         <!--settings activity-->
-        <activity android:name=".ShowSettingsActivity">
+        <activity
+            android:name=".ShowSettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/settings">
 
             <intent-filter>
-                <!--to Manage Network Usage-->
-                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

@@ -4,7 +4,17 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-    <color name="blueFacebook">#3B5999</color><!--The original color of Facebook-->
-    <color name="blueSlimFacebook">#37538f</color>
-    <color name="darkBlueSlimFacebook">#2d3a6b</color>
+    <color name="officialBlueFacebook">#3B5999</color><!--The original color of Facebook-->
+
+    <!--standard theme-->
+    <color name="blueSlimFacebookTheme">#37538f</color>
+    <color name="darkBlueSlimFacebookTheme">#2d3a6b</color>
+
+    <!--dark theme-->
+    <color name="blueSlimFacebookThemeDark">#1a237e</color>
+    <color name="darkBlueSlimFacebookThemeDark">#101650</color>
+
+    <!--light theme-->
+    <color name="blueSlimFacebookThemeLight">#c5cae9</color>
+    <color name="darkBlueSlimFacebookThemeLight">#9fa8da</color>
 </resources>

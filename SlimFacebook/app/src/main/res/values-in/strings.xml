@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="awards">Aplikasi ini dengan Sumber kode terbuka.</string>
+    <string name="descriptionNoConnection">Tidak ada koneksi,Coba Segarkan kembali.</string>
+    <string name="downloadInstruction">"Untuk menggunakan SlimFacebook,anda harus:
+ 1. LANGGANAN VERSI BETA:
+ - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook
+ - Sign in with Google
+ - Accept the conditions
+ 2. DOWNLOAD APLIKASI: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook"</string>
+    <string name="information">Informasi</string>
+    <string name="openInBrowser">Buka dengan peramban</string>
+    <string name="prefCat_app_settings_title">Pengaturan Aplikasi</string>
+    <string name="prefCat_fb_settings_title">PengaturanFacebook</string>
+    <string name="refresh">Segarkan</string>
+    <string name="settings">Pengaturan</string>
+    <string name="share">Bagikan Aplikasi Ini</string>
+    <string name="summary_recentNewsFirst">instead of by top stories</string>
+    <string name="titleNoConnection">Ops, Ada masalah Jaringan!</string>
+    <string name="title_networkUsage">Penggunaan Data</string>
+    <string name="title_recentNewsFirst">Order the news feed by most recent</string>
+    <string name="version">Version</string>
+    <string name="thanks">Terima kasih.</string>
+    <string name="prefCat_app_information_title">App Informasi</string>
+</resources>

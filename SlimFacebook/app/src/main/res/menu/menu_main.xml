@@ -32,7 +32,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         <!--android:id="@+id/info"-->
         <!--android:title="@string/information"></item>-->
 
-    <!--<item-->
-        <!--android:id="@+id/settings"-->
-        <!--android:title="@string/settings"></item>-->
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"></item>
 </menu>
