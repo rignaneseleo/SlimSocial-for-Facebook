@@ -17,11 +17,22 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 
@@ -30,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
 
     private WebView webViewFacebook;//the main webView where is shown facebook
-    private WebSettings webViewFacebookSettings;//the settings of the webview
+    //to upload files
+    public static final int INPUT_FILE_REQUEST_CODE = 1;
+    public static final String EXTRA_FROM_NOTIFICATION = "EXTRA_FROM_NOTIFICATION";
+    private ValueCallback<Uri[]> mFilePathCallback;
+    private String mCameraPhotoPath;
 
     private Menu optionsMenu;//contains the main menu
 
@@ -48,14 +63,15 @@ public class MainActivity extends AppCompatActivity {
         savedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //setup the theme
-        int savedThemeId = Integer.parseInt(savedPreferences.getString("pref_key_theme8", "2131361965"));//get the last saved theme id
-        setTheme(savedThemeId);//this refresh the theme if necessary
+        //int savedThemeId = Integer.parseInt(savedPreferences.getString("pref_key_theme8", "2131361965"));//get the last saved theme id
+        //setTheme(savedThemeId);//this refresh the theme if necessary
+        // TODO fix the change of status bar
+
         setContentView(R.layout.activity_main);//load the layout
 
         // setup the refresh layout
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        //swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebookok, R.color.blueSlimFacebook, R.color.darkBlueSlimFacebook);// set
-        // the colors
+        swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -66,14 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
         // setup the webView
         webViewFacebook = (WebView) findViewById(R.id.webView);
-        webViewFacebookSettings = webViewFacebook.getSettings();
+        setUpWebViewDefaults(webViewFacebook);//set the settings
 
-        webViewFacebookSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);//to make the webview faster
-        webViewFacebookSettings.setJavaScriptEnabled(true);//enable js
-        webViewFacebookSettings.setDefaultTextEncodingName("utf-8");
-
-        //load homepage
-        goHome();
+        goHome();//load homepage
 
         //WebViewClient that is the client callback.
         webViewFacebook.setWebViewClient(new WebViewClient() {//advanced set up
@@ -91,25 +102,39 @@ public class MainActivity extends AppCompatActivity {
             // when I click in a external link
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url == null || url.contains("facebook.com")) {
+                    //url is ok
                     return false;
                 } else {
                     if (url.contains("https://scontent")) {
+                        //TODO add the possibility to download and share directly
+
+                        Toast.makeText(getApplicationContext(), getString(R.string.downloadOrShareWithBrowser),
+                                Toast.LENGTH_LONG).show();
+                        //TODO get bitmap from url
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
-
-                        // to add the possibility to download
-                        return false;
-                    } else {
-                        //if the link doesn't contain 'facebook.com', open it using the browser
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                         return true;
                     }
+
+                    //if the link doesn't contain 'facebook.com', open it using the browser
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    return true;
                 }
             }
 
             //START management of loading
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                //TODO when I push on messages, open messanger
+//                if(url!=null){
+//                    if (url.contains("soft=messages") || url.contains("facebook.com/messages")) {
+//                        Toast.makeText(getApplicationContext(),"Open Messanger",
+//                                Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(getPackageManager().getLaunchIntentForPackage("com.facebook.orca")));//messanger
+//                    }
+//                }
+
+
                 // show you progress image
                 if (!swipeRefresh) {
                     final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
@@ -133,9 +158,126 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //WebChromeClient for handling all chrome functions.
-        //webViewFacebook.setWebChromeClient(new WebChromeClient());//for a future usage
+        webViewFacebook.setWebChromeClient(new WebChromeClient() {
+            //to upload files
+            //thanks to gauntface
+            //https://github.com/GoogleChrome/chromium-webview-samples
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    WebChromeClient.FileChooserParams fileChooserParams) {
+                if (mFilePathCallback != null) {
+                    mFilePathCallback.onReceiveValue(null);
+                }
+                mFilePathCallback = filePathCallback;
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getBaseContext().getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                        takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile));
+                    } else {
+                        takePictureIntent = null;
+                    }
+                }
+
+                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("image/*");
+
+                Intent[] intentArray;
+                if (takePictureIntent != null) {
+                    intentArray = new Intent[]{takePictureIntent};
+                } else {
+                    intentArray = new Intent[0];
+                }
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+
+                startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
+
+                return true;
+            }
+        });
     }
 
+    //*********************** UPLOAD FILES ****************************
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //used to upload files
+        //thanks to gauntface
+        //https://github.com/GoogleChrome/chromium-webview-samples
+        if (requestCode != INPUT_FILE_REQUEST_CODE || mFilePathCallback == null) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        Uri[] results = null;
+
+        // Check that the response is a good one
+        if (resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                // If there is not data, then we may have taken a photo
+                if (mCameraPhotoPath != null) {
+                    results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                }
+            } else {
+                String dataString = data.getDataString();
+                if (dataString != null) {
+                    results = new Uri[]{Uri.parse(dataString)};
+                }
+            }
+        }
+
+        mFilePathCallback.onReceiveValue(results);
+        mFilePathCallback = null;
+        return;
+    }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return imageFile;
+    }
+
+    //*********************** DOWNLOAD PHOTOS ****************************
+//    public Bitmap getBitmapFromURL(String src) {
+//        try {
+//            URL url = new URL(src);
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setDoInput(true);
+//            connection.connect();
+//            InputStream input = connection.getInputStream();
+//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+//            return myBitmap;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    //*********************** KEY ****************************
     // management the back button
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -155,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //*********************** MENU ****************************
     //add my menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -205,6 +348,35 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    //*********************** WEBVIEW FACILITIES ****************************
+    private void setUpWebViewDefaults(WebView webView) {
+        WebSettings settings = webView.getSettings();
+
+        // Enable Javascript
+        settings.setJavaScriptEnabled(true);
+
+        //to make the webview faster
+        //settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
+
+        // Use WideViewport and Zoom out if there is no viewport defined
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+
+        // Enable pinch to zoom without the zoom buttons
+        settings.setBuiltInZoomControls(true);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+            // Hide the zoom controls for HONEYCOMB+
+            settings.setDisplayZoomControls(false);
+        }
+
+        // Enable remote debugging via chrome://inspect
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+    }
 
     private void goHome() {
         if (savedPreferences.getBoolean("pref_recentNewsFirst", false)) {

@@ -11,7 +11,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!--Permissions-->
     <!--to connect to the Internet-->
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <!--to upload files-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +23,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         android:theme="@style/SlimFacebookTheme"
 
 
-        android:versionCode="6"
-        android:versionName="1.4"
+        android:versionCode="7"
+        android:versionName="1.5"
         ><!--the official version is wrote in build.gradle-->
 
 
@@ -54,6 +55,12 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
                 <data
                     android:host="touch.facebook.com"
                     android:scheme="https"/>
+
+                <!--<data-->
+                    <!--android:host="m.facebook.com"-->
+                    <!--android:pathPrefix="/sharer.php"-->
+                    <!--android:scheme="https"/>-->
+                <!--add https://www.facebook.com/sharer-->
             </intent-filter>
         </activity>
 

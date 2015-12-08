@@ -25,4 +25,11 @@ v1.4
 - fix the utf8 in the offline page
 - fix the refresh when there is no connection
 - photos are opened with the browser
+- add indonesian translations
 
+v1.5
+- upload of files
+- improved the compatibility with older Android version
+- fix translations
+- fix the cache load
+- add some toasts

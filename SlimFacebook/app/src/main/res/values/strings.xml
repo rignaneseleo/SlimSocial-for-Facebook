@@ -20,7 +20,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
 
     <string name="awards">This is an Open Source app.</string>
     <string name="share">Share this app</string>
-    <string name="downloadInstruction">To download SlimFacebook you have to:\n 1. SUBSCRIBE THE BETA:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook\n - Sign in with Google\n - Accept the conditions\n 2. DOWNLOAD THE APP: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="title_recentNewsFirst">Order the news feed by most recent</string>
     <string name="summary_recentNewsFirst">instead of by top stories</string>
     <string name="prefCat_fb_settings_title">Facebook Settings</string>
@@ -30,6 +30,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_selectTheme">Select the Theme</string>
     <string name="summary_selectTheme">choose your favourite theme</string>
     <string name="prefCat_app_information_title">App Information</string>
-    <string name="thanks">Thanks.</string>
+    <string name="thanks">Thanks!</string>
+    <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
 
 </resources>
