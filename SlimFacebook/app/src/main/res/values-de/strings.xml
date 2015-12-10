@@ -1,0 +1,64 @@
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- Some strings have been removed because they are not translatable,
+    so the english version will be automatically applied for these strings. -->
+
+    <!-- TRANSLATION IS MADE BY: xdevs23 (Simao) -->
+
+    <!--menu string-->
+    <string name="refresh">Aktualisieren</string>
+    <string name="openInBrowser">Im Browser öffnen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="information">Information</string>
+    <string name="share">Teile diese App</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Facebook-Einstellungen</string>
+    <string name="prefCat_app_settings_title">App-Einstellungen</string>
+    <string name="prefCat_app_information_title">App-Information</string>
+    <string name="title_recentNewsFirst">Sortiere die Neuigkeiten nach Relevanz</string>
+    <string name="summary_recentNewsFirst">Statt Top-Stories</string>
+    <string name="title_selectTheme">Theme auswählen</string>
+    <string name="summary_selectTheme">Wähle dein bevorzugtes Design</string>
+    <string name="version">Version</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Ups, wir haben ein Problem!</string>
+    <string name="descriptionNoConnection">Überprüfe Deine Verbindung und versuche es erneut.</string>
+    <string name="awards">Diese App ist Open-Source.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">Du kannst SlimFacebook hier herunterladen:\n - Öffne https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Melde Dich mit deinem Google-Konto an (falls noch nicht geschehen)\n - Drücke \"Tester werden\"\n - Öffne dies mit der Play Store-App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Danke!</string>
+    <string name="downloadOrShareWithBrowser">Mithilfe des Browsers kannst Du das Bild ansehen und teilen.</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+Mit nur 700Kb kannst du Facebook erleben! (in der Web-Version)
+FULL DESCRIPTION:
+WICHTIG: Diese App ist am Besten geeignet, wenn Facebook nicht oft verwendet wird (hauptsächlich Browser-Nutzung), es ist nicht für den dauerhaften Einsatz.
+Warum SlimFacebook?
+- Es ist leicht: Kleiner als 1 MB;
+- Simples, einfaches Design: Nur was Du brauchst;
+- Es ist Open-Source: Der Quellcode der App ist auf GitHub, jeder kann die Authentität der App überprüfen und zur Entwicklung beitragen.
+- Kostenlos und Werbefrei;
+- Nicht aufdringlich;
+- Wir respektieren Deine Privatsphäre: Diese App benötigt keine speziellen Rechte. Dadurch kann Facebook keine Daten von Deinem Gerät erfassen;
+Die App ist noch in der Entwicklungsphase, daher funktioniert nicht alles:
+- GPS;
+- Benachrichtigungen;
+GitHub-Link:
+https://github.com/leorigna/SlimFacebook
+    -->
+
+</resources>
