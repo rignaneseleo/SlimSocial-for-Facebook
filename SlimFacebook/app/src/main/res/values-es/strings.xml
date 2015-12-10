@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <string name="openInBrowser">Abrir en el navegador</string>
+    <string name="settings">Configuración</string>
+    <string name="information">Información</string>
+    <string name="titleNoConnection">Ops, hubo un problema!</string>
+    <string name="descriptionNoConnection">Verifique la conexión de red e inténtalo nuevamente.</string>
+    <string name="awards"> Esta aplicación é Open Source.</string>
+    <string name="refresh">Actualizar</string>
+    <string name="share">Compartir la aplicación</string>
+    <string name="downloadInstruction">Para descargar la aplicación SlimFacebook:\n
+- Accede: https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n
+- Inicie tu sesión Google (Si ya no lo hiciste)\n
+- Haz clic en "Tornarse un Beta Tester"\n
+- Con la Play Store, accede: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="title_recentNewsFirst">Mostrar primeramente las notícias recientes</string>
+    <string name="summary_recentNewsFirst"> en vez de las noticias principales</string>
+    <string name="prefCat_fb_settings_title">Configuración del Facebook</string>
+    <string name="prefCat_app_settings_title">Configuración de la aplicación</string>
+    <string name="title_networkUsage">Uso de datos</string>
+    <string name="version">Versión</string>
+    <string name="summary_selectTheme">Elige tu tema favorito</string>
+    <string name="title_selectTheme">Elige el tema</string>
+    <string name="prefCat_app_information_title">Información de la aplicación</string>
+    <string name="thanks">Gracias!</string>
+    <string name="downloadOrShareWithBrowser">Abrindo el navegador es possble descargar o compartir esta imagen.</string>
+</resources>

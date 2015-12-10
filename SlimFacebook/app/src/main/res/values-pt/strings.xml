@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--menu string-->
+    <string name="openInBrowser">Abrir no navegador</string>
+    <string name="settings">Configurações</string>
+    <string name="information">Informações</string>
+
+    <string name="titleNoConnection">Ops, houve um problema!</string>
+    <string name="descriptionNoConnection">Verifique sua conexão e tente novamente.</string>
+
+    <string name="awards"> Este aplicativo é Open Source.</string>
+    <string name="refresh">Atualizar</string>
+    <string name="share">Compartilhe o aplicativo</string>
+    <string name="downloadInstruction">Para baixar o aplicativo SlimFacebook:\n
+- Abra: https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n
+- Faça login na sua conta Google (caso já não o tenha feito)\n
+- Clique em "Tornar-se testador"\n
+- Com o app da Play Store, abra: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="title_recentNewsFirst">Mostrar primeiro as notícias recentes</string>
+    <string name="summary_recentNewsFirst">ao invés das notícias principais</string>
+    <string name="prefCat_fb_settings_title">Configurações do Facebook</string>
+    <string name="prefCat_app_settings_title">Configurações do aplicativo</string>
+    <string name="title_networkUsage">Uso de dados</string>
+    <string name="version">Versão</string>
+    <string name="summary_selectTheme">Escolha seu tema preferido</string>
+    <string name="title_selectTheme">Escolha o tema</string>
+    <string name="prefCat_app_information_title">Informações do aplicativo</string>
+    <string name="thanks">Obrigado!</string>
+    <string name="downloadOrShareWithBrowser">Abrindo o navegador é possível baixar ou compartilhar esta imagem.</string>
+
+</resources>

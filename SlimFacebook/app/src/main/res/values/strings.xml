@@ -4,8 +4,11 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
 -->
 <resources>
     <string name="app_name" translatable="false">SlimFacebook</string>
-
     <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
 
     <!--menu string-->
     <string name="home" translatable="false">Home</string>
@@ -14,23 +17,55 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="openInBrowser">Open using the Browser</string>
     <string name="settings">Settings</string>
     <string name="information">Information</string>
-
-    <string name="titleNoConnection">Ops, there is a problem!</string>
-    <string name="descriptionNoConnection">Try to check the connection and refresh.</string>
-
-    <string name="awards">This is an Open Source app.</string>
     <string name="share">Share this app</string>
-    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="title_recentNewsFirst">Order the news feed by most recent</string>
-    <string name="summary_recentNewsFirst">instead of by top stories</string>
+    <!--end menu string-->
+
+    <!--settings-->
     <string name="prefCat_fb_settings_title">Facebook Settings</string>
     <string name="prefCat_app_settings_title">App Settings</string>
-    <string name="title_networkUsage">Network Usage</string>
-    <string name="version">Version</string>
+    <string name="prefCat_app_information_title">App Information</string>
+    <string name="title_recentNewsFirst">Order the news feed by most recent</string>
+    <string name="summary_recentNewsFirst">instead of by top stories</string>
     <string name="title_selectTheme">Select the Theme</string>
     <string name="summary_selectTheme">choose your favourite theme</string>
-    <string name="prefCat_app_information_title">App Information</string>
+    <string name="version">Version</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Ops, there is a problem!</string>
+    <string name="descriptionNoConnection">Try to check the connection and refresh.</string>
+    <string name="awards">This is an Open Source app.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Thanks!</string>
     <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+
+DESCRIPTION ( max 80 char! shape and adapt it):
+With only 700Kb, allows you to enjoy the Facebook experience(in its Web version)
+
+FULL DESCRIPTION:
+ATTENTION: This app is dedicated only for who use Facebook a little (accessing mainly from the browser), it is not yet suitable for who use it frequently.
+
+Why do I download SlimFacebook?
+- It is lightweight: it weighs less than 1 Mb;
+- It has simple, modern design: there is only what you need;
+- It is Open source: the code of this app is online on GitHub, anyone can verify the authenticity of the app and contribute to its development.
+- It is free and without ads;
+- it is not instrusive;
+- It respect your privacy: this app doesn't require special permits. Without consensus Facebook can not access to any data of your mobile phone;
+
+
+The app is in full development, so still doesn't work:
+- GPS;
+- Notifications;
+
+Link di GitHub
+https://github.com/leorigna/SlimFacebook
+    -->
 
 </resources>
