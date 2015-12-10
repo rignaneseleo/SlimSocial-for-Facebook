@@ -1,0 +1,36 @@
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <string name="app_name" translatable="false">SlimFacebook</string>
+
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+
+    <!--menu string-->
+    <string name="home" translatable="false">首頁</string>
+    <string name="refresh">重新整理</string>
+    <string name="top" translatable="false">頁首</string>
+    <string name="openInBrowser">使用外部瀏覽器開啟</string>
+    <string name="settings">設定</string>
+    <string name="information">Information</string>
+
+    <string name="titleNoConnection">沒有連線!</string>
+    <string name="descriptionNoConnection">請檢查連線後重新整理.</string>
+
+    <string name="awards">這是個開源(Open Source)程式.</string>
+    <string name="share">分享</string>
+    <string name="downloadInstruction">若要下載SlimFacebook:\n - 開啟 https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - 登入Google帳號 (如果未登入)\n - 按下 \"成為測試人員\"\n - 使用Play Store開啟這個連結: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="title_recentNewsFirst">優先顯示最新動態</string>
+    <string name="summary_recentNewsFirst">最新動態優先於熱門動態</string>
+    <string name="prefCat_fb_settings_title">Facebook設定</string>
+    <string name="prefCat_app_settings_title">程式設定</string>
+    <string name="title_networkUsage">網路使用量</string>
+    <string name="version">版本</string>
+    <string name="title_selectTheme">選擇主題</string>
+    <string name="summary_selectTheme">選擇您喜愛的主題</string>
+    <string name="prefCat_app_information_title">程式資訊</string>
+    <string name="thanks">感謝!</string>
+    <string name="downloadOrShareWithBrowser">以瀏覽器下載或分享.</string>
+
+</resources>
