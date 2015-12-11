@@ -4,18 +4,20 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
+    <!-- TRANSLATION IS MADE BY: *minimaster4734* -->
+
     <!--menu string-->
     <string name="openInBrowser">Ouvrir sur le navigateur</string>
     <string name="settings">Paramètres</string>
     <string name="information">Informations</string>
     <string name="refresh">Rafraîchir</string>
-    <string name="share">Partager l'/application</string>
+    <string name="share">Partager l\'application</string>
     <!--end menu string-->
 
     <!--settings-->
     <string name="prefCat_fb_settings_title"> Paramètres de Facebook</string>
-    <string name="prefCat_app_settings_title">Paramètres de l'/application</string>
-    <string name="prefCat_app_information_title">Informations sur l'/application</string>
+    <string name="prefCat_app_settings_title">Paramètres de l\'application</string>
+    <string name="prefCat_app_information_title">Informations sur l\'application</string>
     <string name="title_recentNewsFirst">Montrer les nouvelles plus récent premièrement</string>
     <string name="summary_recentNewsFirst">au lieu de les nouvelles principales</string>
     <string name="version">Version</string>
@@ -31,9 +33,9 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction"> Pour installer l'/application SlimFacebook:\n
+    <string name="downloadInstruction"> Pour installer l\'application SlimFacebook:\n
 - Accédez: https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n
-- Ouvrez votre session Google (si vous ne l'avez déjà fait)\n
+- Ouvrez votre session Google (si vous ne l\'avez déjà fait)\n
 - Appuyez sur "Devenir un testeur beta"\n
 - Sur Play Store, accédez: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="downloadOrShareWithBrowser">En ouvrant le navigateur, vous pouvez sauvegarder ou partager cette image.</string>
