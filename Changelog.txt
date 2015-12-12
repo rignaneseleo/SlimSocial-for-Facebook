@@ -33,3 +33,6 @@ v1.5
 - fix translations
 - fix the cache load
 - add some toasts
+
+v1.5.1
+- Added the French, German, Spanish, Portuguese, Chinese translations!

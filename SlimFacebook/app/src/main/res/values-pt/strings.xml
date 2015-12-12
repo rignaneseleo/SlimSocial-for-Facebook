@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
 <resources>
-    <!--menu string-->
+    <!-- TRANSLATION IS MADE BY: *minimaster4734* -->
+
     <string name="openInBrowser">Abrir no navegador</string>
     <string name="settings">Configurações</string>
     <string name="information">Informações</string>

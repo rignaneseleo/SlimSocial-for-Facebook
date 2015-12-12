@@ -4,6 +4,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
+    <!-- TRANSLATION IS MADE BY: *minimaster4734* -->
+
     <string name="openInBrowser">Abrir en el navegador</string>
     <string name="settings">Configuración</string>
     <string name="information">Información</string>
@@ -21,7 +23,6 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_recentNewsFirst"> en vez de las noticias principales</string>
     <string name="prefCat_fb_settings_title">Configuración del Facebook</string>
     <string name="prefCat_app_settings_title">Configuración de la aplicación</string>
-    <string name="title_networkUsage">Uso de datos</string>
     <string name="version">Versión</string>
     <string name="summary_selectTheme">Elige tu tema favorito</string>
     <string name="title_selectTheme">Elige el tema</string>
