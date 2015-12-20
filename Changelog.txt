@@ -17,22 +17,29 @@ v1.3.1
 - Fix the launch icon
 
 v1.4
-- add swipe to refresh
-- added settings:
+- Add swipe to refresh
+- Added settings:
 	- order by newest feed
 	- show version
 	
-- fix the utf8 in the offline page
-- fix the refresh when there is no connection
-- photos are opened with the browser
-- add indonesian translations
+- Fix the utf8 in the offline page
+- Fix the refresh when there is no connection
+- Photos are opened with the browser
+- Add indonesian translations
 
 v1.5
-- upload of files
-- improved the compatibility with older Android version
-- fix translations
-- fix the cache load
-- add some toasts
+- Upload of files
+- Improved the compatibility with older Android version
+- Fix translations
+- Fix the cache load
+- Add some toasts
 
 v1.5.1
 - Added the French, German, Spanish, Portuguese, Chinese translations!
+
+v1.6
+- Geolocalizzation
+- Share links with app
+- Added Saving Data option
+- Extended url intent
+- Added Polish translation (DoctorRzepa)

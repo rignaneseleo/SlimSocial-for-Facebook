@@ -12,7 +12,11 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!--to connect to the Internet-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--to upload files-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--gps-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -23,8 +27,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         android:theme="@style/SlimFacebookTheme"
 
 
-        android:versionCode="8"
-        android:versionName="1.5.1"
+        android:versionCode="9"
+        android:versionName="1.6"
         ><!--the official version is wrote in build.gradle-->
 
 
@@ -33,10 +37,11 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/app_name"
-            >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+
             </intent-filter>
             <intent-filter>
                 <!--compatibility to samsung multiwindows-->
@@ -45,22 +50,29 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
                 <!--to start app when facebook site is called-->
                 <action android:name="android.intent.action.VIEW"/>
 
-                <!--to open the facebook link with this app-->
+                <!--to open facebook link with this app-->
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="m.facebook.com"
+                    android:host="*.facebook.com"
+                    android:scheme="http"/>
+                <data
+                    android:host="*.facebook.com"
                     android:scheme="https"/>
                 <data
-                    android:host="touch.facebook.com"
+                    android:host="fb.me"
+                    android:scheme="http"/>
+                <data
+                    android:host="fb.me"
                     android:scheme="https"/>
+            </intent-filter>
 
-                <!--<data-->
-                    <!--android:host="m.facebook.com"-->
-                    <!--android:pathPrefix="/sharer.php"-->
-                    <!--android:scheme="https"/>-->
-                <!--add https://www.facebook.com/sharer-->
+            <intent-filter>
+                <!--to open facebook link for sharing link-->
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
 

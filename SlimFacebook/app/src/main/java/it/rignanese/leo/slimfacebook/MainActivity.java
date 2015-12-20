@@ -1,6 +1,10 @@
 /*
 SlimFacebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+
+
+ special thanks to https://github.com/indywidualny/FaceSlim
+ some of the code is their work!
 */
 
 package it.rignanese.leo.slimfacebook;
@@ -9,7 +13,10 @@ package it.rignanese.leo.slimfacebook;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +24,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -41,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
 
     private WebView webViewFacebook;//the main webView where is shown facebook
+
     //to upload files
     public static final int INPUT_FILE_REQUEST_CODE = 1;
     public static final String EXTRA_FROM_NOTIFICATION = "EXTRA_FROM_NOTIFICATION";
@@ -54,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
     boolean swipeRefresh = false;
 
+    boolean isSharer = false;//flag: true if the app is called from sharer
+    String urlSharer = "";//to save the url got from the sharer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);//load the layout
 
+
         // setup the refresh layout
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
@@ -80,11 +92,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /** get a subject and text and check if this is a link trying to be shared */
+        String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
+        String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+        // if we have a valid URL that was shared by us, open the sharer
+        if (sharedUrl != null) {
+            if (!sharedUrl.equals("")) {
+                // check if the URL being shared is a proper web URL
+                if (!sharedUrl.startsWith("http://") || !sharedUrl.startsWith("https://")) {
+                    // if it's not, let's see if it includes an URL in it (prefixed with a message)
+                    int startUrlIndex = sharedUrl.indexOf("http:");
+                    if (startUrlIndex > 0) {
+                        // seems like it's prefixed with a message, let's trim the start and get the URL only
+                        sharedUrl = sharedUrl.substring(startUrlIndex);
+                    }
+                }
+                // final step, set the proper Sharer...
+                urlSharer = String.format("https://m.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
+                // ... and parse it just in case
+                urlSharer = Uri.parse(urlSharer).toString();
+                isSharer = true;
+            }
+        }
+
+
         // setup the webView
         webViewFacebook = (WebView) findViewById(R.id.webView);
         setUpWebViewDefaults(webViewFacebook);//set the settings
 
-        goHome();//load homepage
+        if (isSharer) {//if is a share request
+            webViewFacebook.loadUrl(urlSharer);//load the sharer url
+            isSharer = false;
+        } else goHome();//load homepage
+
 
         //WebViewClient that is the client callback.
         webViewFacebook.setWebViewClient(new WebViewClient() {//advanced set up
@@ -101,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
             // when I click in a external link
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url == null || url.contains("facebook.com")) {
+                if (url == null || url.contains("facebook.com")) {//// TODO: clear these conditions
                     //url is ok
                     return false;
                 } else {
@@ -111,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.downloadOrShareWithBrowser),
                                 Toast.LENGTH_LONG).show();
                         //TODO get bitmap from url
+
+
+
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                         return true;
@@ -119,8 +164,10 @@ public class MainActivity extends AppCompatActivity {
                     //if the link doesn't contain 'facebook.com', open it using the browser
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     return true;
-                }
+                }//https://www.facebook.com/dialog/return/close?#_=_
             }
+
+
 
             //START management of loading
             @Override
@@ -137,8 +184,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // show you progress image
                 if (!swipeRefresh) {
-                    final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
-                    refreshItem.setActionView(R.layout.circular_progress_bar);
+                    if (optionsMenu != null) {//TODO fix this. Sometimes it is null and I don't know why
+                        final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
+                        refreshItem.setActionView(R.layout.circular_progress_bar);
+                    }
                 }
                 swipeRefresh = false;
                 super.onPageStarted(view, url, favicon);
@@ -146,9 +195,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                // hide your progress image
-                final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
-                refreshItem.setActionView(null);
+                if (optionsMenu != null) {//TODO fix this. Sometimes it is null and I don't know why
+                    final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
+                    refreshItem.setActionView(null);
+                }
+
                 super.onPageFinished(view, url);
 
                 swipeRefreshLayout.setRefreshing(false); //when the page is loaded, stop the refreshing
@@ -159,10 +210,17 @@ public class MainActivity extends AppCompatActivity {
 
         //WebChromeClient for handling all chrome functions.
         webViewFacebook.setWebChromeClient(new WebChromeClient() {
+            //to the geolocalizzation
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                callback.invoke(origin, true, false);
+                //todo notify when the gps is used
+            }
+
             //to upload files
             //thanks to gauntface
             //https://github.com/GoogleChrome/chromium-webview-samples
             public boolean onShowFileChooser(
+                    //todo fix the compatibility with all versions (4.4.4 specially)
                     WebView webView, ValueCallback<Uri[]> filePathCallback,
                     WebChromeClient.FileChooserParams fileChooserParams) {
                 if (mFilePathCallback != null) {
@@ -214,6 +272,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // app is already running and gets a new intent (used to share link without open another activity
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        // grab an url if opened by clicking a link
+        String webViewUrl = getIntent().getDataString();
+
+        /** get a subject and text and check if this is a link trying to be shared */
+        String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
+        String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+        // if we have a valid URL that was shared by us, open the sharer
+        if (sharedUrl != null) {
+            if (!sharedUrl.equals("")) {
+                // check if the URL being shared is a proper web URL
+                if (!sharedUrl.startsWith("http://") || !sharedUrl.startsWith("https://")) {
+                    // if it's not, let's see if it includes an URL in it (prefixed with a message)
+                    int startUrlIndex = sharedUrl.indexOf("http:");
+                    if (startUrlIndex > 0) {
+                        // seems like it's prefixed with a message, let's trim the start and get the URL only
+                        sharedUrl = sharedUrl.substring(startUrlIndex);
+                    }
+                }
+                // final step, set the proper Sharer...
+                webViewUrl = String.format("https://m.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
+                // ... and parse it just in case
+                webViewUrl = Uri.parse(webViewUrl).toString();
+            }
+        }
+        webViewFacebook.loadUrl(webViewUrl);
+    }
+
     //*********************** UPLOAD FILES ****************************
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -246,6 +338,7 @@ public class MainActivity extends AppCompatActivity {
         mFilePathCallback = null;
         return;
     }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -301,11 +394,12 @@ public class MainActivity extends AppCompatActivity {
     //add my menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.optionsMenu = menu;
+        optionsMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     //management the tap on the menu's items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -363,6 +457,11 @@ public class MainActivity extends AppCompatActivity {
         // Use WideViewport and Zoom out if there is no viewport defined
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
+
+        settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath() );
+
+        settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_downloadImages", false));//to save data
+        //todo setLoadsImagesAutomatically without restart the app
 
         // Enable pinch to zoom without the zoom buttons
         settings.setBuiltInZoomControls(true);

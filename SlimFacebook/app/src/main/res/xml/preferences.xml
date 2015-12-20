@@ -20,6 +20,14 @@
         android:key="prefCat_key_app_settings"
         android:title="@string/prefCat_app_settings_title">
 
+        <!--Set the saving data -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+
+            android:key="pref_downloadImages"
+            android:title="@string/title_downloadImages"
+            android:summary="@string/summary_downloadImages"/>
+
         <!--<ListPreference //toast after click on the theme-->
             <!--android:key="pref_key_theme"-->
             <!--android:title="@string/title_selectTheme"-->
