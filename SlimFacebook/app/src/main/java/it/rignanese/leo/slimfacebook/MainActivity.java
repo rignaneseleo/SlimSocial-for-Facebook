@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -155,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                         //TODO get bitmap from url
 
 
-
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                         return true;
@@ -166,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }//https://www.facebook.com/dialog/return/close?#_=_
             }
-
 
 
             //START management of loading
@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     // app is already running and gets a new intent (used to share link without open another activity
