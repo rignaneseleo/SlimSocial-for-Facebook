@@ -11,10 +11,11 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!-- TRANSLATION IS MADE BY: *DoctorRzepa* -->
 
     <!--menu string-->
+    <string name="home" translatable="false">Home</string>
     <string name="refresh">Odśwież</string>
-    <string name="openInBrowser">Otwórz używając przeglądarki</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="openInBrowser">Otwórz w przeglądarce</string>
     <string name="settings">Ustawienia</string>
-    <string name="information">Informacje</string>
     <string name="share">Podziel się tą aplikacją</string>
     <!--end menu string-->
 
@@ -24,6 +25,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Informacje o aplikacji</string>
     <string name="title_recentNewsFirst">Uporządkuj posty zaczynając od najnowszych</string>
     <string name="summary_recentNewsFirst">zamiast od najważniejszych</string>
+    <string name="title_downloadImages">Oszczędzaj transfer (wymaga resetu)</string>
+    <string name="summary_downloadImages">Nie wyświetlaj obrazów</string>
     <string name="title_selectTheme">Ustaw motyw</string>
     <string name="summary_selectTheme">wybierz swój ulubiony motyw</string>
     <string name="version">Wersja</string>
@@ -44,20 +47,27 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!-- PLAY STORE PAGE
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
 Ważąc tylko 700Kb, pozwala Ci wygodnie korzystać z Facebooka (w wersji Web).
-FULL DESCRIPTION:
+
 UWAGA: Aplikacja ta jest dedykowana głównie osobom, które korzystają z Facebooka rzadko (używając głównie przeglądarki), nie jest ona jeszcze przystosowana dla aktywnych użytkowników.
+
 Dlaczego powinienem pobrać aplikację SlimFacebook?
-- Jest leciutka, waży mniej niż 1 Mb;
+- Jest leciutka, waży mniej niż 1 MB;
 - Posiada prosty i nowoczesny design: jest w niej tylko to, co niezbędne;
 - Jest na licencji Open Source: kod źródłowy tej aplikacji znajduje się na witrynie GitHub, każdy może sprawdzić jej autentyczność i przysłużyć się jej rozwojowi.
 - Jest darmowa i nie zawiera reklam;
 - Nie jest natrętna (działa tylko, gdy z niej korzystasz);
-- Ceni Twoją prywatność: ta aplikacja nie wymaga specjalnych zezwoleń. Facebook nie ma dostępu do żadnych danych na Twoim telefonie, bez kompromisów;
+- Ceni Twoją prywatność: ta aplikacja nie wymaga specjalnych zezwoleń. Facebook nie ma dostępu do żadnych danych na Twoim telefonie bez Twojej zgody;
+
+
 Aplikacja jest wciąż w budowie, więc nie działają jeszcze:
-- GPS;
 - Powiadomienia;
+
 Link do aplikacji na witrynie GitHub
 https://github.com/leorigna/SlimFacebook
+
+***Proszę wziąć pod uwagę, że nie jest to oficjalna aplikacja Facebook***
+Jest to projekt, który ma na celu ułatwienie życia ludziom. Aplikacja ta uruchamia oficjalną stronę Facebook. Wszystkie zasługi należą do zespołu Facebook. Aplikacja ta jest darmowa i nie zawiera żadnych reklam.
+ 
     -->
 
 </resources>
