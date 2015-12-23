@@ -41,4 +41,26 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="downloadOrShareWithBrowser">En ouvrant le navigateur, vous pouvez sauvegarder ou partager cette image.</string>
     <string name="thanks">Merci!</string>
     <!--end other-->
+	
+	<!--
+	Avec seulement 700 ko, tu peux accéder à la version mobile du Facebook
+	
+		ATTENTION: Cette application est dédiée uniquement pour ceux qui utilisent un peu le Facebook (principalement à partir du navigateur), il n'est pas encore recommandé à ceux qui l'utilisent fréquemment.
+
+Pourquoi dois-je télécharger SlimFacebook?
+- Il est léger: il pèse moins de 1 Mo;
+- Il a un design simple et moderne: il y a seulement que ce que vous avez besoin;
+- Il est «open source»: le code de cette application est en ligne sur GitHub, tout le monde peut vérifier l'authenticité de l'application et contribuer à son développement.
+- Il est gratuit et sans publicités;
+- Il n'est pas instrusif;
+- Il respecte votre intimité: cette application ne nécessite pas de permis spéciaux. Sans consensus, Facebook ne peut pas accéder à toutes les données de votre téléphone mobile;
+
+L'application est en plein développement, alors il ne fonctionne toujours pas:
+- Notifications;
+
+Lien vers GitHub: https://github.com/leorigna/SlimFacebook
+
+***Cette application n'est pas une application officielle de Facebook***
+Ceci est un projet «open source» qui vise à rendre la vie des gens plus facile. Cette application accède le site mobile officiel de Facebook. Tout le crédit va à l'équipe Facebook. L'application est fourni gratuitement a tous, sans aucune publicité. 
+	-->
 </resources>
