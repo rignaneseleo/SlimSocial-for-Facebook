@@ -50,7 +50,7 @@ DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ )
 With only 700Kb, allows you to enjoy the Facebook experience(in its Web version)
 
 FULL DESCRIPTION:
-ATTENTION: This app is dedicated only for who use Facebook a little (accessing mainly from the browser), it is not yet suitable for who use it frequently.
+ATTENTION: This app may not be suitable for who use it not frequently. 
 
 Why do I download SlimFacebook?
 - It is lightweight: it weighs less than 1 Mb;
@@ -62,11 +62,13 @@ Why do I download SlimFacebook?
 
 
 The app is in full development, so still doesn't work:
-- GPS;
 - Notifications;
 
 Link to GitHub
 https://github.com/leorigna/SlimFacebook
+
+***Take note that this is not an official app from Facebook***
+This is a project which meant to make people life easier. This app will launch Facebook official website. All credit goes to Facebook team. It is provided free for all without any Ads.
     -->
 
 </resources>
