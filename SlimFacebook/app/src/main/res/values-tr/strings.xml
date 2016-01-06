@@ -1,6 +1,6 @@
 <!--
-SlimFacebook Leanardo Rignanese tarafýndan geliþtirilen açýk kaynak kodlu bir yazýlýmdýr
- GNU GENEL KAMU LÝSANSI  Versiyon 2, Haziran 1991
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
     <!--  !!!  LÜTFEN BU FORMATI KORUYARAK TERCÜME EDÝN.  !!!   -->
@@ -34,7 +34,8 @@ SlimFacebook Leanardo Rignanese tarafýndan geliþtirilen açýk kaynak kodlu bi
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">SlimFacebook'u indirmek için þunlarý yapýn :\n - https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook adresine gidin \n - Google Hesabýnýz ile giriþ yapn (daha önce yapmadýysanýz)\n - Basýn \"Test Kullanýcýsý Ol\"\n - Þunu Play Store uygulamasý ile açýn: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction">SlimFacebook\'u indirmek için þunlarý yapýn :\n - https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook adresine gidin \n - Google
+    Hesabýnýz ile giriþ yapn (daha önce yapmadýysanýz)\n - Basýn \"Test Kullanýcýsý Ol\"\n - Þunu Play Store uygulamasý ile açýn: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Teþekkürler!</string>
     <string name="downloadOrShareWithBrowser">Tarayýcýda açýp bunu indirebilir veya paylaþabilirsiniz.</string>
     <!--end other-->
