@@ -43,3 +43,8 @@ v1.6
 - Added Saving Data option
 - Extended url intent
 - Added Polish translation (DoctorRzepa)
+
+v1.6.1
+- Added Greek translation (MikeL)
+- Added Turkish translation (naberl)
+- Added Hungarian translation (kilroy69)
