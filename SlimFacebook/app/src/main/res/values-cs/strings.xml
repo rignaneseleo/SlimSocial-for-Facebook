@@ -1,0 +1,67 @@
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <string name="app_name" translatable="false">SlimFacebook</string>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: *multibestia* -->
+
+    <!--menu string-->
+    <string name="home" translatable="false">Home</string>
+    <string name="refresh">Aktualizovat</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="openInBrowser">Otevøít v prohlížeèi</string>
+    <string name="settings">Nastavení</string>
+    <string name="share">Sdílet tuto aplikaci</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Nastavení Facebooku</string>
+    <string name="prefCat_app_settings_title">Nastavení aplikací</string>
+    <string name="prefCat_app_information_title">Informace o aplikaci</string>
+    <string name="title_recentNewsFirst">Seøadit pøíspìvky od nejnovìjších</string>
+    <string name="summary_recentNewsFirst">namísto nejdùležitìjších</string>
+    <string name="title_downloadImages">Ukládat data (nutný restart)</string>
+    <string name="summary_downloadImages">Nestahovat obrázky</string>
+    <string name="title_selectTheme">Vybrat motiv</string>
+    <string name="summary_selectTheme">vyber svùj oblíbený motiv</string>
+    <string name="version">Verze</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Jejda, tady je nìjaký problém!</string>
+    <string name="descriptionNoConnection">Zkontrolujte stav vašeho pøipojení a zkuste naèíst stránku znovu.</string>
+    <string name="awards">Tato aplikace má licenci Open Source.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">Chcete-li stáhnout aplikaci SlimFacebook, musíte:\n jít na tuto adresu https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Dìkuji!</string>
+    <string name="downloadOrShareWithBrowser">Otevøením prohlížeèe mùžete stáhnout nebo sdílet tento obraz.</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+Velikost pouze 700Kb, vám umožní pohldnì využívat Facebook(ve webové verzi).
+POZNÁMKA:
+POZOR: Tato aplikace není urèena pro bìžné uživatele. 
+Proè použít SlimFacebook?
+- Je malý: zabírá poze 1 Mb místa;
+- Má jednoduchý a moderná design: obsahuje je to co je nutné;
+- SlimFacebook je Open source: zdrojový kód aplikace je k dispozici na GitHubu, každý mùže ovìøit její pravost a pøispìt k jeho rozvoji.
+- Je zdarma a neobsahuje žádné reklamy;
+- SlimFacebook vás nebude rušit;
+- Respektuje vaše soukromí: aplikace nevyžaduje žádná zvláštní oprávnìní. Bez vašeho vìdomí nemùže Facebook získat pøístup k údajùm z vašeho mobilního telefonu;
+Aplikace je stále ve fázi vývoje, tekže nemusí vše fungovat správnì:
+- Notifikace;
+Odkaz na GitHub
+https://github.com/leorigna/SlimFacebook
+***Vemte v úvahu, že se nejedná o oficiální Facebook aplikaci***
+Jedná se o projekt, který si klade za cíl usnadnit život lidem. Tato aplikace spouští oficiální facebookové stránky. Všechny zásluhy patøí Facebooku. Tato aplikace je zdarma a neobsahuje žádné reklamy.
+    -->
+
+</resources>

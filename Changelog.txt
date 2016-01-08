@@ -48,3 +48,7 @@ v1.6.1
 - Added Greek translation (MikeL)
 - Added Turkish translation (naberl)
 - Added Hungarian translation (kilroy69)
+
+v1.6.2
+- Added Slovenian translation (Miha Krsevan)
+- Added Czech translation (multibestia)

@@ -1,0 +1,74 @@
+<!--
+SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <string name="app_name" translatable="false">SlimFacebook</string>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: *Miha Krsevan* -->
+
+    <!--menu string-->
+    <string name="home" translatable="false">Domov</string>
+    <string name="refresh">Osveži</string>
+    <string name="top" translatable="false">Na vrh</string>
+    <string name="openInBrowser">Odpri v brskalniku</string>
+    <string name="settings">Nastavitve</string>
+    <string name="share">Deli aplikacijo</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Facebook Nastavitve</string>
+    <string name="prefCat_app_settings_title">Nastavitve aplikacije</string>
+    <string name="prefCat_app_information_title">O aplikaciji</string>
+    <string name="title_recentNewsFirst">Razvrsti novice od najnovejše naprej</string>
+    <string name="summary_recentNewsFirst">Najnovejše objave prve</string>
+    <string name="title_downloadImages">Shrani podatke (ponoven zagon)</string>
+    <string name="summary_downloadImages">Ne prenesi slik</string>
+    <string name="title_selectTheme">Izberi temo</string>
+    <string name="summary_selectTheme">Izberite najljubšo temo</string>
+    <string name="version">Verzija</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Ups, napaka!</string>
+    <string name="descriptionNoConnection">Preverite povezavo in osvežite.</string>
+    <string name="awards">To je odprtokodna aplikacija.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">Za prenos SlimFacebook aplikacije, obiščite:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prijavite se v Google (če še niste prijavljeni)\n - Kliknite \"Postani preizkuševalec\"\n - Odprite z aplikacijo Trgovina Play: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Hvala!</string>
+    <string name="downloadOrShareWithBrowser">Odpiranje brskalnika za deljenje ali prenos.</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+
+DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+S samo 700kb velikosti, lahko uživate v polni facebook izkušnji(v spletni različici)
+
+FULL DESCRIPTION:
+OPOZORILO: Aplikacija ni primerna za vse, ki pogosto uporabljate Facebook. 
+
+Zakaj namestiti aplikacijo SlimFacebook?
+- Ker je majhna: velikost aplikacije ne presega 1Mb;
+- Ima preprost in moderen uporabniški vmesnik: tisto, kar potrebujete;
+- Je odprtokodna: koda je na voljo na spletni strani GitHub, vsak lahko potrdi pristnost aplikacije ter prispeva v njen nadaljnji razvoj.
+- Je brezplačna in brez nadležnih oglasov;
+- Ni vsiljiva;
+- Spoštuje vašo zasebnost: ne zahteva posebnih dovoljenj. Brez dovoljenj Facebook ne more dostopati do nobenih podatkov na vaši napravi;
+
+
+Aplikacija je še v razvoju, zato nekatere funkcije še ne delujejo:
+- Obvestila;
+
+Povezava na GitHub
+https://github.com/leorigna/SlimFacebook
+
+***To ni uradna Facebook aplikacija***
+To je projekt, ki vam olajša življenje. Ta aplikacija zažene Facebook uradno spletno stran. Vse zahvale gredo Facebook ekipi. Aplikacija je brezplačna in brez oglasov.
+    -->
+
+</resources>
