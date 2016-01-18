@@ -1,5 +1,5 @@
-# SlimFacebook
-Do you find Facebook app uncomfortable?
+# SlimSocial for Facebook
+## Do you find Facebook app uncomfortable?
 It is too heavy, too slow, too energy-consumptive or with too permissions?
 
 I don't use Facebook a lot so I wondered why I have to have their cumbersome app?
@@ -22,22 +22,12 @@ In the first version of the app I've put only:
     the external links are not opened in the app;
     nothing else.
 
-Actually there aren't / TO-DO LIST:
+I would remove unused files to make the app lighter.
 
-    use share button to pubblish post;
-    upload of the photo;
-    geolocalizzation;
-    custom javascript allert;
-    multi windows (ex. home and messages);
-    support to the main productor features (ex. Samsung popup);
-    translations;
-    things received from feedback.
-
-I would also remove unused files to make the app lighter.
-
-I'm looking for a feedback!
+### I'm looking for a feedback!
 Anyone can help me, I'm open to collaboration!
 
+## Come on! Help me :
 XDA: http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
 
 
