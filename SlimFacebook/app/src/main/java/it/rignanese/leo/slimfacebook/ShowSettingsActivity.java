@@ -1,7 +1,7 @@
 package it.rignanese.leo.slimfacebook;
 
 /**
- * SlimFacebook is an Open Source app realized by Leonardo Rignanese
+ * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  */
 

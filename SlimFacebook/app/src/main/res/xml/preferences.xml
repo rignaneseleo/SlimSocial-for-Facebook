@@ -48,5 +48,14 @@
             android:title="@string/version">
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:key="pref_credits"
+            android:title="@string/credits">
+            <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="it.rignanese.leo.slimfacebook"
+            android:targetClass="it.rignanese.leo.slimfacebook.ShowCreditsActivity" />
+        </PreferenceScreen>
+
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//SlimFacebook is an Open Source app realized by Leonardo Rignanese
+//SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 //GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 android {
     compileSdkVersion 23
@@ -9,8 +9,8 @@ android {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.6.2"
+        versionCode 13
+        versionName "1.7.1"
     }
     buildTypes {
         release {

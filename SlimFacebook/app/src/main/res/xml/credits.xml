@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="prefCat_key_developerCredits"
+        android:title="@string/prefCat_developersCredits_title">
+        <PreferenceScreen
+            android:key="pref_LeonardoRignanese"
+            android:title="@string/mainDeveloper"
+            android:summary="@string/summary_LeonardoRignanese">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/leorigna/SlimSocial-for-Facebook" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_FaceSlim"
+            android:title="FaceSlim Developers"
+            android:summary="@string/summary_FaceSlim">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/indywidualny/FaceSlim" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_translatorsCredits"
+        android:title="@string/prefCat_translatorsCredits_title">
+        <PreferenceScreen
+            android:key="pref_Minions_Army"
+            android:title="Minions_Army"
+            android:summary="Indonesian"/>
+        <PreferenceScreen
+            android:key="pref_minimaster4734"
+            android:title="minimaster4734"
+            android:summary="French, Spanish, Portuguese"/>
+        <PreferenceScreen
+            android:key="pref_xdevs23"
+            android:title="xdevs23"
+            android:summary="German"/>
+        <PreferenceScreen
+            android:key="pref_dic1911"
+            android:title="dic1911"
+            android:summary="Chinese"/>
+        <PreferenceScreen
+            android:key="pref_DoctorRzepa"
+            android:title="DoctorRzepa"
+            android:summary="Polish"/>
+        <PreferenceScreen
+            android:key="pref_MikeL"
+            android:title="MikeL"
+            android:summary="Greek"/>
+        <PreferenceScreen
+            android:key="pref_naberl"
+            android:title="naberl"
+            android:summary="Turkish"/>
+        <PreferenceScreen
+            android:key="pref_kilroy69"
+            android:title="kilroy69"
+            android:summary="Hungarian"/>
+        <PreferenceScreen
+            android:key="pref_MihaKrsevan"
+            android:title="Miha Krsevan"
+            android:summary="Slovenian"/>
+        <PreferenceScreen
+            android:key="pref_multibestia"
+            android:title="multibestia"
+            android:summary="Czech"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_otherCredits"
+        android:title="@string/prefCat_otherCredits_title">
+        <PreferenceScreen
+            android:key="pref_xda"
+            android:title="XDA forum">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="http://forum.xda-developers.com/" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_github"
+            android:title="GitHub Inc."/>
+        <PreferenceScreen
+            android:key="pref_facebook"
+            android:title="Facebook Inc."/>
+        <PreferenceScreen
+            android:key="pref_google"
+            android:title="Google Inc."/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

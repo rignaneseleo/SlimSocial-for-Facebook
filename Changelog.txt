@@ -25,7 +25,7 @@ v1.4
 - Fix the utf8 in the offline page
 - Fix the refresh when there is no connection
 - Photos are opened with the browser
-- Add indonesian translations
+- Add indonesian translations (Minions_Army)
 
 v1.5
 - Upload of files
@@ -35,8 +35,11 @@ v1.5
 - Add some toasts
 
 v1.5.1
-- Added the French, German, Spanish, Portuguese, Chinese translations!
-
+- Added translations:
+	French, Spanish, Portuguese (minimaster4734)
+	Chinese (dic1911)
+	German (xdevs23)
+	
 v1.6
 - Geolocalizzation
 - Share links with app
@@ -52,3 +55,12 @@ v1.6.1
 v1.6.2
 - Added Slovenian translation (Miha Krsevan)
 - Added Czech translation (multibestia)
+
+v1.7
+- Renamed to 'SlimSocial for Facebook'
+- Ultra fast share (hold one link or image and share it) (thanks to FaceSlim)
+- Fixed the photo upload for all versions (4.4.4 specially) (thanks to FaceSlim)
+- Added Credits in Settings
+
+v1.7.1
+- Added more credits to FaceSlim

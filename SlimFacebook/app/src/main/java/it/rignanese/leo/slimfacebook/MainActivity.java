@@ -1,31 +1,38 @@
 /*
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 
 
- special thanks to https://github.com/indywidualny/FaceSlim
- some of the code is their work!
+!!!!!!!!!!!!!!! Special thanks to https://github.com/indywidualny/FaceSlim !!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!! I've token some inspiration an code from their work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
 package it.rignanese.leo.slimfacebook;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -41,6 +48,7 @@ import android.provider.MediaStore;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webViewFacebook;//the main webView where is shown facebook
 
-    //to upload files
-    public static final int INPUT_FILE_REQUEST_CODE = 1;
-    public static final String EXTRA_FROM_NOTIFICATION = "EXTRA_FROM_NOTIFICATION";
+    //to choose and upload files
+    private static final int FILECHOOSER_RESULTCODE = 1;
+    private ValueCallback<Uri> mUploadMessage;
+    private Uri mCapturedImageURI = null;
+    // the same for Android 5.0 methods only
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
+
 
     private Menu optionsMenu;//contains the main menu
 
@@ -68,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     boolean isSharer = false;//flag: true if the app is called from sharer
     String urlSharer = "";//to save the url got from the sharer
 
+    // create link handler (long clicked links)
+    private final MyHandler linkHandler = new MyHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +89,13 @@ public class MainActivity extends AppCompatActivity {
         // setup the sharedPreferences
         savedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //setup the theme
-        //int savedThemeId = Integer.parseInt(savedPreferences.getString("pref_key_theme8", "2131361965"));//get the last saved theme id
-        //setTheme(savedThemeId);//this refresh the theme if necessary
-        // TODO fix the change of status bar
+        // if the app is being launched for the first time
+        if (savedPreferences.getBoolean("first_run", true)) {
+            //todo presentation
+
+            // save the fact that the app has been started at least once
+            savedPreferences.edit().putBoolean("first_run", false).apply();
+        }
 
         setContentView(R.layout.activity_main);//load the layout
 
@@ -123,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         // setup the webView
         webViewFacebook = (WebView) findViewById(R.id.webView);
         setUpWebViewDefaults(webViewFacebook);//set the settings
+
 
         if (isSharer) {//if is a share request
             webViewFacebook.loadUrl(urlSharer);//load the sharer url
@@ -217,29 +235,35 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //to upload files
-            //thanks to gauntface
-            //https://github.com/GoogleChrome/chromium-webview-samples
+            //!!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
+            // for >= Lollipop, all in one
             public boolean onShowFileChooser(
-                    //todo fix the compatibility with all versions (4.4.4 specially)
                     WebView webView, ValueCallback<Uri[]> filePathCallback,
                     WebChromeClient.FileChooserParams fileChooserParams) {
+
+                /** Request permission for external storage access.
+                 *  If granted it's awesome and go on,
+                 *  otherwise just stop here and leave the method.
+                 */
                 if (mFilePathCallback != null) {
                     mFilePathCallback.onReceiveValue(null);
                 }
                 mFilePathCallback = filePathCallback;
 
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getBaseContext().getPackageManager()) != null) {
-                    // Create the File where the photo should go
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+                    // create the file where the photo should go
                     File photoFile = null;
                     try {
                         photoFile = createImageFile();
                         takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
+                        Toast.makeText(getApplicationContext(), "Error occurred while creating the File", Toast.LENGTH_LONG).show();
                     }
 
-                    // Continue only if the File was successfully created
+                    // continue only if the file was successfully created
                     if (photoFile != null) {
                         mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -262,15 +286,89 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
                 chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, getString(R.string.chooseAnImage));
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
 
-                startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
+                startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
 
                 return true;
             }
+
+            // creating image files (Lollipop only)
+            private File createImageFile() throws IOException {
+                String appDirectoryName = getString(R.string.app_name).replace(" ", "");
+                File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appDirectoryName);
+
+                if (!imageStorageDir.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    imageStorageDir.mkdirs();
+                }
+
+                // create an image file name
+                imageStorageDir = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+                return imageStorageDir;
+            }
+
+            // openFileChooser for Android 3.0+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+                String appDirectoryName = getString(R.string.app_name).replace(" ", "");
+             mUploadMessage = uploadMsg;
+
+                try {
+                    File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appDirectoryName);
+
+                    if (!imageStorageDir.exists()) {
+                        //noinspection ResultOfMethodCallIgnored
+                        imageStorageDir.mkdirs();
+                    }
+
+                    File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+
+                     mCapturedImageURI = Uri.fromFile(file); // save to the private variable
+
+                    final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+                    //captureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    i.setType("image/*");
+
+                    Intent chooserIntent = Intent.createChooser(i, getString(R.string.chooseAnImage));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{captureIntent});
+
+                    startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), ("Camera Exception"), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            // openFileChooser for other Android versions
+            /** may not work on KitKat due to lack of implementation of openFileChooser() or onShowFileChooser()
+             *  https://code.google.com/p/android/issues/detail?id=62220
+             *  however newer versions of KitKat fixed it on some devices */
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+                openFileChooser(uploadMsg, acceptType);
+            }
         });
 
+        // OnLongClickListener for detecting long clicks on links and images
+        // !!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
+        webViewFacebook.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // activate long clicks on links and image links according to settings
+                if (true) {
+                    WebView.HitTestResult result = webViewFacebook.getHitTestResult();
+                    if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+                        Message msg = linkHandler.obtainMessage();
+                        webViewFacebook.requestFocusNodeHref(msg);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     // app is already running and gets a new intent (used to share link without open another activity
@@ -308,51 +406,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //*********************** UPLOAD FILES ****************************
+    //!!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //used to upload files
-        //thanks to gauntface
-        //https://github.com/GoogleChrome/chromium-webview-samples
-        if (requestCode != INPUT_FILE_REQUEST_CODE || mFilePathCallback == null) {
-            super.onActivityResult(requestCode, resultCode, data);
-            return;
-        }
+        // code for all versions except of Lollipop
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
-        Uri[] results = null;
+            if (requestCode == FILECHOOSER_RESULTCODE) {
+                if (null == this.mUploadMessage)
+                    return;
 
-        // Check that the response is a good one
-        if (resultCode == Activity.RESULT_OK) {
-            if (data == null) {
-                // If there is not data, then we may have taken a photo
-                if (mCameraPhotoPath != null) {
-                    results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                Uri result = null;
+
+                try {
+                    if (resultCode != RESULT_OK)
+                        result = null;
+                    else {
+                        // retrieve from the private variable if the intent is null
+                        result = data == null ? mCapturedImageURI : data.getData();
+                    }
                 }
-            } else {
-                String dataString = data.getDataString();
-                if (dataString != null) {
-                    results = new Uri[]{Uri.parse(dataString)};
+                catch(Exception e) {
+                    Toast.makeText(getApplicationContext(), "activity :"+e, Toast.LENGTH_LONG).show();
+                }
+
+                mUploadMessage.onReceiveValue(result);
+                mUploadMessage = null;
+            }
+
+        } // end of code for all versions except of Lollipop
+
+        // start of code for Lollipop only
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (requestCode != FILECHOOSER_RESULTCODE || mFilePathCallback == null) {
+                super.onActivityResult(requestCode, resultCode, data);
+                return;
+            }
+
+            Uri[] results = null;
+
+            // check that the response is a good one
+            if (resultCode == Activity.RESULT_OK) {
+                if (data == null || data.getData() == null) {
+                    // if there is not data, then we may have taken a photo
+                    if (mCameraPhotoPath != null) {
+                        results = new Uri[] {Uri.parse(mCameraPhotoPath)};
+                    }
+                } else {
+                    String dataString = data.getDataString();
+                    if (dataString != null) {
+                        results = new Uri[] {Uri.parse(dataString)};
+                    }
                 }
             }
-        }
 
-        mFilePathCallback.onReceiveValue(results);
-        mFilePathCallback = null;
-        return;
-    }
+            mFilePathCallback.onReceiveValue(results);
+            mFilePathCallback = null;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File imageFile = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        return imageFile;
+        } // end of code for Lollipop only
     }
 
     //*********************** DOWNLOAD PHOTOS ****************************
@@ -459,7 +572,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
 
-        settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath() );
+        settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath());
 
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_downloadImages", false));//to save data
         //todo setLoadsImagesAutomatically without restart the app
@@ -491,6 +604,57 @@ public class MainActivity extends AppCompatActivity {
             noConnectionError = false;
         } else webViewFacebook.reload();
     }
-}
 
+
+    // handle long clicks on links, an awesome way to avoid memory leaks
+    private static class MyHandler extends Handler {
+        //thanks to FaceSlim
+        private final WeakReference<MainActivity> mActivity;
+
+        public MyHandler(MainActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            MainActivity activity = mActivity.get();
+            if (activity != null) {
+
+                // get url to share
+                String url = (String) msg.getData().get("url");
+
+                if (url != null) {
+                    /* "clean" an url to remove Facebook tracking redirection while sharing
+                    and recreate all the special characters */
+                    url = decodeUrl(cleanUrl(url));
+
+                    // create share intent for long clicked url
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, url);
+                    activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.shareThisLink)));
+                }
+            }
+        }
+
+        // "clean" an url and remove Facebook tracking redirection
+        private static String cleanUrl(String url) {
+            return url.replace("http://lm.facebook.com/l.php?u=", "")
+                    .replace("https://m.facebook.com/l.php?u=", "")
+                    .replace("http://0.facebook.com/l.php?u=", "")
+                    .replaceAll("&h=.*", "").replaceAll("\\?acontext=.*", "");
+        }
+
+        // url decoder, recreate all the special characters
+        private static String decodeUrl(String url) {
+            return url.replace("%3C", "<").replace("%3E", ">").replace("%23", "#").replace("%25", "%")
+                    .replace("%7B", "{").replace("%7D", "}").replace("%7C", "|").replace("%5C", "\\")
+                    .replace("%5E", "^").replace("%7E", "~").replace("%5B", "[").replace("%5D", "]")
+                    .replace("%60", "`").replace("%3B", ";").replace("%2F", "/").replace("%3F", "?")
+                    .replace("%3A", ":").replace("%40", "@").replace("%3D", "=").replace("%26", "&")
+                    .replace("%24", "$").replace("%2B", "+").replace("%22", "\"").replace("%2C", ",")
+                    .replace("%20", " ");
+        }
+    }
+}
 

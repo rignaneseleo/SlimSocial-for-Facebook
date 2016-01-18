@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 
@@ -27,8 +27,8 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         android:theme="@style/SlimFacebookTheme"
 
 
-        android:versionCode="11"
-        android:versionName="1.6.2"
+        android:versionCode="13"
+        android:versionName="1.7.1"
         ><!--the official version is wrote in build.gradle-->
 
 
@@ -36,7 +36,7 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="@string/app_name"
+            android:label="SlimSocial"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -80,6 +80,17 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
         <!--settings activity-->
         <activity
             android:name=".ShowSettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/settings">
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <!--credits activity-->
+        <activity
+            android:name=".ShowCreditsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/settings">
 
