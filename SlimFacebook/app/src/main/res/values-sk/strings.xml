@@ -1,9 +1,9 @@
 <!--
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-    <string name="app_name" translatable="false">SlimFacebook</string>
+    <string name="app_name" translatable="false">SlimSocial pre Facebook</string>
     <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
 
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
@@ -30,6 +30,11 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_selectTheme">Zvoľte tému</string>
     <string name="summary_selectTheme">zvoľte si vašu obľúbenú tému</string>
     <string name="version">Verzia</string>
+    <string name="credits">Zásluhy</string>
+    <string name="prefCat_otherCredits_title">Iné</string>
+    <string name="prefCat_developersCredits_title">Vývojári</string>
+    <string name="summary_LeonardoRignanese">Tvorca a vývojár aplikácie</string>
+    <string name="prefCat_translatorsCredits_title">Prekladatelia</string>
     <!--end settings-->
 
     <!--page error-->
@@ -39,9 +44,13 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Pre stiahnutie SlimFacebook musíte:\n - Otvoriť https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prihlásiť sa na Google účtet (ak už nie ste)\n - Kliknite na \"Chcem sa stať testerom\"\n - Otvoriť v aplikácii Obchod Play adresu: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction">Pre stiahnutie SlimSocial pre Facebook musíte:\n - Otvoriť https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prihlásiť sa na Google účtet (ak už nie ste)\n - Kliknite na \"Chcem sa stať testerom\"\n - Otvoriť v aplikácii Obchod Play adresu: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Ďakujem!</string>
     <string name="downloadOrShareWithBrowser">Otvorením prehliadača môžete uložiť alebo zdieľať tento obrázok.</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <string name="shareThisLink">Zdieľať odkaz</string>
+    <string name="chooseAnImage">Zvoľte obrázok</string>
+    <string name="summary_FaceSlim">Bez nich, by som nemohol pridať niektoré zaujímavé funkcie. Ak ste vývojár, musíte vidieť ich skvelú prácu!</string>
     <!--end other-->
 
     <!-- PLAY STORE PAGE
@@ -52,7 +61,7 @@ Iba so 700Kb, vám umožňuje si užívať Facebook (jeho webovú verziu)
 FULL DESCRIPTION:
 UPOZORNENIE: Táto aplikácia nemusí byť vhodná pre niekoho, kto používa Facebook často. 
 
-Prečo používať SlimFacebook?
+Prečo používať SlimSocial pre Facebook?
 - Je malý: veľkosť je menej ako 1MB;
 - Má jednoduchý a moderný dizajn: je tam len to, čo potrebujete;
 - Je Open Source: zdrojový kód aplikácie je dostupný na stránke GitHub, ktokoľvek si môže overiť pravosť aplikácie a prispievajú k jej rozvoju;
@@ -65,7 +74,7 @@ Aplikácia je stále vo vývoji, takže stále nefunguje:
 - Upozornenia;
 
 Odkaz na GitHub
-https://github.com/leorigna/SlimFacebook
+https://github.com/leorigna/SlimSocial-for-Facebook
 
 ***Berte na vedomie, že toto nie je oficiálna aplikácia od Facebooku***
 Ide o projekt, ktorý chce ľuďom uľahčiť život. Aplikácia zobrazuje oficiálne stránky Facebooku. Všetky zásluhu patria Facebooku tímu. Je k dispozícii zdarma pre všetkých bez akýchkoľvek reklám.
