@@ -23,12 +23,17 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_settings_title">Nastavení aplikací</string>
     <string name="prefCat_app_information_title">Informace o aplikaci</string>
     <string name="title_recentNewsFirst">Seřadit příspěvky od nejnovějších</string>
-    <string name="summary_recentNewsFirst">namísto nejdůležitějších</string>
-    <string name="title_downloadImages">Ukládat data (nutný restart)</string>
+    <string name="summary_recentNewsFirst">místo nejdůležitějších</string>
+    <string name="title_downloadImages">Šetřit data (nutný restart)</string>
     <string name="summary_downloadImages">Nestahovat obrázky</string>
     <string name="title_selectTheme">Vybrat motiv</string>
     <string name="summary_selectTheme">vyber svůj oblíbený motiv</string>
     <string name="version">Verze</string>
+    <string name="credits">O aplikaci</string>
+    <string name="prefCat_otherCredits_title">Ostatní</string>
+    <string name="prefCat_developersCredits_title">Vývojáři</string>
+    <string name="summary_LeonardoRignanese">Tvůrce a vývojář aplikace</string>
+    <string name="prefCat_translatorsCredits_title">Překladatelé</string>
     <!--end settings-->
 
     <!--page error-->
@@ -41,6 +46,11 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="downloadInstruction">Chcete-li stáhnout aplikaci SlimFacebook, musíte:\n jít na tuto adresu https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Děkuji!</string>
     <string name="downloadOrShareWithBrowser">Otevřením prohlížeče můžete stáhnout nebo sdílet tento obraz.</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <string name="shareThisLink">Sdílet odkaz</string>
+    <string name="chooseAnImage">Vyberte obrázek</string>
+    <string name="summary_FaceSlim">Bez nich bych nemohl přidat několik zajímavých funkcí. Každý správný vývojář vidí a chápe jejich přínos.</string>
+    
     <!--end other-->
 
     <!-- PLAY STORE PAGE
