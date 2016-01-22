@@ -538,7 +538,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.share: {//share this app
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.downloadInstruction));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.downloadThisApp));
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share)));
 
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.thanks),
@@ -547,6 +547,12 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.settings: {//open settings
                 startActivity(new Intent(this, ShowSettingsActivity.class));
+                return true;
+            }
+
+            case R.id.exit: {//open settings
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
                 return true;
             }
 

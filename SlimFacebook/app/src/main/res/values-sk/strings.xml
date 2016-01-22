@@ -47,7 +47,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="downloadInstruction">Pre stiahnutie SlimSocial pre Facebook musíte:\n - Otvoriť https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prihlásiť sa na Google účtet (ak už nie ste)\n - Kliknite na \"Chcem sa stať testerom\"\n - Otvoriť v aplikácii Obchod Play adresu: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Ďakujem!</string>
     <string name="downloadOrShareWithBrowser">Otvorením prehliadača môžete uložiť alebo zdieľať tento obrázok.</string>
-    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
     <string name="shareThisLink">Zdieľať odkaz</string>
     <string name="chooseAnImage">Zvoľte obrázok</string>
     <string name="summary_FaceSlim">Bez nich, by som nemohol pridať niektoré zaujímavé funkcie. Ak ste vývojár, musíte vidieť ich skvelú prácu!</string>
