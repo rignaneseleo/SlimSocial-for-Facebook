@@ -2,32 +2,13 @@
 ## Do you find Facebook app uncomfortable?
 It is too heavy, too slow, too energy-consumptive or with too permissions?
 
-I don't use Facebook a lot so I wondered why I have to have their cumbersome app?
-Obviously, I had tried Facebook Light but it was still too "intrusive" to my use.
-For months I've only use the web version of Facebook using the browser but it was stressful because it usually opened a lot of tabs and it killed my battery.
+#FOLLOW THE SLIMSOCIAL PROJECT
+## I need you! I'm open to collaboration!
 
-I noticed that the web version of Facebook was complete and fast so I've thought:
-"Why don't I create a very simply app that uses the web version of Facebook?"
+Official Thread XDA: http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
+FB: https://www.facebook.com/SlimSocialProject/
 
-SlimFacebook, with its 1.1Mb 680Kb and 0 Permissions, is the result!
-Just made, anyone who has saw it want to download it so I've decided to upload it into the PlayStore and on Github to allow everyone to contribute.
+#### I'm looking for a feedback!
 
-In the first version of the app I've put only:
-
-    go to the home;
-    refresh the page;
-    go on the top;
-    open the actual page on the browser;
-    open the app with facebook links;
-    the external links are not opened in the app;
-    nothing else.
-
-I would remove unused files to make the app lighter.
-
-### I'm looking for a feedback!
-Anyone can help me, I'm open to collaboration!
-
-## Come on! Help me :
-XDA: http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
 
 
