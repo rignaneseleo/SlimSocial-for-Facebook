@@ -139,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
         // setup the webView
         webViewFacebook = (WebView) findViewById(R.id.webView);
-        setUpWebViewDefaults(webViewFacebook);//set the settings
+        setUpWebViewDefaults(webViewFacebook);
+        //fits images to screen
+        
 
 
         if (isSharer) {//if is a share request
@@ -577,6 +579,11 @@ public class MainActivity extends AppCompatActivity {
         // Use WideViewport and Zoom out if there is no viewport defined
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
+        // better image sizing support
+        settings.setSupportZoom(true);
+        settings.setDisplayZoomControls(false);
+        settings.setBuiltInZoomControls(true);
+        
 
         settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath());
 
