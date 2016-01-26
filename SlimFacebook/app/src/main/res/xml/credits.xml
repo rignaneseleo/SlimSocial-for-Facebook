@@ -10,7 +10,7 @@
             android:title="@string/mainDeveloper">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/leorigna/SlimSocial-for-Facebook"/>
+                android:data="https://github.com/rignaneseleo/SlimSocial-for-Facebook"/>
         </PreferenceScreen>
         <PreferenceScreen
             android:key="pref_FaceSlim"
