@@ -153,8 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
             // when there isn't a connetion
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                String summary = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body><h1 " +
-                        "style='text-align:center; padding-top:15%;'>" + getString(R.string.titleNoConnection) + "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;'>" + getString(R.string.descriptionNoConnection) + "</h3>  <h5 style='text-align:center; padding-top:80%; opacity: 0.3;'>" + getString(R.string.awards) + "</h5></body></html>";
+                String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" + getString(R.string.titleNoConnection) + "</h1> <h3 " +
+                        "style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
+                        getString(R.string.descriptionNoConnection) + "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; " +
+                        "opacity: 0.3;'>" + getString(R.string.awards) + "</h5>";
                 webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
 
                 noConnectionError = true;
