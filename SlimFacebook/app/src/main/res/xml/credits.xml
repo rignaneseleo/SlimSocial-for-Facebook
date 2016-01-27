@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="prefCat_key_developerCredits"
+        android:title="@string/prefCat_developersCredits_title">
+        <PreferenceScreen
+            android:key="pref_LeonardoRignanese"
+            android:summary="@string/summary_LeonardoRignanese"
+            android:title="@string/mainDeveloper">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/rignaneseleo/SlimSocial-for-Facebook"/>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_FaceSlim"
+            android:summary="@string/summary_FaceSlim"
+            android:title="FaceSlim Developers">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/indywidualny/FaceSlim"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_designersCredits"
+        android:title="@string/prefCat_designersCredits_title">
+        <PreferenceScreen
+            android:key="pref_lRemainl"
+            android:title="lRemainl"
+            android:summary="@string/summary_lRemainl"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_translatorsCredits"
+        android:title="@string/prefCat_translatorsCredits_title">
+        <PreferenceScreen
+            android:key="pref_Minions_Army"
+            android:summary="Indonesian"
+            android:title="Minions_Army"/>
+        <PreferenceScreen
+            android:key="pref_minimaster4734"
+            android:summary="French, Spanish, Portuguese"
+            android:title="minimaster4734"/>
+        <PreferenceScreen
+            android:key="pref_xdevs23"
+            android:summary="German"
+            android:title="xdevs23"/>
+        <PreferenceScreen
+            android:key="pref_dic1911"
+            android:summary="Chinese"
+            android:title="dic1911"/>
+        <PreferenceScreen
+            android:key="pref_DoctorRzepa"
+            android:summary="Polish"
+            android:title="DoctorRzepa"/>
+        <PreferenceScreen
+            android:key="pref_MikeL"
+            android:summary="Greek"
+            android:title="MikeL"/>
+        <PreferenceScreen
+            android:key="pref_naberl"
+            android:summary="Turkish"
+            android:title="naberl"/>
+        <PreferenceScreen
+            android:key="pref_kilroy69"
+            android:summary="Hungarian"
+            android:title="kilroy69"/>
+        <PreferenceScreen
+            android:key="pref_MihaKrsevan"
+            android:summary="Slovenian"
+            android:title="Miha Krsevan"/>
+        <PreferenceScreen
+            android:key="pref_multibestia"
+            android:summary="Czech"
+            android:title="multibestia"/>
+        <PreferenceScreen
+            android:key="pref_TimVNL"
+            android:summary="Dutch"
+            android:title="TimVNL"/>
+        <PreferenceScreen
+            android:key="pref_ja_som"
+            android:summary="Slovak"
+            android:title="ja_som"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_otherCredits"
+        android:title="@string/prefCat_otherCredits_title">
+        <PreferenceScreen
+            android:key="pref_xda"
+            android:title="XDA forum">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://forum.xda-developers.com/"/>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_github"
+            android:title="GitHub Inc."/>
+        <PreferenceScreen
+            android:key="pref_facebook"
+            android:title="Facebook Inc."/>
+        <PreferenceScreen
+            android:key="pref_google"
+            android:title="Google Inc."/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

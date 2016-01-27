@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
@@ -29,4 +29,26 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Información de la aplicación</string>
     <string name="thanks">Gracias!</string>
     <string name="downloadOrShareWithBrowser">Abrindo el navegador es possble descargar o compartir esta imagen.</string>
+	
+	<!--
+	Con solamente 700kb, puedes acceder al Facebook (en su versión web).
+	
+	ATENCIÓN: Esta aplicación es dedicada solamente para quienes usan poco el Facebook (principalmente desde el navegador), aún no es recomendado para quienes utilicen con frecuencia.
+
+¿Por qué debo descargar SlimSocial for Facebook?
+- Es ligero: pesa menos de 1MB;
+- Tiene un estilo sencillo y moderno: hay sólo lo que necesita;
+- Es una aplicación de código abierto: el código de esta aplicación está en GitHub, cualquier persona puede verificar la autenticidad de la aplicación y contribuir a su desarrollo.
+- Es gratuito y sin anuncios;
+- No es intrusivo;
+- Respeta tu privacidad: esta aplicación no requiere permisos especiales. Sin consenso, Facebook no puede acceder a los datos de tu teléfono;
+
+La aplicación está en pleno desarrollo, por lo que todavía no funcionan:
+- Notificaciones;
+
+GitHub: https://github.com/leorigna/SlimSocial for Facebook
+
+***Esta no es una aplicación oficial de Facebook***
+Este es un proyecto de código abierto que tiene la intención de facilitar la vida de las personas. Esta aplicación carga el sitio web móvil oficial de Facebook. Todo el crédito va al equipo de Facebook. La aplicación es gratuita para todos, sin ningún anuncio. 
+	-->
 </resources>

@@ -1,22 +1,25 @@
 <!--
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-    <string name="app_name" translatable="false">SlimFacebook</string>
+
+    <!--remove this from your translations-->
+    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
     <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <!--end remove this from your translations-->
 
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
     <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
 
     <!--menu string-->
-    <string name="home" translatable="false">Home</string>
     <string name="refresh">Refresh</string>
-    <string name="top" translatable="false">Top</string>
     <string name="openInBrowser">Open using the Browser</string>
     <string name="settings">Settings</string>
-    <string name="information">Information</string>
     <string name="share">Share this app</string>
     <!--end menu string-->
 
@@ -26,9 +29,17 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">App Information</string>
     <string name="title_recentNewsFirst">Order the news feed by most recent</string>
     <string name="summary_recentNewsFirst">instead of by top stories</string>
+    <string name="title_downloadImages">Save Data (needs reboot)</string>
+    <string name="summary_downloadImages">Don\'t download images</string>
     <string name="title_selectTheme">Select the Theme</string>
     <string name="summary_selectTheme">choose your favourite theme</string>
     <string name="version">Version</string>
+    <string name="credits">Credits</string>
+    <string name="prefCat_otherCredits_title">Other</string>
+    <string name="prefCat_developersCredits_title">Developers</string>
+    <string name="summary_LeonardoRignanese">Creator and developer of the app</string>
+    <string name="prefCat_translatorsCredits_title">Translators</string>
+    <string name="prefCat_designersCredits_title">Designers</string>
     <!--end settings-->
 
     <!--page error-->
@@ -41,6 +52,12 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Thanks!</string>
     <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
+    <string name="shareThisLink">Share this link</string>
+    <string name="chooseAnImage">Choose an Image</string>
+    <string name="summary_FaceSlim">Without they, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
+    <string name="summary_lRemainl">Creator of the magnificent logo</string>
+    <string name="exit">Exit</string>
+    <string name="downloadThisApp">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <!--end other-->
 
     <!-- PLAY STORE PAGE
@@ -49,9 +66,9 @@ DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ )
 With only 700Kb, allows you to enjoy the Facebook experience(in its Web version)
 
 FULL DESCRIPTION:
-ATTENTION: This app is dedicated only for who use Facebook a little (accessing mainly from the browser), it is not yet suitable for who use it frequently.
+ATTENTION: This app may not be suitable for who use it frequently. 
 
-Why do I download SlimFacebook?
+Why do I download SlimSocial for Facebook?
 - It is lightweight: it weighs less than 1 Mb;
 - It has simple, modern design: there is only what you need;
 - It is Open source: the code of this app is online on GitHub, anyone can verify the authenticity of the app and contribute to its development.
@@ -61,11 +78,13 @@ Why do I download SlimFacebook?
 
 
 The app is in full development, so still doesn't work:
-- GPS;
 - Notifications;
 
 Link to GitHub
-https://github.com/leorigna/SlimFacebook
+https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+***Take note that this is not an official app from Facebook***
+This is a project which meant to make people life easier. This app will launch Facebook official website. All credit goes to Facebook team. It is provided free for all without any Ads.
     -->
 
 </resources>

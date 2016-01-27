@@ -1,5 +1,5 @@
 <!--
-SlimFacebook is an Open Source app realized by Leonardo Rignanese
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,11 +28,10 @@ SlimFacebook is an Open Source app realized by Leonardo Rignanese
     <item
         android:id="@+id/share"
         android:title="@string/share"></item>
-    <!--<item-->
-        <!--android:id="@+id/info"-->
-        <!--android:title="@string/information"></item>-->
-
     <item
         android:id="@+id/settings"
         android:title="@string/settings"></item>
+    <item
+        android:id="@+id/exit"
+        android:title="@string/exit"></item>
 </menu>

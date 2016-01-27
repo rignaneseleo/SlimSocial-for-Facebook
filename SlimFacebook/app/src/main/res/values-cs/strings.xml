@@ -1,0 +1,76 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: *multibestia* -->
+
+    <!--menu string-->
+    <string name="home" translatable="false">Home</string>
+    <string name="refresh">Aktualizovat</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="openInBrowser">Otevřít v prohlížeči</string>
+    <string name="settings">Nastavení</string>
+    <string name="share">Sdílet tuto aplikaci</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Nastavení Facebooku</string>
+    <string name="prefCat_app_settings_title">Nastavení aplikací</string>
+    <string name="prefCat_app_information_title">Informace o aplikaci</string>
+    <string name="title_recentNewsFirst">Seřadit příspěvky od nejnovějších</string>
+    <string name="summary_recentNewsFirst">místo nejdůležitějších</string>
+    <string name="title_downloadImages">Šetřit data (nutný restart)</string>
+    <string name="summary_downloadImages">Nestahovat obrázky</string>
+    <string name="title_selectTheme">Vybrat motiv</string>
+    <string name="summary_selectTheme">vyber svůj oblíbený motiv</string>
+    <string name="version">Verze</string>
+    <string name="credits">O aplikaci</string>
+    <string name="prefCat_otherCredits_title">Ostatní</string>
+    <string name="prefCat_developersCredits_title">Vývojáři</string>
+    <string name="summary_LeonardoRignanese">Tvůrce a vývojář aplikace</string>
+    <string name="prefCat_translatorsCredits_title">Překladatelé</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Jejda, tady je nějaký problém!</string>
+    <string name="descriptionNoConnection">Zkontrolujte stav vašeho připojení a zkuste načíst stránku znovu.</string>
+    <string name="awards">Tato aplikace má licenci Open Source.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">Chcete-li stáhnout aplikaci SlimFacebook, musíte:\n jít na tuto adresu https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Děkuji!</string>
+    <string name="downloadOrShareWithBrowser">Otevřením prohlížeče můžete stáhnout nebo sdílet tento obraz.</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <string name="shareThisLink">Sdílet odkaz</string>
+    <string name="chooseAnImage">Vyberte obrázek</string>
+    <string name="summary_FaceSlim">Bez nich bych nemohl přidat několik zajímavých funkcí. Každý správný vývojář vidí a chápe jejich přínos.</string>
+    
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+Velikost pouze 700Kb, vám umožní pohldně využívat Facebook(ve webové verzi).
+POZNÁMKA:
+POZOR: Tato aplikace není určena pro běžné uživatele. 
+Proč použít SlimSocial for Facebook?
+- Je malý: zabírá pouze 1 Mb místa;
+- Má jednoduchý a moderní design: obsahuje jen to co je nutné;
+- SlimSocial for Facebook je Open source: zdrojový kód aplikace je k dispozici na GitHubu, každý může ověřit její pravost a přispět k jeho rozvoji.
+- Je zdarma a neobsahuje žádné reklamy;
+- SlimSocial for Facebook vás nebude rušit;
+- Respektuje vaše soukromí: aplikace nevyžaduje žádná zvláštní oprávnění. Bez vašeho vědomí nemůže Facebook získat přístup k údajům z vašeho mobilního telefonu;
+Aplikace je stále ve fázi vývoje, takže nemusí vše fungovat správně:
+- Notifikace;
+Odkaz na GitHub
+https://github.com/leorigna/SlimSocial for Facebook
+***Vemte v úvahu, že se nejedná o oficiální Facebook aplikaci***
+Jedná se o projekt, který si klade za cíl usnadnit život lidem. Tato aplikace spouští oficiální facebookové stránky. Všechny zásluhy patří Facebooku. Tato aplikace je zdarma a neobsahuje žádné reklamy.
+    -->
+
+</resources>

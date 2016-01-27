@@ -17,22 +17,57 @@ v1.3.1
 - Fix the launch icon
 
 v1.4
-- add swipe to refresh
-- added settings:
+- Add swipe to refresh
+- Added settings:
 	- order by newest feed
 	- show version
 	
-- fix the utf8 in the offline page
-- fix the refresh when there is no connection
-- photos are opened with the browser
-- add indonesian translations
+- Fix the utf8 in the offline page
+- Fix the refresh when there is no connection
+- Photos are opened with the browser
+- Add indonesian translations (Minions_Army)
 
 v1.5
-- upload of files
-- improved the compatibility with older Android version
-- fix translations
-- fix the cache load
-- add some toasts
+- Upload of files
+- Improved the compatibility with older Android version
+- Fix translations
+- Fix the cache load
+- Add some toasts
 
 v1.5.1
-- Added the French, German, Spanish, Portuguese, Chinese translations!
+- Added translations:
+	French, Spanish, Portuguese (minimaster4734)
+	Chinese (dic1911)
+	German (xdevs23)
+	
+v1.6
+- Geolocalizzation
+- Share links with app
+- Added Saving Data option
+- Extended url intent
+- Added Polish translation (DoctorRzepa)
+
+v1.6.1
+- Added Greek translation (MikeL)
+- Added Turkish translation (naberl)
+- Added Hungarian translation (kilroy69)
+
+v1.6.2
+- Added Slovenian translation (Miha Krsevan)
+- Added Czech translation (multibestia)
+
+v1.7
+- Renamed to 'SlimSocial for Facebook'
+- Ultra fast share (hold one link or image and share it) (thanks to FaceSlim)
+- Fixed the photo upload for all versions (4.4.4 specially) (thanks to FaceSlim)
+- Added Credits in Settings
+
+v1.7.1
+- Added more credits to FaceSlim
+
+v1.8
+- Changed logo
+- Added Exit button
+- Changed 'share app' intent
+- Added dutch translation(TimVNL (Tim Veluwenkamp))
+- Added slovak translation (ja_som)
