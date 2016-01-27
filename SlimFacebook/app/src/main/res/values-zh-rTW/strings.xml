@@ -3,30 +3,80 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-    <!-- TRANSLATION IS MADE BY: *dic1911* -->
 
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: dic1911 -->
+
+    <!--menu string-->
     <string name="refresh">重新整理</string>
-    <string name="openInBrowser">使用外部瀏覽器開啟</string>
+    <string name="openInBrowser">使用瀏覽器開啟</string>
     <string name="settings">設定</string>
-    <string name="information">Information</string>
+    <string name="share">分享並推薦本程式</string>
+    <!--end menu string-->
 
-    <string name="titleNoConnection">沒有連線!</string>
-    <string name="descriptionNoConnection">請檢查連線後重新整理.</string>
-
-    <string name="awards">這是個開源(Open Source)程式.</string>
-    <string name="share">分享</string>
-    <string name="downloadInstruction">若要下載SlimFacebook:\n - 開啟 https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - 登入Google帳號 (如果未登入)\n - 按下 \"成為測試人員\"\n - 使用Play Store開啟這個連結: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="title_recentNewsFirst">優先顯示最新動態</string>
-    <string name="summary_recentNewsFirst">最新動態優先於熱門動態</string>
+    <!--settings-->
     <string name="prefCat_fb_settings_title">Facebook設定</string>
     <string name="prefCat_app_settings_title">程式設定</string>
-    <string name="title_networkUsage">網路使用量</string>
-    <string name="version">版本</string>
+    <string name="prefCat_app_information_title">關於本程式</string>
+    <string name="title_recentNewsFirst">優先顯示最新動態</string>
+    <string name="summary_recentNewsFirst">而不是優先顯示熱門動態</string>
+    <string name="title_downloadImages">節省流量 (需要重新開啟程式)</string>
+    <string name="summary_downloadImages">不顯示圖片</string>
     <string name="title_selectTheme">選擇主題</string>
     <string name="summary_selectTheme">選擇您喜愛的主題</string>
-    <string name="prefCat_app_information_title">程式資訊</string>
-    <string name="thanks">感謝!</string>
-    <string name="downloadOrShareWithBrowser">以瀏覽器下載或分享.</string>
-    <string name="home" translatable="false"></string>
+    <string name="version">版本</string>
+    <string name="credits">特別感謝</string>
+    <string name="prefCat_otherCredits_title">其他</string>
+    <string name="prefCat_developersCredits_title">開發人員</string>
+    <string name="summary_LeonardoRignanese">創造並開發本程式</string>
+    <string name="prefCat_translatorsCredits_title">翻譯人員</string>
+    <string name="prefCat_designersCredits_title">設計</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">離線中!</string>
+    <string name="descriptionNoConnection">請檢查連線後重新整理.</string>
+    <string name="awards">這是個開源程式.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Thanks!</string>
+    <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
+    <string name="shareThisLink">Share this link</string>
+    <string name="chooseAnImage">Choose an Image</string>
+    <string name="summary_FaceSlim">Without they, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
+    <string name="summary_lRemainl">Creator of the magnificent logo</string>
+    <string name="exit">Exit</string>
+    <string name="downloadThisApp">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+
+DESCRIPTION: 
+只需700Kb不到的空間，您就可以享受Facebook!(網頁版)
+
+
+
+FULL DESCRIPTION: 
+注意：本程式主要為較輕度之臉書使用者設計(平時主要使用瀏覽器登入臉書)，目前還不適合多數重度使用者
+
+為何選擇SlimFacebook?
+  -	 超輕量程式本體，1MB不到的大小
+  -	 簡單、質感設計(Material Design)，沒有不必要的功能 
+  -	 這是個開源程式，程式碼存放在GitHub伺服器，所有人都能驗證本程式的可信度同時也能對本程式的開發做出貢獻
+  -	 這個程式尊重您的隱私，無須任何特殊權限，且在沒有您的許可之下，Facebook無法取得任何關於您手機的資訊
+  -	 最棒的是，這個程式免費！也沒有任何廣告！
+
+
+註：本程式目前還在開發階段，通知仍無法使用
+
+Link to GitHub
+https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+***注意! 這不是官方的Facebook程式***
+這個程式是為了讓您能更便捷的使用Facebook網頁版, Facebook團隊才是Facebook的開發者, 本程式為免費提供且無加入任何第三方廣告
+    -->
 
 </resources>
