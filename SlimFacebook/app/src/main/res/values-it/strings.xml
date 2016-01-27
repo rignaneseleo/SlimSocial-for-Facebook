@@ -45,5 +45,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_lRemainl">Realizzatore del logo</string>
     <string name="exit">Esci</string>
     <string name="downloadThisApp">Scarica SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">Nessuna informazione personale o privata riguardo te o il tuo device è raccolta o trasmessa da quest\'app !</string>
+    <string name="donate">Dona</string>
+    <string name="donateToContribute">Ho creato quest\'app gratis. Puoi offrirmelo un caffè?</string>
 
 </resources>

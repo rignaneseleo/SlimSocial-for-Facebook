@@ -28,24 +28,31 @@
             android:title="@string/title_downloadImages"
             android:summary="@string/summary_downloadImages"/>
 
-        <!--<ListPreference //toast after click on the theme-->
-            <!--android:key="pref_key_theme"-->
-            <!--android:title="@string/title_selectTheme"-->
-            <!--android:summary=""-->
-            <!--android:defaultValue="2131361965"-->
-            <!--android:entries="@array/listThemes"-->
-            <!--android:entryValues="@array/listValuesThemes"/>-->
-
+        <PreferenceScreen
+            android:key="pref_key_unsubscribeBeta"
+            android:title="Unsubscribe the beta"
+            android:summary="After the unsubscrition, unistall this app and reinstall it from Play Store!">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook"/>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="prefCat_key_app_information"
         android:title="@string/prefCat_app_information_title">
+        <PreferenceScreen
+            android:key="pref_noPersonalInformationAreShared"
+            android:summary="@string/noPersonalInformationAreShared">
+        </PreferenceScreen>
 
         <PreferenceScreen
-            android:key="pref_key_version"
-            android:summary="1.0"
-            android:title="@string/version">
+            android:key="pref_key_donate"
+            android:title="@string/donate"
+            android:summary="@string/donateToContribute">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7NFPYFBNAL3AL"/>
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -57,5 +64,9 @@
             android:targetClass="it.rignanese.leo.slimfacebook.ShowCreditsActivity" />
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:key="pref_key_version"
+            android:title="@string/version">
+        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

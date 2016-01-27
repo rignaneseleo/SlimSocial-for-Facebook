@@ -11,8 +11,11 @@ package it.rignanese.leo.slimfacebook;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -51,6 +54,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 
 
@@ -670,6 +675,30 @@ public class MainActivity extends AppCompatActivity {
                     .replace("%24", "$").replace("%2B", "+").replace("%22", "\"").replace("%2C", ",")
                     .replace("%20", " ");
         }
+    }
+
+    // to check if there is the key
+    protected boolean isProInstalled(Context context) {
+        // the packagename of the 'key' app
+        String proPackage = "it.rignanese.leo.donationkey1";
+
+        // get the package manager
+        final PackageManager pm = context.getPackageManager();
+
+        // get a list of installed packages
+        List<PackageInfo> list = pm.getInstalledPackages(PackageManager.GET_DISABLED_COMPONENTS);
+
+        // let's iterate through the list
+        Iterator<PackageInfo> i = list.iterator();
+        while(i.hasNext()) {
+            PackageInfo p = i.next();
+            // check if proPackage is in the list AND whether that package is signed
+            //  with the same signature as THIS package
+            if((p.packageName.equals(proPackage)) &&
+                    (pm.checkSignatures(context.getPackageName(), p.packageName) == PackageManager.SIGNATURE_MATCH))
+                return true;
+        }
+        return false;
     }
 }
 

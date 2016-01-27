@@ -71,3 +71,11 @@ v1.8
 - Changed 'share app' intent
 - Added dutch translation(TimVNL (Tim Veluwenkamp))
 - Added slovak translation (ja_som)
+
+v1.8.1
+- Fix logo
+- Fix html error page
+- Fix zoom one image
+- Changed controls colors
+- Added the possibility to donate
+- "No personal or private info.."

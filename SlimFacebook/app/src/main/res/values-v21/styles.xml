@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Standard theme. -->
     <style name="SlimFacebookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/blueSlimFacebookTheme</item>
         <item name="colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
         <item name="colorAccent">@color/blueSlimFacebookTheme</item>
+        <item name="android:navigationBarColor">?android:attr/colorPrimaryDark</item>
     </style>
 </resources>
