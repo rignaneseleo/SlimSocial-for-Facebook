@@ -14,6 +14,30 @@
             android:summary="@string/summary_recentNewsFirst"
             android:title="@string/title_recentNewsFirst"/>
 
+        <!--Fixed bar-->
+        <CheckBoxPreference
+            android:defaultValue="true"
+
+            android:key="pref_fixedBar"
+            android:summary="@string/summary_fixedBar"
+            android:title="@string/title_fixedBar"/>
+
+        <!--Black theme -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+
+            android:key="pref_blackTheme"
+            android:summary="@string/summary_blackTheme"
+            android:title="@string/title_blackTheme"/>
+
+        <!--Hide sponsored posts -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+
+            android:key="pref_hideSponsoredPosts"
+            android:summary="@string/summary_hideSponsoredPosts"
+            android:title="@string/title_hideSponsoredPosts"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -24,18 +48,9 @@
         <CheckBoxPreference
             android:defaultValue="false"
 
-            android:key="pref_downloadImages"
-            android:title="@string/title_downloadImages"
-            android:summary="@string/summary_downloadImages"/>
-
-        <PreferenceScreen
-            android:key="pref_key_unsubscribeBeta"
-            android:title="Unsubscribe the beta"
-            android:summary="After the unsubscrition, unistall this app and reinstall it from Play Store!">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook"/>
-        </PreferenceScreen>
+            android:key="pref_doNotDownloadImages"
+            android:summary="@string/summary_downloadImages"
+            android:title="@string/title_downloadImages"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -48,8 +63,8 @@
 
         <PreferenceScreen
             android:key="pref_key_donate"
-            android:title="@string/donate"
-            android:summary="@string/donateToContribute">
+            android:summary="@string/donateToContribute"
+            android:title="@string/donate">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7NFPYFBNAL3AL"/>
@@ -59,9 +74,9 @@
             android:key="pref_credits"
             android:title="@string/credits">
             <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="it.rignanese.leo.slimfacebook"
-            android:targetClass="it.rignanese.leo.slimfacebook.ShowCreditsActivity" />
+                android:action="android.intent.action.VIEW"
+                android:targetClass="it.rignanese.leo.slimfacebook.ShowCreditsActivity"
+                android:targetPackage="it.rignanese.leo.slimfacebook"/>
         </PreferenceScreen>
 
         <PreferenceScreen

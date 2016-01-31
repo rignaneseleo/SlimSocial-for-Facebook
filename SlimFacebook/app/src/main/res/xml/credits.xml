@@ -27,8 +27,8 @@
         android:title="@string/prefCat_designersCredits_title">
         <PreferenceScreen
             android:key="pref_lRemainl"
-            android:title="lRemainl"
-            android:summary="@string/summary_lRemainl"/>
+            android:summary="@string/summary_lRemainl"
+            android:title="lRemainl"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -82,7 +82,24 @@
             android:key="pref_ja_som"
             android:summary="Slovak"
             android:title="ja_som"/>
+        <PreferenceScreen
+            android:key="pref_EMINEM786"
+            android:summary="Hindi"
+            android:title="EMINEM786"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCat_key_Beta"
+        android:title="BETA Testers">
+        <PreferenceScreen
+            android:key="pref_key_unsubscribeBeta"
+            android:summary="You need to unistall and reinstall this app to apply the changes !"
+            android:title="Subscribe/Unsubscribe the BETA">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook"/>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -105,5 +122,4 @@
             android:key="pref_google"
             android:title="Google Inc."/>
     </PreferenceCategory>
-
 </PreferenceScreen>

@@ -1,0 +1,55 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: *EMINEM786* -->
+
+    <!--menu string-->
+    <string name="refresh">रिफ्रेश </string>
+    <string name="openInBrowser">ब्राउज़र का उपयोग कर खोलें</string>
+    <string name="settings">सेटिंग्स </string>
+    <string name="share">इस एप को शेयर करे</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">फेसबुक  सेटिंग्स </string>
+    <string name="prefCat_app_settings_title">एप सेटिंग्स </string>
+    <string name="prefCat_app_information_title">एप इनफार्मेशन </string>
+    <string name="title_recentNewsFirst"> सबसे हाल ही के  न्यूज़  फीड  दिखाएं</string>
+    <string name="summary_recentNewsFirst">बजाय शीर्ष कहानियों की</string>
+    <string name="title_downloadImages">सेव  डाटा ( रिबूट की जरूरत है)</string>
+    <string name="summary_downloadImages">छवियों को डाउनलोड न करें</string>
+    <string name="title_selectTheme">थीम का चयन करें</string>
+    <string name="summary_selectTheme">अपने पसंदीदा थीम  का चयन </string>
+    <string name="version">संस्करण</string>
+    <string name="credits">क्रेडिट्स</string>
+    <string name="prefCat_otherCredits_title">अन्य</string>
+    <string name="prefCat_developersCredits_title">डेवलपर्स </string>
+    <string name="summary_LeonardoRignanese"> क्रिएटर  और  एप्लिकेशन के डेवलपर</string>
+    <string name="prefCat_translatorsCredits_title">अनुवादक</string>
+    <string name="prefCat_designersCredits_title">डिजाइनरस</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">ऑप्स , वहाँ एक समस्या है !</string>
+    <string name="descriptionNoConnection">नेटवर्क कनेक्शन की जाँच करें और  रिफ्रेश   करें </string>
+    <string name="awards">यह एक  ओपन  सोर्स एप  है  </string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction">SlimFacebook डाउनलोड करने के लिए आप इस साइट को  :\n - खोलें  https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">धन्यवाद !</string>
+    <string name="downloadOrShareWithBrowser">ब्राउज़र के माध्यम से खुलने आप डाउनलोड या इस छवि को शेयर  कर सकते हैं</string>
+    <string name="shareThisLink">इस लिंक को शेयर  करे </string>
+    <string name="chooseAnImage">एक छवि का चयन  करे </string>
+    <string name="summary_FaceSlim">उनके बिना, मैं कुछ आकर्षक फंक्शन्स  नहीं बना  पाता . यदि आप एक डेवलपर हैं, आप को  उन भी मेहनत देखना चाहिए!</string>
+    <string name="summary_lRemainl">इस शानदार लोगो के क्रिएटर </string>
+    <string name="exit">बाहर जाएं</string>
+    <string name="downloadThisApp">डाउनलोड  SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <!--end other-->
+
+</resources>

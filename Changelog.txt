@@ -69,8 +69,8 @@ v1.8
 - Changed logo
 - Added Exit button
 - Changed 'share app' intent
-- Added dutch translation(TimVNL (Tim Veluwenkamp))
-- Added slovak translation (ja_som)
+- Added Dutch translation(TimVNL (Tim Veluwenkamp))
+- Added Slovak translation (ja_som)
 
 v1.8.1
 - Fix logo
@@ -79,3 +79,10 @@ v1.8.1
 - Changed controls colors
 - Added the possibility to donate
 - "No personal or private info.."
+
+v1.9
+- Added settings:
+	- Black theme
+	- Fixed Bar
+	- Hide sponsored posts
+- Added hindi translation (EMINEM786)

@@ -21,7 +21,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 - Premi "Diventa un Tester"\n
 - Con l\'app del Play Store apri: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="title_recentNewsFirst">Mostra per prime le notizie recenti</string>
-    <string name="summary_recentNewsFirst">invece che quelle principali</string>
+    <string name="summary_recentNewsFirst">Invece che quelle principali</string>
     <string name="prefCat_fb_settings_title">Impostazioni di Facebook</string>
     <string name="prefCat_app_settings_title">Impostazioni dell\'App</string>
     <string name="title_networkUsage">Utilizzo Dati</string>
@@ -47,6 +47,12 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="downloadThisApp">Scarica SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="noPersonalInformationAreShared">Nessuna informazione personale o privata riguardo te o il tuo device è raccolta o trasmessa da quest\'app !</string>
     <string name="donate">Dona</string>
-    <string name="donateToContribute">Ho creato quest\'app gratis. Puoi offrirmelo un caffè?</string>
+    <string name="donateToContribute">Ho scelto di sviluppare quest\'app gratis. Lo merito un caffè?</string>
+    <string name="summary_fixedBar">La barra blu rimarrà attaccata in alto.</string>
+    <string name="title_fixedBar">Barra fissa in alto</string>
+    <string name="summary_blackTheme">Lo sfondo sarà nero e le scritte bianche. (Con display AMOLED riduce i consumi energetici)</string>
+    <string name="title_blackTheme">Tema Scuro</string>
+    <string name="summary_hideSponsoredPosts">I post sponsorizzati non compariranno!</string>
+    <string name="title_hideSponsoredPosts">Non mostrare post sponsorizzati</string>
 
 </resources>

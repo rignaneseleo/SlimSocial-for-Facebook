@@ -10,32 +10,24 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 package it.rignanese.leo.slimfacebook;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -43,17 +35,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -72,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     // the same for Android 5.0 methods only
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
-
 
     private Menu optionsMenu;//contains the main menu
 
@@ -97,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         // if the app is being launched for the first time
         if (savedPreferences.getBoolean("first_run", true)) {
             //todo presentation
-
             // save the fact that the app has been started at least once
             savedPreferences.edit().putBoolean("first_run", false).apply();
         }
@@ -146,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         webViewFacebook = (WebView) findViewById(R.id.webView);
         setUpWebViewDefaults(webViewFacebook);
         //fits images to screen
-        
 
 
         if (isSharer) {//if is a share request
@@ -227,9 +212,21 @@ public class MainActivity extends AppCompatActivity {
                     refreshItem.setActionView(null);
                 }
 
+                //load the css customizations
+                String css = "";
+                if (savedPreferences.getBoolean("pref_blackTheme", false)) { css += getString(R.string.blackCss); }
+                if (savedPreferences.getBoolean("pref_fixedBar", false)) { css += getString(R.string.fixedBar); }
+                if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += getString(R.string.hideSponsoredPost); }
+
+                //apply the customizations
+                webViewFacebook.loadUrl("javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " +
+                        "str; document.body.appendChild(node); } addStyleString('" + css + "');");
+
+                //finish the load
                 super.onPageFinished(view, url);
 
-                swipeRefreshLayout.setRefreshing(false); //when the page is loaded, stop the refreshing
+                //when the page is loaded, stop the refreshing
+                swipeRefreshLayout.setRefreshing(false);
             }
             //END management of loading
 
@@ -321,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             // openFileChooser for Android 3.0+
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
                 String appDirectoryName = getString(R.string.app_name).replace(" ", "");
-             mUploadMessage = uploadMsg;
+                mUploadMessage = uploadMsg;
 
                 try {
                     File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appDirectoryName);
@@ -333,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
 
                     File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 
-                     mCapturedImageURI = Uri.fromFile(file); // save to the private variable
+                    mCapturedImageURI = Uri.fromFile(file); // save to the private variable
 
                     final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
@@ -359,6 +356,7 @@ public class MainActivity extends AppCompatActivity {
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
                 openFileChooser(uploadMsg, acceptType);
             }
+
         });
 
         // OnLongClickListener for detecting long clicks on links and images
@@ -435,9 +433,8 @@ public class MainActivity extends AppCompatActivity {
                         // retrieve from the private variable if the intent is null
                         result = data == null ? mCapturedImageURI : data.getData();
                     }
-                }
-                catch(Exception e) {
-                    Toast.makeText(getApplicationContext(), "activity :"+e, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "activity :" + e, Toast.LENGTH_LONG).show();
                 }
 
                 mUploadMessage.onReceiveValue(result);
@@ -461,12 +458,12 @@ public class MainActivity extends AppCompatActivity {
                 if (data == null || data.getData() == null) {
                     // if there is not data, then we may have taken a photo
                     if (mCameraPhotoPath != null) {
-                        results = new Uri[] {Uri.parse(mCameraPhotoPath)};
+                        results = new Uri[]{Uri.parse(mCameraPhotoPath)};
                     }
                 } else {
                     String dataString = data.getDataString();
                     if (dataString != null) {
-                        results = new Uri[] {Uri.parse(dataString)};
+                        results = new Uri[]{Uri.parse(dataString)};
                     }
                 }
             }
@@ -590,11 +587,11 @@ public class MainActivity extends AppCompatActivity {
         settings.setSupportZoom(true);
         settings.setDisplayZoomControls(false);
         settings.setBuiltInZoomControls(true);
-        
+
 
         settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath());
 
-        settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_downloadImages", false));//to save data
+        settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
         //todo setLoadsImagesAutomatically without restart the app
 
         // Enable pinch to zoom without the zoom buttons
@@ -625,6 +622,9 @@ public class MainActivity extends AppCompatActivity {
         } else webViewFacebook.reload();
     }
 
+
+
+    //*********************** OTHER ****************************
 
     // handle long clicks on links, an awesome way to avoid memory leaks
     private static class MyHandler extends Handler {
@@ -677,7 +677,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // to check if there is the key
+    //to check if there is the key for future use
+    //I 'll never add premium features but I would acknowledge who has buyed the app
     protected boolean isProInstalled(Context context) {
         // the packagename of the 'key' app
         String proPackage = "it.rignanese.leo.donationkey1";
@@ -690,15 +691,17 @@ public class MainActivity extends AppCompatActivity {
 
         // let's iterate through the list
         Iterator<PackageInfo> i = list.iterator();
-        while(i.hasNext()) {
+        while (i.hasNext()) {
             PackageInfo p = i.next();
             // check if proPackage is in the list AND whether that package is signed
             //  with the same signature as THIS package
-            if((p.packageName.equals(proPackage)) &&
+            if ((p.packageName.equals(proPackage)) &&
                     (pm.checkSignatures(context.getPackageName(), p.packageName) == PackageManager.SIGNATURE_MATCH))
                 return true;
         }
         return false;
     }
+
+
 }
 
