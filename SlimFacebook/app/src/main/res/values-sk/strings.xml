@@ -21,6 +21,12 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Informácie o aplikácii</string>
     <string name="title_recentNewsFirst">Zoradiť novinky od najnovších</string>
     <string name="summary_recentNewsFirst">namiesto od top príbehov</string>
+    <string name="title_fixedBar">Pevná lišta</string>
+    <string name="summary_fixedBar">Modrá lišta na vrchu bude stále zobrazená.</string>
+    <string name="title_blackTheme">Tmavá téma</string>
+    <string name="summary_blackTheme">Pozadie bude čierne a text biely. (Dobré pre AMOLED displeje)</string>
+    <string name="title_hideSponsoredPosts">Nezobrazovať sponzorované príspevky</string>
+    <string name="summary_hideSponsoredPosts">Sponzorované príspevky sa viac nezobrazia!</string>
     <string name="title_downloadImages">Šetriť dáta (vyžaduje reštart)</string>
     <string name="summary_downloadImages">Nenačítavať obrázky</string>
     <string name="title_selectTheme">Zvoľte tému</string>
