@@ -4,14 +4,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 -->
 <resources>
 
-    <!--remove this from your translations-->
-    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
-    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
-    <string name="home" translatable="false">Home</string>
-    <string name="top" translatable="false">Top</string>
-    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
-    <!--end remove this from your translations-->
-
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
     <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
