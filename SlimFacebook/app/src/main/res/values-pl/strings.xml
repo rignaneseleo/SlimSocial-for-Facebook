@@ -1,13 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
 SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
 
+    <!--remove this from your translations-->
+    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <!--end remove this from your translations-->
+
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
-    <!-- TRANSLATION IS MADE BY: *DoctorRzepa* -->
+    <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
 
     <!--menu string-->
     <string name="refresh">Odśwież</string>
@@ -20,51 +27,65 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_fb_settings_title">Ustawienia Facebooka</string>
     <string name="prefCat_app_settings_title">Ustawienia aplikacji</string>
     <string name="prefCat_app_information_title">Informacje o aplikacji</string>
-    <string name="title_recentNewsFirst">Uporządkuj posty zaczynając od najnowszych</string>
-    <string name="summary_recentNewsFirst">zamiast od najważniejszych</string>
-    <string name="title_downloadImages">Oszczędzaj transfer (wymaga resetu)</string>
-    <string name="summary_downloadImages">Nie wyświetlaj obrazów</string>
+    <string name="title_recentNewsFirst">Uporządkuj posty od najnowszych</string>
+    <string name="summary_recentNewsFirst">Zamiast od najpopularniejszych</string>
+    <string name="title_fixedBar">Pasek górny zawsze widoczny</string>
+    <string name="summary_fixedBar">Górny pasek Facebooka zawsze będzie widoczny.</string>
+    <string name="title_blackTheme">Ciemny motyw</string>
+    <string name="summary_blackTheme">Tło będzie czarne, a tekst biały. (Przydatne dla wyświetlaczy AMOLED)</string>
+    <string name="title_hideSponsoredPosts">Nie wyświetlaj postów sponsorowanych</string>
+    <string name="summary_hideSponsoredPosts">Żadnych sponsorowanych postów!</string>
+    <string name="title_downloadImages">Zachowuj transfer (wymaga resetu)</string>
+    <string name="summary_downloadImages">Nie pobieraj obrazów</string>
     <string name="title_selectTheme">Ustaw motyw</string>
-    <string name="summary_selectTheme">wybierz swój ulubiony motyw</string>
+    <string name="summary_selectTheme">wybierz swój ulubiony</string>
     <string name="version">Wersja</string>
+    <string name="credits">O twórcach</string>
+    <string name="prefCat_otherCredits_title">Inne</string>
+    <string name="prefCat_developersCredits_title">Programiści</string>
+    <string name="summary_LeonardoRignanese">Twórca i główny programista</string>
+    <string name="prefCat_translatorsCredits_title">Tłumacze</string>
+    <string name="prefCat_designersCredits_title">Graficy</string>
+    <string name="donate">Złóż dotację</string>
+    <string name="donateToContribute">Zdecydowałem się tworzyć to za darmo. Zafundujesz mi kawę?</string>
     <!--end settings-->
 
     <!--page error-->
     <string name="titleNoConnection">Ups, wystąpił problem!</string>
-    <string name="descriptionNoConnection">Sprawdź stan połączenia z Internetem i spróbuj odświeżyć stronę.</string>
-    <string name="awards">Jest to aplikacja na licencji Open Source.</string>
+    <string name="descriptionNoConnection">Sprawdź połączenie i spróbuj odświeżyć stronę.</string>
+    <string name="awards">Jest to aplikacja Open Source.</string>
     <!--end page error-->
 
     <!--other-->
     <string name="downloadInstruction">By pobrać aplikację SlimFacebook, musisz:\n - Przejść pod adres https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Zalogować się w Google (o ile tego już nie dokonano)\n - Kliknąć \"Become a tester\"\n - Otworzyć ten adres w aplikacji Sklep Play: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Dziękuję Ci!</string>
     <string name="downloadOrShareWithBrowser">Otwierając przeglądarkę możesz pobrać lub udostępnić ten obraz.</string>
+    <string name="shareThisLink">Podziel się tym linkiem</string>
+    <string name="chooseAnImage">Wybierz obraz</string>
+    <string name="summary_FaceSlim">Bez nich nie mógłbym dodać wielu fajnych funkcji. Jeśli jesteś programistą, musisz dostrzec ogrom ich pracy!</string>
+    <string name="summary_lRemainl">Twórca majestatycznego logo</string>
+    <string name="exit">Wyjście</string>
+    <string name="downloadThisApp">Pobierz SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">Żadne osobiste ani prywatne informacje o Tobie lub Twoim urządzeniu nie są zbierane ani wysyłane przez tę aplikację!</string>
+
     <!--end other-->
 
     <!-- PLAY STORE PAGE
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
-Ważąc tylko 700Kb, pozwala Ci wygodnie korzystać z Facebooka (w wersji Web).
-
-UWAGA: Aplikacja ta jest dedykowana głównie osobom, które korzystają z Facebooka rzadko (używając głównie przeglądarki), nie jest ona jeszcze przystosowana dla aktywnych użytkowników.
-
-Dlaczego powinienem pobrać aplikację SlimSocial for Facebook?
+Ważąc tylko 700KB, pozwala Ci wygodnie korzystać z Facebooka (w wersji Web)
+FULL DESCRIPTION:
+UWAGA: Ta aplikacja może nie pasować osobom, które korzystają z Facebooka często.
+Dlaczego miałbyś pobrać aplikację SlimSocial for Facebook?
 - Jest leciutka, waży mniej niż 1 MB;
 - Posiada prosty i nowoczesny design: jest w niej tylko to, co niezbędne;
-- Jest na licencji Open Source: kod źródłowy tej aplikacji znajduje się na witrynie GitHub, każdy może sprawdzić jej autentyczność i przysłużyć się jej rozwojowi.
+- Jest Open source: jej kod źródłowy znajduje się na witrynie GitHub, każdy może sprawdzić jej autentyczność i przysłużyć się jej rozwojowi.
 - Jest darmowa i nie zawiera reklam;
 - Nie jest natrętna (działa tylko, gdy z niej korzystasz);
-- Ceni Twoją prywatność: ta aplikacja nie wymaga specjalnych zezwoleń. Facebook nie ma dostępu do żadnych danych na Twoim telefonie bez Twojej zgody;
-
-
-Aplikacja jest wciąż w budowie, więc nie działają jeszcze:
+- Ceni Twoją prywatność: nie wymaga specjalnych zezwoleń. Facebook nie ma dostępu do żadnych danych na Twoim telefonie bez Twojej zgody;
+Aplikacja jest w trakcie rozwoju, więc nie działają jeszcze:
 - Powiadomienia;
-
-Link do aplikacji na witrynie GitHub
-https://github.com/leorigna/SlimSocial for Facebook
-
-***Proszę wziąć pod uwagę, że nie jest to oficjalna aplikacja Facebook***
+Link do GitHub
+https://github.com/rignaneseleo/SlimSocial-for-Facebook
+***Nie jest to oficjalna aplikacja Facebook***
 Jest to projekt, który ma na celu ułatwienie życia ludziom. Aplikacja ta uruchamia oficjalną stronę Facebook. Wszystkie zasługi należą do zespołu Facebook. Aplikacja ta jest darmowa i nie zawiera żadnych reklam.
- 
     -->
-
-</resources>
