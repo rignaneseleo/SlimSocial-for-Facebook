@@ -3,17 +3,22 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
+
+    <!--remove this from your translations-->
+    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
     <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+    <string name="home" translatable="false">Kezdőlap</string>
+    <string name="top" translatable="false">Fel</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <!--end remove this from your translations-->
 
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
     <!-- TRANSLATION IS MADE BY: *kilroy69* -->
 
     <!--menu string-->
-    <string name="home" translatable="false">Kezdõlap</string>
     <string name="refresh">Frissítés</string>
-    <string name="top" translatable="false">Fel</string>
-    <string name="openInBrowser">Megnyitás Böngészõvel</string>
+    <string name="openInBrowser">Megnyitás Böngészővel</string>
     <string name="settings">Beállítások</string>
     <string name="share">Megosztás</string>
     <!--end menu string-->
@@ -24,47 +29,69 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Alkalmazás Info</string>
     <string name="title_recentNewsFirst">Rendezés legfrissebb hírek szerint</string>
     <string name="summary_recentNewsFirst">Friss Hírek</string>
+    <string name="title_fixedBar">Navigációs sáv lezárása</string>
+    <string name="summary_fixedBar">A navigációs sáv marad görgetésnél is.</string>
+    <string name="title_blackTheme">Sötét Téma</string>
+    <string name="summary_blackTheme">A háttér fekete lesz, a szöveg fehér. (Legjobb az AMOLED kijelzőn)</string>
+    <string name="title_hideSponsoredPosts">Ne mutassa a szponzorált posztokat</string>
+    <string name="summary_hideSponsoredPosts">Nem lesz szponzorált poszt!</string>
     <string name="title_downloadImages">Adatforgalom csökkentése (újraindítás szükséges)</string>
     <string name="summary_downloadImages">Képeket nem tölti le</string>
     <string name="title_selectTheme">Témaválasztó</string>
     <string name="summary_selectTheme">Válassz témát</string>
     <string name="version">Verzió</string>
+    <string name="credits">Fejlesztők</string>
+    <string name="prefCat_otherCredits_title">Egyéb</string>
+    <string name="prefCat_developersCredits_title">Fejlesztők</string>
+    <string name="summary_LeonardoRignanese">Az alkalmazás készítője és fejlesztője</string>
+    <string name="prefCat_translatorsCredits_title">Fordítók</string>
+    <string name="prefCat_designersCredits_title">Designer</string>
+    <string name="donate">Segítsd a munkámat</string>
+    <string name="donateToContribute">Én ingyen csinálom. Meghívsz egy kávéra?</string>
     <!--end settings-->
 
     <!--page error-->
     <string name="titleNoConnection">Hupsz, akadt egy kis probléma!</string>
-    <string name="descriptionNoConnection">Próbáld meg leellenõrizni az internet kapcsolatot és frissíts.</string>
+    <string name="descriptionNoConnection">Próbáld meg leellenőrizni az internet kapcsolatot és frissíts.</string>
     <string name="awards">Ez egy nyílt forráskódú alkalmazás.</string>
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">A SlimFacebook letöltéséhez:\n - Megnyitás https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Lépj be a Google fiókoddal (ha még nem vagy bejelentkezve)\n - Nyomd meg \"Tesztelõ vagyok\"\n - Nyisd meg a Play Áruházban: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction">A SlimFacebook letöltéséhez:\n - Megnyitás https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Lépj be a Google fiókoddal (ha még nem vagy bejelentkezve)\n - Nyomd meg \"Tesztelő vagyok\"\n - Nyisd meg a Play Áruházban: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Köszönöm!</string>
-    <string name="downloadOrShareWithBrowser">Böngészõvel le lehet tölteni, vagy megosztani ezt a képet.</string>
+    <string name="downloadOrShareWithBrowser">Böngészővel le lehet tölteni, vagy megosztani ezt a képet.</string>
+    <string name="shareThisLink">Link Megosztása</string>
+    <string name="chooseAnImage">Kép kiválasztása</string>
+    <string name="summary_FaceSlim">Néhány érdekes funkció hiányzik. Ha fejlesztő vagy, akkor tudhatod, hogy ez nagy munka!</string>
+    <string name="summary_lRemainl">Káprázatos logó készítője</string>
+    <string name="exit">Kilépés</string>
+    <string name="downloadThisApp">SlimSocial for Facebook letöltése: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">Az alkalmazás nem gyűjt Rólad és a készülékedről személyes vagy bizalmas információt, és nem is küldi tovább!</string>
+
     <!--end other-->
 
     <!-- PLAY STORE PAGE
 
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
-Ez az alkalmazás csak 700Kb, és lehetõvé teszi, hogy élvezze a Facebook által nyújtott adottságokat (webes változat).
+Ez az alkalmazás csak 700Kb, és lehetővé teszi, hogy élvezze a Facebook által nyújtott adottságokat (webes változat).
 
 TELJES LEÍRÁS:
 FIGYELEM: Ez az alkalmazás nem lehet alkalmas gyakori használatra. 
 
-Miért érdemes letölteni a SlimSocial for Facebook applikációt?
+Miért érdemes letölteni a SlimFacebook applikációt?
 - Pehelysúlyú: kevesebb, mint 1 Mb;
-- Egyszerû és jól néz ki: csak azokat a dolgokat tartalmazza, amire szükség van;
-- Nyílt forráskódú: az alkalmazás forráskódja a GitHub -on fent van, bárki le tudja ellenõrizni a hitelességét és hozzá is járulhat a fejlesztéshez.
+- Egyszerű és jól néz ki: csak azokat a dolgokat tartalmazza, amire szükség van;
+- Nyílt forráskódú: az alkalmazás forráskódja a GitHub -on fent van, bárki le tudja ellenőrizni a hitelességét és hozzá is járulhat a fejlesztéshez.
 - Ingyenes és reklámmentes;
-- Nem tolakodó;
-- Tiszteletben tartjuk a jogaidat: ez az alkalmazás nem igényel különleges engedélyeket. Közös beleegyezésed nélkül a Facebook nem tud hozzáférni semmilyen adathoz a mobiltelefonodon;
+- Nem tolakodó, nem fut a háttérben;
+- Tiszteletben tartjuk a jogaidat: ez az alkalmazás nem igényel különleges engedélyeket. Közös beleegyezésed nélkül a Facebook nem tud hozzáférni semmilyen adathoz a készülékeden;
 
 
-Az alkalmazás fejlesztés alatt van. Ez még nem mûködik:
+Az alkalmazás fejlesztés alatt van. Ami még nem működik:
 - Értesítések;
 
 GitHub oldal linkje:
-https://github.com/leorigna/SlimSocial for Facebook
+https://github.com/leorigna/SlimFacebook
 
 ***Vegyük figyelembe, hogy ez nem egy hivatalos Facebook applikáció***
 Ez a projekt, az emberek életének megkönnyítését szolgálja. Ez az alkalmazás megnyitja a hivatalos Facebook weboldalt. Minden érdem kizárólag a Facebook csapatot illeti.  Ez biztosítja mindenki számára, hogy ingyenes és reklámmentes legyen.
