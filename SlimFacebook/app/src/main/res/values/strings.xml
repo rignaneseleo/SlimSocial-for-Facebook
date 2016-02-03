@@ -222,9 +222,6 @@ This is a project which meant to make people life easier. This app will launch F
        padding-top: 44px;
        }
 
-       .flyout {
-       overflow-y: scroll;
-       }
     </string>
     <string name="hideSponsoredPost" translatable="false">
     #m_newsfeed_stream article[data-ft*=\"\\\"ei\\\":\\\"\"], .aymlCoverFlow, .aymlNewCoverFlow[data-ft*=\"\\\"is_sponsored\\\":\\\"1\\\"\"], .pyml,

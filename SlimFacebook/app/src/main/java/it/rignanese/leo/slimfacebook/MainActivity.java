@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -215,7 +217,21 @@ public class MainActivity extends AppCompatActivity {
                 //load the css customizations
                 String css = "";
                 if (savedPreferences.getBoolean("pref_blackTheme", false)) { css += getString(R.string.blackCss); }
-                if (savedPreferences.getBoolean("pref_fixedBar", false)) { css += getString(R.string.fixedBar); }
+                if (savedPreferences.getBoolean("pref_fixedBar", false)) {
+
+                    css += getString(R.string.fixedBar);//get the first part
+
+                    int navbar = 0;//default value
+                    int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");//get id
+                    if (resourceId > 0) {//if there is
+                        navbar = getResources().getDimensionPixelSize(resourceId);//get the dimension
+                    }
+                    float density = getResources().getDisplayMetrics().density;
+                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar) / density);
+
+                    css += ".flyout { max-height:" + barHeight + "px; overflow-y:scroll;  }";//without this doen-t scroll
+
+                }
                 if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += getString(R.string.hideSponsoredPost); }
 
                 //apply the customizations
@@ -621,7 +637,6 @@ public class MainActivity extends AppCompatActivity {
             noConnectionError = false;
         } else webViewFacebook.reload();
     }
-
 
 
     //*********************** OTHER ****************************
