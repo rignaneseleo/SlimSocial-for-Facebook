@@ -44,6 +44,7 @@ import android.provider.MediaStore;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -159,12 +160,16 @@ public class MainActivity extends AppCompatActivity {
 
             // when I click in a external link
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url == null || url.contains("facebook.com")) {//// TODO: clear these conditions
+                if (url == null
+                        || Uri.parse(url).getHost().endsWith("facebook.com")
+                        || Uri.parse(url).getHost().endsWith("m.facebook.com")
+                        || url.contains(".gif")) {
                     //url is ok
                     return false;
                 } else {
-                    if (url.contains("https://scontent")) {
+                    if (Uri.parse(url).getHost().endsWith("fbcdn.net")) {
                         //TODO add the possibility to download and share directly
+
 
                         Toast.makeText(getApplicationContext(), getString(R.string.downloadOrShareWithBrowser),
                                 Toast.LENGTH_LONG).show();
@@ -227,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                         navbar = getResources().getDimensionPixelSize(resourceId);//get the dimension
                     }
                     float density = getResources().getDisplayMetrics().density;
-                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar) / density);
+                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar-44) / density);
 
                     css += ".flyout { max-height:" + barHeight + "px; overflow-y:scroll;  }";//without this doen-t scroll
 

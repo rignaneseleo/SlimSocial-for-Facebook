@@ -29,7 +29,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">App Information</string>
     <string name="title_recentNewsFirst">Order the news feed by most recent</string>
     <string name="summary_recentNewsFirst">Instead of by top stories</string>
-    <string name="title_fixedBar">Fixed bar</string>
+    <string name="title_fixedBar">Fixed bar (beta)</string>
     <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
     <string name="title_blackTheme">Dark Theme</string>
     <string name="summary_blackTheme">The background will be black and the text white. (Good for AMOLED displays)</string>
@@ -230,5 +230,6 @@ This is a project which meant to make people life easier. This app will launch F
     display: none;
     }
     </string>
+    <string name="summary_Pharetra">Full of talent and creativity</string>
 
 </resources>

@@ -29,6 +29,10 @@
             android:key="pref_lRemainl"
             android:summary="@string/summary_lRemainl"
             android:title="lRemainl"/>
+        <PreferenceScreen
+            android:key="pref_lRemainl"
+            android:summary="@string/summary_Pharetra"
+            android:title="Pharetra"/>
     </PreferenceCategory>
 
     <PreferenceCategory
