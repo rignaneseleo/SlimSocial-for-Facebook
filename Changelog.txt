@@ -86,3 +86,8 @@ v1.9
 	- Fixed Bar
 	- Hide sponsored posts
 - Added hindi translation (EMINEM786)
+
+v1.9.1
+- Partially fixed the scroll with fixed bar
+- Added designer in credits(pharetra)
+- Open some gifs in-app
