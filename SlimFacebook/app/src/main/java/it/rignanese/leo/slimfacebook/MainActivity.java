@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu optionsMenu;//contains the main menu
 
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
-
+	
     boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
     boolean swipeRefresh = false;
 
@@ -142,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
             isSharer = false;
         } else goHome();//load homepage
 
+//        webViewFacebook.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
+//            public void onSwipeLeft() {
+//                webViewFacebook.loadUrl("javascript:try{document.querySelector('#messages_jewel > a').click();}catch(e){window.location.href='" +
+//                        getString(R.string.urlFacebookMobile) + "messages/';}");
+//            }
+//
+//        });
 
         //WebViewClient that is the client callback.
         webViewFacebook.setWebViewClient(new WebViewClient() {//advanced set up
@@ -222,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 //load the css customizations
                 String css = "";
                 if (savedPreferences.getBoolean("pref_blackTheme", false)) { css += getString(R.string.blackCss); }
-                if (savedPreferences.getBoolean("pref_fixedBar", false)) {
+                if (savedPreferences.getBoolean("pref_fixedBar", true)) {
 
                     css += getString(R.string.fixedBar);//get the first part
 
@@ -232,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                         navbar = getResources().getDimensionPixelSize(resourceId);//get the dimension
                     }
                     float density = getResources().getDisplayMetrics().density;
-                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar-44) / density);
+                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar - 44) / density);
 
                     css += ".flyout { max-height:" + barHeight + "px; overflow-y:scroll;  }";//without this doen-t scroll
 
@@ -255,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
         //WebChromeClient for handling all chrome functions.
         webViewFacebook.setWebChromeClient(new WebChromeClient() {
-            //to the geolocalizzation
+            //to the Geolocation
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
                 //todo notify when the gps is used
@@ -495,21 +502,6 @@ public class MainActivity extends AppCompatActivity {
         } // end of code for Lollipop only
     }
 
-    //*********************** DOWNLOAD PHOTOS ****************************
-//    public Bitmap getBitmapFromURL(String src) {
-//        try {
-//            URL url = new URL(src);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream input = connection.getInputStream();
-//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-//            return myBitmap;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     //*********************** KEY ****************************
     // management the back button
@@ -593,6 +585,9 @@ public class MainActivity extends AppCompatActivity {
     //*********************** WEBVIEW FACILITIES ****************************
     private void setUpWebViewDefaults(WebView webView) {
         WebSettings settings = webView.getSettings();
+
+        //allow Geolocation
+        settings.setGeolocationEnabled(savedPreferences.getBoolean("pref_allowGeolocation", true));
 
         // Enable Javascript
         settings.setJavaScriptEnabled(true);

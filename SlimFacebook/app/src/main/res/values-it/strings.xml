@@ -55,5 +55,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_hideSponsoredPosts">I post sponsorizzati non compariranno!</string>
     <string name="title_hideSponsoredPosts">Non mostrare post sponsorizzati</string>
     <string name="summary_Pharetra">Pieno di talento e creatività</string>
+    <string name="summary_allowGeolocation">Facebook potrà utilizzare la tua posizione</string>
+    <string name="title_allowGeolocation">Permetti l\'utilizzo del GPS</string>
 
 </resources>

@@ -51,6 +51,14 @@
             android:key="pref_doNotDownloadImages"
             android:summary="@string/summary_downloadImages"
             android:title="@string/title_downloadImages"/>
+
+        <!--Allow Geolocation -->
+        <CheckBoxPreference
+            android:defaultValue="true"
+
+            android:key="pref_allowGeolocation"
+            android:summary="@string/summary_allowGeolocation"
+            android:title="@string/title_allowGeolocation"/>
     </PreferenceCategory>
 
     <PreferenceCategory

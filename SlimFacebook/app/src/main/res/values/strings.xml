@@ -48,6 +48,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Donate</string>
     <string name="donateToContribute">I chose to do it for free. Can you offer me a coffee?</string>
+	
+    <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
+    <string name="title_allowGeolocation">Allow the use of GPS</string>
     <!--end settings-->
 
     <!--page error-->
@@ -63,11 +66,11 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="shareThisLink">Share this link</string>
     <string name="chooseAnImage">Choose an Image</string>
     <string name="summary_FaceSlim">Without they, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
-    <string name="summary_lRemainl">Creator of the magnificent logo</string>
+    <string name="summary_lRemainl">Creator of the magnificent logo</string>  
+	<string name="summary_Pharetra">Full of talent and creativity</string>
     <string name="exit">Exit</string>
     <string name="downloadThisApp">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
-
+    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>  
     <!--end other-->
 
     <!-- PLAY STORE PAGE
@@ -230,6 +233,5 @@ This is a project which meant to make people life easier. This app will launch F
     display: none;
     }
     </string>
-    <string name="summary_Pharetra">Full of talent and creativity</string>
 
 </resources>

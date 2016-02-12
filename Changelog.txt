@@ -91,3 +91,8 @@ v1.9.1
 - Partially fixed the scroll with fixed bar
 - Added designer in credits(pharetra)
 - Open some gifs in-app
+
+v1.9.2
+- Fixed first time fixed bar
+- Full control of access to GPS
+- Updated translations (pt, sp, fr, nl)

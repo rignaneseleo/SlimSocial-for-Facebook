@@ -30,7 +30,7 @@
             android:summary="@string/summary_lRemainl"
             android:title="lRemainl"/>
         <PreferenceScreen
-            android:key="pref_lRemainl"
+            android:key="pref_Pharetra"
             android:summary="@string/summary_Pharetra"
             android:title="Pharetra"/>
     </PreferenceCategory>
@@ -81,7 +81,7 @@
         <PreferenceScreen
             android:key="pref_TimVNL"
             android:summary="Dutch"
-            android:title="TimVNL"/>
+            android:title="TimVNL and Othellods"/>
         <PreferenceScreen
             android:key="pref_ja_som"
             android:summary="Slovak"
