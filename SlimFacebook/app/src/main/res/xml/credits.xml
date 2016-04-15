@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <PreferenceCategory
+        android:key="prefCat_key_you"
+        android:title="@string/title_you">
+        <PreferenceScreen
+            android:key="pref_you"
+            android:summary="@string/summary_you"
+            android:title="@string/title_you"/>
+    </PreferenceCategory>
     <PreferenceCategory
         android:key="prefCat_key_developerCredits"
         android:title="@string/prefCat_developersCredits_title">
@@ -33,6 +40,10 @@
             android:key="pref_Pharetra"
             android:summary="@string/summary_Pharetra"
             android:title="Pharetra"/>
+        <PreferenceScreen
+            android:key="pref_PIERONMU"
+            android:summary="@string/summary_creditsCssThemes"
+            android:title="PIERO'NMU"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -65,7 +76,7 @@
         <PreferenceScreen
             android:key="pref_naberl"
             android:summary="Turkish"
-            android:title="naberl"/>
+            android:title="naberl and Yasir Bilgiç"/>
         <PreferenceScreen
             android:key="pref_kilroy69"
             android:summary="Hungarian"
@@ -90,6 +101,11 @@
             android:key="pref_EMINEM786"
             android:summary="Hindi"
             android:title="EMINEM786"/>
+        <PreferenceScreen
+            android:key="pref_Xkirnel99"
+            android:summary="Arabic"
+            android:title="Xkirnel99"/>
+
 
     </PreferenceCategory>
 

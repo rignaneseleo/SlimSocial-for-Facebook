@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -43,6 +44,7 @@ import android.provider.MediaStore;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.Iterator;
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
 	
     boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
-    boolean swipeRefresh = false;
 
     boolean isSharer = false;//flag: true if the app is called from sharer
     String urlSharer = "";//to save the url got from the sharer
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 refreshPage();//reload the page
-                swipeRefresh = true;
             }
         });
 
@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
 
                 noConnectionError = true;
-                swipeRefreshLayout.setRefreshing(false); //when the page is loaded, stop the refreshing
             }
 
             // when I click in a external link
@@ -208,14 +207,8 @@ public class MainActivity extends AppCompatActivity {
 //                }
 
 
-                // show you progress image
-                if (!swipeRefresh) {
-                    if (optionsMenu != null) {//TODO fix this. Sometimes it is null and I don't know why
-                        final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
-                        refreshItem.setActionView(R.layout.circular_progress_bar);
-                    }
-                }
-                swipeRefresh = false;
+                swipeRefreshLayout.setRefreshing(true);
+
                 super.onPageStarted(view, url, favicon);
             }
 
@@ -228,7 +221,16 @@ public class MainActivity extends AppCompatActivity {
 
                 //load the css customizations
                 String css = "";
-                if (savedPreferences.getBoolean("pref_blackTheme", false)) { css += getString(R.string.blackCss); }
+                if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += getString(R.string.hideSponsoredPosts); }
+                if (savedPreferences.getBoolean("pref_centerTextPosts", false)) { css += getString(R.string.centerTextPosts); }
+                if (savedPreferences.getBoolean("pref_addSpaceBetweenPosts", false)) { css += getString(R.string.addSpaceBetweenPosts); }
+                switch (savedPreferences.getString("pref_theme", "standard")){
+                    case "DarkTheme":{
+                        css+= getString(R.string.blackTheme);
+                    }
+                    default:break;
+                }
+
                 if (savedPreferences.getBoolean("pref_fixedBar", true)) {
 
                     css += getString(R.string.fixedBar);//get the first part
@@ -242,9 +244,16 @@ public class MainActivity extends AppCompatActivity {
                     int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar - 44) / density);
 
                     css += ".flyout { max-height:" + barHeight + "px; overflow-y:scroll;  }";//without this doen-t scroll
-
                 }
-                if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += getString(R.string.hideSponsoredPost); }
+
+                /*
+                 var h = document.getElementsByTagName('head').item(0);
+                var link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href="https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/blackTheme.css";
+                h.appendChild(link);
+                <link rel="stylesheet" href="https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/blackTheme.css">
+                */
 
                 //apply the customizations
                 webViewFacebook.loadUrl("javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " +
@@ -438,6 +447,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         webViewFacebook.loadUrl(webViewUrl);
+
+        // recreate activity when something important was just changed
+        if (getIntent().getBooleanExtra("settingsChanged", false)) {
+            finish(); // close this
+            Intent restart = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(restart);//reopen this
+        }
     }
 
     //*********************** UPLOAD FILES ****************************
@@ -605,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setBuiltInZoomControls(true);
 
 
-        settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath());
+        //settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
 
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
         //todo setLoadsImagesAutomatically without restart the app
@@ -716,7 +732,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-
 }
+
 

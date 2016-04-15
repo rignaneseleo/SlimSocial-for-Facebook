@@ -21,13 +21,13 @@
     <string name="prefCat_app_information_title">App Informatie</string>
     <string name="title_recentNewsFirst">Sorteer nieuwsoverzicht op meest recent</string>
     <string name="summary_recentNewsFirst">In plaats van op Populairste Verslagen</string>
-    <string name="title_fixedBar">Vastgezette balk (beta)</string>
+    <string name="title_fixedBar">Vastgezette balk </string>
     <string name="summary_fixedBar">De blauwe balk zal aan de bovenkant blijven. </string>
     <string name="title_blackTheme">Donker Thema</string>
     <string name="summary_blackTheme">Zwarte achtergrond en witte tekst. (Ideaal voor AMOLED schermen)</string>
     <string name="title_hideSponsoredPosts">Toon geen gesponserde verslagen</string>
     <string name="summary_hideSponsoredPosts">Er zullen geen gesponserde verslagen getoond worden!</string>
-    <string name="title_downloadImages">Sla data op (herstart vereist)</string>
+    <string name="title_downloadImages">Sla data op </string>
     <string name="summary_downloadImages">Afbeeldingen niet downloaden</string>
     <string name="title_selectTheme">Selecteer een thema</string>
     <string name="summary_selectTheme">Kies je favoriete thema</string>

@@ -2,17 +2,14 @@
 <resources>
     <string-array name="listThemes">
         <item>Standard</item>
-        <item>Ultra Dark Theme</item>
-        <item>Dark Gray Theme</item>
-        <item>Soft Gray Theme</item>
-        <item>Deep Blue Theme</item>
+        <item>Dark Theme</item>
     </string-array>
-
     <string-array name="listValuesThemes">
         <item>Standard</item>
+        <item>DarkTheme</item>
         <item>UltraDarkTheme</item>
-        <item>DarkGrayTheme</item>
         <item>SoftGrayTheme</item>
+        <item>DarkGrayTheme</item>
         <item>DeepBlueTheme</item>
     </string-array>
 </resources>

@@ -96,3 +96,15 @@ v1.9.2
 - Fixed first time fixed bar
 - Full control of access to GPS
 - Updated translations (pt, sp, fr, nl)
+
+v2.0.0
+- New logo 
+- Auto restart changing some core settings
+- Changed load animation
+- Center text of posts
+- Removed 'Hide sponsored posts'
+- More space between posts
+- Added one important credit
+- Updated turkish translation (sirreddot)
+- Added arabic translation (Xkirnel99)
+!Consider the possibility to donate!

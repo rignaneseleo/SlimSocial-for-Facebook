@@ -25,7 +25,7 @@ SlimSocial for Facebook es una aplicación «Open Source» creada por Leonardo R
     <string name="summary_blackTheme">El fondo será negro y el texto será blanco. (Bueno para pantallas AMOLED)</string>
     <string name="title_hideSponsoredPosts">No mostrar publicaciones patrocinadas</string>
     <string name="summary_hideSponsoredPosts">¡No serán exibidas publicaciones patrocinadas!</string>
-    <string name="title_downloadImages">Economizar datos (requiere reinicio)</string>
+    <string name="title_downloadImages">Economizar datos </string>
     <string name="summary_downloadImages">No descarga imágenes</string>
     <string name="title_selectTheme">Seleccionar un tema</string>
     <string name="summary_selectTheme">Elige tu tema favorito</string>

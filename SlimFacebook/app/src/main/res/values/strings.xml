@@ -31,14 +31,20 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_recentNewsFirst">Instead of by top stories</string>
     <string name="title_centerTextPosts">Center the posts text</string>
     <string name="summary_centerTextPosts">The text of each post will be centered</string>
-    <string name="title_fixedBar">Fixed bar (beta)</string>
+    <string name="summary_addSpaceBetweenPosts">There will be more space between posts</string>
+    <string name="title_addSpaceBetweenPosts">Add space between posts</string>
+    <string name="summary_creditsCssThemes">Thanks for the fantastic themes!</string>
+    <string name="summary_theme">Choose the theme that you like</string>
+    <string name="title_fixedBar">Fixed top bar</string>
     <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
     <string name="title_blackTheme">Dark Theme</string>
     <string name="summary_blackTheme">The background will be black and the text white. (Good for AMOLED displays)</string>
     <string name="title_hideSponsoredPosts">Don\'t show sponsored posts</string>
     <string name="summary_hideSponsoredPosts">There not will be sponsored posts!</string>
-    <string name="title_downloadImages">Save Data (needs reboot)</string>
+    <string name="title_downloadImages">Save Data </string>
     <string name="summary_downloadImages">Don\'t download images</string>
+    <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
+    <string name="title_allowGeolocation">Allow the use of GPS</string>
     <string name="title_selectTheme">Select the Theme</string>
     <string name="summary_selectTheme">choose your favourite theme</string>
     <string name="version">Version</string>
@@ -50,9 +56,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Donate</string>
     <string name="donateToContribute">I chose to do it for free. Can you offer me a coffee?</string>
-
-    <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
-    <string name="title_allowGeolocation">Allow the use of GPS</string>
+    <string name="prefCat_you_title">You</string>
+    <string name="summary_you">It\'s also thanks to you that this app exists</string>
+    <string name="title_you">You are important</string>
     <!--end settings-->
 
     <!--page error-->
@@ -73,6 +79,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="exit">Exit</string>
     <string name="downloadThisApp">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
+    <string name="title_theme">Themes</string>
+    <string name="applyingChanges">Applying changes!</string>
+
     <!--end other-->
 
     <!-- PLAY STORE PAGE
@@ -108,15 +117,5 @@ This is a project which meant to make people life easier. This app will launch F
     This css are made originally from FaceSlim
     See it on https://github.com/indywidualny/FaceSlim
     -->
-
-    <string name="summary_you">It\'s alsthanks to you that this app exists</string>
-    <string name="title_you">You</string>
-    <string name="summary_addSpaceBetweenPosts">There will be more space between posts</string>
-    <string name="title_addSpaceBetweenPosts">Add space between posts</string>
-    <string name="summary_creditsCssThemes">Thanks for the fantastic themes!</string>
-    <string name="summary_theme">Choose the theme that you like</string>
-    <string name="title_theme">Themes</string>
-    <string name="title_centerTitlePosts">Center the post title</string>
-    <string name="summary_centerTitlePosts">The title of each post will be centered</string>
 
 </resources>
