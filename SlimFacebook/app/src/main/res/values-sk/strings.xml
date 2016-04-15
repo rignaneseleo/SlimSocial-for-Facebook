@@ -4,6 +4,14 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 -->
 <resources>
 
+    <!--remove this from your translations-->
+    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
+    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="top" translatable="false">Top</string>
+    <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
+    <!--end remove this from your translations-->
+
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
     <!-- TRANSLATION IS MADE BY: *ja_som* -->
@@ -21,6 +29,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Informácie o aplikácii</string>
     <string name="title_recentNewsFirst">Zoradiť novinky od najnovších</string>
     <string name="summary_recentNewsFirst">namiesto od top príbehov</string>
+    <string name="title_centerTextPosts">Centrovať text príspevku</string>
+    <string name="summary_centerTextPosts">Text každého príspevku bude vycentrovaný</string>
     <string name="title_fixedBar">Pevná lišta</string>
     <string name="summary_fixedBar">Modrá lišta na vrchu bude stále zobrazená.</string>
     <string name="title_blackTheme">Tmavá téma</string>
@@ -40,6 +50,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">Dizajnéri</string>
     <string name="donate">Podporiť</string>
     <string name="donateToContribute">Robím to zadarmo, ale môžete mi kúpiť kávu.</string>
+    
+    <string name="summary_allowGeolocation">Facebook bude mať prístup k vašej polohe</string>
+    <string name="title_allowGeolocation">Povoliť použitie GPS</string>
     <!--end settings-->
 
     <!--page error-->
@@ -56,6 +69,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="chooseAnImage">Zvoľte obrázok</string>
     <string name="summary_FaceSlim">Bez nich, by som nemohol pridať niektoré zaujímavé funkcie. Ak ste vývojár, musíte vidieť ich skvelú prácu!</string>
     <string name="summary_lRemainl">Tvorca veľkolepého loga</string>
+    <string name="summary_Pharetra">Plný talentu a kreativity</string>
     <string name="exit">Ukončiť</string>
     <string name="downloadThisApp">Stiahnuť SlimSocial pre Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="noPersonalInformationAreShared">Táto aplikácia nezbiera ani nepreposiela žiadne osobné alebo súkromné informácie o vás alebo vašom zariadení!</string>
@@ -87,5 +101,22 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 ***Berte na vedomie, že toto nie je oficiálna aplikácia od Facebooku***
 Ide o projekt, ktorý chce ľuďom uľahčiť život. Aplikácia zobrazuje oficiálne stránky Facebooku. Všetky zásluhu patria Facebooku tímu. Je k dispozícii zdarma pre všetkých bez akýchkoľvek reklám.
     -->
+
+
+    <!--CSS, DELETE THIS FROM YOUR TRANSLATION
+
+    This css are made originally from FaceSlim
+    See it on https://github.com/indywidualny/FaceSlim
+    -->
+
+    <string name="summary_you">Aj vďaka vám táto aplikácia existuje</string>
+    <string name="title_you">Vy</string>
+    <string name="summary_addSpaceBetweenPosts">Medzi príspevkami bude viac miesta</string>
+    <string name="title_addSpaceBetweenPosts">Pridať medzeru medzi príspevky</string>
+    <string name="summary_creditsCssThemes">Vďaka za úžasné témy!</string>
+    <string name="summary_theme">Zvoľte si tému, ktorá sa vám páči</string>
+    <string name="title_theme">Témy</string>
+    <string name="title_centerTitlePosts">Centrovať nadpis príspevku</string>
+    <string name="summary_centerTitlePosts">Nadpis každého príspevku bude vycentrovaný</string>
 
 </resources>
