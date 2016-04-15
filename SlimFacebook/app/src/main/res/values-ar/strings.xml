@@ -1,0 +1,97 @@
+<!--
+Leonardo Rignanese للفيسبوك هو تطبيق مفتوح المصدر مبرمج بواسطة SlimSocial
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <!-- Xkirnel99الترجمة بواسطة : -->
+
+    <!--menu string-->
+    <string name="refresh">تحديث</string>
+    <string name="openInBrowser">فتح باستعمال المتصفح</string>
+    <string name="settings">الإعدادات</string>
+    <string name="share">مشاركة هذا التطبيق</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">إعدادات الفيسبوك</string>
+    <string name="prefCat_app_settings_title">إعدادات التطبيق</string>
+    <string name="prefCat_app_information_title">معلومات التطبيق</string>
+    <string name="title_recentNewsFirst">عرض الأخبار بآخر الأحداث</string>
+    <string name="summary_recentNewsFirst">بدلاً من أهم الأحداث.</string>
+    <string name="title_centerTextPosts">توسيط نص المشاركات</string>
+    <string name="summary_centerTextPosts">سيتم توسيط جميع نصوص المشاركات.</string>
+    <string name="title_fixedBar">شريط ثابت (تجريبي)</string>
+    <string name="summary_fixedBar">الشريط الأزرق سيبقى ثابتاً بالأعلى. </string>
+    <string name="title_blackTheme">المظهر الأسود</string>
+    <string name="summary_blackTheme">الخلفية ستكون بالأسود والنصوص بالأبيض (جيد للشاشات بتقنية الأموليد). </string>
+    <string name="title_hideSponsoredPosts">إخفاء المشاركات الإعلانية</string>
+    <string name="summary_hideSponsoredPosts">لن تظهر أي مشاركات إعلانية </string>
+    <string name="title_downloadImages">تشغيل إقتصاد البيانات</string>
+    <string name="summary_downloadImages">عدم تحميل الصور.</string>
+    <string name="title_selectTheme">تحديد الشكل</string>
+    <string name="summary_selectTheme">إختيار شكلك المفضل.</string>
+    <string name="version">إصدار</string>
+    <string name="credits">التقدير</string>
+    <string name="prefCat_otherCredits_title">آخر</string>
+    <string name="prefCat_developersCredits_title">المطورين</string>
+    <string name="summary_LeonardoRignanese">المخرجين و المطورين</string>
+    <string name="prefCat_translatorsCredits_title">المترجمين</string>
+    <string name="prefCat_designersCredits_title">المصممين</string>
+    <string name="donate">التبرع</string>
+    <string name="donateToContribute">إخترت أن أجعل التطبيق مجاني. هل يمكنك أن تهديني قهوة ؟</string>
+
+    <string name="summary_allowGeolocation">فيسبوك سيكون قادر على الوصول إلى موقعك. </string>
+    <string name="title_allowGeolocation">السماح باستعمال نظام تحديد المواقع جي بي إس.</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">!عذراً, هناك مشكلة</string>
+    <string name="descriptionNoConnection">حاول التحقق من الإتصال وإعمل تحديث.</string>
+    <string name="awards">هذا التطبيق مفتوح المصدر </string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction"> يجب أن :SlimFacebook لتحميل تطبيق
+\n - تفتح https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n – إفتح هذا عبر تطبيق البلاي ستور: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">!الشكر</string>
+    <string name="downloadOrShareWithBrowser">يمكنك تحميل أو مشاركة الصورة عن طريق فتح المتصفح</string>
+    <string name="shareThisLink">)linkمشاركة الوصلة(</string>
+    <string name="chooseAnImage">إختيار صورة</string>
+    <string name="summary_FaceSlim">بدونهم, لم أكن لأضيف عدة وظائف جذابة,إذا . !كنت مطوِّراً يجب أن ترى أعمالهم المذهلة</string>
+    <string name="summary_lRemainl">مبتكر الشعار الرائع</string>
+	<string name="summary_Pharetra">كامل الموهبة ومبدع</string>
+    <string name="exit">خروج</string>
+    <string name="downloadThisApp"> للفيسبوك :SlimSocialتحميل  \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">لن يتم جمع أو نقل أي معلومات شخصية أو حساسة حول جهازك عبر هذا التطبيق</string>
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+
+الوصف :
+
+مع 700 كيلوبايت فقط سيسمح لك التّمتّع بالفيسبوك (الإصدار الشبكي).
+
+الوصف الكامل :
+
+ملاحظة: ممكن أن لا يكون هذا التطبيق مناسب لمن يستخدمونه كثيراً.
+
+ للفيسبوك ؟SlimSocial لماذا سأحمل
+- خفيف : مساحنه أقل من 1 ميغا بايت.
+- بسيط, مع تصميم حديث : هناك فقط ما تحتاجه.
+- مفتوح المصدر : كود هذا التطبيق ستجدونه أونلاين في(غيت هيب) أي أحد يمكنه التحقق من سلامة هذا التطبيق والمساهمة في تطويره. 
+- مجاني وبلا إعلانات.
+-إنه بلا خروقات.
+- يحترم خصوصياتك : لا يحتاج إلا أي صلاحيات خاصة. دون موافقة الفيسبومك لا يمكن الوصول إلا أي بيانات في هاتفك المحمول.
+
+
+هذا التطبيق في طور التطوير, إذاً لا زال هناك مشكل :
+- الإشعارات.
+
+Link to GitHub
+https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+*** نحيط علماً أن هذاالتطبيق ليس تطبيق رسمي من فيسبوك ***
+هذا المشروع يهدف إلى جعل حياة الناس أسهل. هذا التطبيق يطلق النسخة الرسمية لفيسبوك الخاصة بالهاتف. وكل الفضل يرجع إلى فريق الفيسبوك. لجعله مجاني وبلا إعلانات.    -->
+
+</resources>
+
