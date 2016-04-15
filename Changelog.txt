@@ -102,8 +102,9 @@ v2.0.0
 - Auto restart changing some core settings
 - Changed load animation
 - Center text of posts
-- Removed 'Hide sponsored posts'
 - More space between posts
+- Black theme improved
+- Removed 'Hide sponsored posts'
 - Added one important credit
 - Updated turkish translation (sirreddot)
 - Added arabic translation (Xkirnel99)
