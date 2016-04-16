@@ -105,11 +105,13 @@ Ide o projekt, ktorý chce ľuďom uľahčiť život. Aplikácia zobrazuje ofici
     -->
 
     <string name="summary_you">Aj vďaka vám táto aplikácia existuje</string>
-    <string name="title_you">Vy</string>
+    <string name="prefCat_you_title">Vy</string>
+    <string name="title_you">Vy ste dôležitý</string>
     <string name="summary_addSpaceBetweenPosts">Medzi príspevkami bude viac miesta</string>
     <string name="title_addSpaceBetweenPosts">Pridať medzeru medzi príspevky</string>
     <string name="summary_creditsCssThemes">Vďaka za úžasné témy!</string>
     <string name="summary_theme">Zvoľte si tému, ktorá sa vám páči</string>
     <string name="title_theme">Témy</string>
+    <string name="applyingChanges">Aplikovanie zmien!</string>
 
 </resources>
