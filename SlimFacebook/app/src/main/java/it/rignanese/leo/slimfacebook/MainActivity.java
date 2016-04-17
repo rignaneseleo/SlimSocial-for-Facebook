@@ -10,22 +10,21 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 package it.rignanese.leo.slimfacebook;
 
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,20 +34,13 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
-import android.app.Activity;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.ref.WeakReference;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
+
+import it.rignanese.leo.slimfacebook.webview.MyWebViewClient;
 
 
 
@@ -66,10 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
 
-    private Menu optionsMenu;//contains the main menu
-
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
-	
+
     boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
 
     boolean isSharer = false;//flag: true if the app is called from sharer
@@ -133,140 +123,32 @@ public class MainActivity extends AppCompatActivity {
 
         // setup the webView
         webViewFacebook = (WebView) findViewById(R.id.webView);
-        setUpWebViewDefaults(webViewFacebook);
-        //fits images to screen
-
+        setUpWebViewDefaults(webViewFacebook);//setup webview
 
         if (isSharer) {//if is a share request
             webViewFacebook.loadUrl(urlSharer);//load the sharer url
             isSharer = false;
         } else goHome();//load homepage
 
-//        webViewFacebook.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-//            public void onSwipeLeft() {
-//                webViewFacebook.loadUrl("javascript:try{document.querySelector('#messages_jewel > a').click();}catch(e){window.location.href='" +
-//                        getString(R.string.urlFacebookMobile) + "messages/';}");
-//            }
-//
-//        });
-
         //WebViewClient that is the client callback.
-        webViewFacebook.setWebViewClient(new WebViewClient() {//advanced set up
-
-            // when there isn't a connetion
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" + getString(R.string.titleNoConnection) + "</h1> <h3 " +
-                        "style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
-                        getString(R.string.descriptionNoConnection) + "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; " +
-                        "opacity: 0.3;'>" + getString(R.string.awards) + "</h5>";
-                webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
-
-                noConnectionError = true;
-            }
-
-            // when I click in a external link
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url == null
-                        || Uri.parse(url).getHost().endsWith("facebook.com")
-                        || Uri.parse(url).getHost().endsWith("m.facebook.com")
-                        || url.contains(".gif")) {
-                    //url is ok
-                    return false;
-                } else {
-                    if (Uri.parse(url).getHost().endsWith("fbcdn.net")) {
-                        //TODO add the possibility to download and share directly
-
-
-                        Toast.makeText(getApplicationContext(), getString(R.string.downloadOrShareWithBrowser),
-                                Toast.LENGTH_LONG).show();
-                        //TODO get bitmap from url
-
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(intent);
-                        return true;
-                    }
-
-                    //if the link doesn't contain 'facebook.com', open it using the browser
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    return true;
-                }//https://www.facebook.com/dialog/return/close?#_=_
-            }
-
-
-            //START management of loading
-            @Override
+        webViewFacebook.setWebViewClient(new MyWebViewClient(getApplicationContext()) {
+            @Override//called when the page starts loading
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                //TODO when I push on messages, open messanger
-//                if(url!=null){
-//                    if (url.contains("soft=messages") || url.contains("facebook.com/messages")) {
-//                        Toast.makeText(getApplicationContext(),"Open Messanger",
-//                                Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(getPackageManager().getLaunchIntentForPackage("com.facebook.orca")));//messanger
-//                    }
-//                }
-
-
-                swipeRefreshLayout.setRefreshing(true);
-
                 super.onPageStarted(view, url, favicon);
+                swipeRefreshLayout.setRefreshing(true);
             }
 
-            @Override
+            @Override//called when the page end loading
             public void onPageFinished(WebView view, String url) {
-                if (optionsMenu != null) {//TODO fix this. Sometimes it is null and I don't know why
-                    final MenuItem refreshItem = optionsMenu.findItem(R.id.refresh);
-                    refreshItem.setActionView(null);
-                }
-
-                //load the css customizations
-                String css = "";
-                if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += getString(R.string.hideSponsoredPosts); }
-                if (savedPreferences.getBoolean("pref_centerTextPosts", false)) { css += getString(R.string.centerTextPosts); }
-                if (savedPreferences.getBoolean("pref_addSpaceBetweenPosts", false)) { css += getString(R.string.addSpaceBetweenPosts); }
-                switch (savedPreferences.getString("pref_theme", "standard")){
-                    case "DarkTheme":{
-                        css+= getString(R.string.blackTheme);
-                    }
-                    default:break;
-                }
-
-                if (savedPreferences.getBoolean("pref_fixedBar", true)) {
-
-                    css += getString(R.string.fixedBar);//get the first part
-
-                    int navbar = 0;//default value
-                    int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");//get id
-                    if (resourceId > 0) {//if there is
-                        navbar = getResources().getDimensionPixelSize(resourceId);//get the dimension
-                    }
-                    float density = getResources().getDisplayMetrics().density;
-                    int barHeight = (int) ((getResources().getDisplayMetrics().heightPixels - navbar - 44) / density);
-
-                    css += ".flyout { max-height:" + barHeight + "px; overflow-y:scroll;  }";//without this doen-t scroll
-                }
-
-                /*
-                 var h = document.getElementsByTagName('head').item(0);
-                var link = document.createElement("link");
-                link.rel = "stylesheet";
-                link.href="https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/blackTheme.css";
-                h.appendChild(link);
-                <link rel="stylesheet" href="https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/blackTheme.css">
-                */
-
-                //apply the customizations
-                webViewFacebook.loadUrl("javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " +
-                        "str; document.body.appendChild(node); } addStyleString('" + css + "');");
-
-                //finish the load
                 super.onPageFinished(view, url);
-
-                //when the page is loaded, stop the refreshing
                 swipeRefreshLayout.setRefreshing(false);
             }
-            //END management of loading
 
+            @Override//called when there isn't connection
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                noConnectionError = true;//to allow to return at the last visited page
+            }
         });
 
         //WebChromeClient for handling all chrome functions.
@@ -402,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 // activate long clicks on links and image links according to settings
-                if (true) {
+                if (savedPreferences.getBoolean("pref_enableFastShare", true)) {
                     WebView.HitTestResult result = webViewFacebook.getHitTestResult();
                     if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
                         Message msg = linkHandler.obtainMessage();
@@ -543,7 +425,6 @@ public class MainActivity extends AppCompatActivity {
     //add my menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        optionsMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -602,6 +483,9 @@ public class MainActivity extends AppCompatActivity {
     private void setUpWebViewDefaults(WebView webView) {
         WebSettings settings = webView.getSettings();
 
+        int zoom=Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
+        settings.setTextZoom(zoom);
+
         //allow Geolocation
         settings.setGeolocationEnabled(savedPreferences.getBoolean("pref_allowGeolocation", true));
 
@@ -624,7 +508,6 @@ public class MainActivity extends AppCompatActivity {
         //settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
 
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
-        //todo setLoadsImagesAutomatically without restart the app
 
         // Enable pinch to zoom without the zoom buttons
         settings.setBuiltInZoomControls(true);
@@ -710,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
 
     //to check if there is the key for future use
     //I 'll never add premium features but I would acknowledge who has buyed the app
-    protected boolean isProInstalled(Context context) {
+   /* protected boolean isProInstalled(Context context) {
         // the packagename of the 'key' app
         String proPackage = "it.rignanese.leo.donationkey1";
 
@@ -731,7 +614,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return false;
-    }
+    }*/
 }
 
 

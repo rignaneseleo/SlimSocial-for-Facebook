@@ -5,35 +5,43 @@
         android:key="prefCat_key_fb_settings"
         android:title="@string/prefCat_fb_settings_title">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="pref_recentNewsFirst"
             android:summary="@string/summary_recentNewsFirst"
             android:title="@string/title_recentNewsFirst"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="pref_centerTextPosts"
             android:summary="@string/summary_centerTextPosts"
             android:title="@string/title_centerTextPosts"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="pref_addSpaceBetweenPosts"
             android:summary="@string/summary_addSpaceBetweenPosts"
             android:title="@string/title_addSpaceBetweenPosts"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="pref_fixedBar"
             android:summary="@string/summary_fixedBar"
             android:title="@string/title_fixedBar"/>
 
-        <!--<CheckBoxPreference
+        <!--<SwitchPreference
             android:defaultValue="false"
             android:key="pref_hideSponsoredPosts"
             android:summary="@string/summary_hideSponsoredPosts"
             android:title="@string/title_hideSponsoredPosts"/>-->
+
+        <ListPreference
+            android:defaultValue="Standard"
+            android:entries="@array/listTextSize"
+            android:entryValues="@array/listValuesTextSize"
+            android:key="pref_textSize"
+            android:summary="@string/summary_textSize"
+            android:title="@string/title_textSize"/>
 
         <ListPreference
             android:defaultValue="Standard"
@@ -49,7 +57,7 @@
         android:title="@string/prefCat_app_settings_title">
 
         <!--Set the saving data -->
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
 
             android:key="pref_doNotDownloadImages"
@@ -57,12 +65,20 @@
             android:title="@string/title_downloadImages"/>
 
         <!--Allow Geolocation -->
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
 
             android:key="pref_allowGeolocation"
             android:summary="@string/summary_allowGeolocation"
             android:title="@string/title_allowGeolocation"/>
+
+        <!--Enable FastShare -->
+        <SwitchPreference
+            android:defaultValue="true"
+
+            android:key="pref_enableFastShare"
+            android:summary="@string/summary_enableFastShare"
+            android:title="@string/title_enableFastShare"/>
     </PreferenceCategory>
 
     <PreferenceCategory

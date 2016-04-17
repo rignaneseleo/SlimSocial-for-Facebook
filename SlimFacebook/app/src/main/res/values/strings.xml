@@ -32,7 +32,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_centerTextPosts">Center the posts text</string>
     <string name="summary_centerTextPosts">The text of each post will be centered</string>
     <string name="summary_addSpaceBetweenPosts">There will be more space between posts</string>
-    <string name="title_addSpaceBetweenPosts">Add space between posts</string>
+    <string name="title_addSpaceBetweenPosts">More space between posts</string>
     <string name="summary_creditsCssThemes">Thanks for the fantastic themes!</string>
     <string name="summary_theme">Choose the theme that you like</string>
     <string name="title_fixedBar">Fixed top bar</string>
@@ -68,7 +68,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction" >To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Thanks!</string>
     <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
     <string name="shareThisLink">Share this link</string>
@@ -77,10 +77,14 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_lRemainl">Creator of the magnificent logo</string>
 	<string name="summary_Pharetra">Full of talent and creativity</string>
     <string name="exit">Exit</string>
-    <string name="downloadThisApp">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadThisApp" translatable="false">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
     <string name="title_theme">Themes</string>
     <string name="applyingChanges">Applying changes!</string>
+    <string name="title_textSize">Text Size</string>
+    <string name="title_enableFastShare">Enable Fast Share</string>
+    <string name="summary_enableFastShare">With Fast Share you can share any link simply tapping and holding it</string>
+    <string name="summary_textSize">Choose the text size that you prefer</string>
 
     <!--end other-->
 

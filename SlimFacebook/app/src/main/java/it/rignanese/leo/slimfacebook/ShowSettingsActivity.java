@@ -59,7 +59,8 @@ public class ShowSettingsActivity extends PreferenceActivity implements
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case "pref_doNotDownloadImages":
-            case "pref_allowGeolocation": {
+            case "pref_allowGeolocation":
+            case "pref_textSize": {
                 restart();
             }
         }

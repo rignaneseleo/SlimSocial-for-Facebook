@@ -101,11 +101,23 @@ v2.0.0
 - New logo 
 - Auto restart changing some core settings
 - Changed load animation
-- Center text of posts
-- More space between posts
-- Black theme improved
+- Added settings:
+	- Center text of posts
+	- More space between posts
 - Removed 'Hide sponsored posts'
+- Black theme improved
 - Added one important credit
 - Updated turkish translation (sirreddot)
 - Added arabic translation (Xkirnel99)
-!Consider the possibility to donate!
+
+v2.1.0
+- More stability (removed useless code and splitted the webview config)
+- Added settings:
+	- Set the text size
+	- Enable/disable fast-share
+- Substitute checkbox with switches into the settings
+- Fixed the messages crash
+- Removed useless strings (it's lighten)
+
+
+! Consider the possibility to donate !
