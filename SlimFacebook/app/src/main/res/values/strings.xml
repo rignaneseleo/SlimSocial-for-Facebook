@@ -85,6 +85,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_enableFastShare">Enable Fast Share</string>
     <string name="summary_enableFastShare">With Fast Share you can share any link simply tapping and holding it</string>
     <string name="summary_textSize">Choose the text size that you prefer</string>
+    <string name="refreshToApply">Refresh Facebook to apply the changes</string>
 
     <!--end other-->
 

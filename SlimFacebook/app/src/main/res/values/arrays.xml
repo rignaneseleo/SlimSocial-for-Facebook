@@ -6,11 +6,11 @@
     </string-array>
     <string-array name="listValuesThemes">
         <item>Standard</item>
-        <item>DarkTheme</item>
+        <item>DarkTheme</item><!--
         <item>UltraDarkTheme</item>
         <item>SoftGrayTheme</item>
         <item>DarkGrayTheme</item>
-        <item>DeepBlueTheme</item>
+        <item>DeepBlueTheme</item>-->
     </string-array>
 
     <string-array name="listTextSize">
