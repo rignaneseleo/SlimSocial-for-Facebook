@@ -36,7 +36,7 @@
             android:title="@string/title_hideSponsoredPosts"/>-->
 
         <ListPreference
-            android:defaultValue="Standard"
+            android:defaultValue="100"
             android:entries="@array/listTextSize"
             android:entryValues="@array/listValuesTextSize"
             android:key="pref_textSize"

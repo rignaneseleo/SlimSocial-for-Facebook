@@ -123,5 +123,8 @@ v2.1.1
 - Fixed theme bug with the slovak language
 - Added the toast "Refresh Facebook to apply the changes"
 
+v2.1.2
+- Fixed the settings crash 
+
 
 ! Consider the possibility to donate !
