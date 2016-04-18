@@ -61,13 +61,13 @@ public class ShowSettingsActivity extends PreferenceActivity implements
             case "pref_recentNewsFirst":
             case "pref_centerTextPosts":
             case "pref_fixedBar":
-            case "pref_theme":
             case "pref_addSpaceBetweenPosts": {
                 Toast.makeText(ShowSettingsActivity.this, R.string.refreshToApply, Toast.LENGTH_SHORT).show();
                 break;
             }
             case "pref_doNotDownloadImages":
             case "pref_allowGeolocation":
+            case "pref_theme":
             case "pref_textSize": {
                 restart();
                 break;

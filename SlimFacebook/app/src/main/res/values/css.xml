@@ -34,8 +34,9 @@
 
     <!--Themes-->
     <string name="blackTheme" translatable="false">
+
         body, #root, .storyStream, ._2v9s, ._4nmh, ._4u3j, ._35aq, ._146a, ._4g34, ._5pxb, ._55wq, ._53_-, ._55ws, ._u42, .jx-result, .jx-typeahead-results, ._56bt, ._52x7, ._vqv, ._4g33, ._5rgt, .popover_flyout, .flyout, #m_newsfeed_stream, ._55wo, ._3iln, .mentions-suggest, #header, ._xy, ._bgx, .acb, .acg, .aclb, .touch ._4g34, ._59e9, .nontouch ._5ui0, input[type=text], .acw, ._5up8, ._5kgn, .tlLinkContainer, .aps, .jewel .flyout .header, .appCenterCategorySelectorButton, .tlBody, #timelineBody, .timelineX, .timeline .feed, .timeline .tlPrelude, .timeline .tlFeedPlaceholder, .touch ._5c9u, .touch ._5ca9, .innerLink, ._5dy4, ._52x3, #m_group_stories_container, .albums, .subpage, ._uwu, ._uww, .scrollAreaBody, .al, .apl, .structuredPublisher, .groupChromeView, ._djv, ._bjg, ._5kgn, ._3f50, ._55wm, ._58f0 {
-        background: #000 !important;
+        background: #000 !important; /* the background */
         }
         ._50cg._2ss {
         background: #000 !important;
@@ -78,7 +79,7 @@
         background: #323232 !important;
         }
         .flyout {
-        border: 1px solid #000 !important;
+        border: 1px solid #fff !important;
         }
 
         /* context menu */
@@ -104,15 +105,15 @@
         border-bottom: 0px;
         }
         ._59te.popoverOpen, ._59te.isActivem, ._59te {
-        background: #000000;
-        border-bottom: 1px solid #424242;
-        border-right: 1px solid #424242;
+        background: #000;/*topbar*/
+        border-bottom: 1px solid #444;
+        border-right: 1px solid #444;
         }
         #feed_jewel ._59tf {
         background-position: -22px -103px;
         }
         #requests_jewel ._59tf {
-        background-position: -205px -149px;
+        background-position: -122px -148px;
         }
         #messages_jewel ._59tf {
         background-position: -268px -103px;

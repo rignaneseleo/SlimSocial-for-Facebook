@@ -70,10 +70,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        savedPreferences = PreferenceManager.getDefaultSharedPreferences(this); // setup the sharedPreferences
+        switch (savedPreferences.getString("pref_theme", "standard")) {
+            case "StandardNoBar":{
+                setTheme(R.style.SlimSocialNoActionBar);
+                break;
+            }
+            case "DarkTheme": {
+                setTheme(R.style.SlimSocialBlackTheme);
+                break;
+            }
+            case "DarkNoBar": {
+                setTheme(R.style.SlimSocialDarkNoActionBar);
+                break;
+            }
+            default: {
+                setTheme(R.style.SlimFacebookTheme);
+                break;
+            }
+        }
+        super.onCreate(savedInstanceState);//to apply the theme
 
-        // setup the sharedPreferences
-        savedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // if the app is being launched for the first time
         if (savedPreferences.getBoolean("first_run", true)) {
@@ -483,7 +500,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpWebViewDefaults(WebView webView) {
         WebSettings settings = webView.getSettings();
 
-        int zoom=Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
+        int zoom = Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
         settings.setTextZoom(zoom);
 
         //allow Geolocation

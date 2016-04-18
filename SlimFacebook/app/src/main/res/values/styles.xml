@@ -6,10 +6,23 @@
         <item name="colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
         <item name="colorAccent">@color/blueSlimFacebookTheme</item>
     </style>
+    <!-- No Action Bar. -->
+    <style name="SlimSocialNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/blueSlimFacebookTheme</item>
+        <item name="colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
+        <item name="colorAccent">@color/blueSlimFacebookTheme</item>
+    </style>
 
-   <!-- <style name="SlimSocialBlackTheme" parent="SlimFacebookTheme">
-        <item name="colorPrimary">@color/background_floating_material_dark</item>
-        <item name="colorPrimaryDark">@color/background_material_dark</item>
+    <!-- Black theme. -->
+    <style name="SlimSocialBlackTheme" parent="SlimFacebookTheme">
+        <item name="colorPrimary">@color/primary_dark_material_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
         <item name="colorAccent">@color/abc_secondary_text_material_light</item>
-    </style>-->
+    </style>
+    <!-- No Action Bar. -->
+    <style name="SlimSocialDarkNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_dark_material_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorAccent">@color/abc_secondary_text_material_light</item>
+    </style>
 </resources>

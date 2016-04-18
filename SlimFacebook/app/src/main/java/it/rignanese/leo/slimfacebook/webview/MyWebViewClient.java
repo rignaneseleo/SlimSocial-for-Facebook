@@ -92,10 +92,8 @@ public class MyWebViewClient extends WebViewClient {
         if (savedPreferences.getBoolean("pref_addSpaceBetweenPosts", false)) { css += context.getString(R.string.addSpaceBetweenPosts); }
 
         switch (savedPreferences.getString("pref_theme", "standard")) {
-            case "DarkTheme": {
-                css += context.getString(R.string.blackTheme);
-               // this.context.setTheme(R.style.SlimSocialBlackTheme);
-            }
+            case "DarkTheme":
+            case "DarkNoBar": { css += context.getString(R.string.blackTheme); }
             default:
                 break;
         }
