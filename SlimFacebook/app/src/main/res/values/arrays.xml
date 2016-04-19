@@ -2,15 +2,15 @@
 <resources>
     <string-array name="listThemes">
         <item>Standard</item>
-        <item>Standard without Action Bar</item>
         <item>Dark Theme</item>
-        <item>Dark Theme without Action Bar</item>
+        <!--<item>Standard without Action Bar</item>
+        <item>Dark Theme without Action Bar</item>-->
     </string-array>
     <string-array name="listValuesThemes">
         <item>Standard</item>
-        <item>StandardNoBar</item>
         <item>DarkTheme</item>
-        <item>DarkNoBar</item>
+        <!--<item>StandardNoBar</item>
+        <item>DarkNoBar</item>-->
     </string-array>
 
     <string-array name="listTextSize">

@@ -80,7 +80,6 @@ public class MyWebViewClient extends WebViewClient {
         Context context = view.getContext();
         //load the css customizations
         String css = "";
-        if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) { css += context.getString(R.string.hideSponsoredPosts); }
         if (savedPreferences.getBoolean("pref_centerTextPosts", false)) { css += context.getString(R.string.centerTextPosts); }
         if (savedPreferences.getBoolean("pref_addSpaceBetweenPosts", false)) { css += context.getString(R.string.addSpaceBetweenPosts); }
 

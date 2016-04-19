@@ -27,8 +27,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
         android:theme="@style/SlimFacebookTheme"
 
 
-        android:versionCode="21"
-        android:versionName="2.0.0"
+        android:versionCode="27"
+        android:versionName="2.2.2"
         ><!--the official version is wrote in build.gradle-->
 
 

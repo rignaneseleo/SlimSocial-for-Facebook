@@ -25,11 +25,11 @@
     max-height:
   </string>
     <!--fixedBar continue into the mainActivity-->
-  <string name="hideSponsoredPosts" translatable="false">
+ <!-- <string name="hideSponsoredPosts" translatable="false">
     #m_newsfeed_stream article[data-ft*=\"\\\"ei\\\":\\\"\"], .aymlCoverFlow, .aymlNewCoverFlow[data-ft*=\"\\\"is_sponsored\\\":\\\"1\\\"\"], .pyml,
     .storyStream > ._6t2[data-sigil=\"marea\"], .storyStream > .fullwidth._539p, .storyStream > article[id^=\"u_\"]._676, .storyStream > article[id^=\"u_\"].storyAggregation
     { display: none; }
-  </string>
+  </string>-->
 
 
     <!--Themes-->

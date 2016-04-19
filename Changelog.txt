@@ -140,5 +140,7 @@ v2.2.1
 - Updated Portuguese translation (elcioebel from ackuna.com)
 - Updated Chinese translations (dic1911)
 
+v.2.2.2
+- Themes without actionbar are temporaly removed 
 
 ! Consider the possibility to donate !
