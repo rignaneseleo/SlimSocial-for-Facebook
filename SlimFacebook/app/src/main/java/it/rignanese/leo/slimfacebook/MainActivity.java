@@ -4,7 +4,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 
 
 !!!!!!!!!!!!!!! Special thanks to https://github.com/indywidualny/FaceSlim !!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!! I've token some inspiration an code from their work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!! I've token some inspiration and code from their work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
 package it.rignanese.leo.slimfacebook;
@@ -25,7 +25,6 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         savedPreferences = PreferenceManager.getDefaultSharedPreferences(this); // setup the sharedPreferences
         switch (savedPreferences.getString("pref_theme", "standard")) {
-            case "StandardNoBar":{
+            case "StandardNoBar": {
                 setTheme(R.style.SlimSocialNoActionBar);
                 break;
             }
@@ -417,26 +416,16 @@ public class MainActivity extends AppCompatActivity {
         } // end of code for Lollipop only
     }
 
-
     //*********************** KEY ****************************
-    // management the back button
+    // handling the back button
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (webViewFacebook.canGoBack()) {
-                        webViewFacebook.goBack();
-                    } else {
-                        // exit
-                        finish();
-                    }
-                    return true;
-            }
+    public void onBackPressed() {
+        if (webViewFacebook.canGoBack()) {
+            webViewFacebook.goBack();
+        } else {
+            finish();// exit
         }
-        return super.onKeyDown(keyCode, event);
     }
-
 
     //*********************** MENU ****************************
     //add my menu
@@ -447,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //management the tap on the menu's items
+    //handling the tap on the menu's items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -542,9 +531,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void goHome() {
         if (savedPreferences.getBoolean("pref_recentNewsFirst", false)) {
-            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_chr");//load .facebook.com/home.php
+            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_chr");
         } else {
-            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_nor");//load m.facebook.com
+            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_nor");
         }
     }
     private void refreshPage() {

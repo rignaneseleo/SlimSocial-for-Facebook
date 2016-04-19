@@ -11,11 +11,6 @@
         <item>StandardNoBar</item>
         <item>DarkTheme</item>
         <item>DarkNoBar</item>
-        <!--
-        <item>UltraDarkTheme</item>
-        <item>SoftGrayTheme</item>
-        <item>DarkGrayTheme</item>
-        <item>DeepBlueTheme</item>-->
     </string-array>
 
     <string-array name="listTextSize">
@@ -23,11 +18,13 @@
         <item>Small</item>
         <item>Standard</item>
         <item>Big</item>
+        <item>Huge</item>
     </string-array>
     <string-array name="listValuesTextSize">
         <item>80</item>
         <item>90</item>
         <item>100</item>
-        <item>110</item>
+        <item>120</item>
+        <item>140</item>
     </string-array>
 </resources>

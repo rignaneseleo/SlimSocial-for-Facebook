@@ -33,7 +33,6 @@ public class MyWebViewClient extends WebViewClient {
     }
 
     // when there isn't a connetion
-    @SuppressWarnings("deprecation")
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         Context context = view.getContext();
@@ -45,12 +44,6 @@ public class MyWebViewClient extends WebViewClient {
                 context.getString(R.string.awards) +
                 "</h5>";
         view.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
-    }
-
-    @TargetApi(android.os.Build.VERSION_CODES.M)
-    @Override// redirect to deprecated method, so we can use it in all SDK versions
-    public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError err) {
-        onReceivedError(view, err.getErrorCode(), err.getDescription().toString(), req.getUrl().toString());
     }
 
     // when I click in a external link

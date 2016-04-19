@@ -3,43 +3,78 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-
-    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
-
-    <!-- Some strings have been removed because they are not translatable,
-    so the english version will be automatically applied for these strings. -->
-
-    <!-- TRANSLATION IS MADE BY: xdevs23 (Simao) -->
+    <!-- TRANSLATION IS MADE BY: *anononymous ackuser* -->
 
     <!--menu string-->
     <string name="refresh">Aktualisieren</string>
     <string name="openInBrowser">Im Browser öffnen</string>
     <string name="settings">Einstellungen</string>
-    <string name="share">Teile diese App</string>
+    <string name="share">Diese App teilen</string>
     <!--end menu string-->
 
     <!--settings-->
-    <string name="prefCat_fb_settings_title">Facebook-Einstellungen</string>
-    <string name="prefCat_app_settings_title">App-Einstellungen</string>
-    <string name="prefCat_app_information_title">App-Information</string>
-    <string name="title_recentNewsFirst">Sortiere die Neuigkeiten nach Relevanz</string>
-    <string name="summary_recentNewsFirst">Statt Top-Stories</string>
-    <string name="title_selectTheme">Theme auswählen</string>
-    <string name="summary_selectTheme">Wähle dein bevorzugtes Design</string>
+    <string name="prefCat_fb_settings_title">Facebook Einstellungen</string>
+    <string name="prefCat_app_settings_title">App Einstellungen</string>
+    <string name="prefCat_app_information_title">App Information</string>
+    <string name="title_recentNewsFirst">Neuigkeiten ordnen (neueste zuerst)</string>
+    <string name="summary_recentNewsFirst">Anstatt nach Top Stories</string>
+    <string name="title_centerTextPosts">Text des Posts zentrieren</string>
+    <string name="summary_centerTextPosts">Text von jedem Post wird zentriert</string>
+    <string name="summary_addSpaceBetweenPosts">Es wird mehr Platz zwischen den Posts geben</string>
+    <string name="title_addSpaceBetweenPosts">Mehr Platz zwischen den Posts</string>
+    <string name="summary_creditsCssThemes">Danke für die fantastischen Stile!</string>
+    <string name="summary_theme">Wählen Sie den Stil, der Ihnen gefällt</string>
+    <string name="title_fixedBar">Fixierte Leiste oben</string>
+    <string name="summary_fixedBar">Die blaue Leiste wird oben fixiert</string>
+    <string name="title_blackTheme">Dunkler Stil</string>
+    <string name="summary_blackTheme">Der Hintergrund wird schwarz und der Text weiß. (Gut für AMOLED Bildschirme)</string>
+    <string name="title_hideSponsoredPosts">Keine empfohlenen Beiträge zeigen</string>
+    <string name="summary_hideSponsoredPosts">Es werden keine empfohlenen Beiträge gezeigt!</string>
+    <string name="title_downloadImages">Daten speichern</string>
+    <string name="summary_downloadImages">Keine Bilder herunterladen</string>
+    <string name="summary_allowGeolocation">Facebook wird auf Ihren Standort zugreifen können</string>
+    <string name="title_allowGeolocation">GPS Zugriff erlauben</string>
+    <string name="title_selectTheme">Stil wählen</string>
+    <string name="summary_selectTheme">Wählen Sie Ihren Lieblingsstil</string>
     <string name="version">Version</string>
+    <string name="credits">Credits</string>
+    <string name="prefCat_otherCredits_title">Anderes</string>
+    <string name="prefCat_developersCredits_title">Entwickler</string>
+    <string name="summary_LeonardoRignanese">Urheber und Entwickler der App</string>
+    <string name="prefCat_translatorsCredits_title">Übersetzer</string>
+    <string name="prefCat_designersCredits_title">Designer</string>
+    <string name="donate">Spende</string>
+    <string name="donateToContribute">Ich habe mich dazu entschieden es kostenlos zu machen. Können Sie mir einen Kaffee spendieren?</string>
+    <string name="prefCat_you_title">Sie</string>
+    <string name="summary_you">It\'s also thanks to you that this app exists</string>
+    <string name="title_you">Sie sind wichtig</string>
     <!--end settings-->
 
     <!--page error-->
-    <string name="titleNoConnection">Ups, wir haben ein Problem!</string>
-    <string name="descriptionNoConnection">Überprüfe Deine Verbindung und versuche es erneut.</string>
-    <string name="awards">Diese App ist Open-Source.</string>
+    <string name="titleNoConnection">Ops, es gibt ein Problem!</string>
+    <string name="descriptionNoConnection">Versuchen sie die Verbindung zu überprüfen und erneuern Sie danach.</string>
+    <string name="awards">Das ist eine Open Source App.</string>
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Du kannst SlimFacebook hier herunterladen:\n - Öffne https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Melde Dich mit deinem Google-Konto an (falls noch nicht geschehen)\n - Drücke \"Tester werden\"\n - Öffne dies mit der Play Store-App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="downloadInstruction">To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Danke!</string>
-    <string name="downloadOrShareWithBrowser">Mithilfe des Browsers kannst Du das Bild ansehen und teilen.</string>
+    <string name="downloadOrShareWithBrowser">Durch das Öffnen des browsers können Sie Bilder herunterladen und teilen</string>
+    <string name="shareThisLink">Diesen Link teilen</string>
+    <string name="chooseAnImage">Ein Bild auswählen</string>
+    <string name="summary_FaceSlim">Ohne sie kann ich einige attraktive Funktionen hinzufügen. Wenn Sie ein Entwickler sind, sollten Sie die großen Mengen an Arbeit sehen!</string>
+    <string name="summary_lRemainl">Schöpfer des ausgezeichneten Logos</string>
+    <string name="summary_Pharetra">Voller Talent und kreativität</string>
+    <string name="exit">Ausgang</string>
+    <string name="noPersonalInformationAreShared">Keine persönlichen oder privaten Informationen über Sie oder ihres Gerätes werden gesammelt oder versendet von dieser App!</string>
+    <string name="title_theme">Stile</string>
+    <string name="applyingChanges">Änderungen speichern</string>
+    <string name="title_textSize">Textgröße</string>
+    <string name="title_enableFastShare">Schnelles Teilen erlauben</string>
+    <string name="summary_enableFastShare">Mit schnellem Teilen können Sie jeden link teilen, indem Sie einfach darauf tippen und halten</string>
+    <string name="summary_textSize">Wählen Sie die Textgröße, die Ihnen gefällt</string>
     <!--end other-->
+
 
     <!-- PLAY STORE PAGE
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):

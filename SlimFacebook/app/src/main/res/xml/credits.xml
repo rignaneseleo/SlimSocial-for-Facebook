@@ -58,9 +58,13 @@
             android:summary="French, Spanish, Portuguese"
             android:title="minimaster4734"/>
         <PreferenceScreen
-            android:key="pref_xdevs23"
+            android:key="pref_elcioebel"
+            android:summary="Portuguese"
+            android:title="elcioebel"/>
+        <PreferenceScreen
+            android:key="pref_buagseitei"
             android:summary="German"
-            android:title="xdevs23"/>
+            android:title="buagseitei"/>
         <PreferenceScreen
             android:key="pref_dic1911"
             android:summary="Chinese"
@@ -105,8 +109,10 @@
             android:key="pref_Xkirnel99"
             android:summary="Arabic"
             android:title="Xkirnel99"/>
-
-
+        <PreferenceScreen
+            android:key="pref_Yomawaru"
+            android:summary="Norwegian"
+            android:title="Yomawaru"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -131,4 +131,14 @@ v2.2.0
 - Black theme improved
 - Fixed friends icon in the black theme
 
+v2.2.1
+- Fixed bug (upload photo on comment)
+- Fixed bug (hold back button doesn't close the app)
+- Changed big textsize (110 to 120) and added huge size (140)
+- Added Norwegian translation (Yomawaru from ackuna.com)
+- Updated German translation (Stefan Hoermann from ackuna.com)
+- Updated Portuguese translation (elcioebel from ackuna.com)
+- Updated Chinese translations (dic1911)
+
+
 ! Consider the possibility to donate !

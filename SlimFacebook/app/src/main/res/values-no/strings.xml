@@ -1,0 +1,79 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <!-- TRANSLATION IS MADE BY: *anonymous ackuna* -->
+
+    <!--menu string-->
+    <string name="refresh">Oppdater</string>
+    <string name="openInBrowser">Åpne i nettleseren</string>
+    <string name="settings">Innstillinger</string>
+    <string name="share">Del denne appen</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Facebook-innstillinger</string>
+    <string name="prefCat_app_settings_title">App-innstillinger</string>
+    <string name="prefCat_app_information_title">App-informasjon</string>
+    <string name="title_recentNewsFirst">Ordne nyhetsstrømmen etter mest nylig</string>
+    <string name="summary_recentNewsFirst">I stedet for etter topphendelser</string>
+    <string name="title_centerTextPosts">Sentrer innleggstekstene</string>
+    <string name="summary_centerTextPosts">Teksten i hvert innlegg vil bli sentrert</string>
+    <string name="summary_addSpaceBetweenPosts">Det vil være mer opprom mellom innleggene</string>
+    <string name="title_addSpaceBetweenPosts">Mer rom mellom innlegg</string>
+    <string name="summary_creditsCssThemes">Takk for de fantastiske temaene!</string>
+    <string name="summary_theme">Velg temaet som du liker</string>
+    <string name="title_fixedBar">Fiksert topplinje</string>
+    <string name="summary_fixedBar">Den blåe linjen vil sitte fast på toppen.</string>
+    <string name="title_blackTheme">Mørkt tema</string>
+    <string name="summary_blackTheme">Bakgrunnen vil være svart og teksten hvit. (Bra for AMOLED-skjermer)</string>
+    <string name="title_hideSponsoredPosts">Ikke vis sponsede innlegg</string>
+    <string name="summary_hideSponsoredPosts">Det vil ikke finnes noen sponsede innlegg!</string>
+    <string name="title_downloadImages">Lagre data</string>
+    <string name="summary_downloadImages">Ikke last ned bilder</string>
+    <string name="summary_allowGeolocation">Facebook vil kunne få tilgang til din posisjon</string>
+    <string name="title_allowGeolocation">Tillat bruk av GPS</string>
+    <string name="title_selectTheme">Velg temaet</string>
+    <string name="summary_selectTheme">velg ditt favorittema</string>
+    <string name="version">Versjon</string>
+    <string name="credits">Bidragsytere</string>
+    <string name="prefCat_otherCredits_title">Annet</string>
+    <string name="prefCat_developersCredits_title">Utviklere</string>
+    <string name="summary_LeonardoRignanese">Skaper og utvikler av appen</string>
+    <string name="prefCat_translatorsCredits_title">Oversettere</string>
+    <string name="prefCat_designersCredits_title">Designere</string>
+    <string name="donate">Doner</string>
+    <string name="donateToContribute">Jeg valgte å gjøre det gratis. Kan du tilby meg en kopp kaffe?</string>
+    <string name="prefCat_you_title">Deg</string>
+    <string name="summary_you">Det er også takket være deg at denne appen finnes</string>
+    <string name="title_you">Du er viktig</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Ups, det er et problem!</string>
+    <string name="descriptionNoConnection">Forsøk å sjekke tilkoblingen og oppdater.</string>
+    <string name="awards">Dette er en app med åpen kildekode.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction" >For å laste ned SlimFacebook så må du:\n - Åpne https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Logge inn i Google (hvis du ikke allerede er det)\n - Trykke \"Bli en tester\"\n - Åpne dette med Play Store-appen: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="thanks">Takk!</string>
+    <string name="downloadOrShareWithBrowser">Åpner nettleser hvor du kan laste ned eller dele dette bildet.</string>
+    <string name="shareThisLink">Del denne lenken</string>
+    <string name="chooseAnImage">Velg et bilde</string>
+    <string name="summary_FaceSlim">Uten dem, kunne jeg ikke ha lagt til noen attraktive funksjoner! Hvis du er en utvikler, så må du se det gedigne arbeidet deres!</string>
+    <string name="summary_lRemainl">Skaper av den fantastiske logoen</string>
+    <string name="summary_Pharetra">Fulle av talent og kreativitet</string>
+    <string name="exit">Avslutt</string>
+    <string name="noPersonalInformationAreShared">Ingen personlig eller privat informasjon angående deg eller din enhet blir samlet inn eller overført av denne appen!</string>
+    <string name="title_theme">Temaer</string>
+    <string name="applyingChanges">Bruker endringer!</string>
+    <string name="title_textSize">Tekststørrelse</string>
+    <string name="title_enableFastShare">Aktiver rask deling</string>
+    <string name="summary_enableFastShare">Med rask deling kan du dele en hvilken som helst lenke ved å bare trykke og holde på den</string>
+    <string name="summary_textSize">Velg tekststørrelsen du foretrekker</string>
+    <!--end other-->
+
+
+</resources>
