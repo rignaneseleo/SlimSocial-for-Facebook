@@ -3,27 +3,105 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-    <!-- TRANSLATION IS MADE BY: *dic1911* -->
 
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: DiC1911 -->
+
+    <!--menu string-->
     <string name="refresh">重新整理</string>
     <string name="openInBrowser">使用外部瀏覽器開啟</string>
     <string name="settings">設定</string>
+    <string name="share">分享本程式</string>
+    <!--end menu string-->
 
-    <string name="titleNoConnection">沒有連線!</string>
-    <string name="descriptionNoConnection">請檢查連線後重新整理.</string>
-
-    <string name="awards">這是個開源(Open Source)程式.</string>
-    <string name="share">分享</string>
-    <string name="downloadInstruction">若要下載SlimFacebook:\n - 開啟 https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - 登入Google帳號 (如果未登入)\n - 按下 \"成為測試人員\"\n - 使用Play Store開啟這個連結: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="title_recentNewsFirst">優先顯示最新動態</string>
-    <string name="summary_recentNewsFirst">最新動態優先於熱門動態</string>
+    <!--settings-->
     <string name="prefCat_fb_settings_title">Facebook設定</string>
     <string name="prefCat_app_settings_title">程式設定</string>
-    <string name="version">版本</string>
+    <string name="prefCat_app_information_title">程式資訊</string>
+    <string name="title_recentNewsFirst">優先顯示最新動態</string>
+    <string name="summary_recentNewsFirst">而不是熱門動態優先</string>
+    <string name="title_centerTextPosts">將貼文的文字內容置中</string>
+    <string name="summary_centerTextPosts">貼文內容將被置於頁面中間</string>
+    <string name="summary_addSpaceBetweenPosts">增加每篇貼文間的間隔</string>
+    <string name="title_addSpaceBetweenPosts">增加貼文間的間隔</string>
+    <string name="summary_creditsCssThemes">感謝提供這麼棒的主題!</string>
+    <string name="summary_theme">選擇您喜歡的主題</string>
+    <string name="title_fixedBar">固定導航列</string>
+    <string name="summary_fixedBar">導航選單將被固定於頁面上方.</string>
+    <string name="title_blackTheme">黑化主題</string>
+    <string name="summary_blackTheme">將頁面背景改為黑色. (建議AMOLED螢幕裝置使用者啟用)</string>
+    <string name="title_hideSponsoredPosts">不顯示贊助貼文</string>
+    <string name="summary_hideSponsoredPosts">動態中將不會出現贊助的廣告貼文!</string>
+    <string name="title_downloadImages">節省流量</string>
+    <string name="summary_downloadImages">停用圖片以節省流量</string>
+    <string name="summary_allowGeolocation">讓Facebook存取您的所在位置</string>
+    <string name="title_allowGeolocation">允許程式存取GPS</string>
     <string name="title_selectTheme">選擇主題</string>
     <string name="summary_selectTheme">選擇您喜愛的主題</string>
-    <string name="prefCat_app_information_title">程式資訊</string>
+    <string name="version">版本</string>
+    <string name="credits">貢獻者</string>
+    <string name="prefCat_otherCredits_title">其他</string>
+    <string name="prefCat_developersCredits_title">開發人員</string>
+    <string name="summary_LeonardoRignanese">創造,開發這個程式的人</string>
+    <string name="prefCat_translatorsCredits_title">翻譯</string>
+    <string name="prefCat_designersCredits_title">設計</string>
+    <string name="donate">贊助</string>
+    <string name="donateToContribute">這個程式為免費提供. 但或許您能請我喝杯咖啡?</string>
+    <string name="prefCat_you_title">您</string>
+    <string name="summary_you">我也感謝您使用本程式</string>
+    <string name="title_you">您，對我們很重要</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">糟糕!連線錯誤!</string>
+    <string name="descriptionNoConnection">請檢查連線後重新整理頁面.</string>
+    <string name="awards">這是個開源程式.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="downloadInstruction" >若要下載SlimFacebook:\n - 開啟 https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - 登入Google帳號 (如果未登入)\n - 按下 \"成為測試人員\"\n - 使用Play Store開啟這個連結: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">感謝!</string>
-    <string name="downloadOrShareWithBrowser">以瀏覽器下載或分享.</string>
+    <string name="downloadOrShareWithBrowser">使用瀏覽器開啟以下載或分享這張圖片.</string>
+    <string name="shareThisLink">分享本連結</string>
+    <string name="chooseAnImage">選擇圖片</string>
+    <string name="summary_FaceSlim">沒有他們,我就不能加入這些這麼棒的功能,如果您也是個開發人員,您也該看看他們的傑作!</string>
+    <string name="summary_lRemainl">LOGO製作</string>
+	<string name="summary_Pharetra">有才能又有創造力</string>
+    <string name="exit">離開</string>
+    <string name="downloadThisApp" translatable="false">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">本程式不會蒐集，傳送您的個人資料!</string>
+    <string name="title_theme">主題</string>
+    <string name="applyingChanges">正在套用變更!</string>
+    <string name="title_textSize">文字大小</string>
+    <string name="title_enableFastShare">啟用快速分享</string>
+    <string name="summary_enableFastShare">按住連結以分享</string>
+    <string name="summary_textSize">選擇您偏好的文字大小</string>
+    <string name="refreshToApply">重新整理頁面以套用變更</string>
+
+    <!--end other-->
+
+    <!-- PLAY STORE PAGE
+
+DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+With only 700Kb, allows you to enjoy the Facebook experience(in its Web version)
+
+FULL DESCRIPTION:
+注意：本程式主要為較輕度之臉書使用者設計(平時主要使用瀏覽器登入臉書)，可能不適合重度使用者
+為何選擇SlimSocial for Facebook?
+-	超輕量程式本體，1MB不到的大小
+-	簡單、質感設計(Material Design)，沒有不必要的功能 
+-	這是個開源程式，程式碼存放在GitHub伺服器，所有人都能驗證本程式的可信度同時也能對本程式的開發做出貢獻
+-	這個程式尊重您的隱私，無須任何特殊權限，且在沒有您的許可之下，Facebook無法取得任何關於您手機的資訊
+-	最棒的是，這個程式免費！也沒有任何廣告！
+
+註：本程式目前還在開發階段，通知仍無法使用
+
+GitHub: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+
+***注意這並不是Facebook的官方程式***
+這是個讓人們不用安裝"肥肥的"官方FB又能輕鬆在手機上使用FB的開源專案. 使用Facebook網頁版並加以改進. 感謝FB團隊提供社群平台. 本程式為免費提供並不含廣告!
+    -->
 
 </resources>
