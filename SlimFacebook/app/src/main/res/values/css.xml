@@ -20,9 +20,6 @@
     #root {
     padding-top: 44px;
     }
-
-    .flyout { overflow-y:scroll;
-    max-height:
   </string>
     <!--fixedBar continue into the mainActivity-->
  <!-- <string name="hideSponsoredPosts" translatable="false">

@@ -143,4 +143,7 @@ v2.2.1
 v.2.2.2
 - Themes without actionbar are temporaly removed 
 
+v.2.2.3
+- Fixed scroll bug
+
 ! Consider the possibility to donate !
