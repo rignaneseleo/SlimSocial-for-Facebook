@@ -100,7 +100,7 @@
             android:title="@string/credits">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:targetClass="it.rignanese.leo.slimfacebook.ShowCreditsActivity"
+                android:targetClass="it.rignanese.leo.slimfacebook.settings.CreditsActivity"
                 android:targetPackage="it.rignanese.leo.slimfacebook"/>
         </PreferenceScreen>
         <PreferenceScreen
