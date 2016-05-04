@@ -23,8 +23,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_recentNewsFirst">αντί για τις πιο δημοφιλείς</string>
     <string name="title_downloadImages">Αποθήκευση Δεδομένων </string>
     <string name="summary_downloadImages">Όχι Αποθήκευση Φωτογραφιών</string>
-    <string name="title_selectTheme">Επιλέξτε το θέμα</string>
-    <string name="summary_selectTheme">Επιλέξτε το αγαπημένο σας θέμα</string>
     <string name="version">Έκδοση</string>
     <!--end settings-->
 
@@ -35,7 +33,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Για να κατεβάσετε το SlimFacebook πρέπει να: \n - Ανοίξετε https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Σύνσεση μέσω Google (αν δεν είστε ήδη συνδεδεμένος/η)\n - Push \"Για να γίνετε δοκιμαστής\"\n - Άνοιγμα μέσω του Play Store: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Ευχαριστώ!</string>
     <string name="downloadOrShareWithBrowser">Ανοίγοντας τον Browser σας μπορείτε να αποθηκέυσετε ή να κοινοποιήσετε την εικόνα.</string>
     <!--end other-->

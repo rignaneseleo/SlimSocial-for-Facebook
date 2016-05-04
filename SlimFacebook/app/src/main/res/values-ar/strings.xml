@@ -22,14 +22,8 @@ Leonardo Rignanese للفيسبوك هو تطبيق مفتوح المصدر مب
     <string name="summary_centerTextPosts">سيتم توسيط جميع نصوص المشاركات.</string>
     <string name="title_fixedBar">شريط ثابت (تجريبي)</string>
     <string name="summary_fixedBar">الشريط الأزرق سيبقى ثابتاً بالأعلى. </string>
-    <string name="title_blackTheme">المظهر الأسود</string>
-    <string name="summary_blackTheme">الخلفية ستكون بالأسود والنصوص بالأبيض (جيد للشاشات بتقنية الأموليد). </string>
-    <string name="title_hideSponsoredPosts">إخفاء المشاركات الإعلانية</string>
-    <string name="summary_hideSponsoredPosts">لن تظهر أي مشاركات إعلانية </string>
     <string name="title_downloadImages">تشغيل إقتصاد البيانات</string>
     <string name="summary_downloadImages">عدم تحميل الصور.</string>
-    <string name="title_selectTheme">تحديد الشكل</string>
-    <string name="summary_selectTheme">إختيار شكلك المفضل.</string>
     <string name="version">إصدار</string>
     <string name="credits">التقدير</string>
     <string name="prefCat_otherCredits_title">آخر</string>
@@ -51,8 +45,6 @@ Leonardo Rignanese للفيسبوك هو تطبيق مفتوح المصدر مب
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction"> يجب أن :SlimFacebook لتحميل تطبيق
-\n - تفتح https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n – إفتح هذا عبر تطبيق البلاي ستور: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">!الشكر</string>
     <string name="downloadOrShareWithBrowser">يمكنك تحميل أو مشاركة الصورة عن طريق فتح المتصفح</string>
     <string name="shareThisLink">)linkمشاركة الوصلة(</string>

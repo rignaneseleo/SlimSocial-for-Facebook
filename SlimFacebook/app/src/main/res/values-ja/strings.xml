@@ -1,0 +1,68 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <!-- TRANSLATION IS MADE BY: Salvo85 -->
+
+    <!--menu string-->
+    <string name="refresh">再読み込み</string>
+    <string name="openInBrowser">ブラウザを使用して開き</string>
+    <string name="settings">セッティング</string>
+    <string name="share">このアプリをシェアする</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Facebookの設定</string>
+    <string name="prefCat_app_settings_title">アプリの設定</string>
+    <string name="prefCat_app_information_title">アプリ情報</string>
+    <string name="title_recentNewsFirst">最新のニュースフィードを注文</string>
+    <string name="summary_recentNewsFirst">トップ記事によると</string>
+    <string name="title_centerTextPosts">記事のテキストを中央揃え</string>
+    <string name="summary_centerTextPosts">各ポストのテキストが中央に表示されます</string>
+    <string name="summary_addSpaceBetweenPosts">ポスト間より多くのスペースがあります</string>
+    <string name="title_addSpaceBetweenPosts">ポスト間のよりもっとスペース</string>
+    <string name="summary_creditsCssThemes">素晴らしいテーマをありがとう！</string>
+    <string name="summary_theme">好きなテーマを選択してください</string>
+    <string name="title_fixedBar">固定上部バー</string>
+    <string name="summary_fixedBar">青いバーが上に立ち往生のままになります。</string>
+    <string name="title_downloadImages">セーブデータ</string>
+    <string name="summary_downloadImages">画像をダウンロードしないでください。</string>
+    <string name="summary_allowGeolocation">Facebookはあなたの位置にアクセスすることができます。</string>
+    <string name="title_allowGeolocation">GPSの使用を許可します。</string>
+    <string name="version">バージョン</string>
+    <string name="credits">クレジット</string>
+    <string name="prefCat_otherCredits_title">その他</string>
+    <string name="prefCat_developersCredits_title">デベロッパー</string>
+    <string name="summary_LeonardoRignanese">アプリのクリエイターとアプリのデベロッパー</string>
+    <string name="prefCat_translatorsCredits_title">翻訳者</string>
+    <string name="prefCat_designersCredits_title">デザイナー</string>
+    <string name="donate">寄付をして下さい。</string>
+    <string name="donateToContribute">私は無料でそれをやることを決めました。せめて、あなたは私にコーヒーなんかおごりませんか？</string>
+    <string name="summary_you">また、あなたの御蔭でこのアプリが存在してこそ、あなたのことを感謝をしています。</string>
+    <string name="title_you">あなたが重要です。</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">おっと、問題があります！</string>
+    <string name="descriptionNoConnection">接続を確認し、リフレッシュしてみてください。</string>
+    <string name="awards">これは、オープンソースアプリです。</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="thanks">ありがとうございます！</string>
+    <string name="downloadOrShareWithBrowser">オープニングブラウザは、あなたがダウンロードしたり、この画像をシェアすることができます。</string>
+    <string name="shareThisLink">このリンクをシェア</string>
+    <string name="summary_lRemainl">壮大なロゴの作成者</string>
+    <string name="summary_Pharetra">才能と創造性の完全な</string>
+    <string name="exit">エグジット</string>
+    <string name="noPersonalInformationAreShared">あなたのことやあなたのデバイスについての個人情報とかは収集されないし、このアプリによって送信されていません。</string>
+    <string name="title_theme">テーマ</string>
+    <string name="applyingChanges">変更を適用！</string>
+    <string name="title_textSize">文字サイズ</string>
+    <string name="title_enableFastShare">高速共有を有効にします。</string>
+    <string name="summary_enableFastShare">高速共有を使用すると、単純にタップし、それを保持している任意のリンクをシェアすることができます。</string>
+    <string name="summary_textSize">お好みのテキストサイズを選択して下さい。</string>
+    <!--end other-->
+
+</resources>

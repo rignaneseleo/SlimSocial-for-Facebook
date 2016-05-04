@@ -1,4 +1,4 @@
-package it.rignanese.leo.slimfacebook;
+package it.rignanese.leo.slimfacebook.settings;
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
@@ -16,9 +16,11 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import it.rignanese.leo.slimfacebook.MainActivity;
+import it.rignanese.leo.slimfacebook.R;
 
 
-public class ShowSettingsActivity extends PreferenceActivity implements
+public class SettingsActivity extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     static String appVersion;
@@ -62,7 +64,7 @@ public class ShowSettingsActivity extends PreferenceActivity implements
             case "pref_centerTextPosts":
             case "pref_fixedBar":
             case "pref_addSpaceBetweenPosts": {
-                Toast.makeText(ShowSettingsActivity.this, R.string.refreshToApply, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, R.string.refreshToApply, Toast.LENGTH_SHORT).show();
                 break;
             }
             case "pref_doNotDownloadImages":
@@ -76,7 +78,7 @@ public class ShowSettingsActivity extends PreferenceActivity implements
     }
     private void restart() {
         // notify user
-        Toast.makeText(ShowSettingsActivity.this, R.string.applyingChanges, Toast.LENGTH_SHORT).show();
+        Toast.makeText(SettingsActivity.this, R.string.applyingChanges, Toast.LENGTH_SHORT).show();
 
         // sending intent to onNewIntent() of MainActivity that restarts the app
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

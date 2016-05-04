@@ -28,14 +28,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_centerTextPosts">Text každého príspevku bude vycentrovaný</string>
     <string name="title_fixedBar">Pevná lišta</string>
     <string name="summary_fixedBar">Modrá lišta na vrchu bude stále zobrazená.</string>
-    <string name="title_blackTheme">Tmavá téma</string>
-    <string name="summary_blackTheme">Pozadie bude čierne a text biely. (Dobré pre AMOLED displeje)</string>
-    <string name="title_hideSponsoredPosts">Nezobrazovať sponzorované príspevky</string>
-    <string name="summary_hideSponsoredPosts">Sponzorované príspevky sa viac nezobrazia!</string>
     <string name="title_downloadImages">Šetriť dáta</string>
     <string name="summary_downloadImages">Nenačítavať obrázky</string>
-    <string name="title_selectTheme">Zvoľte tému</string>
-    <string name="summary_selectTheme">zvoľte si vašu obľúbenú tému</string>
     <string name="version">Verzia</string>
     <string name="credits">Zásluhy</string>
     <string name="prefCat_otherCredits_title">Iné</string>
@@ -56,7 +50,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Pre stiahnutie SlimSocial pre Facebook musíte:\n - Otvoriť https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prihlásiť sa na Google účtet (ak už nie ste)\n - Kliknite na \"Chcem sa stať testerom\"\n - Otvoriť v aplikácii Obchod Play adresu: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Ďakujem!</string>
     <string name="downloadOrShareWithBrowser">Otvorením prehliadača môžete uložiť alebo zdieľať tento obrázok.</string>
     <string name="shareThisLink">Zdieľať odkaz</string>
@@ -67,7 +60,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="exit">Ukončiť</string>
     <string name="noPersonalInformationAreShared">Táto aplikácia nezbiera ani nepreposiela žiadne osobné alebo súkromné informácie o vás alebo vašom zariadení!</string>
     <string name="summary_you">Aj vďaka vám táto aplikácia existuje</string>
-    <string name="prefCat_you_title">Vy</string>
     <string name="title_you">Vy ste dôležitý</string>
     <string name="summary_addSpaceBetweenPosts">Medzi príspevkami bude viac miesta</string>
     <string name="title_addSpaceBetweenPosts">Pridať medzeru medzi príspevky</string>

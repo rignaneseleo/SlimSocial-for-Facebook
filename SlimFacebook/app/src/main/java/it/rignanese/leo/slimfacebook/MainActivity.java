@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
+import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
 import it.rignanese.leo.slimfacebook.webview.MyWebViewClient;
 
 
@@ -468,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.settings: {//open settings
-                startActivity(new Intent(this, ShowSettingsActivity.class));
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             }
 

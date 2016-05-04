@@ -1,54 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-
-    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
-
-    <!-- TRANSLATION IS MADE BY: *EMINEM786* -->
+    <!-- TRANSLATION IS MADE BY: *Siddique Nagarkar* -->
 
     <!--menu string-->
-    <string name="refresh">रिफ्रेश </string>
-    <string name="openInBrowser">ब्राउज़र का उपयोग कर खोलें</string>
-    <string name="settings">सेटिंग्स </string>
-    <string name="share">इस एप को शेयर करे</string>
+    <string name="refresh">ताज़ा करे</string>
+    <string name="openInBrowser">ब्राउज़र का उपयोग खोलें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="share">इस एप को शेयर कीजिए</string>
     <!--end menu string-->
 
     <!--settings-->
-    <string name="prefCat_fb_settings_title">फेसबुक  सेटिंग्स </string>
-    <string name="prefCat_app_settings_title">एप सेटिंग्स </string>
-    <string name="prefCat_app_information_title">एप इनफार्मेशन </string>
-    <string name="title_recentNewsFirst"> सबसे हाल ही के  न्यूज़  फीड  दिखाएं</string>
-    <string name="summary_recentNewsFirst">बजाय शीर्ष कहानियों की</string>
-    <string name="title_downloadImages">सेव  डाटा </string>
+    <string name="prefCat_fb_settings_title">फेसबुक सेटिंग्स</string>
+    <string name="prefCat_app_settings_title">एप्लिकेशन सेटिंग</string>
+    <string name="prefCat_app_information_title">एप्लिकेशन की सूचना</string>
+    <string name="title_recentNewsFirst">आदेश में सबसे हाल ही में समाचार फ़ीड</string>
+    <string name="summary_recentNewsFirst">इसके बजाय शीर्ष कहानियों से के साथ</string>
+    <string name="title_centerTextPosts">पदों के पाठ का केंद्र</string>
+    <string name="summary_centerTextPosts">प्रत्येक पद के पाठ केन्द्रित किया जाएगा</string>
+    <string name="summary_addSpaceBetweenPosts">पोस्ट के बीच और अधिक स्थान हो जाएगा</string>
+    <string name="title_addSpaceBetweenPosts">पोस्ट के बीच अधिक स्थान</string>
+    <string name="summary_creditsCssThemes">शानदार थीम्स के लिए धन्यवाद!</string>
+    <string name="summary_theme">आप चाहें थीम चुनें</string>
+    <string name="title_fixedBar">निश्चित शीर्ष बार</string>
+    <string name="summary_fixedBar">नीली पट्टी शीर्ष पर अटक बनी रहेगी.</string>
+    <string name="title_downloadImages">डाटा सेव करें </string>
     <string name="summary_downloadImages">छवियों को डाउनलोड न करें</string>
-    <string name="title_selectTheme">थीम का चयन करें</string>
-    <string name="summary_selectTheme">अपने पसंदीदा थीम  का चयन </string>
+    <string name="summary_allowGeolocation">फेसबुक अपनी स्थिति की के लिए उपयोग करने में सक्षम हो जाएगा</string>
+    <string name="title_allowGeolocation">जीपीएस के उपयोग की अनुमति दें</string>
     <string name="version">संस्करण</string>
-    <string name="credits">क्रेडिट्स</string>
+    <string name="credits">आभार सूची</string>
     <string name="prefCat_otherCredits_title">अन्य</string>
-    <string name="prefCat_developersCredits_title">डेवलपर्स </string>
-    <string name="summary_LeonardoRignanese"> क्रिएटर  और  एप्लिकेशन के डेवलपर</string>
+    <string name="prefCat_developersCredits_title">डेवलपर्स</string>
+    <string name="summary_LeonardoRignanese">प्रजापति और एप्लिकेशन के डेवलपर</string>
     <string name="prefCat_translatorsCredits_title">अनुवादक</string>
-    <string name="prefCat_designersCredits_title">डिजाइनरस</string>
+    <string name="prefCat_designersCredits_title">डिजाइनर</string>
+    <string name="donate">दान करना</string>
+    <string name="donateToContribute">मैं मुक्त करने के लिए यह करने के लिए चुना है। आप मुझे एक कॉफी की पेशकश कर सकते हैं?</string>
+    <string name="summary_you">यह भी आप के लिए धन्यवाद है कि इस एप्लिकेशन मौजूद है</string>
+    <string name="title_you">आप खास है</string>
     <!--end settings-->
 
     <!--page error-->
-    <string name="titleNoConnection">ऑप्स , वहाँ एक समस्या है !</string>
-    <string name="descriptionNoConnection">नेटवर्क कनेक्शन की जाँच करें और  रिफ्रेश   करें </string>
-    <string name="awards">यह एक  ओपन  सोर्स एप  है  </string>
+    <string name="titleNoConnection">ओह, वहाँ एक समस्या है!</string>
+    <string name="descriptionNoConnection">कनेक्शन की जाँच करने के लिए प्रयास करें और ताज़ा करें.</string>
+    <string name="awards">यह एक खुला स्रोत अनुप्रयोग है.</string>
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">SlimFacebook डाउनलोड करने के लिए आप इस साइट को  :\n - खोलें  https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="thanks">धन्यवाद !</string>
-    <string name="downloadOrShareWithBrowser">ब्राउज़र के माध्यम से खुलने आप डाउनलोड या इस छवि को शेयर  कर सकते हैं</string>
-    <string name="shareThisLink">इस लिंक को शेयर  करे </string>
-    <string name="chooseAnImage">एक छवि का चयन  करे </string>
-    <string name="summary_FaceSlim">उनके बिना, मैं कुछ आकर्षक फंक्शन्स  नहीं बना  पाता . यदि आप एक डेवलपर हैं, आप को  उन भी मेहनत देखना चाहिए!</string>
-    <string name="summary_lRemainl">इस शानदार लोगो के क्रिएटर </string>
+    <string name="thanks">धन्यवाद!</string>
+    <string name="downloadOrShareWithBrowser">उद्घाटन ब्राउज़र आप डाउनलोड या इस छवि को साझा कर सकते हैं.</string>
+    <string name="shareThisLink">इस लिंक को साझा करें</string>
+    <string name="chooseAnImage">एक छवि का चयन</string>
+    <string name="summary_FaceSlim">बिना, मैं कुछ आकर्षक कार्य नहीं जोड़ सके। आप एक डेवलपर हैं, तो आप उनके बड़े पैमाने पर काम को देखने के लिए है!</string>
+    <string name="summary_lRemainl">शानदार लोगो के रचयिता</string>
+    <string name="summary_Pharetra">प्रतिभा और रचनात्मकता से भरा</string>
     <string name="exit">बाहर जाएं</string>
-    <!--end other-->
+    <string name="noPersonalInformationAreShared">आप या आपके डिवाइस के बारे में कोई भी व्यक्तिगत या निजी जानकारी एकत्र की है और इस एप्लिकेशन के द्वारा फैलता है!</string>
+    <string name="title_theme">विषय-वस्तु</string>
+    <string name="applyingChanges">परिवर्तनों को लागू करना!</string>
+    <string name="title_textSize">शब्दों का आकर</string>
+    <string name="title_enableFastShare">तेजी से शेयर सक्षम करें</string>
+    <string name="summary_enableFastShare">तेजी से हिस्सेदारी के साथ आप बस दोहन और इसे धारण किसी भी लिंक साझा कर सकते हैं</string>
+    <string name="summary_textSize">पाठ का आकार है कि आप पसंद चुनें</string>
+    <string name="refreshToApply">फेसबुक ताज़ा करे परिवर्तनों को लागू करने</string>
 
+    <!--end other-->
 </resources>

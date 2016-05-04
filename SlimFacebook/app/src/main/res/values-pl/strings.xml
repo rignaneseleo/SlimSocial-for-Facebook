@@ -3,62 +3,64 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-
-    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
-
-    <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
+    <!-- TRANSLATION IS MADE BY: kostafil000 -->
 
     <!--menu string-->
     <string name="refresh">Odśwież</string>
     <string name="openInBrowser">Otwórz w przeglądarce</string>
     <string name="settings">Ustawienia</string>
-    <string name="share">Podziel się tą aplikacją</string>
+    <string name="share">Udostępnij</string>
     <!--end menu string-->
 
     <!--settings-->
     <string name="prefCat_fb_settings_title">Ustawienia Facebooka</string>
     <string name="prefCat_app_settings_title">Ustawienia aplikacji</string>
     <string name="prefCat_app_information_title">Informacje o aplikacji</string>
-    <string name="title_recentNewsFirst">Uporządkuj posty od najnowszych</string>
-    <string name="summary_recentNewsFirst">Zamiast od najpopularniejszych</string>
-    <string name="title_fixedBar">Pasek górny zawsze widoczny</string>
-    <string name="summary_fixedBar">Górny pasek Facebooka zawsze będzie widoczny.</string>
-    <string name="title_blackTheme">Ciemny motyw</string>
-    <string name="summary_blackTheme">Tło będzie czarne, a tekst biały. (Przydatne dla wyświetlaczy AMOLED)</string>
-    <string name="title_hideSponsoredPosts">Nie wyświetlaj postów sponsorowanych</string>
-    <string name="summary_hideSponsoredPosts">Żadnych sponsorowanych postów!</string>
-    <string name="title_downloadImages">Zachowuj transfer</string>
-    <string name="summary_downloadImages">Nie pobieraj obrazów</string>
-    <string name="title_selectTheme">Ustaw motyw</string>
-    <string name="summary_selectTheme">wybierz swój ulubiony</string>
+    <string name="title_recentNewsFirst">Uporządkuj newsfeed od najnowszego</string>
+    <string name="summary_recentNewsFirst">Zamiast wg najpopularniejszych historii</string>
+    <string name="title_centerTextPosts">Wyśrodkuj tekst wiadomości</string>
+    <string name="summary_centerTextPosts">Tekst każdej wiadomości zostanie wyśrodkowany</string>
+    <string name="summary_addSpaceBetweenPosts">Między wiadomościami będą większe odstępy</string>
+    <string name="title_addSpaceBetweenPosts">Większe odstępy między wiadomościami</string>
+    <string name="summary_creditsCssThemes">Dziękuję za wspaniałe motywy!</string>
+    <string name="summary_theme">Wybierz motyw, który ci się podoba</string>
+    <string name="title_fixedBar">Górny pasek na stałe</string>
+    <string name="summary_fixedBar">Niebieski pasek zostanie przypięty w górnej części</string>
+    <string name="title_downloadImages">Zapisz dane</string>
+    <string name="summary_allowGeolocation">Facebook będzie mógł odczytywać twoją pozycję</string>
+    <string name="title_allowGeolocation">Pozwól na korzystanie z GPS</string>
+    <string name="title_textSize">Rozmiar tekstu</string>
+    <string name="title_enableFastShare">Włącz szybkie udostępnianie</string>
+    <string name="summary_enableFastShare">Za pomocą szybkiego udostępniania możesz podzielić się dowolnym linkiem poprzez przytrzymanie go</string>
+    <string name="summary_textSize">Zmień rozmiar tekstu na wielkość, którą preferujesz</string>
     <string name="version">Wersja</string>
-    <string name="credits">O twórcach</string>
+    <string name="credits">Podziękowania</string>
     <string name="prefCat_otherCredits_title">Inne</string>
-    <string name="prefCat_developersCredits_title">Programiści</string>
-    <string name="summary_LeonardoRignanese">Twórca i główny programista</string>
+    <string name="prefCat_developersCredits_title">Autorzy</string>
+    <string name="summary_LeonardoRignanese">Twórca aplikacji</string>
     <string name="prefCat_translatorsCredits_title">Tłumacze</string>
-    <string name="prefCat_designersCredits_title">Graficy</string>
-    <string name="donate">Złóż dotację</string>
-    <string name="donateToContribute">Zdecydowałem się tworzyć to za darmo. Zafundujesz mi kawę?</string>
+    <string name="prefCat_designersCredits_title">Projektanci</string>
+    <string name="donate">Donate</string>   <string name="title_theme">Motywy</string>
+    <string name="donateToContribute">Zdecydowałem, że będzie za darmo. Czy możesz zaoferować mi kawę?</string>
+    <string name="title_you">Jesteś ważny</string>
     <!--end settings-->
 
     <!--page error-->
-    <string name="titleNoConnection">Ups, wystąpił problem!</string>
-    <string name="descriptionNoConnection">Sprawdź połączenie i spróbuj odświeżyć stronę.</string>
-    <string name="awards">Jest to aplikacja Open Source.</string>
+    <string name="titleNoConnection">Ops, pojawił się jakiś problem!</string>
+    <string name="descriptionNoConnection">Spróbuj sprawdzić połączenie i odświeżyć.</string>
+    <string name="awards">Ta aplikacja jest Open Source.</string>
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">By pobrać aplikację SlimFacebook, musisz:\n - Przejść pod adres https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Zalogować się w Google (o ile tego już nie dokonano)\n - Kliknąć \"Become a tester\"\n - Otworzyć ten adres w aplikacji Sklep Play: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="thanks">Dziękuję Ci!</string>
-    <string name="downloadOrShareWithBrowser">Otwierając przeglądarkę możesz pobrać lub udostępnić ten obraz.</string>
-    <string name="shareThisLink">Podziel się tym linkiem</string>
-    <string name="chooseAnImage">Wybierz obraz</string>
-    <string name="summary_FaceSlim">Bez nich nie mógłbym dodać wielu fajnych funkcji. Jeśli jesteś programistą, musisz dostrzec ogrom ich pracy!</string>
-    <string name="summary_lRemainl">Twórca majestatycznego logo</string>
+    <string name="thanks">Dzięki!</string>
+    <string name="downloadOrShareWithBrowser">Otwierając przeglądarkę możesz pobierać lub udostępnić ten obraz.</string>
+    <string name="shareThisLink">Udostępnij link</string>
+    <string name="summary_lRemainl">Twórca wspaniałego logo</string>
+    <string name="summary_Pharetra">Wielce utalentowany i kreatywny</string>
     <string name="exit">Wyjście</string>
-    <string name="noPersonalInformationAreShared">Żadne osobiste ani prywatne informacje o Tobie lub Twoim urządzeniu nie są zbierane ani wysyłane przez tę aplikację!</string>
-
+    <string name="noPersonalInformationAreShared">Żadne prywatne lub osobiste informacje o tobie lub twoim urządzeniu nie są zbierane i przesyłane przez tę aplikację!</string>
+    <string name="applyingChanges">Zastosuj zmiany!</string>
+    <string name="refreshToApply">Refresh Facebook to apply the changes</string>
     <!--end other-->
 
     <!-- PLAY STORE PAGE

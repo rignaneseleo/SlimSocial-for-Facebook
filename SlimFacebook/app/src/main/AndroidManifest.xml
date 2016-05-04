@@ -79,7 +79,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 
         <!--settings activity-->
         <activity
-            android:name=".ShowSettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/settings">
 
@@ -90,7 +90,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 
         <!--credits activity-->
         <activity
-            android:name=".ShowCreditsActivity"
+            android:name=".settings.CreditsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/settings">
 

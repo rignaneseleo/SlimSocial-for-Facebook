@@ -1,0 +1,67 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+    <!-- TRANSLATION IS MADE BY: *YOURNAME* -->
+
+    <!--menu string-->
+    <string name="refresh">รีเฟรช</string>
+    <string name="openInBrowser">เปิดโดยใช้บราวเซอร์</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="share">แบ่งปันแอพนี้</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">การตั้งค่า Facebook</string>
+    <string name="prefCat_app_settings_title">การตั้งค่าแอพ</string>
+    <string name="prefCat_app_information_title">ข้อมูลแอพ</string>
+    <string name="title_recentNewsFirst">เรียงลำดับฟีดข่าวโดยแสดงข่าวล่าสุดก่อน</string>
+    <string name="summary_recentNewsFirst">แทนที่จะเรียงโดยเรื่องราวยอดนิยม</string>
+    <string name="title_centerTextPosts">ปรับข้อความที่โพสต์ไว้ตรงกลาง</string>
+    <string name="summary_centerTextPosts">ข้อความของแต่ละโพสต์จะถูกปรับไว้ตรงกลาง</string>
+    <string name="summary_addSpaceBetweenPosts">โดยจะมีพื้นทีว่างระหว่างแตะละโพสต์มากขึ้น</string>
+    <string name="title_addSpaceBetweenPosts">พื้นที่ว่างระหว่างโพสต์</string>
+    <string name="summary_creditsCssThemes">ขอบคุณสำหรับธีมสวยๆ</string>
+    <string name="summary_theme">เลือกธีมที่คุณต้องการ</string>
+    <string name="title_fixedBar">Fixed top bar</string>
+    <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
+    <string name="title_downloadImages">บันทึกข้อมูล</string>
+    <string name="summary_downloadImages">อย่าดาวน์โหลดภาพ</string>
+    <string name="summary_allowGeolocation">Facebook จะสามารถเข้าถึงข้อมูลตำแหน่งที่อยู่ของคุณได้</string>
+    <string name="title_allowGeolocation">อนุญาตให้ใช้ GPS</string>
+    <string name="title_textSize">ขนาดข้อความ</string>
+    <string name="title_enableFastShare">เปิดใช้ Fast Share</string>
+    <string name="summary_enableFastShare">ด้วย Fast Share คุณสามารถแบ่งปันลิงค์ใดๆ ได้อย่างง่ายดายโดยการแตะค้างที่ลิงค์</string>
+    <string name="summary_textSize">เลือกขนาดข้อความที่คุณต้องการ</string>
+    <string name="version">เวอร์ชั่น</string>
+    <string name="credits">เครดิต</string>
+    <string name="prefCat_otherCredits_title">อื่นๆ</string>
+    <string name="prefCat_developersCredits_title">ผู้พัฒนา</string>
+    <string name="summary_LeonardoRignanese">ผู้สร้างและผู้พัฒนาแอพนี้</string>
+    <string name="prefCat_translatorsCredits_title">ผู้แปล</string>
+    <string name="prefCat_designersCredits_title">ผู้ออกแบบ</string>
+    <string name="donate">Donate</string>   <string name="title_theme">ธีม</string>
+    <string name="donateToContribute">ฉันเลือกที่จะทำให้ฟรี ขอกาแฟให้ฉันสักแก้วได้มั้ย?</string>
+    <string name="summary_you">ขอบคุณมากที่มีแอพดีๆ แบบนี้อยู่</string>
+    <string name="title_you">คุณสำคัญมาก</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">อุ๊บส์ เจอปัญหา</string>
+    <string name="descriptionNoConnection">ลองตรวจสอบการเชื่อมต่อแล้วรีเฟรช</string>
+    <string name="awards">นี่เป็นแอพ Open Source</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="thanks">ขอบคุณมาก!</string>
+    <string name="downloadOrShareWithBrowser">เปิดบราวเซอร์ คุณสามารถดาวน์โหลดหรือแบ่งปันภาพนี้ได้</string>
+    <string name="shareThisLink">แบ่งปันลิงค์นี้</string>
+    <string name="summary_FaceSlim">หากไม่มีพวกเขา ฉันคงจะเพิ่มฟังก์ชั่นที่น่าสนใจบางอย่างไม่ได้เลย หากคุณเป็นนักพัฒนา คุณต้องได้เห็นว่างานพวกเขามันยุ่งแค่ไหน!</string>
+    <string name="summary_lRemainl">ผู้สร้างโลโก้ที่สวยงาม</string>
+    <string name="summary_Pharetra">เปี่ยมไปด้วยพรสวรรค์และความคิดสร้างสรรค์</string>
+    <string name="exit">ิิออก</string>
+    <string name="noPersonalInformationAreShared">ไม่มีการรวบรวมข้อมูลส่วนตัวใดๆ ของคุณ หรือของอุปกรณ์ของคุณ หรือมีการถ่ายโอนข้อมูลของคุณโดยแอพนี้!</string>
+
+    <!--end other-->
+</resources>

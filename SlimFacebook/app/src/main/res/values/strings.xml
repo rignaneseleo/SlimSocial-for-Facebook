@@ -37,16 +37,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_theme">Choose the theme that you like</string>
     <string name="title_fixedBar">Fixed top bar</string>
     <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
-    <string name="title_blackTheme">Dark Theme</string>
-    <string name="summary_blackTheme">The background will be black and the text white. (Good for AMOLED displays)</string>
-    <string name="title_hideSponsoredPosts">Don\'t show sponsored posts</string>
-    <string name="summary_hideSponsoredPosts">There not will be sponsored posts!</string>
     <string name="title_downloadImages">Save Data </string>
     <string name="summary_downloadImages">Don\'t download images</string>
     <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
     <string name="title_allowGeolocation">Allow the use of GPS</string>
-    <string name="title_selectTheme">Select the Theme</string>
-    <string name="summary_selectTheme">choose your favourite theme</string>
     <string name="version">Version</string>
     <string name="credits">Credits</string>
     <string name="prefCat_otherCredits_title">Other</string>
@@ -56,7 +50,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Donate</string>
     <string name="donateToContribute">I chose to do it for free. Can you offer me a coffee?</string>
-    <string name="prefCat_you_title">You</string>
     <string name="summary_you">It\'s also thanks to you that this app exists</string>
     <string name="title_you">You are important</string>
     <!--end settings-->
@@ -68,7 +61,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction" >To download SlimFacebook you have to:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Thanks!</string>
     <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
     <string name="shareThisLink">Share this link</string>

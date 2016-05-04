@@ -3,9 +3,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
 -->
 <resources>
-
-    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
-
     <!-- TRANSLATION IS MADE BY: *kilroy69* -->
 
     <!--menu string-->
@@ -21,11 +18,29 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_app_information_title">Alkalmazás Info</string>
     <string name="title_recentNewsFirst">Rendezés legfrissebb hírek szerint</string>
     <string name="summary_recentNewsFirst">Friss Hírek</string>
-    <string name="title_downloadImages">Adatforgalom csökkentése</string>
+    <string name="title_centerTextPosts">Középre igazítás</string>
+    <string name="summary_centerTextPosts">Minden posztszöveget középre igazít</string>
+    <string name="summary_addSpaceBetweenPosts">Több hely lesz a posztok között</string>
+    <string name="title_addSpaceBetweenPosts">Több hely</string>
+    <string name="summary_creditsCssThemes">Köszönöm ezt a szuper témát!</string>
+    <string name="summary_theme">Válassz egy témát</string>
+    <string name="title_fixedBar">Navigációs sáv lezárása</string>
+    <string name="summary_fixedBar">A navigációs sáv marad görgetésnél is.</string>
+    <string name="title_downloadImages">Adatforgalom csökkentése (újraindítás szükséges)</string>
     <string name="summary_downloadImages">Képeket nem tölti le</string>
-    <string name="title_selectTheme">Témaválasztó</string>
-    <string name="summary_selectTheme">Válassz témát</string>
+    <string name="summary_allowGeolocation">A Facebook hozzá fog férni a pozíciójához</string>
+    <string name="title_allowGeolocation">Engedélyezi a GPS használatát</string>
     <string name="version">Verzió</string>
+    <string name="credits">Fejlesztõk</string>
+    <string name="prefCat_otherCredits_title">Egyéb</string>
+    <string name="prefCat_developersCredits_title">Fejlesztõk</string>
+    <string name="summary_LeonardoRignanese">Az alkalmazás készítõje és fejlesztõje</string>
+    <string name="prefCat_translatorsCredits_title">Fordítók</string>
+    <string name="prefCat_designersCredits_title">Designer</string>
+    <string name="donate">Segítsd a munkámat</string>
+    <string name="donateToContribute">Én ingyen csinálom. Meghívsz egy kávéra?</string>
+    <string name="summary_you">Köszönöm Neked, hiszen használod az alkalmazásomat</string>
+    <string name="title_you">Te is Fontos vagy</string>
     <!--end settings-->
 
     <!--page error-->
@@ -35,36 +50,23 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">A SlimFacebook letöltéséhez:\n - Megnyitás https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Lépj be a Google fiókoddal (ha még nem vagy bejelentkezve)\n - Nyomd meg \"Tesztelõ vagyok\"\n - Nyisd meg a Play Áruházban: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Köszönöm!</string>
     <string name="downloadOrShareWithBrowser">Böngészõvel le lehet tölteni, vagy megosztani ezt a képet.</string>
+    <string name="shareThisLink">Link Megosztása</string>
+    <string name="chooseAnImage">Kép kiválasztása</string>
+    <string name="summary_FaceSlim">Néhány érdekes funkció hiányzik. Ha fejlesztõ vagy, akkor tudhatod, hogy ez nagy munka!</string>
+    <string name="summary_lRemainl">Káprázatos logó készítõje</string>
+    <string name="summary_Pharetra">Tehetség és kreativitás</string>
+    <string name="exit">Kilépés</string>
+    <string name="noPersonalInformationAreShared">Az alkalmazás nem gyûjt Rólad és a készülékedrõl személyes vagy bizalmas információt, és nem is küldi tovább!</string>
+    <string name="title_theme">Témák</string>
+    <string name="applyingChanges">Változtatások alkalmazva!</string>
+    <string name="title_textSize">Szöveg méret</string>
+    <string name="title_enableFastShare">Gyors megosztás alkalmazása</string>
+    <string name="summary_enableFastShare">A gyors megosztással meg tudsz osztani bármilyen linket, ha csak egyszerûen rákattintasz és nyomva tartod</string>
+    <string name="summary_textSize">Válaszd ki azt a szöveg méretet, ami Neked tetszik</string>
+    <string name="refreshToApply">Frissítsd az alkalmazást, hogy a változtatások életbe lépjenek</string>
+
     <!--end other-->
-
-    <!-- PLAY STORE PAGE
-
-DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
-Ez az alkalmazás csak 700Kb, és lehetõvé teszi, hogy élvezze a Facebook által nyújtott adottságokat (webes változat).
-
-TELJES LEÍRÁS:
-FIGYELEM: Ez az alkalmazás nem lehet alkalmas gyakori használatra. 
-
-Miért érdemes letölteni a SlimSocial for Facebook applikációt?
-- Pehelysúlyú: kevesebb, mint 1 Mb;
-- Egyszerû és jól néz ki: csak azokat a dolgokat tartalmazza, amire szükség van;
-- Nyílt forráskódú: az alkalmazás forráskódja a GitHub -on fent van, bárki le tudja ellenõrizni a hitelességét és hozzá is járulhat a fejlesztéshez.
-- Ingyenes és reklámmentes;
-- Nem tolakodó;
-- Tiszteletben tartjuk a jogaidat: ez az alkalmazás nem igényel különleges engedélyeket. Közös beleegyezésed nélkül a Facebook nem tud hozzáférni semmilyen adathoz a mobiltelefonodon;
-
-
-Az alkalmazás fejlesztés alatt van. Ez még nem mûködik:
-- Értesítések;
-
-GitHub oldal linkje:
-https://github.com/leorigna/SlimSocial for Facebook
-
-***Vegyük figyelembe, hogy ez nem egy hivatalos Facebook applikáció***
-Ez a projekt, az emberek életének megkönnyítését szolgálja. Ez az alkalmazás megnyitja a hivatalos Facebook weboldalt. Minden érdem kizárólag a Facebook csapatot illeti.  Ez biztosítja mindenki számára, hogy ingyenes és reklámmentes legyen.
-    -->
 
 </resources>

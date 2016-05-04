@@ -18,8 +18,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_fb_settings_title">Impostazioni di Facebook</string>
     <string name="prefCat_app_settings_title">Impostazioni dell\'App</string>
     <string name="version">Versione</string>
-    <string name="summary_selectTheme">scegli il tuo tema preferito</string>
-    <string name="title_selectTheme">Scegli il tema</string>
     <string name="prefCat_app_information_title">Informazioni dell\'App</string>
     <string name="thanks">Grazie!</string>
     <string name="downloadOrShareWithBrowser">Aprendo il browser è possibile scaricare o condividere questa immagine.</string>
@@ -41,15 +39,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="donateToContribute">Ho scelto di sviluppare quest\'app gratis. Lo merito un caffè?</string>
     <string name="summary_fixedBar">La barra blu rimarrà attaccata in alto.</string>
     <string name="title_fixedBar">Barra fissa in alto</string>
-    <string name="summary_blackTheme">Lo sfondo sarà nero e le scritte bianche. (Con display AMOLED riduce i consumi energetici)</string>
-    <string name="title_blackTheme">Tema Scuro</string>
-    <string name="summary_hideSponsoredPosts">I post sponsorizzati non compariranno!</string>
-    <string name="title_hideSponsoredPosts">Non mostrare post sponsorizzati</string>
     <string name="summary_Pharetra">Pieno di talento e creatività</string>
     <string name="summary_allowGeolocation">Facebook potrà utilizzare la tua posizione</string>
     <string name="title_allowGeolocation">Permetti l\'utilizzo del GPS</string>
     <string name="applyingChanges">Applicando le modifiche!</string>
-    <string name="prefCat_you_title">Tu</string>
     <string name="summary_addSpaceBetweenPosts">Ci sarà più spazio tra i post</string>
     <string name="summary_centerTextPosts">Il testo di ogni post sarà centrato</string>
     <string name="summary_creditsCssThemes">Grazie per il tema fantastico</string>
@@ -59,7 +52,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_centerTextPosts">Centra il testo dei post</string>
     <string name="title_theme">Temi</string>
     <string name="title_you">Sei importante</string>
-    <string name="downloadInstruction">Per scaricare SlimFacebook:\n - Apri: https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Accedi a Google (se non sei già autenticato)\n - Premi "Diventa un Tester"\n - Con l\'app del Play Store apri: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="settings">Impostazioni</string>
     <string name="summary_enableFastShare">Con la Condivisione Veloce puoi condividere qualsiasi link semplicemente tenendolo premuto</string>
     <string name="summary_textSize">Scegli la dimensione del testo che preferisci</string>

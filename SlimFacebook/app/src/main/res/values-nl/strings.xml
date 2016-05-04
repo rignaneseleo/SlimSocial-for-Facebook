@@ -23,14 +23,8 @@
     <string name="summary_recentNewsFirst">In plaats van op Populairste Verslagen</string>
     <string name="title_fixedBar">Vastgezette balk </string>
     <string name="summary_fixedBar">De blauwe balk zal aan de bovenkant blijven. </string>
-    <string name="title_blackTheme">Donker Thema</string>
-    <string name="summary_blackTheme">Zwarte achtergrond en witte tekst. (Ideaal voor AMOLED schermen)</string>
-    <string name="title_hideSponsoredPosts">Toon geen gesponserde verslagen</string>
-    <string name="summary_hideSponsoredPosts">Er zullen geen gesponserde verslagen getoond worden!</string>
     <string name="title_downloadImages">Sla data op </string>
     <string name="summary_downloadImages">Afbeeldingen niet downloaden</string>
-    <string name="title_selectTheme">Selecteer een thema</string>
-    <string name="summary_selectTheme">Kies je favoriete thema</string>
     <string name="version">Versie</string>
     <string name="credits">Credits</string>
     <string name="prefCat_otherCredits_title">Overige</string>
@@ -49,7 +43,6 @@
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Om SlimFacebook te downloaden moet je deze link openen:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Login in Google (if you aren\'t already logged)\n - Push \"Become a tester\"\n - Open this with the Play Store App: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="downloadOrShareWithBrowser">Openen in je browser om op te slaan en te delen.</string>
     <string name="shareThisLink">Deel deze link</string>
     <string name="chooseAnImage">Kies een afbeelding</string>

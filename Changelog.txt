@@ -140,10 +140,22 @@ v2.2.1
 - Updated Portuguese translation (elcioebel from ackuna.com)
 - Updated Chinese translations (dic1911)
 
-v.2.2.2
+v2.2.2
 - Themes without actionbar are temporaly removed 
 
-v.2.2.3
+v2.2.3
 - Fixed scroll bug
+
+v2.2.4
+- Removed unused resources
+- Added Swedish translation (josjo67)
+- Added Thai translation (phakawat)
+- Updated French translation ()
+- Updated Polish translation (kostafil000)
+- Updated Portuguese translation (Soxy)
+- Updated Hungarian translation (kilroy69)
+- Updated Hindi translation (Siddique Nagarkar) 
+- Updated Indonesian translation (Aditya Pratama)
+
 
 ! Consider the possibility to donate !

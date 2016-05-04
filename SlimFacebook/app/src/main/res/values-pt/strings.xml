@@ -1,104 +1,59 @@
-<!--
-SlimSocial for Facebook é um aplicativo de código aberto criado por Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Soxy USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo -->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
 <resources>
-
-    <!-- TRADUÇÃO FEIRA POR: Leandro Coelho aka minimaster4734 and elcioebel-->
-
-    <!--menu string-->
-    <string name="refresh">Atualizar</string>
-    <string name="openInBrowser">Abrir usando o navegador</string>
+    <string name="refresh">Actualizar</string>
+    <string name="openInBrowser">Abrir usando o Navegador</string>
     <string name="settings">Configurações</string>
-    <string name="share">Compartilhar este aplicativo</string>
-    <!--end menu string-->
-
-    <!--settings-->
+    <string name="share">Partilhar esta aplicação</string>
     <string name="prefCat_fb_settings_title">Configurações do Facebook</string>
-    <string name="prefCat_app_settings_title">Configurações do aplicativo</string>
-    <string name="prefCat_app_information_title">Informação do aplicativo</string>
+    <string name="prefCat_app_settings_title">Configurações da Aplicação</string>
+    <string name="prefCat_app_information_title">Informações da Aplicação</string>
     <string name="title_recentNewsFirst">Ordenar o feed de notícias por mais recentes</string>
-    <string name="summary_recentNewsFirst">Ao invés por histórias em destaque</string>
-    <string name="title_centerTextPosts">Centralizar os textos das postagens</string>
-    <string name="summary_centerTextPosts">O texto de cada postagem será centralizado</string>
-    <string name="summary_addSpaceBetweenPosts">Haverá mais espaço entre as postagens</string>
-    <string name="title_addSpaceBetweenPosts">Mais espaço entre as postagens</string>
+    <string name="summary_recentNewsFirst">Em vez de por histórias em destaque</string>
+    <string name="title_centerTextPosts">Centrar o texto das publicações</string>
+    <string name="summary_centerTextPosts">O texto de cada publicação será centrado</string>
+    <string name="summary_addSpaceBetweenPosts">Haverá mais espaço entre as publicações</string>
+    <string name="title_addSpaceBetweenPosts">Mais espaço entre publicações</string>
     <string name="summary_creditsCssThemes">Obrigado pelos temas fantásticos!</string>
-    <string name="summary_theme">Escolher o tema que você gosta</string>
-    <string name="title_fixedBar">Barra superior fixada</string>
-    <string name="summary_fixedBar">A barra azul permanecerá fixada no topo.</string>
-    <string name="title_blackTheme">Tema Escuro</string>
-    <string name="summary_blackTheme">O fundo será preto e o texto branco. (Bom para telas AMOLED)</string>
-    <string name="title_hideSponsoredPosts">Não mostrar postagens patrocinadas</string>
-    <string name="summary_hideSponsoredPosts">Não haverá postagens patrocinadas!</string>
-    <string name="title_downloadImages">Salvar dados</string>
-    <string name="summary_downloadImages">Não baixar imagens</string>
-    <string name="summary_allowGeolocation">Facebook será habilitado para acessar a sua localização</string>
-    <string name="title_allowGeolocation">Permitir uso de GPS</string>
-    <string name="title_selectTheme">Selecionar o Tema</string>
-    <string name="summary_selectTheme">escolher seu tema favorito</string>
+    <string name="summary_theme">Escolha o tema que mais gosta</string>
+    <string name="title_fixedBar">Barra superior fixa</string>
+    <string name="summary_fixedBar">A barra azul permanecerá fixa no topo.</string>
+    <string name="title_downloadImages">Guardar dados</string>
+    <string name="summary_downloadImages">Não descarregar imagens</string>
+    <string name="summary_allowGeolocation">O Facebook será capaz de aceder a sua posição</string>
+    <string name="title_allowGeolocation">Permitir a utilização do GPS</string>
     <string name="version">Versão</string>
     <string name="credits">Créditos</string>
     <string name="prefCat_otherCredits_title">Outros</string>
     <string name="prefCat_developersCredits_title">Desenvolvedores</string>
-    <string name="summary_LeonardoRignanese">Criador e desenvolvedor do aplicativo</string>
+    <string name="summary_LeonardoRignanese">Criador e desenvolvedor da aplicação</string>
     <string name="prefCat_translatorsCredits_title">Tradutores</string>
-    <string name="prefCat_designersCredits_title">Projetistas</string>
+    <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Doar</string>
-    <string name="donateToContribute">Escolhi fazer isso gratuitamente. Pode me oferecer um café?</string>
-    <string name="prefCat_you_title">Você</string>
-    <string name="summary_you">Também é graças a você que este aplicativo existe</string>
-    <string name="title_you">Você é importante</string>
-    <!--end settings-->
-
-    <!--page error-->
-    <string name="titleNoConnection">Opa, há um problema!</string>
-    <string name="descriptionNoConnection">Tente verificar a conexão e atualizar.</string>
-    <string name="awards">Este é um aplicativo de fonte aberta.</string>
-    <!--end page error-->
-
-    <!--other-->
-    <string name="downloadInstruction" >Para baixar SlimFacebook você deve:\n Abrir https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Logar no Google (caso ainda não esteja logado)\n - Pressionar \"Become a tester\"\n - Abrir isto com o aplicativo Play Store: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="donateToContribute">Eu escolhi fazer gratuitamente. Podes me oferecer um café?</string>
+    <string name="summary_you">É também graças a ti que existe esta aplicação</string>
+    <string name="title_you">Tu és importante</string>
+    <string name="titleNoConnection">Ops, existe um problema!</string>
+    <string name="descriptionNoConnection">Tente verificar a conexão e actualizar.</string>
+    <string name="awards">Esta é uma aplicação de código aberto.</string>
     <string name="thanks">Obrigado!</string>
-    <string name="downloadOrShareWithBrowser">Abrindo o navegador você pode baixar ou compartilhar esta imagem.</string>
-    <string name="shareThisLink">Compartilhar este link</string>
-    <string name="chooseAnImage">Escolher uma imagem</string>
-    <string name="summary_FaceSlim">Sem eles eu não poderia adicionar algumas funções atrativas. Se você é um desenvolvedor, precisa ver o seu trabalho enorme!</string>
-    <string name="summary_lRemainl">Criador do logotipo magnífico</string>
+    <string name="downloadOrShareWithBrowser">Abrindo o navegador pode descarregar ou partilhar esta imagem.</string>
+    <string name="shareThisLink">Partilhe este endereço</string>
+    <string name="chooseAnImage">Escolha uma imagem</string>
+    <string name="summary_FaceSlim">Sem eles, eu não conseguiria ter adicionado algumas funções atraentes. Se és um desenvolvedor, tens que ver o enorme trabalho deles!</string>
+    <string name="summary_lRemainl">Criador do logótipo magnífico</string>
     <string name="summary_Pharetra">Cheio de talento e criatividade</string>
-    <string name="exit">Sair</string>
-     <string name="noPersonalInformationAreShared">Nenhuma informação pessoal ou particular sobre você ou seu dispositivo e coletada ou transmitida por este aplicativo!</string>
+    <string name="exit">Saída</string>
+    <string name="noPersonalInformationAreShared">Nenhuma informação pessoal ou privada sobre si ou do dispositivo é guardada ou transmitida pela aplicação!</string>
     <string name="title_theme">Temas</string>
-    <string name="applyingChanges">Aplicando modificações!</string>
+    <string name="applyingChanges">Aplicando alterações!</string>
     <string name="title_textSize">Tamanho do texto</string>
-    <string name="title_enableFastShare">Habilitar Fast Share</string>
-    <string name="summary_enableFastShare">Com Fast Share você pode partilhar qualquer link por simplesmente tocá-lo e segurá-lo</string>
-    <string name="summary_textSize">Escolher o tamanho de texto de sua preferência</string>
-    <!--end other-->
-
-    <!-- PLAY STORE PAGE
-
-DESCRIÇÃO:
-Com apenas 700Kb, permite-lhe usar o Facebook (na sua versão web)
-
-DESCRIÇÃO COMPLETA:
-ATENÇÃO: Este aplicativo pode não ser adequado para quem usa o Facebook com frequência.
-
-Por que eu devo baixar SlimSocial for Facebook?
-- É leve: pesa menos de 1 Mb;
-- Tem um design simples e moderno: tem apenas o que você precisa;
-- É um aplicativo "Open Source" (código aberto): o código desse aplicativo está online no GitHub, qualquer pessoa pode verificar a autenticidade do aplicativo e contribuir para o seu desenvolvimento.
-- Ele é gratuito e sem anúncios;
-- Não é invasivo;
-- Respeita sua privacidade: este aplicativo não requer permissões especiais. O Facebook não acessará nenhum  dado do seu telefone sem o seu consenso
-
-O aplicativo está em pleno desenvolvimento, por isso ainda não funciona:
-- Notificações;
-
-Link para o GitHub
-https://github.com/rignaneseleo/SlimSocial-for-Facebook
-
-*** Este não é um aplicativo oficial do Facebook ***
-Este é um projeto para facilitar a vida das pessoas. Este aplicativo carrega a versão para celular do site oficial do Facebook. Todo o crédito vai para a equipe do Facebook. O aplicativo é fornecido gratuitamente para todos, sem qualquer anúncio.
-    -->
+    <string name="title_enableFastShare">Activar Partilha Rápida</string>
+    <string name="summary_enableFastShare">Com a Partilha Rápida pode partilhar qualquer endereço simplesmente ficando a carregar</string>
+    <string name="summary_textSize">Escolha o tamanho do texto que prefer</string>
+    <string name="refreshToApply">Actualizar Facebook para aplicar as alterações</string>
 </resources>

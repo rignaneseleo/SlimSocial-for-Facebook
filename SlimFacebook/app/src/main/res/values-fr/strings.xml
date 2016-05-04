@@ -7,55 +7,64 @@ SlimSocial for Facebook est une application «Open Source» créée par Leonardo
     <!-- Traduction faite par: Leandro Coelho aka minimaster4734 -->
 
     <!--menu string-->
-    <string name="refresh">Rafraîchir</string>
-    <string name="openInBrowser">Ouvrir sur le navigateur</string>
+    <string name="refresh">Actualiser</string>
+    <string name="openInBrowser">Ouvrir dans le navigateur</string>
     <string name="settings">Paramètres</string>
-    <string name="share">Partager l\'application</string>
+    <string name="share">Partager cette application</string>
     <!--end menu string-->
 
     <!--settings-->
-    <string name="prefCat_fb_settings_title">Paramètres sur Facebook</string>
-    <string name="prefCat_app_settings_title">Paramètres sur l\'application</string>
+    <string name="prefCat_fb_settings_title">Réglages de Facebook</string>
+    <string name="prefCat_app_settings_title">Réglages de l\'application</string>
     <string name="prefCat_app_information_title">Informations sur l\'application</string>
-    <string name="title_recentNewsFirst">Montrer premièrement les nouvelles plus récentes</string>
-    <string name="summary_recentNewsFirst">Au lieu de les nouvelles plus importantes </string>
-    <string name="title_fixedBar">Barre fixe</string>
-    <string name="summary_fixedBar"> La barre bleue restera fixe en haut.</string>
-    <string name="title_blackTheme">Thème noir</string>
-    <string name="summary_blackTheme">Le fond será noir et le texte será blanc. (Bon pour les écrans AMOLED)</string>
-    <string name="title_hideSponsoredPosts">Ne pas montrer des publications sponsorisées</string>
-    <string name="summary_hideSponsoredPosts">Il n\'y aura pas des publications sponsorisées!</string>
-    <string name="title_downloadImages">Économiser donnés</string>
-    <string name="summary_downloadImages">Les images non serons pas chargées</string>
-    <string name="title_selectTheme">Choisissez un thème</string>
-    <string name="summary_selectTheme"> Choisissez votre thème préféré</string>
+    <string name="title_recentNewsFirst">Trier le flux de nouvelles depuis les plus récentes</string>
+    <string name="summary_recentNewsFirst">Instead of by top stories</string>
+    <string name="title_centerTextPosts">Centrer le texte des publications</string>
+    <string name="summary_centerTextPosts">Le texte de chaque publication sera centré</string>
+    <string name="summary_addSpaceBetweenPosts">Il y aura plus d\'espace entre les publications</string>
+    <string name="title_addSpaceBetweenPosts">Plus d\'espace entre les publications</string>
+    <string name="summary_creditsCssThemes">Thanks for the fantastic themes!</string>
+    <string name="summary_theme">Choisissez le thème que vous aimez</string>
+    <string name="title_fixedBar">Fixed top bar</string>
+    <string name="summary_fixedBar">La barre bleue restera fixée en haut.</string>
+    <string name="title_downloadImages">Sauvegarder les données</string>
+    <string name="summary_downloadImages">Ne pas télécharger les images</string>
+    <string name="summary_allowGeolocation">Facebook pourra accéder à votre localisation</string>
+    <string name="title_allowGeolocation">Autoriser l\'utilisation du GPS</string>
+    <string name="title_textSize">Taille du texte</string>
+    <string name="title_enableFastShare">Enable Fast Share</string>
+    <string name="summary_enableFastShare">With Fast Share you can share any link simply tapping and holding it</string>
+    <string name="summary_textSize">Choisissez la taille de texte que vous préférez</string>
     <string name="version">Version</string>
     <string name="credits">Crédits</string>
     <string name="prefCat_otherCredits_title">Autres</string>
-    <string name="prefCat_developersCredits_title">Développeurs</string>
-    <string name="summary_LeonardoRignanese">Créateur et développeur de l\'application</string>
+    <string name="prefCat_developersCredits_title">Concepteurs</string>
+    <string name="summary_LeonardoRignanese">Créateur et concepteur de l\'application</string>
     <string name="prefCat_translatorsCredits_title">Traducteurs</string>
     <string name="prefCat_designersCredits_title">Designers</string>
-    <string name="donate">Donation</string>
-    <string name="donateToContribute">J\'ai décidé de faire l\'application gratuitement. Pouvez-vous payer moi un café?</string>
+    <string name="donate">Donate</string>   <string name="title_theme">Thèmes</string>
+    <string name="donateToContribute">J\'ai choisi de le faire gratuitement. Pouvez-vous m\'offrir un café ?</string>
+    <string name="summary_you">C\'est aussi grâce à vous que cette application existe.</string>
+    <string name="title_you">Vous êtes important</string>
     <!--end settings-->
 
     <!--page error-->
-    <string name="titleNoConnection">Ops, il y a eu un problème!</string>
-    <string name="descriptionNoConnection">Vérifiez votre connexion et essayez de nouveau.</string>
-    <string name="awards">Cette application est «Open Source»</string>
+    <string name="titleNoConnection">Oups, il y a un problème !</string>
+    <string name="descriptionNoConnection">Vérifiez votre connexion et réessayez.</string>
+    <string name="awards">This is an Open Source app.</string>
     <!--end page error-->
 
     <!--other-->
-    <string name="thanks">Merci!</string>
-    <string name="downloadOrShareWithBrowser">Vous pouvez sauvegarder ou partager cette image en ouvrant le navigateur.</string>
-    <string name="shareThisLink">Partager cet lien</string>
-    <string name="chooseAnImage">Choisissez une image</string>
-    <string name="summary_FaceSlim">Sans eux, il me serais pas possible d\'ajouter quelques fictions utiles. Si vous êtes un développeurs, vous devez regarder leurs travails brillants!</string>
+    <string name="thanks">Merci !</string>
+    <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
+    <string name="shareThisLink">Partagez ce lien</string>
+    <string name="summary_FaceSlim">Without they, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
     <string name="summary_lRemainl">Créateur du magnifique logo</string>
-    <string name="exit">Sortir</string>
-    <string name="noPersonalInformationAreShared">Aucune information personnel ou privée sur toi est collectée ou transmit par cette application!</string>
-
+    <string name="summary_Pharetra">Plein de talent et de créativité</string>
+    <string name="exit">Sortie</string>
+    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
+    <string name="applyingChanges">Application des changements !</string>
+    <string name="refreshToApply">Rechargez Facebook pour appliquer les changements</string>
     <!--end other-->
 
     <!-- PLAY STORE PAGE
@@ -69,19 +78,19 @@ AVERTISSEMENT: Cette application peut ne pas convenir à ceux qui utilisent Face
 Pourquoi devrais-je télécharger SlimSocial for Facebook?
 - Il est léger: il pèse moins de 1 Mo;
 - Il a un design simple et moderne: il y a seulement ce que vous avez besoin;
-- Il est «Open Source» (code source ouverte): le code de cette application est sur GitHub, vous pouvez vérifier l'authenticité de l'application et contribuer à son développement.
+- Il est «Open Source» (code source ouverte): le code de cette application est sur GitHub, vous pouvez vérifier l\'authenticité de l\'application et contribuer à son développement.
 - Il est gratuit et sans publicité;
-- Il n'est pas invasif;
-- Il respecte votre donnés privée: cette application ne nécessite pas de permis spéciaux. Facebook n'aura pas l'accès à les données de votre téléphone sans votre consentement.
+- Il n\'est pas invasif;
+- Il respecte votre donnés privée: cette application ne nécessite pas de permis spéciaux. Facebook n\'aura pas l\'accès à les données de votre téléphone sans votre consentement.
 
-L'application est en cours de développement, de sorte qu'il ne fonctionne toujours pas:
+L\'application est en cours de développement, de sorte qu\'il ne fonctionne toujours pas:
 - Notifications;
 
 Lien vers GitHub
 https://github.com/rignaneseleo/SlimSocial-for-Facebook
 
-*** Cette application n'est pas une application officielle du Facebook ***
-C'est un projet visant à faciliter la vie des personnes. Cette application charge la version mobile du site officiel. Tout le crédit va à l'équipe de Facebook. L'application est gratuite pour tous, sans aucune annonce.
+*** Cette application n\'est pas une application officielle du Facebook ***
+C\'est un projet visant à faciliter la vie des personnes. Cette application charge la version mobile du site officiel. Tout le crédit va à l\'équipe de Facebook. L\'application est gratuite pour tous, sans aucune annonce.
 -->
 
 </resources>

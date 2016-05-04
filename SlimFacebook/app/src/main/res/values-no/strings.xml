@@ -26,16 +26,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_theme">Velg temaet som du liker</string>
     <string name="title_fixedBar">Fiksert topplinje</string>
     <string name="summary_fixedBar">Den blåe linjen vil sitte fast på toppen.</string>
-    <string name="title_blackTheme">Mørkt tema</string>
-    <string name="summary_blackTheme">Bakgrunnen vil være svart og teksten hvit. (Bra for AMOLED-skjermer)</string>
-    <string name="title_hideSponsoredPosts">Ikke vis sponsede innlegg</string>
-    <string name="summary_hideSponsoredPosts">Det vil ikke finnes noen sponsede innlegg!</string>
     <string name="title_downloadImages">Lagre data</string>
     <string name="summary_downloadImages">Ikke last ned bilder</string>
     <string name="summary_allowGeolocation">Facebook vil kunne få tilgang til din posisjon</string>
     <string name="title_allowGeolocation">Tillat bruk av GPS</string>
-    <string name="title_selectTheme">Velg temaet</string>
-    <string name="summary_selectTheme">velg ditt favorittema</string>
     <string name="version">Versjon</string>
     <string name="credits">Bidragsytere</string>
     <string name="prefCat_otherCredits_title">Annet</string>
@@ -45,7 +39,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">Designere</string>
     <string name="donate">Doner</string>
     <string name="donateToContribute">Jeg valgte å gjøre det gratis. Kan du tilby meg en kopp kaffe?</string>
-    <string name="prefCat_you_title">Deg</string>
     <string name="summary_you">Det er også takket være deg at denne appen finnes</string>
     <string name="title_you">Du er viktig</string>
     <!--end settings-->
@@ -57,7 +50,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction" >For å laste ned SlimFacebook så må du:\n - Åpne https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Logge inn i Google (hvis du ikke allerede er det)\n - Trykke \"Bli en tester\"\n - Åpne dette med Play Store-appen: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Takk!</string>
     <string name="downloadOrShareWithBrowser">Åpner nettleser hvor du kan laste ned eller dele dette bildet.</string>
     <string name="shareThisLink">Del denne lenken</string>

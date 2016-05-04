@@ -6,7 +6,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 
     <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
 
-    <!-- TRANSLATION IS MADE BY: *Miha Krsevan* -->
+    <!-- TRANSLATION IS MADE BY: *Miha Krsevan*
+    http://stringsxmlbuilder.netsons.org/builder.php?url=https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/SlimFacebook/app/src/main/res/values/strings.xml&lang=sl
+    -->
 
     <!--menu string-->
     <string name="refresh">Osveži</string>
@@ -23,8 +25,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_recentNewsFirst">Najnovejše objave prve</string>
     <string name="title_downloadImages">Shrani podatke </string>
     <string name="summary_downloadImages">Ne prenesi slik</string>
-    <string name="title_selectTheme">Izberi temo</string>
-    <string name="summary_selectTheme">Izberite najljubšo temo</string>
     <string name="version">Verzija</string>
     <!--end settings-->
 
@@ -35,7 +35,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction">Za prenos SlimFacebook aplikacije, obiščite:\n - Open https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - Prijavite se v Google (če še niste prijavljeni)\n - Kliknite \"Postani preizkuševalec\"\n - Odprite z aplikacijo Trgovina Play: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">Hvala!</string>
     <string name="downloadOrShareWithBrowser">Odpiranje brskalnika za deljenje ali prenos.</string>
     <!--end other-->

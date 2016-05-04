@@ -1,19 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
 <resources>
-    <!-- TRANSLATION IS MADE BY: *Minions_Army* -->
+    <!-- TRANSLATION IS MADE BY: *ADITYA PRATAMA* -->
 
-    <string name="awards">Aplikasi ini dengan Sumber kode terbuka.</string>
-    <string name="descriptionNoConnection">Tidak ada koneksi,Coba Segarkan kembali.</string>
+    <!--menu string-->
+    <string name="refresh">Perbarui</string>
     <string name="openInBrowser">Buka dengan peramban</string>
-    <string name="prefCat_app_settings_title">Pengaturan Aplikasi</string>
-    <string name="prefCat_fb_settings_title">PengaturanFacebook</string>
-    <string name="refresh">Segarkan</string>
     <string name="settings">Pengaturan</string>
-    <string name="share">Bagikan Aplikasi Ini</string>
-    <string name="summary_recentNewsFirst">instead of by top stories</string>
-    <string name="titleNoConnection">Ops, Ada masalah Jaringan!</string>
-    <string name="title_recentNewsFirst">Order the news feed by most recent</string>
-    <string name="version">Version</string>
-    <string name="thanks">Terima kasih!</string>
-    <string name="prefCat_app_information_title">App Informasi</string>
+    <string name="share">Bagikan aplikasi ini</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Pengaturan Facebook</string>
+    <string name="prefCat_app_settings_title">Pengaturan Aplikasi</string>
+    <string name="prefCat_app_information_title">Informasi tentang Aplikasi</string>
+    <string name="title_recentNewsFirst">Urutkan Kabar Berita Terbaru</string>
+    <string name="summary_recentNewsFirst">Daripada Kabar Berita Terpopuler</string>
+    <string name="title_centerTextPosts">Pusatkan teks</string>
+    <string name="summary_centerTextPosts">Teks dari setiap posting akan dipusatkan</string>
+    <string name="summary_addSpaceBetweenPosts">Akan ada lebih banyak ruang antar posting</string>
+    <string name="title_addSpaceBetweenPosts">Tambahkan ruang antar posting</string>
+    <string name="summary_creditsCssThemes">Terimakasih untuk tema yang fantastik!</string>
+    <string name="summary_theme">Pilih tema yang kamu sukai</string>
+    <string name="title_fixedBar">Tetapkan bar bagian atas</string>
+    <string name="summary_fixedBar">Bar biru akan selalu nampak dibagian atas.</string>
+    <string name="title_downloadImages">Hemat penggunaan data</string>
+    <string name="summary_downloadImages">Jangan/Unduh Gambar</string>
+    <string name="summary_allowGeolocation">Facebook akan dapat mengakses posisi anda</string>
+    <string name="title_allowGeolocation">Ijinkan penggunaan GPS</string>
+    <string name="version">Versi</string>
+    <string name="credits">Kredit</string>
+    <string name="prefCat_otherCredits_title">Lainya</string>
+    <string name="prefCat_developersCredits_title">Pengembang</string>
+    <string name="summary_LeonardoRignanese">Pencipta dan pengembang aplikasi</string>
+    <string name="prefCat_translatorsCredits_title">Penerjemah</string>
+    <string name="prefCat_designersCredits_title">Desainer</string>
+    <string name="donate">Donasi</string>
+    <string name="donateToContribute">Saya memilih untuk melakukannya secara gratis. Dapatkah Anda menawarkan saya kopi?</string>
+    <string name="summary_you">Terimakasih berkat Anda aplikasi ini dapat terwujud</string>
+    <string name="title_you">Anda sangat penting</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Ops, ada masalah!</string>
+    <string name="descriptionNoConnection">Cobalah cek koneksi data dan lakukan pembaruan.</string>
+    <string name="awards">Ini adalah sebuah aplikasi Open Source.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="thanks">Terimakasih!</string>
+    <string name="downloadOrShareWithBrowser">Membuka peramban, anda dapat mengunduh atau membagikan gambar ini.</string>
+    <string name="shareThisLink">Bagikan tautan ini</string>
+    <string name="chooseAnImage">Pilih gambar</string>
+    <string name="summary_FaceSlim">Tanpa mereka, saya tidak dapat menambahkan beberapa fungsi atraktif. Jika anda seorang pengembang, anda dapat melihat pekerjaan besar mereka!</string>
+    <string name="summary_lRemainl">Pencipta logo yang indah</string>
+    <string name="summary_Pharetra">Penuh bakat dan kreativitas</string>
+    <string name="exit">Keluar</string>
+    <string name="noPersonalInformationAreShared">Tidak ada informasi pribadi atau privat tentang Anda atau perangkat anda yang dikumpulkan dan disebarkan oleh aplikasi ini!</string>
+    <string name="title_theme">Tema</string>
+    <string name="applyingChanges">Menerapkan perubahan!</string>
+    <string name="title_textSize">Ukuran Teks</string>
+    <string name="title_enableFastShare">Aktifkan share cepat</string>
+    <string name="summary_enableFastShare">Dengan share cepat anda dapat membagikan semua tautan dengan tekan dan tahan</string>
+    <string name="summary_textSize">Pilih ukuran teks yang anda sukai</string>
+    <string name="refreshToApply">Perbarui Facebook untuk menerapkan perubahan</string>
+    <!--end other-->
 </resources>

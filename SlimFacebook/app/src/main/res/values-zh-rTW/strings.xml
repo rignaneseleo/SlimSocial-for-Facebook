@@ -29,16 +29,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_theme">選擇您喜歡的主題</string>
     <string name="title_fixedBar">固定導航列</string>
     <string name="summary_fixedBar">導航選單將被固定於頁面上方.</string>
-    <string name="title_blackTheme">黑化主題</string>
-    <string name="summary_blackTheme">將頁面背景改為黑色. (建議AMOLED螢幕裝置使用者啟用)</string>
-    <string name="title_hideSponsoredPosts">不顯示贊助貼文</string>
-    <string name="summary_hideSponsoredPosts">動態中將不會出現贊助的廣告貼文!</string>
     <string name="title_downloadImages">節省流量</string>
     <string name="summary_downloadImages">停用圖片以節省流量</string>
     <string name="summary_allowGeolocation">讓Facebook存取您的所在位置</string>
     <string name="title_allowGeolocation">允許程式存取GPS</string>
-    <string name="title_selectTheme">選擇主題</string>
-    <string name="summary_selectTheme">選擇您喜愛的主題</string>
     <string name="version">版本</string>
     <string name="credits">貢獻者</string>
     <string name="prefCat_otherCredits_title">其他</string>
@@ -48,7 +42,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_designersCredits_title">設計</string>
     <string name="donate">贊助</string>
     <string name="donateToContribute">這個程式為免費提供. 但或許您能請我喝杯咖啡?</string>
-    <string name="prefCat_you_title">您</string>
     <string name="summary_you">我也感謝您使用本程式</string>
     <string name="title_you">您，對我們很重要</string>
     <!--end settings-->
@@ -60,7 +53,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end page error-->
 
     <!--other-->
-    <string name="downloadInstruction" >若要下載SlimFacebook:\n - 開啟 https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook \n - 登入Google帳號 (如果未登入)\n - 按下 \"成為測試人員\"\n - 使用Play Store開啟這個連結: https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
     <string name="thanks">感謝!</string>
     <string name="downloadOrShareWithBrowser">使用瀏覽器開啟以下載或分享這張圖片.</string>
     <string name="shareThisLink">分享本連結</string>

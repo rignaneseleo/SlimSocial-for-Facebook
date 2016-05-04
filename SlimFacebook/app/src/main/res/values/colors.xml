@@ -11,10 +11,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <color name="darkBlueSlimFacebookTheme">#2d3a6b</color>
 
     <!--dark theme-->
-    <color name="blueSlimFacebookThemeDark">#1a237e</color>
-    <color name="darkBlueSlimFacebookThemeDark">#101650</color>
 
     <!--light theme-->
-    <color name="blueSlimFacebookThemeLight">#c5cae9</color>
-    <color name="darkBlueSlimFacebookThemeLight">#9fa8da</color>
 </resources>

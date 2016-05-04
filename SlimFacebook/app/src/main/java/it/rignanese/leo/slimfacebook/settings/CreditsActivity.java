@@ -1,16 +1,17 @@
-package it.rignanese.leo.slimfacebook;
+package it.rignanese.leo.slimfacebook.settings;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
+import it.rignanese.leo.slimfacebook.R;
 
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  */
-public class ShowCreditsActivity  extends PreferenceActivity {
+public class CreditsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
