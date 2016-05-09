@@ -70,7 +70,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 	<string name="summary_Pharetra">Full of talent and creativity</string>
     <string name="exit">Exit</string>
     <string name="downloadThisApp" translatable="false">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
+    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmitted by this app !</string>
     <string name="title_theme">Themes</string>
     <string name="applyingChanges">Applying changes!</string>
     <string name="title_textSize">Text Size</string>
@@ -107,12 +107,4 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 ***Take note that this is not an official app from Facebook***
 This is a project which meant to make people life easier. This app will launch Facebook official website. All credit goes to Facebook team. It is provided free for all without any Ads.
     -->
-
-
-    <!--CSS, DELETE THIS FROM YOUR TRANSLATION
-
-    This css are made originally from FaceSlim
-    See it on https://github.com/indywidualny/FaceSlim
-    -->
-
 </resources>
