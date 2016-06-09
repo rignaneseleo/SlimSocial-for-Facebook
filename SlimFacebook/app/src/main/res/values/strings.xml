@@ -69,10 +69,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="shareThisLink">Share this link</string>
     <string name="summary_FaceSlim">Without them, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
     <string name="summary_lRemainl">Creator of the magnificent logo</string>
-    <string name="summary_Pharetra">Full of talent and creativity</string>
+	<string name="summary_Pharetra">Full of talent and creativity</string>
     <string name="exit">Exit</string>
     <string name="downloadThisApp" translatable="false">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app!</string>
+    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or transmitted by this app !</string>
     <string name="title_theme">Themes</string>
     <string name="applyingChanges">Applying changes!</string>
     <string name="title_textSize">Text Size</string>
@@ -97,7 +97,7 @@ DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ )
 The Facebook Experience into 400kb
 
 FULL DESCRIPTION:
-ATTENTION: This app may not be suitable for who use it frequently.
+ATTENTION: This app may not be suitable for who use it frequently. 
 
 Why do I download SlimSocial for Facebook?
 - It is lightweight: it weighs less than 1 Mb;
@@ -117,5 +117,12 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 ***Take note that this is not an official app from Facebook***
 This is a project which meant to make people life easier. This app will launch Facebook official website. All credit goes to Facebook team. It is provided free for all without any Ads.
     -->
-</resources>
 
+
+    <!--CSS, DELETE THIS FROM YOUR TRANSLATION
+
+    This css are made originally from FaceSlim
+    See it on https://github.com/indywidualny/FaceSlim
+    -->
+
+</resources>
