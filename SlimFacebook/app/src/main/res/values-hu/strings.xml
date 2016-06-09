@@ -1,72 +1,60 @@
-<!--
-SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Dániel Tanács (CanibelZ @XDA) USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
 <resources>
-    <!-- TRANSLATION IS MADE BY: *kilroy69* -->
-
-    <!--menu string-->
     <string name="refresh">Frissítés</string>
-    <string name="openInBrowser">Megnyitás Böngészõvel</string>
+    <string name="openInBrowser">Megnyitás böngészőben</string>
     <string name="settings">Beállítások</string>
-    <string name="share">Megosztás</string>
-    <!--end menu string-->
-
-    <!--settings-->
-    <string name="prefCat_fb_settings_title">Facebook Beállítások</string>
-    <string name="prefCat_app_settings_title">Alkalmazás Beállítások</string>
-    <string name="prefCat_app_information_title">Alkalmazás Info</string>
-    <string name="title_recentNewsFirst">Rendezés legfrissebb hírek szerint</string>
-    <string name="summary_recentNewsFirst">Friss Hírek</string>
-    <string name="title_centerTextPosts">Középre igazítás</string>
-    <string name="summary_centerTextPosts">Minden posztszöveget középre igazít</string>
-    <string name="summary_addSpaceBetweenPosts">Több hely lesz a posztok között</string>
-    <string name="title_addSpaceBetweenPosts">Több hely</string>
-    <string name="summary_creditsCssThemes">Köszönöm ezt a szuper témát!</string>
-    <string name="summary_theme">Válassz egy témát</string>
-    <string name="title_fixedBar">Navigációs sáv lezárása</string>
-    <string name="summary_fixedBar">A navigációs sáv marad görgetésnél is.</string>
-    <string name="title_downloadImages">Adatforgalom csökkentése (újraindítás szükséges)</string>
-    <string name="summary_downloadImages">Képeket nem tölti le</string>
-    <string name="summary_allowGeolocation">A Facebook hozzá fog férni a pozíciójához</string>
-    <string name="title_allowGeolocation">Engedélyezi a GPS használatát</string>
-    <string name="version">Verzió</string>
-    <string name="credits">Fejlesztõk</string>
-    <string name="prefCat_otherCredits_title">Egyéb</string>
-    <string name="prefCat_developersCredits_title">Fejlesztõk</string>
-    <string name="summary_LeonardoRignanese">Az alkalmazás készítõje és fejlesztõje</string>
+    <string name="share">Alkalmazás megosztása</string>
+    <string name="prefCat_fb_settings_title">Facebook beállítások</string>
+    <string name="prefCat_app_settings_title">App beállítások</string>
+    <string name="prefCat_app_information_title">App információ</string>
+    <string name="title_recentNewsFirst">Hírfolyam rendezése legfrissebb szerint</string>
+    <string name="summary_recentNewsFirst">A legjobb történések helyett</string>
+    <string name="title_centerTextPosts">Bejegyzések középre igazítása</string>
+    <string name="summary_centerTextPosts">A bejegyzések szövege középre lesz igazítva</string>
+    <string name="summary_addSpaceBetweenPosts">Több hely lesz a bejegyzések között</string>
+    <string name="title_addSpaceBetweenPosts">Több hely a bejegyzések között</string>
+    <string name="summary_creditsCssThemes">Köszönöm a fantasztikus témákat!</string>
+    <string name="summary_theme">Válaszd ki a neked tetsző témát</string>
+    <string name="title_fixedBar">Fix felső sáv</string>
+    <string name="summary_fixedBar">A kék sáv folyton látszódni fog felül.</string>
+    <string name="title_downloadImages">Adatok mentése</string>
+    <string name="summary_downloadImages">Ne töltsön le képeket</string>
+    <string name="summary_allowGeolocation">A Facebook hozzáférhet a pozíciódhoz</string>
+    <string name="title_allowGeolocation">GPS használatának engedélyezése</string>
+    <string name="version">Változat</string>
+    <string name="credits">Credits</string>
+    <string name="prefCat_otherCredits_title">Más</string>
+    <string name="prefCat_developersCredits_title">Fejlesztők</string>
+    <string name="summary_LeonardoRignanese">Az alkalmazás készítője és fejlesztője</string>
     <string name="prefCat_translatorsCredits_title">Fordítók</string>
-    <string name="prefCat_designersCredits_title">Designer</string>
-    <string name="donate">Segítsd a munkámat</string>
-    <string name="donateToContribute">Én ingyen csinálom. Meghívsz egy kávéra?</string>
-    <string name="summary_you">Köszönöm Neked, hiszen használod az alkalmazásomat</string>
-    <string name="title_you">Te is Fontos vagy</string>
-    <!--end settings-->
-
-    <!--page error-->
-    <string name="titleNoConnection">Hupsz, akadt egy kis probléma!</string>
-    <string name="descriptionNoConnection">Próbáld meg leellenõrizni az internet kapcsolatot és frissíts.</string>
+    <string name="prefCat_designersCredits_title">Tervezők</string>
+    <string name="donate">Adományozás</string>
+    <string name="donateToContribute">Úgy döntöttem, hogy ingyen fejlesztem. Vennél nekem egy kávét?</string>
+    <string name="summary_you">Nektek is köszönhető, hogy ez az alkalmazás létrejött</string>
+    <string name="title_you">Fontos vagy</string>
+    <string name="titleNoConnection">Ops, van egy probléma!</string>
+    <string name="descriptionNoConnection">Ellenőrizd a kapcsolatot, majd frissíts.</string>
     <string name="awards">Ez egy nyílt forráskódú alkalmazás.</string>
-    <!--end page error-->
-
-    <!--other-->
     <string name="thanks">Köszönöm!</string>
-    <string name="downloadOrShareWithBrowser">Böngészõvel le lehet tölteni, vagy megosztani ezt a képet.</string>
-    <string name="shareThisLink">Link Megosztása</string>
-    <string name="chooseAnImage">Kép kiválasztása</string>
-    <string name="summary_FaceSlim">Néhány érdekes funkció hiányzik. Ha fejlesztõ vagy, akkor tudhatod, hogy ez nagy munka!</string>
-    <string name="summary_lRemainl">Káprázatos logó készítõje</string>
-    <string name="summary_Pharetra">Tehetség és kreativitás</string>
+    <string name="downloadOrShareWithBrowser">A böngészőt megnyitva tudod letölteni vagy megosztani ezt a képet.</string>
+    <string name="shareThisLink">Link megosztása</string>
+    <string name="summary_FaceSlim">Nélkülük nem tudnék további vonzó funkciókat az alkalmazáshoz adni. Ha te is egy fejlesztő vagy, meg kell nézned a munkáikat!</string>
+    <string name="summary_lRemainl">A csodálatos logó alkotója</string>
+    <string name="summary_Pharetra">Tehetséggel és kreativitással teli</string>
     <string name="exit">Kilépés</string>
-    <string name="noPersonalInformationAreShared">Az alkalmazás nem gyûjt Rólad és a készülékedrõl személyes vagy bizalmas információt, és nem is küldi tovább!</string>
+    <string name="noPersonalInformationAreShared">Ez az alkalmazás nem gyűjt vagy küld el személyes információkat rólad vagy a telefonodról!</string>
     <string name="title_theme">Témák</string>
-    <string name="applyingChanges">Változtatások alkalmazva!</string>
-    <string name="title_textSize">Szöveg méret</string>
-    <string name="title_enableFastShare">Gyors megosztás alkalmazása</string>
-    <string name="summary_enableFastShare">A gyors megosztással meg tudsz osztani bármilyen linket, ha csak egyszerûen rákattintasz és nyomva tartod</string>
-    <string name="summary_textSize">Válaszd ki azt a szöveg méretet, ami Neked tetszik</string>
-    <string name="refreshToApply">Frissítsd az alkalmazást, hogy a változtatások életbe lépjenek</string>
-
-    <!--end other-->
-
+    <string name="applyingChanges">Módosítások alkalmazása!</string>
+    <string name="title_textSize">Szövegméret</string>
+    <string name="title_enableFastShare">Gyors megosztás engedélyezése</string>
+    <string name="summary_enableFastShare">A gyors megosztással egyszerűen hosszan megnyomva tudsz megosztani</string>
+    <string name="summary_textSize">Válaszd ki a neked tetsző szövegméretet</string>
+    <string name="refreshToApply">Facebook frissítése a változások alkalmazásához</string>
 </resources>

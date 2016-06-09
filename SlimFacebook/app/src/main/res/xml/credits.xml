@@ -6,8 +6,9 @@
         <PreferenceScreen
             android:key="pref_you"
             android:summary="@string/summary_you"
-            android:title="@string/title_you"/>
+            android:title="@string/title_you" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCat_key_developerCredits"
         android:title="@string/prefCat_developersCredits_title">
@@ -17,7 +18,23 @@
             android:title="@string/mainDeveloper">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/rignaneseleo/SlimSocial-for-Facebook"/>
+                android:data="https://github.com/rignaneseleo/SlimSocial-for-Facebook" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_SaschaHa"
+            android:summary="@string/summary_SaschaHa"
+            android:title="SaschaHa">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.facebook.com/SaschaHa-Apps-658340960897111/" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_delight.im"
+            android:summary="@string/summary_AdvancedWebView"
+            android:title="delight.im AdvancedWebView">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/indywidualny/FaceSlim" />
         </PreferenceScreen>
         <PreferenceScreen
             android:key="pref_FaceSlim"
@@ -25,7 +42,7 @@
             android:title="FaceSlim Developers">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/indywidualny/FaceSlim"/>
+                android:data="https://github.com/indywidualny/FaceSlim" />
         </PreferenceScreen>
     </PreferenceCategory>
 
@@ -35,84 +52,53 @@
         <PreferenceScreen
             android:key="pref_lRemainl"
             android:summary="@string/summary_lRemainl"
-            android:title="lRemainl"/>
+            android:title="lRemainl" />
         <PreferenceScreen
             android:key="pref_Pharetra"
             android:summary="@string/summary_Pharetra"
-            android:title="Pharetra"/>
+            android:title="Pharetra" />
         <PreferenceScreen
             android:key="pref_PIERONMU"
             android:summary="@string/summary_creditsCssThemes"
-            android:title="PIERO'NMU"/>
+            android:title="PIERO'NMU" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="prefCat_key_translatorsCredits"
         android:title="@string/prefCat_translatorsCredits_title">
         <PreferenceScreen
-            android:key="pref_Minions_Army"
-            android:summary="Indonesian"
-            android:title="Minions_Army"/>
-        <PreferenceScreen
-            android:key="pref_minimaster4734"
-            android:summary="French, Spanish, Portuguese"
-            android:title="minimaster4734"/>
-        <PreferenceScreen
-            android:key="pref_elcioebel"
-            android:summary="Portuguese"
-            android:title="elcioebel"/>
-        <PreferenceScreen
-            android:key="pref_buagseitei"
-            android:summary="German"
-            android:title="buagseitei"/>
-        <PreferenceScreen
-            android:key="pref_dic1911"
-            android:summary="Chinese"
-            android:title="dic1911"/>
-        <PreferenceScreen
-            android:key="pref_DoctorRzepa"
-            android:summary="Polish"
-            android:title="DoctorRzepa"/>
-        <PreferenceScreen
-            android:key="pref_MikeL"
-            android:summary="Greek"
-            android:title="MikeL"/>
-        <PreferenceScreen
-            android:key="pref_naberl"
-            android:summary="Turkish"
-            android:title="naberl and Yasir Bilgiç"/>
-        <PreferenceScreen
-            android:key="pref_kilroy69"
-            android:summary="Hungarian"
-            android:title="kilroy69"/>
-        <PreferenceScreen
-            android:key="pref_MihaKrsevan"
-            android:summary="Slovenian"
-            android:title="Miha Krsevan"/>
-        <PreferenceScreen
-            android:key="pref_multibestia"
-            android:summary="Czech"
-            android:title="multibestia"/>
-        <PreferenceScreen
-            android:key="pref_TimVNL"
-            android:summary="Dutch"
-            android:title="TimVNL and Othellods"/>
-        <PreferenceScreen
-            android:key="pref_ja_som"
-            android:summary="Slovak"
-            android:title="ja_som"/>
-        <PreferenceScreen
-            android:key="pref_EMINEM786"
-            android:summary="Hindi"
-            android:title="EMINEM786"/>
-        <PreferenceScreen
-            android:key="pref_Xkirnel99"
             android:summary="Arabic"
-            android:title="Xkirnel99"/>
+            android:title="Xkirnel" />
         <PreferenceScreen
-            android:key="pref_Yomawaru"
-            android:summary="Norwegian"
-            android:title="Yomawaru"/>
+            android:summary="Spanish"
+            android:title="minimaster4734 and lRemainl" />
+        <PreferenceScreen
+            android:summary="French"
+            android:title="minimaster4734" />
+        <PreferenceScreen
+            android:summary="Hindi"
+            android:title="Siddique Nagarkar" />
+        <PreferenceScreen
+            android:summary="Indonesian"
+            android:title="ADITYA PRATAMA" />
+        <PreferenceScreen
+            android:summary="Polish"
+            android:title="Mikele.O." />
+        <PreferenceScreen
+            android:summary="Portuguese"
+            android:title="sonickles9" />
+        <PreferenceScreen
+            android:summary="Slovak"
+            android:title="R3nd0gg" />
+        <PreferenceScreen
+            android:summary="Tamil"
+            android:title="Ramkumar" />
+        <PreferenceScreen
+            android:summary="Simplified Chinese"
+            android:title="Jason Yuen" />
+        <PreferenceScreen
+            android:summary="Traditional Chinese"
+            android:title="DiC1911" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -124,7 +110,7 @@
             android:title="Subscribe/Unsubscribe the BETA">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook"/>
+                android:data="https://play.google.com/apps/testing/it.rignanese.leo.slimfacebook" />
         </PreferenceScreen>
     </PreferenceCategory>
 
@@ -136,16 +122,16 @@
             android:title="XDA forum">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="http://forum.xda-developers.com/"/>
+                android:data="http://forum.xda-developers.com/" />
         </PreferenceScreen>
         <PreferenceScreen
             android:key="pref_github"
-            android:title="GitHub Inc."/>
+            android:title="GitHub Inc." />
         <PreferenceScreen
             android:key="pref_facebook"
-            android:title="Facebook Inc."/>
+            android:title="Facebook Inc." />
         <PreferenceScreen
             android:key="pref_google"
-            android:title="Google Inc."/>
+            android:title="Google Inc." />
     </PreferenceCategory>
 </PreferenceScreen>

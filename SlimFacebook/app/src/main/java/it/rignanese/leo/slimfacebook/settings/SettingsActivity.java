@@ -1,10 +1,5 @@
 package it.rignanese.leo.slimfacebook.settings;
 
-/**
- * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
- */
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -19,11 +14,15 @@ import android.widget.Toast;
 import it.rignanese.leo.slimfacebook.MainActivity;
 import it.rignanese.leo.slimfacebook.R;
 
-
+/**
+ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
+ * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+ * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+ */
 public class SettingsActivity extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    static String appVersion;
+   private static String appVersion;
 
     //using a PreferenceFragment along with the PreferenceActivity (see there
     // http://alvinalexander.com/android/android-tutorial-preferencescreen-preferenceactivity-preferencefragment )
@@ -93,7 +92,7 @@ public class SettingsActivity extends PreferenceActivity implements
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);//load the layout
+            addPreferencesFromResource(R.xml.settings);//load the layout
 
             //set the appVersion
             Preference version = findPreference("pref_key_version");
@@ -103,9 +102,8 @@ public class SettingsActivity extends PreferenceActivity implements
 
 
     //read the appVersion
-    public String appVersion() throws PackageManager.NameNotFoundException {
+    private String appVersion() throws PackageManager.NameNotFoundException {
         PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        String version = pInfo.versionName;
-        return version;
+        return pInfo.versionName;
     }
 }

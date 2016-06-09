@@ -1,59 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY Soxy USING StringsXmlBuilder -->
-<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo -->
+<!-- THIS TRANSLATION IS MADE BY sonickles9 USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
+
 <resources>
-    <string name="refresh">Actualizar</string>
-    <string name="openInBrowser">Abrir usando o Navegador</string>
+    <string name="refresh">Atualizar</string>
+    <string name="openInBrowser">Abra usando o navegador</string>
     <string name="settings">Configurações</string>
-    <string name="share">Partilhar esta aplicação</string>
+    <string name="share">Compartilhe esse aplicativo</string>
     <string name="prefCat_fb_settings_title">Configurações do Facebook</string>
-    <string name="prefCat_app_settings_title">Configurações da Aplicação</string>
-    <string name="prefCat_app_information_title">Informações da Aplicação</string>
+    <string name="prefCat_app_settings_title">Configurações de aplicativos</string>
+    <string name="prefCat_app_information_title">Informações do aplicativo</string>
     <string name="title_recentNewsFirst">Ordenar o feed de notícias por mais recentes</string>
     <string name="summary_recentNewsFirst">Em vez de por histórias em destaque</string>
-    <string name="title_centerTextPosts">Centrar o texto das publicações</string>
-    <string name="summary_centerTextPosts">O texto de cada publicação será centrado</string>
-    <string name="summary_addSpaceBetweenPosts">Haverá mais espaço entre as publicações</string>
-    <string name="title_addSpaceBetweenPosts">Mais espaço entre publicações</string>
+    <string name="title_centerTextPosts">Centralizar o texto das postagens</string>
+    <string name="summary_centerTextPosts">O texto de cada postagem será centralizado</string>
+    <string name="summary_addSpaceBetweenPosts">Haverá mais espaço entre as postagens</string>
+    <string name="title_addSpaceBetweenPosts">Mais espaço entre as postagens</string>
     <string name="summary_creditsCssThemes">Obrigado pelos temas fantásticos!</string>
-    <string name="summary_theme">Escolha o tema que mais gosta</string>
+    <string name="summary_theme">Escolha o tema que você gosta</string>
     <string name="title_fixedBar">Barra superior fixa</string>
-    <string name="summary_fixedBar">A barra azul permanecerá fixa no topo.</string>
-    <string name="title_downloadImages">Guardar dados</string>
-    <string name="summary_downloadImages">Não descarregar imagens</string>
-    <string name="summary_allowGeolocation">O Facebook será capaz de aceder a sua posição</string>
+    <string name="summary_fixedBar">A barra azul permanecerá presa no topo.</string>
+    <string name="title_downloadImages">Salvar dados</string>
+    <string name="summary_downloadImages">Não baixar imagens</string>
+    <string name="summary_allowGeolocation">Facebook será capaz de acessar a sua posição</string>
     <string name="title_allowGeolocation">Permitir a utilização do GPS</string>
     <string name="version">Versão</string>
     <string name="credits">Créditos</string>
     <string name="prefCat_otherCredits_title">Outros</string>
     <string name="prefCat_developersCredits_title">Desenvolvedores</string>
-    <string name="summary_LeonardoRignanese">Criador e desenvolvedor da aplicação</string>
+    <string name="summary_LeonardoRignanese">Criador e desenvolvedor do app</string>
     <string name="prefCat_translatorsCredits_title">Tradutores</string>
     <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Doar</string>
-    <string name="donateToContribute">Eu escolhi fazer gratuitamente. Podes me oferecer um café?</string>
-    <string name="summary_you">É também graças a ti que existe esta aplicação</string>
-    <string name="title_you">Tu és importante</string>
+    <string name="donateToContribute">Eu escolhi fazê-lo gratuitamente. você pode me oferecer um café?</string>
+    <string name="summary_you">É também graças a você que existe esse app</string>
+    <string name="title_you">Você é importante</string>
     <string name="titleNoConnection">Ops, existe um problema!</string>
-    <string name="descriptionNoConnection">Tente verificar a conexão e actualizar.</string>
-    <string name="awards">Esta é uma aplicação de código aberto.</string>
+    <string name="descriptionNoConnection">Tente verificar a conexão e atualizar.</string>
+    <string name="awards">Este é um aplicativo de código aberto.</string>
     <string name="thanks">Obrigado!</string>
-    <string name="downloadOrShareWithBrowser">Abrindo o navegador pode descarregar ou partilhar esta imagem.</string>
-    <string name="shareThisLink">Partilhe este endereço</string>
-    <string name="chooseAnImage">Escolha uma imagem</string>
-    <string name="summary_FaceSlim">Sem eles, eu não conseguiria ter adicionado algumas funções atraentes. Se és um desenvolvedor, tens que ver o enorme trabalho deles!</string>
-    <string name="summary_lRemainl">Criador do logótipo magnífico</string>
+    <string name="downloadOrShareWithBrowser">Abrindo o navegador você pode baixar ou compartilhar essa imagem.</string>
+    <string name="shareThisLink">Compartilhe este link</string>
+    <string name="summary_FaceSlim">Sem eles, eu não poderia adicionar algumas funções atraentes. Se você é um desenvolvedor, você tem que ver o seu trabalho enorme!</string>
+    <string name="summary_lRemainl">Criador do logotipo magnífico</string>
     <string name="summary_Pharetra">Cheio de talento e criatividade</string>
     <string name="exit">Saída</string>
-    <string name="noPersonalInformationAreShared">Nenhuma informação pessoal ou privada sobre si ou do dispositivo é guardada ou transmitida pela aplicação!</string>
+    <string name="noPersonalInformationAreShared">Nenhuma informação pessoal ou privada sobre você ou seu dispositivo é coletada ou transmitida por este app!</string>
     <string name="title_theme">Temas</string>
-    <string name="applyingChanges">Aplicando alterações!</string>
+    <string name="applyingChanges">Aplicando mudanças!</string>
     <string name="title_textSize">Tamanho do texto</string>
-    <string name="title_enableFastShare">Activar Partilha Rápida</string>
-    <string name="summary_enableFastShare">Com a Partilha Rápida pode partilhar qualquer endereço simplesmente ficando a carregar</string>
-    <string name="summary_textSize">Escolha o tamanho do texto que prefer</string>
-    <string name="refreshToApply">Actualizar Facebook para aplicar as alterações</string>
+    <string name="title_enableFastShare">Ativar Compartilhamento Rápido</string>
+    <string name="summary_enableFastShare">Com o Compartilhamento Rápido você pode compartilhar qualquer link simplesmente tocando e segurando nele</string>
+    <string name="summary_textSize">Escolha o tamanho do texto que você preferir</string>
+    <string name="refreshToApply">Atualize o Facebook para aplicar as alterações</string>
 </resources>

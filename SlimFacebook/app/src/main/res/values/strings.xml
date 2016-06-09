@@ -5,8 +5,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 <resources>
 
     <!--remove this from your translations-->
-    <string name="app_name" translatable="false">SlimSocial for Facebook</string>
-    <string name="urlFacebookMobile" translatable="false">https://m.facebook.com/home.php</string>
+    <string name="launcher_name" translatable="false">SlimSocial for Facebook</string>
+    <string name="actionbar_name" translatable="false">SlimSocial</string>
+    <string name="urlFacebookMobile" translatable="false">https://touch.facebook.com/home.php</string>
     <string name="home" translatable="false">Home</string>
     <string name="top" translatable="false">Top</string>
     <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
@@ -37,6 +38,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_theme">Choose the theme that you like</string>
     <string name="title_fixedBar">Fixed top bar</string>
     <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
+    <string name="title_hideSponsoredPosts">Don\'t show sponsored posts</string>
+    <string name="summary_hideSponsoredPosts">Some sponsored posts there not will be</string>
     <string name="title_downloadImages">Save Data </string>
     <string name="summary_downloadImages">Don\'t download images</string>
     <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
@@ -64,13 +67,12 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="thanks">Thanks!</string>
     <string name="downloadOrShareWithBrowser">Opening browser you can download or share this image.</string>
     <string name="shareThisLink">Share this link</string>
-    <string name="chooseAnImage">Choose an Image</string>
-    <string name="summary_FaceSlim">Without they, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
+    <string name="summary_FaceSlim">Without them, I couldn\'t add some attractive functions. If you are a developer, you have to see their massive work!</string>
     <string name="summary_lRemainl">Creator of the magnificent logo</string>
-	<string name="summary_Pharetra">Full of talent and creativity</string>
+    <string name="summary_Pharetra">Full of talent and creativity</string>
     <string name="exit">Exit</string>
     <string name="downloadThisApp" translatable="false">Download SlimSocial for Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app !</string>
+    <string name="noPersonalInformationAreShared">No personal or private information about you or your device is collected or trasmetted by this app!</string>
     <string name="title_theme">Themes</string>
     <string name="applyingChanges">Applying changes!</string>
     <string name="title_textSize">Text Size</string>
@@ -78,23 +80,31 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_enableFastShare">With Fast Share you can share any link simply tapping and holding it</string>
     <string name="summary_textSize">Choose the text size that you prefer</string>
     <string name="refreshToApply">Refresh Facebook to apply the changes</string>
+    <string name="summary_AdvancedWebView">Part of this app is based on their work</string>
+    <string name="title_translate">Would you translate this app?</string>
+    <string name="summary_translate">Use my WebTool: tap here, select the language that you know, generate the builder, correct errors, generate and send me the \'strings.xml\' file by email</string>
+    <string name="title_removeMessengerDownload">Remove \'Download Messenger\' messages</string>
+    <string name="summary_removeMessengerDownload">The ads with \'Install Messenger\' there won\'t be</string>
+    <string name="summary_SaschaHa">A very talented and smart guy that helped me a lot and has become a friend. Tap here to see his incredible work!</string>
+    <string name="supportMe">Support me</string>
+    <string name="donateWithPayPal">Donate with PayPal</string>
 
     <!--end other-->
 
     <!-- PLAY STORE PAGE
 
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
-With only 700Kb, allows you to enjoy the Facebook experience(in its Web version)
+The Facebook Experience into 400kb
 
 FULL DESCRIPTION:
-ATTENTION: This app may not be suitable for who use it frequently. 
+ATTENTION: This app may not be suitable for who use it frequently.
 
 Why do I download SlimSocial for Facebook?
 - It is lightweight: it weighs less than 1 Mb;
 - It has simple, modern design: there is only what you need;
 - It is Open source: the code of this app is online on GitHub, anyone can verify the authenticity of the app and contribute to its development.
 - It is free and without ads;
-- it is not instrusive;
+- it is not intrusive;
 - It respect your privacy: this app doesn't require special permits. Without consensus Facebook can not access to any data of your mobile phone;
 
 
@@ -107,12 +117,5 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 ***Take note that this is not an official app from Facebook***
 This is a project which meant to make people life easier. This app will launch Facebook official website. All credit goes to Facebook team. It is provided free for all without any Ads.
     -->
-
-
-    <!--CSS, DELETE THIS FROM YOUR TRANSLATION
-
-    This css are made originally from FaceSlim
-    See it on https://github.com/indywidualny/FaceSlim
-    -->
-
 </resources>
+

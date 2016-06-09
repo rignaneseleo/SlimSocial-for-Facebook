@@ -6,10 +6,10 @@ import android.preference.PreferenceFragment;
 
 import it.rignanese.leo.slimfacebook.R;
 
-
 /**
- * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+ * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
 public class CreditsActivity extends PreferenceActivity {
 
@@ -29,6 +29,4 @@ public class CreditsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.credits);//load the layout
         }
     }
-
-
 }

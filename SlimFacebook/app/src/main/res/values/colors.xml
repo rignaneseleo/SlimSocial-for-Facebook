@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
 <resources>
     <color name="officialBlueFacebook">#3B5999</color><!--The original color of Facebook-->
 
     <!--standard theme-->
     <color name="blueSlimFacebookTheme">#37538f</color>
     <color name="darkBlueSlimFacebookTheme">#2d3a6b</color>
-
-    <!--dark theme-->
-
-    <!--light theme-->
 </resources>

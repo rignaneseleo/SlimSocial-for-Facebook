@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Jason Yuen USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">刷新</string>
+    <string name="openInBrowser">使用浏览器打开</string>
+    <string name="settings">设置</string>
+    <string name="share">分享这个应用程序</string>
+    <string name="prefCat_fb_settings_title">Facebook的设置</string>
+    <string name="prefCat_app_settings_title">应用程序设置</string>
+    <string name="prefCat_app_information_title">应用程序信息</string>
+    <string name="title_recentNewsFirst">命令由最近的新闻提要</string>
+    <string name="summary_recentNewsFirst">而不是由上面的故事</string>
+    <string name="title_centerTextPosts">居中帖文</string>
+    <string name="summary_centerTextPosts">每篇帖文的文本将居中</string>
+    <string name="summary_addSpaceBetweenPosts">增加帖文之间的空间</string>
+    <string name="title_addSpaceBetweenPosts">帖文之间将有更多的空间</string>
+    <string name="summary_creditsCssThemes">感谢您的梦幻般的主题！</string>
+    <string name="summary_theme">选择你喜欢的主题</string>
+    <string name="title_fixedBar">固定顶栏</string>
+    <string name="summary_fixedBar">蓝色条将保持贴在上面</string>
+    <string name="title_downloadImages">保存数据</string>
+    <string name="summary_downloadImages">不要下载图片</string>
+    <string name="summary_allowGeolocation">Facebook将能够访问你的位置</string>
+    <string name="title_allowGeolocation">允许利用GPS</string>
+    <string name="version">版本</string>
+    <string name="credits">制作人员</string>
+    <string name="prefCat_otherCredits_title">其他</string>
+    <string name="prefCat_developersCredits_title">开发者</string>
+    <string name="summary_LeonardoRignanese">创造者和应用开发者</string>
+    <string name="prefCat_translatorsCredits_title">译者</string>
+    <string name="prefCat_designersCredits_title">设计师</string>
+    <string name="donate">捐献</string>
+    <string name="donateToContribute">我选择了免费提供程式的。你能不能给我喝杯咖啡吗？</string>
+    <string name="summary_you">多亏了您的支持，才有这个程式的存在</string>
+    <string name="title_you">你很重要</string>
+    <string name="titleNoConnection">噢，有一个问题！</string>
+    <string name="descriptionNoConnection">尝试检查网络连接和刷新。</string>
+    <string name="awards">这是一个开源应用程序。</string>
+    <string name="thanks">谢谢！</string>
+    <string name="downloadOrShareWithBrowser">打开浏览器，您可以下载或共享此图像。</string>
+    <string name="shareThisLink">分享此链接</string>
+    <string name="summary_FaceSlim">如果没有他们，我不可能添加一些有吸引力的功能。如果你是一个开发者，你必须看到他们大量的工作！</string>
+    <string name="summary_lRemainl">宏伟的标志创作者</string>
+    <string name="summary_Pharetra">充满才华和创造力</string>
+    <string name="exit">离开</string>
+    <string name="noPersonalInformationAreShared">没有您的个人或私人信息被这个程序收集或发送的！</string>
+    <string name="title_theme">主题</string>
+    <string name="applyingChanges">套用改变！</string>
+    <string name="title_textSize">字体大小</string>
+    <string name="title_enableFastShare">启用快速分享</string>
+    <string name="summary_enableFastShare">透着快速分享，你可以简单地点击并按住它去分享任何链接</string>
+    <string name="summary_textSize">选择您喜欢的文字大小</string>
+    <string name="refreshToApply">刷新Facebook来套用更改</string>
+</resources>

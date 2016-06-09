@@ -157,5 +157,29 @@ v2.2.4
 - Updated Hindi translation (Siddique Nagarkar) 
 - Updated Indonesian translation (Aditya Pratama)
 
+v2.2.5
+- Added Tamil translation (Ramkumar TD)
+- Added Traditiona Chinese (Jason Yuen)
+
+v2.3.2
+- New Polish translation (norbi1952)
+
+v3.0.0
+App completely recoded:
+- New incredible size: 150kb!
+- Added 'delight-im/Android-AdvancedWebView':
+	-Optimized for best performance and security
+	-Features are patched across Android versions
+	-Better File uploads (video and photo) 
+- Cleaner code:
+	- New method to get strings (splitted java code from css and js)
+- Layout Improved:
+	- ActionBar shown in all devices
+	- White icons
+- Full screen video
+- Improved the fix bar: "show all.." button is always shown in notifications, messages, etc.
+- New interesting settings
+- Credits updated
+- Updated some translations
 
 ! Consider the possibility to donate !

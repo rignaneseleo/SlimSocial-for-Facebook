@@ -1,68 +1,63 @@
-<!--
-SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Mikele.O. USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
 <resources>
-    <!-- TRANSLATION IS MADE BY: kostafil000 -->
-
-    <!--menu string-->
     <string name="refresh">Odśwież</string>
-    <string name="openInBrowser">Otwórz w przeglądarce</string>
+    <string name="openInBrowser">Otwórz za pomocą przeglądarki</string>
     <string name="settings">Ustawienia</string>
-    <string name="share">Udostępnij</string>
-    <!--end menu string-->
-
-    <!--settings-->
+    <string name="share">Udostępnij tę aplikację</string>
     <string name="prefCat_fb_settings_title">Ustawienia Facebooka</string>
     <string name="prefCat_app_settings_title">Ustawienia aplikacji</string>
     <string name="prefCat_app_information_title">Informacje o aplikacji</string>
-    <string name="title_recentNewsFirst">Uporządkuj newsfeed od najnowszego</string>
-    <string name="summary_recentNewsFirst">Zamiast wg najpopularniejszych historii</string>
-    <string name="title_centerTextPosts">Wyśrodkuj tekst wiadomości</string>
-    <string name="summary_centerTextPosts">Tekst każdej wiadomości zostanie wyśrodkowany</string>
-    <string name="summary_addSpaceBetweenPosts">Między wiadomościami będą większe odstępy</string>
-    <string name="title_addSpaceBetweenPosts">Większe odstępy między wiadomościami</string>
-    <string name="summary_creditsCssThemes">Dziękuję za wspaniałe motywy!</string>
-    <string name="summary_theme">Wybierz motyw, który ci się podoba</string>
-    <string name="title_fixedBar">Górny pasek na stałe</string>
-    <string name="summary_fixedBar">Niebieski pasek zostanie przypięty w górnej części</string>
-    <string name="title_downloadImages">Zapisz dane</string>
-    <string name="summary_allowGeolocation">Facebook będzie mógł odczytywać twoją pozycję</string>
-    <string name="title_allowGeolocation">Pozwól na korzystanie z GPS</string>
-    <string name="title_textSize">Rozmiar tekstu</string>
-    <string name="title_enableFastShare">Włącz szybkie udostępnianie</string>
-    <string name="summary_enableFastShare">Za pomocą szybkiego udostępniania możesz podzielić się dowolnym linkiem poprzez przytrzymanie go</string>
-    <string name="summary_textSize">Zmień rozmiar tekstu na wielkość, którą preferujesz</string>
+    <string name="title_recentNewsFirst">Sortuj wiadomości od najnowszych</string>
+    <string name="summary_recentNewsFirst">Zamiast według popularności</string>
+    <string name="title_centerTextPosts">Wyśrodkuj zawartość postów</string>
+    <string name="summary_centerTextPosts">Tekst każdego postu będzie wyśrodkowany</string>
+    <string name="summary_addSpaceBetweenPosts">Pozostaw większą przestrzeń pomiędzy postami</string>
+    <string name="title_addSpaceBetweenPosts">Większa przestrzeń między postami</string>
+    <string name="summary_creditsCssThemes">Dzięki za fantastyczne motywy!</string>
+    <string name="summary_theme">Wybierz motyw, który Ci się podoba</string>
+    <string name="title_fixedBar">Zablokuj górny panel</string>
+    <string name="summary_fixedBar">Niebieski panel pozostanie zablokowany na górze.</string>
+    <string name="title_downloadImages">Oszczędzaj transfer</string>
+    <string name="summary_downloadImages">Nie pobieraj obrazów</string>
+    <string name="summary_allowGeolocation">Facebook będzie miał dostęp do twojej lokalizacji</string>
+    <string name="title_allowGeolocation">Zezwól na korzystanie z GPS</string>
     <string name="version">Wersja</string>
-    <string name="credits">Podziękowania</string>
-    <string name="prefCat_otherCredits_title">Inne</string>
-    <string name="prefCat_developersCredits_title">Autorzy</string>
-    <string name="summary_LeonardoRignanese">Twórca aplikacji</string>
+    <string name="credits">Twórcy</string>
+    <string name="prefCat_otherCredits_title">Inny</string>
+    <string name="prefCat_developersCredits_title">Deweloperzy</string>
+    <string name="summary_LeonardoRignanese">Twórca i deweloper aplikacji</string>
     <string name="prefCat_translatorsCredits_title">Tłumacze</string>
     <string name="prefCat_designersCredits_title">Projektanci</string>
-    <string name="donate">Donate</string>   <string name="title_theme">Motywy</string>
-    <string name="donateToContribute">Zdecydowałem, że będzie za darmo. Czy możesz zaoferować mi kawę?</string>
+    <string name="donate">Wspomóż finansowo</string>
+    <string name="donateToContribute">Zdecydowałem się robić tę aplikację darmo. Może w zamian zechcesz podarować mi kawę?</string>
+    <string name="summary_you">To także dzięki tobie ta aplikacja istnieje!</string>
     <string name="title_you">Jesteś ważny</string>
-    <!--end settings-->
-
-    <!--page error-->
-    <string name="titleNoConnection">Ops, pojawił się jakiś problem!</string>
-    <string name="descriptionNoConnection">Spróbuj sprawdzić połączenie i odświeżyć.</string>
-    <string name="awards">Ta aplikacja jest Open Source.</string>
-    <!--end page error-->
-
-    <!--other-->
+    <string name="titleNoConnection">Ups, wystąpił problem!</string>
+    <string name="descriptionNoConnection">Sprawdź połączenie i odśwież.</string>
+    <string name="awards">Ta aplikacja jest otwartym oprogramowaniem.</string>
     <string name="thanks">Dzięki!</string>
-    <string name="downloadOrShareWithBrowser">Otwierając przeglądarkę możesz pobierać lub udostępnić ten obraz.</string>
-    <string name="shareThisLink">Udostępnij link</string>
+    <string name="downloadOrShareWithBrowser">Otwierając w przeglądarce możesz pobrać lub udostępnić ten obraz.</string>
+    <string name="shareThisLink">Udostępnij ten link</string>
+    <string name="summary_FaceSlim">Bez nich, nie mógłbym dodać niektórych ważnych funkcji. Jeśli jesteś programistą, musisz zobaczyć ich pracę!</string>
     <string name="summary_lRemainl">Twórca wspaniałego logo</string>
     <string name="summary_Pharetra">Wielce utalentowany i kreatywny</string>
     <string name="exit">Wyjście</string>
-    <string name="noPersonalInformationAreShared">Żadne prywatne lub osobiste informacje o tobie lub twoim urządzeniu nie są zbierane i przesyłane przez tę aplikację!</string>
-    <string name="applyingChanges">Zastosuj zmiany!</string>
-    <string name="refreshToApply">Refresh Facebook to apply the changes</string>
-    <!--end other-->
-
+    <string name="noPersonalInformationAreShared">Żadne osobiste informacje o tobie i o twoim urządzeniu nie będą zbierane ani wysyłane przez aplikację!</string>
+    <string name="title_theme">Motywy</string>
+    <string name="applyingChanges">Zastosowywanie zmian</string>
+    <string name="title_textSize">Rozmiar czcionki</string>
+    <string name="title_enableFastShare">Włącz Szybkie Udostępnianie</string>
+    <string name="summary_enableFastShare">Z Szybkim Udostępnianiem możesz udostępnić dowolny link przytrzymując go</string>
+    <string name="summary_textSize">Wybierz preferowany rozmiar tekstu</string>
+    <string name="refreshToApply">Odśwież Facebooka, aby zastosować zmiany</string>
+</resources>
     <!-- PLAY STORE PAGE
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
 Ważąc tylko 700KB, pozwala Ci wygodnie korzystać z Facebooka (w wersji Web)
@@ -82,4 +77,3 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 ***Nie jest to oficjalna aplikacja Facebook***
 Jest to projekt, który ma na celu ułatwienie życia ludziom. Aplikacja ta uruchamia oficjalną stronę Facebook. Wszystkie zasługi należą do zespołu Facebook. Aplikacja ta jest darmowa i nie zawiera żadnych reklam.
     -->
-    </resources>

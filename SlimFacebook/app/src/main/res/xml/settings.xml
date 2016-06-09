@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/prefCat_fb_settings_title">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_recentNewsFirst"
+            android:summary="@string/summary_recentNewsFirst"
+            android:title="@string/title_recentNewsFirst" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_centerTextPosts"
+            android:summary="@string/summary_centerTextPosts"
+            android:title="@string/title_centerTextPosts" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_addSpaceBetweenPosts"
+            android:summary="@string/summary_addSpaceBetweenPosts"
+            android:title="@string/title_addSpaceBetweenPosts" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_fixedBar"
+            android:summary="@string/summary_fixedBar"
+            android:title="@string/title_fixedBar" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_removeMessengerDownload"
+            android:summary="@string/summary_removeMessengerDownload"
+            android:title="@string/title_removeMessengerDownload" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_hideSponsoredPosts"
+            android:summary="@string/summary_hideSponsoredPosts"
+            android:title="@string/title_hideSponsoredPosts" />
+
+        <!--<SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_useMessenger"
+            android:summary="@string/summary_useMessenger"
+            android:title="@string/title_useMessenger"/>-->
+
+        <ListPreference
+            android:defaultValue="100"
+            android:entries="@array/listTextSize"
+            android:entryValues="@array/listValuesTextSize"
+            android:key="pref_textSize"
+            android:summary="@string/summary_textSize"
+            android:title="@string/title_textSize" />
+
+        <ListPreference
+            android:defaultValue="Standard"
+            android:entries="@array/listThemes"
+            android:entryValues="@array/listValuesThemes"
+            android:key="pref_theme"
+            android:summary="@string/summary_theme"
+            android:title="@string/title_theme" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefCat_app_settings_title">
+
+        <!--Set the saving data -->
+        <SwitchPreference
+            android:defaultValue="false"
+
+            android:key="pref_doNotDownloadImages"
+            android:summary="@string/summary_downloadImages"
+            android:title="@string/title_downloadImages" />
+
+        <!--Allow Geolocation -->
+        <SwitchPreference
+            android:defaultValue="true"
+
+            android:key="pref_allowGeolocation"
+            android:summary="@string/summary_allowGeolocation"
+            android:title="@string/title_allowGeolocation" />
+
+        <!--Enable FastShare -->
+        <SwitchPreference
+            android:defaultValue="true"
+
+            android:key="pref_enableFastShare"
+            android:summary="@string/summary_enableFastShare"
+            android:title="@string/title_enableFastShare" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/supportMe">
+        <PreferenceScreen android:summary="@string/donateToContribute" />
+        <PreferenceScreen android:title="@string/donateWithPayPal">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=7NFPYFBNAL3AL" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefCat_app_information_title">
+        <PreferenceScreen android:summary="@string/noPersonalInformationAreShared" />
+
+        <PreferenceScreen
+            android:summary="@string/summary_translate"
+            android:title="@string/title_translate">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://stringsxmlbuilder.netsons.org/index.php?originalXmlURL=https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/SlimFacebook/app/src/main/res/values/strings.xml" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_credits"
+            android:title="@string/credits">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="it.rignanese.leo.slimfacebook.settings.CreditsActivity"
+                android:targetPackage="it.rignanese.leo.slimfacebook" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="pref_key_version"
+            android:title="@string/version" />
+    </PreferenceCategory>
+</PreferenceScreen>

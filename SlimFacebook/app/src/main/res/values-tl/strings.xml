@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Ramkumar TD USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">புதுப்பி</string>
+    <string name="openInBrowser">உலாவி பயன்படுத்தி திறக்க</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="share">இந்த பயன்பாட்டை பகிர்</string>
+    <string name="prefCat_fb_settings_title">பேஸ்புக் அமைப்புகள்</string>
+    <string name="prefCat_app_settings_title">பயன்பாட்டு அமைப்புகள்</string>
+    <string name="prefCat_app_information_title">பயன்பாட்டு தகவல்</string>
+    <string name="title_recentNewsFirst">மிக சமீபத்திய செய்தி பார்வையிட</string>
+    <string name="summary_recentNewsFirst">மேல் கதைகள் பதிலாக</string>
+    <string name="title_centerTextPosts">பதிவுகளை மையப்படுத்த </string>
+    <string name="summary_centerTextPosts">ஒவ்வொரு பதிவின் வார்த்தைகள் மையப்படுத்தப்படும் </string>
+    <string name="summary_addSpaceBetweenPosts">பதிவுகள் இடையே அதிக இடைவெளி இருக்கும்</string>
+    <string name="title_addSpaceBetweenPosts">பதிவுகள் இடையே அதிக இடைவெளி</string>
+    <string name="summary_creditsCssThemes">அற்புதமான காட்டுருவிற்கு  நன்றி</string>
+    <string name="summary_theme">உங்களுக்கு  பிடித்த காட்டுருவை தேர்வு செய்யவும் </string>
+    <string name="title_fixedBar">நிலையான மேல் பட்டி</string>
+    <string name="summary_fixedBar">நீல பட்டி மேல் சிக்கி இருக்கும்</string>
+    <string name="title_downloadImages">தரவு சேமிக்க</string>
+    <string name="summary_downloadImages">படங்களை பதிவிறக்க வேண்டாம்</string>
+    <string name="summary_allowGeolocation">பேஸ்புக் உங்கள் நிலையை அணுக முடியும்</string>
+    <string name="title_allowGeolocation">ஜிபிஎஸ் பயன்படுத்த அனுமதி</string>
+    <string name="version">பதிப்பு</string>
+    <string name="credits">நன்றி</string>
+    <string name="prefCat_otherCredits_title">பிற</string>
+    <string name="prefCat_developersCredits_title">உருவாக்குநர்கள்</string>
+    <string name="summary_LeonardoRignanese">படைப்பாளர் மற்றும் பயன்பாட்டை மேம்பாட்டாளர்</string>
+    <string name="prefCat_translatorsCredits_title">மொழிபெயர்ப்பாளர்</string>
+    <string name="prefCat_designersCredits_title">வடிவமைப்பாளர்கள்</string>
+    <string name="donate">நன்கொடை அளி </string>
+    <string name="donateToContribute">நான் அதை இலவசமாக செய்ய முடிவெடுத்தேன். நீங்கள் எனக்கு ஒரு காபி வழங்க முடியும்?</string>
+    <string name="summary_you">இந்த பயன்பாட்டை உள்ளதற்கு உங்களுக்கு நன்றி</string>
+    <string name="title_you">நீங்கள் முக்கியம்</string>
+    <string name="titleNoConnection">அச்சச்சோ, ஒரு சிக்கல் இருக்கிறது!</string>
+    <string name="descriptionNoConnection">இணைப்பைச் சரிபார்த்து புதுப்பிக்கவும்.</string>
+    <string name="awards">இந்த ஒரு திறந்த மூல பயன்பாடு ஆகும்.</string>
+    <string name="thanks">நன்றி!</string>
+    <string name="downloadOrShareWithBrowser">உலாவி திறப்பதன் மூலம் நீங்கள் இந்த படத்தை பதிவிறக்க அல்லது பகிர்ந்து கொள்ளலாம்</string>
+    <string name="shareThisLink">இந்த இணைப்பைப் பகிர்</string>
+    <string name="summary_FaceSlim">இவர்கள் இல்லாமல், நான் சில கவர்ச்சிகரமான செயல்பாடுகளை சேர்க்க முடியவில்லை. நீங்கள் ஒரு உருவாக்குநர் என்றால், நீங்கள் அவர்களின் மிகப் பெரிய வேலையை  பார்க்க வேண்டும்!</string>
+    <string name="summary_lRemainl">அற்புதமான சின்னத்தை  உருவாக்கியவர்</string>
+    <string name="summary_Pharetra">திறமை மற்றும் படைப்பாற்றல் முழு</string>
+    <string name="exit">வெளியேறு</string>
+    <string name="noPersonalInformationAreShared">நீங்கள் அல்லது உங்கள் சாதனம் பற்றி சொந்த அல்லது தனிப்பட்ட தகவல்  இந்த பயன்பாட்டை மூலம் பரவுகிறது இல்லை</string>
+    <string name="title_theme">காட்டுரு</string>
+    <string name="applyingChanges">மாற்றங்களைப் பயன்படுத்துகிறது!</string>
+    <string name="title_textSize">எழுத்தின் அளவு</string>
+    <string name="title_enableFastShare">விரைவு பகிர் இயக்கு</string>
+    <string name="summary_enableFastShare">விரைவாக  பகிர  நீங்கள் வெறுமனே தட்டுவது மற்றும் அதை பிடித்து இணைப்பை பகிர்ந்து கொள்ளலாம்</string>
+    <string name="summary_textSize">நீங்கள் விரும்பிய எழுத்தின் அளவை தேர்வு செய்யவும் </string>
+    <string name="refreshToApply">மாற்றங்களை ஏற்படுத்த பேஸ்புக்கை புதுப்பிக்கவும் </string>
+</resources>

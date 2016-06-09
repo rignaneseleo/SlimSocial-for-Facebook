@@ -1,81 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="it.rignanese.leo.slimfacebook">
 
-<manifest
-    package="it.rignanese.leo.slimfacebook"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!--Permissions-->
-    <!--to connect to the Internet-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--to upload files-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--gps-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- PERMISSIONS -->
 
 
+    <!-- to connect to the Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- to upload files -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- gps -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/launcher_name"
+        android:supportsRtl="true"
+        android:theme="@style/DefaultTheme">
 
-        android:label="@string/app_name"
-        android:theme="@style/SlimFacebookTheme"
-
-
-        android:versionCode="28"
-        android:versionName="2.2.3"
-        ><!--the official version is wrote in build.gradle-->
-
-
-        <!--the main activity-->
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="SlimSocial"
+            android:label="@string/actionbar_name"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <!--compatibility to samsung multiwindows-->
-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
 
+            <intent-filter> <!--compatibility to samsung multiwindows-->
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
                 <!--to start app when facebook site is called-->
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
                 <!--to open facebook link with this app-->
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="*.facebook.com"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <data
                     android:host="*.facebook.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
                 <data
                     android:host="fb.me"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <data
                     android:host="fb.me"
-                    android:scheme="https"/>
+                    android:scheme="https" />
+
             </intent-filter>
 
             <intent-filter>
                 <!--to open facebook link for sharing link-->
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
 
         <!--settings activity-->
         <activity
@@ -84,7 +72,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
             android:label="@string/settings">
 
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -92,10 +80,10 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
         <activity
             android:name=".settings.CreditsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="@string/settings">
+            android:label="@string/credits">
 
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -103,26 +91,26 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
         <!-- uses the Multi Window library -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
-            android:required="false"></uses-library>
+            android:required="false"/>
 
         <!--to indicate your application is Multi Window compatible-->
         <meta-data
             android:name="com.sec.android.support.multiwindow"
-            android:value="true"/>
+            android:value="true" />
 
         <!--set the size of the window-->
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
-            android:resource="@dimen/app_defaultsize_w"/>
+            android:resource="@dimen/app_defaultsize_w" />
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
-            android:resource="@dimen/app_defaultsize_h"/>
+            android:resource="@dimen/app_defaultsize_h" />
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
-            android:resource="@dimen/app_minimumsize_w"/>
+            android:resource="@dimen/app_minimumsize_w" />
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
-            android:resource="@dimen/app_minimumsize_h"/>
+            android:resource="@dimen/app_minimumsize_h" />
     </application>
 
 </manifest>

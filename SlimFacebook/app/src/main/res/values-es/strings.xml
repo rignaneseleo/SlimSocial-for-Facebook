@@ -44,14 +44,13 @@ SlimSocial for Facebook es una aplicación «Open Source» creada por Leonardo R
     <string name="thanks">¡Gracias!</string>
     <string name="downloadOrShareWithBrowser">Puedes descargar o compartir esta imagen abriendo el navegador.</string>
     <string name="shareThisLink">Compartir este enlace</string>
-    <string name="chooseAnImage"> Elige una imagen</string>
     <string name="summary_FaceSlim">Sin ellos, no sería posible añadir algunas buenas funciones. Si eres un desarrollador, ¡tienes que ver sus trabajos geniales!</string>
     <string name="summary_lRemainl">Creador del magnifico logotipo</string>
     <string name="exit">Salir</string>
     <string name="noPersonalInformationAreShared">¡Ninguna información personal o privada a cerca de ti es recogida o transmitida por esta aplicación!</string>
 
     <!--end other-->
-
+</resources>
     <!-- PLAY STORE PAGE
 
 DESCRIPCIÓN:
@@ -77,4 +76,3 @@ https://github.com/rignaneseleo/SlimSocial-for-Facebook
 *** Esta no es una aplicación oficial de Facebook ***
 Este es un proyecto para facilitar la vida de las personas. Esta aplicación carga la versión móvil del sitio oficial de Facebook. Todo el crédito va al equipo de Facebook. La aplicación es gratuita para todos, sin ningún tipo de anuncio.
 -->
-</resources>

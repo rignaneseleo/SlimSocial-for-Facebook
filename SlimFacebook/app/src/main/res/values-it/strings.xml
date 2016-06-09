@@ -29,7 +29,6 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="prefCat_translatorsCredits_title">Traduttori</string>
     <string name="summary_LeonardoRignanese">Ideatore e sviluppatore dell\'app</string>
     <string name="shareThisLink">Condividi questo link</string>
-    <string name="chooseAnImage">Scegli un\'immagine</string>
     <string name="summary_FaceSlim">Senza di loro, quest\'applicazione non avrebbe molte delle sue funzioni. Se sei uno sviluppatore, devi assoulutamente vedere il loro imponente lavoro!</string>
     <string name="prefCat_designersCredits_title">Designer</string>
     <string name="summary_lRemainl">Realizzatore del logo</string>
@@ -58,5 +57,15 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_enableFastShare">Abilita la Condivisione Veloce</string>
     <string name="title_textSize">Dimensione del testo</string>
     <string name="refreshToApply">Ricarica Faebook per applicare i cambiamenti</string>
+    <string name="summary_AdvancedWebView">Parte di quest\'app è basata sul loro lavoro</string>
+    <string name="summary_hideSponsoredPosts">Alcuni post pubblicitari verranno nascosti</string>
+    <string name="summary_removeMessengerDownload">Le scritte \'Installa Messenger\' non saranno mostrate</string>
+    <string name="summary_translate">Usa il mio WebTool: schiaccia qui, seleziona la lingua che conosci, genera il builder, correggi gli errori e inviami il file \'strings.xml\' per email</string>
+    <string name="title_hideSponsoredPosts">Non mostrare post sponsorizzati</string>
+    <string name="title_removeMessengerDownload">Rimuovi \'Scarica Messenger\'</string>
+    <string name="title_translate">Vuoi tradurre quest\'app?</string>
+    <string name="summary_SaschaHa">Ragazzo davvero in gamba che mi ha aiutato parecchio e con cui stretto amicizia. Schiaccia qua per vedere i suoi lavori incredibili!</string>
+    <string name="donateWithPayPal">Dona con PayPal</string>
+    <string name="supportMe">Supportami</string>
 
 </resources>

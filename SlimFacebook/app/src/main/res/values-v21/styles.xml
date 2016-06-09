@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SlimFacebookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blueSlimFacebookTheme</item>
-        <item name="colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
-        <item name="colorAccent">@color/blueSlimFacebookTheme</item>
-        <item name="android:navigationBarColor">?android:attr/colorPrimaryDark</item>
+   <style name="DefaultTheme" parent="android:Theme.Material.Light">
+        <item name="android:colorPrimary">@color/blueSlimFacebookTheme</item>
+        <item name="android:colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
+        <item name="android:colorAccent">@color/blueSlimFacebookTheme</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="DarkTheme" parent="android:ThemeOverlay.Material.Dark">
+        <item name="android:colorPrimary">@android:color/black</item>
+        <item name="android:colorPrimaryDark">@android:color/black</item>
+        <item name="android:colorAccent">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:backgroundTint">@android:color/white</item>
     </style>
 </resources>

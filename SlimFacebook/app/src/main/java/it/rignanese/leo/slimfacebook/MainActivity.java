@@ -1,317 +1,119 @@
-/*
-SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
-
-
-!!!!!!!!!!!!!!! Special thanks to https://github.com/indywidualny/FaceSlim !!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!! I've token some inspiration and code from their work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*/
-
 package it.rignanese.leo.slimfacebook;
 
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.GeolocationPermissions;
-import android.webkit.ValueCallback;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 
+import im.delight.android.webview.AdvancedWebView;
 import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
-import it.rignanese.leo.slimfacebook.webview.MyWebViewClient;
+import it.rignanese.leo.slimfacebook.utility.Dimension;
 
+/**
+ * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
+ * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+ * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+ */
+public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
-
-public class MainActivity extends AppCompatActivity {
-
-    SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
-
-    private WebView webViewFacebook;//the main webView where is shown facebook
-
-    //to choose and upload files
-    private static final int FILECHOOSER_RESULTCODE = 1;
-    private ValueCallback<Uri> mUploadMessage;
-    private Uri mCapturedImageURI = null;
-    // the same for Android 5.0 methods only
-    private ValueCallback<Uri[]> mFilePathCallback;
-    private String mCameraPhotoPath;
+    private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
+    private AdvancedWebView webViewFacebook;//the main webView where is shown facebook
 
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
 
-    boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
+    private boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
 
-    boolean isSharer = false;//flag: true if the app is called from sharer
-    String urlSharer = "";//to save the url got from the sharer
+    private boolean isSharer = false;//flag: true if the app is called from sharer
+    private String urlSharer = "";//to save the url got from the sharer
 
     // create link handler (long clicked links)
     private final MyHandler linkHandler = new MyHandler(this);
 
+    //full screen video variables
+    private FrameLayout mTargetView;
+    private WebChromeClient.CustomViewCallback mCustomViewCallback;
+    private View mCustomView;
+    private WebChromeClient myWebChromeClient;
+
+
+    //*********************** ACTIVITY EVENTS ****************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         savedPreferences = PreferenceManager.getDefaultSharedPreferences(this); // setup the sharedPreferences
-        switch (savedPreferences.getString("pref_theme", "standard")) {
-            case "StandardNoBar": {
-                setTheme(R.style.SlimSocialNoActionBar);
-                break;
-            }
-            case "DarkTheme": {
-                setTheme(R.style.SlimSocialBlackTheme);
-                break;
-            }
-            case "DarkNoBar": {
-                setTheme(R.style.SlimSocialDarkNoActionBar);
-                break;
-            }
-            default: {
-                setTheme(R.style.SlimFacebookTheme);
-                break;
-            }
-        }
-        super.onCreate(savedInstanceState);//to apply the theme
 
+        SetTheme();//set the activity theme
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         // if the app is being launched for the first time
         if (savedPreferences.getBoolean("first_run", true)) {
-            //todo presentation
-            // save the fact that the app has been started at least once
             savedPreferences.edit().putBoolean("first_run", false).apply();
         }
 
-        setContentView(R.layout.activity_main);//load the layout
+        SetupRefreshLayout();// setup the refresh layout
 
+        ShareLinkHandler();//handle a link shared (if there is)
 
-        // setup the refresh layout
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshPage();//reload the page
-            }
-        });
+        SetupWebView();//setup webview
 
+        SetupFullScreenVideo();
 
-        /** get a subject and text and check if this is a link trying to be shared */
-        String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
-        String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-
-        // if we have a valid URL that was shared by us, open the sharer
-        if (sharedUrl != null) {
-            if (!sharedUrl.equals("")) {
-                // check if the URL being shared is a proper web URL
-                if (!sharedUrl.startsWith("http://") || !sharedUrl.startsWith("https://")) {
-                    // if it's not, let's see if it includes an URL in it (prefixed with a message)
-                    int startUrlIndex = sharedUrl.indexOf("http:");
-                    if (startUrlIndex > 0) {
-                        // seems like it's prefixed with a message, let's trim the start and get the URL only
-                        sharedUrl = sharedUrl.substring(startUrlIndex);
-                    }
-                }
-                // final step, set the proper Sharer...
-                urlSharer = String.format("https://m.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
-                // ... and parse it just in case
-                urlSharer = Uri.parse(urlSharer).toString();
-                isSharer = true;
-            }
-        }
-
-
-        // setup the webView
-        webViewFacebook = (WebView) findViewById(R.id.webView);
-        setUpWebViewDefaults(webViewFacebook);//setup webview
+        SetupOnLongClickListener();
 
         if (isSharer) {//if is a share request
             webViewFacebook.loadUrl(urlSharer);//load the sharer url
             isSharer = false;
-        } else goHome();//load homepage
+        } else GoHome();//load homepage
+    }
 
-        //WebViewClient that is the client callback.
-        webViewFacebook.setWebViewClient(new MyWebViewClient(getApplicationContext()) {
-            @Override//called when the page starts loading
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                swipeRefreshLayout.setRefreshing(true);
-            }
+    @SuppressLint("NewApi")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webViewFacebook.onResume();
+    }
 
-            @Override//called when the page end loading
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                swipeRefreshLayout.setRefreshing(false);
-            }
+    @SuppressLint("NewApi")
+    @Override
+    protected void onPause() {
+        webViewFacebook.onPause();
+        super.onPause();
+    }
 
-            @Override//called when there isn't connection
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-                noConnectionError = true;//to allow to return at the last visited page
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        Log.e("Info", "onDestroy()");
+        webViewFacebook.onDestroy();
+        super.onDestroy();
+    }
 
-        //WebChromeClient for handling all chrome functions.
-        webViewFacebook.setWebChromeClient(new WebChromeClient() {
-            //to the Geolocation
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-                //todo notify when the gps is used
-            }
-
-            //to upload files
-            //!!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
-            // for >= Lollipop, all in one
-            public boolean onShowFileChooser(
-                    WebView webView, ValueCallback<Uri[]> filePathCallback,
-                    WebChromeClient.FileChooserParams fileChooserParams) {
-
-                /** Request permission for external storage access.
-                 *  If granted it's awesome and go on,
-                 *  otherwise just stop here and leave the method.
-                 */
-                if (mFilePathCallback != null) {
-                    mFilePathCallback.onReceiveValue(null);
-                }
-                mFilePathCallback = filePathCallback;
-
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
-                    // create the file where the photo should go
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                        takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
-                        Toast.makeText(getApplicationContext(), "Error occurred while creating the File", Toast.LENGTH_LONG).show();
-                    }
-
-                    // continue only if the file was successfully created
-                    if (photoFile != null) {
-                        mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(photoFile));
-                    } else {
-                        takePictureIntent = null;
-                    }
-                }
-
-                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                contentSelectionIntent.setType("image/*");
-
-                Intent[] intentArray;
-                if (takePictureIntent != null) {
-                    intentArray = new Intent[]{takePictureIntent};
-                } else {
-                    intentArray = new Intent[0];
-                }
-
-                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-                chooserIntent.putExtra(Intent.EXTRA_TITLE, getString(R.string.chooseAnImage));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-
-                startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
-
-                return true;
-            }
-
-            // creating image files (Lollipop only)
-            private File createImageFile() throws IOException {
-                String appDirectoryName = getString(R.string.app_name).replace(" ", "");
-                File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appDirectoryName);
-
-                if (!imageStorageDir.exists()) {
-                    //noinspection ResultOfMethodCallIgnored
-                    imageStorageDir.mkdirs();
-                }
-
-                // create an image file name
-                imageStorageDir = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-                return imageStorageDir;
-            }
-
-            // openFileChooser for Android 3.0+
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                String appDirectoryName = getString(R.string.app_name).replace(" ", "");
-                mUploadMessage = uploadMsg;
-
-                try {
-                    File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appDirectoryName);
-
-                    if (!imageStorageDir.exists()) {
-                        //noinspection ResultOfMethodCallIgnored
-                        imageStorageDir.mkdirs();
-                    }
-
-                    File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-
-                    mCapturedImageURI = Uri.fromFile(file); // save to the private variable
-
-                    final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-                    //captureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                    i.setType("image/*");
-
-                    Intent chooserIntent = Intent.createChooser(i, getString(R.string.chooseAnImage));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{captureIntent});
-
-                    startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), ("Camera Exception"), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            // openFileChooser for other Android versions
-            /** may not work on KitKat due to lack of implementation of openFileChooser() or onShowFileChooser()
-             *  https://code.google.com/p/android/issues/detail?id=62220
-             *  however newer versions of KitKat fixed it on some devices */
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-                openFileChooser(uploadMsg, acceptType);
-            }
-
-        });
-
-        // OnLongClickListener for detecting long clicks on links and images
-        // !!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
-        webViewFacebook.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // activate long clicks on links and image links according to settings
-                if (savedPreferences.getBoolean("pref_enableFastShare", true)) {
-                    WebView.HitTestResult result = webViewFacebook.getHitTestResult();
-                    if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
-                        Message msg = linkHandler.obtainMessage();
-                        webViewFacebook.requestFocusNodeHref(msg);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        webViewFacebook.onActivityResult(requestCode, resultCode, intent);
     }
 
     // app is already running and gets a new intent (used to share link without open another activity
@@ -355,85 +157,257 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //*********************** UPLOAD FILES ****************************
-    //!!!!!!!!!!! thanks to FaceSlim !!!!!!!!!!!!!!!
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //used to upload files
-        // code for all versions except of Lollipop
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+    //*********************** SETUP ****************************
+    private void SetupWebView() {
+        webViewFacebook = (AdvancedWebView) findViewById(R.id.webView);
+        WebSettings settings = webViewFacebook.getSettings();
 
-            if (requestCode == FILECHOOSER_RESULTCODE) {
-                if (null == this.mUploadMessage)
-                    return;
+        webViewFacebook.setListener(this, this);
 
-                Uri result = null;
+        webViewFacebook.addPermittedHostname("m.facebook.com");
+        webViewFacebook.addPermittedHostname("h.facebook.com");
+        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
+        webViewFacebook.addPermittedHostname("touch.facebook.com");
+        webViewFacebook.addPermittedHostname("facebook.com");
+        webViewFacebook.addPermittedHostname("messenger.com");
 
-                try {
-                    if (resultCode != RESULT_OK)
-                        result = null;
-                    else {
-                        // retrieve from the private variable if the intent is null
-                        result = data == null ? mCapturedImageURI : data.getData();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "activity :" + e, Toast.LENGTH_LONG).show();
-                }
+        webViewFacebook.setDesktopMode(false);
 
-                mUploadMessage.onReceiveValue(result);
-                mUploadMessage = null;
-            }
+        webViewFacebook.requestFocus(View.FOCUS_DOWN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
 
-        } // end of code for all versions except of Lollipop
+        //set text zoom
+        int zoom = Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
+        settings.setTextZoom(zoom);
 
-        // start of code for Lollipop only
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //set Geolocation
+        settings.setGeolocationEnabled(savedPreferences.getBoolean("pref_allowGeolocation", true));
 
-            if (requestCode != FILECHOOSER_RESULTCODE || mFilePathCallback == null) {
-                super.onActivityResult(requestCode, resultCode, data);
-                return;
-            }
+        // Use WideViewport and Zoom out if there is no viewport defined
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
 
-            Uri[] results = null;
+        // better image sizing support
+        settings.setSupportZoom(true);
+        settings.setDisplayZoomControls(false);
+        settings.setBuiltInZoomControls(true);
 
-            // check that the response is a good one
-            if (resultCode == Activity.RESULT_OK) {
-                if (data == null || data.getData() == null) {
-                    // if there is not data, then we may have taken a photo
-                    if (mCameraPhotoPath != null) {
-                        results = new Uri[]{Uri.parse(mCameraPhotoPath)};
-                    }
-                } else {
-                    String dataString = data.getDataString();
-                    if (dataString != null) {
-                        results = new Uri[]{Uri.parse(dataString)};
-                    }
-                }
-            }
+        //settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
 
-            mFilePathCallback.onReceiveValue(results);
-            mFilePathCallback = null;
+        settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
 
-        } // end of code for Lollipop only
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+            // Hide the zoom controls for HONEYCOMB+
+            settings.setDisplayZoomControls(false);
+        }
     }
 
-    //*********************** KEY ****************************
+    private void SetupOnLongClickListener() {
+        // OnLongClickListener for detecting long clicks on links and images
+        webViewFacebook.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // activate long clicks on links and image links according to settings
+                if (savedPreferences.getBoolean("pref_enableFastShare", true)) {
+                    WebView.HitTestResult result = webViewFacebook.getHitTestResult();
+                    if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+                        Message msg = linkHandler.obtainMessage();
+                        webViewFacebook.requestFocusNodeHref(msg);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        webViewFacebook.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
+                        if (!v.hasFocus()) {
+                            v.requestFocus();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void SetupFullScreenVideo() {
+        //full screen video
+        mTargetView = (FrameLayout) findViewById(R.id.target_view);
+        myWebChromeClient = new WebChromeClient() {
+            //this custom WebChromeClient allow to show video on full screen
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                mCustomViewCallback = callback;
+                mTargetView.addView(view);
+                mCustomView = view;
+                swipeRefreshLayout.setVisibility(View.GONE);
+                mTargetView.setVisibility(View.VISIBLE);
+                mTargetView.bringToFront();
+            }
+
+            @Override
+            public void onHideCustomView() {
+                if (mCustomView == null)
+                    return;
+
+                mCustomView.setVisibility(View.GONE);
+                mTargetView.removeView(mCustomView);
+                mCustomView = null;
+                mTargetView.setVisibility(View.GONE);
+                mCustomViewCallback.onCustomViewHidden();
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
+        };
+        webViewFacebook.setWebChromeClient(myWebChromeClient);
+    }
+
+    private void ShareLinkHandler() {
+        /** get a subject and text and check if this is a link trying to be shared */
+        String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
+        String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+        // if we have a valid URL that was shared by us, open the sharer
+        if (sharedUrl != null) {
+            if (!sharedUrl.equals("")) {
+                // check if the URL being shared is a proper web URL
+                if (!sharedUrl.startsWith("http://") || !sharedUrl.startsWith("https://")) {
+                    // if it's not, let's see if it includes an URL in it (prefixed with a message)
+                    int startUrlIndex = sharedUrl.indexOf("http:");
+                    if (startUrlIndex > 0) {
+                        // seems like it's prefixed with a message, let's trim the start and get the URL only
+                        sharedUrl = sharedUrl.substring(startUrlIndex);
+                    }
+                }
+                // final step, set the proper Sharer...
+                urlSharer = String.format("https://m.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
+                // ... and parse it just in case
+                urlSharer = Uri.parse(urlSharer).toString();
+                isSharer = true;
+            }
+        }
+
+    }
+
+    private void SetTheme() {
+        switch (savedPreferences.getString("pref_theme", "default")) {
+            case "DarkTheme": {
+                setTheme(R.style.DarkTheme);
+                break;
+            }
+            default: {
+                setTheme(R.style.DefaultTheme);
+                break;
+            }
+        }
+    }
+
+    private void SetupRefreshLayout() {
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_chr");//refreshPage();//reload the page
+            }
+        });
+    }
+
+
+    //*********************** WEBVIEW FACILITIES ****************************
+    private void GoHome() {
+        if (savedPreferences.getBoolean("pref_recentNewsFirst", false)) {
+            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_chr");
+        } else {
+            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_nor");
+        }
+    }
+
+    private void RefreshPage() {
+        if (noConnectionError) {
+            webViewFacebook.goBack();
+            noConnectionError = false;
+        } else webViewFacebook.reload();
+    }
+
+
+    //*********************** WEBVIEW EVENTS ****************************
+    @Override
+    public void onPageStarted(String url, Bitmap favicon) {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void onPageFinished(String url) {
+        ApplyCustomCss();
+
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(!Uri.parse(url).getHost().endsWith("messenger.com"));//disable the scroll to refresh in messenger
+    }
+
+    @Override
+    public void onPageError(int errorCode, String description, String failingUrl) {
+        String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
+                getString(R.string.titleNoConnection) +
+                "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
+                getString(R.string.descriptionNoConnection) +
+                "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; opacity: 0.3;'>" +
+                getString(R.string.awards) +
+                "</h5>";
+        webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
+        noConnectionError = true;//to allow to return at the last visited page
+    }
+
+    @Override
+    public void onDownloadRequested(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+    }
+
+    @Override
+    public void onExternalPageRequest(String url) {//if the link doesn't contain 'facebook.com', open it using the browser
+        if (Uri.parse(url).getHost().endsWith("fbcdn.net")) {//it is an image
+            //TODO add the possibility to download and share directly
+            Toast.makeText(getApplicationContext(), getString(R.string.downloadOrShareWithBrowser),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {//this prevents the crash
+            Log.e("shouldOverrideUrlLoad", "" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    //*********************** BUTTON ****************************
     // handling the back button
     @Override
     public void onBackPressed() {
-        if (webViewFacebook.canGoBack()) {
-            webViewFacebook.goBack();
+        if (mCustomView != null) {
+            myWebChromeClient.onHideCustomView();//hide video player
         } else {
-            finish();// exit
+            if (webViewFacebook.canGoBack()) {
+                if (Uri.parse(webViewFacebook.getUrl()).getHost().endsWith("messenger.com"))
+                    GoHome();
+                else webViewFacebook.goBack();
+            } else {
+                finish();// close app
+            }
         }
     }
+
 
     //*********************** MENU ****************************
     //add my menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -447,15 +421,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.openInBrowser: {//open the actual page into using the browser
-                webViewFacebook.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(webViewFacebook.getUrl())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(webViewFacebook.getUrl())));
                 break;
             }
             case R.id.refresh: {//refresh the page
-                refreshPage();
+                RefreshPage();
                 break;
             }
             case R.id.home: {//go to the home
-                goHome();
+                GoHome();
                 break;
             }
             case R.id.share: {//share this app
@@ -486,66 +460,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //*********************** WEBVIEW FACILITIES ****************************
-    private void setUpWebViewDefaults(WebView webView) {
-        WebSettings settings = webView.getSettings();
-
-        int zoom = Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
-        settings.setTextZoom(zoom);
-
-        //allow Geolocation
-        settings.setGeolocationEnabled(savedPreferences.getBoolean("pref_allowGeolocation", true));
-
-        // Enable Javascript
-        settings.setJavaScriptEnabled(true);
-
-        //to make the webview faster
-        //settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
-
-        // Use WideViewport and Zoom out if there is no viewport defined
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-        // better image sizing support
-        settings.setSupportZoom(true);
-        settings.setDisplayZoomControls(false);
-        settings.setBuiltInZoomControls(true);
-
-
-        //settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
-
-        settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
-
-        // Enable pinch to zoom without the zoom buttons
-        settings.setBuiltInZoomControls(true);
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-            // Hide the zoom controls for HONEYCOMB+
-            settings.setDisplayZoomControls(false);
-        }
-
-        // Enable remote debugging via chrome://inspect
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
-    }
-
-    private void goHome() {
-        if (savedPreferences.getBoolean("pref_recentNewsFirst", false)) {
-            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_chr");
-        } else {
-            webViewFacebook.loadUrl(getString(R.string.urlFacebookMobile) + "?sk=h_nor");
-        }
-    }
-    private void refreshPage() {
-        if (noConnectionError) {
-            webViewFacebook.goBack();
-            noConnectionError = false;
-        } else webViewFacebook.reload();
-    }
-
-
     //*********************** OTHER ****************************
+
+    private void ApplyCustomCss() {
+        String css = "";
+        if (savedPreferences.getBoolean("pref_centerTextPosts", false)) {
+            css += getString(R.string.centerTextPosts);
+        }
+        if (savedPreferences.getBoolean("pref_addSpaceBetweenPosts", false)) {
+            css += getString(R.string.addSpaceBetweenPosts);
+        }
+        if (savedPreferences.getBoolean("pref_hideSponsoredPosts", false)) {
+            css += getString(R.string.hideAdsAndPeopleYouMayKnow);
+        }
+        if (savedPreferences.getBoolean("pref_fixedBar", true)) {//without add the barHeight doesn't scroll
+            css += (getString(R.string.fixedBar).replace("$s", "" + Dimension.heightForFixedFacebookNavbar(getApplicationContext())));
+        }
+        if (savedPreferences.getBoolean("pref_removeMessengerDownload", true)) {
+            css += getString(R.string.removeMessengerDownload);
+        }
+
+        switch (savedPreferences.getString("pref_theme", "standard")) {
+            case "DarkTheme":
+            case "DarkNoBar": {
+                css += getString(R.string.blackTheme);
+            }
+            default:
+                break;
+        }
+
+        //apply the customizations
+        webViewFacebook.loadUrl(getString(R.string.editCss).replace("$css", css));
+    }
 
     // handle long clicks on links, an awesome way to avoid memory leaks
     private static class MyHandler extends Handler {
@@ -598,30 +544,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //to check if there is the key for future use
-    //I 'll never add premium features but I would acknowledge who has buyed the app
-   /* protected boolean isProInstalled(Context context) {
-        // the packagename of the 'key' app
-        String proPackage = "it.rignanese.leo.donationkey1";
-
-        // get the package manager
-        final PackageManager pm = context.getPackageManager();
-
-        // get a list of installed packages
-        List<PackageInfo> list = pm.getInstalledPackages(PackageManager.GET_DISABLED_COMPONENTS);
-
-        // let's iterate through the list
-        Iterator<PackageInfo> i = list.iterator();
-        while (i.hasNext()) {
-            PackageInfo p = i.next();
-            // check if proPackage is in the list AND whether that package is signed
-            //  with the same signature as THIS package
-            if ((p.packageName.equals(proPackage)) &&
-                    (pm.checkSignatures(context.getPackageName(), p.packageName) == PackageManager.SIGNATURE_MATCH))
-                return true;
-        }
-        return false;
-    }*/
 }
-
-

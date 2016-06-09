@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_action_notification_sync"
+        android:showAsAction="always"
+        android:title="@string/refresh"/>
+    <item
+        android:id="@+id/top"
+        android:icon="@drawable/ic_action_hardware_keyboard_arrow_up"
+        android:showAsAction="always"
+        android:title="@string/top"/>
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_action_action_home"
+        android:showAsAction="always"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/openInBrowser"
+        android:title="@string/openInBrowser"/>
+    <item
+        android:id="@+id/share"
+        android:title="@string/share"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"/>
+    <item
+        android:id="@+id/exit"
+        android:title="@string/exit"/>
+</menu>
