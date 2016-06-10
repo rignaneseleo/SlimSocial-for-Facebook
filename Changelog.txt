@@ -182,4 +182,11 @@ App completely recoded:
 - Credits updated
 - Updated some translations
 
+v3.5
+- Messages Implemented with mbasic.facebook.com
+- Photos opened in-app and you can hold to save
+- Fix 'Fast Share' setting
+- Limited domains from the manifest
+- Remove swipe to refresh bug (loaded always home)
+
 ! Consider the possibility to donate !

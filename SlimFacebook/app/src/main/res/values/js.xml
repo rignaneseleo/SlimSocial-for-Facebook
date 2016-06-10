@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+	* SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
+	* GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+	* GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+	*/
+	-->
 <resources>
     <string name="editCss" translatable="false">
 		javascript:function addStyle(css) {
@@ -8,5 +13,24 @@
 		}
 		addStyle(\'$css\');
 	</string>
+<string name="fixMessages" translatable="false">
+		javascript:function fixMessages() {
+		var a=(document.querySelectorAll(\'#messages_jewel ._19no.touchable\'))[0];
+        a.href=\'https://slimsocial.leo\';
+        a.setAttribute(\'data-autoid\',\'\');
+		}
+		fixMessages();
+</string>
+
+	<string name="hideHeaderFooterMessages" translatable="false">
+		javascript: function hideHeaderFooterMessages(){
+	var divs = document.getElementById(\'viewport\').children;
+	for(var i = 0; i &#60; divs.length; i++) {
+		if(divs[i].id != \'objects_container\')
+		divs[i].style.display=\'none\';
+	}
+}
+hideHeaderFooterMessages();
+</string>
 
 </resources>
