@@ -203,4 +203,7 @@ v3.5.1
 - Updated French translation
 - Updated Traditional chinese translation
 
+v3.5.2
+- Fix GPS
+
 ! Consider the possibility to donate !

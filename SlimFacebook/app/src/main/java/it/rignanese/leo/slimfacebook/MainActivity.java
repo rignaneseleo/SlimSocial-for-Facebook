@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -49,7 +50,6 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 	private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
 	private AdvancedWebView webViewFacebook;//the main webView where is shown facebook
 
-
 	private SharedPreferences savedPreferences;//contains all the values of saved preferences
 
 	private boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
@@ -62,9 +62,9 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 	//full screen video variables
 	private FrameLayout mTargetView;
+	private WebChromeClient myWebChromeClient;
 	private WebChromeClient.CustomViewCallback mCustomViewCallback;
 	private View mCustomView;
-	private WebChromeClient myWebChromeClient;
 
 
 	//*********************** ACTIVITY EVENTS ****************************
@@ -172,24 +172,24 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 	private void SetupWebView() {
 		webViewFacebook = (AdvancedWebView) findViewById(R.id.webView);
-		WebSettings settings = webViewFacebook.getSettings();
-
 		webViewFacebook.setListener(this, this);
 
 		webViewFacebook.clearPermittedHostnames();
-
-//        webViewFacebook.addPermittedHostname("m.facebook.com");
-//        webViewFacebook.addPermittedHostname("h.facebook.com");
-//        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
-//        webViewFacebook.addPermittedHostname("touch.facebook.com");
-		//   webViewFacebook.addPermittedHostname("messenger.com");
 		webViewFacebook.addPermittedHostname("facebook.com");
 		webViewFacebook.addPermittedHostname("fbcdn.net");
+/*webViewFacebook.addPermittedHostname("m.facebook.com");
+        webViewFacebook.addPermittedHostname("h.facebook.com");
+        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
+      webViewFacebook.addPermittedHostname("touch.facebook.com");
+	  webViewFacebook.addPermittedHostname("messenger.com");*/
 
 		webViewFacebook.setDesktopMode(false);
-
 		webViewFacebook.requestFocus(View.FOCUS_DOWN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
+
+		WebSettings settings = webViewFacebook.getSettings();
+
+		settings.setJavaScriptEnabled(true);
 
 		//set text zoom
 		int zoom = Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
@@ -208,9 +208,8 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		settings.setBuiltInZoomControls(true);
 
 		// set caching
-		settings.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+		settings.setAppCachePath(getCacheDir().getAbsolutePath());
 		settings.setAppCacheEnabled(true);
-		//settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
 
 		settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
 
@@ -341,6 +340,11 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 				mTargetView.setVisibility(View.GONE);
 				mCustomViewCallback.onCustomViewHidden();
 				swipeRefreshLayout.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+				callback.invoke(origin, true, false);
 			}
 		};
 		webViewFacebook.setWebChromeClient(myWebChromeClient);
