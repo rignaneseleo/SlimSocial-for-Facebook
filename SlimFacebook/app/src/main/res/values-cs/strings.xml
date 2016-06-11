@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY kinclma1 USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+	<string name="refresh">Obnovit</string>
+	<string name="openInBrowser">Otevřít v prohlížeči</string>
+	<string name="settings">Nastavení</string>
+	<string name="share">Sdílejte tuto aplikaci</string>
+	<string name="prefCat_fb_settings_title">Nastavení Facebooku</string>
+	<string name="prefCat_app_settings_title">Nastavení aplikace</string>
+	<string name="prefCat_app_information_title">Informace o aplikaci</string>
+	<string name="title_recentNewsFirst">Řadit příspěvky od nejnovějších</string>
+	<string name="summary_recentNewsFirst">Místo hlavních</string>
+	<string name="title_centerTextPosts">Zarovnat příspěvky na střed</string>
+	<string name="summary_centerTextPosts">Text každého příspěvku bude zarovnán na střed</string>
+	<string name="summary_addSpaceBetweenPosts">Mezi příspěvky bude více místa</string>
+	<string name="title_addSpaceBetweenPosts">Přidat mezery mezi příspěvky</string>
+	<string name="summary_creditsCssThemes">Díky za fantastické motivy!</string>
+	<string name="summary_theme">Vyberte si motiv, který se vám líbí</string>
+	<string name="title_fixedBar">Pevná horní lišta</string>
+	<string name="summary_fixedBar">Modrá lišta zůstane na vrchu.</string>
+	<string name="title_hideSponsoredPosts">Nezobrazovat sponzorované příspěvky</string>
+	<string name="summary_hideSponsoredPosts">Skryje některé sponzorované příspěvky</string>
+	<string name="title_downloadImages">Uložit data</string>
+	<string name="summary_downloadImages">Neukládat obrázky</string>
+	<string name="summary_allowGeolocation">Facebook získá přístup k vaší poloze</string>
+	<string name="title_allowGeolocation">Povolit přístup k GPS</string>
+	<string name="version">Verze</string>
+	<string name="credits">Zásluhy</string>
+	<string name="prefCat_otherCredits_title">Ostatní</string>
+	<string name="prefCat_developersCredits_title">Vývojáři</string>
+	<string name="summary_LeonardoRignanese">Tvůrce a vývojář aplikace</string>
+	<string name="prefCat_translatorsCredits_title">Překladatelé</string>
+	<string name="prefCat_designersCredits_title">Návrháři</string>
+	<string name="donate">Přispět</string>
+	<string name="donateToContribute">Dělám to zdarma. Pozvete mě na kávu?</string>
+	<string name="summary_you">Tato aplikace exituje také díky vám</string>
+	<string name="title_you">Jste důležití</string>
+	<string name="titleNoConnection">Vyskytla se chyba.</string>
+	<string name="descriptionNoConnection">Zkontrolujte připojení a obnovte stránku.</string>
+	<string name="awards">Tato aplikace je open source.</string>
+	<string name="thanks">Díky!</string>
+	<string name="downloadOrShareWithBrowser">Tento obrázek můžete stáhnout nebo sdílet v prohlížeči.</string>
+	<string name="shareThisLink">Sdílet odkaz</string>
+	<string name="summary_FaceSlim">Bez nich bych nemohl přidat některé zajímavé funkce. Pokud jste vývojáři, musíte vidět jejich skvělou práci!</string>
+	<string name="summary_lRemainl">Tvůrce nádherného loga</string>
+	<string name="summary_Pharetra">Talentovaný se spoustou nápadů</string>
+	<string name="exit">Ukončit</string>
+	<string name="noPersonalInformationAreShared">Aplikace nesbírá ani nepřenáší žádné informace o vás ani o vašem zařízení!</string>
+	<string name="title_theme">Motivy</string>
+	<string name="applyingChanges">Aplikuji změny!</string>
+	<string name="title_textSize">Velikost textu</string>
+	<string name="title_enableFastShare">Povolit rychlé sdílení</string>
+	<string name="summary_enableFastShare">Rychlé sdílení vám umožňuje sdílet libovolný odkaz ťuknutím a podržením.</string>
+	<string name="summary_textSize">Zvolte si velikost textu dle libosti</string>
+	<string name="refreshToApply">Změny se projeví po obnovení stránky</string>
+	<string name="summary_AdvancedWebView">Část aplikace je založena na jejich práci</string>
+	<string name="title_translate">Chcete přeložit tuto aplikaci?</string>
+	<string name="summary_translate">Použijte můj nástroj WebTool: klepněte sem, vyberte jazyk, jímž vládnete, vygenerujte nástroj na sestavení, opravte chyby, vygenerujte soubor \'strings.xml\' a pošlete mi jej e-mailem.</string>
+	<string name="title_removeMessengerDownload">Odstranit doporučení ke stažení Messengeru</string>
+	<string name="summary_removeMessengerDownload">Odstraní reklamy na stažení Messengeru</string>
+	<string name="summary_SaschaHa">Talentovaný chytrý člověk, který mi velice pomohl a spřátelili jsme se. Klepnutím sem se dostanete k jeho výtvorům!</string>
+	<string name="supportMe">Podpořte mě</string>
+	<string name="donateWithPayPal">Přispět prostřednictvím PayPalu</string>
+	<string name="messages">Zprávy</string>
+	<string name="close">Zavřít</string>
+	<string name="acceptPermissionAndRetry">Přijměte oprávnění a restartujte aplikaci!</string>
+	<string name="yes">Ano</string>
+	<string name="no">Ne</string>
+	<string name="downloadingPhoto">Stahuji fotku!</string>
+	<string name="askDownloadPhoto">Stáhnout fotku?</string>
+	<string name="holdImageToDownload">Stáhněte fotku dlouhým stiskem!</string>
+</resources>
+
+	<!-- PLAY STORE PAGE
+
+	DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+	400kB aplikace pro Facebook
+
+	FULL DESCRIPTION:
+	Upozornění: Aplikace nemusí být vhodná k častému používání.
+
+	Proč si nainstalovat aplikaci SlimSocial for Facebook?
+	- Je malá: je menší než 1MB;
+	- Je jednoduchá a modení: obsahuje jen to, co je třeba;
+	- Je Open source: kód aplikace je na GitHubu, kdokoli může zkontrolovat její kód nebo přispět k vývoji.
+	- Je zdarma a bez reklam;
+	- Není vlezlá;
+	- Respektuje vaše soukromí: nevyžaduje žádná zvláštní oprávnění. Bez vašeho svolení se Facebook nedostane k žádným datům z vašeho zařízení;
+
+
+	Aplikace je stále ve fázi vývoje, momentálně pracujeme na:
+	- Notifikacích;
+
+	Odkaz na GitHub
+	https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+	***Nejedná se o oficiální aplikaci Facebooku***
+	Jedná se o snahu zjednodušit lidem život. Zobrazuje mobilní verzi webu Facebooku. Veškeré zásluhy patří Facebooku. Aplikace je poskytována zdarma a bez reklam.
+		-->

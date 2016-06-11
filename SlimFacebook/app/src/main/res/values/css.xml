@@ -23,11 +23,6 @@
 		bottom: 0px;
 		text-align: center !important;
 		}
-
-        /*remove the cookie message*/
-        #u_0_a {
-		display: none;
-		}
 	</string>
 	<string name="removeMessengerDownload" translatable="false">
 		._s15 {

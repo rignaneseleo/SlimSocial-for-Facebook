@@ -181,6 +181,9 @@ App completely recoded:
 - New interesting settings
 - Credits updated
 - Updated some translations
+	-Portuguese
+	-Hungarian
+	-Tamil
 
 v3.5
 - Messages Implemented with mbasic.facebook.com
@@ -188,5 +191,16 @@ v3.5
 - Fix 'Fast Share' setting
 - Limited domains from the manifest
 - Remove swipe to refresh bug (loaded always home)
+
+v3.5.1
+- Fixed settings scrolling on Android 4
+- Fixed hidden search bar 
+- Fixed opening fb link when the app is closed
+- Improved caching
+- Added www.facebook.com to the allowed domains
+- Added Swedish translation
+- Added Czech translation
+- Updated French translation
+- Updated Traditional chinese translation
 
 ! Consider the possibility to donate !

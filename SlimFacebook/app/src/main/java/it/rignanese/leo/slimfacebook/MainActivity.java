@@ -88,15 +88,15 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 		SetupWebView();//setup webview
 
-
 		SetupFullScreenVideo();
 
 		SetupOnLongClickListener();
 
 		if (isSharer) {//if is a share request
 			webViewFacebook.loadUrl(urlSharer);//load the sharer url
-
 			isSharer = false;
+		} else if (getIntent() != null && getIntent().getDataString() != null) {//if is a fb link open request
+			webViewFacebook.loadUrl(getIntent().getDataString());
 		} else GoHome();//load homepage
 	}
 
@@ -139,7 +139,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		/** get a subject and text and check if this is a link trying to be shared */
 		String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
 		String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-
+		Log.d("sharedUrl", "onNewIntent() - sharedUrl: " + sharedUrl);
 		// if we have a valid URL that was shared by us, open the sharer
 		if (sharedUrl != null) {
 			if (!sharedUrl.equals("")) {
@@ -169,6 +169,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 	}
 
 	//*********************** SETUP ****************************
+
 	private void SetupWebView() {
 		webViewFacebook = (AdvancedWebView) findViewById(R.id.webView);
 		WebSettings settings = webViewFacebook.getSettings();
@@ -206,6 +207,9 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		settings.setDisplayZoomControls(false);
 		settings.setBuiltInZoomControls(true);
 
+		// set caching
+		settings.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+		settings.setAppCacheEnabled(true);
 		//settings.setGeolocationDatabasePath(getBaseContext().getFilesDir().getPath()); it crashes on some devices
 
 		settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
@@ -346,6 +350,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		/** get a subject and text and check if this is a link trying to be shared */
 		String sharedSubject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
 		String sharedUrl = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+		Log.d("sharedUrl", "ShareLinkHandler() - sharedUrl: " + sharedUrl);
 
 		// if we have a valid URL that was shared by us, open the sharer
 		if (sharedUrl != null) {
@@ -583,7 +588,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		private final WeakReference<MainActivity> mActivity;
 
 		public MyHandler(MainActivity activity) {
-			this.activity=activity;
+			this.activity = activity;
 			mActivity = new WeakReference<>(activity);
 		}
 
@@ -599,7 +604,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 					if (url != null) {
 					/* "clean" an url to remove Facebook tracking redirection while sharing
-	                and recreate all the special characters */
+					and recreate all the special characters */
 						url = decodeUrl(cleanUrl(url));
 
 						// create share intent for long clicked url

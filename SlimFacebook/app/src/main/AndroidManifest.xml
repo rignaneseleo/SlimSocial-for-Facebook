@@ -11,6 +11,9 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<!-- gps -->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<!-- inApp donations -->
+	<uses-permission android:name="com.android.vending.BILLING"/>
+
 
 	<application
 		android:allowBackup="true"
@@ -54,7 +57,7 @@
 					android:host="mbasic.facebook.com"
 					android:scheme="https" />
 				<data
-					android:host="facebook.com"
+					android:host="www.facebook.com"
 					android:scheme="https" />
 			</intent-filter>
 			<intent-filter>

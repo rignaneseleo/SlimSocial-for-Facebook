@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Baxtex USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+	<string name="refresh">Uppdatera</string>
+	<string name="openInBrowser">Öppna med webbläsaren</string>
+	<string name="settings">Inställningar</string>
+	<string name="share">Dela den här appen</string>
+	<string name="prefCat_fb_settings_title">Facebook inställningar</string>
+	<string name="prefCat_app_settings_title">App inställningar</string>
+	<string name="prefCat_app_information_title">App information</string>
+	<string name="title_recentNewsFirst">Ordna nyhetsflödet efter senaste inlägg</string>
+	<string name="summary_recentNewsFirst">I stället för genom populära inlägg</string>
+	<string name="title_centerTextPosts">Centrera inläggens text</string>
+	<string name="summary_centerTextPosts">Texten i varje inlägg kommer att centreras</string>
+	<string name="summary_addSpaceBetweenPosts">Det kommer att finnas mer utrymme mellan inlägg</string>
+	<string name="title_addSpaceBetweenPosts">Mer utrymme mellan inlägg</string>
+	<string name="summary_creditsCssThemes">Tack för dessa fantastiska teman!</string>
+	<string name="summary_theme">Välj tema</string>
+	<string name="title_fixedBar">Fast top fliken</string>
+	<string name="summary_fixedBar">Det blå fältet förblir fäst på toppen.</string>
+	<string name="title_hideSponsoredPosts">Visar inte sponsrade inlägg</string>
+	<string name="summary_hideSponsoredPosts">Några sponsrade inlägg kommer inte att visas</string>
+	<string name="title_downloadImages">Spara data</string>
+	<string name="summary_downloadImages">Ladda inte ner bilder</string>
+	<string name="summary_allowGeolocation">Facebook kommer att kunna få tillgång till din position</string>
+	<string name="title_allowGeolocation">Tillåta användning av GPS</string>
+	<string name="version">Version</string>
+	<string name="credits">Credits</string>
+	<string name="prefCat_otherCredits_title">Andra</string>
+	<string name="prefCat_developersCredits_title">Utvecklare</string>
+	<string name="summary_LeonardoRignanese">Skapare och utvecklare av appen</string>
+	<string name="prefCat_translatorsCredits_title">Översättare</string>
+	<string name="prefCat_designersCredits_title">Designers</string>
+	<string name="donate">Donera</string>
+	<string name="donateToContribute">Jag valde att göra det gratis. vill du ge mig en kopp kaffe?</string>
+	<string name="summary_you">Det är också tack vare er att denna app existerar.</string>
+	<string name="title_you">Du är viktig.</string>
+	<string name="titleNoConnection">Oj, det finns ett problem!</string>
+	<string name="descriptionNoConnection">Försök att kontrollera anslutningen och uppdatera.</string>
+	<string name="awards">Detta är en Open Source app.</string>
+	<string name="thanks">Tack!</string>
+	<string name="downloadOrShareWithBrowser">Öppning webbläsare du kan ladda ner eller dela den här bilden.</string>
+	<string name="shareThisLink">Dela denna länk</string>
+	<string name="summary_FaceSlim">Utan dem skulle jag inte lägga till några bra funktioner. Om du är en utvecklare, måste du se deras arbete!</string>
+	<string name="summary_lRemainl">Skaparen av den magnifika logotyp</string>
+	<string name="summary_Pharetra">Full av talang och kreativitet</string>
+	<string name="exit">Stäng av</string>
+	<string name="noPersonalInformationAreShared">Ingen personlig eller privat information om dig eller din enhet samlas in eller överförs av denna applikation!</string>
+	<string name="title_theme">Teman</string>
+	<string name="applyingChanges">Applicering av ändringar!</string>
+	<string name="title_textSize">Textstorlek</string>
+	<string name="title_enableFastShare">Aktivera snabb delning</string>
+	<string name="summary_enableFastShare">Med snabb delning kan du dela en länk helt enkelt knacka och hålla på ett inlägg för att dela det.</string>
+	<string name="summary_textSize">Välj text storlek som du föredrar</string>
+	<string name="refreshToApply">Uppdatera Facebook för att verkställa ändringarna</string>
+	<string name="summary_AdvancedWebView">En del av denna app är baserad på deras arbete</string>
+	<string name="title_translate">Vill du översätta denna app?</string>
+	<string name="summary_translate">Använd min WebTool: peka här, välja det språk som du vet, generera byggaren, korrigera fel, generera och skicka mig "strings.xml" fil via e-post</string>
+	<string name="title_removeMessengerDownload">Ta bort "Ladda ner Messenger" meddelande</string>
+	<string name="summary_removeMessengerDownload">Annonserna med "Installera Messenger" det kommer att försvinna</string>
+	<string name="summary_SaschaHa">En mycket begåvad och smart kille som hjälpt mig mycket och har blivit en vän. Tryck här för att se hans otroliga arbete!</string>
+	<string name="supportMe">Stöd mig</string>
+	<string name="donateWithPayPal">Donera med PayPal</string>
+	<string name="messages">Meddelanden</string>
+	<string name="close">Stäng</string>
+	<string name="acceptPermissionAndRetry">Acceptera behörigheter och försök igen!</string>
+	<string name="yes">Ja</string>
+	<string name="no">Nej</string>
+	<string name="downloadingPhoto">Nedladdning av bild!</string>
+	<string name="askDownloadPhoto">Hämta bilden?</string>
+	<string name="holdImageToDownload">Håll bilden för att ladda!</string>
+</resources>

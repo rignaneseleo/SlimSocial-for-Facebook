@@ -74,7 +74,7 @@
             android:title="minimaster4734 and lRemainl" />
         <PreferenceScreen
             android:summary="French"
-            android:title="minimaster4734" />
+            android:title="Stephane Robert" />
         <PreferenceScreen
             android:summary="Hindi"
             android:title="Siddique Nagarkar" />
@@ -97,8 +97,14 @@
             android:summary="Simplified Chinese"
             android:title="Jason Yuen" />
         <PreferenceScreen
-            android:summary="Traditional Chinese"
-            android:title="DiC1911" />
+        android:summary="Traditional Chinese"
+        android:title="Jacky Yip" />
+        <PreferenceScreen
+            android:summary="Swedish"
+            android:title="Baxtex" />
+        <PreferenceScreen
+            android:summary="Czech"
+            android:title="kinclma1" />
     </PreferenceCategory>
 
     <PreferenceCategory

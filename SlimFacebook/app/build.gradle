@@ -8,8 +8,8 @@ android {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 34
-        versionName "3.5.0"
+        versionCode 35
+        versionName "3.5.1"
     }
     buildTypes {
         release {
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.github.delight-im:Android-AdvancedWebView:da127f967f8dcf0ce5a0297c58e9bef2cc1a5ae8'
     compile 'com.android.support:support-v4:23.4.0'
     testCompile 'junit:junit:4.12'
+//    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 }
