@@ -40,7 +40,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_fixedBar">Fixed top bar</string>
     <string name="summary_fixedBar">The blue bar will remain stuck on the top.</string>
     <string name="title_hideSponsoredPosts">Don\'t show sponsored posts</string>
-    <string name="summary_hideSponsoredPosts">Some sponsored posts there not will be</string>
+    <string name="summary_hideSponsoredPosts">Some sponsored posts will be hidden</string>
     <string name="title_downloadImages">Save Data </string>
     <string name="summary_downloadImages">Don\'t download images</string>
     <string name="summary_allowGeolocation">Facebook will be able to access to your position</string>
@@ -59,7 +59,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <!--end settings-->
 
     <!--page error-->
-    <string name="titleNoConnection">Ops, there is a problem!</string>
+    <string name="titleNoConnection">Oops, there is a problem!</string>
     <string name="descriptionNoConnection">Try to check the connection and refresh.</string>
     <string name="awards">This is an Open Source app.</string>
     <!--end page error-->
@@ -85,7 +85,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_translate">Would you translate this app?</string>
     <string name="summary_translate">Use my WebTool: tap here, select the language that you know, generate the builder, correct errors, generate and send me the \'strings.xml\' file by email</string>
     <string name="title_removeMessengerDownload">Remove \'Download Messenger\' messages</string>
-    <string name="summary_removeMessengerDownload">The ads with \'Install Messenger\' there won\'t be</string>
+    <string name="summary_removeMessengerDownload">The ads with \'Install Messenger\' will be hidden</string>
     <string name="summary_SaschaHa">A very talented and smart guy that helped me a lot and has become a friend. Tap here to see his incredible work!</string>
     <string name="supportMe">Support me</string>
     <string name="donateWithPayPal">Donate with PayPal</string>
