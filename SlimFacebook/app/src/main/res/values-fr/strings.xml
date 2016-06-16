@@ -25,7 +25,7 @@
     <string name="title_fixedBar">Barre supérieure fixe</string>
     <string name="summary_fixedBar">La barre bleue restera bloquée au dessus.</string>
     <string name="title_hideSponsoredPosts">Ne pas afficher les messages sponsorisés</string>
-    <string name="summary_hideSponsoredPosts">Certains messages sponsorisés ne le seront pas</string>
+    <string name="summary_hideSponsoredPosts">Certains messages sponsorisés seront cachés</string>
     <string name="title_downloadImages">Enregistrer des données</string>
     <string name="summary_downloadImages">Ne pas télécharger les images</string>
     <string name="summary_allowGeolocation">Facebook sera en mesure d\'accéder à votre position</string>
