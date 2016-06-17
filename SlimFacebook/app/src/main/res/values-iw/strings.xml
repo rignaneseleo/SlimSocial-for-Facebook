@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY iakovl  USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+	<string name="refresh">רענן</string>
+	<string name="openInBrowser">פתח באמצעות דפדפן</string>
+	<string name="settings">הגדרות</string>
+	<string name="share">שתף יישום זה</string>
+	<string name="prefCat_fb_settings_title">הגדרות פייסבוק</string>
+	<string name="prefCat_app_settings_title">הגדרות יישום</string>
+	<string name="prefCat_app_information_title">פרטי יישום</string>
+	<string name="title_recentNewsFirst">סדר את זרם החדשות לפי העדכני ביותר</string>
+	<string name="summary_recentNewsFirst">במקום על ידי סיפורים פופולריים</string>
+	<string name="title_centerTextPosts">מרכז טקסט של פוסטים</string>
+	<string name="summary_centerTextPosts">הטקסט של כל פוסט יהיה ממורכז</string>
+	<string name="summary_addSpaceBetweenPosts">יהיה יותר מקום בין הפוסטים</string>
+	<string name="title_addSpaceBetweenPosts">יותר מרווח בין הפוסטים</string>
+	<string name="summary_creditsCssThemes">תודה על הערכות נושא הפנטסטיות!</string>
+	<string name="summary_theme">בחר את ערכת הנושא שאתה אוהב</string>
+	<string name="title_fixedBar">סרגל כלים עליון קבוע</string>
+	<string name="summary_fixedBar">הסרגל הכחול ישאר דבוק בחלק העליון</string>
+	<string name="title_hideSponsoredPosts">אל תציג פוסטים ממומנים</string>
+	<string name="summary_hideSponsoredPosts">כמה פוסטים ממומנים לא יהיו שם</string>
+	<string name="title_downloadImages">שמור מידע</string>
+	<string name="summary_downloadImages">אל תוריד תמונות</string>
+	<string name="summary_allowGeolocation">פייסבוק תוכל לקבל גישה למיקום שלך</string>
+	<string name="title_allowGeolocation">אפשר שימוש ב GPS</string>
+	<string name="version">גירסה</string>
+	<string name="credits">קרדיט</string>
+	<string name="prefCat_otherCredits_title">אחר</string>
+	<string name="prefCat_developersCredits_title">מפתחים</string>
+	<string name="summary_LeonardoRignanese">יוצר ומפתח האפליקציה</string>
+	<string name="prefCat_translatorsCredits_title">מתרגמים</string>
+	<string name="prefCat_designersCredits_title">מעצבים</string>
+	<string name="donate">תרום</string>
+	<string name="donateToContribute">בחרתי לעשות את זה בחינם. אתה יכול להציע לי קפה?</string>
+	<string name="summary_you">היישום הזה קיים גם בזכותך</string>
+	<string name="title_you">אתה חשוב</string>
+	<string name="titleNoConnection">אופס, יש בעיה!</string>
+	<string name="descriptionNoConnection">נסה לבדוק את החיבור ולרענן</string>
+	<string name="awards">האפליקציה היא בקוד פתוח</string>
+	<string name="thanks">תודה!</string>
+	<string name="downloadOrShareWithBrowser">פותח דפדפן, אתה יכול להוריד או לשתף את התמונה</string>
+	<string name="shareThisLink">שתף קישור זה</string>
+	<string name="summary_FaceSlim">בלעדיהם, לא יכולתי להוסיף כמה מהפונקציות האטרקטיביות. אם אתה מפתח, אתה צריך לראות את העבודה מהסיבית שלהם!</string>
+	<string name="summary_lRemainl">יוצר הלוגו המפואר</string>
+	<string name="summary_Pharetra">מלא בכישרון ויצירתיות</string>
+	<string name="exit">יציאה</string>
+	<string name="noPersonalInformationAreShared">שום מידע אישי או פרטי עליך ועל המכשיר שלך לא נאסף או מועבר על ידי האפליקציה הזאת !</string>
+	<string name="title_theme">ערכות נושא</string>
+	<string name="applyingChanges">מחיל שינויים!</string>
+	<string name="title_textSize">גודל טקסט</string>
+	<string name="title_enableFastShare">אפשר שיתוף מהיר</string>
+	<string name="summary_enableFastShare">עם שיתוף מהיר אתה יכול לשתף כל לינק באמצעות לחיצה והחזקה עליו</string>
+	<string name="summary_textSize">בחר את גודל הטקסט שאתה מעדיף</string>
+	<string name="refreshToApply">רענן את פייסבוק כדי להחיל את השינויים</string>
+	<string name="summary_AdvancedWebView">חלק  מהיישום הזה מבוסס על עבודתם</string>
+	<string name="title_translate">האם תהיה מוכן לתרגם את היישום?</string>
+	<string name="summary_translate">השתמש בכלי שלי: הקש כאן, בחר באת השפה שאתה יודעת, הפעל את הבנאי, תקן טעויות, צור את הקובץ ושלח לי את הקובץ במייל</string>
+	<string name="title_removeMessengerDownload">הסר הודעות \'הורד מסנגר\' </string>
+	<string name="summary_removeMessengerDownload">ההודעות עם \'הורד מסנגר\' לא יהיו </string>
+	<string name="summary_SaschaHa">בחור מאוד מוכשר וחכם עזר לי המון, והפך לחבר. הקש כאן כדי לראות את העבודה המדהימה שלו!</string>
+	<string name="supportMe">תמוך בי</string>
+	<string name="donateWithPayPal">תרום עם פייפל</string>
+	<string name="messages">הודעות</string>
+	<string name="close">סגור</string>
+	<string name="acceptPermissionAndRetry">אשרו הרשאות ונסו שוב! </string>
+	<string name="yes">כן</string>
+	<string name="no">לא</string>
+	<string name="downloadingPhoto">הורדת תמונה!</string>
+	<string name="askDownloadPhoto">להוריד תמונה?</string>
+	<string name="holdImageToDownload">החזק את התמונה כדי להוריד!</string>
+	<string name="summary_rate"></string>
+</resources>

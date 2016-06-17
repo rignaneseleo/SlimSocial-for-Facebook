@@ -1,55 +1,80 @@
-<!--
-SlimSocial for Facebook es una aplicación «Open Source» creada por Leonardo Rignanese
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY MaCkBarrios USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
 <resources>
-
-    <!-- Traducción hecha por: Leandro Coelho aka minimaster4734 & FABRIZZIO NAVARRO aka lRemainl -->
-
-    <!--menu string-->
-    <string name="refresh">Actualizar</string>
-    <string name="openInBrowser">Abrir en el navegador</string>
+    <string name="refresh">Recargue</string>
+    <string name="openInBrowser">Abrir mediante el Navegador</string>
     <string name="settings">Ajustes</string>
-    <string name="share">Compartir la aplicación</string>
-    <!--end menu string-->
-
-    <!--settings-->
-    <string name="prefCat_fb_settings_title">Ajustes del Facebook</string>
-    <string name="prefCat_app_settings_title">Ajustes de la aplicación</string>
-    <string name="prefCat_app_information_title">Informaciones de la aplicación</string>
-    <string name="title_recentNewsFirst">Mostrar las noticias más recientes primero</string>
-    <string name="summary_recentNewsFirst">En vez de las noticias más importantes</string>
-    <string name="title_fixedBar">Barra fija</string>
-    <string name="summary_fixedBar"> La barra azul permanecerá fija en la parte superior.</string>
-    <string name="title_downloadImages">Economizar datos </string>
-    <string name="summary_downloadImages">No descarga imágenes</string>
+    <string name="share">Comparte ésta aplicación</string>
+    <string name="prefCat_fb_settings_title">Ajustes de Facebook</string>
+    <string name="prefCat_app_settings_title">Ajustes de Aplicacion</string>
+    <string name="prefCat_app_information_title">Información de la aplicación</string>
+    <string name="title_recentNewsFirst">Ordenar el servicio de noticias por más reciente</string>
+    <string name="summary_recentNewsFirst">En lugar de las Noticias Principales</string>
+    <string name="title_centerTextPosts">Centrar el texto del Post</string>
+    <string name="summary_centerTextPosts">El texto de cada Post será centrado</string>
+    <string name="summary_addSpaceBetweenPosts">Habrá mas espacio en los Posts</string>
+    <string name="title_addSpaceBetweenPosts">Más espacio entre los Posts</string>
+    <string name="summary_creditsCssThemes">¡Gracias por los fantásticos temas!</string>
+    <string name="summary_theme">Elige el tema que te gusta</string>
+    <string name="title_fixedBar">Barra Superior Fijada</string>
+    <string name="summary_fixedBar">La barra azul permanecerá en la parte superior.</string>
+    <string name="title_hideSponsoredPosts">No mostrar mensajes patrocinados</string>
+    <string name="summary_hideSponsoredPosts">Algunos mensajes patrocinados estarán ocultos</string>
+    <string name="title_downloadImages">Guardar datos</string>
+    <string name="summary_downloadImages">No descargar imágenes</string>
+    <string name="summary_allowGeolocation">Facebook podrá de acceder a su posición</string>
+    <string name="title_allowGeolocation">Permitir el uso de GPS</string>
     <string name="version">Versión</string>
     <string name="credits">Créditos</string>
-    <string name="prefCat_otherCredits_title">Otros</string>
+    <string name="prefCat_otherCredits_title">Otro</string>
     <string name="prefCat_developersCredits_title">Desarrolladores</string>
-    <string name="summary_LeonardoRignanese">Creador y desarrollador del aplicativo</string>
+    <string name="summary_LeonardoRignanese">Creador y desarrollador de la aplicación</string>
     <string name="prefCat_translatorsCredits_title">Traductores</string>
     <string name="prefCat_designersCredits_title">Diseñadores</string>
-    <string name="donate">Donación</string>
-    <string name="donateToContribute">Decidí hacer la aplicación gratis. ¿Podrías pagarme un café?</string>
-    <!--end settings-->
-
-    <!--page error-->
-    <string name="titleNoConnection">¡Ops, hubo un problema!</string>
-    <string name="descriptionNoConnection">Compruebe su conexión de red e inténtelo de nuevo</string>
-    <string name="awards">Esta es una aplicación «Open Source»</string>
-    <!--end page error-->
-
-    <!--other-->
+    <string name="donate">Donar</string>
+    <string name="donateToContribute">He optado por hacerlo de forma gratuita. ¿Me Invitas a un Café?</string>
+    <string name="summary_you">Es también gracias a ti que existe esta aplicación</string>
+    <string name="title_you">Eres importante</string>
+    <string name="titleNoConnection">Vaya, hay un problema!</string>
+    <string name="descriptionNoConnection">Trata de comprobar la conexión y vuelve a recargar</string>
+    <string name="awards">Esta es una aplicación de código abierto.</string>
     <string name="thanks">¡Gracias!</string>
-    <string name="downloadOrShareWithBrowser">Puedes descargar o compartir esta imagen abriendo el navegador.</string>
-    <string name="shareThisLink">Compartir este enlace</string>
-    <string name="summary_FaceSlim">Sin ellos, no sería posible añadir algunas buenas funciones. Si eres un desarrollador, ¡tienes que ver sus trabajos geniales!</string>
-    <string name="summary_lRemainl">Creador del magnifico logotipo</string>
-    <string name="exit">Salir</string>
-    <string name="noPersonalInformationAreShared">¡Ninguna información personal o privada a cerca de ti es recogida o transmitida por esta aplicación!</string>
-
-    <!--end other-->
+    <string name="downloadOrShareWithBrowser">Abriendo el navegador podrás descargar o compartir ésta imagen.</string>
+    <string name="shareThisLink">Comparte éste enlace</string>
+    <string name="summary_FaceSlim">Sin ellos, no podré añadir algunas funciones atractivas. Si usted es un desarrollador, tiene que ver su gran cantidad de trabajo!</string>
+    <string name="summary_lRemainl">Creador del grandioso logo</string>
+    <string name="summary_Pharetra">Lleno de talento y creatividad</string>
+    <string name="exit">Salida</string>
+    <string name="noPersonalInformationAreShared">Ninguna información personal o privada sobre usted o su dispositivo se recoge o transmite por esta aplicación!</string>
+    <string name="title_theme">Temas</string>
+    <string name="applyingChanges">¡Aplicando Cambios!</string>
+    <string name="title_textSize">Tamaño del texto</string>
+    <string name="title_enableFastShare">Habilitar Rápido Compartir</string>
+    <string name="summary_enableFastShare">Con Fast-Share usted puede compartir cualquier link al tocar y mantener</string>
+    <string name="summary_textSize">Seleccione el tamaño de texto que prefiera</string>
+    <string name="refreshToApply">Recargue Facebook para aplicar los cambios</string>
+    <string name="summary_AdvancedWebView">Parte de esta aplicación es basada en su trabajo</string>
+    <string name="title_translate">¿Le gustaría traducir ésta aplicación?</string>
+    <string name="summary_translate">Utiliza mi WebTools: toque aquí, seleccione el idioma que usted sabe, inicie el editor, corrija los errores, cree y me envíeme el archivo \'strings.xml\' por correo electrónico</string>
+    <string name="title_removeMessengerDownload">Quitar los mensajes \'Descargar Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Los anuncios con \'Instalar Messenger\' se ocultarán</string>
+    <string name="summary_SaschaHa">Un tipo muy talentoso e inteligente que me ha ayudado mucho , se ha convertido en un amigo. Toque aquí para ver su increíble trabajo!</string>
+    <string name="supportMe">¡Apoyame!</string>
+    <string name="donateWithPayPal">Dona con PayPal</string>
+    <string name="messages">Mensajes</string>
+    <string name="close">Cerrar</string>
+    <string name="acceptPermissionAndRetry">Acepte los permisos y vuelva a intentar!</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="downloadingPhoto">¡Descargando la Foto!</string>
+    <string name="askDownloadPhoto">¿Descargar la foto?</string>
+    <string name="holdImageToDownload">Mantenga presionada la imagen para descargar!</string>
 </resources>
     <!-- PLAY STORE PAGE
 

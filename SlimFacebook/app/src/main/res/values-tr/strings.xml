@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY ibocan06 USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+	<string name="refresh">Yenile</string>
+	<string name="openInBrowser">Tarayıcı kullanarak aç</string>
+	<string name="settings">Ayarlar</string>
+	<string name="share">Bu uygulamayı paylaş</string>
+	<string name="prefCat_fb_settings_title">Facebook Ayarları</string>
+	<string name="prefCat_app_settings_title">Uygulama Ayarları</string>
+	<string name="prefCat_app_information_title">Uygulama Bilgileri</string>
+	<string name="title_recentNewsFirst">En yenilere göre sırala</string>
+	<string name="summary_recentNewsFirst">Başlıca haberler yerine</string>
+	<string name="title_centerTextPosts">Gönderideki metinleri ortala</string>
+	<string name="summary_centerTextPosts">Her gönderideki metinler ortalanacak</string>
+	<string name="summary_addSpaceBetweenPosts">Gönderiler arasında daha fazla boşluk bırakılacak</string>
+	<string name="title_addSpaceBetweenPosts">Gönderiler arasında daha fazla boşluk bırak</string>
+	<string name="summary_creditsCssThemes">Fantastik temalar için teşekkürler!</string>
+	<string name="summary_theme">İstediğiniz temayı seçin</string>
+	<string name="title_fixedBar">Üst çubuğu sabit tut</string>
+	<string name="summary_fixedBar">Mavi çubuk hep üstte kalacaktır.</string>
+	<string name="title_hideSponsoredPosts">Sponsor gönderilerini gösterme</string>
+	<string name="summary_hideSponsoredPosts">Bazı sponsor gönderileri gösterilmeyecek</string>
+	<string name="title_downloadImages">Veri Tasarrufu</string>
+	<string name="summary_downloadImages">Görüntüler yüklenmez</string>
+	<string name="summary_allowGeolocation">Facebook\'un konumunuza erişmesi mümkün olacak</string>
+	<string name="title_allowGeolocation">GPS kullanımına izin ver</string>
+	<string name="version">Sürüm</string>
+	<string name="credits">Emeği Geçenler</string>
+	<string name="prefCat_otherCredits_title">Diğer</string>
+	<string name="prefCat_developersCredits_title">Geliştiriciler</string>
+	<string name="summary_LeonardoRignanese">Uygulamanın oluşturucusu ve geliştiricisi</string>
+	<string name="prefCat_translatorsCredits_title">Çevirmenler</string>
+	<string name="prefCat_designersCredits_title">Tasarımcılar</string>
+	<string name="donate">Bağış Yap</string>
+	<string name="donateToContribute">Ücretsiz olduğu için bunu yapmayı seçtim. Bana bir kahve ısmarlar mısın?</string>
+	<string name="summary_you">Bu uygulama sizin sayenizde var</string>
+	<string name="title_you">Siz önemlisiniz</string>
+	<string name="titleNoConnection">Of, bir sorun var!</string>
+	<string name="descriptionNoConnection">Bağlantınızı kontrol edin ve yenileyin.</string>
+	<string name="awards">Bu, açık kaynak kodlu bir uygulamadır.</string>
+	<string name="thanks">Teşekkürler!</string>
+	<string name="downloadOrShareWithBrowser">Tarayıcınızı açarak bu görüntüyü paylaşabilir veya indirebilirsiniz.</string>
+	<string name="shareThisLink">Bu bağlantıyı paylaş</string>
+	<string name="summary_FaceSlim">Onlar olmadan, bazı cazip fonksiyonları eklemem mümkün olmazdı. Bir geliştirici iseniz, onların devasa işlerini görmek zorundasınız!</string>
+	<string name="summary_lRemainl">Bu şahane logonun yaratıcısı</string>
+	<string name="summary_Pharetra">Yetenek ve yaratıcılık dolu</string>
+	<string name="exit">Çıkış</string>
+	<string name="noPersonalInformationAreShared">Sizin ya da cihazınız hakkında hiçbir kişisel veya özel bilgi bu uygulama tarafından toplanmaz ve iletilmez !</string>
+	<string name="title_theme">Temalar</string>
+	<string name="applyingChanges">Değişiklikleri uygula!</string>
+	<string name="title_textSize">Yazı Boyutu</string>
+	<string name="title_enableFastShare">Hızlı Paylaşımı Etkinleştir</string>
+	<string name="summary_enableFastShare">Hızlı Paylaşım ile sadece dokunarak ve basılı tutarak herhangi bir bağlantı paylaşabilirsiniz</string>
+	<string name="summary_textSize">Tercih ettiğiniz metin boyutunu seçin</string>
+	<string name="refreshToApply">Değişiklikleri uygulamak için Facebook\'u yenile</string>
+	<string name="summary_AdvancedWebView">Bu uygulamanın bir parçası onların çalışmalarına dayanmaktadır</string>
+	<string name="title_translate">Bu uygulamayı çevirmek misiniz?</string>
+	<string name="summary_translate">Benim WebTool\'umu kullan: buraya dokun, bildiğin dili seç, builder oluştur, hataları düzelt, \'strings.xml\' dosyası oluştur ve bana e-mail olarak gönder</string>
+	<string name="title_removeMessengerDownload">\'Messenger İndir\' mesajlarını kaldır</string>
+	<string name="summary_removeMessengerDownload">\'Messenger Yükle\' reklamları olmayacak</string>
+	<string name="summary_SaschaHa">Çok yetenekli ve zeki bir kişi bana yardım etti ve bu sayede arkadaşım oldu. Buraya tıklayarak onun muhteşem çalışmasını görebilirsin!</string>
+	<string name="supportMe">Beni destekle</string>
+	<string name="donateWithPayPal">PayPal ile bağış yap</string>
+	<string name="messages">Mesajlar</string>
+	<string name="close">Kapat</string>
+	<string name="acceptPermissionAndRetry">İzinleri kabul edip yeniden deneyin!</string>
+	<string name="yes">Evet</string>
+	<string name="no">Hayır</string>
+	<string name="downloadingPhoto">Fotoğraf indiriliyor!</string>
+	<string name="askDownloadPhoto">Fotoğrafı İndir?</string>
+	<string name="holdImageToDownload">İndirmek için görüntüye basılı tutun!</string>
+</resources>

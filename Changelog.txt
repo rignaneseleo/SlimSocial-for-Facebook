@@ -202,8 +202,18 @@ v3.5.1
 - Added Czech translation
 - Updated French translation
 - Updated Traditional chinese translation
+- Updated Polish translation
 
 v3.5.2
 - Fix GPS
+
+v3.5.3
+- Correct english typo
+- Added Turkish translation
+- Added Hebrew translation
+- Update French translation
+- Updated Spanish translation
+- Added 'rate this app'
+
 
 ! Consider the possibility to donate !

@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY sthid USING StringsXmlBuilder -->
+<!-- THIS TRANSLATION IS MADE BY zkaf38 USING StringsXmlBuilder -->
 <!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
 
 <resources>
     <string name="refresh">Rafraîchir</string>
-    <string name="openInBrowser">Ouvrir avec le navigateur</string>
+    <string name="openInBrowser">Ouvrir à l\'aide du navigateur</string>
     <string name="settings">Paramètres</string>
     <string name="share">Partager cette application</string>
     <string name="prefCat_fb_settings_title">Paramètres Facebook</string>
     <string name="prefCat_app_settings_title">Paramètres de l\'application</string>
-    <string name="prefCat_app_information_title">information sur l\'appli</string>
-    <string name="title_recentNewsFirst">Trier le fil d\'actualité en commençant par le plus récent</string>
-    <string name="summary_recentNewsFirst">Au lieu de par les meilleures histoires</string>
+    <string name="prefCat_app_information_title">Information sur l\'appli</string>
+    <string name="title_recentNewsFirst">Triez le flux de nouvelles par le plus récent</string>
+    <string name="summary_recentNewsFirst">Au lieu de par les meilleurs histoires</string>
     <string name="title_centerTextPosts">Centrer le texte des messages</string>
     <string name="summary_centerTextPosts">Le texte de chaque message sera centré</string>
-    <string name="summary_addSpaceBetweenPosts">Il y aura plus d\'espace entre les messages</string>
-    <string name="title_addSpaceBetweenPosts">Plus d\'espace entre les messages</string>
-    <string name="summary_creditsCssThemes">Merci pour les thèmes fantastiques !</string>
+    <string name="summary_addSpaceBetweenPosts">Il y aura plus d\'espace entre les postes</string>
+    <string name="title_addSpaceBetweenPosts">Plus d\'espace entre les postes</string>
+    <string name="summary_creditsCssThemes">Merci pour les thèmes fantastiques!</string>
     <string name="summary_theme">Choisissez le thème que vous aimez</string>
     <string name="title_fixedBar">Barre supérieure fixe</string>
-    <string name="summary_fixedBar">La barre bleue restera bloquée au dessus.</string>
+    <string name="summary_fixedBar">La barre bleue restera bloqué sur le dessus.</string>
     <string name="title_hideSponsoredPosts">Ne pas afficher les messages sponsorisés</string>
-    <string name="summary_hideSponsoredPosts">Certains messages sponsorisés ne le seront pas</string>
+    <string name="summary_hideSponsoredPosts">Certains messages sponsorisés seront cachés</string>
     <string name="title_downloadImages">Enregistrer des données</string>
     <string name="summary_downloadImages">Ne pas télécharger les images</string>
-    <string name="summary_allowGeolocation">Facebook sera en mesure d\'accéder à votre position</string>
+    <string name="summary_allowGeolocation">Facebook sera en mesure d\'accéder à votre poste</string>
     <string name="title_allowGeolocation">Autoriser l\'utilisation du GPS</string>
     <string name="version">Version</string>
     <string name="credits">Crédits</string>
@@ -38,41 +38,41 @@
     <string name="prefCat_translatorsCredits_title">Traducteurs</string>
     <string name="prefCat_designersCredits_title">Designers</string>
     <string name="donate">Faire un don</string>
-    <string name="donateToContribute">J\'ai choisi de faire ça gratuitement. Pouvez-vous m\'offrir un café ?</string>
+    <string name="donateToContribute">J\'ai choisi de le faire gratuitement. Pouvez-vous m\'offrir un café?</string>
     <string name="summary_you">C\'est également grâce à vous que cette application existe</string>
-    <string name="title_you">Vous êtes importants</string>
-    <string name="titleNoConnection">Oups, il y a un problème !</string>
-    <string name="descriptionNoConnection">Essayez de vérifier la connexion et d\'actualiser. </string>
+    <string name="title_you">Tu es important</string>
+    <string name="titleNoConnection">Oops, il y a un problème!</string>
+    <string name="descriptionNoConnection">Essayez de vérifier la connexion et de rafraîchir.</string>
     <string name="awards">Ceci est une application Open Source.</string>
-    <string name="thanks">Merci !</string>
+    <string name="thanks">Merci!</string>
     <string name="downloadOrShareWithBrowser">Ouverture du navigateur, vous pourrez télécharger ou partager cette image.</string>
     <string name="shareThisLink">Partager ce lien</string>
-    <string name="summary_FaceSlim">Sans eux, je ne pouvais pas ajouter quelques nouvelles fonctionnalités intéressantes. Si vous êtes un développeur, vous devez voir leur important travail ! </string>
+    <string name="summary_FaceSlim">Sans eux, je ne pouvais pas ajouter de fonctions intéressantes. Si vous êtes un développeur, vous devez regarder leur travail massif!</string>
     <string name="summary_lRemainl">Créateur du magnifique logo</string>
     <string name="summary_Pharetra">Plein de talent et de créativité</string>
     <string name="exit">Sortie</string>
     <string name="noPersonalInformationAreShared">Aucune information personnelle ou privée sur vous ou votre appareil n\'est collectée ou transmise par cette application!</string>
     <string name="title_theme">Thèmes</string>
-    <string name="applyingChanges">Application des modifications !</string>
+    <string name="applyingChanges">Application des modifications!</string>
     <string name="title_textSize">Taille du texte</string>
-    <string name="title_enableFastShare">Activer Partage Rapide</string>
-    <string name="summary_enableFastShare">Avec Partage Rapide vous pouvez partager n\'importe quel lien simplement en tapotant et en le maintenant</string>
+    <string name="title_enableFastShare">Activer le partage rapide</string>
+    <string name="summary_enableFastShare">Avec le partage rapide vous pouvez partager un lien en le tapant et maintenant</string>
     <string name="summary_textSize">Choisissez la taille de texte que vous préférez</string>
     <string name="refreshToApply">Actualisez Facebook pour appliquer les modifications</string>
     <string name="summary_AdvancedWebView">Une partie de cette application est basée sur leur travail</string>
     <string name="title_translate">Voulez-vous traduire cette application?</string>
-    <string name="summary_translate">Utiliser mon WebTool: tapez ici, sélectionnez la langue que vous connaissez, générez le constructeur, corrigez les erreurs, générez et envoyez-moi le fichier \'strings.xml\' par email</string>
-    <string name="title_removeMessengerDownload">Supprimer le message \'Télécharger Messenger\' </string>
-    <string name="summary_removeMessengerDownload">Il n\'y aura pas d\'annonce \'Installer Messenger\' </string>
+    <string name="summary_translate">Utiliser mon outil en ligne: tapez ici, sélectionnez la langue que vous maîtirsez, générer le constructeur, de corriger les erreurs, générer et envoyez-moi le fichier \'strings.xml\' par email</string>
+    <string name="title_removeMessengerDownload">Supprimer le message \'Télécharger Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Les annonces \'Installer Messenger\' seront cachées</string>
     <string name="summary_SaschaHa">Un gars très talentueux et intelligent qui m\'a beaucoup aidé et est devenu un ami. Appuyez ici pour voir son travail incroyable!</string>
     <string name="supportMe">Me soutenir</string>
     <string name="donateWithPayPal">Faire un don avec PayPal</string>
     <string name="messages">Messages</string>
     <string name="close">Fermer</string>
-    <string name="acceptPermissionAndRetry">Acceptez les autorisations et réessayez !</string>
+    <string name="acceptPermissionAndRetry">Acceptez les autorisations et réessayez!</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="downloadingPhoto">Téléchargement photo !</string>
-    <string name="askDownloadPhoto">Télécharger photo ?</string>
-    <string name="holdImageToDownload">Maintenez l\'image pour télécharger!</string>
+    <string name="downloadingPhoto">Téléchargement de l\'image!</string>
+    <string name="askDownloadPhoto">Télécharger l\'image?</string>
+    <string name="holdImageToDownload">Maintenez l\'image pour la télécharger!</string>
 </resources>

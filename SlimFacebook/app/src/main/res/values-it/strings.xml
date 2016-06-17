@@ -75,5 +75,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="askDownloadPhoto">Scaricare la foto?</string>
     <string name="acceptPermissionAndRetry">Accetta i permessi e riprova!</string>
     <string name="yes">Si</string>
+    <string name="summary_rate">Scrivendo una recensione da 5 stelle sul PlayStore mi supporti. Se qualcosa non funziona, contattami prima di scrivere una recensione negativa</string>
+    <string name="title_rate">Vota con 5 stelle quest\'app</string>
 
 </resources>
