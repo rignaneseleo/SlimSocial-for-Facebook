@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Αντώνης Μ. USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+	<string name="refresh">Ανανέωση</string>
+	<string name="openInBrowser">Άνοιγμα με το πρόγραμμα περιήγησης</string>
+	<string name="settings">Ρυθμίσεις</string>
+	<string name="share">Μοιραστείτε αυτήν την εφαρμογή</string>
+	<string name="prefCat_fb_settings_title">Ρυθμίσεις Facebook</string>
+	<string name="prefCat_app_settings_title">Ρυθμίσεις Εφαρμογής</string>
+	<string name="prefCat_app_information_title">Πληροφορίες Εφαρμογής</string>
+	<string name="title_recentNewsFirst">Tαξινόμηση ροής ειδήσεων με τα πιό πρόσφατα</string>
+	<string name="summary_recentNewsFirst">Αντί από κορυφαίες ιστορίες</string>
+	<string name="title_centerTextPosts">Κεντράρισμα του κειμένου της δημοσίευσης</string>
+	<string name="summary_centerTextPosts">Το κείμενο της κάθε δημοσίευσης θα είναι στο κέντρο</string>
+	<string name="summary_addSpaceBetweenPosts">Θα υπάρξει περισσότερος χώρος μεταξύ των δημοσιεύσεων</string>
+	<string name="title_addSpaceBetweenPosts">Περισσότερος χώρος μεταξύ των δημοσιεύσεων</string>
+	<string name="summary_creditsCssThemes">Ευχαριστώ για τα φανταστικά θέματα!</string>
+	<string name="summary_theme">Επιλέξτε το θέμα που σας αρέσει</string>
+	<string name="title_fixedBar">Σταθερή επάνω γραμμή</string>
+	<string name="summary_fixedBar">Η μπλε γραμμή θα παραμείνει κολλημένη στην κορυφή.</string>
+	<string name="title_hideSponsoredPosts">Μην φαίνονται επιχορηγούμενες δημοσιεύσεις</string>
+	<string name="summary_hideSponsoredPosts">Κάποιες επιχορηγούμενες δημοσιεύσεις θα είναι κρυμμένες</string>
+	<string name="title_downloadImages">Εξοικονόμηση δεδομένων</string>
+	<string name="summary_downloadImages">Μην κάνετε λήψη εικόνων</string>
+	<string name="summary_allowGeolocation">Το Facebook θα μπορεί να έχει πρόσβαση στη τοποθεσία σας</string>
+	<string name="title_allowGeolocation">Επιτρέψτε τη χρήση GPS</string>
+	<string name="version">Έκδοση</string>
+	<string name="credits">Ευχαριστίες</string>
+	<string name="prefCat_otherCredits_title">Άλλα</string>
+	<string name="prefCat_developersCredits_title">Προγραμματιστές</string>
+	<string name="summary_LeonardoRignanese">Δημιουργός και προγραμματιστής της εφαρμογής</string>
+	<string name="prefCat_translatorsCredits_title">Μεταφραστές</string>
+	<string name="prefCat_designersCredits_title">Σχεδιαστές</string>
+	<string name="donate">Δωρεά</string>
+	<string name="donateToContribute">Επέλεξα να το κάνω δωρεάν. Μπορείς να μου προσφέρεις έναν καφέ;</string>
+	<string name="summary_you">Είναι χάρις εσάς η ύπαρξη αυτού του προγράμματος</string>
+	<string name="title_you">Είσαι σημαντικός</string>
+	<string name="titleNoConnection">Ωχ, υπήρξε ένα πρόβλημα!</string>
+	<string name="descriptionNoConnection">Ελέγξτε τη σύνδεση και ανανεώστε.</string>
+	<string name="awards">Αυτή είναι μια εφαρμογή ανοιχτού κώδικα.</string>
+	<string name="thanks">Ευχαριστώ!</string>
+	<string name="downloadOrShareWithBrowser">Ανοίγοντας το πρόγραμμα περιήγησης μπορείτε να κατεβάστε ή να μοιραστείτε αυτή την εικόνα.</string>
+	<string name="shareThisLink">Μοιραστείτε αυτό το σύνδεσμο</string>
+	<string name="summary_FaceSlim">Χωρίς αυτούς, δεν θα μπορούσα να προσθέσω μερικές ελκυστικές λειτουργίες. Εάν είστε προγραμματιστής, θα πρέπει να δείτε την τεράστια δουλειά τους!</string>
+	<string name="summary_lRemainl">Δημιουργός του μαγευτικού λογότυπου</string>
+	<string name="summary_Pharetra">Γεμάτη ταλέντο και δημιουργικότητα</string>
+	<string name="exit">Έξοδος</string>
+	<string name="noPersonalInformationAreShared">Καμία προσωπική ή ιδιωτική πληροφορία σχετικά με εσάς ή τη συσκευή σας δεν συλλέγεται ή μεταδίδεται από αυτή την εφαρμογή!</string>
+	<string name="title_theme">Θέματα</string>
+	<string name="applyingChanges">Εφαρμόζουμε τις αλλαγές!</string>
+	<string name="title_textSize">Μέγεθος κειμένου</string>
+	<string name="title_enableFastShare">Ενεργοποίηση Γρήγορης Κοινοποίησης</string>
+	<string name="summary_enableFastShare">Με την Γρήγορη Κοινοποίηση μπορείτε να μοιραστείτε οποιοδήποτε σύνδεσμο απλά πατώντας και κρατώντας το πατημένο</string>
+	<string name="summary_textSize">Επιλέξτε το μέγεθος του κειμένου που προτιμάτε</string>
+	<string name="refreshToApply">Ανανέωση Facebook για να εφαρμοστούν οι αλλαγές</string>
+	<string name="summary_AdvancedWebView">Μέρος αυτής της εφαρμογής βασίζεται στο έργο τους</string>
+	<string name="title_translate">Θα θέλατε να μεταφράσετε αυτή την εφαρμογή;</string>
+	<string name="summary_translate">Χρησιμοποιήστε WebTool μου: πατήστε εδώ, επιλέξτε τη γλώσσα που ξέρετε ώστε να δημιουργήσει το αρχείο, να διορθώσετε λάθη, να δημιουργήσετε και να μου στείλετε το αρχείο "strings.xml" μέσω e-mail</string>
+	<string name="title_removeMessengerDownload">Κατάργηση των μηνυμάτων «Κατεβάστε το Messenger»</string>
+	<string name="summary_removeMessengerDownload">Οι διαφημίσεις με «Εγκατάσταση του Messenger» θα είναι κρυμμένες</string>
+	<string name="summary_SaschaHa">Ένας πολύ ταλαντούχος και έξυπνος άνθρωπος που με βοήθησε πολύ έχει γίνει φίλος. Πατήστε εδώ για να δείτε την απίστευτη δουλειά του!</string>
+	<string name="supportMe">Υποστηρίξτε με</string>
+	<string name="donateWithPayPal">Δωρεά μέσω PayPal</string>
+	<string name="messages">Μηνύματα</string>
+	<string name="close">Κλείσιμο</string>
+	<string name="acceptPermissionAndRetry">Επιτρέψτε τα δικαιώματα και δοκιμάστε ξανά!</string>
+	<string name="yes">Ναί</string>
+	<string name="no">Όχι</string>
+	<string name="downloadingPhoto">Λήψη φωτογραφίας</string>
+	<string name="askDownloadPhoto">Κατέβασμα φωτογραφίας;</string>
+	<string name="holdImageToDownload">Κρατήστε την εικόνα για να την κατεβάσετε!</string>
+	<string name="title_rate">Βαθμολογήστε αυτή την εφαρμογή με 5 αστέρια</string>
+	<string name="summary_rate">Μπορείτε να με υποστηρίξετε βαθμολογώντας 5 αστέρια στο PlayStore. Παρακαλώ, εάν κάτι δεν λειτουργεί, επικοινωνήστε μαζί μου πριν γράψετε μια κακή κριτική</string>
+</resources>

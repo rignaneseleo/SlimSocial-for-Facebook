@@ -111,6 +111,12 @@
 		<PreferenceScreen
 			android:summary="Hebrew"
 			android:title="iakovl"/>
+		<PreferenceScreen
+			android:summary="Greek"
+			android:title="Αντώνης Μ."/>
+		<PreferenceScreen
+			android:summary="German "
+			android:title="KuroTheBang"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory

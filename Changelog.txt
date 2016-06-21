@@ -208,12 +208,17 @@ v3.5.2
 - Fix GPS
 
 v3.5.3
-- Correct english typo
+- Corrected english typo
 - Added Turkish translation
 - Added Hebrew translation
-- Update French translation
+- Updated French translation
 - Updated Spanish translation
 - Added 'rate this app'
+
+v3.5.4
+- Added Greek translation
+- Updated German translation
+
 
 
 ! Consider the possibility to donate !
