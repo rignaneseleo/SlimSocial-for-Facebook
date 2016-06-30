@@ -219,6 +219,10 @@ v3.5.4
 - Added Greek translation
 - Updated German translation
 
-
+v3.5.5
+- Messages are also available from touch.facebook.com
+- Decide where save images
+- Updated Turkish translation
+- Updated Spanish translation
 
 ! Consider the possibility to donate !

@@ -189,6 +189,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 		WebSettings settings = webViewFacebook.getSettings();
 
+		settings.setUserAgentString("Mozilla/5.0 (BB10; Kbd) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.1.0.4633 Mobile Safari/537.10+");
 		settings.setJavaScriptEnabled(true);
 
 		//set text zoom
@@ -280,7 +281,13 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 												request.allowScanningByMediaScanner();
 												request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 											}
-											request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS + "/SlimSocial", "Photo.jpg");
+
+
+											String path=Environment.DIRECTORY_DOWNLOADS;
+											if (savedPreferences.getBoolean("pref_useSlimSocialSubfolderToDownloadedFiles", false)) {
+												path+= "/SlimSocial";
+											}
+											request.setDestinationInExternalPublicDir(path, "Photo.jpg");
 
 											// get download service and enqueue file
 											DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -293,7 +300,6 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 					}
 					return true;
 				}
-
 				return false;
 			}
 		});
@@ -434,8 +440,9 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 	public void onPageFinished(String url) {
 		ApplyCustomCss();
 
-
-		webViewFacebook.loadUrl(getString(R.string.fixMessages));
+		if (savedPreferences.getBoolean("pref_enableMessagesShortcut", false)) {
+			webViewFacebook.loadUrl(getString(R.string.fixMessages));
+		}
 
 		swipeRefreshLayout.setRefreshing(false);
 

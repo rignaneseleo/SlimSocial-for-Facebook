@@ -50,13 +50,13 @@
 		android:key="prefCat_key_designersCredits"
 		android:title="@string/prefCat_designersCredits_title">
 		<PreferenceScreen
-			android:key="pref_lRemainl"
-			android:summary="@string/summary_lRemainl"
-			android:title="lRemainl"/>
-		<PreferenceScreen
 			android:key="pref_Pharetra"
-			android:summary="@string/summary_Pharetra"
+			android:summary="@string/summary_lRemainl"
 			android:title="Pharetra"/>
+		<PreferenceScreen
+			android:key="pref_lRemainl"
+			android:summary="@string/summary_Pharetra"
+			android:title="lRemainl"/>
 		<PreferenceScreen
 			android:key="pref_PIERONMU"
 			android:summary="@string/summary_creditsCssThemes"
@@ -71,7 +71,7 @@
 			android:title="Xkirnel"/>
 		<PreferenceScreen
 			android:summary="Spanish"
-			android:title="MaCkBarrios"/>
+			android:title="lRemainl"/>
 		<PreferenceScreen
 			android:summary="French"
 			android:title="zkaf38"/>

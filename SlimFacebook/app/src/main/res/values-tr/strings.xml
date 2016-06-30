@@ -75,4 +75,6 @@
 	<string name="downloadingPhoto">Fotoğraf indiriliyor!</string>
 	<string name="askDownloadPhoto">Fotoğrafı İndir?</string>
 	<string name="holdImageToDownload">İndirmek için görüntüye basılı tutun!</string>
+	<string name="title_rate">Bu uygulamayı 5 yıldızla oyla</string>
+	<string name="summary_rate">Play Store\'da 5 yıldızlı inceleme yazısıyla beni destekleyebilirsiniz. Çalışmayan bir şeyler varsa, kötü eleştiri yazmadan önce lütfen benimle iletişime geçin.</string>
 </resources>

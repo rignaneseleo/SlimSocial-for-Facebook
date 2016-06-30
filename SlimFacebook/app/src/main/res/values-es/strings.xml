@@ -1,96 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY MaCkBarrios USING StringsXmlBuilder -->
+<!-- THIS TRANSLATION IS MADE BY lRemainl USING StringsXmlBuilder -->
 <!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
 
 <resources>
-    <string name="refresh">Recargue</string>
-    <string name="openInBrowser">Abrir mediante el Navegador</string>
+    <string name="refresh">Actualizar</string>
+    <string name="openInBrowser">Abrir en el Navegador</string>
     <string name="settings">Ajustes</string>
-    <string name="share">Comparte ésta aplicación</string>
+    <string name="share">Comparte esta aplicación</string>
     <string name="prefCat_fb_settings_title">Ajustes de Facebook</string>
-    <string name="prefCat_app_settings_title">Ajustes de Aplicacion</string>
+    <string name="prefCat_app_settings_title">Ajustes de aplicación</string>
     <string name="prefCat_app_information_title">Información de la aplicación</string>
-    <string name="title_recentNewsFirst">Ordenar el servicio de noticias por más reciente</string>
+    <string name="title_recentNewsFirst">Ordenar servicio de noticias por las más recientes</string>
     <string name="summary_recentNewsFirst">En lugar de las Noticias Principales</string>
-    <string name="title_centerTextPosts">Centrar el texto del Post</string>
-    <string name="summary_centerTextPosts">El texto de cada Post será centrado</string>
-    <string name="summary_addSpaceBetweenPosts">Habrá mas espacio en los Posts</string>
-    <string name="title_addSpaceBetweenPosts">Más espacio entre los Posts</string>
+    <string name="title_centerTextPosts">Centrar texto de las publicaciones</string>
+    <string name="summary_centerTextPosts">Se centrará el texto de cada publicación</string>
+    <string name="summary_addSpaceBetweenPosts">Habrá más espacio entre las publicaciones</string>
+    <string name="title_addSpaceBetweenPosts">Más espacio entre las publicaciones</string>
     <string name="summary_creditsCssThemes">¡Gracias por los fantásticos temas!</string>
-    <string name="summary_theme">Elige el tema que te gusta</string>
+    <string name="summary_theme">Elige el tema que más te guste</string>
     <string name="title_fixedBar">Barra Superior Fijada</string>
     <string name="summary_fixedBar">La barra azul permanecerá en la parte superior.</string>
-    <string name="title_hideSponsoredPosts">No mostrar mensajes patrocinados</string>
-    <string name="summary_hideSponsoredPosts">Algunos mensajes patrocinados estarán ocultos</string>
-    <string name="title_downloadImages">Guardar datos</string>
+    <string name="title_hideSponsoredPosts">No mostrar publicaciones patrocinadas</string>
+    <string name="summary_hideSponsoredPosts">Algunas publicaciones patrocinados estarán ocultas</string>
+    <string name="title_downloadImages">Ahorrar datos</string>
     <string name="summary_downloadImages">No descargar imágenes</string>
-    <string name="summary_allowGeolocation">Facebook podrá de acceder a su posición</string>
+    <string name="summary_allowGeolocation">Facebook podrá acceder a su ubicación</string>
     <string name="title_allowGeolocation">Permitir el uso de GPS</string>
     <string name="version">Versión</string>
     <string name="credits">Créditos</string>
-    <string name="prefCat_otherCredits_title">Otro</string>
+    <string name="prefCat_otherCredits_title">Otros</string>
     <string name="prefCat_developersCredits_title">Desarrolladores</string>
     <string name="summary_LeonardoRignanese">Creador y desarrollador de la aplicación</string>
     <string name="prefCat_translatorsCredits_title">Traductores</string>
     <string name="prefCat_designersCredits_title">Diseñadores</string>
     <string name="donate">Donar</string>
-    <string name="donateToContribute">He optado por hacerlo de forma gratuita. ¿Me Invitas a un Café?</string>
+    <string name="donateToContribute">He optado por hacer esto de forma gratuita. ¿Me invitarías un café?</string>
     <string name="summary_you">Es también gracias a ti que existe esta aplicación</string>
     <string name="title_you">Eres importante</string>
-    <string name="titleNoConnection">Vaya, hay un problema!</string>
-    <string name="descriptionNoConnection">Trata de comprobar la conexión y vuelve a recargar</string>
+    <string name="titleNoConnection">¡Vaya, hay un problema!</string>
+    <string name="descriptionNoConnection">Trata de comprobar la conexión y vuelve a actualizar</string>
     <string name="awards">Esta es una aplicación de código abierto.</string>
     <string name="thanks">¡Gracias!</string>
-    <string name="downloadOrShareWithBrowser">Abriendo el navegador podrás descargar o compartir ésta imagen.</string>
-    <string name="shareThisLink">Comparte éste enlace</string>
-    <string name="summary_FaceSlim">Sin ellos, no podré añadir algunas funciones atractivas. Si usted es un desarrollador, tiene que ver su gran cantidad de trabajo!</string>
+    <string name="downloadOrShareWithBrowser">Abriendo el navegador podrás descargar o compartir esta imagen.</string>
+    <string name="shareThisLink">Comparte este enlace</string>
+    <string name="summary_FaceSlim">Sin ellos no habría sido posible añadir algunas funciones interesantes. ¡Si eres un desarrollador, tienes que ver su gran cantidad de trabajos!</string>
     <string name="summary_lRemainl">Creador del grandioso logo</string>
     <string name="summary_Pharetra">Lleno de talento y creatividad</string>
-    <string name="exit">Salida</string>
-    <string name="noPersonalInformationAreShared">Ninguna información personal o privada sobre usted o su dispositivo se recoge o transmite por esta aplicación!</string>
+    <string name="exit">Salir</string>
+    <string name="noPersonalInformationAreShared">¡Ningún tipo de información personal o privada sobre ti o tu dispositivo son recogidas o transmitidas por esta aplicación!</string>
     <string name="title_theme">Temas</string>
-    <string name="applyingChanges">¡Aplicando Cambios!</string>
+    <string name="applyingChanges">¡Aplicando cambios!</string>
     <string name="title_textSize">Tamaño del texto</string>
-    <string name="title_enableFastShare">Habilitar Rápido Compartir</string>
-    <string name="summary_enableFastShare">Con Fast-Share usted puede compartir cualquier link al tocar y mantener</string>
-    <string name="summary_textSize">Seleccione el tamaño de texto que prefiera</string>
-    <string name="refreshToApply">Recargue Facebook para aplicar los cambios</string>
-    <string name="summary_AdvancedWebView">Parte de esta aplicación es basada en su trabajo</string>
-    <string name="title_translate">¿Le gustaría traducir ésta aplicación?</string>
-    <string name="summary_translate">Utiliza mi WebTools: toque aquí, seleccione el idioma que usted sabe, inicie el editor, corrija los errores, cree y me envíeme el archivo \'strings.xml\' por correo electrónico</string>
-    <string name="title_removeMessengerDownload">Quitar los mensajes \'Descargar Messenger\'</string>
-    <string name="summary_removeMessengerDownload">Los anuncios con \'Instalar Messenger\' se ocultarán</string>
-    <string name="summary_SaschaHa">Un tipo muy talentoso e inteligente que me ha ayudado mucho , se ha convertido en un amigo. Toque aquí para ver su increíble trabajo!</string>
-    <string name="supportMe">¡Apoyame!</string>
+    <string name="title_enableFastShare">Habilitar Fast-Share</string>
+    <string name="summary_enableFastShare">Con Fast-Share podrás compartir cualquier enlace al tocar y mantener</string>
+    <string name="summary_textSize">Selecciona el tamaño de texto que prefieras</string>
+    <string name="refreshToApply">Actualizar Facebook para aplicar los cambios</string>
+    <string name="summary_AdvancedWebView">Parte de esta aplicación está basada en su trabajo</string>
+    <string name="title_translate">¿Te gustaría traducir esta aplicación?</string>
+    <string name="summary_translate">Utiliza mis Herramientas Web: toca aquí, selecciona el idioma que conoces, inicia el editor, corrige los errores, crea y envíame el archivo \'strings.xml\' por correo electrónico</string>
+    <string name="title_removeMessengerDownload">Quitar los avisos \'Descargar Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Los avisos con \'Instalar Messenger\' se ocultarán</string>
+    <string name="summary_SaschaHa">Un tipo muy talentoso e inteligente que me ha ayudado mucho, se ha convertido en un amigo. ¡Toca aquí para ver su increíble trabajo!</string>
+    <string name="supportMe">¡Apóyame!</string>
     <string name="donateWithPayPal">Dona con PayPal</string>
     <string name="messages">Mensajes</string>
     <string name="close">Cerrar</string>
-    <string name="acceptPermissionAndRetry">Acepte los permisos y vuelva a intentar!</string>
+    <string name="acceptPermissionAndRetry">¡Acepta los permisos y vuelve a intentar!</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
-    <string name="downloadingPhoto">¡Descargando la Foto!</string>
-    <string name="askDownloadPhoto">¿Descargar la foto?</string>
-    <string name="holdImageToDownload">Mantenga presionada la imagen para descargar!</string>
+    <string name="downloadingPhoto">¡Descargando la imagen!</string>
+    <string name="askDownloadPhoto">¿Descargar la imagen?</string>
+    <string name="holdImageToDownload">¡Mantén presionada la imagen para descargar!</string>
+    <string name="title_rate">Califica esta aplicación con 5 estrellas</string>
+    <string name="summary_rate">Puedes apoyarme calificando mi app con 5 estrellas en la PlayStore. Por favor, si algo no funciona, ponte en contacto conmigo antes de calificar de forma negativa</string>
 </resources>
     <!-- PLAY STORE PAGE
 
 DESCRIPCIÓN:
-Con solamente 700KB, puedes acceder el Facebook (en su versión web)
+Con solamente 700KB, puedes acceder a Facebook (en su versión web)
 
 Descripción completa:
-ADVERTENCIA: Esta aplicación puede no ser adecuada para quienes utilizan el Facebook con regularidad.
+ADVERTENCIA: Esta aplicación puede no ser adecuada para quienes utilizan Facebook con regularidad.
 
 ¿Por qué debería descargar SlimSocial for Facebook?
 - Es ligero: pesa menos de 1 Mb;
 - Tiene un diseño sencillo y moderno: hay solamente lo que necesitas;
-- Es una aplicación «Open Source» (código abierto): el código de esta aplicación está en el GitHub, se puede verificar la autenticidad de la aplicación y contribuir a su desarrollo.
+- Es una aplicación «Open Source» (código abierto): el código de esta aplicación está en GitHub, se puede verificar la autenticidad de la aplicación y contribuir a su desarrollo.
 - Es gratis y sin anuncios;
-- No es invasivo;
-- Respeta tu privacidad: esta aplicación no requiere permisos especiales. Facebook no tendrá acceso a ningún dato de tu teléfono sin tu consentimiento
+- No es invasiva;
+- Respeta tu privacidad: esta aplicación no requiere de permisos especiales. Facebook no tendrá acceso a ningún dato de tu teléfono sin tu consentimiento
 
 La aplicación está en fase de desarrollo, por lo que todavía no funciona:
 - Notificaciones;

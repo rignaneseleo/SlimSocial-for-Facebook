@@ -77,5 +77,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="yes">Si</string>
     <string name="summary_rate">Scrivendo una recensione da 5 stelle sul PlayStore mi supporti. Se qualcosa non funziona, contattami prima di scrivere una recensione negativa</string>
     <string name="title_rate">Vota con 5 stelle quest\'app</string>
+    <string name="summary_enableMessagesShortcut">Abilitando questa opzione, il tab dei messaggi di SlimSocial verrà aperto con il tap sull\'icona dei messaggi di Facebook</string>
+    <string name="title_enableMessagesShortcut">Abilita la scorciatoia dei messaggi</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Usa la sottocartella \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Salva le immagini in una sottocartella piuttosto che direttamente in \'Download\'</string>
 
 </resources>
