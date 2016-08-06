@@ -229,7 +229,6 @@ v3.5.6
 - Added Vietnamese translation
 - Updated German translation
 - Updated French translation
-- Updated Swedish translation
 - Removed the in-app donation permission
 
 
