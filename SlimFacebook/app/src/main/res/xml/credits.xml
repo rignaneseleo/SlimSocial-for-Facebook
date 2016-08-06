@@ -74,7 +74,7 @@
 			android:title="lRemainl"/>
 		<PreferenceScreen
 			android:summary="French"
-			android:title="zkaf38"/>
+			android:title="Sundr0_o"/>
 		<PreferenceScreen
 			android:summary="Hindi"
 			android:title="Siddique Nagarkar"/>
@@ -116,7 +116,10 @@
 			android:title="Αντώνης Μ."/>
 		<PreferenceScreen
 			android:summary="German "
-			android:title="KuroTheBang"/>
+			android:title="Ngoc Bui"/>
+		<PreferenceScreen
+			android:summary="Vietnamese"
+			android:title="Vũ Quang Huy"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory
