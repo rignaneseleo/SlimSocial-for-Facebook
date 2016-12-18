@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY DushyantTrivediRajkot USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">રિફ્રેશ કરી ફરીથી જુઓ!</string>
+    <string name="openInBrowser">જુઓ બ્રાઉઝર વડે</string>
+    <string name="settings">સેટીંંગ્સ</string>
+    <string name="share">આ એપ વહેંંચો</string>
+    <string name="prefCat_fb_settings_title">ફેસબુક સેટીંંગ્સ</string>
+    <string name="prefCat_app_settings_title">એપ સેટીંંગ્સ</string>
+    <string name="prefCat_app_information_title">આ એપ વિશે માહિતી.</string>
+    <string name="title_recentNewsFirst">ન્યુઝ ફીડને સોથી તાજા પહેલા એ પ્રમાણે ગોઠવો.</string>
+    <string name="summary_recentNewsFirst">અથવા ટોચની વાર્તાઓ મુજબ </string>
+    <string name="title_centerTextPosts">પોસ્ટને મધ્યમાંં રાખો.</string>
+    <string name="summary_centerTextPosts">દરેક પોસ્ટનુ લખાણ મધ્યમાંં રહેશે.</string>
+    <string name="summary_addSpaceBetweenPosts">અલગ પોસ્ટ વચ્ચે વધુ જગ્યા રહેશે.</string>
+    <string name="title_addSpaceBetweenPosts">પોસ્ટ વચ્ચે વધારે જગ્યા</string>
+    <string name="summary_creditsCssThemes">અદભુત્ત થીમ માટે આભાર!</string>
+    <string name="summary_theme">તમને ગમતી થીમ પસંંદ કરો.</string>
+    <string name="title_fixedBar">સ્થીર ઉપરી પટ્ટો(ટોપ બાર)</string>
+    <string name="summary_fixedBar">ઉપરી બ્લુ પટ્ટો સ્થિર થઈ ત્યાંં જ રહેશે.</string>
+    <string name="title_hideSponsoredPosts">પ્રાયોજીત કરાયેલી પોસ્ટ ન દેખાડો.</string>
+    <string name="summary_hideSponsoredPosts">કેટલીક પ્રાયોજીત પોસ્ટ દેખાશે નહી(સંંતાયેલી રહેશે).</string>
+    <string name="title_downloadImages">માહિતી સાચવો.</string>
+    <string name="summary_downloadImages">ચિત્રો ડાઉનલોડ ન કરો</string>
+    <string name="summary_allowGeolocation">ફેસબુક તમારા સ્થળની માહિતી મેળવી શકશે</string>
+    <string name="title_allowGeolocation">જીપીએસનો ઉપયોગ મંંજુર કરો.</string>
+    <string name="version">આવૃૃત્તિ</string>
+    <string name="credits">યશભાગી</string>
+    <string name="prefCat_otherCredits_title">અન્ય</string>
+    <string name="prefCat_developersCredits_title">વિકસીતકર્તા</string>
+    <string name="summary_LeonardoRignanese">આ એપના નિર્માતા અને વિકસીતકર્તા </string>
+    <string name="prefCat_translatorsCredits_title">ભાષાનુવાદક</string>
+    <string name="prefCat_designersCredits_title">ડીઝાઇનર્સ</string>
+    <string name="donate">દાન આપો</string>
+    <string name="donateToContribute">મે આ મફતમાંં કર્યુ! શુંં તમે મને કોફીની સલાહ  કરી શકશો?</string>
+    <string name="summary_you">આ એપનુ અસ્તીત્વ તમને આભારી છે</string>
+    <string name="title_you">તમે મહત્વના છો.</string>
+    <string name="titleNoConnection">ઉપ્પસ્સ! કઈક તકલીફ છે!</string>
+    <string name="descriptionNoConnection">કનેક્શન ચકાસવાનોપ્રયત્ન કરો! અને ફરીથી જુઓ</string>
+    <string name="awards">આ એક ઓપન સોર્સ એપ છે.</string>
+    <string name="thanks">આભાર!</string>
+    <string name="downloadOrShareWithBrowser">બ્રાઉઝર વડે આ ચિત્ર તમે ડાઉનલોડ અથવા શેર કરી (વહેંંચી)શકો છો</string>
+    <string name="shareThisLink">આ લિંંક શેર કરો.</string>
+    <string name="summary_FaceSlim">એમના વગર હુંં કેટલીક આકર્ષક ખુબીઓ ન જોડી શક્યો હોત. જો તમે વિકસીતકર્તા(ડેવલપર) હો તો તમારે તેમનુ વિશાળ કાર્ય જોવુંં જ જોઈએ!</string>
+    <string name="summary_lRemainl"> ભવ્ય ચિહ્નના રચયિતા</string>
+    <string name="summary_Pharetra">પ્રતિભા અને રચનાત્મકતાથી ભરેલ</string>
+    <string name="exit">બહાર નીકળો.</string>
+    <string name="noPersonalInformationAreShared">આ એપ દ્વારા તમારી કોઇપણ જાતની વ્યક્તિગત કે ખાનગી માહિતી એકઠી કરાતી કે મોકલાતી નથી.</string>
+    <string name="title_theme">થીમ</string>
+    <string name="applyingChanges">ફેરફારો લાગુ કરો!</string>
+    <string name="title_textSize">અક્ષરોનુ માપ.</string>
+    <string name="title_enableFastShare">ફાસ્ટ શેર ચાલુ કરો.</string>
+    <string name="summary_enableFastShare">ફાસ્ટ શેર વડે તમે કોઈપણ લિંંક શેર કરી શકો છો ફક્ત ટેપ અને હોલ્ડ કરીને.</string>
+    <string name="summary_textSize">અક્ષરોનુ જે માપ તમને પસંંદ હોય તે રાખો.</string>
+    <string name="refreshToApply">ફેરફારો લાગુ કરવા માટે ફેસબુક રિફ્રેશ કરી ફરીથી જુઓ.</string>
+    <string name="summary_AdvancedWebView">આ એપ નો અમુક ભાગ તેમના કાર્ય ઉપર આધારિત છે.</string>
+    <string name="title_translate">શુ તમે આ એપ ભાષાંંતરીત કરશો?</string>
+    <string name="summary_translate">મારુ વેબ ટુલ ઉપયોગ કરવા અહી ટેપ કરો, તમે જાણતા હો એ ભાષા પસંંદ કરો, બિલ્ડર જનરેટ કરી, ભુલો સુધારો, બનાવો અને મને \'strings.xml\'ફાઇલ ઈ-મેઈલથી મોકલી આપો.</string>
+    <string name="title_removeMessengerDownload">\'Download Messenger\' સંંદેશાઓ કાઢી નાખો.</string>
+    <string name="summary_removeMessengerDownload">\'Install Messenger\' જાહેરાતો નહી દેખાય.</string>
+    <string name="summary_SaschaHa">એક ખુબ જ પ્રતિભાશાળી અને ચતુર વ્યક્તિએ મને ખુબ જ મદદ કરી છે અને એ એક મિત્ર બની ગયા છે. અહી જુઓ એમનુ ઉત્ક્રૂષ્ટ કાર્ય.</string>
+    <string name="acceptPermissionAndRetry">પરવાનગીઓ લાગુ કરો અને ફરી પ્રયત્ન કરો!</string>
+    <string name="yes">હા</string>
+    <string name="no">ના</string>
+    <string name="downloadingPhoto">ફોટો ડાઉનલોડ થઈ રહ્યો છે!</string>
+    <string name="askDownloadPhoto">ફોટો ડાઉનલોડ કરશો?</string>
+    <string name="holdImageToDownload">ડાઉનલોડ કરવા માટે ફોટો અડકી થોભી રાખો!</string>
+    <string name="title_rate">આ એપને 5 સ્ટાર ની રેટીંંગ આપો!</string>
+    <string name="summary_rate">તમે મને પ્લે સ્ટોરમા 5 સ્ટાર રેટીંંગ આપી પ્રોત્સાહન આપી શકો છો.કાઈક ન ચાલે તો પ્લે સ્ટોરમા ખરાબ રિવ્યુ આપો પહેલા મારો સંંપર્ક સાધશો.</string>
+    <string name="title_enableMessagesShortcut">સંંદેશાઓનો શોર્ટકટ ચાલુ કરો.</string>
+    <string name="summary_enableMessagesShortcut">આ ચાલુ કરશો એટલે SlimSocial સંંદેશાઓની ટેબ ખુલશે જ્યારે તમે ફેસબુક સંંદેશાઓનુંં આઈકોન ટેપ કરશો ત્યારે.</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">SlimSocialના સબ ફોલ્ડરનો ઉપયોગ કરો.</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">ચિત્રો \'Download\'ના બદલે SlimSocialના સબફોલ્ડરમાંં ડાઉનલોડ કરો.</string>
+</resources>

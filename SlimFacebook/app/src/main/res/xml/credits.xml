@@ -120,6 +120,16 @@
 		<PreferenceScreen
 			android:summary="Vietnamese"
 			android:title="Vũ Quang Huy"/>
+		<PreferenceScreen
+			android:summary="Romanian"
+			android:title="Adrian Nedelcu"/>
+		<PreferenceScreen
+			android:summary="Romanian"
+			android:title="Adrian Nedelcu"/>
+		<PreferenceScreen
+			android:summary="Guarani"
+			android:title="DushyantTrivediRajkot"/>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory

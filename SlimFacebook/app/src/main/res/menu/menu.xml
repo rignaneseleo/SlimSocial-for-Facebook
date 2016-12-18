@@ -24,6 +24,9 @@
         android:id="@+id/openInBrowser"
         android:title="@string/openInBrowser"/>
     <item
+        android:id="@+id/shareLink"
+        android:title="@string/shareLink"/>
+    <item
         android:id="@+id/share"
         android:title="@string/share"/>
     <item

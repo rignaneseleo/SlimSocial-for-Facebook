@@ -103,6 +103,9 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_enableMessagesShortcut">Enabling this, the SlimSocial messages tab will open when you tap on Facebook messages icon</string>
     <string name="title_useSlimSocialSubfolderToDownloadedFiles">Use \'SlimSocial\' subfolder</string>
     <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Save images in a subfolder rather than in the folder \'Download\'</string>
+    <string name="shareLink">Share this page</string>
+    <string name="title_enableNotifications">Enable Notifications</string>
+    <string name="noNotificationEnjoyLife">I am looking for the best way to integrate them. In the meanwhile, enjoy a life without interruptions from Facebook :)</string>
 
     <!--end other-->
 </resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Vũ Quang Huy USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">Làm mới</string>
+    <string name="openInBrowser">Mở bằng trình duyệt</string>
+    <string name="settings">Cài đặt</string>
+    <string name="share">Chia sẻ ứng dụng này</string>
+    <string name="prefCat_fb_settings_title">Cài đặt Facebook</string>
+    <string name="prefCat_app_settings_title">Cài đặt ứng dụng</string>
+    <string name="prefCat_app_information_title">Thông tin ứng dụng</string>
+    <string name="title_recentNewsFirst">Sắp xếp theo các bài đã đọc gần đây</string>
+    <string name="summary_recentNewsFirst">Thay vì những bài mới</string>
+    <string name="title_centerTextPosts">Giữa bài viết văn bản</string>
+    <string name="summary_centerTextPosts">Văn bản của mỗi bài sẽ được đặt ở giữa</string>
+    <string name="summary_addSpaceBetweenPosts">Sẽ có thêm khoảng cách giữa các bài viết</string>
+    <string name="title_addSpaceBetweenPosts">Thêm khoảng cách giữa các bài viết</string>
+    <string name="summary_creditsCssThemes">Cảm ơn vì chủ đề tuyệt vời!</string>
+    <string name="summary_theme">Chọn chủ đề mà bạn thích</string>
+    <string name="title_fixedBar">Cố định thanh hàng đầu</string>
+    <string name="summary_fixedBar">Thanh màu xanh sẽ vẫn sẽ ở trên đỉnh.</string>
+    <string name="title_hideSponsoredPosts">Không hiển thị bài viết quảng cáo</string>
+    <string name="summary_hideSponsoredPosts">Một số bài viết quảng cáo sẽ được ẩn</string>
+    <string name="title_downloadImages">Lưu dữ liệu</string>
+    <string name="summary_downloadImages">Không tải về hình ảnh</string>
+    <string name="summary_allowGeolocation">Facebook sẽ có quyền truy cập vào vị trí của bạn</string>
+    <string name="title_allowGeolocation">Cho phép sử dụng GPS</string>
+    <string name="version">Phiên bản</string>
+    <string name="credits">Thẻ tín dụng</string>
+    <string name="prefCat_otherCredits_title">khác</string>
+    <string name="prefCat_developersCredits_title">Nhà phát triển</string>
+    <string name="summary_LeonardoRignanese">Người sáng tạo và phát triển ứng dụng</string>
+    <string name="prefCat_translatorsCredits_title">dịch</string>
+    <string name="prefCat_designersCredits_title">nhà thiết kế</string>
+    <string name="donate">ủng hộ</string>
+    <string name="donateToContribute">Tôi đã làm ứng dụng miễn phí. Bạn có thể ủng hộ cho tôi?</string>
+    <string name="summary_you">Nó cũng vì bạn mà ứng dụng này tồn tại</string>
+    <string name="title_you">Bạn rất quan trọng</string>
+    <string name="titleNoConnection">Rất tiếc, có một vấn đề!</string>
+    <string name="descriptionNoConnection">Hãy thử để kiểm tra kết nối và làm mới.</string>
+    <string name="awards">Đây là một ứng dụng mã nguồn mở.</string>
+    <string name="thanks">Cảm ơn!</string>
+    <string name="downloadOrShareWithBrowser">Khi trình duyệt mở, bạn có thể tải về hoặc chia sẻ hình ảnh này.</string>
+    <string name="shareThisLink">Chia sẻ liên kết này</string>
+    <string name="summary_FaceSlim">Nếu không có họ, tôi không thể thêm một số chức năng hấp dẫn. Nếu bạn là một nhà phát triển, bạn phải xem công việc của họ!</string>
+    <string name="summary_lRemainl">Người sáng tạo  logo tuyệt vời</string>
+    <string name="summary_Pharetra">Đầy tài năng và sự sáng tạo</string>
+    <string name="exit">Thoát</string>
+    <string name="noPersonalInformationAreShared">Không có thông tin cá nhân hoặc riêng tư về bạn hoặc thiết bị của bạn được thu thập hoặc truyền qua ứng dụng này!</string>
+    <string name="title_theme">chủ đề</string>
+    <string name="applyingChanges">Áp dụng những thay đổi!</string>
+    <string name="title_textSize">Cỡ chữ</string>
+    <string name="title_enableFastShare">Bật chia sẻ nhanh</string>
+    <string name="summary_enableFastShare">Với Chia sẻ nhanh bạn có thể chia sẻ bất cứ liên kết đơn giản là nhấn và giữ nó</string>
+    <string name="summary_textSize">Chọn kích thước văn bản mà bạn thích</string>
+    <string name="refreshToApply">Làm mới Facebook để áp dụng các thay đổi</string>
+    <string name="summary_AdvancedWebView">Một phần của ứng dụng này được dựa trên công việc của họ</string>
+    <string name="title_translate">Bạn có thích dịch ứng dụng này?</string>
+    <string name="summary_translate">Sử dụng webtool tôi: nhấn vào đây, chọn ngôn ngữ mà bạn biết, tạo ra các nhà xây dựng, sửa lỗi, tạo ra và gửi cho tôi file \'strings.xml\' qua email</string>
+    <string name="title_removeMessengerDownload">Xóa quảng cáo \'Tải Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Các quảng cáo với "Tải Messenger" sẽ được ẩn</string>
+    <string name="summary_SaschaHa">Một anh chàng rất tài năng và thông minh đã giúp tôi rất nhiều và đã trở thành một người bạn. Hãy nhấn vào đây để xem công việc đáng kinh ngạc của anh ấy!</string>
+    <string name="supportMe">Ủng hộ tôi</string>
+    <string name="donateWithPayPal">Ủng hộ bằng PayPal</string>
+    <string name="messages">Tin nhắn</string>
+    <string name="close">Gần</string>
+    <string name="acceptPermissionAndRetry">Chấp nhận quyền và thử lại!</string>
+    <string name="yes">Vâng</string>
+    <string name="no">Không</string>
+    <string name="downloadingPhoto">Đang tải ảnh!</string>
+    <string name="askDownloadPhoto">Bạn có chác chắn muốn tải ảnh?</string>
+    <string name="holdImageToDownload">Giữ hình ảnh để tải về!</string>
+    <string name="title_rate">Xếp hạng ứng dụng này 5 sao</string>
+    <string name="summary_rate">Bạn có thể hỗ trợ tôi khi cho 5 sao nhận xét trong CHPlay. Xin vui lòng nếu một thứ gì đó không làm việc, liên hệ với tôi trước khi viết bình luận xấu</string>
+    <string name="title_enableMessagesShortcut">Kích hoạt tính năng viết tắt</string>
+    <string name="summary_enableMessagesShortcut">Bật tính năng này, các tab tin nhắn SlimSocial sẽ mở ra khi bạn gõ vào các thông điệp biểu tượng Facebook</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Sử dụng \' Thư mục con SlimSocial\' </string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Lưu hình ảnh trong một thư mục con chứ không phải trong thư mục \'Download\'</string>
+</resources>

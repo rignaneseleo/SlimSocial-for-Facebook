@@ -231,5 +231,18 @@ v3.5.6
 - Updated French translation
 - Removed the in-app donation permission
 
+(v3.6.0)
+- Added Romanian translation(Adrian Nedelcu)
+- Added Vietnamese translation(Vũ Quang Huy)
+- Updated Polish translation
+- Updated the compiler (partial compatibility with android N)
+
+v3.6.(1)-2
+- Removed the user agent string and set the desktop mode to avoid the white page bug
+- Added 'Share this page' on the menu
+- Added '&SharedWith=SlimSocial'
+- Added Gujarati translation (DushyantTrivediRajkot)
+- Updated credits
+
 
 ! Consider the possibility to donate !

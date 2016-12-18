@@ -183,13 +183,13 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
       webViewFacebook.addPermittedHostname("touch.facebook.com");
 	  webViewFacebook.addPermittedHostname("messenger.com");*/
 
-		webViewFacebook.setDesktopMode(false);
 		webViewFacebook.requestFocus(View.FOCUS_DOWN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
 
 		WebSettings settings = webViewFacebook.getSettings();
 
-		settings.setUserAgentString("Mozilla/5.0 (BB10; Kbd) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.1.0.4633 Mobile Safari/537.10+");
+		webViewFacebook.setDesktopMode(true);
+		//settings.setUserAgentString("Mozilla/5.0 (BB10; Kbd) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.1.0.4633 Mobile Safari/537.10+");
 		settings.setJavaScriptEnabled(true);
 
 		//set text zoom
@@ -531,6 +531,14 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 				GoHome();
 				break;
 			}
+			case R.id.shareLink: {//share this page
+				Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+				sharingIntent.setType("text/plain");
+				sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, MyHandler.cleanUrl(webViewFacebook.getUrl()));
+				startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.shareThisLink)));
+
+				break;
+			}
 			case R.id.share: {//share this app
 				Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 				sharingIntent.setType("text/plain");
@@ -633,7 +641,7 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 			return url.replace("http://lm.facebook.com/l.php?u=", "")
 					.replace("https://m.facebook.com/l.php?u=", "")
 					.replace("http://0.facebook.com/l.php?u=", "")
-					.replaceAll("&h=.*", "").replaceAll("\\?acontext=.*", "");
+					.replaceAll("&h=.*", "").replaceAll("\\?acontext=.*", "")+"&SharedWith=SlimSocial";
 		}
 
 		// url decoder, recreate all the special characters

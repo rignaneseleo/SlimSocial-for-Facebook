@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Teo Beje USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">Reîncarcă pagina</string>
+    <string name="openInBrowser">Deschide cu Browser</string>
+    <string name="settings">Setări</string>
+    <string name="share">Condivide această aplicaţie</string>
+    <string name="prefCat_fb_settings_title">Setări Facebook</string>
+    <string name="prefCat_app_settings_title">Setări aplicaţie</string>
+    <string name="prefCat_app_information_title">Info aplicaţie</string>
+    <string name="title_recentNewsFirst">Sortează știrile noi după cele mai recente</string>
+    <string name="summary_recentNewsFirst">În loc de articolele de top</string>
+    <string name="title_centerTextPosts">Centrează textul posturilor</string>
+    <string name="summary_centerTextPosts">Textul fiecărui post va fi centrat</string>
+    <string name="summary_addSpaceBetweenPosts">Va fi mai mult spațiu între posturi</string>
+    <string name="title_addSpaceBetweenPosts">Mai mult spațiu între posturi</string>
+    <string name="summary_creditsCssThemes">Mersi pentru temele fantastice!</string>
+    <string name="summary_theme">Alege tema care iti place</string>
+    <string name="title_fixedBar">Top Bar fixă</string>
+    <string name="summary_fixedBar">Blue Bar va rămâne fixă sus.</string>
+    <string name="title_hideSponsoredPosts">Fără posturi sponsorizate</string>
+    <string name="summary_hideSponsoredPosts">Unele posturi sponsorizate vor fi ascunse</string>
+    <string name="title_downloadImages">Salvează date</string>
+    <string name="summary_downloadImages">Nu descărca imagini</string>
+    <string name="summary_allowGeolocation">Facebook va avea acces la poziția ta</string>
+    <string name="title_allowGeolocation">Permite utilizarea GPS</string>
+    <string name="version">Versiune</string>
+    <string name="credits">Credite</string>
+    <string name="prefCat_otherCredits_title">Alte</string>
+    <string name="prefCat_developersCredits_title">Dezvoltatorii</string>
+    <string name="summary_LeonardoRignanese">Creator si dezvoltător al aplicației</string>
+    <string name="prefCat_translatorsCredits_title">Traducători</string>
+    <string name="prefCat_designersCredits_title">Designeri</string>
+    <string name="donate">Fă o donație</string>
+    <string name="donateToContribute">Am ales să o fac gratis. Poți să-mi oferi o cafea?</string>
+    <string name="summary_you">E și datorită ție dacă această aplicație există</string>
+    <string name="title_you">Tu ești important</string>
+    <string name="titleNoConnection">Hop, avem o problemă!</string>
+    <string name="descriptionNoConnection">Verifică conexiunea și reîncarcă pagina!</string>
+    <string name="awards">Această aplicație e Open Source.</string>
+    <string name="thanks">Mulțumiri!</string>
+    <string name="downloadOrShareWithBrowser">Descărca sau condivide această imagine cu Browser.</string>
+    <string name="shareThisLink">Condivide link!</string>
+    <string name="summary_FaceSlim">Fără ei nu aș fi putut adăuga unele funcții atractive. Dacă sunteți un dezvoltator, trebuie să vedeţi munca lor masivă!</string>
+    <string name="summary_lRemainl">Creatorul acestui minunat logo</string>
+    <string name="summary_Pharetra">Plin de talent și creativitate</string>
+    <string name="exit">Ieșire</string>
+    <string name="noPersonalInformationAreShared">Această aplicație nu inregistrează nici transmite informațiile private ori personale!</string>
+    <string name="title_theme">Teme</string>
+    <string name="applyingChanges">Se aplică modificările!</string>
+    <string name="title_textSize">Mărimea textului</string>
+    <string name="title_enableFastShare">Activează Fast Share (condiviziune rapidă)</string>
+    <string name="summary_enableFastShare">Ține apăsat pentru a condivide link-ul cu Fast Share</string>
+    <string name="summary_textSize">Alege dimensiunea preferată a textului</string>
+    <string name="refreshToApply">Actualizează Facebook pentru a aplica modificările</string>
+    <string name="summary_AdvancedWebView">O parte din această aplicație se bazează pe munca lor</string>
+    <string name="title_translate">Ai traduce această aplicație?</string>
+    <string name="summary_translate">Utilizează WebTool: apăsă aici, alege limba pe care o cunoști, generează constructorul, corectează erorile și trimite-mi fișierul "strings.xml" prin e-mail</string>
+    <string name="title_removeMessengerDownload">Elimină mesajele \'Download Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Anunțurile cu \'Install Messenger\' vor fi ascunse</string>
+    <string name="summary_SaschaHa">Un tip foarte talentat și inteligent, care m-a ajutat o grămadă și-am devenit tovarăși. Apasă aici pentru a vedea munca lui incredibilă!</string>
+    <string name="supportMe">Susține-mă</string>
+    <string name="donateWithPayPal">Donează cu PayPal</string>
+    <string name="messages">Mesaje</string>
+    <string name="close">Închide</string>
+    <string name="acceptPermissionAndRetry">Acceptă permisiunile și încearcă din nou!</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
+    <string name="downloadingPhoto">Se descarcă poza!</string>
+    <string name="askDownloadPhoto">Descarc poza?</string>
+    <string name="holdImageToDownload">Ține apăsat pe imagine pentru download!</string>
+    <string name="title_rate">Evaluează această aplicație cu 5 stele</string>
+    <string name="summary_rate">Mă poți susține scriind o recenzie de 5 stele în PlayStore. Dacă ceva nu funcționează, contactează-mă te rog înainte de a scrie recenzie negativă!</string>
+    <string name="title_enableMessagesShortcut">Activează scurtătură mesaje.</string>
+    <string name="summary_enableMessagesShortcut">Activând această opţiune, icon-ul mesaje Facebook se va deschide cu \'SlimSocial messages\' </string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Utilizează subdirector \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Salvează imaginile într-un subdirector în loc de directorul \'Download\'</string>
+</resources>

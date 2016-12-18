@@ -73,7 +73,9 @@ public class SettingsActivity extends PreferenceActivity implements
 			case "pref_recentNewsFirst":
 			case "pref_centerTextPosts":
 			case "pref_fixedBar":
-			case "pref_addSpaceBetweenPosts": {
+			case "pref_addSpaceBetweenPosts":
+			case "pref_enableMessagesShortcut":
+				{
 				Toast.makeText(SettingsActivity.this, R.string.refreshToApply, Toast.LENGTH_SHORT).show();
 				break;
 			}

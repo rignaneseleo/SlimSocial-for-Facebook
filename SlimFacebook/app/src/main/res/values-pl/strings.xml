@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY Mikele.O. USING StringsXmlBuilder -->
+<!-- THIS TRANSLATION IS MADE BY ch3mn3y USING StringsXmlBuilder -->
 <!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
@@ -10,54 +10,80 @@
     <string name="refresh">Odśwież</string>
     <string name="openInBrowser">Otwórz za pomocą przeglądarki</string>
     <string name="settings">Ustawienia</string>
-    <string name="share">Udostępnij tę aplikację</string>
+    <string name="share">Podziel się tą aplikację</string>
     <string name="prefCat_fb_settings_title">Ustawienia Facebooka</string>
     <string name="prefCat_app_settings_title">Ustawienia aplikacji</string>
-    <string name="prefCat_app_information_title">Informacje o aplikacji</string>
-    <string name="title_recentNewsFirst">Sortuj wiadomości od najnowszych</string>
-    <string name="summary_recentNewsFirst">Zamiast według popularności</string>
-    <string name="title_centerTextPosts">Wyśrodkuj zawartość postów</string>
-    <string name="summary_centerTextPosts">Tekst każdego postu będzie wyśrodkowany</string>
-    <string name="summary_addSpaceBetweenPosts">Pozostaw większą przestrzeń pomiędzy postami</string>
-    <string name="title_addSpaceBetweenPosts">Większa przestrzeń między postami</string>
+    <string name="prefCat_app_information_title">Informacje na temat aplikacji</string>
+    <string name="title_recentNewsFirst">Sortuj kanały od najnowszych</string>
+    <string name="summary_recentNewsFirst">Zamiast od najlepszych</string>
+    <string name="title_centerTextPosts">Wyśrodkuj tekst postów</string>
+    <string name="summary_centerTextPosts">Tekst każdego postu zostanie wyśrodkowany</string>
+    <string name="summary_addSpaceBetweenPosts">Będzie więcej miejsca między postami</string>
+    <string name="title_addSpaceBetweenPosts">Więcej miejsca między postami</string>
     <string name="summary_creditsCssThemes">Dzięki za fantastyczne motywy!</string>
-    <string name="summary_theme">Wybierz motyw, który Ci się podoba</string>
-    <string name="title_fixedBar">Zablokuj górny panel</string>
-    <string name="summary_fixedBar">Niebieski panel pozostanie zablokowany na górze.</string>
-    <string name="title_downloadImages">Oszczędzaj transfer</string>
-    <string name="summary_downloadImages">Nie pobieraj obrazów</string>
-    <string name="summary_allowGeolocation">Facebook będzie miał dostęp do twojej lokalizacji</string>
-    <string name="title_allowGeolocation">Zezwól na korzystanie z GPS</string>
+    <string name="summary_theme">Wybierz motyw, który ci się podoba</string>
+    <string name="title_fixedBar">Popraw górny pasek</string>
+    <string name="summary_fixedBar">Niebieski pasek pozostanie zablokowany na górze.</string>
+    <string name="title_downloadImages">Zapisz dane</string>
+    <string name="summary_downloadImages">Nie pobieraj zdjęć</string>
+    <string name="summary_allowGeolocation">Facebook będzie w stanie uzyskać dostęp do Twojej pozycji</string>
+    <string name="title_allowGeolocation">Zezwól na korzystanie z lokalizacji GPS</string>
     <string name="version">Wersja</string>
-    <string name="credits">Twórcy</string>
-    <string name="prefCat_otherCredits_title">Inny</string>
-    <string name="prefCat_developersCredits_title">Deweloperzy</string>
-    <string name="summary_LeonardoRignanese">Twórca i deweloper aplikacji</string>
+    <string name="credits">Podziękowania</string>
+    <string name="prefCat_otherCredits_title">Inne</string>
+    <string name="prefCat_developersCredits_title">Twórcy</string>
+    <string name="summary_LeonardoRignanese">Twórca i projektant aplikacji</string>
     <string name="prefCat_translatorsCredits_title">Tłumacze</string>
     <string name="prefCat_designersCredits_title">Projektanci</string>
-    <string name="donate">Wspomóż finansowo</string>
-    <string name="donateToContribute">Zdecydowałem się robić tę aplikację darmo. Może w zamian zechcesz podarować mi kawę?</string>
-    <string name="summary_you">To także dzięki tobie ta aplikacja istnieje!</string>
-    <string name="title_you">Jesteś ważny</string>
-    <string name="titleNoConnection">Ups, wystąpił problem!</string>
-    <string name="descriptionNoConnection">Sprawdź połączenie i odśwież.</string>
-    <string name="awards">Ta aplikacja jest otwartym oprogramowaniem.</string>
+    <string name="donate">Wesprzyj twórców</string>
+    <string name="donateToContribute">Zdecydowałem się wydać tę aplikację za darmo. Może postawisz mi kawę?</string>
+    <string name="summary_you">Aplikacja istnieje dzięki Wam</string>
+    <string name="title_you">Jesteści ważni</string>
+    <string name="titleNoConnection">Huston, chyba mamy problem!</string>
+    <string name="descriptionNoConnection">Spróbuj sprawdzić połączenie, a następnie odśwież stronę.</string>
+    <string name="awards">Źródła aplikacji są ogólnodostępne.</string>
     <string name="thanks">Dzięki!</string>
-    <string name="downloadOrShareWithBrowser">Otwierając w przeglądarce możesz pobrać lub udostępnić ten obraz.</string>
+    <string name="downloadOrShareWithBrowser">Otwarając przeglądarkę możesz pobrać lub udostępnić ten obraz.</string>
     <string name="shareThisLink">Udostępnij ten link</string>
-    <string name="summary_FaceSlim">Bez nich, nie mógłbym dodać niektórych ważnych funkcji. Jeśli jesteś programistą, musisz zobaczyć ich pracę!</string>
+    <string name="summary_FaceSlim">Bez nich nie mogłbym dodać części dodatkowych funkcji. Jeśli jesteś programistą, musisz zobaczyć ogrom ich prac!</string>
     <string name="summary_lRemainl">Twórca wspaniałego logo</string>
-    <string name="summary_Pharetra">Wielce utalentowany i kreatywny</string>
+    <string name="summary_Pharetra">Pełen talentu i kreatywności</string>
     <string name="exit">Wyjście</string>
-    <string name="noPersonalInformationAreShared">Żadne osobiste informacje o tobie i o twoim urządzeniu nie będą zbierane ani wysyłane przez aplikację!</string>
+    <string name="noPersonalInformationAreShared">Żadne osobiste lub prywatne informacje o tobie lub o Twoim urządzeniu nie są gromadzone lub przekazywane przez tę aplikację!</string>
     <string name="title_theme">Motywy</string>
-    <string name="applyingChanges">Zastosowywanie zmian</string>
+    <string name="applyingChanges">Stosowanie zmian!</string>
     <string name="title_textSize">Rozmiar czcionki</string>
-    <string name="title_enableFastShare">Włącz Szybkie Udostępnianie</string>
-    <string name="summary_enableFastShare">Z Szybkim Udostępnianiem możesz udostępnić dowolny link przytrzymując go</string>
-    <string name="summary_textSize">Wybierz preferowany rozmiar tekstu</string>
+    <string name="title_enableFastShare">Włącz szybkie udostępnianie</string>
+    <string name="summary_enableFastShare">Szybkie udostępnianie pozwala na udostępnianie dowolnego linku poprzez dotknięcie i przytrzymanie na nim</string>
+    <string name="summary_textSize">Wybierz rozmiar tekstu jaki wolisz</string>
     <string name="refreshToApply">Odśwież Facebooka, aby zastosować zmiany</string>
+    <string name="summary_AdvancedWebView">Część tej aplikacji powstała w oparciu o ich pracę</string>
+    <string name="summary_SaschaHa">Bardzo utalentowany i inteligentny facet, który bardzo mi pomógł i stał się moim przyjacielem. Kliknij tutaj, aby zobaczyć jego niesamowitą pracę!</string>
+    <string name="supportMe">Wesprzyj mnie</string>
+    <string name="messages">Wiadomości</string>
+    <string name="close">Zamknij</string>
+    <string name="acceptPermissionAndRetry">Zaakceptuj uprawnienia i spróbuj ponownie!</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="downloadingPhoto">Pobieranie zdjęcia!</string>
+    <string name="askDownloadPhoto">Pobrać zdjęcie?</string>
+    <string name="holdImageToDownload">Przytrzymaj na zdjęciu, aby je pobrać!</string>
+    <string name="title_enableMessagesShortcut">Włącz skrót do wiadomości</string>
+    <string name="summary_enableMessagesShortcut">Włączenie tej opcji, spowoduje uruchomienie zakładki z wiadomościami SlimSocial po wciśnięciu ikony wiadomości na Facebooku</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Korzystaj z podfolderu \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Zapisuj zdjęcia w subfolderze, zamiast w folderze Download</string>
+    <string name="summary_rate">Możesz wesprzeć mnie, dając 5 gwiazdek w opiniach w Sklepie Play. Proszę, jeśli coś nie działa, skontaktuj się ze mną, zanim napiszesz złą opinię</string>
+    <string name="title_rate">Oceń tę aplikację, używając 5 gwiazdek</string>
+    <string name="donateWithPayPal">Wspomóż przez PayPal</string>
+    <string name="summary_removeMessengerDownload">Ukryj wyświetlanie tego powiadomienia</string>
+    <string name="title_removeMessengerDownload">Usuń banner "Pobierz Messangera"</string>
+    <string name="title_hideSponsoredPosts">Nie pokazuj sponsorowanych postów</string>
+    <string name="summary_hideSponsoredPosts">Niektóre sponsorowane posty zostaną ukryte</string>
+    <string name="summary_translate">Użyj mojego WebTool: dotknij tu aby wybrać język który znasz, uruchom środowisko tłumacza, popraw błędy, wygeneruj i wyślij mi plik \'strings.xml\'  przez e-mail</string>
+    <string name="title_translate">Czy umiesz przetłumaczyć tę aplikację?</string>
 </resources>
+
+
     <!-- PLAY STORE PAGE
 DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
 Ważąc tylko 700KB, pozwala Ci wygodnie korzystać z Facebooka (w wersji Web)
