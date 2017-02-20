@@ -244,5 +244,12 @@ v3.6.(1)-2
 - Added Gujarati translation (DushyantTrivediRajkot)
 - Updated credits
 
+v3.6.5
+- Create MyAdvancedWebView (custom isHostnameAllowed, added onReceivedError) -> The "no connection" bug seems solved
+- Desktop links are converted to mobile links
+- The install location now may be the SD card
+- Fixed the crash when you clicked on a tel. number
+- Added Brazilian translation (Guilherme Scudeler Ribeiro)
+
 
 ! Consider the possibility to donate !

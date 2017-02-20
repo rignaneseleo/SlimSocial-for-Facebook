@@ -17,17 +17,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 
-import im.delight.android.webview.AdvancedWebView;
+import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
-public class MessagesActivity extends Activity implements AdvancedWebView.Listener {
+public class MessagesActivity extends Activity implements 	MyAdvancedWebView.Listener {
 
 	private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
-	private AdvancedWebView webViewMessages;//the main webView where is shown facebook
+	private MyAdvancedWebView webViewMessages;//the main webView where is shown facebook
 	private SharedPreferences savedPreferences;//contains all the values of saved preferences
 
 	@Override
@@ -59,7 +59,7 @@ public class MessagesActivity extends Activity implements AdvancedWebView.Listen
 	}
 
 	private void SetupMessagesWebView() {
-		webViewMessages = (AdvancedWebView) findViewById(R.id.webViewMessages);
+		webViewMessages = (MyAdvancedWebView) findViewById(R.id.webViewMessages);
 		webViewMessages.setListener(this, this);
 		webViewMessages.addPermittedHostname("mbasic.facebook.com");
 
@@ -119,10 +119,10 @@ public class MessagesActivity extends Activity implements AdvancedWebView.Listen
 
 	}
 
-	@Override
-	public void onDownloadRequested(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+    @Override
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
 
-	}
+    }
 
 	@Override
 	public void onExternalPageRequest(String url) {

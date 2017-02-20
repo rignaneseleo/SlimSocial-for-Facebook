@@ -36,19 +36,19 @@ import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
-import im.delight.android.webview.AdvancedWebView;
 import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
 import it.rignanese.leo.slimfacebook.utility.Dimension;
+import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
-public class MainActivity extends Activity implements AdvancedWebView.Listener {
+public class MainActivity extends Activity implements MyAdvancedWebView.Listener {
 
 	private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
-	private AdvancedWebView webViewFacebook;//the main webView where is shown facebook
+	private MyAdvancedWebView webViewFacebook;//the main webView where is shown facebook
 
 	private SharedPreferences savedPreferences;//contains all the values of saved preferences
 
@@ -82,6 +82,8 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 			savedPreferences.edit().putBoolean("first_run", false).apply();
 		}
 
+
+
 		SetupRefreshLayout();// setup the refresh layout
 
 		ShareLinkHandler();//handle a link shared (if there is)
@@ -93,11 +95,14 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		SetupOnLongClickListener();
 
 		if (isSharer) {//if is a share request
+            Log.d("MainActiviy.OnCreate","Loading shared link");
 			webViewFacebook.loadUrl(urlSharer);//load the sharer url
 			isSharer = false;
-		} else if (getIntent() != null && getIntent().getDataString() != null) {//if is a fb link open request
-			webViewFacebook.loadUrl(getIntent().getDataString());
+		} else if (getIntent() != null && getIntent().getDataString() != null) {
+            //if the app is opened by fb link
+            webViewFacebook.loadUrl(FromDestopToMobileUrl(getIntent().getDataString()));
 		} else GoHome();//load homepage
+
 	}
 
 	@SuppressLint("NewApi")
@@ -127,9 +132,10 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		webViewFacebook.onActivityResult(requestCode, resultCode, intent);
 	}
 
-	// app is already running and gets a new intent (used to share link without open another activity
+	// app is already running and gets a new intent (used to share link without open another activity)
 	@Override
 	protected void onNewIntent(Intent intent) {
+
 		super.onNewIntent(intent);
 		setIntent(intent);
 
@@ -158,7 +164,8 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 				webViewUrl = Uri.parse(webViewUrl).toString();
 			}
 		}
-		webViewFacebook.loadUrl(webViewUrl);
+
+        webViewFacebook.loadUrl(FromDestopToMobileUrl(webViewUrl));
 
 		// recreate activity when something important was just changed
 		if (getIntent().getBooleanExtra("settingsChanged", false)) {
@@ -171,8 +178,8 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 	//*********************** SETUP ****************************
 
 	private void SetupWebView() {
-		webViewFacebook = (AdvancedWebView) findViewById(R.id.webView);
-		webViewFacebook.setListener(this, this);
+		webViewFacebook = (MyAdvancedWebView) findViewById(R.id.webView);
+		webViewFacebook.setListener(this,this);
 
 		webViewFacebook.clearPermittedHostnames();
 		webViewFacebook.addPermittedHostname("facebook.com");
@@ -427,6 +434,8 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 
 	//*********************** WEBVIEW EVENTS ****************************
+
+	
 	@Override
 	public void onPageStarted(String url, Bitmap favicon) {
 		swipeRefreshLayout.setRefreshing(true);
@@ -461,19 +470,25 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 		noConnectionError = true;//to allow to return at the last visited page
 	}
 
-	@Override
-	public void onDownloadRequested(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-	}
+    @Override
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
+
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+
+    }
+
 
 	@Override
 	public void onExternalPageRequest(String url) {//if the link doesn't contain 'facebook.com', open it using the browser
-		if (Uri.parse(url).getHost().endsWith("slimsocial.leo")) {
+		if (Uri.parse(url).getHost()!=null ? Uri.parse(url).getHost().endsWith("slimsocial.leo"):false) {
 			//he clicked on messages
 			startActivity(new Intent(this, MessagesActivity.class));
 		} else {
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-			} catch (ActivityNotFoundException e) {//this prevents the crash
+            } catch (ActivityNotFoundException e) {//this prevents the crash
 				Log.e("shouldOverrideUrlLoad", "" + e.getMessage());
 				e.printStackTrace();
 			}
@@ -568,6 +583,13 @@ public class MainActivity extends Activity implements AdvancedWebView.Listener {
 
 
 	//*********************** OTHER ****************************
+
+    String FromDestopToMobileUrl(String url){
+        if (Uri.parse(url).getHost().endsWith("www.facebook.com")) {
+            url = url.replace("www.facebook.com", "touch.facebook.com");
+        }
+        return url;
+    }
 
 	private void ApplyCustomCss() {
 		String css = "";

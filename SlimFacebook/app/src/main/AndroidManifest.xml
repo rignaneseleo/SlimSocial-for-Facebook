@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="it.rignanese.leo.slimfacebook">
-
+	package="it.rignanese.leo.slimfacebook"
+	android:installLocation="auto"
+	xmlns:tools="http://schemas.android.com/tools">
 	<!-- PERMISSIONS -->
 
 
@@ -12,6 +13,7 @@
 	<!-- gps -->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+	<uses-sdk tools:overrideLibrary="com.novoda.simplechromecustomtabs"/>//to force the use of simplechromecustomtabs that has the  min sdk 16
 
 	<application
 		android:allowBackup="true"
