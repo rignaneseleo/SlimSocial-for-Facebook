@@ -1,6 +1,7 @@
 package it.rignanese.leo.slimfacebook;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,7 +55,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
 
-    private boolean noConnectionError = false;//flag: is true if there is a connection error and it should be reload not the error page but the last useful
+    private boolean noConnectionError = false;//flag: is true if there is a connection error. It should reload the last useful page
 
     private boolean isSharer = false;//flag: true if the app is called from sharer
     private String urlSharer = "";//to save the url got from the sharer
@@ -441,7 +444,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     public void onPageStarted(String url, Bitmap favicon) {
         swipeRefreshLayout.setRefreshing(true);
 
-        if (Uri.parse(url).getHost().endsWith("fbcdn.net"))
+        if (Uri.parse(url).getHost()!= null && Uri.parse(url).getHost().endsWith("fbcdn.net"))
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.holdImageToDownload),
                     Toast.LENGTH_SHORT).show();
     }
@@ -460,15 +463,29 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     @Override
     public void onPageError(int errorCode, String description, String failingUrl) {
-        String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
-                getString(R.string.titleNoConnection) +
-                "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
-                getString(R.string.descriptionNoConnection) +
-                "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; opacity: 0.3;'>" +
-                getString(R.string.awards) +
-                "</h5>";
-        webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
-        noConnectionError = true;//to allow to return at the last visited page
+        // refresh on connection error (sometimes there is an error even when there is a network connection)
+        if(isInternetAvailable()) return;
+      //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")                && !failingUrl.contains("atdmt") && !noConnectionError)
+      else  {
+            Log.i("onPageError link" , failingUrl);
+            String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
+                    getString(R.string.titleNoConnection) +
+                    "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
+                    getString(R.string.descriptionNoConnection) +
+                    "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; opacity: 0.3;'>" +
+                    getString(R.string.awards) +
+                    "</h5>";
+            webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
+            //to allow to return at the last visited page
+            noConnectionError = true;
+        }
+    }
+
+
+    public boolean isInternetAvailable() {
+        NetworkInfo newtworkInfo = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (newtworkInfo != null && newtworkInfo.isAvailable() && newtworkInfo.isConnected()) return true;
+        else return false;
     }
 
     @Override
@@ -586,8 +603,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** OTHER ****************************
 
     String FromDestopToMobileUrl(String url) {
-if(Uri.parse(url).getHost()!=null)
-            if (Uri.parse(url).getHost().endsWith("www.facebook.com")) {
+            if (Uri.parse(url).getHost()!=null && Uri.parse(url).getHost().endsWith("www.facebook.com")) {
                 url = url.replace("www.facebook.com", "touch.facebook.com");
             }
         return url;

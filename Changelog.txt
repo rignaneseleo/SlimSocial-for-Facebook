@@ -252,7 +252,11 @@ v3.6.5
 - Added Brazilian translation (Guilherme Scudeler Ribeiro)
 
 v3.6.6
-- Fix crash when re-open the app 
+- Fix crash when re-open the app
+
+v3.6.7
+- Fix OnPageError (checked the connection before the error)
+- Added the permission ACCESS_NETWORK_STATE to check the connection state
 
 
 ! Consider the possibility to donate !

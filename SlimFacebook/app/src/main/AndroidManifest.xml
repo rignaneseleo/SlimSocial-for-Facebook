@@ -8,8 +8,13 @@
 
 	<!-- to connect to the Internet -->
 	<uses-permission android:name="android.permission.INTERNET" />
-	<!-- to upload files -->
+
+	<!-- to check if there is connection -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+	<!-- to allow to save photos -->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 	<!-- gps -->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
