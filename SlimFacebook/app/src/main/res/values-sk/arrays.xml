@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listThemes">
+        <item>Štandardná</item>
+        <item>Štandardná bez lišty</item>
+        <item>Tmavá téma</item>
+        <item>Tmavá téma bez lišty</item>
+    </string-array>
+
+    <string-array name="listTextSize">
+        <item>Extra malé</item>
+        <item>Malé</item>
+        <item>Štandardné</item>
+        <item>Veľké</item>
+    </string-array>
+</resources>
