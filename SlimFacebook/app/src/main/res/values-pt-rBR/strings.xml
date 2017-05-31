@@ -1,87 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY Guilherme Scudeler Ribeiro USING StringsXmlBuilder -->
+<!-- THIS TRANSLATION IS MADE BY Guilherme Scudeler Ribeiro USING StringsXmlBuilder
+     REVIEWED BY Marcel de Sena Dall'Agnol -->
 <!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
 
 <resources>
-    <string name="refresh">Atualizar</string>
+    <string name="refresh">Recarregar</string>
     <string name="openInBrowser">Abra usando o navegador</string>
     <string name="settings">Configurações</string>
     <string name="share">Compartilhe esse app</string>
+    <!--end menu string-->
+
+    <!--settings-->
     <string name="prefCat_fb_settings_title">Configurações do Facebook</string>
     <string name="prefCat_app_settings_title">Configurações do app</string>
-    <string name="prefCat_app_information_title">Informações do app</string>
-    <string name="title_recentNewsFirst">Ordenei o feed de notícias pelo mais recente </string>
-    <string name="summary_recentNewsFirst">Ao invés das histórias populares </string>
-    <string name="title_centerTextPosts">Centralizar as postagens de texto </string>
-    <string name="summary_centerTextPosts">O texto de cada postagem será centralizado </string>
-    <string name="summary_addSpaceBetweenPosts">Existirá mais espaço entre as postagens </string>
-    <string name="title_addSpaceBetweenPosts">Mais espaço entre as postagens </string>
-    <string name="summary_creditsCssThemes">Obrigado pelos fantásticos temas! </string>
-    <string name="summary_theme">Escolha o tema que você gosta </string>
-    <string name="title_fixedBar">Barra superior ajustada </string>
+    <string name="prefCat_app_information_title">Informações sobre o app</string>
+    <string name="title_recentNewsFirst">Ordenar o feed de notícias pelo mais recente</string>
+    <string name="summary_recentNewsFirst">Em vez de histórias populares</string>
+    <string name="title_centerTextPosts">Centralizar o texto de posts</string>
+    <string name="summary_centerTextPosts">O texto de cada post será centralizado</string>
+    <string name="summary_addSpaceBetweenPosts">Existirá mais espaço entre os posts</string>
+    <string name="title_addSpaceBetweenPosts">Mais espaço entre os posts</string>
+    <string name="summary_creditsCssThemes">Obrigado pelos temas fantásticos!</string>
+    <string name="summary_theme">Escolha o tema que você deseja</string>
+    <string name="title_fixedBar">Barra superior fixa</string>
     <string name="summary_fixedBar">A barra azul permanecerá presa no topo</string>
-    <string name="title_hideSponsoredPosts">Não mostre postagens com anúncios </string>
-    <string name="summary_hideSponsoredPosts">Algumas postagens com anúncios serão escondidas </string>
+    <string name="title_hideSponsoredPosts">Não mostre posts com anúncios</string>
+    <string name="summary_hideSponsoredPosts">Alguns posts com anúncios serão escondidos</string>
     <string name="title_downloadImages">Salvar dados</string>
     <string name="summary_downloadImages">Não baixar imagens </string>
-    <string name="summary_allowGeolocation">Facebook será capaz de acessar sua localização </string>
-    <string name="title_allowGeolocation">Permitir usp do GPS</string>
-    <string name="version">Versão </string>
-    <string name="credits">Créditos </string>
-    <string name="prefCat_otherCredits_title">Outros </string>
-    <string name="prefCat_developersCredits_title">Desenvolvedores </string>
+    <string name="summary_allowGeolocation">Facebook será capaz de acessar sua localização</string>
+    <string name="title_allowGeolocation">Permitir uso do GPS</string>
+    <string name="version">Versão</string>
+    <string name="credits">Créditos</string>
+    <string name="prefCat_otherCredits_title">Outros</string>
+    <string name="prefCat_developersCredits_title">Desenvolvedores</string>
     <string name="summary_LeonardoRignanese">Criador e desenvolvedor do app</string>
-    <string name="prefCat_translatorsCredits_title">Tradutores </string>
+    <string name="prefCat_translatorsCredits_title">Tradutores</string>
     <string name="prefCat_designersCredits_title">Designers</string>
-    <string name="donate">Faça uma doação </string>
-    <string name="donateToContribute">Eu escolho fazer de graça. Você poderia me pagar um café? </string>
-    <string name="summary_you">Também grato a você que esse app existe </string>
-    <string name="title_you">Você é importante </string>
-    <string name="titleNoConnection">Oops, tem um problema! </string>
-    <string name="descriptionNoConnection">Tente verificar sua conexão e atualize. </string>
-    <string name="awards">Esse é um aplicativo de código aberto. </string>
-    <string name="thanks">Obrigado! </string>
-    <string name="downloadOrShareWithBrowser">Abrindo o navegador você pode baixar ou compartilhar essa imagem. </string>
-    <string name="shareThisLink">Compartilhe esse link</string>
-    <string name="summary_FaceSlim">Sem eles, eu não poderia adicionar algumas funções atrativas. Se você é um desenvolvedor, você tem que ver o massivo trabalho deles! </string>
-    <string name="summary_lRemainl">Criador do magnífico logo</string>
+    <string name="donate">Faça uma doação</string>
+    <string name="donateToContribute">Eu escolhi fazer o app de graça. Você poderia me pagar um café?</string>
+    <string name="summary_you">É também graças a você que este app existe</string>
+    <string name="title_you">Você é importante</string>
+    <string name="titleNoConnection">Oops, há algum problema!</string>
+    <string name="descriptionNoConnection">Tente verificar sua conexão e recarregue.</string>
+    <string name="awards">Este é um aplicativo de código aberto.</string>
+    <string name="thanks">Obrigado!</string>
+    <string name="downloadOrShareWithBrowser">Abrindo o navegador, você pode baixar ou compartilhar esta imagem.</string>
+    <string name="shareThisLink">Compartilhe este link</string>
+    <string name="summary_FaceSlim">Sem eles, eu não poderia adicionar algumas funções atraentes. Se você é um desenvolvedor, precisa ver o grande trabalho deles!</string>
+    <string name="summary_lRemainl">Criador do logo magnífico</string>
     <string name="summary_Pharetra">Cheio de talento e criatividade</string>
     <string name="exit">Sair</string>
-    <string name="noPersonalInformationAreShared">Nenhuma informação pessoal oi privada sobre você ou seu dispositivo é coletada ou transmitida por este aplicativo! </string>
+    <string name="noPersonalInformationAreShared">Nenhuma informação pessoal ou privada sobre você ou seu dispositivo é coletada ou transmitida por este aplicativo!</string>
     <string name="title_theme">Temas</string>
-    <string name="applyingChanges">Aplicando mudanças! </string>
+    <string name="applyingChanges">Aplicando mudanças!</string>
     <string name="title_textSize">Tamanho do texto</string>
-    <string name="title_enableFastShare">Habilitar compartilhamento rapido</string>
-    <string name="summary_enableFastShare">Com o compartilhamento rápido você pode compartilhar qualquer link simplesmente tocando e segurando ele</string>
-    <string name="summary_textSize">Escolha o tamanho de texto de sua preferência </string>
-    <string name="refreshToApply">Atualize o Facebook para aplicar as mudanças </string>
-    <string name="summary_AdvancedWebView">Parte deste aplicativo é baseada no trabalho deles </string>
-    <string name="title_translate">Você gostaria de traduzir este aplicativo? </string>
-    <string name="summary_translate">Use minha Ferramenta Online: toque aqui, selecione a língua que você sabe, gere o construtor, corrija os erros, crie e me envie o arquivo \'strings.xml\' por email</string>
-    <string name="title_removeMessengerDownload">Removaas mensagens de \'Baixar o Messenger\' </string>
-    <string name="summary_removeMessengerDownload">Os anúncios com \'instalar o Messenger\' serão escondidas </string>
-    <string name="summary_SaschaHa">Um talentoso e inteligente cara que me judeu muito e se tornou um amigo. Toque aqui para ver o trabalho incrível dele! </string>
-    <string name="supportMe">Me ajude</string>
+    <string name="title_enableFastShare">Habilitar compartilhamento rápido</string>
+    <string name="summary_enableFastShare">Com o compartilhamento rápido, você pode compartilhar qualquer link simplesmente tocando e segurando</string>
+    <string name="summary_textSize">Escolha o tamanho de texto de sua preferência</string>
+    <string name="refreshToApply">Recarregue o Facebook para aplicar as mudanças</string>
+    <string name="summary_AdvancedWebView">Parte deste aplicativo é baseada no trabalho deles</string>
+    <string name="title_translate">Você gostaria de traduzir este aplicativo?</string>
+    <string name="summary_translate">Use minha ferramenta online: toque aqui, selecione a língua que você sabe, gere o construtor, corrija erros, crie e me envie o arquivo \'strings.xml\' por email</string>
+    <string name="title_removeMessengerDownload">Remova as mensagens para \'Baixar o Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Os anúncios para \'Instalar o Messenger\' serão escondidos</string>
+    <string name="summary_SaschaHa">Um cara talentoso e inteligente que me ajudou muito e se tornou um amigo. Toque aqui para ver o trabalho incrível dele!</string>
+    <string name="supportMe">Me apoie</string>
     <string name="donateWithPayPal">Doe via PayPal</string>
-    <string name="messages">Mensagens </string>
+    <string name="messages">Mensagens</string>
     <string name="close">Fechar</string>
-    <string name="acceptPermissionAndRetry">Aceitar permissões e reentradas! </string>
+    <string name="acceptPermissionAndRetry">Aceite as permissões e tente novamente!</string>
     <string name="yes">Sim</string>
     <string name="no">Não </string>
-    <string name="downloadingPhoto">Baixando foto! </string>
-    <string name="askDownloadPhoto">Baixar foto? </string>
-    <string name="holdImageToDownload">Segure a imagem para baixar! </string>
-    <string name="title_rate">Avalie este aplicativo com 5 estrelas </string>
-    <string name="summary_rate">Você pode me ajudar escrevendo uma avaliação de 5 estrelas na PlayStore. Por favor se algo não funciona, entre em contato comigo antes de escrever uma avaliação negativa </string>
-    <string name="title_enableMessagesShortcut">Ativar atalho de mensagens </string>
-    <string name="summary_enableMessagesShortcut">Ativando isso, a aba de mensagens do SlimSocial será aberta quando tocar sobre o ícone de mensagens do Facebook </string>
-    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Use a subpasta \'SlimSocial\' </string>
-    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Salve imagens em uma subpasta ao invés da pasta \'Download\' </string>
-    <string name="shareLink">Compartilhe essa pagina</string>
-    <string name="title_enableNotifications">Ativar notificações </string>
-    <string name="noNotificationEnjoyLife">Eu estou procurando a melhor maneira de integrar eles. Enquanto isso, aproveite a vida sem interrupções do Facebook :) </string>
+    <string name="downloadingPhoto">Baixando foto!</string>
+    <string name="askDownloadPhoto">Baixar foto?</string>
+    <string name="holdImageToDownload">Segure a imagem para baixar!</string>
+    <string name="title_rate">Avalie este aplicativo com 5 estrelas</string>
+    <string name="summary_rate">Você pode me ajudar escrevendo uma avaliação de 5 estrelas na Play Store. Se algo não funciona, por favor entre em contato comigo antes de escrever uma avaliação negativa</string>
+    <string name="title_enableMessagesShortcut">Ativar atalho de mensagens</string>
+    <string name="summary_enableMessagesShortcut">Ativando isto, a aba de mensagens do SlimSocial será aberta quando tocar sobre o ícone de mensagens do Facebook</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Usar a subpasta \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Salvar imagens em uma subpasta em vez da pasta \'Download\'</string>
+    <string name="shareLink">Compartilhe esta página</string>
+    <string name="title_enableNotifications">Ativar notificações</string>
+    <string name="noNotificationEnjoyLife">Eu estou procurando a melhor maneira de integrá-las. Enquanto isso, aproveite a vida sem interrupções do Facebook :) </string>
 </resources>
