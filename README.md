@@ -1,4 +1,4 @@
-#FOLLOW SLIMSOCIAL PROJECT
+# FOLLOW SLIMSOCIAL PROJECT
 ## See more on XDA: 
 http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
 
