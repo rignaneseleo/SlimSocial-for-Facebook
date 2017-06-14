@@ -2599,7 +2599,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-pt-rBR/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-pt_BR/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1200">
           <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
