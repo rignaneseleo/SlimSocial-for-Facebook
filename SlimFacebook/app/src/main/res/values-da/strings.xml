@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY JohnDoeDK USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">Opdater</string>
+    <string name="openInBrowser">Åbn ved hjælp af browser</string>
+    <string name="settings">Indstillinger</string>
+    <string name="share">Del denne app</string>
+    <string name="prefCat_fb_settings_title">Facebook Indstillinger</string>
+    <string name="prefCat_app_settings_title">App Indstillinger</string>
+    <string name="prefCat_app_information_title">App Information</string>
+    <string name="title_recentNewsFirst">Sorter nyhedsfeedet efter nyeste</string>
+    <string name="summary_recentNewsFirst">I stedet for tophistorier</string>
+    <string name="title_centerTextPosts">Centrer opslag</string>
+    <string name="summary_centerTextPosts">Teksten i hvert opslag vil blive centreret</string>
+    <string name="summary_addSpaceBetweenPosts">Der vil være mere plads mellem opslag</string>
+    <string name="title_addSpaceBetweenPosts">Mere plads mellem opslag</string>
+    <string name="summary_creditsCssThemes">Tak for de fantastiske temaer!</string>
+    <string name="summary_theme">Vælg det tema du ønsker</string>
+    <string name="title_fixedBar">Fast topbjælke</string>
+    <string name="summary_fixedBar">Den blå topbjælke vil forblive synlig i toppen</string>
+    <string name="title_hideSponsoredPosts">Vis ikke sponserede opslag</string>
+    <string name="summary_hideSponsoredPosts">Nogle af de sponsorerede opslag vil ikke blive vist</string>
+    <string name="title_downloadImages">Gem Data</string>
+    <string name="summary_downloadImages">Download ikke billeder</string>
+    <string name="summary_allowGeolocation">Facebook vil få adgang til din position</string>
+    <string name="title_allowGeolocation">Tillad brug af GPS</string>
+    <string name="version">Version</string>
+    <string name="credits">Credit</string>
+    <string name="prefCat_otherCredits_title">Andet</string>
+    <string name="prefCat_developersCredits_title">Udviklere</string>
+    <string name="summary_LeonardoRignanese">Skaber og udvikler af app\'en</string>
+    <string name="prefCat_translatorsCredits_title">Oversættere</string>
+    <string name="prefCat_designersCredits_title">Designere</string>
+    <string name="donate">Doner</string>
+    <string name="donateToContribute">Jeg har valgt at gøre dette gratis. Kunne du mon byde på en kop kaffe?</string>
+    <string name="summary_you">Det er også på grund af dig at denne app eksisterer</string>
+    <string name="title_you">Du er vigtig</string>
+    <string name="titleNoConnection">Ups, der er et problem!</string>
+    <string name="descriptionNoConnection">Prøv at checke forbindelsen og opdatér.</string>
+    <string name="awards">Dette er en Open Source app.</string>
+    <string name="thanks">Tak!</string>
+    <string name="downloadOrShareWithBrowser">Du kan downloade eller dele dette billede ved at åbne en browser.</string>
+    <string name="shareThisLink">Del dette link</string>
+    <string name="summary_FaceSlim">Uden dem kunne jeg ikke tilføje attraktive funktioner. Hvis du er udvikler skulle du se deres enorme arbejde!</string>
+    <string name="summary_lRemainl">Skaber af det fantastiske logo</string>
+    <string name="summary_Pharetra">Fuld af talent og kreativitet</string>
+    <string name="exit">Afslut</string>
+    <string name="noPersonalInformationAreShared">Ingen personlig eller privat information om dig eller din enhed bliver indsamlet af denne app!</string>
+    <string name="title_theme">Temaer</string>
+    <string name="applyingChanges">Udfører ændringer!</string>
+    <string name="title_textSize">Tekst størrelse</string>
+    <string name="title_enableFastShare">Aktivér Fast Share</string>
+    <string name="summary_enableFastShare">Med Fast Svare kan du dele ethvert link ved at trykke og holde på det.</string>
+    <string name="summary_textSize">Vælg den tekststørrelse du foretrækker</string>
+    <string name="refreshToApply">Opdater Facebook for at tilføje ændringer</string>
+    <string name="summary_AdvancedWebView">Dele af denne app er baseret på deres arbejde</string>
+    <string name="title_translate">Vil du oversætte denne app?</string>
+    <string name="summary_translate">Brug mit WebTool: tryk her, vælg det sprog du kender, generer en oversætter, ret fejlene, generer en oversættelse og send \'strings.xml\' filen til mig via e-mail.</string>
+    <string name="title_removeMessengerDownload">Fjern \'Download Messenger\'-beskederne</string>
+    <string name="summary_removeMessengerDownload">Reklamerne med \'Installer Messenger\'-teksten vil blive gemt</string>
+    <string name="summary_SaschaHa">En meget talentfuld og klog fyr hjalp mig meget og er derfor blevet min ven. Tryk her for at se hans utrolige arbejde!</string>
+    <string name="supportMe">Støt mig</string>
+    <string name="donateWithPayPal">Doner med Paypal</string>
+    <string name="messages">Beskeder</string>
+    <string name="close">Luk</string>
+    <string name="acceptPermissionAndRetry">Accepter tilladelser og prøv igen!</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+    <string name="downloadingPhoto">Downloader billede!</string>
+    <string name="askDownloadPhoto">Download billede?</string>
+    <string name="holdImageToDownload">Hold på billedet for at downloade!</string>
+    <string name="title_rate">Bedøm denne app med 5 stjerner</string>
+    <string name="summary_rate">Du kan støtte mig ved at give mig et 5-stjernet review i Play Store. Hvis noget ikke virker så kontakt mig venligst før du skriver et dårligt review</string>
+    <string name="title_enableMessagesShortcut">Aktivér beskedgenvej</string>
+    <string name="summary_enableMessagesShortcut">Aktiverer du denne, så kan SlimSocial åbne når du trykker på Facebooks besked ikon.</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Brug \'SlimSocial\' undermappe</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Gem billeder i en undermappei stedet for Download mappen</string>
+    <string name="shareLink">Del denne side</string>
+    <string name="title_enableNotifications">Aktivér Notifikationer</string>
+    <string name="noNotificationEnjoyLife">Jeg leder efter den bedste måde at integrere dem på.  I mellemtiden kan du nyde et liv uden forstyrrelser fra Facebook :)</string>
+</resources>

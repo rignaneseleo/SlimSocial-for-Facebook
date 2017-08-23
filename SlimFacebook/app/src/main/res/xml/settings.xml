@@ -132,7 +132,7 @@
 			android:title="@string/title_translate">
 			<intent
 				android:action="android.intent.action.VIEW"
-				android:data="http://stringsxmlbuilder.netsons.org/index.php?originalXmlURL=https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/SlimFacebook/app/src/main/res/values/strings.xml"/>
+				android:data="http://stringsxmlbuilder.site88.net/index.php?originalXmlURL=https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/SlimFacebook/app/src/main/res/values/strings.xml"/>
 		</PreferenceScreen>
 		<PreferenceScreen
 			android:key="pref_credits"

@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -42,6 +43,8 @@ import java.lang.ref.WeakReference;
 import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
 import it.rignanese.leo.slimfacebook.utility.Dimension;
 import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
+
+import static it.rignanese.leo.slimfacebook.R.id.webView;
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
@@ -182,7 +185,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** SETUP ****************************
 
     private void SetupWebView() {
-        webViewFacebook = (MyAdvancedWebView) findViewById(R.id.webView);
+        webViewFacebook = (MyAdvancedWebView) findViewById(webView);
         webViewFacebook.setListener(this, this);
 
         webViewFacebook.clearPermittedHostnames();
@@ -522,6 +525,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             myWebChromeClient.onHideCustomView();//hide video player
         } else {
             if (webViewFacebook.canGoBack()) {
+                //WebBackForwardList wbfl = webViewFacebook.copyBackForwardList();
                 webViewFacebook.goBack();
             } else {
                 finish();// close app

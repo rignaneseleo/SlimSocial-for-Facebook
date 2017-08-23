@@ -258,5 +258,13 @@ v3.6.7
 - Fix OnPageError (checked the connection before the error)
 - Added the permission ACCESS_NETWORK_STATE to check the connection state
 
+v3.6.8
+- Updated Gradle (2.1.2 -> 2.3.3) and buildtoolversion (23.0.3 -> 25)
+- Updated android:host list in Manifest
+- Updated stringsxmlbuilder link
+- Updated German translation (Bernhard)
+- Added Danish translation (JohnDoeDK)
+- Updated the css to hide sponsored posts
+- Updated the black theme
 
 ! Consider the possibility to donate !

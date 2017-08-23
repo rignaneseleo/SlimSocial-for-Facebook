@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 46
-        versionName "3.6.7"
+        versionCode 47
+        versionName "3.6.8"
     }
     buildTypes {
         release {
