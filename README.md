@@ -1,11 +1,12 @@
-# FOLLOW SLIMSOCIAL PROJECT
+# Download the app from PlayStore:
+https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook
+
 ## See more on XDA: 
 http://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
-
-
 ## I need your hand! Improve the app :)
-FB: https://www.facebook.com/SlimSocialProject/
 
+# FOLLOW SLIMSOCIAL PROJECT
+FB: https://www.facebook.com/SlimSocialProject/
 
 ### Donate
 Paypal
