@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 27
 
     defaultConfig {
         applicationId "it.rignanese.leo.slimfacebook"
@@ -26,9 +26,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile 'com.github.delight-im:Android-AdvancedWebView:v2.1.0'
-    //  compile 'com.github.delight-im:Android-AdvancedWebView:da127f967f8dcf0ce5a0297c58e9bef2cc1a5ae8'
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:support-v4:27.0.2'
     testCompile 'junit:junit:4.12'
-//    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 }
