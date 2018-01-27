@@ -29,7 +29,7 @@
     <string name="title_downloadImages">Salvar dados</string>
     <string name="summary_downloadImages">Não baixar imagens </string>
     <string name="summary_allowGeolocation">Facebook será capaz de acessar sua localização </string>
-    <string name="title_allowGeolocation">Permitir usp do GPS</string>
+    <string name="title_allowGeolocation">Permitir uso do GPS</string>
     <string name="version">Versão </string>
     <string name="credits">Créditos </string>
     <string name="prefCat_otherCredits_title">Outros </string>
