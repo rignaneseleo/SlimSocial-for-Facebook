@@ -656,7 +656,8 @@ public class MyAdvancedWebView extends WebView {
                 if (Build.VERSION.SDK_INT >= 21) {
                     if (mCustomWebViewClient != null) {
                         mCustomWebViewClient.onUnhandledInputEvent(view, event);
-                    } else {
+                    }
+                    else {
                         super.onUnhandledInputEvent(view, event);
                     }
                 }
