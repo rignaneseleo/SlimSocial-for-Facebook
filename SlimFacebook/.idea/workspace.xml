@@ -50,8 +50,8 @@
       <file leaf-file-name="MyAdvancedWebView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/utility/MyAdvancedWebView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="663" column="0" lean-forward="true" selection-start-line="663" selection-start-column="0" selection-end-line="663" selection-end-column="0" />
+            <state relative-caret-position="257">
+              <caret line="657" column="54" lean-forward="false" selection-start-line="657" selection-start-column="54" selection-end-line="657" selection-end-column="54" />
               <folding>
                 <element signature="e#2193#2225#0" expanded="true" />
                 <element signature="e#3590#3598#0" expanded="true" />
@@ -62,15 +62,16 @@
                 <element signature="e#20029#20053#0" expanded="true" />
                 <element signature="e#20600#20624#0" expanded="true" />
                 <element signature="e#22346#22370#0" expanded="true" />
-                <element signature="e#24872#24896#0" expanded="true" />
-                <element signature="e#25566#25593#0" expanded="true" />
-                <element signature="e#26133#26160#0" expanded="true" />
-                <element signature="e#26442#26466#0" expanded="true" />
-                <element signature="e#28805#28829#0" expanded="true" />
-                <element signature="e#33284#33308#0" expanded="true" />
-                <element signature="e#33760#33784#0" expanded="true" />
-                <element signature="e#37322#37858#0" expanded="true" />
-                <element signature="e#37857#37858#0" expanded="true" />
+                <element signature="e#24007#24031#0" expanded="true" />
+                <element signature="e#24888#24912#0" expanded="true" />
+                <element signature="e#25582#25609#0" expanded="true" />
+                <element signature="e#26149#26176#0" expanded="true" />
+                <element signature="e#26458#26482#0" expanded="true" />
+                <element signature="e#28821#28845#0" expanded="true" />
+                <element signature="e#33300#33324#0" expanded="true" />
+                <element signature="e#33776#33800#0" expanded="true" />
+                <element signature="e#37338#37874#0" expanded="true" />
+                <element signature="e#37873#37874#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,7 +80,7 @@
       <file leaf-file-name="Changelog.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../Changelog.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
+            <state relative-caret-position="4020">
               <caret line="268" column="0" lean-forward="false" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
               <folding />
             </state>
@@ -89,7 +90,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
+            <state relative-caret-position="780">
               <caret line="52" column="32" lean-forward="false" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="32" />
               <folding />
             </state>
@@ -104,7 +105,47 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
               <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-              <folding />
+              <folding>
+                <marker date="1518805739337" expanded="true" signature="7133:9216" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="9262:15130" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="9419:14598" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="9490:14588" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="10096:10372" ph="//..." />
+                <marker date="1518805739337" expanded="true" signature="10841:14453" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="10980:14419" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="12016:12681" ph="//..." />
+                <marker date="1518805739337" expanded="true" signature="14672:15122" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="14758:15112" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="15172:16566" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="15320:16496" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="15502:15806" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="15873:16277" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="16417:16486" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="16604:18013" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="18043:18353" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="18393:18847" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="18706:18839" ph="{...}" />
+                <marker date="1518805739337" expanded="false" signature="18765:18784" ph=" { " />
+                <marker date="1518805739337" expanded="false" signature="18815:18829" ph=" }" />
+                <marker date="1518805739337" expanded="true" signature="18954:19242" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="19275:19433" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="19584:19891" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="19950:20196" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="20294:21439" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="21483:21753" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="21925:22046" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="22113:22728" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="22875:23258" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="23407:23570" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="23685:26051" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="26165:26390" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="26426:27687" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="27813:30484" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="27985:28089" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="28156:29259" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="29379:29701" ph="{...}" />
+                <marker date="1518805739337" expanded="true" signature="29815:30478" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,7 +154,7 @@
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="21" />
+              <caret line="3" column="24" lean-forward="false" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -1888,8 +1929,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/css.xml" />
         <option value="$PROJECT_DIR$/../Changelog.txt" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/utility/MyAdvancedWebView.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -1912,10 +1953,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1938,8 +1976,65 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SlimFacebook" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SlimFacebook" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="slimfacebook" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SlimFacebook" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="slimfacebook" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utility" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2047,7 +2142,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1517079169037" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1518806777213" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2093,7 +2188,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1517079169037" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1518806777214" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2228,7 +2323,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1517079169037" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1518806777215" />
       </method>
     </configuration>
     <list size="1">
@@ -2317,9 +2412,9 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21529745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21529745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2328,7 +2423,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973376" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2336,7 +2431,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20678514" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985657" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43018335" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2375,7 +2470,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>512</line>
+          <line>506</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
@@ -2387,32 +2482,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>103</line>
+          <line>99</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>505</line>
+          <line>499</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>435</line>
+          <line>429</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>473</line>
+          <line>467</line>
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/MainActivity.java</url>
-          <line>608</line>
-          <properties class="it.rignanese.leo.slimfacebook.MainActivity" method="FromDestopToMobileUrl" />
+          <line>602</line>
+          <properties class="it.rignanese.leo.slimfacebook.MainActivity" />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
@@ -2490,7 +2585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -2511,7 +2605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2540,7 +2633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1200">
           <caret line="80" column="35" lean-forward="false" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2559,7 +2651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2578,7 +2669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" column="54" lean-forward="false" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2586,7 +2676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1605">
           <caret line="107" column="73" lean-forward="false" selection-start-line="107" selection-start-column="73" selection-end-line="107" selection-end-column="73" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2601,7 +2690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="48" column="9" lean-forward="false" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2609,7 +2697,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2617,13 +2704,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Changelog.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
+        <state relative-caret-position="4020">
           <caret line="268" column="0" lean-forward="false" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
           <folding />
         </state>
@@ -2631,7 +2717,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
+        <state relative-caret-position="780">
           <caret line="52" column="32" lean-forward="false" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="32" />
           <folding />
         </state>
@@ -2644,14 +2730,54 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-          <folding />
+          <folding>
+            <marker date="1518805739337" expanded="true" signature="7133:9216" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="9262:15130" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="9419:14598" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="9490:14588" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="10096:10372" ph="//..." />
+            <marker date="1518805739337" expanded="true" signature="10841:14453" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="10980:14419" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="12016:12681" ph="//..." />
+            <marker date="1518805739337" expanded="true" signature="14672:15122" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="14758:15112" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="15172:16566" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="15320:16496" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="15502:15806" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="15873:16277" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="16417:16486" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="16604:18013" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="18043:18353" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="18393:18847" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="18706:18839" ph="{...}" />
+            <marker date="1518805739337" expanded="false" signature="18765:18784" ph=" { " />
+            <marker date="1518805739337" expanded="false" signature="18815:18829" ph=" }" />
+            <marker date="1518805739337" expanded="true" signature="18954:19242" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="19275:19433" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="19584:19891" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="19950:20196" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="20294:21439" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="21483:21753" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="21925:22046" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="22113:22728" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="22875:23258" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="23407:23570" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="23685:26051" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="26165:26390" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="26426:27687" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="27813:30484" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="27985:28089" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="28156:29259" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="29379:29701" ph="{...}" />
+            <marker date="1518805739337" expanded="true" signature="29815:30478" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/it/rignanese/leo/slimfacebook/utility/MyAdvancedWebView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="663" column="0" lean-forward="true" selection-start-line="663" selection-start-column="0" selection-end-line="663" selection-end-column="0" />
+        <state relative-caret-position="257">
+          <caret line="657" column="54" lean-forward="false" selection-start-line="657" selection-start-column="54" selection-end-line="657" selection-end-column="54" />
           <folding>
             <element signature="e#2193#2225#0" expanded="true" />
             <element signature="e#3590#3598#0" expanded="true" />
@@ -2662,15 +2788,16 @@
             <element signature="e#20029#20053#0" expanded="true" />
             <element signature="e#20600#20624#0" expanded="true" />
             <element signature="e#22346#22370#0" expanded="true" />
-            <element signature="e#24872#24896#0" expanded="true" />
-            <element signature="e#25566#25593#0" expanded="true" />
-            <element signature="e#26133#26160#0" expanded="true" />
-            <element signature="e#26442#26466#0" expanded="true" />
-            <element signature="e#28805#28829#0" expanded="true" />
-            <element signature="e#33284#33308#0" expanded="true" />
-            <element signature="e#33760#33784#0" expanded="true" />
-            <element signature="e#37322#37858#0" expanded="true" />
-            <element signature="e#37857#37858#0" expanded="true" />
+            <element signature="e#24007#24031#0" expanded="true" />
+            <element signature="e#24888#24912#0" expanded="true" />
+            <element signature="e#25582#25609#0" expanded="true" />
+            <element signature="e#26149#26176#0" expanded="true" />
+            <element signature="e#26458#26482#0" expanded="true" />
+            <element signature="e#28821#28845#0" expanded="true" />
+            <element signature="e#33300#33324#0" expanded="true" />
+            <element signature="e#33776#33800#0" expanded="true" />
+            <element signature="e#37338#37874#0" expanded="true" />
+            <element signature="e#37873#37874#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2678,7 +2805,7 @@
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="21" />
+          <caret line="3" column="24" lean-forward="false" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
           <folding />
         </state>
       </provider>
