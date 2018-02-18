@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.app.DownloadManager.Request;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -25,23 +26,22 @@ import android.webkit.ClientCertRequest;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
+import android.webkit.GeolocationPermissions.Callback;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
 import android.webkit.SslErrorHandler;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage.QuotaUpdater;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.app.DownloadManager.Request;
-import android.webkit.URLUtil;
-import android.webkit.GeolocationPermissions.Callback;
-import android.webkit.WebStorage.QuotaUpdater;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
@@ -77,6 +77,9 @@ public class MyAdvancedWebView extends WebView {
         void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent);
 
         void onExternalPageRequest(String url);
+
+        //method by rignaneseleo
+        boolean shouldLoadUrl(String url);
     }
 
     public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
@@ -517,6 +520,7 @@ public class MyAdvancedWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+
                 // if the hostname may not be accessed
                 if (!isHostnameAllowed(url)) {
                     // if a listener is available
@@ -656,8 +660,7 @@ public class MyAdvancedWebView extends WebView {
                 if (Build.VERSION.SDK_INT >= 21) {
                     if (mCustomWebViewClient != null) {
                         mCustomWebViewClient.onUnhandledInputEvent(view, event);
-                    }
-                    else {
+                    } else {
                         super.onUnhandledInputEvent(view, event);
                     }
                 }
@@ -990,16 +993,18 @@ public class MyAdvancedWebView extends WebView {
             additionalHttpHeaders.putAll(mHttpHeaders);
         }
 
-        super.loadUrl(url, additionalHttpHeaders);
+        if (checkKeepLoading(url))
+            super.loadUrl(url, additionalHttpHeaders);
     }
 
     @Override
     public void loadUrl(final String url) {
-        if (mHttpHeaders.size() > 0) {
-            super.loadUrl(url, mHttpHeaders);
-        } else {
-            super.loadUrl(url);
-        }
+        if (checkKeepLoading(url))
+            if (mHttpHeaders.size() > 0) {
+                super.loadUrl(url, mHttpHeaders);
+            } else {
+                super.loadUrl(url);
+            }
     }
 
     public void loadUrl(String url, final boolean preventCaching) {
@@ -1016,6 +1021,16 @@ public class MyAdvancedWebView extends WebView {
         }
 
         loadUrl(url, additionalHttpHeaders);
+    }
+
+    //method by rignaneseleo
+    private boolean checkKeepLoading(String url) {
+        //true if it should keep load
+        if (mListener == null) return true;
+
+        if (mListener.shouldLoadUrl(url))
+            return true; //keep loading
+        else return false;
     }
 
     protected static String makeUrlUnique(final String url) {
@@ -1054,9 +1069,10 @@ public class MyAdvancedWebView extends WebView {
         for (String expectedHost : mPermittedHostnames) {
 
             // if the two hostnames match or if the actual host is a subdomain of the expected host
+
+            //if edited by rignaneseleo
             if (actualHost.endsWith(expectedHost)) { //actualHost.equals(expectedHost) || actualHost.endsWith("."+expectedHost)
                 // the actual hostname of the URL to be checked is allowed
-
                 return true;
             }
         }

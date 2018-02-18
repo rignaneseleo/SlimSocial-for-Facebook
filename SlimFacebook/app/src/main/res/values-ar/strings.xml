@@ -9,7 +9,7 @@ Leonardo Rignanese للفيسبوك هو تطبيق مفتوح المصدر مب
     <string name="refresh">تحديث</string>
     <string name="openInBrowser">فتح باستعمال المتصفح</string>
     <string name="settings">الإعدادات</string>
-    <string name="share">مشاركة هذا التطبيق</string>
+    <string name="shareThisApp">مشاركة هذا التطبيق</string>
     <!--end menu string-->
 
     <!--settings-->

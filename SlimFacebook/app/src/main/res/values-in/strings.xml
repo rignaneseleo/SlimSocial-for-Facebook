@@ -9,7 +9,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="refresh">Perbarui</string>
     <string name="openInBrowser">Buka dengan peramban</string>
     <string name="settings">Pengaturan</string>
-    <string name="share">Bagikan aplikasi ini</string>
+    <string name="shareThisApp">Bagikan aplikasi ini</string>
     <!--end menu string-->
 
     <!--settings-->

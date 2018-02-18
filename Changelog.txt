@@ -267,4 +267,21 @@ v3.6.8
 - Updated the css to hide sponsored posts
 - Updated the black theme
 
+v3.7.0
+- Open pics in a new activity
+- Share the images
+- Updated donation link
+- Donation button also in the menu
+- Open the app also with h.facebook.com and fb.me
+- touch.facebook.com instead of m.facebook.com for sharing
+- Added parent_activity into the manifest
+- Back arrow in settings
+- Added Extra Huge font size
+- Corrected English translation
+- Updated Swedish translation (Pontus)
+- Updated Norwegian translation (havstenius and huggorm)
+- Updated Gradle (3.0.1) and downgrade buildtoolversion (23.0.3)
+
+
+
 ! Consider the possibility to donate !

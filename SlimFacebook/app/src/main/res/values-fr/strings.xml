@@ -10,7 +10,7 @@
     <string name="refresh">Rafraîchir</string>
     <string name="openInBrowser">Ouvrez dans le navigateur</string>
     <string name="settings">Paramètres</string>
-    <string name="share">Partager cette application</string>
+    <string name="shareThisApp">Partager cette application</string>
     <string name="prefCat_fb_settings_title">Paramètres Facebook</string>
     <string name="prefCat_app_settings_title">Paramètres de l\'application</string>
     <string name="prefCat_app_information_title">Informations sur l\'appli</string>

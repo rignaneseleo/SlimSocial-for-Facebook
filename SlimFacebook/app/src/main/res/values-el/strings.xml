@@ -10,7 +10,7 @@
 	<string name="refresh">Ανανέωση</string>
 	<string name="openInBrowser">Άνοιγμα με το πρόγραμμα περιήγησης</string>
 	<string name="settings">Ρυθμίσεις</string>
-	<string name="share">Μοιραστείτε αυτήν την εφαρμογή</string>
+	<string name="shareThisApp">Μοιραστείτε αυτήν την εφαρμογή</string>
 	<string name="prefCat_fb_settings_title">Ρυθμίσεις Facebook</string>
 	<string name="prefCat_app_settings_title">Ρυθμίσεις Εφαρμογής</string>
 	<string name="prefCat_app_information_title">Πληροφορίες Εφαρμογής</string>
