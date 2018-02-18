@@ -269,7 +269,7 @@ v3.6.8
 
 v3.7.0
 - Open pics in a new activity
-- Share the images
+- Share the images (new permission to hide notifications)
 - Updated donation link
 - Donation button also in the menu
 - Open the app also with h.facebook.com and fb.me
