@@ -1,179 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="it.rignanese.leo.slimfacebook"
-	android:installLocation="auto"
-	xmlns:tools="http://schemas.android.com/tools">
-	<!-- PERMISSIONS -->
+    xmlns:tools="http://schemas.android.com/tools"
+    package="it.rignanese.leo.slimfacebook"
+    android:installLocation="auto">
+    <!-- PERMISSIONS -->
 
 
-	<!-- to connect to the Internet -->
-	<uses-permission android:name="android.permission.INTERNET" />
+    <!-- to connect to the Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
-	<!-- to check if there is connection -->
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- to check if there is connection -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-	<!-- to allow to save photos -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- to allow to save photos -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-	<!-- gps -->
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- gps -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-	<uses-sdk tools:overrideLibrary="com.novoda.simplechromecustomtabs"/>//to force the use of simplechromecustomtabs that has the  min sdk 16
+    <!-- to share pictures -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
-	<application
-		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/launcher_name"
-		android:supportsRtl="true"
-		android:theme="@style/DefaultTheme">
-		<activity
-			android:name=".MainActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:label="@string/actionbar_name"
-			android:launchMode="singleTask">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
+    <uses-sdk tools:overrideLibrary="com.novoda.simplechromecustomtabs" />//to force the use of
+    simplechromecustomtabs that has the min sdk 16
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<intent-filter>
-				<!-- compatibility to samsung multiwindows -->
-				<category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-			</intent-filter>
-			<intent-filter>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/launcher_name"
+        android:supportsRtl="true"
+        android:theme="@style/DefaultTheme">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/actionbar_name"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<!-- to start app when facebook site is called -->
-				<action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <!-- compatibility to samsung multiwindows -->
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
 
-				<!-- to open facebook link with this app -->
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
+                <!-- to start app when facebook site is called -->
+                <action android:name="android.intent.action.VIEW" />
 
-				<data
-					android:host="m.facebook.com"
-					android:scheme="http"/>
-				<data
-					android:host="m.facebook.com"
-					android:scheme="https"/>
-				<data
-					android:host="m.fb.com"
-					android:scheme="http"/>
-				<data
-					android:host="m.fb.com"
-					android:scheme="https"/>
-				<data
-					android:host="touch.facebook.com"
-					android:scheme="http"/>
-				<data
-					android:host="touch.facebook.com"
-					android:scheme="https"/>
-				<data
-					android:host="touch.fb.com"
-					android:scheme="http"/>
-				<data
-					android:host="touch.fb.com"
-					android:scheme="https"/>
-				<data
-					android:host="facebook.com"
-					android:scheme="http"/>
-				<data
-					android:host="facebook.com"
-					android:scheme="https"/>
-				<data
-					android:host="fb.com"
-					android:scheme="http"/>
-				<data
-					android:host="fb.com"
-					android:scheme="https"/>
-				<data
-					android:host="www.facebook.com"
-					android:scheme="http"/>
-				<data
-					android:host="www.facebook.com"
-					android:scheme="https"/>
-				<data
-					android:host="www.fb.com"
-					android:scheme="http"/>
-				<data
-					android:host="www.fb.com"
-					android:scheme="https"/>
-				<data
-					android:host="apps.facebook.com"
-					android:scheme="http"/>
-				<data
-					android:host="apps.facebook.com"
-					android:scheme="https"/>
-				<data
-					android:host="apps.fb.com"
-					android:scheme="http"/>
-				<data
-					android:host="apps.fb.com"
-					android:scheme="https"/>
-			</intent-filter>
-			<intent-filter>
+                <!-- to open facebook link with this app -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-				<!-- to open facebook link for sharing link -->
-				<action android:name="android.intent.action.SEND" />
+                <data
+                    android:host="m.facebook.com"
+                    android:scheme="http" />
+                <data
+                    android:host="m.facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="m.fb.com"
+                    android:scheme="http" />
+                <data
+                    android:host="m.fb.com"
+                    android:scheme="https" />
+                <data
+                    android:host="touch.facebook.com"
+                    android:scheme="http" />
+                <data
+                    android:host="touch.facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="touch.fb.com"
+                    android:scheme="http" />
+                <data
+                    android:host="touch.fb.com"
+                    android:scheme="https" />
+                <data
+                    android:host="facebook.com"
+                    android:scheme="http" />
+                <data
+                    android:host="facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="h.facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="fb.me"
+                    android:scheme="http" />
+                <data
+                    android:host="fb.me"
+                    android:scheme="https" />
+                <data
+                    android:host="fb.com"
+                    android:scheme="http" />
+                <data
+                    android:host="fb.com"
+                    android:scheme="https" />
+                <data
+                    android:host="www.facebook.com"
+                    android:scheme="http" />
+                <data
+                    android:host="www.facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="www.fb.com"
+                    android:scheme="http" />
+                <data
+                    android:host="www.fb.com"
+                    android:scheme="https" />
+                <data
+                    android:host="apps.facebook.com"
+                    android:scheme="http" />
+                <data
+                    android:host="apps.facebook.com"
+                    android:scheme="https" />
+                <data
+                    android:host="apps.fb.com"
+                    android:scheme="http" />
+                <data
+                    android:host="apps.fb.com"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
 
-				<category android:name="android.intent.category.DEFAULT" />
+                <!-- to open facebook link for sharing link -->
+                <action android:name="android.intent.action.SEND" />
 
-				<data android:mimeType="text/plain" />
-			</intent-filter>
-		</activity>
+                <category android:name="android.intent.category.DEFAULT" />
 
-		<!-- message activity -->
-		<activity
-			android:name=".MessagesActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:label="@string/messages">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 
-		<!-- settings activity -->
-		<activity
-			android:name=".settings.SettingsActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:label="@string/settings">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
+        <!-- message activity -->
+        <activity
+            android:name=".MessagesActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/messages"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
-		<!-- credits activity -->
-		<activity
-			android:name=".settings.CreditsActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:label="@string/credits">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
+        <!-- picture activity -->
+        <activity
+            android:name=".PictureActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label=""
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
-		<!-- uses the Multi Window library -->
-		<uses-library
-			android:name="com.sec.android.app.multiwindow"
-			android:required="false" />
+        <!-- settings activity -->
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/settings"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
-		<!-- to indicate your application is Multi Window compatible -->
-		<meta-data
-			android:name="com.sec.android.support.multiwindow"
-			android:value="true" />
+        <!-- credits activity -->
+        <activity
+            android:name=".settings.CreditsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/credits"
+            android:parentActivityName=".settings.SettingsActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".settings.SettingsActivity" />
+        </activity>
 
-		<!-- set the size of the window -->
-		<meta-data
-			android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
-			android:resource="@dimen/app_defaultsize_w" />
-		<meta-data
-			android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
-			android:resource="@dimen/app_defaultsize_h" />
-		<meta-data
-			android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
-			android:resource="@dimen/app_minimumsize_w" />
-		<meta-data
-			android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
-			android:resource="@dimen/app_minimumsize_h" />
-	</application>
+        <!-- uses the Multi Window library -->
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
+
+        <!-- to indicate your application is Multi Window compatible -->
+        <meta-data
+            android:name="com.sec.android.support.multiwindow"
+            android:value="true" />
+
+        <!-- set the size of the window -->
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
+            android:resource="@dimen/app_defaultsize_w" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
+            android:resource="@dimen/app_defaultsize_h" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
+            android:resource="@dimen/app_minimumsize_w" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
+            android:resource="@dimen/app_minimumsize_h" />
+    </application>
 
 </manifest>

@@ -63,12 +63,13 @@ public class MessagesActivity extends Activity implements 	MyAdvancedWebView.Lis
 		webViewMessages.setListener(this, this);
 		webViewMessages.addPermittedHostname("mbasic.facebook.com");
 
-		WebSettings settings = webViewMessages.getSettings();
 		webViewMessages.setDesktopMode(false);
 
 		webViewMessages.requestFocus(View.FOCUS_DOWN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
 
+
+		WebSettings settings = webViewMessages.getSettings();
 		//set text zoom
 		int zoom = Integer.parseInt(savedPreferences.getString("pref_textSize", "100"));
 		settings.setTextZoom(zoom);
@@ -132,6 +133,11 @@ public class MessagesActivity extends Activity implements 	MyAdvancedWebView.Lis
 			Log.e("shouldOverrideUrlLoad", "" + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean shouldLoadUrl(String url) {
+		return true;
 	}
 
 	//*********************** MENU ****************************

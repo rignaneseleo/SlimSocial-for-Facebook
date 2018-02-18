@@ -19,6 +19,7 @@
         <item>Standard</item>
         <item>Big</item>
         <item>Huge</item>
+        <item>Extra Huge</item>
     </string-array>
     <string-array name="listValuesTextSize">
         <item>80</item>
@@ -26,5 +27,6 @@
         <item>100</item>
         <item>120</item>
         <item>140</item>
+        <item>160</item>
     </string-array>
 </resources>

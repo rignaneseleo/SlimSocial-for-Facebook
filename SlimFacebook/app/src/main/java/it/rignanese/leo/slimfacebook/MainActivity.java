@@ -1,28 +1,20 @@
 package it.rignanese.leo.slimfacebook;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
-import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -171,7 +162,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         }
 
         if (webViewUrl != null)
-        webViewFacebook.loadUrl(FromDestopToMobileUrl(webViewUrl));
+            webViewFacebook.loadUrl(FromDestopToMobileUrl(webViewUrl));
 
 
         // recreate activity when something important was just changed
@@ -191,9 +182,13 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         webViewFacebook.clearPermittedHostnames();
         webViewFacebook.addPermittedHostname("facebook.com");
         webViewFacebook.addPermittedHostname("fbcdn.net");
-/*webViewFacebook.addPermittedHostname("m.facebook.com");
+        webViewFacebook.addPermittedHostname("fb.com");
+        webViewFacebook.addPermittedHostname("fb.me");
+
+    /*      webViewFacebook.addPermittedHostname("m.facebook.com");
         webViewFacebook.addPermittedHostname("h.facebook.com");
-        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
+        webViewFacebook.addPermittedHostname("touch.facebook.com");
+      webViewFacebook.addPermittedHostname("mbasic.facebook.com");
       webViewFacebook.addPermittedHostname("touch.facebook.com");
 	  webViewFacebook.addPermittedHostname("messenger.com");*/
 
@@ -246,73 +241,6 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                         || type == WebView.HitTestResult.IMAGE_TYPE) {
                     Message msg = linkHandler.obtainMessage();
                     webViewFacebook.requestFocusNodeHref(msg);
-                    //final String linkUrl = (String) msg.getData().get("url");
-                    final String imgUrl = (String) msg.getData().get("src");
-//                    if (linkUrl != null && imgUrl != null) {
-//                        activity.longClickDialog(linkUrl, imgUrl);
-//                    } else
-// if (linkUrl != null) {
-//                        activity.longClickDialog(linkUrl);
-//                    } else
-                    if (imgUrl != null) {
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(getResources().getString(R.string.askDownloadPhoto))
-                                //.setMessage("Do you want download this photo?")
-                                .setCancelable(true)
-                                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //check permission
-                                        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(MainActivity.this,
-                                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                                            //ask permission
-                                            Toast.makeText(getApplicationContext(), getString(R.string.acceptPermissionAndRetry),
-                                                    Toast.LENGTH_LONG).show();
-                                            int requestResult = 0;
-                                            ActivityCompat.requestPermissions(MainActivity.this,
-                                                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestResult
-                                            );
-                                        } else {
-
-
-                                            //share photo
-                                            // Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-//												sharingIntent.setType("image/jpeg");
-//												sharingIntent.putExtra(Intent.EXTRA_STREAM, imgUrl);
-//												startActivity(Intent.createChooser(sharingIntent, "Share image using"));
-
-                                            //open photo with gallery
-//												Intent intent = new Intent();
-//												intent.setAction(Intent.ACTION_VIEW);
-//												intent.setDataAndType(Uri.parse("file://" + imgUrl), "image/*");
-//												startActivity(intent);
-
-                                            //download photo
-                                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imgUrl));
-                                            request.setTitle("SlimSocial Download");
-                                            // in order for this if to run, you must use the android 3.2 to compile your app
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                                request.allowScanningByMediaScanner();
-                                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                            }
-
-
-                                            String path = Environment.DIRECTORY_DOWNLOADS;
-                                            if (savedPreferences.getBoolean("pref_useSlimSocialSubfolderToDownloadedFiles", false)) {
-                                                path += "/SlimSocial";
-                                            }
-                                            request.setDestinationInExternalPublicDir(path, "Photo.jpg");
-
-                                            // get download service and enqueue file
-                                            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                            manager.enqueue(request);
-                                            Toast.makeText(getApplicationContext(), getString(R.string.downloadingPhoto),
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                }).create().show();
-                    }
-                    return true;
                 }
                 return false;
             }
@@ -389,7 +317,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                     }
                 }
                 // final step, set the proper Sharer...
-                urlSharer = String.format("https://m.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
+                urlSharer = String.format("https://touch.facebook.com/sharer.php?u=%s&t=%s", sharedUrl, sharedSubject);
                 // ... and parse it just in case
                 urlSharer = Uri.parse(urlSharer).toString();
                 isSharer = true;
@@ -441,15 +369,22 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
 
     //*********************** WEBVIEW EVENTS ****************************
+    @Override
+    public boolean shouldLoadUrl(String url) {
+        //Check is it's opening a image
+        boolean b = Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("fbcdn.net");
 
+        if (b) {
+            //open the activity to show the pic
+            startActivity(new Intent(this, PictureActivity.class).putExtra("URL", url));
+        }
+
+        return !b;
+    }
 
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
         swipeRefreshLayout.setRefreshing(true);
-
-        if (Uri.parse(url).getHost()!= null && Uri.parse(url).getHost().endsWith("fbcdn.net"))
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.holdImageToDownload),
-                    Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -467,10 +402,10 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     @Override
     public void onPageError(int errorCode, String description, String failingUrl) {
         // refresh on connection error (sometimes there is an error even when there is a network connection)
-        if(isInternetAvailable()) return;
-      //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")                && !failingUrl.contains("atdmt") && !noConnectionError)
-      else  {
-            Log.i("onPageError link" , failingUrl);
+        if (isInternetAvailable()) return;
+            //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")                && !failingUrl.contains("atdmt") && !noConnectionError)
+        else {
+            Log.i("onPageError link", failingUrl);
             String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
                     getString(R.string.titleNoConnection) +
                     "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
@@ -486,8 +421,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
 
     public boolean isInternetAvailable() {
-        NetworkInfo newtworkInfo = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if (newtworkInfo != null && newtworkInfo.isAvailable() && newtworkInfo.isConnected()) return true;
+        NetworkInfo newtworkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (newtworkInfo != null && newtworkInfo.isAvailable() && newtworkInfo.isConnected())
+            return true;
         else return false;
     }
 
@@ -560,6 +496,12 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 startActivity(new Intent(this, MessagesActivity.class));
                 break;
             }
+            case R.id.donate: {//refresh the page
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.paypalDonationLink))));
+                break;
+            }
+
             case R.id.refresh: {//refresh the page
                 RefreshPage();
                 break;
@@ -580,7 +522,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.downloadThisApp));
-                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share)));
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.shareThisApp)));
 
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.thanks),
                         Toast.LENGTH_SHORT).show();
@@ -607,9 +549,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** OTHER ****************************
 
     String FromDestopToMobileUrl(String url) {
-            if (Uri.parse(url).getHost()!=null && Uri.parse(url).getHost().endsWith("www.facebook.com")) {
-                url = url.replace("www.facebook.com", "touch.facebook.com");
-            }
+        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("www.facebook.com")) {
+            url = url.replace("www.facebook.com", "touch.facebook.com");
+        }
         return url;
     }
 
@@ -635,6 +577,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             case "DarkTheme":
             case "DarkNoBar": {
                 css += getString(R.string.blackTheme);
+                break;
             }
             default:
                 break;
@@ -667,7 +610,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
                     if (url != null) {
                     /* "clean" an url to remove Facebook tracking redirection while sharing
-					and recreate all the special characters */
+                    and recreate all the special characters */
                         url = decodeUrl(cleanUrl(url));
 
                         // create share intent for long clicked url

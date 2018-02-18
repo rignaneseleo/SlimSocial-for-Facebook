@@ -10,7 +10,7 @@
 	<string name="refresh">Yenile</string>
 	<string name="openInBrowser">Tarayıcı kullanarak aç</string>
 	<string name="settings">Ayarlar</string>
-	<string name="share">Bu uygulamayı paylaş</string>
+	<string name="shareThisApp">Bu uygulamayı paylaş</string>
 	<string name="prefCat_fb_settings_title">Facebook Ayarları</string>
 	<string name="prefCat_app_settings_title">Uygulama Ayarları</string>
 	<string name="prefCat_app_information_title">Uygulama Bilgileri</string>

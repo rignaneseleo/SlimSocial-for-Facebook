@@ -10,7 +10,7 @@
     <string name="refresh">刷新</string>
     <string name="openInBrowser">使用浏览器打开</string>
     <string name="settings">设置</string>
-    <string name="share">分享这个应用程序</string>
+    <string name="shareThisApp">分享这个应用程序</string>
     <string name="prefCat_fb_settings_title">Facebook的设置</string>
     <string name="prefCat_app_settings_title">应用程序设置</string>
     <string name="prefCat_app_information_title">应用程序信息</string>

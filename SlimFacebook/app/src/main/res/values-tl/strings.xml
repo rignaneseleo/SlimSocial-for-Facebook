@@ -10,7 +10,7 @@
     <string name="refresh">புதுப்பி</string>
     <string name="openInBrowser">உலாவி பயன்படுத்தி திறக்க</string>
     <string name="settings">அமைப்புகள்</string>
-    <string name="share">இந்த பயன்பாட்டை பகிர்</string>
+    <string name="shareThisApp">இந்த பயன்பாட்டை பகிர்</string>
     <string name="prefCat_fb_settings_title">பேஸ்புக் அமைப்புகள்</string>
     <string name="prefCat_app_settings_title">பயன்பாட்டு அமைப்புகள்</string>
     <string name="prefCat_app_information_title">பயன்பாட்டு தகவல்</string>

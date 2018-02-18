@@ -10,7 +10,7 @@
     <string name="refresh">Frissítés</string>
     <string name="openInBrowser">Megnyitás böngészőben</string>
     <string name="settings">Beállítások</string>
-    <string name="share">Alkalmazás megosztása</string>
+    <string name="shareThisApp">Alkalmazás megosztása</string>
     <string name="prefCat_fb_settings_title">Facebook beállítások</string>
     <string name="prefCat_app_settings_title">App beállítások</string>
     <string name="prefCat_app_information_title">App információ</string>
