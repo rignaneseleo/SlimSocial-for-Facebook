@@ -42,83 +42,282 @@
 	</string>
 
     <!--Themes-->
+
     <string name="blackTheme" translatable="false">
+        body,
+#root,
+.storyStream,
+._2v9s,
+._4nmh,
+._4u3j,
+._35aq,
+._146a,
+._4g34,
+._5pxb,
+._55wq,
+._53_-,
+._55ws,
+._u42,
+.jx-result,
+.jx-typeahead-results,
+._56bt,
+._52x7,
+._vqv,
+._4g33,
+._5rgt,
+.popover_flyout,
+.flyout,
+#m_newsfeed_stream,
+._55wo,
+._3iln,
+.mentions-suggest,
+#header,
+._xy,
+._bgx,
+.acb,
+.acg,
+.aclb,
+.touch ._4g34,
+._59e9,
+.nontouch ._5ui0,
+input[type=text],
+.acw,
+._5up8,
+._5kgn,
+.tlLinkContainer,
+.aps,
+.jewel .flyout .header,
+.appCenterCategorySelectorButton,
+.tlBody,
+#timelineBody,
+.timelineX,
+.timeline .feed,
+.timeline .tlPrelude,
+.timeline .tlFeedPlaceholder,
+.touch ._5c9u,
+.touch ._5ca9,
+.innerLink,
+._5dy4,
+._52x3,
+#m_group_stories_container,
+.albums,
+.subpage,
+._uwu,
+._uww,
+.scrollAreaBody,
+.al,
+.apl,
+.structuredPublisher,
+.groupChromeView,
+._djv,
+._bjg,
+._5kgn,
+._3f50,
+._55wm,
+._58f0,
+._55wr,
+._22wy,
+._1gkq,
+._484w,
+._1ih_,
+._1p70,
+._4e8n,
+._15n_,
+._1of-,
+._5b6o,
+._2rgt,
+._u2c,
+._5as1,
+._3tl8,
+._333v,
+._5-lw,
+._13e_,
+._2rea._24e1._412_._bpa._vyy._5t8z,
+.touch ._uoq,
+._1t4h,
+.touch ._45fu ._18qg ._1_ac,
+._10c_ ._2jl2,
+._4s0c,
+._1h_j,
+.touch ._3e18,
+.touch ._533c {
+    background: #000 !important;
+    /* the background */
+}
+._65wz {
+    background: none !important;
+}
+._51-g,
+._2b06,
+._5-lx,
+._14v5._14v5 ._14v8 {
+    background: #383a3e !important;
+}
+h3._391s {
+    color: #383a3e !important;
+}
+._50cg._2ss {
+    background: #000 !important;
+}
+.composerLinkText,
+.fcg,
+._5c4t ._1g06 {
+    color: #d2d2d2 !important;
+}
+/* white text */
 
-        body, #root, .storyStream, ._2v9s, ._4nmh,._4u3j, ._35aq, ._146a, ._4g34, ._5pxb, ._55wq, ._53_-, ._55ws, ._u42, .jx-result, .jx-typeahead-results, ._56bt, ._52x7, ._vqv, ._4g33, ._5rgt, .popover_flyout, .flyout, #m_newsfeed_stream, ._55wo, ._3iln, .mentions-suggest, #header, ._xy, ._bgx, .acb, .acg, .aclb, .touch ._4g34, ._59e9, .nontouch ._5ui0, input[type=text], .acw, ._5up8, ._5kgn, .tlLinkContainer, .aps, .jewel .flyout .header, .appCenterCategorySelectorButton, .tlBody, #timelineBody, .timelineX, .timeline .feed, .timeline .tlPrelude, .timeline .tlFeedPlaceholder, .touch ._5c9u, .touch ._5ca9, .innerLink, ._5dy4, ._52x3, #m_group_stories_container, .albums, .subpage, ._uwu, ._uww, .scrollAreaBody, .al, .apl, .structuredPublisher, .groupChromeView, ._djv, ._bjg, ._5kgn, ._3f50, ._55wm, ._58f0,._55wr,._22wy, ._1gkq,._484w,._1ih_,._1p70,._4e8n,._15n_,._1of-,._5b6o,._2rgt,._u2c,._5as1 {
-        background: #000 !important; /* the background */
-        }
-        ._50cg._2ss {
-        background: #000 !important;
-        }
-        .composerLinkText, .fcg {
-        color: #d2d2d2 !important;
-        }
+body,
+.touch ._2ya3,
+.composerTextSelected,
+.composerInput,
+.mentions-input,
+input[type=text],
+._5001,
+.timeline .cover .profileName,
+.appListTitle,
+._52jd,
+._52jb,
+._52jg,
+._5qc3,
+.tlActorText,
+.tlLinkTitle,
+._5379,
+._5cqn,
+._592p,
+._3c9l,
+._4yrh,
+.name,
+.btn,
+.upText,
+.tlLinkTitleOnly,
+._5rgt,
+._52x2,
+._52jh,
+._52ja,
+._56bz,
+._2tbu,
+._1mwn,
+._55sr,
+._5t6r,
+._1_oe,
+._52lz,
+._2l5v,
+.inputtext,
+.inputpassword,
+.touch,
+.touch tr,
+.touch input,
+.touch textarea,
+.touch .mfsm {
+    color: #d2d2d2 !important;
+}
+.touch ._2ya3 {
+    border-radius: 5px;
+    padding: 5px;
+}
+/* blue link text */
 
-        /* white text */
+a,
+.actor,
+.mfsl,
+.fcw,
+.title,
+.blueName,
+._5aw4,
+._vqv,
+._5yll,
+._5qc3,
+._52lz,
+._4nwe,
+._27vp,
+._ir4,
+._5wsv,
+._46pa {
+    color: #DFEFF0 !important;
+}
+/* dark important */
 
-        body, .touch ._2ya3, .composerTextSelected, .composerInput, .mentions-input, input[type=text], ._5001, .timeline .cover .profileName, .appListTitle, ._52jd, ._52jb, ._52jg, ._5qc3, .tlActorText, .tlLinkTitle, ._5379, ._5cqn, ._592p, ._3c9l, ._4yrh, .name, .btn, .upText, .tlLinkTitleOnly, ._5rgt, ._52x2, ._52jh, ._52ja, ._56bz, ._2tbu, ._1mwn, ._55sr, ._5t6r, ._1_oe, ._52lz, ._2l5v, .inputtext, .inputpassword, .touch, .touch tr, .touch input, .touch textarea, .touch .mfsm {
-        color: #d2d2d2 !important;
-        }
-        .touch ._2ya3 {
-        border-radius: 5px;
-        padding: 5px;
-        }
+.acy,
+.nontouch ._55mb .actor-link,
+.nontouch a.btnD,
+.inlineMedia.storyAttachment {
+    background: #304702 !important;
+}
+.statusBox,
+._5whq,
+._56bt,
+.composerInput,
+.mentions-input,
+._1svy,
+._bji {
+    background: #323232 !important;
+}
+.ufiBorder,
+._5as0,
+._5ef_,
+._35aq {
+    border-color: #555 !important;
+}
+/* buttons */
 
-        /* blue link text */
+.button>a.touchable,
+.btn,
+.touch ._5c9u,
+._2l5v,
+._52x1,
+._tn0,
+._52ja,
+._5lm6 {
+    background: #323232 !important;
+}
+/* context menu */
 
-        a, .actor, .mfsl, .fcw, .title, .blueName, ._5aw4, ._vqv, ._5yll, ._5qc3, ._52lz, ._4nwe, ._27vp, ._ir4, ._5wsv, ._46pa {
-        color: #DFEFF0 !important;
-        }
+._5c0e,
+._5bn_ {
+    background: #4e4e4e !important;
+}
+article,
+._4o50,
+.acw,
+._53_-,
+._3wjp,
+._usq,
+._55wq,
+._400s {
+    border: 1px dotted #383838 !important;
+    border-radius: 4px;
+}
+._1_oa,
+._bmx,
+._52x1 {
+    border-bottom: 1px dotted #383838 !important;
+}
+article h3 {
+    color: #999 !important;
+}
+/* no border */
 
-        /* dark important */
+.aclb,
+._53_-,
+._52x6,
+._52x1,
+._2l5v,
+._tn0,
+._52ja,
+._5lm6 {
+    border-top: 0px;
+    border-bottom: 0px;
+}
+._59te.popoverOpen,
+._59te.isActivem,
+._59te {
+    background: #000;
+    /*topbar*/
 
-        .acy, .nontouch ._55mb .actor-link, .nontouch a.btnD, .inlineMedia.storyAttachment {
-        background: #304702 !important;
-        }
-        .statusBox, ._5whq, ._56bt, .composerInput, .mentions-input, ._1svy, ._bji {
-        background: #323232 !important;
-        }
-        .ufiBorder, ._5as0, ._5ef_, ._35aq {
-        border-color: #555 !important;
-        }
-
-        /* buttons */
-
-        .button>a.touchable, .btn, .touch ._5c9u, ._2l5v, ._52x1, ._tn0, ._52ja, ._5lm6 {
-        background: #323232 !important;
-        }
-        .flyout {
-        border: 1px solid #fff !important;
-        }
-
-        /* context menu */
-
-        ._5c0e, ._5bn_ {
-        background: #4e4e4e !important;
-        }
-        article, ._4o50, .acw, ._53_-, ._3wjp, ._usq, ._55wq, ._400s {
-        border: 1px dotted #383838 !important;
-        border-radius: 4px;
-        }
-        ._1_oa, ._bmx, ._52x1 {
-        border-bottom: 1px dotted #383838 !important;
-        }
-        article h3 {
-        color: #999 !important;
-        }
-
-        /* no border */
-
-        .aclb, ._53_-, ._52x6, ._52x1, ._2l5v, ._tn0, ._52ja, ._5lm6 {
-        border-top: 0px;
-        border-bottom: 0px;
-        }
-        ._59te.popoverOpen, ._59te.isActivem, ._59te {
-        background: #000;/*topbar*/
-        border-bottom: 1px solid #444;
-        border-right: 1px solid #444;
-        }
-       /* #feed_jewel ._59tf {
+    border-bottom: 1px solid #444;
+    border-right: 1px solid #444;
+}
+/* #feed_jewel ._59tf {
         background-position: -22px -103px;
         }
         #requests_jewel ._59tf {
@@ -139,8 +338,10 @@
         #bookmarks_jewel ._59tf {
         background-position: -104px -103px;
         }*/
-        ._2lut {
-        border: 1px dotted #e9eaed !important;
-        }
-	</string>
+
+._2lut {
+    border: 1px dotted #e9eaed !important;
+}
+    </string>
+
 </resources>
