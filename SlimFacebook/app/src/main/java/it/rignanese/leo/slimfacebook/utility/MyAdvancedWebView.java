@@ -654,18 +654,6 @@ public class MyAdvancedWebView extends WebView {
                 }
             }
 
-            @SuppressLint("NewApi")
-            @SuppressWarnings("all")
-            public void onUnhandledInputEvent(WebView view, InputEvent event) {
-                if (Build.VERSION.SDK_INT >= 21) {
-                    if (mCustomWebViewClient != null) {
-                        mCustomWebViewClient.onUnhandledInputEvent(view, event);
-                    } else {
-                        super.onUnhandledInputEvent(view, event);
-                    }
-                }
-            }
-
             @Override
             public void onScaleChanged(WebView view, float oldScale, float newScale) {
                 if (mCustomWebViewClient != null) {
