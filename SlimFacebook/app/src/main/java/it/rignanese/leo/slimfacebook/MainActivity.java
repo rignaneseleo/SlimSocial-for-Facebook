@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         WebSettings settings = webViewFacebook.getSettings();
 
         webViewFacebook.setDesktopMode(true);
-        //settings.setUserAgentString("Mozilla/5.0 (BB10; Kbd) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.1.0.4633 Mobile Safari/537.10+");
+        settings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
         settings.setJavaScriptEnabled(true);
 
         //set text zoom
@@ -371,6 +371,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** WEBVIEW EVENTS ****************************
     @Override
     public boolean shouldLoadUrl(String url) {
+        Log.d("MainActivity", "shouldLoadUrl: "+url);
         //Check is it's opening a image
         boolean b = Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("fbcdn.net");
 

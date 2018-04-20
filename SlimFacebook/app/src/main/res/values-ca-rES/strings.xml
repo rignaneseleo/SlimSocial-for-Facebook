@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY Solatec Informàtica USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <dev.rignaneseleo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">Refrescar</string>
+    <string name="openInBrowser">Obrir al navegador</string>
+    <string name="settings">Configuracions</string>
+    <string name="shareThisApp">Comparteix aquesta aplicació</string>
+    <string name="prefCat_fb_settings_title">Configuracions de Facebook</string>
+    <string name="prefCat_app_settings_title">Ajustaments de l\'aplicació</string>
+    <string name="prefCat_app_information_title">Informació de l\'aplicació</string>
+    <string name="title_recentNewsFirst">Endreçar la font de notícies per la més recent</string>
+    <string name="summary_recentNewsFirst">En lloc de per popularitat</string>
+    <string name="title_centerTextPosts">Centrar el text del missatge</string>
+    <string name="summary_centerTextPosts">El text de cada publicació estarà centrat</string>
+    <string name="summary_addSpaceBetweenPosts">Hi haurà més espai entre publicacions</string>
+    <string name="title_addSpaceBetweenPosts">Més espai entre publicacions</string>
+    <string name="summary_creditsCssThemes">Gracies pels fantàstics temes!</string>
+    <string name="summary_theme">Tria el tema que t\'agrada</string>
+    <string name="title_fixedBar">Barra superior fixa</string>
+    <string name="summary_fixedBar">La barra blava es mantindrà enganxada a la part superior</string>
+    <string name="title_hideSponsoredPosts">No mostrar publicacions patrocinades</string>
+    <string name="summary_hideSponsoredPosts">Alguns missatges patrocinats estaran ocults</string>
+    <string name="title_downloadImages">Desar dades</string>
+    <string name="summary_downloadImages">No descarregar imatges</string>
+    <string name="summary_allowGeolocation">Facebook podrà accedir a la teva posició</string>
+    <string name="title_allowGeolocation">Permetre l\'ús del GPS</string>
+    <string name="version">Versió</string>
+    <string name="credits">Crèdits</string>
+    <string name="prefCat_otherCredits_title">Altre</string>
+    <string name="prefCat_developersCredits_title">Desenvolupadors</string>
+    <string name="summary_LeonardoRignanese">Creador i desenvolupador de la aplicació</string>
+    <string name="prefCat_translatorsCredits_title">Traductors</string>
+    <string name="prefCat_designersCredits_title">Dissenyadors</string>
+    <string name="donate">Donar</string>
+    <string name="donateToContribute">Vaig triar fer-ho gratuït. ¿Vols contribuir oferint-me un cafè?</string>
+    <string name="summary_you">També és gracies a tu que aquesta aplicació existeix</string>
+    <string name="title_you">Ets important</string>
+    <string name="titleNoConnection">Vaja, hi ha un problema!</string>
+    <string name="descriptionNoConnection">Intenta verificar la connexió i actualitzar.</string>
+    <string name="awards">Aquesta és una aplicació de codi obert.</string>
+    <string name="thanks">Gracies!</string>
+    <string name="downloadOrShareWithBrowser">Al obrir el navegador pots descarregar o compartir aquesta imatge.</string>
+    <string name="shareThisLink">Comparteix aquest enllaç</string>
+    <string name="summary_FaceSlim">Sense ells no podria agregar algunes funcions atractives. Si ets un desenvolupador, has de veure el ser treball!</string>
+    <string name="summary_lRemainl">Creador del magnific logotip</string>
+    <string name="summary_Pharetra">Ple de talent i creativitat</string>
+    <string name="exit">Sortir</string>
+    <string name="noPersonalInformationAreShared">Cap informació personal o provada sobre tu o el teu dispositiu és recopilada o tramesa per aquesta aplicació!</string>
+    <string name="title_theme">Temes</string>
+    <string name="applyingChanges">Aplicant canvis!</string>
+    <string name="title_textSize">Mida del text</string>
+    <string name="title_enableFastShare">Habilitar compartir ràpidament</string>
+    <string name="summary_enableFastShare">Amb compartir ràpidament pots compartir qualsevol enllaç simplement tocant i sostenint-lo</string>
+    <string name="summary_textSize">Tria la mida de text que prefereixes</string>
+    <string name="refreshToApply">Actualitza Facebook per aplicar els canvis</string>
+    <string name="summary_AdvancedWebView">Part d\'aquesta aplicació està basada en la seva feina</string>
+    <string name="title_translate">Vols traduir aquesta aplicació?</string>
+    <string name="summary_translate">Fes servir la meva eina web: prem aquí, tria l\'idioma que coneixes, corregeix els errors, genera el fitxer xmli envia-me\'l per correu electrònic.</string>
+    <string name="title_removeMessengerDownload">Eliminar els anuncis \'Descarregar Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Els anuncis amb \'Instal·lar Messenger\' estaran ocults</string>
+    <string name="summary_SaschaHa">Un noi molt talentós i intel·ligent que em va ajudar molt i es va fer amic meu.
+Toca aquí per veure la seva increïble feina!</string>
+    <string name="supportMe">Ajuda\'m</string>
+    <string name="donateWithPayPal">Donar amb PayPal</string>
+    <string name="messages">Missatges</string>
+    <string name="close">Tanca</string>
+    <string name="acceptPermissionAndRetry">Accepta els permisos i torna-ho a provar!</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="downloadingPhoto">Descarregant foto!</string>
+    <string name="askDownloadPhoto">Descarregar foto?</string>
+    <string name="holdImageToDownload">Prem la imatge per descarregar-la!</string>
+    <string name="title_rate">Qualifica aquesta aplicació amb 5 estels</string>
+    <string name="summary_rate">Pots ajudar-me escrivint ressenyes de 5 estels a playStore. Si us plau, si alguna cosa no funciona, contacta amb mi abans d\'escriure una mala crítica</string>
+    <string name="title_enableMessagesShortcut">Habilitar drecera de missates</string>
+    <string name="summary_enableMessagesShortcut">Habilitant això, la pestanya de missatges de SlimSocial s\'oabrirà quan toquis la icona de missatges de Facebook</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Fes servir la subcarpeta \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Desa les imatges a una subcarpeta enlloc de a la carpeta \'Descarregues\'</string>
+    <string name="shareLink">Comparteix aquesta pàgina</string>
+    <string name="title_enableNotifications">Permet notificacions</string>
+    <string name="noNotificationEnjoyLife">Estic buscant la millor manera d\'implementar-los. Mentrestant, gaudeix d\'una vida sense les interrupcions de Facebook :)</string>
+    <string name="download">Descarregar</string>
+    <string name="share">Compartir</string>
+</resources>
