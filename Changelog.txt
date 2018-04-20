@@ -286,4 +286,9 @@ v3.7.1
 - Updated black theme
 - compileSdkVersion 27 and compile 'com.android.support:support-v4:27.0.2' (onUnhandledInputEvent removed from the webview)
 
+v3.7.2
+- Updated the user agent (fix messages and fullscreen pic)
+- Added Catalan translation (Solatec Informàtica)
+- Added Serbian translation (Jovan Mitrovski)
+
 ! Consider the possibility to donate !

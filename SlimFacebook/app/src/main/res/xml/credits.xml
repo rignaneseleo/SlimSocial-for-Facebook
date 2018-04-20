@@ -115,7 +115,7 @@
 			android:summary="Greek"
 			android:title="Αντώνης Μ."/>
 		<PreferenceScreen
-			android:summary="German "
+			android:summary="German"
 			android:title="Ngoc Bui"/>
 		<PreferenceScreen
 			android:summary="Vietnamese"
@@ -129,7 +129,9 @@
 		<PreferenceScreen
 			android:summary="Guarani"
 			android:title="DushyantTrivediRajkot"/>
-
+		<PreferenceScreen
+			android:summary="Catalan"
+			android:title="Solatec Informàtica"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory
