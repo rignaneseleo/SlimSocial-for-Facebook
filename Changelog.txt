@@ -291,4 +291,7 @@ v3.7.2
 - Added Catalan translation (Solatec Informàtica)
 - Added Serbian translation (Jovan Mitrovski)
 
+v3.7.3
+- Removed the paypal button on menu
+
 ! Consider the possibility to donate !

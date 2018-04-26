@@ -497,12 +497,6 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 startActivity(new Intent(this, MessagesActivity.class));
                 break;
             }
-            case R.id.donate: {//refresh the page
-
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.paypalDonationLink))));
-                break;
-            }
-
             case R.id.refresh: {//refresh the page
                 RefreshPage();
                 break;

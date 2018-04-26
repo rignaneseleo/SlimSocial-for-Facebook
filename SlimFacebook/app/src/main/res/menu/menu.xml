@@ -30,9 +30,6 @@
         android:id="@+id/share"
         android:title="@string/shareThisApp"/>
     <item
-        android:id="@+id/donate"
-        android:title="@string/donateWithPayPal"/>
-    <item
         android:id="@+id/settings"
         android:title="@string/settings"/>
     <item
