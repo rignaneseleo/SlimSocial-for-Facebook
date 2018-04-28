@@ -294,4 +294,7 @@ v3.7.2
 v3.7.3
 - Removed the paypal button on menu
 
+v3.7.4
+- Removed the PayPal button on settings
+
 ! Consider the possibility to donate !
