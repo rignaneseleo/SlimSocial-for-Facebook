@@ -490,7 +490,11 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 break;
             }
             case R.id.openInBrowser: {//open the actual page into using the browser
+		try{
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(webViewFacebook.getUrl())));
+		 } catch (ActivityNotFoundException e) {
+			Toast.makeText(this, e.toString, Toast.LENGTH_SHORT).show();	
+		}
                 break;
             }
             case R.id.messages: {//open messages
