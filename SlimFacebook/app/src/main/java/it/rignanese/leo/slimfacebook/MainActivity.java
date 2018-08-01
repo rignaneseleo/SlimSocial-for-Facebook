@@ -96,7 +96,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             isSharer = false;
         } else if (getIntent() != null && getIntent().getDataString() != null) {
             //if the app is opened by fb link
-            webViewFacebook.loadUrl(FromDestopToMobileUrl(getIntent().getDataString()));
+            webViewFacebook.loadUrl(FromDesktopToMobileUrl(getIntent().getDataString()));
         } else GoHome();//load homepage
 
     }
@@ -162,7 +162,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         }
 
         if (webViewUrl != null)
-            webViewFacebook.loadUrl(FromDestopToMobileUrl(webViewUrl));
+            webViewFacebook.loadUrl(FromDesktopToMobileUrl(webViewUrl));
 
 
         // recreate activity when something important was just changed
@@ -371,7 +371,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** WEBVIEW EVENTS ****************************
     @Override
     public boolean shouldLoadUrl(String url) {
-        Log.d("MainActivity", "shouldLoadUrl: "+url);
+        Log.d("MainActivity", "shouldLoadUrl: " + url);
         //Check is it's opening a image
         boolean b = Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("fbcdn.net");
 
@@ -543,7 +543,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     //*********************** OTHER ****************************
 
-    String FromDestopToMobileUrl(String url) {
+    String FromDesktopToMobileUrl(String url) {
         if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("www.facebook.com")) {
             url = url.replace("www.facebook.com", "touch.facebook.com");
         }
