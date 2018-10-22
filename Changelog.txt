@@ -297,8 +297,15 @@ v3.7.3
 v3.7.4
 - Removed the PayPal button on settings
 
-3.7.5
+v3.7.5
 - Updated libraries (including gradle and targetSdkVersion)
+- Updated Tawanese translation (YuCJ and Bei Chan)
+- Updated German translation (Emanuel)
+- Removed "sharedWithSlimsocial" on shared links
+- Updated Arabic translation (aboultol@gmail.com)
+
+
+
 
 
 ! Consider the possibility to donate !
