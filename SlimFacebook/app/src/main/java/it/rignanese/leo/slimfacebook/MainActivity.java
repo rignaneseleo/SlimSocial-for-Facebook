@@ -623,7 +623,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             return url.replace("http://lm.facebook.com/l.php?u=", "")
                     .replace("https://m.facebook.com/l.php?u=", "")
                     .replace("http://0.facebook.com/l.php?u=", "")
-                    .replaceAll("&h=.*", "").replaceAll("\\?acontext=.*", "") + "&SharedWith=SlimSocial";
+                    .replaceAll("&h=.*", "").replaceAll("\\?acontext=.*", "");
         }
 
         // url decoder, recreate all the special characters

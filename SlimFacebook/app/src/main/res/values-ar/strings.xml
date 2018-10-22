@@ -1,87 +1,89 @@
-<!--
-Leonardo Rignanese للفيسبوك هو تطبيق مفتوح المصدر مبرمج بواسطة SlimSocial
- GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
--->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY aboultol@gmail.com USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <dev.rignaneseleo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
 <resources>
-    <!-- Xkirnel99الترجمة بواسطة : -->
-
-    <!--menu string-->
-    <string name="refresh">تحديث</string>
-    <string name="openInBrowser">فتح باستعمال المتصفح</string>
-    <string name="settings">الإعدادات</string>
-    <string name="shareThisApp">مشاركة هذا التطبيق</string>
-    <!--end menu string-->
-
-    <!--settings-->
-    <string name="prefCat_fb_settings_title">إعدادات الفيسبوك</string>
-    <string name="prefCat_app_settings_title">إعدادات التطبيق</string>
+    <string name="refresh">تجديد</string>
+    <string name="openInBrowser">افتح في المتصفح</string>
+    <string name="settings">إعدادات</string>
+    <string name="shareThisApp">شارك هذا التطبيق</string>
+    <string name="prefCat_fb_settings_title">إعدادات Facebook</string>
+    <string name="prefCat_app_settings_title">إعدادات التطبيقات</string>
     <string name="prefCat_app_information_title">معلومات التطبيق</string>
-    <string name="title_recentNewsFirst">عرض الأخبار بآخر الأحداث</string>
-    <string name="summary_recentNewsFirst">بدلاً من أهم الأحداث.</string>
-    <string name="title_centerTextPosts">توسيط نص المشاركات</string>
-    <string name="summary_centerTextPosts">سيتم توسيط جميع نصوص المشاركات.</string>
-    <string name="title_fixedBar">شريط ثابت (تجريبي)</string>
-    <string name="summary_fixedBar">الشريط الأزرق سيبقى ثابتاً بالأعلى. </string>
-    <string name="title_downloadImages">تشغيل إقتصاد البيانات</string>
-    <string name="summary_downloadImages">عدم تحميل الصور.</string>
-    <string name="version">إصدار</string>
-    <string name="credits">التقدير</string>
+    <string name="title_recentNewsFirst">اطلب الأخبار من أحدثها</string>
+    <string name="summary_recentNewsFirst">بدلا من الشعبية</string>
+    <string name="title_centerTextPosts">توسيط نص المشاركة</string>
+    <string name="summary_centerTextPosts">سوف يوضع نص كل منشور في المركز</string>
+    <string name="summary_addSpaceBetweenPosts">سيكون هناك مساحة أكبر بين المنشورات</string>
+    <string name="title_addSpaceBetweenPosts">مساحة أكبر بين المشاركات</string>
+    <string name="summary_creditsCssThemes">شكرا على المظاهر الرائعة!</string>
+    <string name="summary_theme">اختر المظهر الذي تريده</string>
+    <string name="title_fixedBar">خط علوي ثابت</string>
+    <string name="summary_fixedBar">سيبقى الخط الأزرق عالقًا في الأعلى</string>
+    <string name="title_hideSponsoredPosts">لا تظهر المنشورات التي تم رعيها</string>
+    <string name="summary_hideSponsoredPosts">سيتم إخفاء بعض المشاركات الدعائية</string>
+    <string name="title_downloadImages">احفظ البيانات</string>
+    <string name="summary_downloadImages">لا تقم بتنزيل الصور</string>
+    <string name="summary_allowGeolocation">سيتمكن Facebook من الوصول إلى موقعك</string>
+    <string name="title_allowGeolocation">السماح باستخدام تكنولوجيا تحديد الموقع</string>
+    <string name="version">الإصدار</string>
+    <string name="credits">قروض</string>
     <string name="prefCat_otherCredits_title">آخر</string>
-    <string name="prefCat_developersCredits_title">المطورين</string>
-    <string name="summary_LeonardoRignanese">المخرجين و المطورين</string>
-    <string name="prefCat_translatorsCredits_title">المترجمين</string>
+    <string name="prefCat_developersCredits_title">المطورون</string>
+    <string name="summary_LeonardoRignanese">الخالق ومطور التطبيق</string>
+    <string name="prefCat_translatorsCredits_title">مترجمين</string>
     <string name="prefCat_designersCredits_title">المصممين</string>
-    <string name="donate">التبرع</string>
-    <string name="donateToContribute">إخترت أن أجعل التطبيق مجاني. هل يمكنك أن تهديني قهوة ؟</string>
-
-    <string name="summary_allowGeolocation">فيسبوك سيكون قادر على الوصول إلى موقعك. </string>
-    <string name="title_allowGeolocation">السماح باستعمال نظام تحديد المواقع جي بي إس.</string>
-    <!--end settings-->
-
-    <!--page error-->
-    <string name="titleNoConnection">!عذراً, هناك مشكلة</string>
-    <string name="descriptionNoConnection">حاول التحقق من الإتصال وإعمل تحديث.</string>
-    <string name="awards">هذا التطبيق مفتوح المصدر </string>
-    <!--end page error-->
-
-    <!--other-->
-    <string name="thanks">!الشكر</string>
-    <string name="downloadOrShareWithBrowser">يمكنك تحميل أو مشاركة الصورة عن طريق فتح المتصفح</string>
-    <string name="shareThisLink">)linkمشاركة الوصلة(</string>
-    <string name="summary_FaceSlim">بدونهم, لم أكن لأضيف عدة وظائف جذابة,إذا . !كنت مطوِّراً يجب أن ترى أعمالهم المذهلة</string>
-    <string name="summary_lRemainl">مبتكر الشعار الرائع</string>
-	<string name="summary_Pharetra">كامل الموهبة ومبدع</string>
+    <string name="donate">تبرع</string>
+    <string name="donateToContribute">اخترت أن أفعل ذلك مجانا. هل تريد المساهمة في تقديم قهوة لي؟(تبرع</string>
+    <string name="summary_you">كما أنه بفضلك هذا التطبيق موجود</string>
+    <string name="title_you">انت مهم</string>
+    <string name="titleNoConnection">عفوًا ، هناك مشكلة!</string>
+    <string name="descriptionNoConnection">حاول التحقق من الاتصال والتحديث.</string>
+    <string name="awards">هذا هو تطبيق مفتوح المصدر.</string>
+    <string name="thanks">شكرا!</string>
+    <string name="downloadOrShareWithBrowser">بفتح المتصفح يمكنك تنزيل أو مشاركة هذه الصورة.</string>
+    <string name="shareThisLink">شارك هذا الرابط</string>
+    <string name="summary_FaceSlim">بدونها ، لم أتمكن من إضافة بعض الوظائف الجذابة. إذا كنت مطورًا ، فعليك أن ترى أعماله الضخمة!</string>
+    <string name="summary_lRemainl">مخترع الشعار الرائع</string>
+    <string name="summary_Pharetra">مليئة بالمواهب والإبداع</string>
     <string name="exit">خروج</string>
-    <string name="noPersonalInformationAreShared">لن يتم جمع أو نقل أي معلومات شخصية أو حساسة حول جهازك عبر هذا التطبيق</string>
-    <!--end other-->
-
-    <!-- PLAY STORE PAGE
-
-الوصف :
-
-مع 700 كيلوبايت فقط سيسمح لك التّمتّع بالفيسبوك (الإصدار الشبكي).
-
-الوصف الكامل :
-
-ملاحظة: ممكن أن لا يكون هذا التطبيق مناسب لمن يستخدمونه كثيراً.
-
- للفيسبوك ؟SlimSocial لماذا سأحمل
-- خفيف : مساحنه أقل من 1 ميغا بايت.
-- بسيط, مع تصميم حديث : هناك فقط ما تحتاجه.
-- مفتوح المصدر : كود هذا التطبيق ستجدونه أونلاين في(غيت هيب) أي أحد يمكنه التحقق من سلامة هذا التطبيق والمساهمة في تطويره. 
-- مجاني وبلا إعلانات.
--إنه بلا خروقات.
-- يحترم خصوصياتك : لا يحتاج إلا أي صلاحيات خاصة. دون موافقة الفيسبومك لا يمكن الوصول إلا أي بيانات في هاتفك المحمول.
-
-
-هذا التطبيق في طور التطوير, إذاً لا زال هناك مشكل :
-- الإشعارات.
-
-Link to GitHub
-https://github.com/rignaneseleo/SlimSocial-for-Facebook
-
-*** نحيط علماً أن هذاالتطبيق ليس تطبيق رسمي من فيسبوك ***
-هذا المشروع يهدف إلى جعل حياة الناس أسهل. هذا التطبيق يطلق النسخة الرسمية لفيسبوك الخاصة بالهاتف. وكل الفضل يرجع إلى فريق الفيسبوك. لجعله مجاني وبلا إعلانات.    -->
-
+    <string name="noPersonalInformationAreShared">لا يتم جمع أي معلومات شخصية أو خاصة عنك أو جهازك من خلال هذا التطبيق!</string>
+    <string name="title_theme">المظاهر</string>
+    <string name="applyingChanges">تطبيق التغييرات!</string>
+    <string name="title_textSize">حجم الكتابة</string>
+    <string name="title_enableFastShare">تمكين المشاركة السريعة(Fast Share)</string>
+    <string name="summary_enableFastShare">مع Fast Share ، يمكنك مشاركة أي رابط بمجرد النقر عليه والثبات عليه</string>
+    <string name="summary_textSize">اختر حجم الكتابة الذي تفضله</string>
+    <string name="refreshToApply">قم بتجديد Facebook لتطبيق التغييرات</string>
+    <string name="summary_AdvancedWebView">جزء من هذا التطبيق يعتمد على عملهم</string>
+    <string name="title_translate">هل ترغب في ترجمة هذا التطبيق؟</string>
+    <string name="summary_translate">استخدم WebTool الخاص بي: انقر هنا ، وحدد اللغة التي تعرفها ، وقم بإنشاء أداة البناء ، وتصحيح الأخطاء ، وإنشاء وإرسال ملف "strings.xml" عبر البريد الإلكتروني</string>
+    <string name="title_removeMessengerDownload">إزالة إعلانات "تنزيل Messenger"</string>
+    <string name="summary_removeMessengerDownload">سيتم إخفاء الإعلانات التي تحتوي على "تثبيت Messenger"</string>
+    <string name="summary_SaschaHa">رجل موهوب وذكي جدا ساعدني كثيرا وأصبح صديقا. اضغط هنا لرؤية عمله لا يصدق!</string>
+    <string name="supportMe">ادعمني</string>
+    <string name="donateWithPayPal">تبرع مع PayPal</string>
+    <string name="messages">رسائل</string>
+    <string name="close">قريب</string>
+    <string name="acceptPermissionAndRetry">اقبل الأذونات وأعد المحاولة!</string>
+    <string name="yes">نعم فعلا</string>
+    <string name="no">لا</string>
+    <string name="downloadingPhoto">جارٍ تنزيل الصورة!</string>
+    <string name="askDownloadPhoto">تنزيل الصورة؟</string>
+    <string name="holdImageToDownload">اضغط الصورة لتنزيلها!</string>
+    <string name="title_rate">تقييم هذا التطبيق مع 5 نجوم</string>
+    <string name="summary_rate">يمكنك دعم لي كتابة 5 نجوم الاستعراض في PlayStore. من فضلك إذا كان هناك شيء لا يعمل ، اتصل بي قبل كتابة مراجعة سيئة</string>
+    <string name="title_enableMessagesShortcut">تمكين اختصار الرسائل</string>
+    <string name="summary_enableMessagesShortcut">تمكين هذا ، سيتم فتح علامة التبويب رسائل SlimSocial عند النقر على أيقونة رسائل Facebook</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">استخدم فرعي "SlimSocial"</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">حفظ الصور في مجلد فرعي بدلاً من المجلد "تنزيل"</string>
+    <string name="shareLink">شارك هذه الصفحة</string>
+    <string name="title_enableNotifications">تمكين التنبيهات</string>
+    <string name="noNotificationEnjoyLife">أنا أبحث عن أفضل طريقة لتنفيذها. في هذه الأثناء ، استمتع بالحياة دون المقاطعات التي يسببها الفيس بوك :)</string>
+    <string name="download">تحميل</string>
+    <string name="share">شارك</string>
 </resources>
-
