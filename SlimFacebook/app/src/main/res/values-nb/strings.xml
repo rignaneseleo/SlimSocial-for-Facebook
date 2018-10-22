@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- **********************************************************  -->
+<!-- THIS TRANSLATION IS MADE BY havstenius, huggorm, and Imre Kristoffer Eilertsen USING StringsXmlBuilder -->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <dev.rignaneseleo@gmail.com>-->
+<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
+<!-- **********************************************************  -->
+
+<resources>
+    <string name="refresh">Oppfrisk</string>
+    <string name="openInBrowser">Åpne i nettleseren</string>
+    <string name="settings">Innstillinger</string>
+    <string name="shareThisApp">Del denne appen</string>
+    <string name="prefCat_fb_settings_title">Facebook-innstillinger</string>
+    <string name="prefCat_app_settings_title">Appinnstillinger</string>
+    <string name="prefCat_app_information_title">Appinformasjon</string>
+    <string name="title_recentNewsFirst">Sorter feeden etter nyeste først</string>
+    <string name="summary_recentNewsFirst">I stedet for topphistorier</string>
+    <string name="title_centerTextPosts">Senter teksten i innleggene</string>
+    <string name="summary_centerTextPosts">Teksten i hvert innlegg vil bli sentrert</string>
+    <string name="summary_addSpaceBetweenPosts">Større mellomrom mellom innleggene</string>
+    <string name="title_addSpaceBetweenPosts">Mer plass mellom innleggene</string>
+    <string name="summary_creditsCssThemes">Takk for de fantastiske temaene!</string>
+    <string name="summary_theme">Velg temaet du liker</string>
+    <string name="title_fixedBar">Fest topp-bar øverst</string>
+    <string name="summary_fixedBar">Den blå linjen vil alltid vises på toppen.</string>
+    <string name="title_hideSponsoredPosts">Ikke vis sponsede innlegg</string>
+    <string name="summary_hideSponsoredPosts">Noen sponsede innlegg vil bli skjult</string>
+    <string name="title_downloadImages">Lagre data</string>
+    <string name="summary_downloadImages">Ikke last ned bilder</string>
+    <string name="summary_allowGeolocation">Facebook vil kunne få tilgang til din posisjon</string>
+    <string name="title_allowGeolocation">Tillat bruk av GPS</string>
+    <string name="version">Versjon</string>
+    <string name="credits">Kreditterte</string>
+    <string name="prefCat_otherCredits_title">Annet</string>
+    <string name="prefCat_developersCredits_title">Utviklere</string>
+    <string name="summary_LeonardoRignanese">Skaperen og utvikleren av appen</string>
+    <string name="prefCat_translatorsCredits_title">Oversettere</string>
+    <string name="prefCat_designersCredits_title">Designere</string>
+    <string name="donate">Donere</string>
+    <string name="donateToContribute">Jeg valgte å gjøre det gratis. Kan du tilby meg en kaffe?</string>
+    <string name="summary_you">Denne appen finnes også på grunn av deg</string>
+    <string name="title_you">Du er viktig</string>
+    <string name="titleNoConnection">Ups, det har oppstått et problem!</string>
+    <string name="descriptionNoConnection">Prøv å sjekke forbindelsen og oppdater.</string>
+    <string name="awards">Dette er en åpen kildekode-app.</string>
+    <string name="thanks">Takk!</string>
+    <string name="downloadOrShareWithBrowser">Ved å åpne en nettleser kan du laste ned eller dele dette bildet.</string>
+    <string name="shareThisLink">Del denne lenken</string>
+    <string name="summary_FaceSlim">Uten dem kunne jeg ikke legge til noen attraktive funksjoner. Hvis du er en utvikler, ser du deres massive arbeid!</string>
+    <string name="summary_lRemainl">Skaperen av den fantastiske logoen</string>
+    <string name="summary_Pharetra">Full av talent og kreativitet</string>
+    <string name="exit">Avslutt</string>
+    <string name="noPersonalInformationAreShared">Ingen personlig eller fortrolig informasjon om deg eller enheten din er samlet inn eller sendt av denne appen!</string>
+    <string name="title_theme">Temaer</string>
+    <string name="applyingChanges">Bruk endringene!</string>
+    <string name="title_textSize">Tekststørrelse</string>
+    <string name="title_enableFastShare">Aktiver Rask Deling</string>
+    <string name="summary_enableFastShare">Med Rask Deling kan du dele hvilken som helst kobling rett og slett ved å trykke og holde inn på den</string>
+    <string name="summary_textSize">Velg tekststørrelsen du foretrekker</string>
+    <string name="refreshToApply">Oppdater Facebook for å bruke endringene</string>
+    <string name="summary_AdvancedWebView">En del av denne appen er basert på deres arbeid</string>
+    <string name="title_translate">Kunne du tenkt deg å oversette denne appen?</string>
+    <string name="summary_translate">Bruk mitt nettverktøy: trykk her, velg språket du kjenner, generer byggeren, korrigér feil, generer og send meg filen \'strings.xml\' via e-post</string>
+    <string name="title_removeMessengerDownload">Fjern \'Last ned Messenger\'-meldinger</string>
+    <string name="summary_removeMessengerDownload">Annonsene med \'Installer Messenger\' vil bli skjult</string>
+    <string name="summary_SaschaHa">En veldig talentfull og smart fyr som hjalp meg mye og har blitt en venn av meg. Trykk her for å se hans fantastiske arbeid!</string>
+    <string name="supportMe">Støtt meg</string>
+    <string name="donateWithPayPal">Doner med PayPal</string>
+    <string name="messages">Meldinger</string>
+    <string name="close">Lukk</string>
+    <string name="acceptPermissionAndRetry">Godta tillatelser og prøv igjen!</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nei</string>
+    <string name="downloadingPhoto">Laster ned bilde!</string>
+    <string name="askDownloadPhoto">Last ned bilde?</string>
+    <string name="holdImageToDownload">Trykk og hold på bildet for å laste ned!</string>
+    <string name="title_rate">Vurder denne appen med 5 stjerner</string>
+    <string name="summary_rate">Du kan støtte meg ved å skrive en ★★★★★-anmeldelse i Play Store. Hvis noe ikke virker, vennligst kontakt meg før du skriver en dårlig anmeldelse</string>
+    <string name="title_enableMessagesShortcut">Aktiver snarvei for meldinger</string>
+    <string name="summary_enableMessagesShortcut">Hvis du aktiverer dette, åpnes kategorien SlimSocial-meldinger når du klikker på Facebook-meldingsikonet</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Bruk \'SlimSocial\'--undermappe</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Lagre bilder i en undermappe i stedet for i \'Download\'-mappen</string>
+    <string name="shareLink">Del denne siden</string>
+    <string name="title_enableNotifications">Aktiver varsler</string>
+    <string name="noNotificationEnjoyLife">Jeg leter etter den beste måten å integrere dem på. I mellomtiden kan du nyte et liv uten forstyrrelser fra Facebook :)</string>
+</resources>
