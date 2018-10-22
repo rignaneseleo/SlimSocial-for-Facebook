@@ -304,6 +304,13 @@ v3.7.5
 - Removed "sharedWithSlimsocial" on shared links
 - Updated Arabic translation (aboultol@gmail.com)
 
+v3.8.0
+- 18:9 screen ratio support
+- Fixed Norwegian translation (from values-no to values-nb)
+- Correct typo of method "FromDesktopToMobileUrl"
+- Added handler for mbasic facebook links
+- MessageActivity refer back to MainActivity when the loading is not about messages 
+
 
 
 
