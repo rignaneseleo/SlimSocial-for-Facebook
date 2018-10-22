@@ -544,7 +544,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** OTHER ****************************
 
     String FromDestopToMobileUrl(String url) {
-        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("www.facebook.com")) {
+        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("facebook.com")) {
+	    url = url.replace("mbasic.facebook.com", "touch.facebook.com");
             url = url.replace("www.facebook.com", "touch.facebook.com");
         }
         return url;

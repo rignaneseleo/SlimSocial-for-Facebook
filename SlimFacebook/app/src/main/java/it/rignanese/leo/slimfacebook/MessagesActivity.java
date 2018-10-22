@@ -105,6 +105,13 @@ public class MessagesActivity extends Activity implements 	MyAdvancedWebView.Lis
 	//*********************** WEBVIEW EVENTS ****************************
 	@Override
 	public void onPageStarted(String url, Bitmap favicon) {
+		// We are no longer in 'messages', so pass this off to the main activity
+		if(!url.contains("messages")) {
+		    Intent i = new Intent(this, MainActivity.class);
+		    i.setData(Uri.parse(url));
+		    startActivity(i);
+
+		}
 		swipeRefreshLayout.setRefreshing(true);
 	}
 
