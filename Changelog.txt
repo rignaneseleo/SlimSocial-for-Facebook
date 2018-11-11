@@ -311,7 +311,8 @@ v3.8.0
 - Added handler for mbasic facebook links
 - MessageActivity refer back to MainActivity when the loading is not about messages 
 
-
+v3.8.1
+- Added the Donate button
 
 
 

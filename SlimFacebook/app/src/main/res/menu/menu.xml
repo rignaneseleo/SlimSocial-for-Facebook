@@ -33,6 +33,9 @@
         android:id="@+id/settings"
         android:title="@string/settings"/>
     <item
+        android:id="@+id/donate"
+        android:title="@string/donate"/>
+    <item
         android:id="@+id/exit"
         android:title="@string/exit"/>
 </menu>

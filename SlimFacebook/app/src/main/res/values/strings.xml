@@ -52,7 +52,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_LeonardoRignanese">Creator and developer of the app</string>
     <string name="prefCat_translatorsCredits_title">Translators</string>
     <string name="prefCat_designersCredits_title">Designers</string>
-    <string name="donate">Donate</string>
+    <string name="donate">DONATE</string>
     <string name="donateToContributeWithoutPaypal">I chose to do it for free. Do you want to
         contribute offering me a coffee? Let\'s get in touch!</string>
     <string name="summary_you">It\'s also thanks to you that this app exists</string>
