@@ -314,6 +314,10 @@ v3.8.0
 v3.8.1
 - Added the Donate button
 
+v3.8.2
+- Changed the link of Contribute button in settings
+
+
 
 
 ! Consider the possibility to donate !
