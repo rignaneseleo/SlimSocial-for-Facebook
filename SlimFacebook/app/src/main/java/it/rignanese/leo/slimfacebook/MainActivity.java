@@ -534,7 +534,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
             case R.id.donate: {//open settings
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://rignaneseleo.github.io/")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.paypalDonationLink))));
                     Toast.makeText(this, "THANK YOU!", Toast.LENGTH_SHORT).show();
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, "Turn on data please", Toast.LENGTH_SHORT).show();
