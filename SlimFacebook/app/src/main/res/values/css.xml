@@ -5,12 +5,12 @@
 		text-align: center;
 		}
 	</string>
-	<string name="addSpaceBetweenPosts" translatable="false">
+    <string name="addSpaceBetweenPosts" translatable="false">
 		article {
 		margin-top: 50px !important;
 		}
 	</string>
-	<string name="fixedBar" translatable="false">
+    <string name="fixedBar" translatable="false">
 		#header{ position: fixed; z-index: 12; top: 0px; }
 
         #root{ padding-top: 44px; }
@@ -24,7 +24,7 @@
 		text-align: center !important;
 		}
 	</string>
-	<string name="removeMessengerDownload" translatable="false">
+    <string name="removeMessengerDownload" translatable="false">
 		._s15 {
 		display: none;
 		}
