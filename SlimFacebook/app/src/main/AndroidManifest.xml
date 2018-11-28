@@ -30,11 +30,11 @@
         android:label="@string/launcher_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
-        
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
-        
+
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

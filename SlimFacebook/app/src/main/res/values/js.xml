@@ -13,7 +13,7 @@
 		}
 		addStyle(\'$css\');
 	</string>
-<string name="fixMessages" translatable="false">
+    <string name="fixMessages" translatable="false">
 		javascript:function fixMessages() {
 		var a=(document.querySelectorAll(\'#messages_jewel ._19no.touchable\'))[0];
         a.href=\'https://slimsocial.leo\';
@@ -22,7 +22,7 @@
 		fixMessages();
 </string>
 
-	<string name="hideHeaderFooterMessages" translatable="false">
+    <string name="hideHeaderFooterMessages" translatable="false">
 		javascript: function hideHeaderFooterMessages(){
 	var divs = document.getElementById(\'viewport\').children;
 	for(var i = 0; i &#60; divs.length; i++) {
