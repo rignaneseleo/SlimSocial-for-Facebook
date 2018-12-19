@@ -69,6 +69,8 @@ public class SettingsActivity extends PreferenceActivity implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
+            case "pref_removeOverlay":
+                Toast.makeText(SettingsActivity.this, R.string.closeAndReopen, Toast.LENGTH_LONG).show();
             case "pref_recentNewsFirst":
             case "pref_centerTextPosts":
             case "pref_fixedBar":

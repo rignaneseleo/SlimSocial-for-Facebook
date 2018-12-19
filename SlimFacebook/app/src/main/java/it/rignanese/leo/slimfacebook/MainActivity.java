@@ -567,6 +567,10 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     private void ApplyCustomCss() {
         String css = "";
+
+        if (savedPreferences.getBoolean("pref_removeOverlay", true)) {
+            css += getString(R.string.removeOverlay);
+        }
         if (savedPreferences.getBoolean("pref_centerTextPosts", false)) {
             css += getString(R.string.centerTextPosts);
         }

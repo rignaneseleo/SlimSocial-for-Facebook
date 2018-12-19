@@ -5,6 +5,9 @@
 		text-align: center;
 		}
 	</string>
+    <string name="removeOverlay" translatable="false">
+         #MBackNavBar { display: none; }
+    </string>
 	<string name="addSpaceBetweenPosts" translatable="false">
 		article {
 		margin-top: 50px !important;
