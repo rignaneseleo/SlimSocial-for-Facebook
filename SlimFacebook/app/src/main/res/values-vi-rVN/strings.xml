@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="editCss">javascript:function addStyle(css) { var node = document.createElement(\'style\'); node.innerHTML = css; document.body.appendChild(node); } addStyle(\'$css\');</string>
+</resources>

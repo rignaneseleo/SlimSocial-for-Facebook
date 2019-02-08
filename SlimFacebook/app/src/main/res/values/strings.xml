@@ -108,10 +108,13 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="shareLink">Share this page</string>
     <string name="title_enableNotifications">Enable Notifications</string>
     <string name="noNotificationEnjoyLife">I am looking for the best way to implement them. In the meanwhile, enjoy life without Facebook\'s interruptions :)</string>
-    <string name="paypalDonationLink" translatable="false">https://rignaneseleo.github.io/</string>
+    <string name="paypalDonationLink">https://rignaneseleo.github.io/</string>
 
     <string name="download">Download</string>
     <string name="share">Share</string>
+    <string name="myWebsite" translatable="false">https://rignaneseleo.github.io/</string>
+    <string name="supportMyProjects">It contains info about me and links to support my projects</string>
+    <string name="visitMyWebsite">Visit my website</string>
 
     <!--end other-->
 </resources>

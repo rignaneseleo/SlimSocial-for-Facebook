@@ -116,11 +116,11 @@
                 android:data="market://details?id=it.rignanese.leo.slimfacebook" />
         </PreferenceScreen>
         <PreferenceScreen
-            android:summary="@string/donateToContributeWithoutPaypal"
-            android:title="@string/contribute">
+            android:summary="@string/supportMyProjects"
+            android:title="@string/visitMyWebsite">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="@string/paypalDonationLink" />
+                android:data="@string/myWebsite" />
         </PreferenceScreen>
     </PreferenceCategory>
 
