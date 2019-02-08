@@ -317,6 +317,11 @@ v3.8.1
 v3.8.2
 - Changed the link of Contribute button in settings
 
+v3.8.3
+- Removed every donation link due to the Google Play ban
+- Updated Vietnamese (Leslie)
+- Updated Russian (Sanjey)
+- 
 
 
 

@@ -523,16 +523,6 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 return true;
             }
 
-            case R.id.donate: {//open settings
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.paypalDonationLink))));
-                    Toast.makeText(this, "THANK YOU!", Toast.LENGTH_SHORT).show();
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(this, "Turn on data please", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-
             case R.id.exit: {//open settings
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(1);
