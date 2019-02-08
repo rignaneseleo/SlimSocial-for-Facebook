@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -91,7 +90,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         SetupOnLongClickListener();
 
         if (isSharer) {//if is a share request
-            Log.d("MainActiviy.OnCreate", "Loading shared link");
+            Log.d("MainActivity.OnCreate", "Loading shared link");
             webViewFacebook.loadUrl(urlSharer);//load the sharer url
             isSharer = false;
         } else if (getIntent() != null && getIntent().getDataString() != null) {
@@ -176,7 +175,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     //*********************** SETUP ****************************
 
     private void SetupWebView() {
-        webViewFacebook = (MyAdvancedWebView) findViewById(webView);
+        webViewFacebook = findViewById(webView);
         webViewFacebook.setListener(this, this);
 
         webViewFacebook.clearPermittedHostnames();
@@ -185,12 +184,14 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         webViewFacebook.addPermittedHostname("fb.com");
         webViewFacebook.addPermittedHostname("fb.me");
 
-    /*      webViewFacebook.addPermittedHostname("m.facebook.com");
+/*
+        webViewFacebook.addPermittedHostname("m.facebook.com");
         webViewFacebook.addPermittedHostname("h.facebook.com");
         webViewFacebook.addPermittedHostname("touch.facebook.com");
-      webViewFacebook.addPermittedHostname("mbasic.facebook.com");
-      webViewFacebook.addPermittedHostname("touch.facebook.com");
-	  webViewFacebook.addPermittedHostname("messenger.com");*/
+        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
+        webViewFacebook.addPermittedHostname("touch.facebook.com");
+        webViewFacebook.addPermittedHostname("messenger.com");
+*/
 
         webViewFacebook.requestFocus(View.FOCUS_DOWN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
@@ -223,48 +224,40 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-            // Hide the zoom controls for HONEYCOMB+
-            settings.setDisplayZoomControls(false);
-        }
+        settings.setDisplayZoomControls(false);
     }
 
     private void SetupOnLongClickListener() {
         // OnLongClickListener for detecting long clicks on links and images
-        webViewFacebook.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+        webViewFacebook.setOnLongClickListener(v -> {
 
-                WebView.HitTestResult result = webViewFacebook.getHitTestResult();
-                int type = result.getType();
-                if (type == WebView.HitTestResult.SRC_ANCHOR_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
-                        || type == WebView.HitTestResult.IMAGE_TYPE) {
-                    Message msg = linkHandler.obtainMessage();
-                    webViewFacebook.requestFocusNodeHref(msg);
-                }
-                return false;
+            WebView.HitTestResult result = webViewFacebook.getHitTestResult();
+            int type = result.getType();
+            if (type == WebView.HitTestResult.SRC_ANCHOR_TYPE
+                    || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
+                    || type == WebView.HitTestResult.IMAGE_TYPE) {
+                Message msg = linkHandler.obtainMessage();
+                webViewFacebook.requestFocusNodeHref(msg);
             }
+            return false;
         });
 
-        webViewFacebook.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_UP:
-                        if (!v.hasFocus()) {
-                            v.requestFocus();
-                        }
-                        break;
-                }
-                return false;
+        webViewFacebook.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_UP:
+                    if (!v.hasFocus()) {
+                        v.requestFocus();
+                    }
+                    break;
             }
+            return false;
         });
     }
 
     private void SetupFullScreenVideo() {
         //full screen video
-        mTargetView = (FrameLayout) findViewById(R.id.target_view);
+        mTargetView = findViewById(R.id.target_view);
         myWebChromeClient = new WebChromeClient() {
             //this custom WebChromeClient allow to show video on full screen
             @Override
@@ -340,14 +333,11 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     }
 
     private void SetupRefreshLayout() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setColorSchemeResources(R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                RefreshPage();//reload the page
-            }
-        });
+        swipeRefreshLayout = findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.officialBlueFacebook, R.color.darkBlueSlimFacebookTheme);// set the colors
+        //reload the page
+        swipeRefreshLayout.setOnRefreshListener(this::RefreshPage);
     }
 
 
@@ -403,8 +393,10 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     @Override
     public void onPageError(int errorCode, String description, String failingUrl) {
         // refresh on connection error (sometimes there is an error even when there is a network connection)
-        if (isInternetAvailable()) return;
-            //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")                && !failingUrl.contains("atdmt") && !noConnectionError)
+        if (isInternetAvailable()) {
+        }
+        //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")
+        // && !failingUrl.contains("atdmt") && !noConnectionError)
         else {
             Log.i("onPageError link", failingUrl);
             String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
@@ -422,14 +414,13 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
 
     public boolean isInternetAvailable() {
-        NetworkInfo newtworkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if (newtworkInfo != null && newtworkInfo.isAvailable() && newtworkInfo.isConnected())
-            return true;
-        else return false;
+        NetworkInfo networkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 
     @Override
-    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType,
+                                    long contentLength, String contentDisposition, String userAgent) {
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -440,7 +431,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     @Override
     public void onExternalPageRequest(String url) {//if the link doesn't contain 'facebook.com', open it using the browser
-        if (Uri.parse(url).getHost() != null ? Uri.parse(url).getHost().endsWith("slimsocial.leo") : false) {
+        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("slimsocial.leo")) {
             //he clicked on messages
             startActivity(new Intent(this, MessagesActivity.class));
         } else {
@@ -539,7 +530,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, "Turn on data please", Toast.LENGTH_SHORT).show();
                 }
-               break;
+                break;
             }
 
             case R.id.exit: {//open settings
@@ -577,7 +568,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             css += getString(R.string.hideAdsAndPeopleYouMayKnow);
         }
         if (savedPreferences.getBoolean("pref_fixedBar", true)) {//without add the barHeight doesn't scroll
-            css += (getString(R.string.fixedBar).replace("$s", "" + Dimension.heightForFixedFacebookNavbar(getApplicationContext())));
+            css += (getString(R.string.fixedBar).replace("$s", ""
+                    + Dimension.heightForFixedFacebookNavbar(getApplicationContext())));
         }
         if (savedPreferences.getBoolean("pref_removeMessengerDownload", true)) {
             css += getString(R.string.removeMessengerDownload);
@@ -643,12 +635,18 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         // url decoder, recreate all the special characters
         private static String decodeUrl(String url) {
-            return url.replace("%3C", "<").replace("%3E", ">").replace("%23", "#").replace("%25", "%")
-                    .replace("%7B", "{").replace("%7D", "}").replace("%7C", "|").replace("%5C", "\\")
-                    .replace("%5E", "^").replace("%7E", "~").replace("%5B", "[").replace("%5D", "]")
-                    .replace("%60", "`").replace("%3B", ";").replace("%2F", "/").replace("%3F", "?")
-                    .replace("%3A", ":").replace("%40", "@").replace("%3D", "=").replace("%26", "&")
-                    .replace("%24", "$").replace("%2B", "+").replace("%22", "\"").replace("%2C", ",")
+            return url.replace("%3C", "<").replace("%3E", ">")
+                    .replace("%23", "#").replace("%25", "%")
+                    .replace("%7B", "{").replace("%7D", "}")
+                    .replace("%7C", "|").replace("%5C", "\\")
+                    .replace("%5E", "^").replace("%7E", "~")
+                    .replace("%5B", "[").replace("%5D", "]")
+                    .replace("%60", "`").replace("%3B", ";")
+                    .replace("%2F", "/").replace("%3F", "?")
+                    .replace("%3A", ":").replace("%40", "@")
+                    .replace("%3D", "=").replace("%26", "&")
+                    .replace("%24", "$").replace("%2B", "+")
+                    .replace("%22", "\"").replace("%2C", ",")
                     .replace("%20", " ");
         }
     }

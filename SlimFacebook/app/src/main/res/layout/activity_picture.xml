@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".PictureActivity">
 
-        <it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView
-            android:id="@+id/webViewPicture"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
+    <it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView
+        android:id="@+id/webViewPicture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
 </LinearLayout>
