@@ -107,11 +107,8 @@ public class PictureActivity extends Activity implements MyAdvancedWebView.Liste
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
             request.setTitle("SlimSocial Download");
 
-            // in order for this if to run, you must use the android 3.2 to compile your app
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            }
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
             String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
             if (savedPreferences.getBoolean("pref_useSlimSocialSubfolderToDownloadedFiles", false)) {
@@ -165,7 +162,7 @@ public class PictureActivity extends Activity implements MyAdvancedWebView.Liste
 
     //*********************** WEBVIEW ****************************
     private void SetupPictureWebView() {
-        webViewPicture = (MyAdvancedWebView) findViewById(R.id.webViewPicture);
+        webViewPicture = findViewById(R.id.webViewPicture);
         webViewPicture.setListener(this, this);
 
         //  webViewPicture.setDesktopMode(true);
@@ -180,36 +177,27 @@ public class PictureActivity extends Activity implements MyAdvancedWebView.Liste
         settings.setUseWideViewPort(true);
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-            // Hide the zoom controls for HONEYCOMB+
-            settings.setDisplayZoomControls(false);
-        }
+        settings.setDisplayZoomControls(false);
     }
 
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
-
     }
 
     @Override
     public void onPageFinished(String url) {
-
     }
 
     @Override
     public void onPageError(int errorCode, String description, String failingUrl) {
-
     }
 
     @Override
     public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
-
     }
 
     @Override
     public void onExternalPageRequest(String url) {
-
     }
 
     @Override

@@ -4,38 +4,38 @@
         android:id="@+id/messages"
         android:icon="@drawable/messages"
         android:showAsAction="always"
-        android:title="@string/messages"/>
+        android:title="@string/messages" />
     <item
         android:id="@+id/top"
         android:icon="@drawable/ic_action_hardware_keyboard_arrow_up"
         android:showAsAction="always"
-        android:title="@string/top"/>
+        android:title="@string/top" />
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_action_action_home"
         android:showAsAction="always"
-        android:title="@string/home"/>
+        android:title="@string/home" />
     <item
         android:id="@+id/refresh"
         android:icon="@drawable/ic_action_notification_sync"
         android:showAsAction="ifRoom"
-        android:title="@string/refresh"/>
+        android:title="@string/refresh" />
     <item
         android:id="@+id/openInBrowser"
-        android:title="@string/openInBrowser"/>
+        android:title="@string/openInBrowser" />
     <item
         android:id="@+id/shareLink"
-        android:title="@string/shareLink"/>
+        android:title="@string/shareLink" />
     <item
         android:id="@+id/share"
-        android:title="@string/shareThisApp"/>
+        android:title="@string/shareThisApp" />
     <item
         android:id="@+id/settings"
-        android:title="@string/settings"/>
+        android:title="@string/settings" />
     <item
         android:id="@+id/donate"
-        android:title="@string/donate"/>
+        android:title="@string/donate" />
     <item
         android:id="@+id/exit"
-        android:title="@string/exit"/>
+        android:title="@string/exit" />
 </menu>

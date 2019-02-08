@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-   <style name="DefaultTheme" parent="android:Theme.Material.Light">
+    <style name="DefaultTheme" parent="android:Theme.Material.Light">
         <item name="android:colorPrimary">@color/blueSlimFacebookTheme</item>
         <item name="android:colorPrimaryDark">@color/darkBlueSlimFacebookTheme</item>
         <item name="android:colorAccent">@color/blueSlimFacebookTheme</item>

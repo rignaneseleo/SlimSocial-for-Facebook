@@ -4,5 +4,5 @@
         android:id="@+id/close"
         android:icon="@drawable/close"
         android:showAsAction="always"
-        android:title="@string/close"/>
+        android:title="@string/close" />
 </menu>
