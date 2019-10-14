@@ -56,7 +56,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_textSize">Scegli la dimensione del testo che preferisci</string>
     <string name="title_enableFastShare">Abilita la Condivisione Veloce</string>
     <string name="title_textSize">Dimensione del testo</string>
-    <string name="refreshToApply">Ricarica Faebook per applicare i cambiamenti</string>
+    <string name="refreshToApply">Ricarica Facebook per applicare i cambiamenti</string>
     <string name="summary_AdvancedWebView">Parte di quest\'app è basata sul loro lavoro</string>
     <string name="summary_hideSponsoredPosts">Alcuni post pubblicitari verranno nascosti</string>
     <string name="summary_removeMessengerDownload">Le scritte \'Installa Messenger\' non saranno mostrate</string>
