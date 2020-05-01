@@ -42,7 +42,7 @@ import static it.rignanese.leo.slimfacebook.R.id.webView;
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
 public class MainActivity extends Activity implements MyAdvancedWebView.Listener {
-
+    private Context mContext;
     private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
     private MyAdvancedWebView webViewFacebook;//the main webView where is shown facebook
 
@@ -77,7 +77,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         if (savedPreferences.getBoolean("first_run", true)) {
             savedPreferences.edit().putBoolean("first_run", false).apply();
         }
-
+        // Get the application context
+        mContext = getApplicationContext();
 
         SetupRefreshLayout();// setup the refresh layout
 
@@ -219,8 +220,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         settings.setBuiltInZoomControls(true);
 
         // set caching
-        settings.setAppCachePath(getCacheDir().getAbsolutePath());
+        settings.setAppCachePath(mContext.getCacheDir().getAbsolutePath());
         settings.setAppCacheEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
 
@@ -394,22 +396,20 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     public void onPageError(int errorCode, String description, String failingUrl) {
         // refresh on connection error (sometimes there is an error even when there is a network connection)
         if (isInternetAvailable()) {
+            webViewFacebook.goBack();
+            return;
         }
-        //  if (!isInternetAvailable() && !failingUrl.contains("edge-chat") && !failingUrl.contains("akamaihd")
-        // && !failingUrl.contains("atdmt") && !noConnectionError)
-        else {
-            Log.i("onPageError link", failingUrl);
-            String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
-                    getString(R.string.titleNoConnection) +
-                    "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
-                    getString(R.string.descriptionNoConnection) +
-                    "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; opacity: 0.3;'>" +
-                    getString(R.string.awards) +
-                    "</h5>";
-            webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
-            //to allow to return at the last visited page
-            noConnectionError = true;
-        }
+        Log.i("onPageError link", failingUrl);
+        String summary = "<h1 style='text-align:center; padding-top:15%; font-size:70px;'>" +
+                getString(R.string.titleNoConnection) +
+                "</h1> <h3 style='text-align:center; padding-top:1%; font-style: italic;font-size:50px;'>" +
+                getString(R.string.descriptionNoConnection) +
+                "</h3>  <h5 style='font-size:30px; text-align:center; padding-top:80%; opacity: 0.3;'>" +
+                getString(R.string.awards) +
+                "</h5>";
+        webViewFacebook.loadData(summary, "text/html; charset=utf-8", "utf-8");//load a custom html page
+        //to allow to return at the last visited page
+        noConnectionError = true;
     }
 
 
@@ -514,7 +514,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.downloadThisApp));
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.shareThisApp)));
 
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.thanks),
+                Toast.makeText(mContext, getResources().getString(R.string.thanks),
                         Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -559,7 +559,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         }
         if (savedPreferences.getBoolean("pref_fixedBar", true)) {//without add the barHeight doesn't scroll
             css += (getString(R.string.fixedBar).replace("$s", ""
-                    + Dimension.heightForFixedFacebookNavbar(getApplicationContext())));
+                    + Dimension.heightForFixedFacebookNavbar(mContext)));
         }
         if (savedPreferences.getBoolean("pref_removeMessengerDownload", true)) {
             css += getString(R.string.removeMessengerDownload);
