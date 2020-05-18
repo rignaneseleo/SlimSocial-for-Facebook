@@ -5,7 +5,7 @@
 <a href="https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="90"/></a>
 
-## I could use some help to improve this app :)
+## Feel free to help :)
 ### Participate in XDA thread: 
 https://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174
 ### Follow the project on Facebook: 
