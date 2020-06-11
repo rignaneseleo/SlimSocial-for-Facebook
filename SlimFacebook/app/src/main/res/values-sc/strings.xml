@@ -1,0 +1,89 @@
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
+<resources>
+
+    <!--menu string-->
+    <string name="openInBrowser">Aberi in s\'esploradore</string>
+
+    <string name="titleNoConnection">Oops, b\'at unu problema!</string>
+    <string name="descriptionNoConnection">Controlla sa connessione e torra a carrigare.</string>
+
+    <string name="awards">Custa aplicatzione est a mitza aberta.</string>
+    <string name="refresh">Torra a carrigare</string>
+    <string name="shareThisApp">Cumpartzi cust\'apl.</string>
+    <string name="title_recentNewsFirst">Ammustra a primu sas noas reghentes</string>
+    <string name="summary_recentNewsFirst">In logu de de cussas printzipales</string>
+    <string name="prefCat_fb_settings_title">Impostatziones de Facebook</string>
+    <string name="prefCat_app_settings_title">Impostatziones de s\'Apl.</string>
+    <string name="version">Versione</string>
+    <string name="prefCat_app_information_title">Informatziones de s\'Apl.</string>
+    <string name="thanks">Gràtzias!</string>
+    <string name="downloadOrShareWithBrowser">Aberende s\'esploradore podes iscarrigare o cumpartzire custa immàgine.</string>
+    <string name="title_downloadImages">Rispàrmia datos </string>
+    <string name="summary_downloadImages">No iscàrrighes sas immàgines</string>
+    <string name="credits">Crèditos</string>
+    <string name="prefCat_otherCredits_title">Àteros</string>
+    <string name="prefCat_developersCredits_title">Isvilupadores</string>
+    <string name="prefCat_translatorsCredits_title">Bortadores</string>
+    <string name="summary_LeonardoRignanese">Ideadore e isvilupadore de s\'apl.</string>
+    <string name="shareThisLink">Cumpartzi custu ligàmene</string>
+    <string name="summary_FaceSlim">Chene de issos, cust\'aplicatzione non diat àere medas de sas funtzionalidades suas. Si ses un\'isvilupadore, depes assolutamente pompiare su traballu mannu issoro!</string>
+    <string name="prefCat_designersCredits_title">Disinnadore</string>
+    <string name="summary_lRemainl">Su chi at realizadu su logotipu</string>
+    <string name="exit">Essi</string>
+    <string name="noPersonalInformationAreShared">Peruna informatzione personale o privada a pitzu de tene o de su dispositivu tuo benit collida o trasmìtida dae cust\'aplicatzione !</string>
+    <string name="donate">Dona</string>
+    <string name="donateToContribute">Apo isseberadu de isvilupare cust\'aplicatzione de badas. A mi lu mèrito unu cafè?</string>
+    <string name="summary_fixedBar">Sa barra biaita at a abarrare apicada in artu.</string>
+    <string name="title_fixedBar">Barra fissa in artu</string>
+    <string name="summary_Pharetra">Prenu de talentu e creatividade</string>
+    <string name="summary_allowGeolocation">Facebook at a pòdere impreare sa positzione tua</string>
+    <string name="title_allowGeolocation">Permite s\'impreu de su GPS</string>
+    <string name="applyingChanges">Aplichende sas modìficas!</string>
+    <string name="summary_addSpaceBetweenPosts">B\'at a èssere prus logu intre sas publicatziones</string>
+    <string name="summary_centerTextPosts">Su testu de cada publicatzione at a bènnere tzentradu</string>
+    <string name="summary_creditsCssThemes">Gràtzias pro su tema de ispantu</string>
+    <string name="summary_theme">Issèbera su tema chi t\'agradat </string>
+    <string name="summary_you">Est fintzas gràtzias a tie chi cust\'aplicatzione esistit</string>
+    <string name="title_addSpaceBetweenPosts">Ismànnia s\'ispàtziu intre sas publicatziones</string>
+    <string name="title_centerTextPosts">Tzentra su testu de sas publicatziones</string>
+    <string name="title_theme">Temas</string>
+    <string name="title_you">Ses importante</string>
+    <string name="settings">Impostatziones</string>
+    <string name="summary_enableFastShare">Cun sa Cumpartzidura Lestra podes cumpartzire cale si siat ligàmene mantendende·lu incarcadu</string>
+    <string name="summary_textSize">Issèbera sa mannària de su testu chi preferis</string>
+    <string name="title_enableFastShare">Abìlita sa Cumpartzidura Lestra</string>
+    <string name="title_textSize">Mannària de su testu</string>
+    <string name="refreshToApply">Torra a abèrrere Facebook pro aplicare sas modìficas</string>
+    <string name="summary_AdvancedWebView">Parte de cust\'aplicatzione est basada in su traballu nostru</string>
+    <string name="summary_hideSponsoredPosts">Calicuna de sas publicatziones publitzitàrias at a bènnere cuada</string>
+    <string name="summary_removeMessengerDownload">Sas iscritas \'Installa Messenger\' no ant a bènnere ammustradas</string>
+    <string name="summary_translate">Imprea su WebTool meu: incarca inoghe, ischerta sa limba chi connosches, ingendra su fraigadore (builder), acontza sas faddinas e imbia·mi su documentu \'strings.xml\' pro mèdiu de posta eletrònica</string>
+    <string name="title_hideSponsoredPosts">No ammustres publicatziones isponsorizadas</string>
+    <string name="title_removeMessengerDownload">Boga \'Iscàrriga Messenger\'</string>
+    <string name="title_translate">Cheres bortare cust\'aplicatzione?</string>
+    <string name="summary_SaschaHa">Pitzocu de gabbale chi m\'at agiudadu meda e cun su cale apo istrintu unu raportu de amistade. Incarca inoghe pro pompiare sos traballos ispantosos suos!</string>
+    <string name="donateWithPayPal">Dona cun PayPal</string>
+    <string name="supportMe">Suporta·mi</string>
+    <string name="close">Serra</string>
+    <string name="downloadingPhoto">Iscarrighende!</string>
+    <string name="holdImageToDownload">Mantene incarcadu in s\'immàgine pro l\'iscarrigare!</string>
+    <string name="messages">Messàgios</string>
+    <string name="no">Nono</string>
+    <string name="askDownloadPhoto">Iscarrigare sa fotografia?</string>
+    <string name="acceptPermissionAndRetry">Atzeta sos permissos e torra a proare!</string>
+    <string name="yes">Eja</string>
+    <string name="summary_rate">Iscriende una retzensione a 5 isteddos in su PlayStore mi suportas. Si carchi cosa non funtzionat, cuntata·mi in antis de iscrìere una retzensione negativa</string>
+    <string name="title_rate">Vota cun 5 isteddos cust\'aplicatzione</string>
+    <string name="summary_enableMessagesShortcut">Abilitende custa opztione, s\'ischeda de sos messàgios de SlimSocial at a bènnere aberta cun su tocu in s\'icona de sos messàgios de Facebook</string>
+    <string name="title_enableMessagesShortcut">Abìlita s\'incurtzada de sos messàgios</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Imprea sa suta-cartella \'SlimSocial\'</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Sarva sas immàgines in una suta-cartella in logu de impreare a \'Download\'</string>
+    <string name="shareLink">Cumpartzi custa pàgina</string>
+    <string name="title_enableNotifications">Abìlita sas notìficas</string>
+    <string name="download">Iscàrriga</string>
+    <string name="share">Cumpartzi</string>
+
+</resources>
