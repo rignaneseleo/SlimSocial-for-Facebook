@@ -321,8 +321,11 @@ v3.8.3
 - Removed every donation link due to the Google Play ban
 - Updated Vietnamese (Leslie)
 - Updated Russian (Sanjey)
-- 
 
+v3.8.4
+- Reduced the size
+- Fixed searchbar
+- New languages
 
 
 ! Consider the possibility to donate !
