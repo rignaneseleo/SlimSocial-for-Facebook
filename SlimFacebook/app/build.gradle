@@ -8,8 +8,8 @@ android {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 57
-        versionName "3.8.3"
+        versionCode 58
+        versionName "3.8.4"
     }
 
     buildTypes {
