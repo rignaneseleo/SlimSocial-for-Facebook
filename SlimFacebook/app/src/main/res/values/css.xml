@@ -36,6 +36,12 @@
         [data-sigil*=m-promo-jewel-header]{ display: none; }
 	</string>
 
+    <string name="removeBrowserNotSupported" translatable="false">
+		#header-notices {
+		    display: none;
+        }
+	</string>
+
     <string name="hideAdsAndPeopleYouMayKnow" translatable="false">
         article[data-ft*=ei]{display: none !important;}
          .ego  {   display: none !important;  }

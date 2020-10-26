@@ -548,6 +548,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     private void ApplyCustomCss() {
         String css = "";
+
+        css += getString(R.string.removeBrowserNotSupported);
+
         if (savedPreferences.getBoolean("pref_centerTextPosts", false)) {
             css += getString(R.string.centerTextPosts);
         }
