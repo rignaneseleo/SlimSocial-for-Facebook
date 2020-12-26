@@ -179,19 +179,13 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         webViewFacebook.setListener(this, this);
 
         webViewFacebook.clearPermittedHostnames();
+
+        //list of hosts allowed
         webViewFacebook.addPermittedHostname("facebook.com");
         webViewFacebook.addPermittedHostname("fbcdn.net");
         webViewFacebook.addPermittedHostname("fb.com");
         webViewFacebook.addPermittedHostname("fb.me");
-
-/*
-        webViewFacebook.addPermittedHostname("m.facebook.com");
-        webViewFacebook.addPermittedHostname("h.facebook.com");
-        webViewFacebook.addPermittedHostname("touch.facebook.com");
-        webViewFacebook.addPermittedHostname("mbasic.facebook.com");
-        webViewFacebook.addPermittedHostname("touch.facebook.com");
         webViewFacebook.addPermittedHostname("messenger.com");
-*/
 
         webViewFacebook.requestFocus(View.FOCUS_DOWN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//remove the keyboard issue
@@ -199,7 +193,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         WebSettings settings = webViewFacebook.getSettings();
 
         webViewFacebook.setDesktopMode(true);
-        settings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
+        settings.setUserAgentString(getString(R.string.userAgent));
         settings.setJavaScriptEnabled(true);
 
         //set text zoom
@@ -350,6 +344,11 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         }
     }
 
+    private void OpenMessenger() {
+        webViewFacebook.loadUrl(getString(R.string.urlMessages));
+
+    }
+
     private void RefreshPage() {
         if (noConnectionError) {
             webViewFacebook.goBack();
@@ -380,7 +379,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     @Override
     public void onPageFinished(String url) {
-        ApplyCustomCss();
+        ApplyCustomCss(url);
 
         if (savedPreferences.getBoolean("pref_enableMessagesShortcut", false)) {
             webViewFacebook.loadUrl(getString(R.string.fixMessages));
@@ -388,6 +387,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         swipeRefreshLayout.setRefreshing(false);
 
+        //remove pull to refresh if it is messenger
+        swipeRefreshLayout.setEnabled(!url.contains("messenger.com"));
     }
 
     @Override
@@ -421,26 +422,19 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     @Override
     public void onDownloadRequested(String url, String suggestedFilename, String mimeType,
                                     long contentLength, String contentDisposition, String userAgent) {
-
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
-
     }
 
 
     @Override
     public void onExternalPageRequest(String url) {//if the link doesn't contain 'facebook.com', open it using the browser
-        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().endsWith("slimsocial.leo")) {
-            //he clicked on messages
-            startActivity(new Intent(this, MessagesActivity.class));
-        } else {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-            } catch (ActivityNotFoundException e) {//this prevents the crash
-                Log.e("shouldOverrideUrlLoad", "" + e.getMessage());
-                e.printStackTrace();
-            }
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {//this prevents the crash
+            Log.e("shouldOverrideUrlLoad", "" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -489,7 +483,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 break;
             }
             case R.id.messages: {//open messages
-                startActivity(new Intent(this, MessagesActivity.class));
+                //startActivity(new Intent(this, MessagesActivity.class));
+                OpenMessenger();
                 break;
             }
             case R.id.refresh: {//refresh the page
@@ -518,6 +513,11 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                         Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.support: {//share this app
+                webViewFacebook.loadUrl(getString(R.string.paypalDonationLink));
+                break;
+            }
+
             case R.id.settings: {//open settings
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -546,7 +546,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         return url;
     }
 
-    private void ApplyCustomCss() {
+    private void ApplyCustomCss(String loadingUrl) {
         String css = "";
 
         css += getString(R.string.removeBrowserNotSupported);
@@ -577,6 +577,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             default:
                 break;
         }
+
+        if (loadingUrl.contains("messenger.com"))
+            css += getString(R.string.adaptMessenger);
 
         //apply the customizations
         webViewFacebook.loadUrl(getString(R.string.editCss).replace("$css", css));
