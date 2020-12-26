@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 59
-        versionName "3.8.5"
+        targetSdkVersion 29
+        versionCode 60
+        versionName "4.0.0"
     }
 
     buildTypes {

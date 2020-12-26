@@ -47,6 +47,32 @@
          .ego  {   display: none !important;  }
 	</string>
 
+    <string name="adaptMessenger" translatable="false">
+       .wkznzc2l {
+        display: none !important;
+        }
+
+        .kuivcneq {
+        display: none !important;
+        }
+
+        .bafdgad4 {
+        display: none !important;
+        }
+
+        .aov4n071.cxmmr5t8.bi6gxh9e.hcukyx3x.jb3vyjys.hv4rvrfc.qt6c0cv9.dati1w0a {
+        display: none !important;
+        }
+
+        .rj1gh0hx {
+        max-width: -webkit-fill-available;
+        }
+
+        .j83agx80 {
+        max-width: -webkit-fill-available;
+        }
+	</string>
+
     <!--Themes-->
 
     <string name="blackTheme" translatable="false">
