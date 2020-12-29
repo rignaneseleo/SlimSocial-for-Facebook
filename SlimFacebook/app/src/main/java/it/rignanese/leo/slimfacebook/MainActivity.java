@@ -56,8 +56,6 @@ import static it.rignanese.leo.slimfacebook.R.id.webView;
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
 public class MainActivity extends Activity implements MyAdvancedWebView.Listener, PurchasesUpdatedListener {
-    // create link handler (long clicked links)
-    private final MyHandler linkHandler = new MyHandler(this);
     private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
     private MyAdvancedWebView webViewFacebook;//the main webView where is shown facebook
     private BillingClient billingClient;
