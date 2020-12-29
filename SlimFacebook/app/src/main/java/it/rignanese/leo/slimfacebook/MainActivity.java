@@ -1,7 +1,7 @@
 package it.rignanese.leo.slimfacebook;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -26,9 +27,22 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ConsumeParams;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
 import it.rignanese.leo.slimfacebook.utility.Dimension;
@@ -41,15 +55,14 @@ import static it.rignanese.leo.slimfacebook.R.id.webView;
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */
-public class MainActivity extends Activity implements MyAdvancedWebView.Listener {
-
+public class MainActivity extends Activity implements MyAdvancedWebView.Listener, PurchasesUpdatedListener {
+    // create link handler (long clicked links)
+    private final MyHandler linkHandler = new MyHandler(this);
     private SwipeRefreshLayout swipeRefreshLayout;//the layout that allows the swipe refresh
     private MyAdvancedWebView webViewFacebook;//the main webView where is shown facebook
-
+    private BillingClient billingClient;
     private SharedPreferences savedPreferences;//contains all the values of saved preferences
-
     private boolean noConnectionError = false;//flag: is true if there is a connection error. It should reload the last useful page
-
     private boolean isSharer = false;//flag: true if the app is called from sharer
     private String urlSharer = "";//to save the url got from the sharer
 
@@ -62,11 +75,18 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
     private View mCustomView;
 
+    //donations
+    private SkuDetails donation1 = null;
+    private SkuDetails donation2 = null;
+    private SkuDetails donation3 = null;
+    private SkuDetails donation4 = null;
 
     //*********************** ACTIVITY EVENTS ****************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         savedPreferences = PreferenceManager.getDefaultSharedPreferences(this); // setup the sharedPreferences
+
+        setUpBillingClient();
 
         SetTheme();//set the activity theme
 
@@ -98,16 +118,33 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             webViewFacebook.loadUrl(FromDesktopToMobileUrl(getIntent().getDataString()));
         } else GoHome();//load homepage
 
+        showDonationDialog();
     }
 
-    @SuppressLint("NewApi")
+    private void showDonationDialog() {
+        //only once
+        SharedPreferences donation_pref = getSharedPreferences("donation_pref", MODE_PRIVATE);
+
+        if (donation_pref.getBoolean("is_show_first_time", true)) {
+            new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert).setTitle("Support the app")
+                    .setMessage("please donate to this project.")
+                    .setPositiveButton("ok", (dialog, which) -> {
+                        donation_pref.edit().putBoolean("is_show_first_time", false).apply();
+                        setupDonation();
+                    }).setNegativeButton("not now", (dialog, which) -> {
+                donation_pref.edit().putBoolean("is_show_first_time", false).apply();
+            }).create().show();
+        }
+
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
         webViewFacebook.onResume();
     }
 
-    @SuppressLint("NewApi")
     @Override
     protected void onPause() {
         webViewFacebook.onPause();
@@ -315,14 +352,15 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     private void SetTheme() {
         switch (savedPreferences.getString("pref_theme", "default")) {
-            case "DarkTheme": {
+            case "DarkTheme":
                 setTheme(R.style.DarkTheme);
                 break;
-            }
-            default: {
+            case "donate_theme":
+                setTheme(R.style.DonateTheme);
+                break;
+            default:
                 setTheme(R.style.DefaultTheme);
                 break;
-            }
         }
     }
 
@@ -513,11 +551,6 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                         Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.support: {//share this app
-                webViewFacebook.loadUrl(getString(R.string.paypalDonationLink));
-                break;
-            }
-
             case R.id.settings: {//open settings
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -528,11 +561,38 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 System.exit(1);
                 return true;
             }
-
+            case R.id.action_donate: {
+                setupDonation();
+                break;
+            }
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDonation() {
+        View donationView = getLayoutInflater().inflate(R.layout.purchase_item, null, false);
+        ((TextView) donationView.findViewById(R.id.tv_donation_1))
+                .setText(String.format("%s", donation1.getPrice()));
+        ((TextView) donationView.findViewById(R.id.tv_donation_2))
+                .setText(String.format("%s", donation2.getPrice()));
+        ((TextView) donationView.findViewById(R.id.tv_donation_3))
+                .setText(String.format("%s", donation3.getPrice()));
+        ((TextView) donationView.findViewById(R.id.tv_donation_4))
+                .setText(String.format("%s", donation4.getPrice()));
+        donationView.findViewById(R.id.donation_1).setOnClickListener(v -> startBillingFlow(donation1));
+        donationView.findViewById(R.id.donation_2).setOnClickListener(v -> startBillingFlow(donation2));
+        donationView.findViewById(R.id.donation_3).setOnClickListener(v -> startBillingFlow(donation3));
+        donationView.findViewById(R.id.donation_4).setOnClickListener(v -> startBillingFlow(donation4));
+        new AlertDialog.Builder(this).setTitle("Please support me").setView(donationView).create().show();
+    }
+
+    private void startBillingFlow(SkuDetails donation) {
+        if (billingClient.isReady()) {
+            BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSkuDetails(donation).build();
+            billingClient.launchBillingFlow(this, flowParams);
+        }
     }
 
 
@@ -583,6 +643,106 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         //apply the customizations
         webViewFacebook.loadUrl(getString(R.string.editCss).replace("$css", css));
+    }
+
+    @Override
+    public void onPurchasesUpdated(@NonNull BillingResult billingResult, List<Purchase> purchases) {
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
+            for (Purchase purchase : purchases) {
+                //handleNonConcumablePurchase(purchase);
+                handlePurchases(purchase);
+            }
+        } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
+            Toast.makeText(this, "Canceled!", Toast.LENGTH_SHORT).show();
+            // Handle an error caused by a user cancelling the purchase flow.
+        } else {
+            Toast.makeText(this, "some thing goes wrong!", Toast.LENGTH_SHORT).show();
+            // Handle any other error codes.
+        }
+
+    }
+
+    private void setUpBillingClient() {
+        billingClient = BillingClient.newBuilder(this)
+                .setListener(this)
+                .enablePendingPurchases()
+                .build();
+        startConnection();
+    }
+
+    private void startConnection() {
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    Log.v("TAG_INAPP", "Setup Billing Done");
+                    // The BillingClient is ready. You can query purchases here.
+                    queryAvailableProducts();
+                }
+            }
+
+            @Override
+            public void onBillingServiceDisconnected() {
+                Log.v("TAG_INAPP", "Billing client Disconnected");
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+        });
+    }
+
+    private void queryAvailableProducts() {
+        List<String> skuList = new ArrayList<>();
+        skuList.add("donation_1");
+        skuList.add("donation_2");
+        skuList.add("donation_3");
+        skuList.add("donation_4");
+        SkuDetailsParams.Builder builder = SkuDetailsParams.newBuilder();
+        builder.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
+        billingClient.querySkuDetailsAsync(builder.build(), (billingResult, skuDetailsList) -> {
+            // Process the result.
+            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                for (SkuDetails skuDetails : skuDetailsList) {
+                    if (skuDetails.getSku().equals("donation_1")) {
+                        donation1 = skuDetails;
+
+                    } else if (skuDetails.getSku().equals("donation_2")) {
+                        donation2 = skuDetails;
+
+                    } else if (skuDetails.getSku().equals("donation_3")) {
+                        donation3 = skuDetails;
+
+                    } else if (skuDetails.getSku().equals("donation_4")) {
+                        donation4 = skuDetails;
+
+                    }
+                }
+                /*for (SkuDetails skuDetails : skuDetailsList) {
+                    if (skuList.contains(skuDetails.getSku())){
+
+
+                    }
+                    BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build();
+                    billingClient.launchBillingFlow(this, flowParams);
+                }*/
+            }
+
+        });
+    }
+
+    private void handlePurchases(@NonNull Purchase purchase) {
+        ConsumeParams consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build();
+        billingClient.consumeAsync(consumeParams, (billingResult, purchaseToken) -> {
+            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                Toast.makeText(this, "Thanks for Supporting :)", Toast.LENGTH_SHORT).show();
+                savedPreferences.edit().putString("pref_theme", "donate_theme").apply();
+                SetTheme();
+
+            } else {
+                Log.w("TAG_INAPP", billingResult.getDebugMessage());
+            }
+
+
+        });
     }
 
     // handle long clicks on links, an awesome way to avoid memory leaks
