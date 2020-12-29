@@ -18,7 +18,7 @@
     <string name="fixedBar" translatable="false">
 		#header{ position: fixed; z-index: 6; top: 0px; }
 
-        #root{ padding-top: 44px; }
+        #root{ padding-top: 84px; }
 
         .flyout{ max-height: $spx; overflow-y: scroll;  }
 
