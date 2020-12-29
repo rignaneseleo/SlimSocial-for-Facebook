@@ -23,6 +23,7 @@
 
     <!-- to force the use of simplechromecustomtabs that has the min sdk 16 -->
     <uses-sdk tools:overrideLibrary="com.novoda.simplechromecustomtabs" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
