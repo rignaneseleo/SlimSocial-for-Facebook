@@ -10,6 +10,11 @@
 		margin-top: 50px !important;
 		}
 	</string>
+    <string name="hideStories" translatable="false">
+		#MStoriesTray {
+		display: none !important;
+		}
+	</string>
     <string name="fixedBar" translatable="false">
 		#header{ position: fixed; z-index: 6; top: 0px; }
 

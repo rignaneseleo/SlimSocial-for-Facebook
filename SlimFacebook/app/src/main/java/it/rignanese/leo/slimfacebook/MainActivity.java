@@ -622,6 +622,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             css += (getString(R.string.fixedBar).replace("$s", ""
                     + Dimension.heightForFixedFacebookNavbar(getApplicationContext())));
         }
+        if (savedPreferences.getBoolean("pref_hideStories", false)) {
+            css += getString(R.string.hideStories);
+        }
         if (savedPreferences.getBoolean("pref_removeMessengerDownload", true)) {
             css += getString(R.string.removeMessengerDownload);
         }
