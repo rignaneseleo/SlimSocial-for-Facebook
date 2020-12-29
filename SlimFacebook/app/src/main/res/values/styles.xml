@@ -26,6 +26,6 @@
         <item name="android:background">@android:color/black</item>
     </style>
     <style name="DonateActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@android:color/holo_blue_dark</item>
+        <item name="android:background">@color/officialBlueFacebook</item>
     </style>
 </resources>
