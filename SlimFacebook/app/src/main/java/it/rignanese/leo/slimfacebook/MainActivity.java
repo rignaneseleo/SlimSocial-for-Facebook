@@ -754,7 +754,8 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         billingClient.consumeAsync(consumeParams, (billingResult, purchaseToken) -> {
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                 Toast.makeText(this, "Thanks for Supporting :)", Toast.LENGTH_SHORT).show();
-                savedPreferences.edit().putString("pref_theme", "donate_theme").apply();
+                savedPreferences.edit().putBoolean("supporter", true).apply();
+                //savedPreferences.edit().putString("pref_theme", "donate_theme").apply();
                 SetTheme();
 
             } else {
