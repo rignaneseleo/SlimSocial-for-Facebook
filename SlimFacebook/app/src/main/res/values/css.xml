@@ -225,7 +225,8 @@ h3._391s {
 .composerLinkText,
 .fcg,
 ._5c4t ._1g06 ,
-._2b06 span{
+._2b06 span,
+        ._59k{
     color: #d2d2d2 !important;
 }
 /* white text */
