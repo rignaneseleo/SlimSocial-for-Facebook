@@ -585,6 +585,10 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     }
 
     private void setupDonation() {
+        if (donation1 == null) {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
         View donationView = getLayoutInflater().inflate(R.layout.purchase_item, null, false);
         ((TextView) donationView.findViewById(R.id.tv_donation_1))
                 .setText(String.format("%s", donation1.getPrice()));
