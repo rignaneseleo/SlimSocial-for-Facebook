@@ -421,7 +421,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         ApplyCustomCss(url);
 
         //if (savedPreferences.getBoolean("pref_enableMessagesShortcut", false)) {
-           // webViewFacebook.loadUrl(getString(R.string.fixMessages));
+        // webViewFacebook.loadUrl(getString(R.string.fixMessages));
         //}
 
         swipeRefreshLayout.setRefreshing(false);
@@ -468,7 +468,19 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
 
     @Override
-    public void onExternalPageRequest(String url) {//if the link doesn't contain 'facebook.com', open it using the browser
+    public void onExternalPageRequest(String url) {
+        //if the link doesn't contain 'facebook.com', open it using the browser
+
+        //this allows to open chats on messenger inside the app
+        if (url.contains("/m.me/")) {
+            //Transform the link
+            // from https://m.me/XX?fbclid=YY
+            // to https://www.messenger.com/t/XX/
+            String newUrl = url.replace("m.me", "www.messenger.com/t");
+            webViewFacebook.loadUrl(newUrl);
+            return;
+        }
+
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         } catch (ActivityNotFoundException e) {//this prevents the crash
