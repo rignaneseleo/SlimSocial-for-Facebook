@@ -415,11 +415,14 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     @Override
     public void onPageFinished(String url) {
+        if (savedPreferences.getBoolean("pref_enableFab", true))
+            webViewFacebook.loadUrl(getString(R.string.createFab));
+
         ApplyCustomCss(url);
 
-        if (savedPreferences.getBoolean("pref_enableMessagesShortcut", false)) {
-            webViewFacebook.loadUrl(getString(R.string.fixMessages));
-        }
+        //if (savedPreferences.getBoolean("pref_enableMessagesShortcut", false)) {
+           // webViewFacebook.loadUrl(getString(R.string.fixMessages));
+        //}
 
         swipeRefreshLayout.setRefreshing(false);
 
@@ -609,6 +612,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         css += getString(R.string.removeBrowserNotSupported);
 
+        if (savedPreferences.getBoolean("pref_enableFab", true))
+            css += getString(R.string.fabBtn);
+
         if (savedPreferences.getBoolean("pref_centerTextPosts", false)) {
             css += getString(R.string.centerTextPosts);
         }
@@ -641,6 +647,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         if (loadingUrl.contains("messenger.com"))
             css += getString(R.string.adaptMessenger);
+
 
         //apply the customizations
         webViewFacebook.loadUrl(getString(R.string.editCss).replace("$css", css));
