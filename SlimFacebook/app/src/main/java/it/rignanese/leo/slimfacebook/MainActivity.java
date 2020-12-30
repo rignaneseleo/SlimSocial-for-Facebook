@@ -116,7 +116,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             webViewFacebook.loadUrl(FromDesktopToMobileUrl(getIntent().getDataString()));
         } else GoHome();//load homepage
 
-        showDonationDialog();
+        //showDonationDialog();
     }
 
     private void showDonationDialog() {
@@ -353,9 +353,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             case "DarkTheme":
                 setTheme(R.style.DarkTheme);
                 break;
-            case "donate_theme":
+            /*case "donate_theme":
                 setTheme(R.style.DonateTheme);
-                break;
+                break;*/
             default:
                 setTheme(R.style.DefaultTheme);
                 break;
@@ -513,6 +513,13 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        //hide or show the donate button
+        if (savedPreferences.getBoolean("supporter", false)) {
+            menu.findItem(R.id.action_donate).setVisible(false);
+            this.setTitle("SlimSocial+");
+        }
+
         return true;
     }
 
