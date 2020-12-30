@@ -203,7 +203,8 @@ input[type=text],
 ._4s0c,
 ._1h_j,
 .touch ._3e18,
-.touch ._533c {
+.touch ._533c,
+        ._13fn{
     background: #000 !important;
     /* the background */
 }
