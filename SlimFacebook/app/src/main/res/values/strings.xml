@@ -118,6 +118,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="visitMyWebsite">Visit my website</string>
     <string name="summary_hideStories">Turn this on to hide the stories on your feed</string>
     <string name="title_hideStories">Hide stories</string>
+    <string name="summary_enableFab">Show the round button on the bottom right</string>
+    <string name="title_enableFab">Show button to go to the top</string>
 
     <!--end other-->
 </resources>

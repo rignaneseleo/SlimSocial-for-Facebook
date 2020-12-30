@@ -69,12 +69,11 @@
 
     <PreferenceCategory android:title="@string/prefCat_app_settings_title">
 
-
         <it.rignanese.leo.slimfacebook.utils.SwitchWithoutBugs
-            android:defaultValue="false"
-            android:key="pref_enableMessagesShortcut"
-            android:summary="@string/summary_enableMessagesShortcut"
-            android:title="@string/title_enableMessagesShortcut" />
+            android:defaultValue="true"
+            android:key="pref_enableFab"
+            android:summary="@string/summary_enableFab"
+            android:title="@string/title_enableFab" />
 
 
         <!--Set the saving data -->
