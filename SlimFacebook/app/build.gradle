@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 61
-        versionName "4.0.1"
+        versionName "5.0.0"
     }
 
     buildTypes {
