@@ -120,11 +120,10 @@
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=it.rignanese.leo.slimfacebook" />
         </PreferenceScreen>
-        <PreferenceScreen
+       <!-- <PreferenceScreen
             android:summary="@string/supportMyProjects"
             android:title="@string/supportMe">
-
-        </PreferenceScreen>
+        </PreferenceScreen>-->
         <PreferenceScreen
             android:title="@string/visitMyWebsite">
             <intent
