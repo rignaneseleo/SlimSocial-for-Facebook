@@ -86,4 +86,10 @@
     <string name="noNotificationEnjoyLife">Ich suche nach dem besten Weg, sie zu implementieren. Genießen Sie in der Zwischenzeit ein Leben ohne Facebook Unterbrechungen :)</string>
     <string name="download">Herunterladen</string>
     <string name="share">Teilen</string>
+
+    <string name="next">Weiter</string>
+    <string name="donatedialog_desc">Dank dieser app können sie Facebook genießen, während ihre telefondaten sicher sind. SlimSocial ist ein unabhängiges projekt, das nur auf spenden von menschen angewiesen ist.</string>
+    <string name="dataworth">Wie viel sind ihre daten wert? </string>
+    <string name="needsupport">SlimSocial braucht ihre unterstützung!</string>
+    <string name="dontsupport">Unterstützen sie das projekt nicht</string>
 </resources>
