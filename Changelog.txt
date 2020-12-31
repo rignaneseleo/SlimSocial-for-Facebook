@@ -333,4 +333,14 @@ v4.0.0
 - Added support button on menu
 - Updated compileSdkVersion and targetSdkVersion to 29
 
+v5.0.0
+- Fresh layout
+- Fixed download bug
+- Removed unused settings
+- Fixed black theme
+- Reduced the size
+- Added a way to donate in-app
+- Improved support to messenger
+- Fixed minor bugs
+
 ! Consider donating to support the project !
