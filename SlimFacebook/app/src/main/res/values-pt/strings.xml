@@ -57,4 +57,14 @@
     <string name="summary_enableFastShare">Com o Compartilhamento Rápido você pode compartilhar qualquer link simplesmente tocando e segurando nele</string>
     <string name="summary_textSize">Escolha o tamanho do texto que você preferir</string>
     <string name="refreshToApply">Atualize o Facebook para aplicar as alterações</string>
+
+    <string name="summary_hideStories">Ative para ocultar as histórias em seu feed</string>
+    <string name="title_hideStories">Ocultar histórias</string>
+    <string name="summary_enableFab">Mostrar o botão redondo no canto inferior direito</string>
+    <string name="title_enableFab">Mostrar botão para ir para o topo</string>
+    <string name="next">Próxima</string>
+    <string name="donatedialog_desc">Graças a este aplicativo, você pode desfrutar do Facebook enquanto os dados do seu telefone estão seguros. SlimSocial é um projeto independente que conta apenas com doações de pessoas. </string>
+    <string name="dataworth">Quanto valem seus dados?</string>
+    <string name="needsupport">SlimSocial precisa de seu apoio!</string>
+    <string name="dontsupport">Não suporta</string>
 </resources>

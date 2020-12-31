@@ -13,6 +13,23 @@
 		}
 		addStyle(\'$css\');
 	</string>
+
+	<string name="createFab" translatable="false">
+		javascript:function createFab() {
+		var button = document.createElement(\'button\');
+		button.type = \'button\';
+  		button.innerHTML = \'▲\';
+  		button.className = \'my_fab_btn\';
+
+  		button.onclick = function() {
+    		window.scrollTo(0,0);
+  		};
+
+  		var container = document.getElementById(\'root\');
+  		container.appendChild(button);
+		}
+		createFab();
+	</string>
     <string name="fixMessages" translatable="false">
 		javascript:function fixMessages() {
 		var a=(document.querySelectorAll(\'#messages_jewel ._19no.touchable\'))[0];

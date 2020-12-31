@@ -10,10 +10,15 @@
 		margin-top: 50px !important;
 		}
 	</string>
+    <string name="hideStories" translatable="false">
+		#MStoriesTray {
+		display: none !important;
+		}
+	</string>
     <string name="fixedBar" translatable="false">
 		#header{ position: fixed; z-index: 6; top: 0px; }
 
-        #root{ padding-top: 44px; }
+        #root{ padding-top: 84px; }
 
         .flyout{ max-height: $spx; overflow-y: scroll;  }
 
@@ -36,9 +41,60 @@
         [data-sigil*=m-promo-jewel-header]{ display: none; }
 	</string>
 
+    <string name="removeBrowserNotSupported" translatable="false">
+		#header-notices {
+		    display: none;
+        }
+	</string>
+
     <string name="hideAdsAndPeopleYouMayKnow" translatable="false">
         article[data-ft*=ei]{display: none !important;}
          .ego  {   display: none !important;  }
+	</string>
+
+    <string name="fabBtn" translatable="false">
+        .my_fab_btn{
+    position: fixed; z-index: 6; bottom: 10px;
+    right:10px;
+  background-color:#3B5998;
+  width:60px;
+  height:60px;
+  border-radius:100%;
+  background:#3B5998;
+  border:none;
+  outline:none;
+  color:#FFF;
+  font-size:23px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.3s;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+	</string>
+
+    <string name="adaptMessenger" translatable="false">
+       .wkznzc2l {
+        display: none !important;
+        }
+
+        .kuivcneq {
+        display: none !important;
+        }
+
+        .bafdgad4 {
+        display: none !important;
+        }
+
+        .aov4n071.cxmmr5t8.bi6gxh9e.hcukyx3x.jb3vyjys.hv4rvrfc.qt6c0cv9.dati1w0a {
+        display: none !important;
+        }
+
+        .rj1gh0hx {
+        max-width: -webkit-fill-available;
+        }
+
+        .j83agx80 {
+        max-width: -webkit-fill-available;
+        }
 	</string>
 
     <!--Themes-->
@@ -55,7 +111,14 @@
 ._4g34,
 ._5pxb,
 ._55wq,
+._7om2,
 ._53_-,
+._3iyw,
+._6j_d,
+._8ytl,
+._4_d0,
+._6beq,
+._vi6,
 ._55ws,
 ._u42,
 .jx-result,
@@ -140,7 +203,8 @@ input[type=text],
 ._4s0c,
 ._1h_j,
 .touch ._3e18,
-.touch ._533c {
+.touch ._533c,
+        ._13fn{
     background: #000 !important;
     /* the background */
 }
@@ -161,7 +225,9 @@ h3._391s {
 }
 .composerLinkText,
 .fcg,
-._5c4t ._1g06 {
+._5c4t ._1g06 ,
+._2b06 span,
+        ._59k{
     color: #d2d2d2 !important;
 }
 /* white text */

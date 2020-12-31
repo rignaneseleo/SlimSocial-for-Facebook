@@ -5,9 +5,8 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:actionBarStyle">@style/MyDefaultActionBar</item>
     </style>
-
     <style name="MyDefaultActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/blueSlimFacebookTheme</item>
+        <item name="android:background">@color/officialBlueFacebook</item>
     </style>
 
 
@@ -16,8 +15,18 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:actionBarStyle">@style/MyDarkActionBar</item>
     </style>
-
     <style name="MyDarkActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@android:color/black</item>
     </style>
+
+
+    <style name="DonateTheme" parent="@android:style/Theme.Holo">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:actionBarStyle">@style/DonateActionBar</item>
+    </style>
+    <style name="DonateActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/officialBlueFacebook</item>
+    </style>
+
 </resources>

@@ -24,6 +24,7 @@ import android.webkit.WebSettings;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.Date;
 
 import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
 
@@ -110,12 +111,14 @@ public class PictureActivity extends Activity implements MyAdvancedWebView.Liste
             request.allowScanningByMediaScanner();
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
+            Date date = new Date();
+            long timeMilli = date.getTime();
+            String filename = "SlimSocial_" + timeMilli + ".jpg";
             if (savedPreferences.getBoolean("pref_useSlimSocialSubfolderToDownloadedFiles", false)) {
-                path += "/SlimSocial";
+                filename = "SlimSocial/"+filename;
             }
 
-            request.setDestinationInExternalPublicDir(path, "SlimSocial.jpg");
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, filename);
 
             if (share)
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);

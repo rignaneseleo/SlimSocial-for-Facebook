@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:id="@+id/root_mesg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:gravity="start"
+            android:text="@string/donatedialog_desc"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:id="@+id/btn_next"
+            android:background="@drawable/btn_background"
+            android:text="@string/next"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/root_donation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/donation_1"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="☕️"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="$1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/donation_2"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="🍕🍕"
+                android:textAppearance="?android:textAppearanceListItem"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="$1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/donation_3"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="🍝🍝🍝"
+                android:textAppearance="?android:textAppearanceListItem"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="$1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/donation_4"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="🍾🍾🍾🍾"
+                android:textAppearance="?android:textAppearanceListItem"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="$1" />
+        </LinearLayout>
+
+        <View
+            android:layout_height="2dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/secondary_text_dark_nodisable" />
+
+        <LinearLayout
+            android:id="@+id/donation_0"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="😔😔😔😔😔"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="FREE" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
