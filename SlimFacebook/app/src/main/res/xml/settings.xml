@@ -135,14 +135,13 @@
 
     <PreferenceCategory android:title="@string/prefCat_app_information_title">
         <PreferenceScreen android:summary="@string/noPersonalInformationAreShared" />
-
-        <PreferenceScreen
+        <!--<PreferenceScreen
             android:summary="@string/summary_translate"
             android:title="@string/title_translate">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://stringsxmlbuilder.site88.net/index.php?originalXmlURL=https://raw.githubusercontent.com/rignaneseleo/SlimSocial-for-Facebook/master/SlimFacebook/app/src/main/res/values/strings.xml" />
-        </PreferenceScreen>
+        </PreferenceScreen>-->
         <PreferenceScreen
             android:key="pref_credits"
             android:title="@string/credits">
