@@ -22,6 +22,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -78,6 +81,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     private SkuDetails donation2 = null;
     private SkuDetails donation3 = null;
     private SkuDetails donation4 = null;
+    // donation dialog that will show on start donation process
+    // and dismiss on end of donation process
+    private AlertDialog donationDialog;
 
     //*********************** ACTIVITY EVENTS ****************************
     @Override
@@ -609,8 +615,34 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         donationView.findViewById(R.id.donation_2).setOnClickListener(v -> startBillingFlow(donation2));
         donationView.findViewById(R.id.donation_3).setOnClickListener(v -> startBillingFlow(donation3));
         donationView.findViewById(R.id.donation_4).setOnClickListener(v -> startBillingFlow(donation4));
-        new AlertDialog.Builder(this).setTitle("Please support me").setView(donationView).create().show();
+        donationView.findViewById(R.id.btn_next).setOnClickListener(v -> {
+            donationView.findViewById(R.id.root_mesg).setVisibility(View.GONE);
+            View view = donationView.findViewById(R.id.root_donation);
+            view.setVisibility(View.VISIBLE);
+            view.startAnimation(inFromRightAnimation());
+        });
+        donationDialog = new AlertDialog.Builder(this)
+                .setTitle("support me")
+                .setView(donationView)
+                .setCancelable(false)
+                .create();
+        donationDialog.show();
+
+
     }
+
+    private Animation inFromRightAnimation() {
+
+        Animation inFromRight = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT, +1.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f);
+        inFromRight.setDuration(300);
+        inFromRight.setInterpolator(new AccelerateInterpolator());
+        return inFromRight;
+    }
+
 
     private void startBillingFlow(SkuDetails donation) {
         if (billingClient.isReady()) {
@@ -763,6 +795,9 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     private void handlePurchases(@NonNull Purchase purchase) {
         ConsumeParams consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build();
         billingClient.consumeAsync(consumeParams, (billingResult, purchaseToken) -> {
+            if (donationDialog != null && donationDialog.isShowing()) {
+                donationDialog.dismiss();
+            }
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                 Toast.makeText(this, "Thanks for Supporting :)", Toast.LENGTH_SHORT).show();
                 savedPreferences.edit().putBoolean("supporter", true).apply();
