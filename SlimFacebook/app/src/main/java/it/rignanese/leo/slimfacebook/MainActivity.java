@@ -129,6 +129,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         //only once
         SharedPreferences donation_pref = getSharedPreferences("donation_pref", MODE_PRIVATE);
 
+        //TODO translate this
         if (donation_pref.getBoolean("is_show_first_time", true)) {
             new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert).setTitle("Support the app")
                     .setMessage("please donate to this project.")
@@ -522,7 +523,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         //hide or show the donate button
         if (savedPreferences.getBoolean("supporter", false)) {
-            menu.findItem(R.id.action_donate).setVisible(false);
+            //menu.findItem(R.id.action_donate).setVisible(false);
             this.setTitle("SlimSocial+");
         }
 
@@ -599,10 +600,21 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
     private void setupDonation() {
         if (donation1 == null) {
-            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.descriptionNoConnection), Toast.LENGTH_SHORT).show();
             return;
         }
+
         View donationView = getLayoutInflater().inflate(R.layout.purchase_item, null, false);
+
+        //View #1
+        donationView.findViewById(R.id.btn_next).setOnClickListener(v -> {
+            donationView.findViewById(R.id.root_mesg).setVisibility(View.GONE);
+            View view = donationView.findViewById(R.id.root_donation);
+            view.setVisibility(View.VISIBLE);
+            view.startAnimation(inFromRightAnimation());
+        });
+
+        //View #2
         ((TextView) donationView.findViewById(R.id.tv_donation_1))
                 .setText(String.format("%s", donation1.getPrice()));
         ((TextView) donationView.findViewById(R.id.tv_donation_2))
@@ -611,24 +623,22 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 .setText(String.format("%s", donation3.getPrice()));
         ((TextView) donationView.findViewById(R.id.tv_donation_4))
                 .setText(String.format("%s", donation4.getPrice()));
+        ((TextView) donationView.findViewById(R.id.tv_donation_0))
+                .setText(String.format("%s", donation1.getPrice().replaceAll("[0-9]", "0")));
         donationView.findViewById(R.id.donation_1).setOnClickListener(v -> startBillingFlow(donation1));
         donationView.findViewById(R.id.donation_2).setOnClickListener(v -> startBillingFlow(donation2));
         donationView.findViewById(R.id.donation_3).setOnClickListener(v -> startBillingFlow(donation3));
         donationView.findViewById(R.id.donation_4).setOnClickListener(v -> startBillingFlow(donation4));
-        donationView.findViewById(R.id.btn_next).setOnClickListener(v -> {
-            donationView.findViewById(R.id.root_mesg).setVisibility(View.GONE);
-            View view = donationView.findViewById(R.id.root_donation);
-            view.setVisibility(View.VISIBLE);
-            view.startAnimation(inFromRightAnimation());
+        donationView.findViewById(R.id.donation_0).setOnClickListener(v -> {
+            donationDialog.cancel();
         });
+
         donationDialog = new AlertDialog.Builder(this)
-                .setTitle("support me")
+                .setTitle(getString(R.string.needsupport))
                 .setView(donationView)
                 .setCancelable(false)
                 .create();
         donationDialog.show();
-
-
     }
 
     private Animation inFromRightAnimation() {
@@ -799,16 +809,13 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
                 donationDialog.dismiss();
             }
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                Toast.makeText(this, "Thanks for Supporting :)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.thanks) + " :)", Toast.LENGTH_SHORT).show();
                 savedPreferences.edit().putBoolean("supporter", true).apply();
                 //savedPreferences.edit().putString("pref_theme", "donate_theme").apply();
                 SetTheme();
-
             } else {
                 Log.w("TAG_INAPP", billingResult.getDebugMessage());
             }
-
-
         });
     }
 

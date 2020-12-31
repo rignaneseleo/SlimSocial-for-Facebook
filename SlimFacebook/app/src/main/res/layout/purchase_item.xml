@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="12dp">
 
     <LinearLayout
         android:id="@+id/root_mesg"
@@ -15,9 +15,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:gravity="start"
-            android:text="Donate to this app will help create new features like messenger, ecc."
-            android:textAppearance="?android:textAppearanceListItem" />
+            android:text="@string/donatedialog_desc"
+            android:textAppearance="?android:textAppearanceMedium" />
 
         <Button
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:layout_marginTop="16dp"
             android:id="@+id/btn_next"
             android:background="@drawable/btn_background"
-            android:text="next"
+            android:text="@string/next"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
@@ -51,8 +52,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Donate"
-                android:textAppearance="?android:textAppearanceListItem"
+                android:text="☕️"
+                android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -78,7 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Donate"
+                android:text="🍕🍕"
                 android:textAppearance="?android:textAppearanceListItem"
                 android:textColor="@android:color/black" />
 
@@ -105,7 +106,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Donate"
+                android:text="🍝🍝🍝"
                 android:textAppearance="?android:textAppearanceListItem"
                 android:textColor="@android:color/black" />
 
@@ -132,7 +133,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Donate"
+                android:text="🍾🍾🍾🍾"
                 android:textAppearance="?android:textAppearanceListItem"
                 android:textColor="@android:color/black" />
 
@@ -145,6 +146,40 @@
                 android:textAppearance="?android:textAppearanceListItem"
                 tools:text="$1" />
         </LinearLayout>
+
+        <View
+            android:layout_height="2dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/secondary_text_dark_nodisable" />
+
+        <LinearLayout
+            android:id="@+id/donation_0"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="😔😔😔😔😔"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_donation_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textAppearance="?android:textAppearanceListItem"
+                tools:text="FREE" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
