@@ -62,7 +62,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
 
     <!--page error-->
     <string name="titleNoConnection">Oops, there is a problem!</string>
-    <string name="descriptionNoConnection">Check the connection and refresh.</string>
+    <string name="descriptionNoConnection">Check the connection and retry.</string>
     <string name="awards">This is an open-source app.</string>
     <!--end page error-->
 
@@ -116,10 +116,17 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="myWebsite" translatable="false">https://rignaneseleo.github.io/</string>
     <string name="supportMyProjects">It contains info about me and links to support my projects</string>
     <string name="visitMyWebsite">Visit my website</string>
+    <string name="donateToContribute">I chose to develop this app for free and share the code with the community, protecting you and your data from Facebook. Do I deserve a coffee?</string>
+
     <string name="summary_hideStories">Turn this on to hide the stories on your feed</string>
     <string name="title_hideStories">Hide stories</string>
     <string name="summary_enableFab">Show the round button on the bottom right</string>
     <string name="title_enableFab">Show button to go to the top</string>
+    <string name="next">Next</string>
+    <string name="donatedialog_desc">Thanks to this app, you can enjoy Facebook while your phone data is safe. SlimSocial is an independent project that only relies on people\'s donations.</string>
+    <string name="dataworth">How much is your data worth?</string>
+    <string name="needsupport">SlimSocial needs your support!</string>
+    <string name="dontsupport">Do not support</string>
 
     <!--end other-->
 </resources>
