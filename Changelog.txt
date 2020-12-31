@@ -327,5 +327,10 @@ v3.8.4
 - Fixed searchbar
 - New languages
 
+v4.0.0
+- Removed MessagesView
+- Added support to messenger.com
+- Added support button on menu
+- Updated compileSdkVersion and targetSdkVersion to 29
 
-! Consider the possibility to donate !
+! Consider donating to support the project !

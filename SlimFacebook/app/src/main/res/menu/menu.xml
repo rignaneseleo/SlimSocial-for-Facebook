@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/messages"
-        android:icon="@drawable/messages"
-        android:showAsAction="always"
-        android:title="@string/messages" />
+
     <item
         android:id="@+id/top"
         android:icon="@drawable/ic_action_hardware_keyboard_arrow_up"
-        android:showAsAction="always"
         android:title="@string/top" />
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_action_action_home"
+        android:icon="@drawable/ic_homealt"
+        android:title="@string/home"
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/messages"
+        android:icon="@drawable/ic_messenger"
         android:showAsAction="always"
-        android:title="@string/home" />
+        android:title="@string/messages" />
+  <item
+        android:id="@+id/action_donate"
+        android:title="@string/supportMe"
+        android:icon="@drawable/ic_donate"
+        android:showAsAction="never"
+        />
     <item
         android:id="@+id/refresh"
-        android:icon="@drawable/ic_action_notification_sync"
-        android:showAsAction="ifRoom"
         android:title="@string/refresh" />
     <item
         android:id="@+id/openInBrowser"

@@ -23,6 +23,7 @@
 
     <!-- to force the use of simplechromecustomtabs that has the min sdk 16 -->
     <uses-sdk tools:overrideLibrary="com.novoda.simplechromecustomtabs" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
@@ -127,6 +128,30 @@
                 <data
                     android:host="apps.fb.com"
                     android:scheme="https" />
+                <data
+                    android:host="messenger.com"
+                    android:scheme="http" />
+                <data
+                    android:host="messenger.com"
+                    android:scheme="https" />
+                <data
+                    android:host="www.messenger.com"
+                    android:scheme="http" />
+                <data
+                    android:host="www.messenger.com"
+                    android:scheme="https" />
+                <data
+                    android:host="m.me"
+                    android:scheme="http" />
+                <data
+                    android:host="m.me"
+                    android:scheme="https" />
+                <data
+                    android:host="www.m.me"
+                    android:scheme="http" />
+                <data
+                    android:host="www.m.me"
+                    android:scheme="https" />
             </intent-filter>
             <intent-filter>
 
@@ -137,21 +162,6 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
-        </activity>
-
-        <!-- message activity -->
-        <activity
-            android:name=".MessagesActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="@string/messages"
-            android:parentActivityName=".MainActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
         </activity>
 
         <!-- picture activity -->

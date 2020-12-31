@@ -2,7 +2,7 @@
 
 <!-- **********************************************************  -->
 <!-- THIS TRANSLATION IS MADE BY lRemainl USING StringsXmlBuilder -->
-<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <rignanese.leo@gmail.com>-->
+<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo<rignanese.leo@gmail.com>-->
 <!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
 <!-- **********************************************************  -->
 
@@ -77,8 +77,17 @@
     <string name="holdImageToDownload">¡Mantén presionada la imagen para descargar!</string>
     <string name="title_rate">Califica esta aplicación con 5 estrellas</string>
     <string name="summary_rate">Puedes apoyarme calificando mi app con 5 estrellas en la PlayStore. Por favor, si algo no funciona, ponte en contacto conmigo antes de calificar de forma negativa</string>
-</resources>
-    <!-- PLAY STORE PAGE
+
+    <string name="summary_hideStories">Activa esta opción para ocultar las historias en tu feed</string>
+    <string name="title_hideStories">Ocultar historias</string>
+    <string name="summary_enableFab">Muestra el botón redondo en la parte inferior derecha</string>
+    <string name="title_enableFab">Mostrar botón para ir a la parte superior</string>
+    <string name="next">Siguiente</string>
+    <string name="donatedialog_desc">Gracias a esta aplicación, puedes disfrutar de Facebook mientras los datos de tu teléfono están seguros. SlimSocial es un proyecto independiente que solo depende de las donaciones de las personas.</string>
+    <string name="dataworth">¿Cuánto valen sus datos?</string>
+    <string name="needsupport">¡SlimSocial necesita su apoyo!</string>
+    <string name="dontsupport">No soportas</string>
+</resources><!-- PLAY STORE PAGE
 
 DESCRIPCIÓN:
 Con solamente 700KB, puedes acceder a Facebook (en su versión web)
