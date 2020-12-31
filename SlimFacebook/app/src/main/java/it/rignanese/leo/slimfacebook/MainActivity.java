@@ -523,7 +523,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
         //hide or show the donate button
         if (savedPreferences.getBoolean("supporter", false)) {
-            //menu.findItem(R.id.action_donate).setVisible(false);
+            menu.findItem(R.id.action_donate).setVisible(false);
             this.setTitle("SlimSocial+");
         }
 
