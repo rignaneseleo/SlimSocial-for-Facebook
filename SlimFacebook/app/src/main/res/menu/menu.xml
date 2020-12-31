@@ -15,11 +15,11 @@
         android:icon="@drawable/ic_messenger"
         android:showAsAction="always"
         android:title="@string/messages" />
-    <item
+  <item
         android:id="@+id/action_donate"
         android:title="@string/supportMe"
         android:icon="@drawable/ic_donate"
-        android:showAsAction="always"
+        android:showAsAction="never"
         />
     <item
         android:id="@+id/refresh"
