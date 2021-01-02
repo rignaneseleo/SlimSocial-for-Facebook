@@ -729,7 +729,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             Toast.makeText(this, "Canceled!", Toast.LENGTH_SHORT).show();
             // Handle an error caused by a user cancelling the purchase flow.
         } else {
-            Toast.makeText(this, "some thing goes wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.descriptionNoConnection), Toast.LENGTH_SHORT).show();
             // Handle any other error codes.
         }
 
@@ -789,14 +789,6 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
 
                     }
                 }
-                /*for (SkuDetails skuDetails : skuDetailsList) {
-                    if (skuList.contains(skuDetails.getSku())){
-
-
-                    }
-                    BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build();
-                    billingClient.launchBillingFlow(this, flowParams);
-                }*/
             }
 
         });
