@@ -18,7 +18,7 @@
             android:title="@string/mainDeveloper">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/rignaneseleo/SlimSocial-for-Facebook" />
+                android:data="https://www.linkedin.com/in/rignaneseleo/" />
         </PreferenceScreen>
         <PreferenceScreen
             android:key="pref_SaschaHa"
