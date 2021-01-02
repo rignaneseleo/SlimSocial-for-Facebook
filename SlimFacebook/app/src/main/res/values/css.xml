@@ -121,6 +121,7 @@
 ._vi6,
 ._55ws,
 ._u42,
+._13fn,
 .jx-result,
 .jx-typeahead-results,
 ._56bt,
@@ -203,12 +204,11 @@ input[type=text],
 ._4s0c,
 ._1h_j,
 .touch ._3e18,
-.touch ._533c,
-        ._13fn{
+.touch ._533c {
     background: #000 !important;
     /* the background */
 }
-._65wz {
+._65wzO {
     background: none !important;
 }
 ._51-g,
@@ -225,9 +225,7 @@ h3._391s {
 }
 .composerLinkText,
 .fcg,
-._5c4t ._1g06 ,
-._2b06 span,
-        ._59k{
+._5c4t ._1g06 {
     color: #d2d2d2 !important;
 }
 /* white text */
@@ -274,9 +272,18 @@ input[type=text],
 .touch tr,
 .touch input,
 .touch textarea,
-.touch .mfsm {
+.touch .mfsm ,
+._2b06 span,
+._59k{
     color: #d2d2d2 !important;
 }
+
+._5s61._2pis
+{
+    background-color: #dfeff0 !important;
+border-radius: 10px !important;
+}
+
 .touch ._2ya3 {
     border-radius: 5px;
     padding: 5px;
@@ -298,7 +305,7 @@ a,
 ._27vp,
 ._ir4,
 ._5wsv,
-._46pa {
+._46pa,header {
     color: #DFEFF0 !important;
 }
 /* dark important */
@@ -321,8 +328,12 @@ a,
 .ufiBorder,
 ._5as0,
 ._5ef_,
-._35aq {
+._35aq{
     border-color: #555 !important;
+}
+
+._59te{
+    border-color: black !important;
 }
 /* buttons */
 
@@ -332,8 +343,7 @@ a,
 ._2l5v,
 ._52x1,
 ._tn0,
-._52ja,
-._5lm6 {
+._52ja {
     background: #323232 !important;
 }
 /* context menu */
