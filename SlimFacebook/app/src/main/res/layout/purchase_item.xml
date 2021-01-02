@@ -53,7 +53,7 @@
                 android:gravity="center_vertical"
                 android:padding="16dp"
                 android:text="☕️"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:textAppearance="?android:textAppearanceListItem"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -167,7 +167,7 @@
                 android:gravity="center_vertical"
                 android:padding="16dp"
                 android:text="😔😔😔😔😔"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:textAppearance="?android:textAppearanceListItem"
                 android:textColor="@android:color/black" />
 
             <TextView
