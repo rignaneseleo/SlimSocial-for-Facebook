@@ -1,92 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- **********************************************************  -->
-<!-- THIS TRANSLATION IS MADE BY andrey USING StringsXmlBuilder -->
-<!-- StringsXmlBuilder is an OPEN SOURCE tool realized by rignaneseleo <dev.rignaneseleo@gmail.com>-->
-<!-- https://github.com/rignaneseleo/Strings.xml-builder-and-translator-PHP -->
-<!-- **********************************************************  -->
-
+<!--
+SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
+ GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
+-->
 <resources>
-<string name="refresh">обновление</string>
-<string name="openInBrowser">Открыть в браузере</string>
-<string name="settings">настройки</string>
-<string name="shareThisApp">Поделиться этим приложением</string>
-<string name="prefCat_fb_settings_title">Настройки Facebook</string>
-<string name="prefCat_app_settings_title">Настройки приложения</string>
-<string name="prefCat_app_information_title">Информация о приложении</string>
-<string name="title_recentNewsFirst">Заказать новостную ленту по самым последним</string>
-<string name="summary_recentNewsFirst">А не по популярности</string>
-<string name="title_centerTextPosts">Центрировать текст поста</string>
-<string name="summary_centerTextPosts">Текст каждого поста будет центрирован</string>
-<string name="summary_addSpaceBetweenPosts">Между постами будет больше места</string>
-<string name="title_addSpaceBetweenPosts">Больше места между постами</string>
-<string name="summary_creditsCssThemes">Спасибо за фантастические темы!</string>
-<string name="summary_theme">Выберите тему, которая вам нравится</string>
-<string name="title_fixedBar">Фиксированная верхняя панель</string>
-<string name="summary_fixedBar">Синяя полоса останется наверху</string>
-<string name="title_hideSponsoredPosts">Не показывать спонсорские посты</string>
-<string name="summary_hideSponsoredPosts">Некоторые спонсорские посты будут скрыты</string>
-<string name="title_downloadImages">Сохранить данные</string>
-<string name="summary_downloadImages">Не загружайте изображения</string>
-<string name="summary_allowGeolocation">Facebook сможет получить доступ к вашей позиции</string>
-<string name="title_allowGeolocation">Разрешить использование GPS</string>
-<string name="version">Версия</string>
-<string name="credits">кредиты</string>
-<string name="prefCat_otherCredits_title">Другой</string>
-<string name="prefCat_developersCredits_title">Разработчики</string>
-<string name="summary_LeonardoRignanese">Создатель и разработчик приложения</string>
-<string name="prefCat_translatorsCredits_title">Переводчики</string>
-<string name="prefCat_designersCredits_title">Дизайнеры</string>
-<string name="donate">ПОДДЕРЖАТЬ</string>
-<string name="donateToContributeWithoutPaypal">Я решил сделать это приложение бесплатно. Хотите внести свой вклад, предложив мне кофе? Давайте свяжемся!</string>
-<string name="summary_you">Также благодаря вам, существует это приложение.</string>
-<string name="title_you">Ты важен</string>
-<string name="titleNoConnection">К сожалению, есть проблема!</string>
-<string name="descriptionNoConnection">Проверьте соединение и обновите.</string>
-<string name="awards">Это приложение с открытым исходным кодом.</string>
-<string name="thanks">Спасибо!</string>
-<string name="downloadOrShareWithBrowser">Вы можете скачать или поделиться этим изображением, открыв браузер.</string>
-<string name="shareThisLink">Поделиться ссылкой</string>
-<string name="summary_FaceSlim">Без них я не смог бы добавить некоторые привлекательные функции. Если вы разработчик, вы должны увидеть их огромную работу!</string>
-<string name="summary_lRemainl">Создатель великолепного логотипа</string>
-<string name="summary_Pharetra">Полный таланта и творчества</string>
-<string name="exit">Выход</string>
-<string name="noPersonalInformationAreShared">Данное приложение не собирает и не передает никакую личную или конфиденциальную информацию о вас или вашем устройстве.</string>
-<string name="title_theme">Темы</string>
-<string name="applyingChanges">Применение изменений ...</string>
-<string name="title_textSize">Размер текста</string>
-<string name="title_enableFastShare">Включить быстрый общий доступ</string>
-<string name="summary_enableFastShare">С помощью функции \'Быстрый доступ\' вы можете поделиться любой ссылкой, просто коснувшись и удерживая ее.</string>
-<string name="summary_textSize">Выберите размер текста, который вы предпочитаете</string>
-<string name="refreshToApply">Обновите Facebook, чтобы применить изменения</string>
-<string name="summary_AdvancedWebView">Часть этого приложения основана на их работе</string>
-<string name="title_translate">Хотите перевести это приложение?</string>
-<string name="summary_translate">Используйте мой WebTool: нажмите здесь, выберите язык, сгенерируйте сборщик, исправьте ошибки, сгенерируйте и пришлите мне файл \'strings.xml\' по электронной почте.</string>
-<string name="title_removeMessengerDownload">Удалить рекламу "Скачать Messenger"</string>
-<string name="summary_removeMessengerDownload">Реклама "Скачать Messenger" будет скрыта</string>
-<string name="summary_SaschaHa">Очень талантливый и умный парень, который мне очень помог и стал моим другом. Нажмите здесь, чтобы увидеть его невероятную работу!</string>
-<string name="supportMe">Поддержите меня</string>
-<string name="contribute">Внести свой вклад</string>
-<string name="messages">Сообщения</string>
-<string name="close">Закрыть</string>
-<string name="acceptPermissionAndRetry">Дайте разрешения и повторите попытку!</string>
-<string name="yes">Да</string>
-<string name="no">Нет</string>
-<string name="downloadingPhoto">Загрузка фото…</string>
-<string name="askDownloadPhoto">Скачать фото?</string>
-<string name="holdImageToDownload">Удерживайте изображение для загрузки!</string>
-<string name="title_rate">Оцените это приложение</string>
-<string name="summary_rate">Вы можете поддержать меня, написав хороший отзыв в Play Store. Пожалуйста, если что-то не работает, свяжитесь со мной, прежде чем писать плохой отзыв</string>
-<string name="title_enableMessagesShortcut">Включить ярлык сообщений</string>
-<string name="summary_enableMessagesShortcut">При включении данной функции вкладка SlimSocial messages откроется при нажатии на значок сообщений Facebook.</string>
-<string name="title_useSlimSocialSubfolderToDownloadedFiles">Использовать подпапку SlimSocial</string>
-<string name="summary_useSlimSocialSubfolderToDownloadedFiles">Сохраняйте изображения в подпапке, а не в папке Загрузки</string>
-<string name="shareLink">Поделиться этой страницей</string>
-<string name="title_enableNotifications">Включить уведомления</string>
-<string name="noNotificationEnjoyLife">Я ищу наилучший способ их реализации. А пока наслаждайтесь жизнью без перерывов в Facebook. :)</string>
-<string name="paypalDonationLink">https://rignaneseleo.github.io/</string>
-<string name="download">Загрузить</string>
-<string name="share">Поделиться</string>
-<string name="supportMyProjects">Он содержит информацию обо мне и ссылки для поддержки моих проектов.</string>
-<string name="visitMyWebsite">Посетите мой сайт</string>
+
+    <!--  !!!  PLEASE TRANSLATE KEEPING THIS FORMAT.  !!!   -->
+
+    <!-- TRANSLATION IS MADE BY: Andrey -->
+
+    <!--menu string-->
+    <string name="refresh">Обновить</string>
+    <string name="openInBrowser">Открыть в браузере</string>
+    <string name="settings">Настройки</string>
+    <string name="shareThisApp">Поделиться этим приложением</string>
+    <!--end menu string-->
+
+    <!--settings-->
+    <string name="prefCat_fb_settings_title">Настройки Facebook</string>
+    <string name="prefCat_app_settings_title">Настройки приложения</string>
+    <string name="prefCat_app_information_title">Информация о приложении</string>
+    <string name="title_recentNewsFirst">Упорядочить ленту новостей по последним</string>
+    <string name="summary_recentNewsFirst">Вместо популярных</string>
+    <string name="title_centerTextPosts">Центрировать текст публикации</string>
+    <string name="summary_centerTextPosts">Текст каждой публикации будет расположен по центру</string>
+    <string name="summary_addSpaceBetweenPosts">Между публикациями будет больше места</string>
+    <string name="title_addSpaceBetweenPosts">Увеличить расстояние между публикациями</string>
+    <string name="summary_creditsCssThemes">Спасибо за потрясающие темы!</string>
+    <string name="summary_theme">Выберите тему, которая вам нравится</string>
+    <string name="title_fixedBar">Закрепить верхнюю панель</string>
+    <string name="summary_fixedBar">Синяя панель останется сверху</string>
+    <string name="title_hideSponsoredPosts">Не показывать спонсорские публикации</string>
+    <string name="summary_hideSponsoredPosts">Некоторые спонсорские сообщения будут скрыты</string>
+    <string name="title_downloadImages">Экономия данных</string>
+    <string name="summary_downloadImages">Изображения загружаться не будут</string>
+    <string name="summary_allowGeolocation">Facebook сможет получить доступ к вашему местоположению</string>
+    <string name="title_allowGeolocation">Разрешить использование GPS</string>
+    <string name="version">Версия</string>
+    <string name="credits">Благодарности</string>
+    <string name="prefCat_otherCredits_title">Остальное</string>
+    <string name="prefCat_developersCredits_title">Разработчики</string>
+    <string name="summary_LeonardoRignanese">Создатель и разработчик приложения</string>
+    <string name="prefCat_translatorsCredits_title">Переводчики</string>
+    <string name="prefCat_designersCredits_title">Дизайнеры</string>
+    <string name="donate">ПОДДЕРЖАТЬ</string>
+    <string name="donateToContributeWithoutPaypal">Я сделал это приложение абсолютно бесплатным. Хотите внести свой вклад, угостив меня кофе? Свяжитесь со мной!</string>
+    <string name="summary_you">Это приложение существует благодаря вам</string>
+    <string name="title_you">Вы очень важны</string>
+    <!--end settings-->
+
+    <!--page error-->
+    <string name="titleNoConnection">Упс, есть проблема!</string>
+    <string name="descriptionNoConnection">Проверьте соединение и повторите попытку.</string>
+    <string name="awards">Это приложение с открытым исходным кодом.</string>
+    <!--end page error-->
+
+    <!--other-->
+    <string name="thanks">Спасибо!</string>
+    <string name="downloadOrShareWithBrowser">Вы можете скачать или поделиться этим изображением, открыв его в браузере.</string>
+    <string name="shareThisLink">Поделиться этой ссылкой</string>
+    <string name="summary_FaceSlim">Без них я не смог бы добавить несколько интересных функций. Если вы разработчик, вы должны увидеть их огромную работу!</string>
+    <string name="summary_lRemainl">Создатель великолепного логотипа</string>
+    <string name="summary_Pharetra">Полный таланта и креативности</string>
+    <string name="exit">Выход</string>
+    <string name="downloadThisApp" translatable="false">Скачать SlimSocial для Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
+    <string name="noPersonalInformationAreShared">Данное приложение не собирает и не передает никакую личную или конфиденциальную информацию о вас или вашем устройстве.</string>
+    <string name="title_theme">Темы</string>
+    <string name="applyingChanges">Применение изменений…</string>
+    <string name="title_textSize">Размер текста</string>
+    <string name="title_enableFastShare">Включить быстрый обмен</string>
+    <string name="summary_enableFastShare">При помощи быстрого обмена вы можете поделиться любой ссылкой, просто коснувшись и удерживая ее</string>
+    <string name="summary_textSize">Выберите желаемый размер текста</string>
+    <string name="refreshToApply">Обновите Facebook для применения изменений</string>
+    <string name="summary_AdvancedWebView">Частично это приложение основано на их работе</string>
+    <string name="title_translate">Хотите перевести приложение?</string>
+    <string name="summary_translate">Используйте мой WebTool: нажмите здесь, выберите язык, сгенерируйте сборщик, исправьте ошибки, сгенерируйте и пришлите мне файл \'strings.xml\' по электронной почте.</string>
+    <string name="title_removeMessengerDownload">Удалить рекламу 'Скачать Messenger'</string>
+    <string name="summary_removeMessengerDownload">Реклама 'Скачать Messenger' будет скрыта</string>
+    <string name="summary_SaschaHa">Очень талантливый и умный парень, который мне очень помог и стал другом. Нажмите сюда, чтобы увидеть его невероятную работу!</string>
+    <string name="supportMe">Поддержать меня</string>
+    <!--<string name="donateWithPayPal">Donate with PayPal</string>-->
+    <string name="contribute">Внести свой вклад</string>
+    <string name="messages">Сообщения</string>
+    <string name="close">Закрыть</string>
+    <string name="acceptPermissionAndRetry">Предоставьте разрешения и повторите попытку!</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="downloadingPhoto">Загрузка фото…</string>
+    <string name="askDownloadPhoto">Скачать фото?</string>
+    <string name="holdImageToDownload">Удерживайте изображение для загрузки!</string>
+    <string name="title_rate">Оценить это приложение</string>
+    <string name="summary_rate">Вы можете поддержать меня, написав хороший отзыв в Play Store. Пожалуйста, если что-то не работает, свяжитесь со мной, прежде чем писать плохой отзыв</string>
+    <string name="title_enableMessagesShortcut">Включить ярлык сообщений</string>
+    <string name="summary_enableMessagesShortcut">При включении вкладка сообщений SlimSocial откроется при нажатии на значок сообщений Facebook</string>
+    <string name="title_useSlimSocialSubfolderToDownloadedFiles">Использовать подпапку SlimSocial</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Сохранять изображения в подпапке, а не в папке загрузок</string>
+    <string name="shareLink">Поделиться этой страницей</string>
+    <string name="title_enableNotifications">Включить уведомления</string>
+    <string name="noNotificationEnjoyLife">Я ищу наилучший способ их реализации. А пока наслаждайтесь жизнью без перерывов в Facebook :)</string>
+    <string name="paypalDonationLink">https://rignaneseleo.github.io/</string>
+
+    <string name="download">Скачать</string>
+    <string name="share">Поделиться</string>
+    <string name="myWebsite" translatable="false">https://rignaneseleo.github.io/</string>
+    <string name="supportMyProjects">Он содержит информацию обо мне и ссылки для поддержки моих проектов</string>
+    <string name="visitMyWebsite">Посетите мой сайт</string>
+    <string name="donateToContribute">Я решил разработать это приложение бесплатно и поделиться кодом с сообществом, защитив вас и ваши данные от Facebook. Заслуживаю ли я кофе?</string>
+
+    <string name="summary_hideStories">Включите, чтобы скрыть истории из вашей ленты</string>
+    <string name="title_hideStories">Скрыть истории</string>
+    <string name="summary_enableFab">Показать круглую кнопку в правом нижнем углу</string>
+    <string name="title_enableFab">Показывать кнопку для перехода наверх</string>
+    <string name="next">Далее</string>
+    <string name="donatedialog_desc">Благодаря этому приложению, вы можете наслаждаться Facebook, при этом данные с вашего телефона надежно защищены. SlimSocial - это независимый проект, который полагается только на пожертвования людей.</string>
+    <string name="dataworth">Сколько стоят ваши данные?</string>
+    <string name="needsupport">SlimSocial нуждается в вашей поддержке!</string>
+    <string name="dontsupport">Не поддерживать</string>
+
+    <!--end other-->
 </resources>
+
+    <!-- PLAY STORE PAGE
+
+SHORT DESCRIPTION ( max 80 char! shape and adapt it. use http://www.charcounter.com/ ):
+Легковесный клиент Facebook с открытым исходным кодом.
+
+FULL DESCRIPTION:
+ВНИМАНИЕ: данное приложение может не подойти тем, кто часто пользуется Facebook.
+
+Зачем использовать SlimSocial для Facebook?
+- малый размер (менее 1 МБ);
+- простой современный дизайн, есть только то, что вам нужно, и нет ничего, что бы вам не понадобилось;
+- открытый исходный код: код этого приложения можно найти на GitHub, любой может проверить подлинность приложения и внести свой вклад в его разработку;
+- бесплатно и без рекламы;
+- ненавязчивый;
+- сохраняет вашу конфиденциальность: это приложение не требует специальных разрешений. Facebook не может получить доступ к данным на вашем мобильном телефоне без вашего согласия при использовании этого приложения.
+
+Приложение находится в процессе разработки, поэтому пока не работают:
+- уведомления
+
+Ссылка на GitHub
+https://github.com/rignaneseleo/SlimSocial-for-Facebook
+***Это не официальное приложение для Facebook***
+Это проект призван облегчить жизнь людей.
+Это приложение запускает Facebook. Оно предоставляется бесплатно для всех без какой-либо рекламы.
+    -->
