@@ -343,4 +343,9 @@ v5.0.0
 - Improved support to messenger
 - Fixed minor bugs
 
+v5.0.1
+- Donate from settings
+- Fix dark theme
+- Minor fixes
+
 ! Consider donating to support the project !
