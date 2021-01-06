@@ -351,4 +351,7 @@ v5.0.1
 v5.0.2
 - Fix donation dialog crash
 
+v5.0.3
+- Highlighted the support menu item
+
 ! Consider donating to support the project !
