@@ -5,4 +5,5 @@
     <!--standard theme-->
     <color name="blueSlimFacebookTheme">#37538f</color>
     <color name="darkBlueSlimFacebookTheme">#2d3a6b</color>
+    <color name="color_devider">#3C3A3A</color>
 </resources>
