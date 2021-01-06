@@ -28,3 +28,6 @@ proguard/
 /SlimFacebook - Alpha
 /SlimFacebook.rar
 /SlimFacebook - Copia
+.DS_Store
+*.aab
+SlimFacebook/app/release/output.json
