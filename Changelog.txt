@@ -348,4 +348,7 @@ v5.0.1
 - Fix dark theme
 - Minor fixes
 
+v5.0.2
+- Fix donation dialog crash
+
 ! Consider donating to support the project !
