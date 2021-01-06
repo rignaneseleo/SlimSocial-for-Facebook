@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -16,6 +17,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -521,6 +524,17 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.getItemId() == R.id.action_donate) {
+                SpannableString spanString = new SpannableString("★ "+item.getTitle().toString());
+                spanString.setSpan(new ForegroundColorSpan(Color.parseColor("#CCA733")), 0, spanString.length(), 0);
+                item.setTitle(spanString);
+                break;
+            }
+        }
+
 
         //hide or show the donate button
         if (savedPreferences.getBoolean("supporter", false)) {
