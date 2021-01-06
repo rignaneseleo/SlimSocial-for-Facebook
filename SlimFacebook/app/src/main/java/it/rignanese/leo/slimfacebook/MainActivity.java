@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -604,7 +605,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             return;
         }
 
-        View donationView = getLayoutInflater().inflate(R.layout.purchase_item, null, false);
+        View donationView = LayoutInflater.from(MainActivity.this).inflate(R.layout.purchase_item, null, false);
 
         //View #1
         donationView.findViewById(R.id.btn_next).setOnClickListener(v -> {

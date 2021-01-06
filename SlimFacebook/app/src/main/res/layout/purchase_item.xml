@@ -151,7 +151,7 @@
             android:layout_height="2dp"
             android:layout_width="match_parent"
             android:layout_marginTop="1dp"
-            android:background="@android:color/secondary_text_dark_nodisable" />
+            android:background="@color/color_devider" />
 
         <LinearLayout
             android:id="@+id/donation_0"
