@@ -88,8 +88,8 @@
     <string name="share">Teilen</string>
 
     <string name="next">Weiter</string>
-    <string name="donatedialog_desc">Dank dieser app können sie Facebook genießen, während ihre telefondaten sicher sind. SlimSocial ist ein unabhängiges projekt, das nur auf spenden von menschen angewiesen ist.</string>
-    <string name="dataworth">Wie viel sind ihre daten wert? </string>
-    <string name="needsupport">SlimSocial braucht ihre unterstützung!</string>
-    <string name="dontsupport">Unterstützen sie das projekt nicht</string>
+    <string name="donatedialog_desc">Dank dieser App können sie Facebook genießen, während ihre Telefondaten sicher sind. SlimSocial ist ein unabhängiges Projekt, das nur auf Spenden von Menschen angewiesen ist.</string>
+    <string name="dataworth">Wie viel sind ihre Daten wert? </string>
+    <string name="needsupport">SlimSocial braucht ihre Unterstützung!</string>
+    <string name="dontsupport">Unterstützen sie das Projekt nicht</string>
 </resources>
