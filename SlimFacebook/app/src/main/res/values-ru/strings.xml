@@ -74,8 +74,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_AdvancedWebView">Частично это приложение основано на их работе</string>
     <string name="title_translate">Хотите перевести приложение?</string>
     <string name="summary_translate">Используйте мой WebTool: нажмите здесь, выберите язык, сгенерируйте сборщик, исправьте ошибки, сгенерируйте и пришлите мне файл \'strings.xml\' по электронной почте.</string>
-    <string name="title_removeMessengerDownload">Удалить рекламу 'Скачать Messenger'</string>
-    <string name="summary_removeMessengerDownload">Реклама 'Скачать Messenger' будет скрыта</string>
+    <string name="title_removeMessengerDownload">Удалить рекламу \'Скачать Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Реклама \'Скачать Messenger\' будет скрыта</string>
     <string name="summary_SaschaHa">Очень талантливый и умный парень, который мне очень помог и стал другом. Нажмите сюда, чтобы увидеть его невероятную работу!</string>
     <string name="supportMe">Поддержать меня</string>
     <!--<string name="donateWithPayPal">Donate with PayPal</string>-->
