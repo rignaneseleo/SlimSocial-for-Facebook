@@ -3,6 +3,7 @@ PRIVACY POLICY:
 - No user data are explicitally collected. The advertising system of Facebook can collect anonymous data not managed by SlimSocial for Facebook app.
 - The app does not collect or transmits any private or personal information user's. All sensitive data that are inserted in our app, are used by Facebook and not by us.
 - If a user gives a donation, we do not collect any sensitive data because we connect the user to an external website that will be opened with an external browser.
+- Mobile phone can be asked from Facebook website in order to login. It won't be collected by SlimSocial.
 Inside the app, there is a section where there is the provacy disclaimer.
 
 We simply prove you an app that allows you to interface with the Facebook site, with some customizations.
