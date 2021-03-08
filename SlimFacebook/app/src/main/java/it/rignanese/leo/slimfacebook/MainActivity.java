@@ -127,6 +127,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         } else GoHome();//load homepage
 
         //showDonationDialog();
+        showDisclosureDialog();
     }
 
     private void showDonationDialog() {
@@ -145,6 +146,24 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
             }).create().show();
         }
 
+    }
+
+    private void showDisclosureDialog() {
+        //only once
+        SharedPreferences disclosure_pref = getSharedPreferences("disclosure_pref", MODE_PRIVATE);
+        String prefName = "shown_disclosure";
+
+        if (!disclosure_pref.getBoolean(prefName, false)) {
+            new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog)
+                    .setTitle("Disclosure")
+                    .setMessage("SlimSocial does not access, collect, use or share any of your data. All the data that you will input on this app (mobile, email, location, etc.) will be handled by Facebook according to its policy.")
+                    .setCancelable(false)
+                    .setPositiveButton("Agree", (dialog, which) -> {
+                        disclosure_pref.edit().putBoolean(prefName, true).apply();
+                    }).setNegativeButton("Exit", (dialog, which) -> {
+                finish();// close app
+            }).create().show();
+        }
     }
 
 
@@ -528,7 +547,7 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             if (item.getItemId() == R.id.action_donate) {
-                SpannableString spanString = new SpannableString("★ "+item.getTitle().toString());
+                SpannableString spanString = new SpannableString("★ " + item.getTitle().toString());
                 spanString.setSpan(new ForegroundColorSpan(Color.parseColor("#CCA733")), 0, spanString.length(), 0);
                 item.setTitle(spanString);
                 break;
