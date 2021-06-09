@@ -18,8 +18,8 @@
      <string name="summary_theme">Escolha um tema</string>
      <string name="title_fixedBar">Barra superior fixa</string>
      <string name="summary_fixedBar">A barra azul permanece fixa no topo.</string>
-     <string name="title_hideSponsoredPosts">Não mostrar publicações\'sponsored'\</string>
-     <string name="summary_hideSponsoredPosts">Algumas publicações \'sponsored'\ serão ocultadas.</string>
+     <string name="title_hideSponsoredPosts">Não mostrar publicações\'sponsored\'</string>
+     <string name="summary_hideSponsoredPosts">Algumas publicações \'sponsored\' serão ocultadas.</string>
      <string name="title_downloadImages">Guardar dados</string>
      <string name="summary_downloadImages">Não descarregar imagens</string>
      <string name="summary_allowGeolocation">Facebook poderá aceder à sua localização.</string>
