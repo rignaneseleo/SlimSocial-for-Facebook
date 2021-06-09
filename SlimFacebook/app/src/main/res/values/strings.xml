@@ -9,7 +9,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="actionbar_name" translatable="false">SlimSocial</string>
     <string name="urlFacebookMobile" translatable="false">https://touch.facebook.com/home.php</string>
     <string name="urlMessages" translatable="false">https://www.messenger.com</string>
-    <string name="userAgent" translatable="false">Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36</string>
+    <string name="userAgent" translatable="false">Mozilla/5.0 (Linux; U; Android 2.3.3; en-gb; Nexus S Build/GRI20) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1</string>
     <string name="home" translatable="false">Home</string>
     <string name="top" translatable="false">Top</string>
     <string name="mainDeveloper" translatable="false">Leonardo Rignanese</string>
