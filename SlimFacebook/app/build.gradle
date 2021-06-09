@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
-        versionCode 65
-        versionName "5.0.4"
         targetSdkVersion 30
+        versionCode 66
+        versionName "5.0.5"
     }
 
     buildTypes {
