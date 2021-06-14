@@ -63,7 +63,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_Pharetra">Полный таланта и креативности</string>
     <string name="exit">Выход</string>
     <string name="downloadThisApp" translatable="false">Скачать SlimSocial для Facebook: \n https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook</string>
-    <string name="noPersonalInformationAreShared">Данное приложение не собирает и не передает никакую личную или конфиденциальную информацию о вас или вашем устройстве.</string>
+    <string name="noPersonalInformationAreShared">Это приложение не собирает и не передает личную или конфиденциальную информацию о вас или вашем устройстве.</string>
     <string name="title_theme">Темы</string>
     <string name="applyingChanges">Применение изменений…</string>
     <string name="title_textSize">Размер текста</string>
@@ -74,8 +74,8 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="summary_AdvancedWebView">Частично это приложение основано на их работе</string>
     <string name="title_translate">Хотите перевести приложение?</string>
     <string name="summary_translate">Используйте мой WebTool: нажмите здесь, выберите язык, сгенерируйте сборщик, исправьте ошибки, сгенерируйте и пришлите мне файл \'strings.xml\' по электронной почте.</string>
-    <string name="title_removeMessengerDownload">Удалить рекламу \'Скачать Messenger\'</string>
-    <string name="summary_removeMessengerDownload">Реклама \'Скачать Messenger\' будет скрыта</string>
+    <string name="title_removeMessengerDownload">Удалить \'Скачать Messenger\'</string>
+    <string name="summary_removeMessengerDownload">Сообщение \'Скачать Messenger\' будет скрыто</string>
     <string name="summary_SaschaHa">Очень талантливый и умный парень, который мне очень помог и стал другом. Нажмите сюда, чтобы увидеть его невероятную работу!</string>
     <string name="supportMe">Поддержать меня</string>
     <!--<string name="donateWithPayPal">Donate with PayPal</string>-->
@@ -93,7 +93,7 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="title_enableMessagesShortcut">Включить ярлык сообщений</string>
     <string name="summary_enableMessagesShortcut">При включении вкладка сообщений SlimSocial откроется при нажатии на значок сообщений Facebook</string>
     <string name="title_useSlimSocialSubfolderToDownloadedFiles">Использовать подпапку SlimSocial</string>
-    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Сохранять изображения в подпапке, а не в папке загрузок</string>
+    <string name="summary_useSlimSocialSubfolderToDownloadedFiles">Изображения будут сохраняться в подпапке вместо папки загрузок</string>
     <string name="shareLink">Поделиться этой страницей</string>
     <string name="title_enableNotifications">Включить уведомления</string>
     <string name="noNotificationEnjoyLife">Я ищу наилучший способ их реализации. А пока наслаждайтесь жизнью без перерывов в Facebook :)</string>
@@ -102,12 +102,12 @@ SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese
     <string name="download">Скачать</string>
     <string name="share">Поделиться</string>
     <string name="myWebsite" translatable="false">https://rignaneseleo.github.io/</string>
-    <string name="supportMyProjects">Он содержит информацию обо мне и ссылки для поддержки моих проектов</string>
-    <string name="visitMyWebsite">Посетите мой сайт</string>
+    <string name="supportMyProjects">Информация обо мне и ссылки для поддержки моих проектов</string>
+    <string name="visitMyWebsite">Посетить мой сайт</string>
     <string name="donateToContribute">Я решил разработать это приложение бесплатно и поделиться кодом с сообществом, защитив вас и ваши данные от Facebook. Заслуживаю ли я кофе?</string>
 
     <string name="summary_hideStories">Включите, чтобы скрыть истории из вашей ленты</string>
-    <string name="title_hideStories">Скрыть истории</string>
+    <string name="title_hideStories">Скрывать истории</string>
     <string name="summary_enableFab">Показать круглую кнопку в правом нижнем углу</string>
     <string name="title_enableFab">Показывать кнопку для перехода наверх</string>
     <string name="next">Далее</string>
