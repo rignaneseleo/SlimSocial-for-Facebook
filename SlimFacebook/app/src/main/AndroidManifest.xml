@@ -39,8 +39,9 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:exported="false"
             android:label="@string/actionbar_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"> <!-- this to fix "Webview is Vulnerable to Cross app" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -154,7 +155,6 @@
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>
-
                 <!-- to open facebook link for sharing link -->
                 <action android:name="android.intent.action.SEND" />
 
@@ -162,6 +162,11 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
+
+            <!-- to fix "Webview is Vulnerable to Cross app" -->
+            <meta-data
+                android:name="android.webkit.WebView.EnableSafeBrowsing"
+                android:value="true" />
         </activity>
 
         <!-- picture activity -->
