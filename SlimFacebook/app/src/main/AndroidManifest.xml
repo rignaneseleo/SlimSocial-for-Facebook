@@ -39,7 +39,7 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/actionbar_name"
             android:launchMode="singleTask"> <!-- this to fix "Webview is Vulnerable to Cross app" -->
             <intent-filter>
