@@ -37,9 +37,9 @@
             android:value="2.1" />
 
         <activity
+            tools:ignore="IntentFilterExportedReceiver" <!-- Removed the exported false to fix "Permission denied / App Not installed on Android 10+" -->
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:exported="false"
             android:label="@string/actionbar_name"
             android:launchMode="singleTask"> <!-- this to fix "Webview is Vulnerable to Cross app" -->
             <intent-filter>
