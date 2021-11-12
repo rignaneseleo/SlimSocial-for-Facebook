@@ -1,6 +1,8 @@
 workflows:
   my-workflow:
-    instance_type: linux
+    name: Build Android AAB and APK
+    instance_type: mac_mini
+    max_build_duration: 30
     scripts:
       - name: Build Android App Bundle
         working_directory: android
