@@ -1,0 +1,37 @@
+workflows:
+  my-workflow:
+    name: Build Android AAB and APK
+    instance_type: mac_mini
+    max_build_duration: 30
+    environment:
+      groups:
+        - SlimSocial 
+          # FCI_KEYSTORE <-- Put your keystore file decoded base64
+          # FCI_KEYSTORE_PATH <-- Path temp file
+          # FCI_KEYSTORE_PASSWORD <-- Put your keystore password here
+          # FCI_KEY_PASSWORD <-- Put your keystore alias password here
+          # FCI_KEY_ALIAS <-- Put your keystore alias username here
+    scripts:
+      - name: Get permissions
+        ignore_failure: true
+        working_directory: SlimFacebook
+        script: chmod +x ./gradlew   
+      - name: Build Android APK
+        working_directory: SlimFacebook
+        ignore_failure: true
+        script: |
+          echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
+          ./gradlew assembleRelease
+      - name: Build Android App Bundle
+        working_directory: SlimFacebook
+        ignore_failure: true
+        script: |
+          echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
+          ./gradlew bundleRelease
+    artifacts:
+      - SlimFacebook/app/build/outputs/**/**/*.aab
+      - SlimFacebook/app/build/outputs/**/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - dev.rignanese.leo@gmail.com
