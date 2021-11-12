@@ -8,8 +8,8 @@ android {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 68
-        versionName "5.0.7"
+        versionCode 69
+        versionName "5.0.8"
     }
 
     signingConfigs {
