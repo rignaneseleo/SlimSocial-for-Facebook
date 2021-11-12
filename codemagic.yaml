@@ -7,13 +7,11 @@ workflows:
       - name: Build Android App Bundle
         working_directory: android
         script: ./gradlew bundleRelease
-    artifacts:
-      - build/**/outputs/bundle/**/*.aab
-    scripts:
       - name: Build Android APK
         working_directory: android
         script: ./gradlew assembleRelease
     artifacts:
+      - build/**/outputs/bundle/**/*.aab
       - app/build/outputs/**/**/*.apk
     publishing:
       email:
