@@ -6,13 +6,13 @@ workflows:
     scripts:
       - name: Build Android App Bundle
         working_directory: android
-        script: ./gradlew bundleRelease
+        script: ./SlimFacebook/gradlew bundleRelease
       - name: Build Android APK
         working_directory: android
-        script: ./gradlew assembleRelease
+        script: ./SlimFacebook/gradlew assembleRelease
     artifacts:
-      - build/**/outputs/bundle/**/*.aab
-      - app/build/outputs/**/**/*.apk
+      - SlimFacebook/build/**/outputs/bundle/**/*.aab
+      - SlimFacebook/app/build/outputs/**/**/*.apk
     publishing:
       email:
         recipients:
