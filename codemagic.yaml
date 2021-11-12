@@ -4,12 +4,12 @@ workflows:
     instance_type: mac_mini
     max_build_duration: 30
     scripts:
-      - name: Build Android App Bundle
-        working_directory: android
-        script: ./SlimFacebook/gradlew bundleRelease
       - name: Build Android APK
         working_directory: android
         script: ./SlimFacebook/gradlew assembleRelease
+      - name: Build Android App Bundle
+        working_directory: android
+        script: ./SlimFacebook/gradlew bundleRelease
     artifacts:
       - SlimFacebook/build/**/outputs/bundle/**/*.aab
       - SlimFacebook/app/build/outputs/**/**/*.apk
