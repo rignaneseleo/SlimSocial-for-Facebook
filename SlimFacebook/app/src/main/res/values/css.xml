@@ -48,7 +48,7 @@
 	</string>
 
     <string name="hideAdsAndPeopleYouMayKnow" translatable="false">
-        article[data-ft*=ei]{display: none !important;}
+        article[data-xt*=ei]{display: none !important;}
          .ego  {   display: none !important;  }
 	</string>
 
