@@ -1,5 +1,7 @@
 package it.rignanese.leo.slimfacebook;
 
+import static it.rignanese.leo.slimfacebook.R.id.webView;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -15,8 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -54,8 +54,6 @@ import java.util.List;
 import it.rignanese.leo.slimfacebook.settings.SettingsActivity;
 import it.rignanese.leo.slimfacebook.utility.Dimension;
 import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
-
-import static it.rignanese.leo.slimfacebook.R.id.webView;
 
 /**
  * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
