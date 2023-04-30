@@ -284,6 +284,12 @@ public class MainActivity extends Activity implements MyAdvancedWebView.Listener
         settings.setLoadsImagesAutomatically(!savedPreferences.getBoolean("pref_doNotDownloadImages", false));//to save data
 
         settings.setDisplayZoomControls(false);
+
+        //to fix "Cross-App Scripting Vulnerability"
+        //https://stackoverflow.com/questions/53095398/google-play-warning-your-app-contains-a-cross-app-scripting-vulnerability
+        settings.setAppCacheMaxSize(0);
+        settings.setAllowFileAccess(false);
+        settings.setAppCacheEnabled(false);
     }
 
     private void SetupOnLongClickListener() {
