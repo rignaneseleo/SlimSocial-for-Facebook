@@ -1,0 +1,128 @@
+import 'package:app_links/app_links.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:slimsocial_for_facebook/screens/home_page.dart';
+import 'package:slimsocial_for_facebook/screens/settings_page.dart';
+import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+
+import 'controllers/fb_controller.dart';
+
+late SharedPreferences sp;
+
+//riverpod state
+final webUriProvider =
+    StateNotifierProvider<webUriState, Uri>((ref) => webUriState(ref));
+
+late PackageInfo packageInfo;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await EasyLocalization.ensureInitialized();
+
+  packageInfo = await PackageInfo.fromPlatform();
+
+  sp = await SharedPreferences.getInstance();
+  final container = ProviderContainer();
+
+  //library to handle app links (link that open the app)
+  final _appLinks = AppLinks();
+
+  // Subscribe to all events when app is started.
+  _appLinks.allUriLinkStream.listen((uri) {
+    print("Received uri: $uri");
+    // Do something (navigation, ...)
+    //run the app with the uri
+    container.read(webUriProvider.notifier).update(uri.toString());
+  });
+
+  runApp(
+    ProviderScope(
+      parent: container,
+      child: EasyLocalization(
+        supportedLocales: [
+          Locale('it', 'IT'),
+          Locale('en', 'US'),
+          Locale('fr', 'FR'),
+          Locale('es', 'ES'),
+          Locale('de', 'DE'),
+          Locale('pt', 'PT'),
+          Locale('nl', 'NL'),
+          Locale('ru', 'RU'),
+          Locale('pl', 'PL'),
+          Locale('tr', 'TR'),
+          Locale('zh', 'CN'),
+          Locale('ja', 'JP'),
+          Locale('ko', 'KR'),
+          Locale('ar', 'AR'),
+          Locale('hi', 'IN'),
+          Locale('sv', 'SE'),
+          Locale('no', 'NO'),
+          Locale('fi', 'FI'),
+          Locale('da', 'DK'),
+          Locale('cs', 'CZ'),
+          Locale('sk', 'SK'),
+          Locale('hu', 'HU'),
+          Locale('ro', 'RO'),
+          Locale('uk', 'UA'),
+          Locale('bg', 'BG'),
+          Locale('hr', 'HR'),
+          Locale('sr', 'SP'),
+          Locale('sl', 'SI'),
+          Locale('et', 'EE'),
+          Locale('lv', 'LV'),
+          Locale('lt', 'LT'),
+          Locale('he', 'IL'),
+          Locale('fa', 'IR'),
+          Locale('ur', 'PK'),
+          Locale('bn', 'IN'),
+          Locale('ta', 'IN'),
+          Locale('te', 'IN'),
+          Locale('mr', 'IN'),
+          Locale('ml', 'IN'),
+          Locale('th', 'TH'),
+          Locale('vi', 'VN'),
+        ],
+        path: 'assets/lang',
+        fallbackLocale: Locale('en', 'US'),
+        child: SlimSocialApp(),
+      ),
+    ),
+  );
+}
+
+class SlimSocialApp extends StatelessWidget {
+  SlimSocialApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    //TODO change app title dynamically
+
+    return MaterialApp(
+      title: 'SlimSocial for Facebook',
+      theme: ThemeData(
+        useMaterial3: false,
+        colorScheme: lightColorScheme,
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: false,
+        colorScheme: darkColorScheme,
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+      ),
+      themeMode: ThemeMode.dark,
+      home: HomePage(),
+      routes: {
+        "/settings": (context) => const SettingsPage(),
+      },
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+    );
+  }
+}
