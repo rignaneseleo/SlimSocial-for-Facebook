@@ -1,0 +1,101 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="it.rignanese.leo.slimfacebook">
+
+    <!-- to connect to the Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- to check if there is connection -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- to allow to save photos -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- to allow to read photos -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- gps -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- to share pictures -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
+    <application
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:label="SlimSocial for Facebook">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:theme="@style/LaunchTheme"
+            android:windowSoftInputMode="adjustResize">
+
+            <!-- App Links -->
+            <intent-filter android:autoVerify="true">
+
+                <!-- to start app when facebook site is called -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <!-- to open facebook link with this app -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+
+                <data android:host="*.facebook.com" />
+                <data android:host="*.fb.com" />
+                <data android:host="*.messenger.com" />
+                <data android:host="*.m.me" />
+                <data android:host="*.instagram.com" />
+                <data android:host="*.workplace.com" />
+                <data android:host="*.pixel.facebook.com" />
+                <data android:host="*.developers.facebook.com" />
+                <data android:host="*.connect.facebook.com" />
+                <data android:host="*.creativehub.facebook.com" />
+                <data android:host="*.enterprise.facebook.com" />
+                <data android:host="*.expresswifi.com" />
+                <data android:host="*.fb.gg" />
+                <data android:host="*.fbmarketplace.com" />
+                <data android:host="*.fbsbx.com" />
+                <data android:host="*.fb.watch" />
+                <data android:host="*.fwdproxy.com" />
+                <data android:host="*.business.facebook.com" />
+
+                <data android:host="fb.com" />
+                <data android:host="m.fb.com" />
+                <data android:host="touch.facebook.com" />
+                <data android:host="touch.fb.com" />
+                <data android:host="facebook.com" />
+                <data android:host="mbasic.facebook.com" />
+                <data android:host="h.facebook.com" />
+                <data android:host="fb.me" />
+                <data android:host="www.facebook.com" />
+                <data android:host="www.fb.com" />
+                <data android:host="apps.facebook.com" />
+                <data android:host="apps.fb.com" />
+                <data android:host="messenger.com" />
+                <data android:host="www.messenger.com" />
+                <data android:host="m.me" />
+                <data android:host="www.m.me" />
+                <data android:host="fb.watch" />
+                <data android:host="free.facebook.com" />
+                <data android:host="m.free.facebook.com" />
+                <data android:host="0.free.facebook.com" />
+            </intent-filter>
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+</manifest>
