@@ -31,3 +31,4 @@ proguard/
 .DS_Store
 *.aab
 SlimFacebook/app/release/output.json
+SlimSocial_for_Facebook/.metadata
