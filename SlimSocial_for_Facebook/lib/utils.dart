@@ -49,7 +49,16 @@ void showToast(String text) => Fluttertoast.showToast(
 
 extension StringExtension on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    return "${this![0].toUpperCase()}${this!.substring(1).toLowerCase()}";
+  }
+}
+
+extension StringNullExtension on String? {
+  bool isNullOrEmpty() {
+    if (this == null) return true;
+    if (this!.trim().isEmpty) return true;
+
+    return false;
   }
 }
 

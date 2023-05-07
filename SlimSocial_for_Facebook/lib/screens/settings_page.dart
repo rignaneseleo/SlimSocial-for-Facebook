@@ -277,6 +277,34 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 description: Text('send_to_dev_desc'.tr()),
                 onPressed: (context) => showSendCodeToDev(),
               ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.private_connectivity_outlined),
+                title: Text('custom_proxy'.tr()),
+                trailing: Visibility(
+                    visible: sp.getBool("custom_proxy_enabled") ?? false,
+                    child: Icon(Icons.check_circle)),
+                onPressed: (context) async {
+                  var spKey = "custom_proxy";
+                  String spKeyEnabled = spKey + "_enabled";
+                  String spKeyIp = spKey + "_ip";
+                  String spKeyPort = spKey + "_port";
+
+                  var ip = sp.getString(spKeyIp);
+                  var port = sp.getString(spKeyPort);
+
+                  await showProxyDialog();
+
+                  var newIp = sp.getString(spKeyIp);
+                  var newPort = sp.getString(spKeyPort);
+                  var enabled = sp.getBool(spKeyEnabled) ?? false;
+
+                  if ((ip != newIp || port != newPort) && enabled) {
+                    Restart.restartApp();
+                  }
+
+                  setState(() {});
+                },
+              ),
             ],
           ),
           SettingsSection(
@@ -450,7 +478,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 children: [
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: Text('enabled'.tr()),
+                    title: Text('enabled'.tr().capitalize()),
                     value: sp.getBool(spKeyEnabled) ?? false,
                     onChanged: (value) {
                       _setState(() {
@@ -472,20 +500,20 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('delete'.tr()),
+              child: Text('delete'.tr().capitalize()),
               onPressed: () {
                 sp.remove(spKey);
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('cancel'.tr()),
+              child: Text('cancel'.tr().capitalize()),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('save'.tr()),
+              child: Text('save'.tr().capitalize()),
               onPressed: () {
                 setState(() {
                   sp.setString(spKey, _textEditingController.text.trim());
@@ -587,5 +615,104 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         sp.setBool(spKey, permissionValue);
       });
     }
+  }
+
+  Future showProxyDialog() async {
+    var spKey = "custom_proxy";
+    String spKeyEnabled = spKey + "_enabled";
+    String spKeyIp = spKey + "_ip";
+    String spKeyPort = spKey + "_port";
+
+    var _ipController = TextEditingController();
+    _ipController.text = sp.getString(spKeyIp) ?? "";
+    var _portController = TextEditingController();
+    _portController.text = sp.getString(spKeyPort) ?? "";
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: StatefulBuilder(
+            builder: (context, StateSetter _setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text('enabled'.tr().capitalize()),
+                    value: sp.getBool(spKeyEnabled) ?? false,
+                    onChanged: (value) {
+                      _setState(() {
+                        sp.setBool(spKeyEnabled, value);
+                      });
+                      if (value)
+                        showToast("default value will be overwritten".tr());
+                    },
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 4,
+                        child: TextField(
+                          minLines: 1,
+                          maxLines: 1,
+                          controller: _ipController,
+                          decoration: InputDecoration(hintText: "localhost"),
+                        ),
+                      ),
+                      Text(" : "),
+                      Flexible(
+                        flex: 2,
+                        child: TextField(
+                          minLines: 1,
+                          maxLines: 1,
+                          controller: _portController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(hintText: "8888"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('delete'.tr().capitalize()),
+              onPressed: () {
+                sp.remove(spKey);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('cancel'.tr().capitalize()),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('save'.tr().capitalize()!),
+              onPressed: () {
+                var port = _portController.text.trim();
+                var ip = _ipController.text.trim();
+
+                if (port.isNullOrEmpty() || port.isNullOrEmpty()) {
+                  Navigator.of(context).pop();
+                  return;
+                }
+
+                setState(() {
+                  sp.setString(spKeyPort, port);
+                  sp.setString(spKeyIp, ip);
+                });
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -29,6 +29,7 @@ dependencies:
   share_plus: ^6.3.4
   flutter_file_downloader: ^1.1.2
   open_file_plus: ^3.4.1
+  native_flutter_proxy: ^0.1.15
 
 dev_dependencies:
   flutter_test:
