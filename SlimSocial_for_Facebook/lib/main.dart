@@ -108,12 +108,12 @@ class SlimSocialApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         colorScheme: lightColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.robotoTextTheme(ThemeData(brightness: Brightness.light).textTheme),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
         colorScheme: darkColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.robotoTextTheme(ThemeData(brightness: Brightness.dark).textTheme),
       ),
       themeMode: ThemeMode.dark,
       home: HomePage(),
