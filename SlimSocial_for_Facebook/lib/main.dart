@@ -3,11 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:native_flutter_proxy/custom_proxy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+import 'package:slimsocial_for_facebook/utils.dart';
 
 import 'controllers/fb_controller.dart';
 
@@ -21,13 +23,12 @@ late PackageInfo packageInfo;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await EasyLocalization.ensureInitialized();
-
   packageInfo = await PackageInfo.fromPlatform();
-
   sp = await SharedPreferences.getInstance();
   final container = ProviderContainer();
+
+  if (sp.getBool("custom_proxy_enabled") ?? false) _setupProxy();
 
   //library to handle app links (link that open the app)
   final _appLinks = AppLinks();
@@ -93,6 +94,23 @@ Future<void> main() async {
       ),
     ),
   );
+}
+
+void _setupProxy() {
+  var ip = sp.getString("custom_proxy_ip");
+  var port = sp.getString("custom_proxy_port");
+  if (ip == null || port == null) {
+    showToast("error_proxy".tr());
+    return;
+  }
+
+  try {
+    final proxy = CustomProxy(ipAddress: ip, port: int.parse(port));
+    proxy.enable();
+    showToast("proxy_is_active".tr());
+  } catch (e) {
+    showToast("error_proxy with {}:{}".tr(args: [ip, port]));
+  }
 }
 
 class SlimSocialApp extends StatelessWidget {

@@ -47,4 +47,10 @@
   "sharing": "Sharing",
   "downloading": "Downloading",
   "error_trylater": "Error, please try later",
+  "custom_proxy": "Custom proxy",
+  "error_proxy with {}:{}": "Error with proxy {}:{}",
+  "error_proxy": "Error with proxy",
+  "enabled": "Enabled",
+  "proxy_is_active" : "Proxy is active",
+
 }
