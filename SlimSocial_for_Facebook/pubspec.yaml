@@ -1,7 +1,7 @@
 name: slimsocial_for_facebook
 description: Webview to securely navigate Facebook
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 10.0.1+101
+version: 10.0.2+102
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
