@@ -24,7 +24,7 @@
   "contribute": "contribute",
   "buy_coffee": "Buy me a coffee",
   "buy_pizza": "Buy me a pizza",
-  "become_hero": "Become my hero",
+  "become_an_hero": "Become an hero",
   "the_project": "The project",
   "follow_me": "Follow me",
   "version": "version",
@@ -51,6 +51,10 @@
   "error_proxy with {}:{}": "Error with proxy {}:{}",
   "error_proxy": "Error with proxy",
   "enabled": "Enabled",
-  "proxy_is_active" : "Proxy is active",
-
+  "proxy_is_active": "Proxy is active",
+  "share_url": "Share URL",
+  "refresh": "Refresh",
+  "support": "Support",
+  "become_hero_desc": "Get your name in list of important supporters",
+  "ad_removed": "Ad removed"
 }
