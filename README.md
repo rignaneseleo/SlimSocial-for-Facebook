@@ -1,4 +1,4 @@
-
+[![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
 # SlimSocial for Facebook
 
 
