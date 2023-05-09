@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Viga proks\u00fcga {}:{}",
   "error_proxy": "Viga proks\u00fcga",
   "enabled": "Lubatud",
-  "proxy_is_active": "Proks\u00fc on aktiivne"
+  "proxy_is_active": "Proks\u00fc on aktiivne",
+  "become_an_hero": "Saage kangelaseks",
+  "share_url": "Jaga URL-i",
+  "refresh": "V\u00e4rskenda",
+  "support": "Toetage",
+  "become_hero_desc": "Saatke oma nimi t\u00e4htsate toetajate nimekirja",
+  "ad_removed": "Reklaam eemaldatud"
 }

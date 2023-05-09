@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Eroare cu proxy-ul {}:{}",
   "error_proxy": "Eroare cu proxy-ul",
   "enabled": "Activat",
-  "proxy_is_active": "Proxy-ul este activ"
+  "proxy_is_active": "Proxy-ul este activ",
+  "become_an_hero": "Fii un erou",
+  "share_url": "\u00cemp\u0103rt\u0103\u0219i\u021bi URL-ul",
+  "refresh": "Re\u00eemprosp\u0103ta\u021bi",
+  "support": "Sus\u021binere",
+  "become_hero_desc": "Ob\u021bine\u021bi numele \u00een lista sus\u021bin\u0103torilor importan\u021bi",
+  "ad_removed": "Reclamele eliminate"
 }

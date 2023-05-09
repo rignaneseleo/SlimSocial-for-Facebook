@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Chyba s proxy serverom {}:{}",
   "error_proxy": "Chyba s proxy serverom",
   "enabled": "Povolen\u00fd",
-  "proxy_is_active": "Proxy server je akt\u00edvny"
+  "proxy_is_active": "Proxy server je akt\u00edvny",
+  "become_an_hero": "Sta\u0148 sa hrdinom",
+  "share_url": "Zdie\u013ea\u0165 URL adresu",
+  "refresh": "Obnovi\u0165",
+  "support": "Podpora",
+  "become_hero_desc": "Dosta\u0148 sa do zoznamu d\u00f4le\u017eit\u00fdch podporovate\u013eov",
+  "ad_removed": "Reklama odstr\u00e1nen\u00e1"
 }

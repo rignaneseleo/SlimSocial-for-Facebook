@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Hiba a proxy haszn\u00e1latakor {}:{}",
   "error_proxy": "Hiba a proxy haszn\u00e1latakor",
   "enabled": "Enged\u00e9lyezve",
-  "proxy_is_active": "A proxy akt\u00edv"
+  "proxy_is_active": "A proxy akt\u00edv",
+  "become_an_hero": "L\u00e9gy h\u0151s",
+  "share_url": "Megoszt\u00e1s URL-c\u00edme",
+  "refresh": "Friss\u00edt\u00e9s",
+  "support": "T\u00e1mogat\u00e1s",
+  "become_hero_desc": "Ker\u00fclj\u00f6n a neved az fontos t\u00e1mogat\u00f3k list\u00e1j\u00e1ra",
+  "ad_removed": "Hirdet\u00e9s elt\u00e1vol\u00edtva"
 }

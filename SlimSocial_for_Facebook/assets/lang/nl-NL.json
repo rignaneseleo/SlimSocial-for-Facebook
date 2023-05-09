@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Fout met proxy {}:{}",
   "error_proxy": "Fout met proxy",
   "enabled": "Ingeschakeld",
-  "proxy_is_active": "Proxy is actief"
+  "proxy_is_active": "Proxy is actief",
+  "become_an_hero": "Word een held",
+  "share_url": "Deel URL",
+  "refresh": "Vernieuwen",
+  "support": "Ondersteunen",
+  "become_hero_desc": "Kom op de lijst van belangrijke supporters te staan",
+  "ad_removed": "Advertentie verwijderd"
 }

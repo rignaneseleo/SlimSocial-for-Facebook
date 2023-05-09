@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Fel med proxy {}:{}",
   "error_proxy": "Fel med proxy",
   "enabled": "Aktiverad",
-  "proxy_is_active": "Proxyn \u00e4r aktiv"
+  "proxy_is_active": "Proxyn \u00e4r aktiv",
+  "become_an_hero": "Bli en hj\u00e4lte",
+  "share_url": "Dela URL",
+  "refresh": "Uppdatera",
+  "support": "St\u00f6d",
+  "become_hero_desc": "F\u00e5 ditt namn i listan \u00f6ver viktiga supporters",
+  "ad_removed": "Annons borttagen"
 }

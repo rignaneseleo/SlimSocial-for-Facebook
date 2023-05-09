@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "B\u0142\u0105d serwera proxy {}:{}",
   "error_proxy": "B\u0142\u0105d serwera proxy",
   "enabled": "W\u0142\u0105czone",
-  "proxy_is_active": "Serwer proxy jest aktywny"
+  "proxy_is_active": "Serwer proxy jest aktywny",
+  "become_an_hero": "Sta\u0144 si\u0119 bohaterem",
+  "share_url": "Udost\u0119pnij adres URL",
+  "refresh": "Od\u015bwie\u017c",
+  "support": "Wsparcie",
+  "become_hero_desc": "Zdob\u0105d\u017a swoje imi\u0119 na li\u015bcie wa\u017cnych darczy\u0144c\u00f3w",
+  "ad_removed": "Usuni\u0119to reklam\u0119"
 }

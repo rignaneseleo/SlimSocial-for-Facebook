@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Napaka s pretvornikom {}:{}",
   "error_proxy": "Napaka s pretvornikom",
   "enabled": "Omogo\u010deno",
-  "proxy_is_active": "Pretvornik je aktiven"
+  "proxy_is_active": "Pretvornik je aktiven",
+  "become_an_hero": "Postani junak",
+  "share_url": "Deli povezavo",
+  "refresh": "Osve\u017ei",
+  "support": "Podpiraj",
+  "become_hero_desc": "Dodaj svoje ime na seznam pomembnih podpornikov",
+  "ad_removed": "Oglas odstranjen"
 }
