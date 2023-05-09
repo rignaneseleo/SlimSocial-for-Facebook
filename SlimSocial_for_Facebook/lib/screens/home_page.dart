@@ -10,6 +10,7 @@ import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
+import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 
 import '../controllers/fb_controller.dart';
@@ -137,17 +138,73 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               icon: const Icon(Icons.ios_share_outlined),
             ),
-          if (!isScontentUrl)
-            IconButton(
-              onPressed: () async {
-                var url = await _controller?.currentUrl();
-                if (url != null) Share.share(url);
-              },
-              icon: const Icon(Icons.share),
-            ),
-          IconButton(
-            onPressed: () async => Navigator.of(context).pushNamed("/settings"),
-            icon: const Icon(Icons.settings),
+          PopupMenuButton<String>(
+            onSelected: (item) async {
+              switch (item) {
+                case "share_url":
+                  var url = await _controller?.currentUrl();
+                  if (url != null) Share.share(url);
+                  break;
+                case "refresh":
+                  _controller?.reload();
+                  break;
+                case "settings":
+                  Navigator.of(context).pushNamed("/settings");
+                  break;
+                case "top":
+                  _controller?.scrollTo(0, 0);
+                  break;
+                case "support":
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SettingsPage(productId: "donation_1")),
+                  );
+                  break;
+                default:
+                  print("Unknown menu item: $item");
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem<String>(
+                  value: "top",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.vertical_align_top),
+                    title: Text("top".tr().capitalize()),
+                  )),
+              PopupMenuItem<String>(
+                  value: "refresh",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.refresh),
+                    title: Text("refresh".tr().capitalize()),
+                  )),
+              PopupMenuItem<String>(
+                  value: "share_url",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.share),
+                    title: Text("share_url".tr().capitalize()),
+                  )),
+              PopupMenuItem<String>(
+                  value: "settings",
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.settings),
+                    title: Text("settings".tr().capitalize()),
+                  )),
+              PopupMenuItem<String>(
+                  value: "support",
+                  child: ListTile(
+                    iconColor: Colors.red,
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.favorite),
+                    title: Text("support".tr().capitalize()),
+                  )),
+            ],
           ),
         ],
       ),
