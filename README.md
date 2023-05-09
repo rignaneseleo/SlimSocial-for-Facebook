@@ -1,5 +1,8 @@
-[![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
-# SlimSocial for Facebook
+
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+# SlimSocial for Facebook 
 
 
 SlimSocial for Facebook is a lightweight and customizable alternative to the official Facebook app. It was originally [created in 2015](https://forum.xda-developers.com/android/apps-games/app-slimfacebook-1mb-0-permissions-t3254174) as a project to explore Android app development, but it was put on hold due to university and work commitments.
@@ -27,6 +30,7 @@ To get started with SlimSocial for Facebook, you can download the app from the s
 
 
 ## Contributing
+[![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
 
 SlimSocial for Facebook is an open-source project, and contributions are welcome! If you would like to contribute to the project, feel free to submit a pull request.
 
