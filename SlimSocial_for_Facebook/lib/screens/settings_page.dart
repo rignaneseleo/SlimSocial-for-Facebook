@@ -281,6 +281,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 },
               ),
               SettingsTile.navigation(
+                enabled: !sp.getString("custom_css").isNullOrEmpty() ||
+                    !sp.getString("custom_js").isNullOrEmpty() ||
+                    !sp.getString("custom_useragent").isNullOrEmpty(),
                 leading: Icon(Icons.send_time_extension),
                 title: Text('send_to_dev'.tr()),
                 description: Text('send_to_dev_desc'.tr()),
