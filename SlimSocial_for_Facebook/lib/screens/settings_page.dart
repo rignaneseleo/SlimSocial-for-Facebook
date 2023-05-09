@@ -19,7 +19,10 @@ import '../main.dart';
 import '../utils.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  //this is used to make a shortcut for donations
+  String? productId;
+
+  SettingsPage({this.productId, Key? key}) : super(key: key);
 
   @override
   ConsumerState<SettingsPage> createState() => _SettingsPageState();
@@ -37,6 +40,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   @override
   void initState() {
     _updatePermissionsToggle();
+
+    if (!widget.productId.isNullOrEmpty()) {
+      Future.delayed(Duration(milliseconds: 1), () {
+        buildPaymentWidget(widget.productId!);
+      });
+    }
 
     super.initState();
   }
@@ -334,15 +343,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     onPressed: (BuildContext context) async {
                       buildPaymentWidget("donation_2".tr());
                     }),
-                SettingsTile.navigation(
+                /*SettingsTile.navigation(
                     leading: Icon(Icons.local_pizza_outlined),
                     title: Text('buy_pizza'.tr()),
                     onPressed: (BuildContext context) async {
                       buildPaymentWidget("donation_3".tr());
-                    }),
+                    }),*/
                 SettingsTile.navigation(
                     leading: Icon(Icons.stars),
                     title: Text('become_hero'.tr()),
+                    description: Text('become_hero_desc'.tr()),
                     onPressed: (BuildContext context) async {
                       buildPaymentWidget("donation_4");
                     }),

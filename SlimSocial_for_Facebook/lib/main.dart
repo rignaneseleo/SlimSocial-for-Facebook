@@ -126,17 +126,19 @@ class SlimSocialApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         colorScheme: lightColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(ThemeData(brightness: Brightness.light).textTheme),
+        textTheme: GoogleFonts.robotoTextTheme(
+            ThemeData(brightness: Brightness.light).textTheme),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
         colorScheme: darkColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(ThemeData(brightness: Brightness.dark).textTheme),
+        textTheme: GoogleFonts.robotoTextTheme(
+            ThemeData(brightness: Brightness.dark).textTheme),
       ),
       themeMode: ThemeMode.dark,
       home: HomePage(),
       routes: {
-        "/settings": (context) => const SettingsPage(),
+        "/settings": (context) => SettingsPage(),
       },
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
