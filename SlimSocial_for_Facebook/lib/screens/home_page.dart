@@ -202,20 +202,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
               //gestures
               gestureNavigationEnabled: true,
-              gestureRecognizers: Set()
-                ..add(
-                  Factory<VerticalDragGestureRecognizer>(
-                      () => VerticalDragGestureRecognizer()
-                        ..onDown = (DragDownDetails dragDownDetails) {
-                          _controller?.getScrollY().then((value) {
-                            if (value == 0 &&
-                                dragDownDetails.globalPosition.direction < 1) {
-                              showToast("reloading...".tr());
-                              _controller?.reload();
-                            }
-                          });
-                        }),
-                ),
             ),
             if (isLoading)
               LinearProgressIndicator(
