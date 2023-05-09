@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "{}:{} \ud504\ub85d\uc2dc \uc624\ub958",
   "error_proxy": "\ud504\ub85d\uc2dc \uc624\ub958",
   "enabled": "\uc0ac\uc6a9 \uac00\ub2a5",
-  "proxy_is_active": "\ud504\ub85d\uc2dc\uac00 \ud65c\uc131\ud654\ub428"
+  "proxy_is_active": "\ud504\ub85d\uc2dc\uac00 \ud65c\uc131\ud654\ub428",
+  "become_an_hero": "\uc601\uc6c5\uc774 \ub418\uc138\uc694",
+  "share_url": "URL \uacf5\uc720",
+  "refresh": "\uc0c8\ub85c\uace0\uce68",
+  "support": "\uc9c0\uc6d0",
+  "become_hero_desc": "\uc911\uc694\ud55c \ud6c4\uc6d0\uc790 \uba85\ub2e8\uc5d0 \uc774\ub984\uc744 \uc62c\ub9ac\uc138\uc694",
+  "ad_removed": "\uad11\uace0 \uc81c\uac70\ub428"
 }

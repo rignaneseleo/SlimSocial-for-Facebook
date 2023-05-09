@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Erro com proxy {}:{}",
   "error_proxy": "Erro com proxy",
   "enabled": "Ativado",
-  "proxy_is_active": "Proxy est\u00e1 ativo"
+  "proxy_is_active": "Proxy est\u00e1 ativo",
+  "become_an_hero": "Torne-se um her\u00f3i",
+  "share_url": "Compartilhar URL",
+  "refresh": "Atualizar",
+  "support": "Apoio",
+  "become_hero_desc": "Obtenha seu nome na lista de apoiadores importantes",
+  "ad_removed": "An\u00fancio removido"
 }

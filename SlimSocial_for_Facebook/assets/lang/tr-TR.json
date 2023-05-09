@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Proxy hatas\u0131 {}:{}",
   "error_proxy": "Proxy hatas\u0131",
   "enabled": "Etkin",
-  "proxy_is_active": "Proxy etkin"
+  "proxy_is_active": "Proxy etkin",
+  "become_an_hero": "Kahraman ol",
+  "share_url": "URL payla\u015f",
+  "refresh": "Yenile",
+  "support": "Destekle",
+  "become_hero_desc": "\u00d6nemli destek\u00e7iler listesinde ad\u0131n\u0131z\u0131 al\u0131n",
+  "ad_removed": "Reklam kald\u0131r\u0131ld\u0131"
 }

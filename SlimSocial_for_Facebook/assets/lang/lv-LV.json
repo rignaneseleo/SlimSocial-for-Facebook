@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "K\u013c\u016bda ar proksiju {}:{}",
   "error_proxy": "K\u013c\u016bda ar proksiju",
   "enabled": "Iesp\u0113jots",
-  "proxy_is_active": "Proksijs ir akt\u012bvs"
+  "proxy_is_active": "Proksijs ir akt\u012bvs",
+  "become_an_hero": "K\u013c\u016bsti par varoni",
+  "share_url": "Kop\u012bgot URL",
+  "refresh": "Atjaunot",
+  "support": "Atbalst\u012bt",
+  "become_hero_desc": "Ieg\u016bsti savu v\u0101rdu svar\u012bgu atbalst\u012bt\u0101ju sarakst\u0101",
+  "ad_removed": "Sludin\u0101jums no\u0146emts"
 }

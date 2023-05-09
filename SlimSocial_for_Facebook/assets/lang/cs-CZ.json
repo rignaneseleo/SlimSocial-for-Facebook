@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Chyba s proxy {}:{}",
   "error_proxy": "Chyba s proxy",
   "enabled": "Povoleno",
-  "proxy_is_active": "Proxy je aktivn\u00ed"
+  "proxy_is_active": "Proxy je aktivn\u00ed",
+  "become_an_hero": "St\u00e1t se hrdinou",
+  "share_url": "Sd\u00edlet URL",
+  "refresh": "Obnovit",
+  "support": "Podpo\u0159it",
+  "become_hero_desc": "Dostat sv\u00e9 jm\u00e9no na seznam v\u00fdznamn\u00fdch podporovatel\u016f",
+  "ad_removed": "Inzerce odstran\u011bna"
 }

@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Virhe v\u00e4lityspalvelimessa {}:{}",
   "error_proxy": "Virhe v\u00e4lityspalvelimessa",
   "enabled": "K\u00e4yt\u00f6ss\u00e4",
-  "proxy_is_active": "V\u00e4lityspalvelin on aktiivinen"
+  "proxy_is_active": "V\u00e4lityspalvelin on aktiivinen",
+  "become_an_hero": "Tule sankariksi",
+  "share_url": "Jaa URL",
+  "refresh": "P\u00e4ivit\u00e4",
+  "support": "Tuki",
+  "become_hero_desc": "Saat nimesi t\u00e4rkeiden tukijoiden luetteloon",
+  "ad_removed": "Mainokset poistettu"
 }

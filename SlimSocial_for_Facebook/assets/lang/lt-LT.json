@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Klaida su serveriu {}:{}",
   "error_proxy": "Klaida su serveriu",
   "enabled": "\u012ejungtas",
-  "proxy_is_active": "Serveris aktyvus"
+  "proxy_is_active": "Serveris aktyvus",
+  "become_an_hero": "Tapti herojumi",
+  "share_url": "Dalintis URL",
+  "refresh": "Atnaujinti",
+  "support": "Remti",
+  "become_hero_desc": "J\u016bs\u0173 vardas bus \u012ftrauktas \u012f svarbi\u0173 rem\u0117j\u0173 s\u0105ra\u0161\u0105",
+  "ad_removed": "Reklama pa\u0161alinta"
 }

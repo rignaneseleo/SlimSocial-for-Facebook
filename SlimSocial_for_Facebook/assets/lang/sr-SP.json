@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Gre\u0161ka sa proksijem {}:{}",
   "error_proxy": "Gre\u0161ka sa proksijem",
   "enabled": "Omogu\u0107eno",
-  "proxy_is_active": "Proksi je aktivan"
+  "proxy_is_active": "Proksi je aktivan",
+  "become_an_hero": "Postani heroj",
+  "share_url": "Podeli URL",
+  "refresh": "Osve\u017ei",
+  "support": "Podr\u0161ka",
+  "become_hero_desc": "Va\u0161e ime na listi va\u017enih podr\u017eavalaca",
+  "ad_removed": "Oglas uklonjen"
 }

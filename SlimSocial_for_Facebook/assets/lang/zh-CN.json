@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "\u4ee3\u7406\u9519\u8bef {}:{}",
   "error_proxy": "\u4ee3\u7406\u9519\u8bef",
   "enabled": "\u5df2\u542f\u7528",
-  "proxy_is_active": "\u4ee3\u7406\u5df2\u542f\u7528"
+  "proxy_is_active": "\u4ee3\u7406\u5df2\u542f\u7528",
+  "become_an_hero": "\u6210\u4e3a\u82f1\u96c4",
+  "share_url": "\u5206\u4eab\u7f51\u5740",
+  "refresh": "\u5237\u65b0",
+  "support": "\u652f\u6301",
+  "become_hero_desc": "\u5c06\u60a8\u7684\u540d\u5b57\u5217\u5165\u91cd\u8981\u652f\u6301\u8005\u540d\u5355",
+  "ad_removed": "\u5e7f\u544a\u5df2\u79fb\u9664"
 }

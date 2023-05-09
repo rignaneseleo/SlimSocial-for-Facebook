@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Feil med proxy {}:{}",
   "error_proxy": "Feil med proxy",
   "enabled": "Aktivert",
-  "proxy_is_active": "Proxyen er aktiv"
+  "proxy_is_active": "Proxyen er aktiv",
+  "become_an_hero": "Bli en helt",
+  "share_url": "Del URL",
+  "refresh": "Oppdater",
+  "support": "St\u00f8tte",
+  "become_hero_desc": "F\u00e5 navnet ditt p\u00e5 listen over viktige st\u00f8ttespillere",
+  "ad_removed": "Annonse fjernet"
 }

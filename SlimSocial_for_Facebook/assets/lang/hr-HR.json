@@ -50,5 +50,11 @@
   "error_proxy with {}:{}": "Gre\u0161ka s proxy poslu\u017eiteljem {}:{}",
   "error_proxy": "Gre\u0161ka s proxy poslu\u017eiteljem",
   "enabled": "Omogu\u0107eno",
-  "proxy_is_active": "Proxy poslu\u017eitelj je aktivan"
+  "proxy_is_active": "Proxy poslu\u017eitelj je aktivan",
+  "become_an_hero": "Postani junak",
+  "share_url": "Podijeli URL",
+  "refresh": "Osvje\u017ei",
+  "support": "Podr\u0161ka",
+  "become_hero_desc": "Stavi svoje ime na popis va\u017enih podr\u017eavatelja",
+  "ad_removed": "Oglas uklonjen"
 }

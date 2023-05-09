@@ -29,7 +29,7 @@
   "follow_me": "Follow me",
   "version": "version",
   "reloading...": "Reloading...",
-  "error_trylater": "Error, please try again later",
+  "error_trylater": "Error, please try later",
   "default value will be overwritten": "Default value will be overwritten",
   "thankyou": "Thank you!",
   "You are running ads free": "You are running ads free",
@@ -46,5 +46,15 @@
   "Image saved to {}": "Image saved to {}",
   "sharing": "Sharing",
   "downloading": "Downloading",
-  "error_trylater": "Error, please try later"
+  "become_an_hero": "Become a hero",
+  "custom_proxy": "Custom proxy",
+  "error_proxy with {}:{}": "Error with proxy {}:{}",
+  "error_proxy": "Error with proxy",
+  "enabled": "Enabled",
+  "proxy_is_active": "Proxy is active",
+  "share_url": "Share URL",
+  "refresh": "Refresh",
+  "support": "Support",
+  "become_hero_desc": "Get your name on the list of important supporters",
+  "ad_removed": "Ad removed"
 }
