@@ -86,7 +86,7 @@ class CustomJs {
     adsCount++;
   }
 
-  console.log(adsCount + ` ads removed`);
+  //console.log(adsCount + ` ads removed`);
   }
 
 // Select the node that will be observed for changes
