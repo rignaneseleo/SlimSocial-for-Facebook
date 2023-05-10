@@ -58,6 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future<NavigationDecision> onNavigationRequest(
       NavigationRequest request) async {
     Uri uri = Uri.parse(request.url);
+    print("onNavigationRequest: ${request.url}");
 
     for (String other in kPermittedHostnamesFb)
       if (uri.host.endsWith(other)) {
@@ -280,7 +281,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
 
               //gestures
-              gestureNavigationEnabled: true,
+              gestureNavigationEnabled: false,
             ),
             if (isLoading)
               LinearProgressIndicator(
