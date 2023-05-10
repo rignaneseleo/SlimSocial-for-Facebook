@@ -56,5 +56,13 @@
   "refresh": "Osvje\u017ei",
   "support": "Podr\u0161ka",
   "become_hero_desc": "Stavi svoje ime na popis va\u017enih podr\u017eavatelja",
-  "ad_removed": "Oglas uklonjen"
+  "ad_removed": "Oglas uklonjen",
+  "hide_all_ads": "Sakrij oglase",
+  "review5stars_v1": "Napi\u0161i recenziju s 5 zvjezdica",
+  "become_hero_desc_v1": "Tvoje ime \u0107e se pojaviti na popisu va\u017enih podr\u017eavatelja",
+  "delete": "Izbri\u0161i",
+  "cancel": "Odustani",
+  "save": "Spremi",
+  "permissions": "Dozvole",
+  "enable_messenger": "Omogu\u0107i Messenger"
 }

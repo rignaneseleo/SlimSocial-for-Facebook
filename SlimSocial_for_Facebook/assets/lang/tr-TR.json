@@ -56,5 +56,13 @@
   "refresh": "Yenile",
   "support": "Destekle",
   "become_hero_desc": "\u00d6nemli destek\u00e7iler listesinde ad\u0131n\u0131z\u0131 al\u0131n",
-  "ad_removed": "Reklam kald\u0131r\u0131ld\u0131"
+  "ad_removed": "Reklam kald\u0131r\u0131ld\u0131",
+  "hide_all_ads": "Reklamlar\u0131 Gizle",
+  "review5stars_v1": "Be\u015f Y\u0131ld\u0131zl\u0131 Bir \u0130nceleme B\u0131rak",
+  "become_hero_desc_v1": "Ad\u0131n\u0131z \u00f6nemli destek\u00e7iler listesinde yer alacak",
+  "delete": "Sil",
+  "cancel": "\u0130ptal",
+  "save": "Kaydet",
+  "permissions": "\u0130zinler",
+  "enable_messenger": "Messenger\"\u0131 Etkinle\u015ftir"
 }

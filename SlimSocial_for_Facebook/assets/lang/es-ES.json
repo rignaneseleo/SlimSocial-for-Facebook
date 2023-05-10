@@ -56,5 +56,13 @@
   "refresh": "Actualizar",
   "support": "Apoyar",
   "become_hero_desc": "Obt\u00e9n tu nombre en la lista de importantes patrocinadores",
-  "ad_removed": "Anuncio removido"
+  "ad_removed": "Anuncio removido",
+  "hide_all_ads": "Ocultar anuncios",
+  "review5stars_v1": "Dejar una rese\u00f1a de 5 estrellas",
+  "become_hero_desc_v1": "Tu nombre aparecer\u00e1 en la lista de importantes patrocinadores",
+  "delete": "Eliminar",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "permissions": "Permisos",
+  "enable_messenger": "Activar Messenger"
 }

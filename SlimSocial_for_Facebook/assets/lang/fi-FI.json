@@ -56,5 +56,13 @@
   "refresh": "P\u00e4ivit\u00e4",
   "support": "Tuki",
   "become_hero_desc": "Saat nimesi t\u00e4rkeiden tukijoiden luetteloon",
-  "ad_removed": "Mainokset poistettu"
+  "ad_removed": "Mainokset poistettu",
+  "hide_all_ads": "Piilota mainokset",
+  "review5stars_v1": "J\u00e4t\u00e4 5 t\u00e4hden arvostelu",
+  "become_hero_desc_v1": "Nimesi n\u00e4kyy t\u00e4rkeiden tukijoiden listalla",
+  "delete": "Poista",
+  "cancel": "Peruuta",
+  "save": "Tallenna",
+  "permissions": "K\u00e4ytt\u00f6oikeudet",
+  "enable_messenger": "Ota Messenger k\u00e4ytt\u00f6\u00f6n"
 }

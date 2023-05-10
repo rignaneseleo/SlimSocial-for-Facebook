@@ -56,5 +56,13 @@
   "refresh": "\uc0c8\ub85c\uace0\uce68",
   "support": "\uc9c0\uc6d0",
   "become_hero_desc": "\uc911\uc694\ud55c \ud6c4\uc6d0\uc790 \uba85\ub2e8\uc5d0 \uc774\ub984\uc744 \uc62c\ub9ac\uc138\uc694",
-  "ad_removed": "\uad11\uace0 \uc81c\uac70\ub428"
+  "ad_removed": "\uad11\uace0 \uc81c\uac70\ub428",
+  "hide_all_ads": "\uad11\uace0 \uc228\uae30\uae30",
+  "review5stars_v1": "5\uc131\uae09 \ub9ac\ubdf0 \ub0a8\uae30\uae30",
+  "become_hero_desc_v1": "\ub2f9\uc2e0\uc758 \uc774\ub984\uc740 \uc911\uc694\ud55c \uc9c0\uc6d0\uc790 \ubaa9\ub85d\uc5d0 \ub098\ud0c0\ub0a9\ub2c8\ub2e4",
+  "delete": "\uc0ad\uc81c",
+  "cancel": "\ucde8\uc18c",
+  "save": "\uc800\uc7a5",
+  "permissions": "\uad8c\ud55c",
+  "enable_messenger": "\uba54\uc2e0\uc800 \ud65c\uc131\ud654"
 }

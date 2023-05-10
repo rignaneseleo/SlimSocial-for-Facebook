@@ -56,5 +56,13 @@
   "refresh": "V\u00e4rskenda",
   "support": "Toetage",
   "become_hero_desc": "Saatke oma nimi t\u00e4htsate toetajate nimekirja",
-  "ad_removed": "Reklaam eemaldatud"
+  "ad_removed": "Reklaam eemaldatud",
+  "hide_all_ads": "Peida reklaamid",
+  "review5stars_v1": "J\u00e4ta 5-t\u00e4rni \u00fclevaade",
+  "become_hero_desc_v1": "Teie nimi ilmub t\u00e4htsate toetajate nimekirjas",
+  "delete": "Kustuta",
+  "cancel": "Loobu",
+  "save": "Salvesta",
+  "permissions": "\u00d5igused",
+  "enable_messenger": "Luba Messenger"
 }

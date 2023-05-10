@@ -56,5 +56,13 @@
   "refresh": "Obnovi\u0165",
   "support": "Podpora",
   "become_hero_desc": "Dosta\u0148 sa do zoznamu d\u00f4le\u017eit\u00fdch podporovate\u013eov",
-  "ad_removed": "Reklama odstr\u00e1nen\u00e1"
+  "ad_removed": "Reklama odstr\u00e1nen\u00e1",
+  "hide_all_ads": "Skry\u0165 reklamy",
+  "review5stars_v1": "Zanecha\u0165 hodnotenie 5 hviezdi\u010diek",
+  "become_hero_desc_v1": "Va\u0161e meno sa objav\u00ed na zozname d\u00f4le\u017eit\u00fdch podporovate\u013eov",
+  "delete": "Odstr\u00e1ni\u0165",
+  "cancel": "Zru\u0161i\u0165",
+  "save": "Ulo\u017ei\u0165",
+  "permissions": "Opr\u00e1vnenia",
+  "enable_messenger": "Povoli\u0165 Messenger"
 }

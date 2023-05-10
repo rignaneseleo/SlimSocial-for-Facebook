@@ -56,5 +56,13 @@
   "refresh": "Osve\u017ei",
   "support": "Podr\u0161ka",
   "become_hero_desc": "Va\u0161e ime na listi va\u017enih podr\u017eavalaca",
-  "ad_removed": "Oglas uklonjen"
+  "ad_removed": "Oglas uklonjen",
+  "hide_all_ads": "Sakrij oglase",
+  "review5stars_v1": "Ostavite pet zvezdica recenziju",
+  "become_hero_desc_v1": "Va\u0161e ime \u0107e se pojaviti na listi va\u017enih podr\u017eavaoca",
+  "delete": "Obri\u0161i",
+  "cancel": "Otka\u017ei",
+  "save": "Sa\u010duvaj",
+  "permissions": "Dozvole",
+  "enable_messenger": "Omogu\u0107i Messenger"
 }

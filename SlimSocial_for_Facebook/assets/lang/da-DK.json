@@ -56,5 +56,13 @@
   "refresh": "Opdater",
   "support": "St\u00f8tte",
   "become_hero_desc": "F\u00e5 dit navn p\u00e5 listen over vigtige st\u00f8tter",
-  "ad_removed": "Reklame fjernet"
+  "ad_removed": "Reklame fjernet",
+  "hide_all_ads": "Skjul annoncer",
+  "review5stars_v1": "Skriv en anmeldelse med 5 stjerner",
+  "become_hero_desc_v1": "Dit navn vil blive vist p\u00e5 listen over vigtige st\u00f8tter",
+  "delete": "Slet",
+  "cancel": "Annuller",
+  "save": "Gem",
+  "permissions": "Tilladelser",
+  "enable_messenger": "Aktiv\u00e9r Messenger"
 }
