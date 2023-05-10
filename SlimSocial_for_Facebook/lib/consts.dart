@@ -2,12 +2,15 @@ const String kFacebookHomeUrl = 'https://touch.facebook.com/home.php';
 const String kFacebookHomeBasicUrl = 'https://mbasic.facebook.com/home.php';
 const String kMessengerUrl = 'https://www.messenger.com';
 
-const List<String> kPermittedHostnames = [
+const List<String> kPermittedHostnamesFb = [
   "facebook.com",
   "fbcdn.net",
   "fb.com",
   "fb.me",
+];
+const List<String> kPermittedHostnamesMessenger = [
   "messenger.com",
+  "m.me",
 ];
 
 //suffix for the feed
@@ -20,10 +23,11 @@ const String kFirefoxUserAgent =
 const String kOperaMiniUserAgent =
     "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
 
-
-
-const String kEmailToDevUrl="mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
-const String kDevEmail="dev.rignaneseleo+slimsocial@gmail.com";
-const String kTwitterProfileUrl="https://twitter.com/leorigna";
-const String kGithubProjectUrl="https://github.com/rignaneseleo/SlimSocial-for-Facebook";
-const String kPlayStoreUrl="https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";
+const String kEmailToDevUrl =
+    "mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
+const String kDevEmail = "dev.rignaneseleo+slimsocial@gmail.com";
+const String kTwitterProfileUrl = "https://twitter.com/leorigna";
+const String kGithubProjectUrl =
+    "https://github.com/rignaneseleo/SlimSocial-for-Facebook";
+const String kPlayStoreUrl =
+    "https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";

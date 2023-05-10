@@ -16,7 +16,7 @@ import 'controllers/fb_controller.dart';
 late SharedPreferences sp;
 
 //riverpod state
-final webUriProvider =
+final fbWebViewProvider =
     StateNotifierProvider<webUriState, Uri>((ref) => webUriState(ref));
 
 late PackageInfo packageInfo;
@@ -38,7 +38,7 @@ Future<void> main() async {
     print("Received uri: $uri");
     // Do something (navigation, ...)
     //run the app with the uri
-    container.read(webUriProvider.notifier).update(uri.toString());
+    container.read(fbWebViewProvider.notifier).update(uri.toString());
   });
 
   runApp(
