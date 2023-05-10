@@ -10,26 +10,26 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_webview_pro: ^3.0.1+4
-  flutter_custom_tabs: ^1.0.4
-  url_launcher: ^6.1.10
-  permission_handler: ^10.2.0
-  shared_preferences: ^2.1.0
+  flutter_webview_pro: 3.0.1+4
+  flutter_custom_tabs: 1.0.4
+  url_launcher: 6.1.10
+  permission_handler: 10.2.0
+  shared_preferences: 2.1.0
   flutter_launcher_icons: 0.13.1
-  app_links: ^3.4.2
-  settings_ui: ^2.0.2
-  flutter_riverpod: ^2.3.6
-  in_app_purchase: ^3.1.5
+  app_links: 3.4.2
+  settings_ui: 2.0.2
+  flutter_riverpod: 2.3.6
+  in_app_purchase: 3.1.5
   fluttertoast: 8.2.1
-  easy_localization: ^3.0.1
-  package_info_plus: ^1.0.6
-  restart_app: ^1.1.2
-  google_fonts: ^4.0.4
-  in_app_review: ^2.0.6
-  share_plus: ^6.3.4
-  flutter_file_downloader: ^1.1.2
-  open_file_plus: ^3.4.1
-  native_flutter_proxy: ^0.1.15
+  easy_localization: 3.0.1
+  package_info_plus: 1.0.6
+  restart_app: 1.1.2
+  google_fonts: 4.0.4
+  in_app_review: 2.0.6
+  share_plus: 6.3.4
+  flutter_file_downloader: 1.1.2
+  open_file_plus: 3.4.1
+  native_flutter_proxy: 0.1.15
 
 dev_dependencies:
   flutter_test:
