@@ -13,10 +13,10 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../consts.dart';
-import '../css.dart';
-import '../js.dart';
+import '../utils/css.dart';
+import '../utils/js.dart';
 import '../main.dart';
-import '../utils.dart';
+import '../utils/utils.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   //this is used to make a shortcut for donations

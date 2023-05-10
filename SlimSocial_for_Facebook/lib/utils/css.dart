@@ -1,4 +1,4 @@
-import 'main.dart';
+import '../main.dart';
 
 class CustomCss {
   static List<MyCss> cssList = [
@@ -63,7 +63,7 @@ class CustomCss {
         '.my_fab_btn { position: fixed; z-index: 6; bottom: 10px; right: 10px; background-color: #3B5998; width: 60px; height: 60px; border-radius: 100%; background: #3B5998; border: none; outline: none; color: #FFF; font-size: 23px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); transition: .3s; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
   );
 
-  static MyCss adaptMessengerCss = MyCss(
+  static MyCss adaptMessengerPageCss = MyCss(
     key: 'adaptMessenger',
     description: 'Adapt messenger',
     code:

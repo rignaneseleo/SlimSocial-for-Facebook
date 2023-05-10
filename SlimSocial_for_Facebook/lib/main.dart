@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
-import 'package:slimsocial_for_facebook/utils.dart';
+import 'package:slimsocial_for_facebook/utils/utils.dart';
 
 import 'controllers/fb_controller.dart';
 

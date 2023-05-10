@@ -14,10 +14,10 @@ import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 
 import '../controllers/fb_controller.dart';
-import '../css.dart';
-import '../js.dart';
+import '../utils/css.dart';
+import '../utils/js.dart';
 import '../main.dart';
-import '../utils.dart';
+import '../utils/utils.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   //String? initialUrl;
