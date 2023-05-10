@@ -21,7 +21,7 @@ dependencies:
   flutter_riverpod: 2.3.6
   in_app_purchase: 3.1.5
   fluttertoast: 8.2.1
-  easy_localization: 3.0.1
+  easy_localization: ^3.0.1
   package_info_plus: 3.1.2
   restart_app: 1.1.2
   google_fonts: 4.0.4
