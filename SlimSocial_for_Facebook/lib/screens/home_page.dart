@@ -32,7 +32,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   WebViewController? _controller;
   bool isLoading = false;
-  late Timer adsRemoverTimer;
   bool isScontentUrl = false;
 
   @override
@@ -41,17 +40,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       WebView.platform = SurfaceAndroidWebView();
     }
 
-    adsRemoverTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (sp.getBool('hide_ads') ?? false)
-        _controller?.runJavascript(CustomJs.removeAds);
-    });
-
     super.initState();
   }
 
   @override
   void dispose() {
-    adsRemoverTimer.cancel();
     super.dispose();
   }
 
@@ -301,6 +294,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         CustomJs.editCss(CustomCss.removeMessengerDownloadCss.code));
     await _controller?.runJavascript(
         CustomJs.editCss(CustomCss.removeBrowserNotSupportedCss.code));
+
+    if (sp.getBool('hide_ads') ?? true)
+      _controller?.runJavascript(CustomJs.removeAds);
 
     //load CSS based on settings
     for (var css in CustomCss.cssList) {

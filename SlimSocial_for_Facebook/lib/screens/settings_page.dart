@@ -92,7 +92,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   ref.refresh(fbWebViewProvider);
                 },
-                initialValue: sp.getBool("hide_ads"),
+                initialValue: sp.getBool("hide_ads") ?? true,
                 leading: Icon(Icons.hide_source),
                 title: Text('hide_all_ads'.tr()),
               ),
