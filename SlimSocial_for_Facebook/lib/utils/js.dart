@@ -68,7 +68,7 @@ class CustomJs {
             "سپانسرڈ",
             // Thai
             "โพสต์ที่ได้รับการสนับสนุน",
-            ${"sponsored_keyword_fb".tr()}}
+            "${"sponsored_keyword_fb".tr()}"
         ];
         
         var myDiv = '<div class="_52z5" style="z-index: 0; height: 135px; display: flex; justify-content: center; align-items: center;"> <div style="text-align: center;"><h1 style="color: white; font-size: 35px; height: 28px; margin: 0;">${"ad_removed".tr()}</h1><p style="color: white; font-size: 12px; margin: 0;">${"Thanks to SlimSocial".tr()}</p></div></div>';
