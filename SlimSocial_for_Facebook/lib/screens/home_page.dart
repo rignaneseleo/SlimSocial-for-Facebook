@@ -105,7 +105,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () =>
-              ref.read(fbWebViewProvider.notifier).update(kFacebookHomeUrl),
+              ref.read(fbWebViewProvider.notifier).updateUrl(kFacebookHomeUrl),
           icon: const Icon(Icons.home),
         ),
         centerTitle: true,
@@ -114,7 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           onTap: () => _controller?.scrollTo(0, 0),
         ),
         backgroundColor: CustomCss.darkThemeCss.isEnabled()
-            ? FacebookColors.black
+            ? FacebookColors.darkBlue
             : FacebookColors.official,
         elevation: 0,
         actions: [
@@ -148,6 +148,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                 }
               },
               icon: const Icon(Icons.ios_share_outlined),
+            ),
+          if (sp.getBool("enable_messenger") ?? true)
+            IconButton(
+              onPressed: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MessengerPage(),
+                  ),
+                );
+              },
+              icon: Image.asset('assets/icons/ic_messenger.png', height: 22),
             ),
           PopupMenuButton<String>(
             onSelected: (item) async {

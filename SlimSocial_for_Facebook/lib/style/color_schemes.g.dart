@@ -12,7 +12,7 @@ class FacebookColors {
   static const Color lightGrey = Color(0xFFE1E2EC);
   static const Color darkGrey = Color(0xFF44464F);
   static const Color grey = Color(0xFF757780);
-  static const Color darkBlue = Color(0xFF17448F);
+  static const Color darkBlue = Color(0xFF080618);
   static const Color lightPurple = Color(0xFFDBE1FF);
   static const Color darkPurple = Color(0xFFC5C6D0);
   static const Color error = Color(0xFFFFB4AB);

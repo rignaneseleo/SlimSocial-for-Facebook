@@ -2,14 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 
 class CustomJs {
   static String editCss(String css) {
-    return '''
+    var str= '''
       javascript:function addStyle(css) {
         var node = document.createElement('style');
         node.innerHTML = css;
         document.body.appendChild(node);
       }
-      addStyle('${css.replaceAll(RegExp(r'\s+'), '')}');
+      addStyle('${css.replaceAll(RegExp(r'\s+'), '').replaceAll("'", "\\'")}');
     ''';
+    return str;
   }
 
   static String exampleJs = """javascript:function foo() {

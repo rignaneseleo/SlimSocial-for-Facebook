@@ -57,10 +57,10 @@ class PrefController {
   }
 }
 
-class webUriState extends StateNotifier<Uri> {
-  webUriState(this.ref) : super(Uri.parse(kFacebookHomeUrl));
+class webViewUriState extends StateNotifier<Uri> {
+  webViewUriState(this.ref) : super(Uri.parse(kFacebookHomeUrl));
 
   final Ref ref;
 
-  void update(String url) => state = Uri.parse(url);
+  void updateUrl(String url) => state = Uri.parse(url);
 }

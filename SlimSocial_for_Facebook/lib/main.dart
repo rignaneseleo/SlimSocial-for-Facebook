@@ -17,7 +17,9 @@ late SharedPreferences sp;
 
 //riverpod state
 final fbWebViewProvider =
-    StateNotifierProvider<webUriState, Uri>((ref) => webUriState(ref));
+    StateNotifierProvider<webViewUriState, Uri>((ref) => webViewUriState(ref));
+final messengerWebViewProvider =
+    StateNotifierProvider<webViewUriState, Uri>((ref) => webViewUriState(ref));
 
 late PackageInfo packageInfo;
 
@@ -38,7 +40,7 @@ Future<void> main() async {
     print("Received uri: $uri");
     // Do something (navigation, ...)
     //run the app with the uri
-    container.read(fbWebViewProvider.notifier).update(uri.toString());
+    container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
   });
 
   runApp(

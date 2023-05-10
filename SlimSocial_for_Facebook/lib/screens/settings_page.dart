@@ -78,30 +78,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
-                    sp.setBool("use_mbasic", value);
+                    sp.setBool("enable_messenger", value);
                   });
-                  ref
-                      .read(fbWebViewProvider.notifier)
-                      .update(PrefController.getHomePage());
-                  Restart.restartApp();
                 },
-                initialValue: sp.getBool("use_mbasic") ?? false,
-                leading: Icon(Icons.abc),
-                title: Text('use_mbasic'.tr()),
-                description: Text('use_mbasic_desc'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool("recent_first", value);
-                  });
-                  ref
-                      .read(fbWebViewProvider.notifier)
-                      .update(PrefController.getHomePage());
-                },
-                initialValue: sp.getBool("recent_first"),
-                leading: Icon(Icons.rss_feed),
-                title: Text('recent_first'.tr()),
+                initialValue: sp.getBool("enable_messenger") ?? true,
+                leading: Icon(Icons.messenger),
+                title: Text('enable_messenger'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -112,71 +94,103 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 },
                 initialValue: sp.getBool("hide_ads"),
                 leading: Icon(Icons.hide_source),
-                title: Text('hide_ads'.tr()),
+                title: Text('hide_all_ads'.tr()),
               ),
               SettingsTile.switchTile(
-                onToggle: (value) async {
-                  Permission permission = Permission.locationWhenInUse;
-
-                  //for gps I don't care about updating value, because the webview can block it anyway
-                  await handlePermission(value, permission);
-
+                onToggle: (value) {
                   setState(() {
-                    sp.setBool("gps_permission", value);
+                    sp.setBool("recent_first", value);
                   });
-                  if (value == false) {
-                    //restart so the weview is blocked
-                    showToast("rebooting".tr());
-                    Restart.restartApp();
-                  }
+                  ref
+                      .read(fbWebViewProvider.notifier)
+                      .updateUrl(PrefController.getHomePage());
                 },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("gps_permission") ?? false,
-                leading: Icon(Icons.gps_fixed),
-                title: Text('gps_permission'.tr()),
+                initialValue: sp.getBool("recent_first"),
+                leading: Icon(Icons.rss_feed),
+                title: Text('recent_first'.tr()),
               ),
               SettingsTile.switchTile(
-                onToggle: (value) async {
-                  var oldVal = value == true;
-                  Permission permission = Permission.camera;
-
-                  //value is set based on the new value of granted
-                  value = await handlePermission(value, permission);
-
-                  if (oldVal != value) {
-                    setState(() {
-                      sp.setBool("camera_permission", value);
-                    });
-                    ref.refresh(fbWebViewProvider);
-                  }
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool("use_mbasic", value);
+                  });
+                  ref
+                      .read(fbWebViewProvider.notifier)
+                      .updateUrl(PrefController.getHomePage());
+                  Restart.restartApp();
                 },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("camera_permission") ?? false,
-                leading: Icon(Icons.camera_alt),
-                title: Text('camera_permission'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  var oldVal = value == true;
-                  Permission permission = Permission.photos;
-
-                  //value is set based on the new value of granted
-                  value = await handlePermission(value, permission);
-
-                  if (oldVal != value) {
-                    setState(() {
-                      sp.setBool("photo_permission", value);
-                    });
-                    ref.refresh(fbWebViewProvider);
-                  }
-                },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("photo_permission") ?? false,
-                leading: Icon(Icons.photo_camera_back_outlined),
-                title: Text('photo_permission'.tr()),
+                initialValue: sp.getBool("use_mbasic") ?? false,
+                leading: Icon(Icons.abc),
+                title: Text('use_mbasic'.tr()),
+                description: Text('use_mbasic_desc'.tr()),
               ),
             ],
           ),
+          SettingsSection(
+              title: Text('permissions'.tr().capitalize()),
+              tiles: <SettingsTile>[
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    Permission permission = Permission.locationWhenInUse;
+
+                    //for gps I don't care about updating value, because the webview can block it anyway
+                    await handlePermission(value, permission);
+
+                    setState(() {
+                      sp.setBool("gps_permission", value);
+                    });
+                    if (value == false) {
+                      //restart so the weview is blocked
+                      showToast("rebooting".tr());
+                      Restart.restartApp();
+                    }
+                  },
+                  //fixme bug on sp, I shoudl use the permission handler .isgranted
+                  initialValue: sp.getBool("gps_permission") ?? false,
+                  leading: Icon(Icons.gps_fixed),
+                  title: Text('gps_permission'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    var oldVal = value == true;
+                    Permission permission = Permission.camera;
+
+                    //value is set based on the new value of granted
+                    value = await handlePermission(value, permission);
+
+                    if (oldVal != value) {
+                      setState(() {
+                        sp.setBool("camera_permission", value);
+                      });
+                      ref.refresh(fbWebViewProvider);
+                    }
+                  },
+                  //fixme bug on sp, I shoudl use the permission handler .isgranted
+                  initialValue: sp.getBool("camera_permission") ?? false,
+                  leading: Icon(Icons.camera_alt),
+                  title: Text('camera_permission'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    var oldVal = value == true;
+                    Permission permission = Permission.photos;
+
+                    //value is set based on the new value of granted
+                    value = await handlePermission(value, permission);
+
+                    if (oldVal != value) {
+                      setState(() {
+                        sp.setBool("photo_permission", value);
+                      });
+                      ref.refresh(fbWebViewProvider);
+                    }
+                  },
+                  //fixme bug on sp, I shoudl use the permission handler .isgranted
+                  initialValue: sp.getBool("photo_permission") ?? false,
+                  leading: Icon(Icons.photo_camera_back_outlined),
+                  title: Text('photo_permission'.tr()),
+                ),
+              ]),
           SettingsSection(
             title: Text('style'.tr().capitalize()),
             tiles: <SettingsTile>[
@@ -331,7 +345,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 SettingsTile.navigation(
                   leading: Icon(Icons.star),
-                  title: Text('review5stars'.tr()),
+                  title: Text('review5stars_v1'.tr()),
                   onPressed: (BuildContext context) async {
                     final InAppReview inAppReview = InAppReview.instance;
 
@@ -355,7 +369,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 SettingsTile.navigation(
                     leading: Icon(Icons.stars),
                     title: Text('become_hero'.tr()),
-                    description: Text('become_hero_desc'.tr()),
+                    description: Text('become_hero_desc_v1'.tr()),
                     onPressed: (BuildContext context) async {
                       buildPaymentWidget("donation_4");
                     }),
