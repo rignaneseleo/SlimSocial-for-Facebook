@@ -10,6 +10,7 @@ import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
+import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 
@@ -58,9 +59,19 @@ class _HomePageState extends ConsumerState<HomePage> {
       NavigationRequest request) async {
     Uri uri = Uri.parse(request.url);
 
-    for (String other in kPermittedHostnames)
+    for (String other in kPermittedHostnamesFb)
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
+      }
+
+    for (String other in kPermittedHostnamesMessenger)
+      if (uri.host.endsWith(other)) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MessengerPage(initialUrl: uri.path),
+          ),
+        );
+        return NavigationDecision.prevent;
       }
 
     // open on webview
@@ -73,7 +84,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     //refresh the page whenever a new state (url) comes
     ref.listen<Uri>(
-      webUriProvider,
+      fbWebViewProvider,
       (previous, next) async {
         if (previous == next) {
           var y = await _controller?.getScrollY();
@@ -94,7 +105,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () =>
-              ref.read(webUriProvider.notifier).update(kFacebookHomeUrl),
+              ref.read(fbWebViewProvider.notifier).update(kFacebookHomeUrl),
           icon: const Icon(Icons.home),
         ),
         centerTitle: true,
