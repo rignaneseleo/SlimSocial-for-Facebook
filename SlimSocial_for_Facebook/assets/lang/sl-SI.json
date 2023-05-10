@@ -56,5 +56,13 @@
   "refresh": "Osve\u017ei",
   "support": "Podpiraj",
   "become_hero_desc": "Dodaj svoje ime na seznam pomembnih podpornikov",
-  "ad_removed": "Oglas odstranjen"
+  "ad_removed": "Oglas odstranjen",
+  "hide_all_ads": "Skrij oglase",
+  "review5stars_v1": "Pusti oceno s 5 zvezdicami",
+  "become_hero_desc_v1": "Va\u0161e ime se bo pojavilo na seznamu pomembnih podpornikov",
+  "delete": "Izbri\u0161i",
+  "cancel": "Prekli\u010di",
+  "save": "Shrani",
+  "permissions": "Dovoljenja",
+  "enable_messenger": "Omogo\u010di Messenger"
 }

@@ -56,5 +56,13 @@
   "refresh": "Friss\u00edt\u00e9s",
   "support": "T\u00e1mogat\u00e1s",
   "become_hero_desc": "Ker\u00fclj\u00f6n a neved az fontos t\u00e1mogat\u00f3k list\u00e1j\u00e1ra",
-  "ad_removed": "Hirdet\u00e9s elt\u00e1vol\u00edtva"
+  "ad_removed": "Hirdet\u00e9s elt\u00e1vol\u00edtva",
+  "hide_all_ads": "Hirdet\u00e9sek elrejt\u00e9se",
+  "review5stars_v1": "Hagyjon 5 csillagos \u00e9rt\u00e9kel\u00e9st",
+  "become_hero_desc_v1": "A neve megjelenik a fontos t\u00e1mogat\u00f3k list\u00e1j\u00e1n",
+  "delete": "T\u00f6rl\u00e9s",
+  "cancel": "M\u00e9gse",
+  "save": "Ment\u00e9s",
+  "permissions": "Enged\u00e9lyek",
+  "enable_messenger": "\u00dczenetk\u00fcld\u00e9s enged\u00e9lyez\u00e9se"
 }

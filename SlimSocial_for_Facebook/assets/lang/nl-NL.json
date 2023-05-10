@@ -56,5 +56,13 @@
   "refresh": "Vernieuwen",
   "support": "Ondersteunen",
   "become_hero_desc": "Kom op de lijst van belangrijke supporters te staan",
-  "ad_removed": "Advertentie verwijderd"
+  "ad_removed": "Advertentie verwijderd",
+  "hide_all_ads": "Verberg advertenties",
+  "review5stars_v1": "Laat een 5 sterren recensie achter",
+  "become_hero_desc_v1": "Je naam zal verschijnen op de lijst van belangrijke supporters",
+  "delete": "Verwijderen",
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "permissions": "Machtigingen",
+  "enable_messenger": "Activeer Messenger"
 }

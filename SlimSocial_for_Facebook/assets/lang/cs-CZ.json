@@ -56,5 +56,13 @@
   "refresh": "Obnovit",
   "support": "Podpo\u0159it",
   "become_hero_desc": "Dostat sv\u00e9 jm\u00e9no na seznam v\u00fdznamn\u00fdch podporovatel\u016f",
-  "ad_removed": "Inzerce odstran\u011bna"
+  "ad_removed": "Inzerce odstran\u011bna",
+  "hide_all_ads": "Skr\u00fdt reklamy",
+  "review5stars_v1": "Zanechat recenzi s 5 hv\u011bzdi\u010dkami",
+  "become_hero_desc_v1": "Va\u0161e jm\u00e9no se objev\u00ed na seznamu d\u016fle\u017eit\u00fdch podporovatel\u016f",
+  "delete": "Smazat",
+  "cancel": "Zru\u0161it",
+  "save": "Ulo\u017eit",
+  "permissions": "Opr\u00e1vn\u011bn\u00ed",
+  "enable_messenger": "Zapnout Messenger"
 }

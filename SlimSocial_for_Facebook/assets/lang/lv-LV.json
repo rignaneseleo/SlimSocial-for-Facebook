@@ -56,5 +56,13 @@
   "refresh": "Atjaunot",
   "support": "Atbalst\u012bt",
   "become_hero_desc": "Ieg\u016bsti savu v\u0101rdu svar\u012bgu atbalst\u012bt\u0101ju sarakst\u0101",
-  "ad_removed": "Sludin\u0101jums no\u0146emts"
+  "ad_removed": "Sludin\u0101jums no\u0146emts",
+  "hide_all_ads": "Pasl\u0113pt rekl\u0101mas",
+  "review5stars_v1": "Atst\u0101jiet 5 zvaig\u017e\u0146u p\u0101rskatu",
+  "become_hero_desc_v1": "J\u016bsu v\u0101rds par\u0101d\u012bsies svar\u012bgo atbalst\u012bt\u0101ju sarakst\u0101",
+  "delete": "Dz\u0113st",
+  "cancel": "Atcelt",
+  "save": "Saglab\u0101t",
+  "permissions": "At\u013caujas",
+  "enable_messenger": "Iesp\u0113jot Messenger"
 }

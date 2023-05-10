@@ -55,6 +55,14 @@
   "share_url": "Condividi URL",
   "refresh": "Aggiorna",
   "support": "Supporto",
-  "become_hero_desc": "Fai inserire il tuo nome nella lista degli importanti sostenitori",
-  "ad_removed": "Annuncio rimosso"
+  "become_hero_desc": "Fai inserire il tuo nome nella lista dei sostenitori importanti",
+  "ad_removed": "Annuncio rimosso",
+  "hide_all_ads": "Nascondi annunci",
+  "review5stars_v1": "Lascia una recensione a 5 stelle",
+  "become_hero_desc_v1": "Il tuo nome comparir\u00e0 nella lista degli importanti sostenitori",
+  "delete": "Elimina",
+  "cancel": "Annulla",
+  "save": "Salva",
+  "permissions": "Permessi",
+  "enable_messenger": "Abilita Messenger"
 }

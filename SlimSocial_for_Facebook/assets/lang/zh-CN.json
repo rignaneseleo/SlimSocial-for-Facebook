@@ -56,5 +56,13 @@
   "refresh": "\u5237\u65b0",
   "support": "\u652f\u6301",
   "become_hero_desc": "\u5c06\u60a8\u7684\u540d\u5b57\u5217\u5165\u91cd\u8981\u652f\u6301\u8005\u540d\u5355",
-  "ad_removed": "\u5e7f\u544a\u5df2\u79fb\u9664"
+  "ad_removed": "\u5e7f\u544a\u5df2\u79fb\u9664",
+  "hide_all_ads": "\u9690\u85cf\u5e7f\u544a",
+  "review5stars_v1": "\u7559\u4e0b5\u661f\u8bc4\u4ef7",
+  "become_hero_desc_v1": "\u4f60\u7684\u540d\u5b57\u5c06\u51fa\u73b0\u5728\u91cd\u8981\u652f\u6301\u8005\u5217\u8868\u4e2d",
+  "delete": "\u5220\u9664",
+  "cancel": "\u53d6\u6d88",
+  "save": "\u4fdd\u5b58",
+  "permissions": "\u6743\u9650",
+  "enable_messenger": "\u542f\u7528Messenger"
 }

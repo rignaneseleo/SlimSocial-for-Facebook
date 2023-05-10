@@ -56,5 +56,13 @@
   "refresh": "Oppdater",
   "support": "St\u00f8tte",
   "become_hero_desc": "F\u00e5 navnet ditt p\u00e5 listen over viktige st\u00f8ttespillere",
-  "ad_removed": "Annonse fjernet"
+  "ad_removed": "Annonse fjernet",
+  "hide_all_ads": "Skjul annonser",
+  "review5stars_v1": "Legg igjen en 5-stjernes anmeldelse",
+  "become_hero_desc_v1": "Navnet ditt vil vises p\u00e5 listen over viktige st\u00f8ttespillere",
+  "delete": "Slett",
+  "cancel": "Avbryt",
+  "save": "Lagre",
+  "permissions": "Tillatelser",
+  "enable_messenger": "Aktiver Messenger"
 }

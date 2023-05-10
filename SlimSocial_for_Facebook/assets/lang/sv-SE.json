@@ -56,5 +56,13 @@
   "refresh": "Uppdatera",
   "support": "St\u00f6d",
   "become_hero_desc": "F\u00e5 ditt namn i listan \u00f6ver viktiga supporters",
-  "ad_removed": "Annons borttagen"
+  "ad_removed": "Annons borttagen",
+  "hide_all_ads": "D\u00f6lj annonser",
+  "review5stars_v1": "L\u00e4mna en 5-stj\u00e4rnig recension",
+  "become_hero_desc_v1": "Ditt namn kommer att visas p\u00e5 listan \u00f6ver viktiga supportrar",
+  "delete": "Ta bort",
+  "cancel": "Avbryt",
+  "save": "Spara",
+  "permissions": "Beh\u00f6righeter",
+  "enable_messenger": "Aktivera Messenger"
 }

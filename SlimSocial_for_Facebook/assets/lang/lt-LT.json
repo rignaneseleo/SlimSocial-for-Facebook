@@ -56,5 +56,13 @@
   "refresh": "Atnaujinti",
   "support": "Remti",
   "become_hero_desc": "J\u016bs\u0173 vardas bus \u012ftrauktas \u012f svarbi\u0173 rem\u0117j\u0173 s\u0105ra\u0161\u0105",
-  "ad_removed": "Reklama pa\u0161alinta"
+  "ad_removed": "Reklama pa\u0161alinta",
+  "hide_all_ads": "Sl\u0117pti reklamas",
+  "review5stars_v1": "Palikti 5 \u017evaig\u017edutes atsiliepim\u0105",
+  "become_hero_desc_v1": "Tavo vardas atsiras svarbi\u0173 r\u0117m\u0117j\u0173 s\u0105ra\u0161e",
+  "delete": "I\u0161trinti",
+  "cancel": "At\u0161aukti",
+  "save": "I\u0161saugoti",
+  "permissions": "Leidimai",
+  "enable_messenger": "\u012ejungti Messenger"
 }

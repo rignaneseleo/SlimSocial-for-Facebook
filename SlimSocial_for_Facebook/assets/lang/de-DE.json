@@ -56,5 +56,13 @@
   "refresh": "Aktualisieren",
   "support": "Unterst\u00fctzung",
   "become_hero_desc": "Erhalte deinen Namen in der Liste wichtiger Unterst\u00fctzer",
-  "ad_removed": "Anzeige entfernt"
+  "ad_removed": "Anzeige entfernt",
+  "hide_all_ads": "Anzeigen ausblenden",
+  "review5stars_v1": "Lassen Sie eine 5-Sterne-Bewertung da",
+  "become_hero_desc_v1": "Ihr Name erscheint auf der Liste wichtiger Unterst\u00fctzer",
+  "delete": "L\u00f6schen",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "permissions": "Berechtigungen",
+  "enable_messenger": "Messenger aktivieren"
 }

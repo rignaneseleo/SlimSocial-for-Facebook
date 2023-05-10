@@ -56,5 +56,13 @@
   "refresh": "Refresh",
   "support": "Support",
   "become_hero_desc": "Get your name on the list of important supporters",
-  "ad_removed": "Ad removed"
+  "ad_removed": "Ad removed",
+  "hide_all_ads": "Hide ads",
+  "review5stars_v1": "Leave a 5 stars review",
+  "become_hero_desc_v1": "Your name will appear on the list of important supporters",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "save": "Save",
+  "permissions": "Permissions",
+  "enable_messenger": "Enable Messenger"
 }

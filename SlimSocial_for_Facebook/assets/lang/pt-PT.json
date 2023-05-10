@@ -56,5 +56,13 @@
   "refresh": "Atualizar",
   "support": "Apoio",
   "become_hero_desc": "Obtenha seu nome na lista de apoiadores importantes",
-  "ad_removed": "An\u00fancio removido"
+  "ad_removed": "An\u00fancio removido",
+  "hide_all_ads": "Ocultar an\u00fancios",
+  "review5stars_v1": "Deixar uma revis\u00e3o de 5 estrelas",
+  "become_hero_desc_v1": "O teu nome aparecer\u00e1 na lista de apoiantes importantes",
+  "delete": "Eliminar",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "permissions": "Permiss\u00f5es",
+  "enable_messenger": "Ativar o Messenger"
 }
