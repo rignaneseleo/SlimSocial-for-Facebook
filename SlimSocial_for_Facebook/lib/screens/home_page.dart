@@ -294,8 +294,11 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future injectCss() async {
     String cssList = "";
     for (var css in CustomCss.cssList) {
-      if (await css.isEnabled()) cssList += (css.code) ;
+      if (await css.isEnabled()) cssList += (css.code);
     }
+
+    //create the function that will be called later
+    _controller?.runJavascript(CustomJs.removeAdsFunc);
 
     //it's important to remove the \n
     var code = """
@@ -303,14 +306,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
                         ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
                         ${CustomJs.injectCssFunc(cssList)}
+                         ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
                     });"""
         .replaceAll("\n", " ");
     await _controller?.runJavascript(code);
   }
 
   Future<void> runJs() async {
-    if (sp.getBool('hide_ads') ?? true)
-      _controller?.runJavascript(CustomJs.removeAds);
+    if (sp.getBool('hide_ads') ?? true) {
+      //setup the observer to run on page updates
+      _controller?.runJavascript(CustomJs.removeAdsObserver);
+    }
 
     var userCustomJs = await PrefController.getUserCustomJs();
     if (userCustomJs?.isNotEmpty ?? false)

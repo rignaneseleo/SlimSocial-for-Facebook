@@ -17,7 +17,7 @@ class CustomJs {
 		}
 		foo();""";
 
-  static String removeAds = """
+  static String removeAdsFunc = """
   javascript: function removeAds() {
   var adKeywords = [
     // French
@@ -88,7 +88,9 @@ class CustomJs {
 
   //console.log(adsCount + ` ads removed`);
   }
+""";
 
+  static String removeAdsObserver = """
 // Select the node that will be observed for changes
 const targetNode = document.body;
 
