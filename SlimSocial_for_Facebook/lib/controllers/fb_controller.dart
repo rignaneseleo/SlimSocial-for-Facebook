@@ -62,5 +62,5 @@ class webViewUriState extends StateNotifier<Uri> {
 
   final Ref ref;
 
-  void updateUrl(String url) => state = Uri.parse(url);
+  void updateUrl(String _url) => state = Uri.parse(_url);
 }

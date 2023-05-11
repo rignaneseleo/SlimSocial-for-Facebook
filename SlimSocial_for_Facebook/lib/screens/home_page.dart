@@ -80,26 +80,41 @@ class _HomePageState extends ConsumerState<HomePage> {
     ref.listen<Uri>(
       fbWebViewProvider,
       (previous, next) async {
-        if (previous == next) {
-          var y = await _controller?.getScrollY();
-          var x = await _controller?.getScrollX();
-          await _controller?.reload();
+        var currentUrl = await _controller?.currentUrl();
+        if (currentUrl != null) {
+          var currentUri = Uri.parse(currentUrl);
+          if (currentUri.toString() == next.toString()) {
+            print("refreshing keeping the y index...");
+            //if I'm refreshing the page, I need to save the current scroll position
+            var y = await _controller?.getScrollY();
+            var x = await _controller?.getScrollX();
 
-          //go back to the previous location
-          if (y != null && x != null && y > 0 && x > 0) {
-            await Future.delayed(const Duration(milliseconds: 1500));
-            await _controller?.scrollTo(x, y);
+            //refresh
+            await _controller?.reload();
+
+            //go back to the previous location
+            if (y != null && x != null && (y > 0 || x > 0)) {
+              await Future.delayed(const Duration(milliseconds: 1500));
+              print("restoring  $x, $y");
+              await _controller?.scrollTo(x, y);
+            }
+            return;
           }
-        } else
-          _controller?.loadUrl(next.toString());
+        }
+
+        _controller?.loadUrl(next.toString());
       },
     );
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () =>
-              ref.read(fbWebViewProvider.notifier).updateUrl(kFacebookHomeUrl),
+          onPressed: () {
+            //_controller?.loadUrl(PrefController.getHomePage());
+            ref
+                .read(fbWebViewProvider.notifier)
+                .updateUrl(PrefController.getHomePage());
+          },
           icon: const Icon(Icons.home),
         ),
         centerTitle: true,
