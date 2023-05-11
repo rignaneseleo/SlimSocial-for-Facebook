@@ -91,27 +91,29 @@ class CustomJs {
 """;
 
   static String removeAdsObserver = """
-// Select the node that will be observed for changes
-const targetNode = document.body;
+if (typeof newPostsObserver !== 'undefined') {
+    // Select the node that will be observed for changes
+    const bodyNode = document.body;
 
-// Create a new observer object
-const observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    // Filter out added nodes that are not <section> elements
-    const addedSections = Array.from(mutation.addedNodes).filter(node => node.nodeName === 'SECTION');
-    
-    // Check if any new <section> elements were added
-    if (addedSections.length) {
-       removeAds();
-    }
-  });
-});
+    // Create a new observer object
+    const newPostsObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            // Filter out added nodes that are not <section> elements
+            const addedSections = Array.from(mutation.addedNodes).filter(node => node.nodeName === 'SECTION');
 
-// Options for the observer (which mutations to observe)
-const config = { childList: true, subtree: true };
+            // Check if any new <section> elements were added
+            if (addedSections.length) {
+                removeAds();
+            }
+        });
+    });
 
-// Start observing the target node for configured mutations
-observer.observe(targetNode, config);
+    // Options for the observer (which mutations to observe)
+    const config = { childList: true, subtree: true };
+
+    // Start observing the target node for configured mutations
+    newPostsObserver.observe(bodyNode, config);
+}
   """;
 }
 
