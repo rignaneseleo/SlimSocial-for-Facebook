@@ -294,9 +294,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future injectCss() async {
     String cssList = "";
     for (var css in CustomCss.cssList) {
-      if (await css.isEnabled()) cssList += (css.code) + "\n";
+      if (await css.isEnabled()) cssList += (css.code) ;
     }
 
+    //it's important to remove the \n
     var code = """
                     document.addEventListener("DOMContentLoaded", function() {
                         ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
