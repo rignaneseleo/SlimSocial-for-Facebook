@@ -81,6 +81,7 @@ class CustomJs {
   let adsCount = 0;
   for (const span of adSpans) {
     const post = span.closest("article");
+    if(post == null) continue;
     post.innerHTML = myDiv;
     adsCount++;
   }
