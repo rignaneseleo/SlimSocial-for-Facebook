@@ -1,14 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 
 class CustomJs {
-  static String editCss(String css) {
+  static String injectCssFunc(String css) {
     var str = '''
-      javascript:function addStyle(css) {
+      (function (css) {
         var node = document.createElement('style');
         node.innerHTML = css;
         document.body.appendChild(node);
-      }
-      addStyle('${css.replaceAll(RegExp(r'\s+'), '').replaceAll("'", "\\'")}');
+      }) ('${css}');
     ''';
     return str;
   }

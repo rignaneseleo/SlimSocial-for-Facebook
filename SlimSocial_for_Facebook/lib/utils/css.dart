@@ -513,7 +513,11 @@ class MyCss {
     required this.code,
     this.defaultEnabled = false,
   }) {
-    this.code = this.code.replaceAll("\n", "");
+    this.code = this
+        .code
+        .replaceAll(RegExp(r'\s+'), '')
+        .replaceAll("'", "\\'")
+        .replaceAll("\n", " ");
   }
 
   bool isEnabled() {

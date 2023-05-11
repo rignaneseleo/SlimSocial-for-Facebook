@@ -258,13 +258,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                 },*/
               navigationDelegate: onNavigationRequest,
               debuggingEnabled: kDebugMode,
-              onPageStarted: (String url) {
+              onPageStarted: (String url) async {
                 setState(() {
                   isScontentUrl = (Uri.parse(url).host.contains("scontent"));
                 });
+
+                //inject the css as soon as the DOM is loaded
+                injectCss();
               },
-              onPageFinished: (String url) {
-                runCss();
+              onPageFinished: (String url) async {
+                runJs();
                 if (kDebugMode) print(url);
               },
               geolocationEnabled: sp.getBool("gps_permission") ?? false,
@@ -288,25 +291,25 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Future<void> runCss() async {
-    //active by default
-    await _controller?.runJavascript(
-        CustomJs.editCss(CustomCss.removeMessengerDownloadCss.code));
-    await _controller?.runJavascript(
-        CustomJs.editCss(CustomCss.removeBrowserNotSupportedCss.code));
-
-    if (sp.getBool('hide_ads') ?? true)
-      _controller?.runJavascript(CustomJs.removeAds);
-
-    //load CSS based on settings
+  Future injectCss() async {
+    String cssList = "";
     for (var css in CustomCss.cssList) {
-      if (await css.isEnabled())
-        await _controller?.runJavascript(CustomJs.editCss(css.code));
+      if (await css.isEnabled()) cssList += (css.code) + "\n";
     }
 
-    var userCustomCss = await PrefController.getUserCustomCss();
-    if (userCustomCss?.isNotEmpty ?? false)
-      await _controller?.runJavascript(CustomJs.editCss(userCustomCss!));
+    var code = """
+                    document.addEventListener("DOMContentLoaded", function() {
+                        ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
+                        ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
+                        ${CustomJs.injectCssFunc(cssList)}
+                    });"""
+        .replaceAll("\n", " ");
+    await _controller?.runJavascript(code);
+  }
+
+  Future<void> runJs() async {
+    if (sp.getBool('hide_ads') ?? true)
+      _controller?.runJavascript(CustomJs.removeAds);
 
     var userCustomJs = await PrefController.getUserCustomJs();
     if (userCustomJs?.isNotEmpty ?? false)

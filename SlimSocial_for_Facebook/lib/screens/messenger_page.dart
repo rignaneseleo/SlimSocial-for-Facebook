@@ -37,7 +37,6 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
-
     super.initState();
   }
 
@@ -94,12 +93,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title:  Row(
+        title: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/icons/ic_messenger.png',height: 22),
+            Image.asset('assets/icons/ic_messenger.png', height: 22),
             const SizedBox(width: 5),
             Text('Messenger'),
           ],
@@ -144,21 +143,19 @@ class _HomePageState extends ConsumerState<MessengerPage> {
                 },*/
               navigationDelegate: onNavigationRequest,
               debuggingEnabled: kDebugMode,
-              onPageStarted: (String url) {},
+              onPageStarted: (String url) {
+                //inject the css as soon as the DOM is loaded
+                injectCss();
+              },
               onPageFinished: (String url) {
-                runCss();
+                runJs();
                 if (kDebugMode) print(url);
               },
               geolocationEnabled: sp.getBool("gps_permission") ?? false,
               allowsInlineMediaPlayback: true,
-              userAgent:kFirefoxUserAgent,
+              userAgent: kFirefoxUserAgent,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-
-              //gestures
-              gestureNavigationEnabled: true,
-              gestureRecognizers: {}..add(Factory<LongPressGestureRecognizer>(
-                  () => LongPressGestureRecognizer())),
             ),
             if (isLoading)
               LinearProgressIndicator(
@@ -172,22 +169,28 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     );
   }
 
-  Future<void> runCss() async {
-    //active by default
-    await _controller
-        ?.runJavascript(CustomJs.editCss(CustomCss.adaptMessengerPageCss.code));
-
-    if (await CustomCss.darkThemeCss.isEnabled())
-      await _controller?.runJavascript(
-          CustomJs.editCss(CustomCss.darkThemeMessengerCss.code));
-
-    var userCustomCss = await PrefController.getUserCustomCss();
-    if (userCustomCss?.isNotEmpty ?? false)
-      await _controller?.runJavascript(CustomJs.editCss(userCustomCss!));
-
+  Future<void> runJs() async {
     var userCustomJs = await PrefController.getUserCustomJs();
     if (userCustomJs?.isNotEmpty ?? false)
       await _controller?.runJavascript(userCustomJs!);
+  }
+
+  Future injectCss() async {
+    String cssList = "";
+
+    if (await CustomCss.darkThemeCss.isEnabled())
+      cssList += ((CustomCss.darkThemeMessengerCss.code));
+
+    var userCustomCss = await PrefController.getUserCustomCss();
+    if (userCustomCss?.isNotEmpty ?? false) cssList += ((userCustomCss!));
+
+    var code = """
+                    document.addEventListener("DOMContentLoaded", function() {
+                        ${CustomJs.injectCssFunc(CustomCss.adaptMessengerPageCss.code)}
+                        ${CustomJs.injectCssFunc(cssList)}
+                    });"""
+        .replaceAll("\n", " ");
+    await _controller?.runJavascript(code);
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
