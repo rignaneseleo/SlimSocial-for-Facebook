@@ -199,6 +199,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.darkThemeCss.key, value);
                   });
+                  //set dark theme
+
+                  var newTheme= value ? ThemeMode.dark : ThemeMode.light;
+                  SlimSocialApp.of(context).changeTheme(newTheme);
                   ref.refresh(fbWebViewProvider);
                 },
                 initialValue: CustomCss.darkThemeCss.isEnabled(),

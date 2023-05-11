@@ -208,6 +208,7 @@ a.x1i10hfl.x1qjc9v5.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x2
   static MyCss darkThemeCss = MyCss(
       key: 'dark_theme',
       description: 'dark theme messenger',
+      defaultEnabled: false,
       code: """
 /* ===========================
 Credits: Bean Verified Bean Terified

@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
 import 'controllers/fb_controller.dart';
@@ -115,8 +116,24 @@ void _setupProxy() {
   }
 }
 
-class SlimSocialApp extends StatelessWidget {
+class SlimSocialApp extends StatefulWidget {
   SlimSocialApp({super.key});
+
+  @override
+  State<SlimSocialApp> createState() => _SlimSocialAppState();
+
+  /// InheritedWidget style accessor to our State object.
+  static _SlimSocialAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_SlimSocialAppState>()!;
+}
+
+class _SlimSocialAppState extends State<SlimSocialApp> {
+  late ThemeMode _themeMode;
+
+  _SlimSocialAppState() {
+    _themeMode =
+        CustomCss.darkThemeCss.isEnabled() ? ThemeMode.dark : ThemeMode.light;
+  }
 
   // This widget is the root of your application.
   @override
@@ -137,7 +154,7 @@ class SlimSocialApp extends StatelessWidget {
         textTheme: GoogleFonts.robotoTextTheme(
             ThemeData(brightness: Brightness.dark).textTheme),
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: _themeMode,
       home: HomePage(),
       routes: {
         "/settings": (context) => SettingsPage(),
@@ -146,5 +163,11 @@ class SlimSocialApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
     );
+  }
+
+  void changeTheme(ThemeMode themeMode) {
+    setState(() {
+      _themeMode = themeMode;
+    });
   }
 }
