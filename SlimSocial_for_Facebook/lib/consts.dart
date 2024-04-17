@@ -1,4 +1,5 @@
-const String kFacebookHomeUrl = 'https://touch.facebook.com/home.php';
+const String kFacebookHomeUrl = 'https://facebook.com/home.php';
+const String kTouchFacebookHomeUrl = 'https://touch.facebook.com/home.php';
 const String kFacebookHomeBasicUrl = 'https://mbasic.facebook.com/home.php';
 const String kMessengerUrl = 'https://www.messenger.com';
 
@@ -19,12 +20,16 @@ const String suffixDefault = "?sk=h_nor";
 
 //user agent for the webview
 const String kFirefoxUserAgent =
-    "Mozilla/5.0 (X11; CrOS x86_64 10066.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36";
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0";
+const String kIpadUserAgent =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36";
 const String kOperaMiniUserAgent =
     "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
 
 const String kEmailToDevUrl =
     "mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
+const String kGithubIssuesUrl =
+    "https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues";
 const String kDevEmail = "dev.rignaneseleo+slimsocial@gmail.com";
 const String kTwitterProfileUrl = "https://twitter.com/leorigna";
 const String kGithubProjectUrl =
