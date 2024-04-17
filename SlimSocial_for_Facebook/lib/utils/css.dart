@@ -8,12 +8,21 @@ class CustomCss {
     fixedBarCss,
     //hideAdsAndPeopleYouMayKnowCss,
     darkThemeCss,
+    hideMessengerSidebar,
   ];
 
   static MyCss centerTextPostsCss = MyCss(
     key: 'center_text',
     code: '._5rgt._5msi { text-align: center;}',
     description: 'Center text posts',
+  );
+
+  static MyCss hideMessengerSidebar = MyCss(
+    key: 'hide_messenger_sidebar',
+    code:
+        '.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.xu1343h.x26u7qi.xy80clv.x1yu6fn4.xs83m0k.x1dt7z5j.x2ixbly {display: none;}',
+    description: 'Hide messenger sidebar',
+    defaultEnabled: true,
   );
 
   static MyCss addSpaceBetweenPostsCss = MyCss(
