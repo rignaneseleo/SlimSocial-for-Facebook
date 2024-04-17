@@ -4,7 +4,7 @@ const String kMessengerUrl = 'https://www.messenger.com';
 
 const List<String> kPermittedHostnamesFb = [
   "facebook.com",
-  "fbcdn.net",
+  //"fbcdn.net", //removed so it downloads pics via the browser
   "fb.com",
   "fb.me",
 ];
