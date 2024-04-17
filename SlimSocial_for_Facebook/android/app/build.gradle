@@ -78,6 +78,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    namespace 'it.rignanese.leo.slimfacebook'
 }
 
 flutter {
