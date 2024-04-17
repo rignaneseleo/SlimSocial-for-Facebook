@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -13,9 +14,9 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../consts.dart';
+import '../main.dart';
 import '../utils/css.dart';
 import '../utils/js.dart';
-import '../main.dart';
 import '../utils/utils.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -30,6 +31,7 @@ class SettingsPage extends ConsumerStatefulWidget {
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
   StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
+  bool isDev = false;
 
   final Map<String, Permission> permissions = const {
     "gps_permission": Permission.locationWhenInUse,
@@ -47,7 +49,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       });
     }
 
+    _checkDev();
+
     super.initState();
+  }
+
+  _checkDev() async {
+    var _isDev = (await FlutterJailbreakDetection.developerMode);
+    setState(() {
+      isDev = _isDev;
+    });
   }
 
   @override
@@ -201,7 +212,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   //set dark theme
 
-                  var newTheme= value ? ThemeMode.dark : ThemeMode.light;
+                  var newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   SlimSocialApp.of(context).changeTheme(newTheme);
                   ref.refresh(fbWebViewProvider);
                 },
@@ -298,15 +309,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {});
                 },
               ),
-              SettingsTile.navigation(
-                enabled: !sp.getString("custom_css").isNullOrEmpty() ||
-                    !sp.getString("custom_js").isNullOrEmpty() ||
-                    !sp.getString("custom_useragent").isNullOrEmpty(),
-                leading: Icon(Icons.send_time_extension),
-                title: Text('send_to_dev'.tr()),
-                description: Text('send_to_dev_desc'.tr()),
-                onPressed: (context) => showSendCodeToDev(),
-              ),
+              if (isDev)
+                SettingsTile.navigation(
+                  enabled: !sp.getString("custom_css").isNullOrEmpty() ||
+                      !sp.getString("custom_js").isNullOrEmpty() ||
+                      !sp.getString("custom_useragent").isNullOrEmpty(),
+                  leading: Icon(Icons.send_time_extension),
+                  title: Text('send_to_dev'.tr()),
+                  description: Text('send_to_dev_desc'.tr()),
+                  onPressed: (context) => showSendCodeToDev(),
+                ),
               SettingsTile.navigation(
                 leading: Icon(Icons.private_connectivity_outlined),
                 title: Text('custom_proxy'.tr()),
@@ -385,19 +397,19 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: Icon(Icons.email),
                 title: Text('contactdev'.tr()),
                 onPressed: (BuildContext context) =>
-                    launchUrl(Uri.parse(kEmailToDevUrl)),
+                    launchInAppUrl(context, kTwitterProfileUrl),
+              ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.bug_report),
+                title: Text('report_issue'.tr()),
+                onPressed: (BuildContext context) =>
+                    launchUrl(Uri.parse(kGithubIssuesUrl)),
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.code),
                 title: Text('GitHub'),
                 onPressed: (BuildContext context) =>
                     launchInAppUrl(context, kGithubProjectUrl),
-              ),
-              SettingsTile.navigation(
-                leading: Icon(Icons.account_circle),
-                title: Text('follow_me'.tr()),
-                onPressed: (BuildContext context) =>
-                    launchInAppUrl(context, kTwitterProfileUrl),
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.perm_device_info),
