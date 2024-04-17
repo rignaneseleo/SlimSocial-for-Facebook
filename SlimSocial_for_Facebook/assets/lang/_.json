@@ -61,5 +61,8 @@
   "cancel": "Cancel",
   "save": "Save",
   "permissions": "Permissions",
-  "enable_messenger": "Enable Messenger"
+  "enable_messenger": "Enable Messenger",
+  "top": "Scroll to the top",
+  "report_issue": "Report an issue",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
 }
