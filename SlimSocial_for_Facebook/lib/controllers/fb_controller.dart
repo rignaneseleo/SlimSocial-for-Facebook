@@ -5,7 +5,7 @@ import '../main.dart';
 
 class PrefController {
   static String getHomePage() {
-    String initialURl = kFacebookHomeUrl;
+    String initialURl = kTouchFacebookHomeUrl;
 
     if (sp.getBool("use_mbasic") ?? false) initialURl = kFacebookHomeBasicUrl;
 
@@ -58,7 +58,7 @@ class PrefController {
 }
 
 class webViewUriState extends StateNotifier<Uri> {
-  webViewUriState(this.ref) : super(Uri.parse(kFacebookHomeUrl));
+  webViewUriState(this.ref) : super(Uri.parse(kTouchFacebookHomeUrl));
 
   final Ref ref;
 
