@@ -32,6 +32,8 @@ const String kGithubIssuesUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues";
 const String kDevEmail = "dev.rignaneseleo+slimsocial@gmail.com";
 const String kTwitterProfileUrl = "https://twitter.com/leorigna";
+const String kGithubIssuesUrl =
+    "https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues";
 const String kGithubProjectUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook";
 const String kPlayStoreUrl =
