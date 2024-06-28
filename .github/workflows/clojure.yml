@@ -1,4 +1,4 @@
-foolboy688/name: Cljure CI
+name: Cljure CI foolboy688
 
 on:
   push:
