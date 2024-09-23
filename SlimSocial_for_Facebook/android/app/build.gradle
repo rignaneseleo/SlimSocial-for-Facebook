@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "it.rignanese.leo.slimfacebook"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
