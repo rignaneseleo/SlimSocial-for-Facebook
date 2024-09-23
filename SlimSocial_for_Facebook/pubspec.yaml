@@ -33,6 +33,10 @@ dependencies:
   native_flutter_proxy: 0.1.15
 
 dev_dependencies:
+  flutter_launcher_icons: 0.13.1
+  custom_lint: 0.6.5
+  very_good_analysis: 6.0.0
+
   flutter_test:
     sdk: flutter
 
