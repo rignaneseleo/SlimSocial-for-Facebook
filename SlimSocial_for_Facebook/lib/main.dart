@@ -6,21 +6,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:native_flutter_proxy/custom_proxy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
-import 'controllers/fb_controller.dart';
-
 late SharedPreferences sp;
 
 //riverpod state
 final fbWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>((ref) => webViewUriState(ref));
+    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
 final messengerWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>((ref) => webViewUriState(ref));
+    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
 
 late PackageInfo packageInfo;
 
@@ -37,9 +36,8 @@ Future<void> main() async {
   final _appLinks = AppLinks();
 
   // Subscribe to all events when app is started.
-  _appLinks.allUriLinkStream.listen((uri) {
+  _appLinks.uriLinkStream.listen((uri) {
     print("Received uri: $uri");
-    // Do something (navigation, ...)
     //run the app with the uri
     container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
   });
@@ -48,7 +46,7 @@ Future<void> main() async {
     ProviderScope(
       parent: container,
       child: EasyLocalization(
-        supportedLocales: [
+        supportedLocales: const [
           Locale('it', 'IT'),
           Locale('en', 'US'),
           Locale('fr', 'FR'),
@@ -92,16 +90,16 @@ Future<void> main() async {
           Locale('vi', 'VN'),
         ],
         path: 'assets/lang',
-        fallbackLocale: Locale('en', 'US'),
-        child: SlimSocialApp(),
+        fallbackLocale: const Locale('en', 'US'),
+        child: const SlimSocialApp(),
       ),
     ),
   );
 }
 
 void _setupProxy() {
-  var ip = sp.getString("custom_proxy_ip");
-  var port = sp.getString("custom_proxy_port");
+  final ip = sp.getString("custom_proxy_ip");
+  final port = sp.getString("custom_proxy_port");
   if (ip == null || port == null) {
     showToast("error_proxy".tr());
     return;
@@ -117,7 +115,7 @@ void _setupProxy() {
 }
 
 class SlimSocialApp extends StatefulWidget {
-  SlimSocialApp({super.key});
+  const SlimSocialApp({super.key});
 
   @override
   State<SlimSocialApp> createState() => _SlimSocialAppState();
@@ -128,12 +126,11 @@ class SlimSocialApp extends StatefulWidget {
 }
 
 class _SlimSocialAppState extends State<SlimSocialApp> {
-  late ThemeMode _themeMode;
-
   _SlimSocialAppState() {
     _themeMode =
         CustomCss.darkThemeCss.isEnabled() ? ThemeMode.dark : ThemeMode.light;
   }
+  late ThemeMode _themeMode;
 
   // This widget is the root of your application.
   @override
@@ -146,16 +143,18 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
         useMaterial3: false,
         colorScheme: lightColorScheme,
         textTheme: GoogleFonts.robotoTextTheme(
-            ThemeData(brightness: Brightness.light).textTheme),
+          ThemeData(brightness: Brightness.light).textTheme,
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
         colorScheme: darkColorScheme,
         textTheme: GoogleFonts.robotoTextTheme(
-            ThemeData(brightness: Brightness.dark).textTheme),
+          ThemeData(brightness: Brightness.dark).textTheme,
+        ),
       ),
       themeMode: _themeMode,
-      home: HomePage(),
+      home: const HomePage(),
       routes: {
         "/settings": (context) => SettingsPage(),
       },
