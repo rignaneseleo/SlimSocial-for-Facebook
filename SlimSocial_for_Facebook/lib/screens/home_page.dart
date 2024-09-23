@@ -2,45 +2,122 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:open_file_plus/open_file_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
+import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
+import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
-
-import '../controllers/fb_controller.dart';
-import '../utils/css.dart';
-import '../utils/js.dart';
-import '../main.dart';
-import '../utils/utils.dart';
+import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   //String? initialUrl;
 
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  WebViewController? _controller;
+  late WebViewController _controller;
   bool isLoading = false;
   bool isScontentUrl = false;
 
   @override
   void initState() {
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
-
     super.initState();
+
+    _controller = _initWebViewController();
+  }
+
+  WebViewController _initWebViewController() {
+    final homepage = PrefController.getHomePage();
+    final controller = (WebViewController())
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(FacebookColors.darkBlue)
+      ..setUserAgent(PrefController.getUserAgent())
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: onNavigationRequest,
+          onPageStarted: (String url) async {
+            setState(() {
+              isScontentUrl = Uri.parse(url).host.contains("scontent");
+            });
+
+            //inject the css as soon as the DOM is loaded
+            await injectCss();
+          },
+          onPageFinished: (String url) async {
+            await runJs();
+            if (kDebugMode) print(url);
+          },
+          onProgress: (int progress) {
+            setState(() {
+              isLoading = progress < 100;
+            });
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(homepage));
+
+    if (Platform.isAndroid) {
+      (controller.platform as AndroidWebViewController)
+        ..setOnShowFileSelector(
+          (FileSelectorParams params) async {
+            final photosPermission = sp.getBool("photos_permission") ?? false;
+
+            if (photosPermission) {
+              final result = await FilePicker.platform.pickFiles();
+
+              if (result != null && result.files.single.path != null) {
+                final file = File(result.files.single.path!);
+                return [file.uri.toString()];
+              }
+            } else {
+              // Handle the case when the permission is not granted
+              showToast("check_permission".tr());
+            }
+            return [];
+          },
+        )
+        ..setGeolocationPermissionsPromptCallbacks(
+          onShowPrompt: (request) async {
+            final gpsPermission = sp.getBool("gps_permission") ?? false;
+
+            if (gpsPermission) {
+              // request location permission
+              final locationPermissionStatus =
+                  await Permission.locationWhenInUse.request();
+
+              // return the response
+              return GeolocationPermissionsResponse(
+                allow: locationPermissionStatus == PermissionStatus.granted,
+                retain: false,
+              );
+            } else {
+              // return the response denying the permission
+              return const GeolocationPermissionsResponse(
+                allow: false,
+                retain: false,
+              );
+            }
+          },
+          onHidePrompt: () => print("Geolocation permission prompt hidden"),
+        );
+    }
+    return controller;
   }
 
   @override
@@ -49,16 +126,17 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<NavigationDecision> onNavigationRequest(
-      NavigationRequest request) async {
-    Uri uri = Uri.parse(request.url);
+    NavigationRequest request,
+  ) async {
+    final uri = Uri.parse(request.url);
     print("onNavigationRequest: ${request.url}");
 
-    for (String other in kPermittedHostnamesFb)
+    for (final other in kPermittedHostnamesFb)
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
       }
 
-    for (String other in kPermittedHostnamesMessenger)
+    for (final other in kPermittedHostnamesMessenger) {
       if (uri.host.endsWith(other)) {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -67,6 +145,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
         return NavigationDecision.prevent;
       }
+    }
 
     // open on webview
     print("Launching external url: ${request.url}");
@@ -80,29 +159,30 @@ class _HomePageState extends ConsumerState<HomePage> {
     ref.listen<Uri>(
       fbWebViewProvider,
       (previous, next) async {
-        var currentUrl = await _controller?.currentUrl();
+        final currentUrl = await _controller.currentUrl();
         if (currentUrl != null) {
-          var currentUri = Uri.parse(currentUrl);
+          final currentUri = Uri.parse(currentUrl);
           if (currentUri.toString() == next.toString()) {
             print("refreshing keeping the y index...");
             //if I'm refreshing the page, I need to save the current scroll position
-            var y = await _controller?.getScrollY();
-            var x = await _controller?.getScrollX();
+            final position = await _controller.getScrollPosition();
+            final x = position.dx;
+            final y = position.dy;
 
             //refresh
-            await _controller?.reload();
+            await _controller.reload();
 
             //go back to the previous location
-            if (y != null && x != null && (y > 0 || x > 0)) {
+            if (y > 0 || x > 0) {
               await Future.delayed(const Duration(milliseconds: 1500));
               print("restoring  $x, $y");
-              await _controller?.scrollTo(x, y);
+              await _controller.scrollTo(x.toInt(), y.toInt());
             }
             return;
           }
         }
 
-        _controller?.loadUrl(next.toString());
+        await _controller.loadRequest(next);
       },
     );
 
@@ -120,7 +200,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         centerTitle: true,
         title: GestureDetector(
           child: const Text('SlimSocial'),
-          onTap: () => _controller?.scrollTo(0, 0),
+          onTap: () => _controller.scrollTo(0, 0),
         ),
         backgroundColor: CustomCss.darkThemeCss.isEnabled()
             ? FacebookColors.darkBlue
@@ -134,10 +214,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (isScontentUrl)
             IconButton(
               onPressed: () async {
-                var url = await _controller?.currentUrl();
+                final url = await _controller.currentUrl();
                 if (url != null) {
-                  showToast("downloading".tr() + "...");
-                  var path = await downloadImage(url);
+                  showToast("${"downloading".tr()}...");
+                  final path = await downloadImage(url);
                   if (path != null) {
                     //showToast("Image saved to {}".tr(args: [path]));
                     OpenFile.open(path);
@@ -149,10 +229,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (isScontentUrl)
             IconButton(
               onPressed: () async {
-                var url = await _controller?.currentUrl();
+                final url = await _controller.currentUrl();
                 if (url != null) {
-                  print("sharing".tr() + "...");
-                  var path = await downloadImage(url);
+                  print("${"sharing".tr()}...");
+                  final path = await downloadImage(url);
                   if (path != null) Share.shareXFiles([XFile(path)]);
                 }
               },
@@ -163,7 +243,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => MessengerPage(),
+                    builder: (context) => const MessengerPage(),
                   ),
                 );
               },
@@ -173,25 +253,31 @@ class _HomePageState extends ConsumerState<HomePage> {
             onSelected: (item) async {
               switch (item) {
                 case "share_url":
-                  var url = await _controller?.currentUrl();
+                  final url = await _controller.currentUrl();
                   if (url != null) Share.share(url);
                   break;
                 case "refresh":
-                  _controller?.reload();
+                  _controller.reload();
                   break;
                 case "settings":
                   Navigator.of(context).pushNamed("/settings");
                   break;
                 case "top":
-                  _controller?.scrollTo(0, 0);
+                  _controller.scrollTo(0, 0);
                   break;
                 case "support":
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            SettingsPage(productId: "donation_1")),
+                      builder: (context) =>
+                          SettingsPage(productId: "donation_1"),
+                    ),
                   );
+                  break;
+                case "reset":
+                  await _controller.clearCache();
+                  await _controller.clearLocalStorage();
+                  _controller = _initWebViewController();
                   break;
                 default:
                   print("Unknown menu item: $item");
@@ -200,55 +286,66 @@ class _HomePageState extends ConsumerState<HomePage> {
             },
             itemBuilder: (context) => [
               PopupMenuItem<String>(
-                  value: "top",
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.vertical_align_top),
-                    title: Text("top".tr().capitalize()),
-                  )),
+                value: "top",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.vertical_align_top),
+                  title: Text("top".tr().capitalize()),
+                ),
+              ),
               PopupMenuItem<String>(
-                  value: "refresh",
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.refresh),
-                    title: Text("refresh".tr().capitalize()),
-                  )),
+                value: "refresh",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.refresh),
+                  title: Text("refresh".tr().capitalize()),
+                ),
+              ),
               PopupMenuItem<String>(
-                  value: "share_url",
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.share),
-                    title: Text("share_url".tr().capitalize()),
-                  )),
+                value: "share_url",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.share),
+                  title: Text("share_url".tr().capitalize()),
+                ),
+              ),
               PopupMenuItem<String>(
-                  value: "settings",
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.settings),
-                    title: Text("settings".tr().capitalize()),
-                  )),
+                value: "settings",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.settings),
+                  title: Text("settings".tr().capitalize()),
+                ),
+              ),
               PopupMenuItem<String>(
-                  value: "support",
-                  child: ListTile(
-                    iconColor: Colors.red,
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.favorite),
-                    title: Text("support".tr().capitalize()),
-                  )),
+                value: "support",
+                child: ListTile(
+                  iconColor: Colors.red,
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.favorite),
+                  title: Text("support".tr().capitalize()),
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: "reset",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.restore),
+                  title: Text("reset".tr().capitalize()),
+                ),
+              ),
             ],
           ),
         ],
       ),
       body: WillPopScope(
         onWillPop: () async {
-          if (_controller == null) return true;
-
-          if (await _controller!.canGoBack()) {
-            _controller!.goBack();
+          if (await _controller.canGoBack()) {
+            _controller.goBack();
 
             if (isScontentUrl) {
               //gotta go back twice to leave scontent (facebook bug?)
-              _controller!.goBack();
+              _controller.goBack();
             }
             return false;
           }
@@ -257,45 +354,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            WebView(
-              initialUrl: PrefController.getHomePage(),
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) =>
-                  _controller = (webViewController),
-              onProgress: (int progress) {
-                setState(() {
-                  isLoading = progress < 100;
-                });
-              },
-
-              /* javascriptChannels: <JavascriptChannel>{
-                  _setupJavascriptChannel(context),
-                },*/
-              navigationDelegate: onNavigationRequest,
-              debuggingEnabled: kDebugMode,
-              onPageStarted: (String url) async {
-                setState(() {
-                  isScontentUrl = (Uri.parse(url).host.contains("scontent"));
-                });
-
-                //inject the css as soon as the DOM is loaded
-                injectCss();
-              },
-              onPageFinished: (String url) async {
-                runJs();
-                if (kDebugMode) print(url);
-              },
-              geolocationEnabled: sp.getBool("gps_permission") ?? false,
-              allowsInlineMediaPlayback: true,
-              userAgent: PrefController.getUserAgent(),
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-
-              //gestures
-              gestureNavigationEnabled: false,
+            WebViewWidget(
+              controller: _controller,
             ),
             if (isLoading)
-              LinearProgressIndicator(
+              const LinearProgressIndicator(
                 valueColor:
                     AlwaysStoppedAnimation<Color>(FacebookColors.official),
                 backgroundColor: Colors.transparent,
@@ -306,17 +369,17 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Future injectCss() async {
-    String cssList = "";
-    for (var css in CustomCss.cssList) {
-      if (await css.isEnabled()) cssList += (css.code);
+  Future<void> injectCss() async {
+    var cssList = "";
+    for (final css in CustomCss.cssList) {
+      if (css.isEnabled()) cssList += css.code;
     }
 
     //create the function that will be called later
-    _controller?.runJavascript(CustomJs.removeAdsFunc);
+    await _controller.runJavaScript(CustomJs.removeAdsFunc);
 
     //it's important to remove the \n
-    var code = """
+    final code = """
                     document.addEventListener("DOMContentLoaded", function() {
                         ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
                         ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
@@ -324,18 +387,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                          ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
                     });"""
         .replaceAll("\n", " ");
-    await _controller?.runJavascript(code);
+    await _controller.runJavaScript(code);
   }
 
   Future<void> runJs() async {
     if (sp.getBool('hide_ads') ?? true) {
       //setup the observer to run on page updates
-      _controller?.runJavascript(CustomJs.removeAdsObserver);
+      await _controller.runJavaScript(CustomJs.removeAdsObserver);
     }
 
-    var userCustomJs = await PrefController.getUserCustomJs();
-    if (userCustomJs?.isNotEmpty ?? false)
-      await _controller?.runJavascript(userCustomJs!);
+    final userCustomJs = PrefController.getUserCustomJs();
+    if (userCustomJs?.isNotEmpty ?? false) {
+      await _controller.runJavaScript(userCustomJs!);
+    }
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
