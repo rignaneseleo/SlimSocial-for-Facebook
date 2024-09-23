@@ -39,6 +39,7 @@
   "contactdev": "Contact the developer",
   "shareapp": "Share the app",
   "revoke_permission": "Revoke permission from settings",
+  "check_permission": "Check permission in settings",
   "gps_permission": "GPS permission",
   "camera_permission": "Camera permission",
   "photo_permission": "Gallery permission",
@@ -64,5 +65,7 @@
   "cancel": "Cancel",
   "save": "Save",
   "permissions": "Permissions",
-  "enable_messenger": "Enable Messenger"
+  "enable_messenger": "Enable Messenger",
+  "report_issue": "Report an issue",
+  "source_code": "Source code"
 }
