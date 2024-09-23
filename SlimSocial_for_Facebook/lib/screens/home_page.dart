@@ -74,6 +74,22 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (Platform.isAndroid) {
       (controller.platform as AndroidWebViewController)
+        ..setCustomWidgetCallbacks(
+          onShowCustomWidget:
+              (Widget widget, OnHideCustomWidgetCallback callback) {
+            // Handle the full screen videos
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => widget,
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          onHideCustomWidget: () {
+            // Handle the full screen videos
+            Navigator.of(context).pop();
+          },
+        )
         ..setOnShowFileSelector(
           (FileSelectorParams params) async {
             final photosPermission = sp.getBool("photos_permission") ?? false;
