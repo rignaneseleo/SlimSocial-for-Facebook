@@ -62,7 +62,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       if (uri.host.endsWith(other)) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MessengerPage(initialUrl: uri.path),
+            builder: (context) => MessengerPage(initialUrl: uri.toString()),
           ),
         );
         return NavigationDecision.prevent;
