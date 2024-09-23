@@ -2,42 +2,115 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_webview_pro/webview_flutter.dart';
-import 'package:open_file_plus/open_file_plus.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
-import 'package:slimsocial_for_facebook/screens/settings_page.dart';
+import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
+import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
-
-import '../controllers/fb_controller.dart';
-import '../utils/css.dart';
-import '../utils/js.dart';
-import '../main.dart';
-import '../utils/utils.dart';
+import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 class MessengerPage extends ConsumerStatefulWidget {
-  String? initialUrl;
-
-  MessengerPage({this.initialUrl, Key? key}) : super(key: key);
+  const MessengerPage({this.initialUrl, super.key});
+  final String? initialUrl;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends ConsumerState<MessengerPage> {
-  WebViewController? _controller;
+  late WebViewController _controller;
   bool isLoading = false;
 
   @override
   void initState() {
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
     super.initState();
+    _controller = _initWebViewController();
+  }
+
+  WebViewController _initWebViewController() {
+    var homepage = widget.initialUrl ?? kMessengerUrl;
+    if (!homepage.startsWith('http')) {
+      homepage = '$kMessengerUrl$homepage';
+    }
+
+    final controller = (WebViewController())
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(FacebookColors.darkBlue)
+      ..setUserAgent(PrefController.getUserAgent())
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: onNavigationRequest,
+          onPageStarted: (String url) async {
+            //inject the css as soon as the DOM is loaded
+            await injectCss();
+          },
+          onPageFinished: (String url) async {
+            await runJs();
+            if (kDebugMode) print(url);
+          },
+          onProgress: (int progress) {
+            setState(() {
+              isLoading = progress < 100;
+            });
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(homepage));
+
+    if (Platform.isAndroid) {
+      (controller.platform as AndroidWebViewController)
+        ..setOnShowFileSelector(
+          (FileSelectorParams params) async {
+            final photosPermission = sp.getBool("photos_permission") ?? false;
+
+            if (photosPermission) {
+              final result = await FilePicker.platform.pickFiles();
+
+              if (result != null && result.files.single.path != null) {
+                final file = File(result.files.single.path!);
+                return [file.uri.toString()];
+              }
+            } else {
+              // Handle the case when the permission is not granted
+              showToast("check_permission".tr());
+            }
+            return [];
+          },
+        )
+        ..setGeolocationPermissionsPromptCallbacks(
+          onShowPrompt: (request) async {
+            final gpsPermission = sp.getBool("gps_permission") ?? false;
+
+            if (gpsPermission) {
+              // request location permission
+              final locationPermissionStatus =
+                  await Permission.locationWhenInUse.request();
+
+              // return the response
+              return GeolocationPermissionsResponse(
+                allow: locationPermissionStatus == PermissionStatus.granted,
+                retain: false,
+              );
+            } else {
+              // return the response denying the permission
+              return const GeolocationPermissionsResponse(
+                allow: false,
+                retain: false,
+              );
+            }
+          },
+          onHidePrompt: () => print("Geolocation permission prompt hidden"),
+        );
+    }
+    return controller;
   }
 
   @override
@@ -46,15 +119,16 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<NavigationDecision> onNavigationRequest(
-      NavigationRequest request) async {
-    Uri uri = Uri.parse(request.url);
+    NavigationRequest request,
+  ) async {
+    final uri = Uri.parse(request.url);
 
-    for (String other in kPermittedHostnamesMessenger)
+    for (final other in kPermittedHostnamesMessenger)
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
       }
 
-    for (String other in kPermittedHostnamesFb)
+    for (final other in kPermittedHostnamesFb)
       if (uri.host.endsWith(other)) {
         ref.read(fbWebViewProvider.notifier).updateUrl(request.url);
         Navigator.of(context).pop();
@@ -74,18 +148,30 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     ref.listen<Uri>(
       fbWebViewProvider,
       (previous, next) async {
-        if (previous == next) {
-          var y = await _controller?.getScrollY();
-          var x = await _controller?.getScrollX();
-          await _controller?.reload();
+        final currentUrl = await _controller.currentUrl();
+        if (currentUrl != null) {
+          final currentUri = Uri.parse(currentUrl);
+          if (currentUri.toString() == next.toString()) {
+            print("refreshing keeping the y index...");
+            //if I'm refreshing the page, I need to save the current scroll position
+            final position = await _controller.getScrollPosition();
+            final x = position.dx;
+            final y = position.dy;
 
-          //go back to the previous location
-          if (y != null && x != null && y > 0 && x > 0) {
-            await Future.delayed(const Duration(milliseconds: 1500));
-            await _controller?.scrollTo(x, y);
+            //refresh
+            await _controller.reload();
+
+            //go back to the previous location
+            if (y > 0 || x > 0) {
+              await Future.delayed(const Duration(milliseconds: 1500));
+              print("restoring  $x, $y");
+              await _controller.scrollTo(x.toInt(), y.toInt());
+            }
+            return;
           }
-        } else
-          _controller?.loadUrl(next.toString());
+        }
+
+        await _controller.loadRequest(next);
       },
     );
 
@@ -96,11 +182,10 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/icons/ic_messenger.png', height: 22),
             const SizedBox(width: 5),
-            Text('Messenger'),
+            const Text('Messenger'),
           ],
         ),
         backgroundColor: CustomCss.darkThemeCss.isEnabled()
@@ -116,10 +201,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          if (_controller == null) return true;
-
-          if (await _controller!.canGoBack()) {
-            _controller!.goBack();
+          if (await _controller.canGoBack()) {
+            _controller.goBack();
             return false;
           }
           return true;
@@ -127,38 +210,11 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            WebView(
-              initialUrl: widget.initialUrl ?? kMessengerUrl,
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) =>
-                  _controller = (webViewController),
-              onProgress: (int progress) {
-                setState(() {
-                  isLoading = progress < 100;
-                });
-              },
-
-              /* javascriptChannels: <JavascriptChannel>{
-                  _setupJavascriptChannel(context),
-                },*/
-              navigationDelegate: onNavigationRequest,
-              debuggingEnabled: kDebugMode,
-              onPageStarted: (String url) {
-                //inject the css as soon as the DOM is loaded
-                injectCss();
-              },
-              onPageFinished: (String url) {
-                runJs();
-                if (kDebugMode) print(url);
-              },
-              geolocationEnabled: sp.getBool("gps_permission") ?? false,
-              allowsInlineMediaPlayback: true,
-              userAgent: kFirefoxUserAgent,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+            WebViewWidget(
+              controller: _controller,
             ),
             if (isLoading)
-              LinearProgressIndicator(
+              const LinearProgressIndicator(
                 valueColor:
                     AlwaysStoppedAnimation<Color>(FacebookColors.official),
                 backgroundColor: Colors.transparent,
@@ -170,27 +226,27 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<void> runJs() async {
-    var userCustomJs = await PrefController.getUserCustomJs();
+    final userCustomJs = PrefController.getUserCustomJs();
     if (userCustomJs?.isNotEmpty ?? false)
-      await _controller?.runJavascript(userCustomJs!);
+      await _controller.runJavaScript(userCustomJs!);
   }
 
-  Future injectCss() async {
-    String cssList = "";
+  Future<void> injectCss() async {
+    var cssList = "";
 
-    if (await CustomCss.darkThemeCss.isEnabled())
-      cssList += ((CustomCss.darkThemeMessengerCss.code));
+    if (CustomCss.darkThemeCss.isEnabled())
+      cssList += CustomCss.darkThemeMessengerCss.code;
 
-    var userCustomCss = await PrefController.getUserCustomCss();
-    if (userCustomCss?.isNotEmpty ?? false) cssList += ((userCustomCss!));
+    final userCustomCss = PrefController.getUserCustomCss();
+    if (userCustomCss?.isNotEmpty ?? false) cssList += userCustomCss!;
 
-    var code = """
+    final code = """
                     document.addEventListener("DOMContentLoaded", function() {
                         ${CustomJs.injectCssFunc(CustomCss.adaptMessengerPageCss.code)}
                         ${CustomJs.injectCssFunc(cssList)}
                     });"""
         .replaceAll("\n", " ");
-    await _controller?.runJavascript(code);
+    await _controller.runJavaScript(code);
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
