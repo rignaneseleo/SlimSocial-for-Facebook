@@ -393,6 +393,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     //create the function that will be called later
     await _controller.runJavaScript(CustomJs.removeAdsFunc);
+    await _controller.runJavaScript(CustomJs.removeSuggestedFunc);
 
     //it's important to remove the \n
     final code = """
@@ -401,6 +402,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
                         ${CustomJs.injectCssFunc(cssList)}
                          ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
+                         ${(sp.getBool('hide_suggested') ?? true) ? "removeSuggested();" : ""}
                     });"""
         .replaceAll("\n", " ");
     await _controller.runJavaScript(code);
@@ -410,6 +412,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (sp.getBool('hide_ads') ?? true) {
       //setup the observer to run on page updates
       await _controller.runJavaScript(CustomJs.removeAdsObserver);
+    }
+    if (sp.getBool('hide_suggested') ?? true) {
+      await _controller.runJavaScript(CustomJs.removeSuggestedObserver);
     }
 
     final userCustomJs = PrefController.getUserCustomJs();

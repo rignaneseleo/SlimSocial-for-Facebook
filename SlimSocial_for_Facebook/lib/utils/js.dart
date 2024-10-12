@@ -99,13 +99,74 @@ if (typeof newPostsObserver !== 'undefined') {
     const newPostsObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             // Filter out added nodes that are not <section> elements
-            const addedSections = Array.from(mutation.addedNodes).filter(node => node.nodeName === 'SECTION');
+            const addedSections = Array.from(mutation.addedNodes);
 
             // Check if any new <section> elements were added
             if (addedSections.length) {
                 removeAds();
             }
         });
+    });
+
+    // Options for the observer (which mutations to observe)
+    const config = { childList: true, subtree: true };
+
+    // Start observing the target node for configured mutations
+    newPostsObserver.observe(bodyNode, config);
+}
+  """;
+
+  static String removeSuggestedFunc = """
+  javascript: function removeSuggested() {
+    var followKeywords = [
+      // Italian
+      "Segui",
+      "Iscriviti",
+      // English
+      "Follow",
+      "Like",
+      "${"suggested_keyword_fb".tr()}",
+    ];
+
+    var followSpans = document.querySelectorAll('span.f2').filter(span =>
+      followKeywords.some(keyword => span.textContent.includes(keyword))
+    );
+
+    followSpans.forEach(span => {
+      // Go up 6 parents
+      let sixthParent = span;
+      for (let i = 0; i < 6; i++) {
+          if (sixthParent) {
+              sixthParent = sixthParent.parentElement;
+          }
+      }
+
+      if (sixthParent) {
+          sixthParent.style.display = 'none';
+          if (sixthParent.previousElementSibling) {
+              sixthParent.previousElementSibling.style.display = 'none';
+          }
+      }
+    });
+  }
+""";
+
+  static String removeSuggestedObserver = """
+if (typeof newPostsObserver !== 'undefined') {
+    // Select the node that will be observed for changes
+    const bodyNode = document.body;
+
+    // Create a new observer object
+    const newPostsObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+          // Filter out added nodes that are not <section> elements
+          const addedSections = Array.from(mutation.addedNodes);
+
+          // Check if any new <section> elements were added
+          if (addedSections.length) {
+              removeSuggested();
+          }
+      });
     });
 
     // Options for the observer (which mutations to observe)

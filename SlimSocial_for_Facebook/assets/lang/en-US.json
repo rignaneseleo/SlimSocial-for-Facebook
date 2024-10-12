@@ -8,6 +8,7 @@
   "use_mbasic_desc": "It works better on older devices or slower connections",
   "recent_first": "Show recent posts first",
   "hide_ads": "Hide some ads (experimental)",
+  "hide_suggested": "Hide suggested posts",
   "style": "style",
   "dark_theme": "Enable dark theme",
   "fixed_bar": "Fixed top bar",
