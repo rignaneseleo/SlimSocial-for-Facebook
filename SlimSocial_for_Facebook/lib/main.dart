@@ -146,6 +146,23 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
         textTheme: GoogleFonts.robotoTextTheme(
           ThemeData(brightness: Brightness.light).textTheme,
         ),
+        popupMenuTheme: const PopupMenuThemeData(
+          textStyle: TextStyle(
+            color: FacebookColors.blue,
+          ),
+          iconColor: FacebookColors.blue,
+        ), 
+        listTileTheme: const ListTileThemeData(
+          tileColor: FacebookColors.white,
+          selectedTileColor: FacebookColors.lightBlue,
+          iconColor: FacebookColors.blue,
+          textColor: FacebookColors.darkBlue,
+        ),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStatePropertyAll(FacebookColors.blue),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
@@ -153,6 +170,19 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
         textTheme: GoogleFonts.robotoTextTheme(
           ThemeData(brightness: Brightness.dark).textTheme,
         ),
+        popupMenuTheme: const PopupMenuThemeData(
+          textStyle: TextStyle(
+            color: FacebookColors.white,
+          ),
+          iconColor: FacebookColors.white,
+        ), 
+        listTileTheme: const ListTileThemeData(
+          //tileColor: FacebookColors.white,
+          selectedTileColor: FacebookColors.lightBlue,
+          iconColor: FacebookColors.white,
+          textColor: FacebookColors.white,
+        ),
+
       ),
       themeMode: _themeMode,
       home: const HomePage(),

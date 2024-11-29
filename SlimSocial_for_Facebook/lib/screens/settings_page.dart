@@ -13,10 +13,12 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 class SettingsPage extends ConsumerStatefulWidget {
   SettingsPage({this.productId, super.key});
@@ -93,6 +95,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("enable_messenger") ?? true,
                 leading: const Icon(Icons.messenger),
                 title: Text('enable_messenger'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -104,6 +107,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("hide_ads") ?? true,
                 leading: const Icon(Icons.hide_source),
                 title: Text('hide_ads'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -117,6 +121,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("recent_first"),
                 leading: const Icon(Icons.rss_feed),
                 title: Text('recent_first'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -132,6 +137,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.abc),
                 title: Text('use_mbasic'.tr()),
                 description: Text('use_mbasic_desc'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
             ],
           ),
@@ -158,6 +164,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("gps_permission") ?? false,
                 leading: const Icon(Icons.gps_fixed),
                 title: Text('gps_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
@@ -178,6 +185,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("camera_permission") ?? false,
                 leading: const Icon(Icons.camera_alt),
                 title: Text('camera_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
@@ -198,6 +206,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("photo_permission") ?? false,
                 leading: const Icon(Icons.photo_camera_back_outlined),
                 title: Text('photo_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
             ],
           ),
@@ -218,6 +227,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.darkThemeCss.isEnabled(),
                 title: Text(CustomCss.darkThemeCss.key.tr()),
                 leading: const Icon(Icons.format_paint),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -229,6 +239,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.fixedBarCss.isEnabled(),
                 leading: const Icon(Icons.vertical_align_top),
                 title: Text(CustomCss.fixedBarCss.key.tr()),
+                activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -240,6 +252,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.hideStoriesCss.isEnabled(),
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
                 leading: const Icon(Icons.hide_image),
+                activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -251,6 +265,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.centerTextPostsCss.isEnabled(),
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
                 leading: const Icon(Icons.format_align_center),
+                activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -262,6 +278,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
                 leading: const Icon(Icons.format_line_spacing),
+                activeSwitchColor: FacebookColors.blue,
+
               ),
             ],
           ),

@@ -266,16 +266,26 @@ class _HomePageState extends ConsumerState<HomePage> {
                 .read(webViewUriNotifierProvider.notifier)
                 .updateUrl(PrefController.getHomePage());
           },
-          icon: const Icon(Icons.home),
+          icon: Icon(Icons.home, color: CustomCss.darkThemeCss.isEnabled()
+                ? FacebookColors.white
+                : FacebookColors.blue,),
         ),
         centerTitle: true,
         title: GestureDetector(
-          child: const Text('SlimSocial'),
+          child: Text(
+            'SlimSocial',
+            style: TextStyle(
+              color: CustomCss.darkThemeCss.isEnabled()
+                  ? FacebookColors.white
+                  : FacebookColors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onTap: () => _controller.scrollTo(0, 0),
         ),
         backgroundColor: CustomCss.darkThemeCss.isEnabled()
             ? FacebookColors.darkBlue
-            : FacebookColors.official,
+            : FacebookColors.white,
         elevation: 0,
         actions: [
           /*  IconButton(
@@ -318,7 +328,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 );
               },
-              icon: Image.asset('assets/icons/ic_messenger.png', height: 22),
+              icon: Image.asset(
+                'assets/icons/ic_messenger.png',
+                height: 22,
+                color: CustomCss.darkThemeCss.isEnabled()
+                    ? FacebookColors.white
+                    : FacebookColors.blue,
+              ),
             ),
           PopupMenuButton<String>(
             onSelected: (item) async {
