@@ -128,13 +128,14 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         return NavigationDecision.navigate;
       }
 
-    for (final other in kPermittedHostnamesFb)
+    for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
-        ref.read(fbWebViewProvider.notifier).updateUrl(request.url);
+        ref.read(webViewUriNotifierProvider.notifier).updateUrl(request.url);
         Navigator.of(context).pop();
         //todo hide msg
         return NavigationDecision.prevent;
       }
+    }
 
     // open on webview
     print("Launching external url: ${request.url}");
@@ -145,33 +146,43 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   @override
   Widget build(BuildContext context) {
     //refresh the page whenever a new state (url) comes
-    ref.listen<Uri>(
-      fbWebViewProvider,
-      (previous, next) async {
-        final currentUrl = await _controller.currentUrl();
-        if (currentUrl != null) {
-          final currentUri = Uri.parse(currentUrl);
-          if (currentUri.toString() == next.toString()) {
-            print("refreshing keeping the y index...");
-            //if I'm refreshing the page, I need to save the current scroll position
-            final position = await _controller.getScrollPosition();
-            final x = position.dx;
-            final y = position.dy;
+    ref.listen<AsyncValue<Uri>>(
+      webViewUriNotifierProvider,
+      (previous, next) {
+        next.when(
+          data: (uri) async {
+            final currentUrl = await _controller.currentUrl();
+            if (currentUrl != null) {
+              final currentUri = Uri.parse(currentUrl);
+              if (currentUri.toString() == uri.toString()) {
+                print("refreshing keeping the y index...");
+                //if I'm refreshing the page, I need to save the current scroll position
+                final position = await _controller.getScrollPosition();
+                final x = position.dx;
+                final y = position.dy;
 
-            //refresh
-            await _controller.reload();
+                //refresh
+                await _controller.reload();
 
-            //go back to the previous location
-            if (y > 0 || x > 0) {
-              await Future.delayed(const Duration(milliseconds: 1500));
-              print("restoring  $x, $y");
-              await _controller.scrollTo(x.toInt(), y.toInt());
+                //go back to the previous location
+                if (y > 0 || x > 0) {
+                  await Future.delayed(const Duration(milliseconds: 1500));
+                  print("restoring  $x, $y");
+                  await _controller.scrollTo(x.toInt(), y.toInt());
+                }
+                return;
+              }
             }
-            return;
-          }
-        }
 
-        await _controller.loadRequest(next);
+            await _controller.loadRequest(uri);
+          },
+          loading: () {
+            const CircularProgressIndicator();
+          },
+          error: (error, stackTrace) {
+            print("Error: $error");
+          },
+        );
       },
     );
 

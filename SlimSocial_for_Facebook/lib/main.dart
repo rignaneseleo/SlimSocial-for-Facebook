@@ -16,10 +16,10 @@ import 'package:slimsocial_for_facebook/utils/utils.dart';
 late SharedPreferences sp;
 
 //riverpod state
-final fbWebViewProvider =
+/* final fbWebViewProvider =
     StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
-final messengerWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
+final messegerWebViewProvider =
+    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new); */
 
 late PackageInfo packageInfo;
 
@@ -39,12 +39,13 @@ Future<void> main() async {
   _appLinks.uriLinkStream.listen((uri) {
     print("Received uri: $uri");
     //run the app with the uri
-    container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
+    container
+        .read(webViewUriNotifierProvider.notifier)
+        .updateUrl(uri.toString());
   });
 
   runApp(
     ProviderScope(
-      parent: container,
       child: EasyLocalization(
         supportedLocales: const [
           Locale('it', 'IT'),

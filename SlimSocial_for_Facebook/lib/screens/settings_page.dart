@@ -99,7 +99,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool("hide_ads", value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: sp.getBool("hide_ads") ?? true,
                 leading: const Icon(Icons.hide_source),
@@ -111,7 +111,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     sp.setBool("recent_first", value);
                   });
                   ref
-                      .read(fbWebViewProvider.notifier)
+                      .read(webViewUriNotifierProvider.notifier)
                       .updateUrl(PrefController.getHomePage());
                 },
                 initialValue: sp.getBool("recent_first"),
@@ -124,7 +124,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     sp.setBool("use_mbasic", value);
                   });
                   ref
-                      .read(fbWebViewProvider.notifier)
+                      .read(webViewUriNotifierProvider.notifier)
                       .updateUrl(PrefController.getHomePage());
                   Restart.restartApp();
                 },
@@ -171,7 +171,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("camera_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.refresh(webViewUriNotifierProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
@@ -191,7 +191,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("photo_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.refresh(webViewUriNotifierProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
@@ -213,7 +213,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                   final newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   SlimSocialApp.of(context).changeTheme(newTheme);
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.darkThemeCss.isEnabled(),
                 title: Text(CustomCss.darkThemeCss.key.tr()),
@@ -224,7 +224,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.fixedBarCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.fixedBarCss.isEnabled(),
                 leading: const Icon(Icons.vertical_align_top),
@@ -235,7 +235,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.hideStoriesCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.hideStoriesCss.isEnabled(),
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
@@ -246,7 +246,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.centerTextPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.centerTextPostsCss.isEnabled(),
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
@@ -257,7 +257,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.addSpaceBetweenPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
