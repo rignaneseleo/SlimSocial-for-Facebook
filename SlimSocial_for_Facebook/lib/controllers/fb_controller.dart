@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart';
@@ -5,16 +6,8 @@ import 'package:slimsocial_for_facebook/main.dart';
 
 part 'fb_controller.g.dart';
 
-@riverpod
-class PrefController extends _$PrefController {
-
-  @override
-  void build() {
-    // Void build method only to inizialize the provider
-  }
-
-
-  String get homePageUrl {
+class PrefController {
+  static String getHomePage() {
     var initialURl = kTouchFacebookHomeUrl;
 
     if (sp.getBool("use_mbasic") ?? false) initialURl = kFacebookHomeBasicUrl;
@@ -25,9 +18,9 @@ class PrefController extends _$PrefController {
     return initialURl + suffixDefault;
   }
 
-
-  String get userAgent {
-    if (sp.getBool(spKeyUserAgentEnabled) ?? false) {
+  static String getUserAgent() {
+    const spKeyEnabled = "custom_useragent_enabled";
+    if (sp.getBool(spKeyEnabled) ?? false) {
       final customUserAgent = sp.getString("custom_useragent");
       if (customUserAgent?.isNotEmpty ?? false) {
         print("Using custom user agent: $customUserAgent");
@@ -41,8 +34,9 @@ class PrefController extends _$PrefController {
   }
 
 
-  String? get userCustomCss {
-    if (sp.getBool(spKeyCustomCssEnabled) ?? false) {
+  static String? getUserCustomCss() {
+    const spKeyEnabled = "custom_css_enabled";
+    if (sp.getBool(spKeyEnabled) ?? false) {
       final customCss = sp.getString("custom_css");
       if (customCss?.isNotEmpty ?? false) {
         print("Using custom css: $customCss");
@@ -53,8 +47,10 @@ class PrefController extends _$PrefController {
     return null;
   }
 
-  String? get userCustomJs {
-    if (sp.getBool(spKeyCustomJsEnabled) ?? false) {
+
+  static String? getUserCustomJs() {
+    const spKeyEnabled = "custom_js_enabled";
+    if (sp.getBool(spKeyEnabled) ?? false) {
       final customJs = sp.getString("custom_js");
       if (customJs?.isNotEmpty ?? false) {
         print("Using custom js: $customJs");

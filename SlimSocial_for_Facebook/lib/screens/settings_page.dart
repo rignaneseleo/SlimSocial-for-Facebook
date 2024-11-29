@@ -117,7 +117,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   ref
                       .read(webViewUriNotifierProvider.notifier)
-                      .updateUrl(_prefController.homePageUrl);
+
+                      .updateUrl(PrefController.getHomePage());
                 },
                 initialValue: sp.getBool("recent_first"),
                 leading: const Icon(Icons.rss_feed),
@@ -131,7 +132,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   ref
                       .read(webViewUriNotifierProvider.notifier)
-                      .updateUrl(_prefController.homePageUrl);
+
+                      .updateUrl(PrefController.getHomePage());
                   Restart.restartApp();
                 },
                 initialValue: sp.getBool("use_mbasic") ?? false,

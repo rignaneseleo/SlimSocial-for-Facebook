@@ -6,24 +6,9 @@ part of 'fb_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$prefControllerHash() => r'8a7f97d6f8277196bb797f5e2c0eaf5a4e93a2aa';
 
-/// See also [PrefController].
-@ProviderFor(PrefController)
-final prefControllerProvider =
-    AutoDisposeNotifierProvider<PrefController, void>.internal(
-  PrefController.new,
-  name: r'prefControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$prefControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PrefController = AutoDisposeNotifier<void>;
 String _$webViewUriNotifierHash() =>
-    r'748b066077a8ac14e79289420cf17cab03e341f6';
+    r'70317dacd19ea8566f71fad4cb27e39b2c9bb3e6';
 
 /// See also [WebViewUriNotifier].
 @ProviderFor(WebViewUriNotifier)
