@@ -19,6 +19,7 @@ import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 class SettingsPage extends ConsumerStatefulWidget {
   SettingsPage({this.productId, super.key});
   //this is used to make a shortcut for donations
@@ -243,6 +244,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.vertical_align_top),
                 title: Text(CustomCss.fixedBarCss.key.tr()),
                 activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -255,6 +257,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
                 leading: const Icon(Icons.hide_image),
                 activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -267,6 +270,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
                 leading: const Icon(Icons.format_align_center),
                 activeSwitchColor: FacebookColors.blue,
+
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -279,6 +283,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
                 leading: const Icon(Icons.format_line_spacing),
                 activeSwitchColor: FacebookColors.blue,
+
               ),
             ],
           ),

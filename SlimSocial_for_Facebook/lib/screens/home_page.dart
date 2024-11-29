@@ -268,12 +268,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 .read(webViewUriNotifierProvider.notifier)
                 .updateUrl(PrefController.getHomePage());
           },
-          icon: Icon(
-            Icons.home,
-            color: CustomCss.darkThemeCss.isEnabled()
+
+          icon: Icon(Icons.home, color: CustomCss.darkThemeCss.isEnabled()
                 ? FacebookColors.white
-                : FacebookColors.blue,
-          ),
+                : FacebookColors.blue,),
         ),
         centerTitle: true,
         title: GestureDetector(
