@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
@@ -29,6 +30,7 @@ class SettingsPage extends ConsumerStatefulWidget {
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
   StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
+  late PrefController _prefController;
   bool isDev = false;
 
   final Map<String, Permission> permissions = const {
@@ -39,6 +41,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   void initState() {
+    _prefController = ref.read(prefControllerProvider.notifier);
     _updatePermissionsToggle();
 
     if (!widget.productId.isNullOrEmpty()) {
@@ -93,17 +96,19 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("enable_messenger") ?? true,
                 leading: const Icon(Icons.messenger),
                 title: Text('enable_messenger'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
                     sp.setBool("hide_ads", value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: sp.getBool("hide_ads") ?? true,
                 leading: const Icon(Icons.hide_source),
                 title: Text('hide_ads'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -111,12 +116,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     sp.setBool("recent_first", value);
                   });
                   ref
-                      .read(fbWebViewProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
+                      .read(webViewUriNotifierProvider.notifier)
+                      .updateUrl(_prefController.homePageUrl);
                 },
                 initialValue: sp.getBool("recent_first"),
                 leading: const Icon(Icons.rss_feed),
                 title: Text('recent_first'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -124,14 +130,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     sp.setBool("use_mbasic", value);
                   });
                   ref
-                      .read(fbWebViewProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
+                      .read(webViewUriNotifierProvider.notifier)
+                      .updateUrl(_prefController.homePageUrl);
                   Restart.restartApp();
                 },
                 initialValue: sp.getBool("use_mbasic") ?? false,
                 leading: const Icon(Icons.abc),
                 title: Text('use_mbasic'.tr()),
                 description: Text('use_mbasic_desc'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
             ],
           ),
@@ -158,6 +165,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool("gps_permission") ?? false,
                 leading: const Icon(Icons.gps_fixed),
                 title: Text('gps_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
@@ -171,13 +179,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("camera_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.refresh(webViewUriNotifierProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
                 initialValue: sp.getBool("camera_permission") ?? false,
                 leading: const Icon(Icons.camera_alt),
                 title: Text('camera_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
@@ -191,13 +200,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("photo_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.refresh(webViewUriNotifierProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
                 initialValue: sp.getBool("photo_permission") ?? false,
                 leading: const Icon(Icons.photo_camera_back_outlined),
                 title: Text('photo_permission'.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
             ],
           ),
@@ -213,55 +223,60 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                   final newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   SlimSocialApp.of(context).changeTheme(newTheme);
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.darkThemeCss.isEnabled(),
                 title: Text(CustomCss.darkThemeCss.key.tr()),
                 leading: const Icon(Icons.format_paint),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
                     sp.setBool(CustomCss.fixedBarCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.fixedBarCss.isEnabled(),
                 leading: const Icon(Icons.vertical_align_top),
                 title: Text(CustomCss.fixedBarCss.key.tr()),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
                     sp.setBool(CustomCss.hideStoriesCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.hideStoriesCss.isEnabled(),
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
                 leading: const Icon(Icons.hide_image),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
                     sp.setBool(CustomCss.centerTextPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.centerTextPostsCss.isEnabled(),
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
                 leading: const Icon(Icons.format_align_center),
+                activeSwitchColor: FacebookColors.blue,
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
                     sp.setBool(CustomCss.addSpaceBetweenPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.refresh(webViewUriNotifierProvider);
                 },
                 initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
                 leading: const Icon(Icons.format_line_spacing),
+                activeSwitchColor: FacebookColors.blue,
               ),
             ],
           ),
@@ -277,8 +292,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_useragent",
-                    hint: PrefController.getUserAgent(),
+                    spKey: spKeyCustomUserAgent,
+                    hint: _prefController.userAgent,
                   );
                   setState(() {});
                 },
@@ -292,7 +307,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_js",
+                    spKey: spKeyCustomJs,
                     hint: CustomJs.exampleJs,
                   );
                   setState(() {});
@@ -307,7 +322,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_css",
+                    spKey: spKeyCustomCss,
                     hint: '._5rgt._5msi { text-align: center;}',
                   );
                   setState(() {});
@@ -331,7 +346,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
-                  const spKey = "custom_proxy";
+                  const spKey = spKeyCustomProxy;
                   const spKeyEnabled = "${spKey}_enabled";
                   const spKeyIp = "${spKey}_ip";
                   const spKeyPort = "${spKey}_port";
@@ -676,7 +691,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   Future showProxyDialog() async {
-    const spKey = "custom_proxy";
+    const spKey = spKeyCustomProxy;
     const spKeyEnabled = "${spKey}_enabled";
     const spKeyIp = "${spKey}_ip";
     const spKeyPort = "${spKey}_port";
