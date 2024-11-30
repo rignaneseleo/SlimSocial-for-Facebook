@@ -27,11 +27,13 @@ class MessengerPage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<MessengerPage> {
   late WebViewController _controller;
+  late PrefController _prefController;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    _prefController = ref.read(prefControllerProvider.notifier);
     _controller = _initWebViewController();
   }
 
@@ -44,7 +46,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     final controller = (WebViewController())
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
-      ..setUserAgent(PrefController.getUserAgent())
+      ..setUserAgent(_prefController.userAgent)
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
@@ -237,7 +239,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<void> runJs() async {
-    final userCustomJs = PrefController.getUserCustomJs();
+    final userCustomJs = _prefController.userCustomJs;
     if (userCustomJs?.isNotEmpty ?? false)
       await _controller.runJavaScript(userCustomJs!);
   }
@@ -248,7 +250,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     if (CustomCss.darkThemeCss.isEnabled())
       cssList += CustomCss.darkThemeMessengerCss.code;
 
-    final userCustomCss = PrefController.getUserCustomCss();
+    final userCustomCss = _prefController.userCustomCss;
     if (userCustomCss?.isNotEmpty ?? false) cssList += userCustomCss!;
 
     final code = """

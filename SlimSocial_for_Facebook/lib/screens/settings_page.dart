@@ -19,7 +19,6 @@ import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class SettingsPage extends ConsumerStatefulWidget {
   SettingsPage({this.productId, super.key});
   //this is used to make a shortcut for donations
@@ -31,6 +30,7 @@ class SettingsPage extends ConsumerStatefulWidget {
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
   StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
+  late PrefController _prefController;
   bool isDev = false;
 
   final Map<String, Permission> permissions = const {
@@ -41,6 +41,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   void initState() {
+    _prefController = ref.read(prefControllerProvider.notifier);
     _updatePermissionsToggle();
 
     if (!widget.productId.isNullOrEmpty()) {
@@ -116,7 +117,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   ref
                       .read(webViewUriNotifierProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
+                      .updateUrl(_prefController.homePageUrl);
                 },
                 initialValue: sp.getBool("recent_first"),
                 leading: const Icon(Icons.rss_feed),
@@ -130,7 +131,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   });
                   ref
                       .read(webViewUriNotifierProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
+                      .updateUrl(_prefController.homePageUrl);
                   Restart.restartApp();
                 },
                 initialValue: sp.getBool("use_mbasic") ?? false,
@@ -240,7 +241,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.vertical_align_top),
                 title: Text(CustomCss.fixedBarCss.key.tr()),
                 activeSwitchColor: FacebookColors.blue,
-
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -253,7 +253,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
                 leading: const Icon(Icons.hide_image),
                 activeSwitchColor: FacebookColors.blue,
-
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -266,7 +265,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
                 leading: const Icon(Icons.format_align_center),
                 activeSwitchColor: FacebookColors.blue,
-
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -279,7 +277,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
                 leading: const Icon(Icons.format_line_spacing),
                 activeSwitchColor: FacebookColors.blue,
-
               ),
             ],
           ),
@@ -296,7 +293,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onPressed: (context) async {
                   await showTextInputDialog(
                     spKey: "custom_useragent",
-                    hint: PrefController.getUserAgent(),
+                    hint: _prefController.userAgent,
                   );
                   setState(() {});
                 },

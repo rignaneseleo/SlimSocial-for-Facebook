@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart';
@@ -6,8 +5,16 @@ import 'package:slimsocial_for_facebook/main.dart';
 
 part 'fb_controller.g.dart';
 
-class PrefController {
-  static String getHomePage() {
+@riverpod
+class PrefController extends _$PrefController {
+
+  @override
+  void build() {
+    // Void build method only to inizialize the provider
+  }
+
+
+  String get homePageUrl {
     var initialURl = kTouchFacebookHomeUrl;
 
     if (sp.getBool("use_mbasic") ?? false) initialURl = kFacebookHomeBasicUrl;
@@ -18,7 +25,8 @@ class PrefController {
     return initialURl + suffixDefault;
   }
 
-  static String getUserAgent() {
+
+  String get userAgent {
     const spKeyEnabled = "custom_useragent_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
       final customUserAgent = sp.getString("custom_useragent");
@@ -33,7 +41,8 @@ class PrefController {
     return kFirefoxUserAgent;
   }
 
-  static String? getUserCustomCss() {
+
+  String? get userCustomCss {
     const spKeyEnabled = "custom_css_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
       final customCss = sp.getString("custom_css");
@@ -46,7 +55,7 @@ class PrefController {
     return null;
   }
 
-  static String? getUserCustomJs() {
+  String? get userCustomJs {
     const spKeyEnabled = "custom_js_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
       final customJs = sp.getString("custom_js");
