@@ -35,6 +35,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool isScontentUrl = false;
 
   late WebViewController _controller;
+  late PrefController _prefController;
 
   @override
   void dispose() {
@@ -104,7 +105,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
 
-    final userCustomJs = PrefController.getUserCustomJs();
+    final userCustomJs = _prefController.userCustomJs;
     if (userCustomJs?.isNotEmpty ?? false) {
       await _controller.runJavaScript(userCustomJs!);
     }
@@ -127,7 +128,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..setBackgroundColor(FacebookColors.white)
       //..setBackgroundColor(FacebookColors.darkBlue)
 
-      ..setUserAgent(PrefController.getUserAgent())
+      ..setUserAgent(_prefController.userAgent)
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
@@ -266,12 +267,15 @@ class _HomePageState extends ConsumerState<HomePage> {
             //_controller?.loadUrl(PrefController.getHomePage());
             ref
                 .read(webViewUriNotifierProvider.notifier)
-                .updateUrl(PrefController.getHomePage());
+                .updateUrl(_prefController.homePageUrl);
           },
 
-          icon: Icon(Icons.home, color: CustomCss.darkThemeCss.isEnabled()
+          icon: Icon(
+            Icons.home,
+            color: CustomCss.darkThemeCss.isEnabled()
                 ? FacebookColors.white
-                : FacebookColors.blue,),
+                : FacebookColors.blue,
+          ),
         ),
         centerTitle: true,
         title: GestureDetector(
@@ -433,23 +437,13 @@ class _HomePageState extends ConsumerState<HomePage> {
               return false;
             }
 
-            return false;
-          }
-          return true;
-        },
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            WebViewWidget(
-              controller: _controller,
-            ),
-            if (isLoading)
-              const Center(
-                child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(FacebookColors.official),
-                  //backgroundColor: Colors.white,
-                ),
+            return true;
+          },
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              WebViewWidget(
+                controller: _controller,
               ),
               if (isLoading)
                 const Center(
