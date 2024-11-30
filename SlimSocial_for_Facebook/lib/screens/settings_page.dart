@@ -292,7 +292,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_useragent",
+                    spKey: spKeyCustomUserAgent,
                     hint: _prefController.userAgent,
                   );
                   setState(() {});
@@ -307,7 +307,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_js",
+                    spKey: spKeyCustomJs,
                     hint: CustomJs.exampleJs,
                   );
                   setState(() {});
@@ -322,7 +322,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_css",
+                    spKey: spKeyCustomCss,
                     hint: '._5rgt._5msi { text-align: center;}',
                   );
                   setState(() {});
@@ -346,7 +346,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
-                  const spKey = "custom_proxy";
+                  const spKey = spKeyCustomProxy;
                   const spKeyEnabled = "${spKey}_enabled";
                   const spKeyIp = "${spKey}_ip";
                   const spKeyPort = "${spKey}_port";
@@ -691,7 +691,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   Future showProxyDialog() async {
-    const spKey = "custom_proxy";
+    const spKey = spKeyCustomProxy;
     const spKeyEnabled = "${spKey}_enabled";
     const spKeyIp = "${spKey}_ip";
     const spKeyPort = "${spKey}_port";
