@@ -27,8 +27,7 @@ class PrefController extends _$PrefController {
 
 
   String get userAgent {
-    const spKeyEnabled = "custom_useragent_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
+    if (sp.getBool(spKeyUserAgentEnabled) ?? false) {
       final customUserAgent = sp.getString("custom_useragent");
       if (customUserAgent?.isNotEmpty ?? false) {
         print("Using custom user agent: $customUserAgent");
@@ -44,8 +43,7 @@ class PrefController extends _$PrefController {
 
 
   String? get userCustomCss {
-    const spKeyEnabled = "custom_css_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
+    if (sp.getBool(spKeyCustomCssEnabled) ?? false) {
       final customCss = sp.getString("custom_css");
       if (customCss?.isNotEmpty ?? false) {
         print("Using custom css: $customCss");
@@ -58,8 +56,7 @@ class PrefController extends _$PrefController {
 
 
   String? get userCustomJs {
-    const spKeyEnabled = "custom_js_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
+    if (sp.getBool(spKeyCustomJsEnabled) ?? false) {
       final customJs = sp.getString("custom_js");
       if (customJs?.isNotEmpty ?? false) {
         print("Using custom js: $customJs");

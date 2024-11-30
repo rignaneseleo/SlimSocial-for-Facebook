@@ -295,7 +295,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onPressed: (context) async {
                   await showTextInputDialog(
 
-                    spKey: "custom_useragent",
+                    spKey: spKeyCustomUserAgent,
                     hint: _prefController.userAgent,
                   );
                   setState(() {});
