@@ -31,22 +31,102 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  late WebViewController _controller;
   bool isLoading = false;
   bool isScontentUrl = false;
+
+  late WebViewController _controller;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-
+    _prefController = ref.read(prefControllerProvider.notifier);
     _controller = _initWebViewController();
   }
 
+  Future<NavigationDecision> onNavigationRequest(
+    NavigationRequest request,
+  ) async {
+    final uri = Uri.parse(request.url);
+    print("onNavigationRequest: ${request.url}");
+
+    for (final other in kPermittedHostnamesFb) {
+      if (uri.host.endsWith(other)) {
+        return NavigationDecision.navigate;
+      }
+    }
+    for (final other in kPermittedHostnamesMessenger) {
+      if (uri.host.endsWith(other)) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MessengerPage(initialUrl: uri.toString()),
+          ),
+        );
+        return NavigationDecision.prevent;
+      }
+    }
+
+    // open on webview
+    print("Launching external url: ${request.url}");
+    launchInAppUrl(context, request.url);
+    return NavigationDecision.prevent;
+  }
+
+  Future<void> injectCss() async {
+    var cssList = "";
+    for (final css in CustomCss.cssList) {
+      if (css.isEnabled()) cssList += css.code;
+    }
+
+    //create the function that will be called later
+    await _controller.runJavaScript(CustomJs.removeAdsFunc);
+
+    //it's important to remove the \n
+    final code = """
+                    document.addEventListener("DOMContentLoaded", function() {
+                        ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
+                        ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
+                        ${CustomJs.injectCssFunc(cssList)}
+                         ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
+                    });"""
+        .replaceAll("\n", " ");
+    await _controller.runJavaScript(code);
+  }
+
+  Future<void> runJs() async {
+    if (sp.getBool('hide_ads') ?? true) {
+      //setup the observer to run on page updates
+      await _controller.runJavaScript(CustomJs.removeAdsObserver);
+    }
+
+
+    final userCustomJs = PrefController.getUserCustomJs();
+    if (userCustomJs?.isNotEmpty ?? false) {
+      await _controller.runJavaScript(userCustomJs!);
+    }
+  }
+
+/*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'Toaster',
+      onMessageReceived: (JavascriptMessage message) {
+        // ignore: deprecated_member_use
+        print('Message received: ${message.message}');
+      },
+    );
+  }*/
+
   WebViewController _initWebViewController() {
-    final homepage = PrefController.getHomePage();
+    final homepage = _prefController.homePageUrl;
     final controller = (WebViewController())
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(FacebookColors.darkBlue)
+      ..setBackgroundColor(FacebookColors.white)
+      //..setBackgroundColor(FacebookColors.darkBlue)
+
       ..setUserAgent(PrefController.getUserAgent())
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -137,68 +217,45 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  Future<NavigationDecision> onNavigationRequest(
-    NavigationRequest request,
-  ) async {
-    final uri = Uri.parse(request.url);
-    print("onNavigationRequest: ${request.url}");
-
-    for (final other in kPermittedHostnamesFb)
-      if (uri.host.endsWith(other)) {
-        return NavigationDecision.navigate;
-      }
-
-    for (final other in kPermittedHostnamesMessenger) {
-      if (uri.host.endsWith(other)) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => MessengerPage(initialUrl: uri.toString()),
-          ),
-        );
-        return NavigationDecision.prevent;
-      }
-    }
-
-    // open on webview
-    print("Launching external url: ${request.url}");
-    launchInAppUrl(context, request.url);
-    return NavigationDecision.prevent;
-  }
-
-  @override
   Widget build(BuildContext context) {
     //refresh the page whenever a new state (url) comes
-    ref.listen<Uri>(
-      fbWebViewProvider,
-      (previous, next) async {
-        final currentUrl = await _controller.currentUrl();
-        if (currentUrl != null) {
-          final currentUri = Uri.parse(currentUrl);
-          if (currentUri.toString() == next.toString()) {
-            print("refreshing keeping the y index...");
-            //if I'm refreshing the page, I need to save the current scroll position
-            final position = await _controller.getScrollPosition();
-            final x = position.dx;
-            final y = position.dy;
+    ref.listen<AsyncValue<Uri>>(
+      webViewUriNotifierProvider,
+      (previous, next) {
+        next.when(
+          data: (uri) async {
+            final currentUrl = await _controller.currentUrl();
+            if (currentUrl != null) {
+              final currentUri = Uri.parse(currentUrl);
+              if (currentUri.toString() == uri.toString()) {
+                print("refreshing keeping the y index...");
+                //if I'm refreshing the page, I need to save the current scroll position
+                final position = await _controller.getScrollPosition();
+                final x = position.dx;
+                final y = position.dy;
 
-            //refresh
-            await _controller.reload();
+                //refresh
+                await _controller.reload();
 
-            //go back to the previous location
-            if (y > 0 || x > 0) {
-              await Future.delayed(const Duration(milliseconds: 1500));
-              print("restoring  $x, $y");
-              await _controller.scrollTo(x.toInt(), y.toInt());
+                //go back to the previous location
+                if (y > 0 || x > 0) {
+                  await Future.delayed(const Duration(milliseconds: 1500));
+                  print("restoring  $x, $y");
+                  await _controller.scrollTo(x.toInt(), y.toInt());
+                }
+                return;
+              }
             }
-            return;
-          }
-        }
 
-        await _controller.loadRequest(next);
+            await _controller.loadRequest(uri);
+          },
+          loading: () {
+            const CircularProgressIndicator();
+          },
+          error: (error, stackTrace) {
+            print("Error: $error");
+          },
+        );
       },
     );
 
@@ -208,19 +265,32 @@ class _HomePageState extends ConsumerState<HomePage> {
           onPressed: () {
             //_controller?.loadUrl(PrefController.getHomePage());
             ref
-                .read(fbWebViewProvider.notifier)
+                .read(webViewUriNotifierProvider.notifier)
                 .updateUrl(PrefController.getHomePage());
           },
-          icon: const Icon(Icons.home),
+          icon: Icon(
+            Icons.home,
+            color: CustomCss.darkThemeCss.isEnabled()
+                ? FacebookColors.white
+                : FacebookColors.blue,
+          ),
         ),
         centerTitle: true,
         title: GestureDetector(
-          child: const Text('SlimSocial'),
+          child: Text(
+            'SlimSocial',
+            style: TextStyle(
+              color: CustomCss.darkThemeCss.isEnabled()
+                  ? FacebookColors.white
+                  : FacebookColors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onTap: () => _controller.scrollTo(0, 0),
         ),
         backgroundColor: CustomCss.darkThemeCss.isEnabled()
             ? FacebookColors.darkBlue
-            : FacebookColors.official,
+            : FacebookColors.white,
         elevation: 0,
         actions: [
           /*  IconButton(
@@ -263,30 +333,34 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 );
               },
-              icon: Image.asset('assets/icons/ic_messenger.png', height: 22),
+              icon: Image.asset(
+                'assets/icons/ic_messenger.png',
+                height: 22,
+                color: CustomCss.darkThemeCss.isEnabled()
+                    ? FacebookColors.white
+                    : FacebookColors.blue,
+              ),
             ),
           PopupMenuButton<String>(
             onSelected: (item) async {
               switch (item) {
                 case "share_url":
                   final url = await _controller.currentUrl();
-                  if (url != null) Share.share(url);
+                  if (url != null) await Share.share(url);
                   break;
                 case "refresh":
-                  _controller.reload();
+                  await _controller.reload();
                   break;
                 case "settings":
-                  Navigator.of(context).pushNamed("/settings");
+                  await Navigator.of(context).pushNamed("/settings");
                   break;
                 case "top":
-                  _controller.scrollTo(0, 0);
+                  await _controller.scrollTo(0, 0);
                   break;
                 case "support":
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          SettingsPage(productId: "donation_1"),
+                  await Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (ctx) => SettingsPage(productId: "donation_1"),
                     ),
                   );
                   break;
@@ -304,7 +378,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               PopupMenuItem<String>(
                 value: "top",
                 child: ListTile(
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.vertical_align_top),
                   title: Text("top".tr().capitalize()),
                 ),
@@ -312,7 +385,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               PopupMenuItem<String>(
                 value: "refresh",
                 child: ListTile(
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.refresh),
                   title: Text("refresh".tr().capitalize()),
                 ),
@@ -320,7 +392,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               PopupMenuItem<String>(
                 value: "share_url",
                 child: ListTile(
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.share),
                   title: Text("share_url".tr().capitalize()),
                 ),
@@ -328,7 +399,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               PopupMenuItem<String>(
                 value: "settings",
                 child: ListTile(
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.settings),
                   title: Text("settings".tr().capitalize()),
                 ),
@@ -337,7 +407,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 value: "support",
                 child: ListTile(
                   iconColor: Colors.red,
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.favorite),
                   title: Text("support".tr().capitalize()),
                 ),
@@ -345,7 +414,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               PopupMenuItem<String>(
                 value: "reset",
                 child: ListTile(
-                  contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.restore),
                   title: Text("reset".tr().capitalize()),
                 ),
@@ -354,15 +422,19 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          if (await _controller.canGoBack()) {
-            _controller.goBack();
-
-            if (isScontentUrl) {
-              //gotta go back twice to leave scontent (facebook bug?)
+      body: SafeArea(
+        child: WillPopScope(
+          onWillPop: () async {
+            if (await _controller.canGoBack()) {
               _controller.goBack();
+
+              if (isScontentUrl) {
+                //gotta go back twice to leave scontent (facebook bug?)
+                _controller.goBack();
+              }
+              return false;
             }
+
             return false;
           }
           return true;
@@ -374,57 +446,25 @@ class _HomePageState extends ConsumerState<HomePage> {
               controller: _controller,
             ),
             if (isLoading)
-              const LinearProgressIndicator(
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(FacebookColors.official),
-                backgroundColor: Colors.transparent,
+              const Center(
+                child: CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(FacebookColors.official),
+                  //backgroundColor: Colors.white,
+                ),
               ),
-          ],
+              if (isLoading)
+                const Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(FacebookColors.official),
+                    //backgroundColor: Colors.white,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
-
-  Future<void> injectCss() async {
-    var cssList = "";
-    for (final css in CustomCss.cssList) {
-      if (css.isEnabled()) cssList += css.code;
-    }
-
-    //create the function that will be called later
-    await _controller.runJavaScript(CustomJs.removeAdsFunc);
-
-    //it's important to remove the \n
-    final code = """
-                    document.addEventListener("DOMContentLoaded", function() {
-                        ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
-                        ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
-                        ${CustomJs.injectCssFunc(cssList)}
-                         ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
-                    });"""
-        .replaceAll("\n", " ");
-    await _controller.runJavaScript(code);
-  }
-
-  Future<void> runJs() async {
-    if (sp.getBool('hide_ads') ?? true) {
-      //setup the observer to run on page updates
-      await _controller.runJavaScript(CustomJs.removeAdsObserver);
-    }
-
-    final userCustomJs = PrefController.getUserCustomJs();
-    if (userCustomJs?.isNotEmpty ?? false) {
-      await _controller.runJavaScript(userCustomJs!);
-    }
-  }
-
-/*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-      name: 'Toaster',
-      onMessageReceived: (JavascriptMessage message) {
-        // ignore: deprecated_member_use
-        print('Message received: ${message.message}');
-      },
-    );
-  }*/
 }
