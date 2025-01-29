@@ -14,6 +14,22 @@ const List<String> kPermittedHostnamesMessenger = [
   "m.me",
 ];
 
+//key for the shared preferences
+
+const String spKeyUseMbasic = "use_mbasic";
+const String spKeyRecentFirst = "recent_first";
+const String spKeyCustomProxy = "custom_proxy";
+const String spKeyCustomUserAgent = "custom_useragent";
+const String spKeyCustomCss = "custom_css";
+const String spKeyCustomJs = "custom_js";
+
+// key enabled for the shared preferences
+const String spKeyUserAgentEnabled = "custom_useragent_enabled";
+const String spKeyCustomCssEnabled = "custom_css_enabled";
+const String spKeyCustomJsEnabled = "custom_js_enabled";
+const String spKeyCustomProxyEnabled = "custom_proxy_enabled";
+
+
 //suffix for the feed
 const String suffixRecentFirst = "?sk=h_chr";
 const String suffixDefault = "?sk=h_nor";

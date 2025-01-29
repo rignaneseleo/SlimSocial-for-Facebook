@@ -16,10 +16,10 @@ import 'package:slimsocial_for_facebook/utils/utils.dart';
 late SharedPreferences sp;
 
 //riverpod state
-final fbWebViewProvider =
+/* final fbWebViewProvider =
     StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
-final messengerWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
+final messegerWebViewProvider =
+    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new); */
 
 late PackageInfo packageInfo;
 
@@ -39,12 +39,13 @@ Future<void> main() async {
   _appLinks.uriLinkStream.listen((uri) {
     print("Received uri: $uri");
     //run the app with the uri
-    container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
+    container
+        .read(webViewUriNotifierProvider.notifier)
+        .updateUrl(uri.toString());
   });
 
   runApp(
     ProviderScope(
-      parent: container,
       child: EasyLocalization(
         supportedLocales: const [
           Locale('it', 'IT'),
@@ -145,6 +146,23 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
         textTheme: GoogleFonts.robotoTextTheme(
           ThemeData(brightness: Brightness.light).textTheme,
         ),
+        popupMenuTheme: const PopupMenuThemeData(
+          textStyle: TextStyle(
+            color: FacebookColors.blue,
+          ),
+          iconColor: FacebookColors.blue,
+        ), 
+        listTileTheme: const ListTileThemeData(
+          tileColor: FacebookColors.white,
+          selectedTileColor: FacebookColors.lightBlue,
+          iconColor: FacebookColors.blue,
+          textColor: FacebookColors.darkBlue,
+        ),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStatePropertyAll(FacebookColors.blue),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
@@ -152,6 +170,19 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
         textTheme: GoogleFonts.robotoTextTheme(
           ThemeData(brightness: Brightness.dark).textTheme,
         ),
+        popupMenuTheme: const PopupMenuThemeData(
+          textStyle: TextStyle(
+            color: FacebookColors.white,
+          ),
+          iconColor: FacebookColors.white,
+        ), 
+        listTileTheme: const ListTileThemeData(
+          //tileColor: FacebookColors.white,
+          selectedTileColor: FacebookColors.lightBlue,
+          iconColor: FacebookColors.white,
+          textColor: FacebookColors.white,
+        ),
+
       ),
       themeMode: _themeMode,
       home: const HomePage(),
