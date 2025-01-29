@@ -7,6 +7,7 @@ class CustomJs {
         var node = document.createElement('style');
         node.innerHTML = css;
         document.body.appendChild(node);
+        document.body.style.zoom = "0.97";
       }) ('${css}');
     ''';
     return str;

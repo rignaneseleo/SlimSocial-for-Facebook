@@ -31,3 +31,4 @@ linter:
     public_member_api_docs: false
     prefer_single_quotes: false
     no_leading_underscores_for_local_identifiers: false
+    avoid_classes_with_only_static_members: true
