@@ -53,6 +53,7 @@ final lightColorScheme = ColorScheme(
   surfaceTint: FacebookColors.blue,
   outlineVariant: FacebookColors.darkGrey,
   scrim: FacebookColors.black,
+
 );
 
 final darkColorScheme = ColorScheme(
