@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/screens/subscription_screen.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
@@ -55,7 +56,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     super.initState();
   }
 
-  _checkDev() async {
+  Future<void> _checkDev() async {
     final _isDev = await FlutterJailbreakDetection.developerMode;
     setState(() {
       isDev = _isDev;
@@ -404,14 +405,29 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   buildPaymentWidget("donation_3".tr());
                 },
               ),
-              /*  SettingsTile.navigation(
+              SettingsTile.navigation(
                 leading: const Icon(Icons.stars),
-                title: Text('become_hero'.tr()),
-                description: Text('become_hero_desc_v1'.tr()),
+                title: Text('Become a member'.tr()),
+                //description: Text('become_hero_desc_v1'.tr()),
+                //description: Text('No commitment'.tr()),
                 onPressed: (BuildContext context) async {
-                  buildPaymentWidget("donation_4");
+                  await Navigator.of(context).push(
+                    ModalBottomSheetRoute(
+                      isScrollControlled: true,
+                      builder: (ctx) {
+                        return LayoutBuilder(
+                          builder:
+                              (BuildContext ctx, BoxConstraints constraints) =>
+                                  SizedBox(
+                            height: constraints.maxHeight * 0.5,
+                            child: SubscriptionBottomSheet(),
+                          ),
+                        );
+                      },
+                    ),
+                  );
                 },
-              ), */
+              ),
             ],
           ),
           SettingsSection(
@@ -465,6 +481,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         case PermissionStatus.permanentlyDenied:
           await openAppSettings();
           break;
+        case PermissionStatus.provisional:
+        // TODO: Handle this case only available on iOS.
+        //break;
       }
     } else {
       //going from on to off
@@ -478,6 +497,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           await openAppSettings();
           print("revoke_permission".tr());
           break;
+        case PermissionStatus.provisional:
+        // TODO: Handle this case only available on iOS.
+        //break;
       }
     }
     return permission.status.isGranted;

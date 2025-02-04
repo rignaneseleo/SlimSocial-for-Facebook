@@ -52,3 +52,10 @@ const String kGithubProjectUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook";
 const String kPlayStoreUrl =
     "https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";
+
+final Map<double, String> priceToProductId = {
+      10.0: 'subscription_10_euro',
+      15.0: 'subscription_15_euro',
+      20.0: 'subscription_20_euro',
+      25.0: 'subscription_25_euro',
+    };
