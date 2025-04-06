@@ -19,9 +19,9 @@ import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
-  SettingsPage({this.productId, super.key});
+  const SettingsPage({this.productId, super.key});
   //this is used to make a shortcut for donations
-  String? productId;
+  final String? productId;
 
   @override
   ConsumerState<SettingsPage> createState() => _SettingsPageState();
@@ -52,7 +52,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     super.initState();
   }
 
-  _checkDev() async {
+  Future<void> _checkDev() async {
     final _isDev = await FlutterJailbreakDetection.developerMode;
     setState(() {
       isDev = _isDev;
@@ -95,11 +95,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text('enable_messenger'.tr()),
               ),
               SettingsTile.switchTile(
-                onToggle: (value) {
+                onToggle: (value) async {
                   setState(() {
                     sp.setBool("hide_ads", value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: sp.getBool("hide_ads") ?? true,
                 leading: const Icon(Icons.hide_source),
@@ -171,7 +171,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("camera_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.invalidate(fbWebViewProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
@@ -191,7 +191,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool("photo_permission", value);
                     });
-                    ref.refresh(fbWebViewProvider);
+                    ref.invalidate(fbWebViewProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
@@ -213,7 +213,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                   final newTheme = value ? ThemeMode.dark : ThemeMode.light;
                   SlimSocialApp.of(context).changeTheme(newTheme);
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: CustomCss.darkThemeCss.isEnabled(),
                 title: Text(CustomCss.darkThemeCss.key.tr()),
@@ -224,7 +224,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.fixedBarCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: CustomCss.fixedBarCss.isEnabled(),
                 leading: const Icon(Icons.vertical_align_top),
@@ -235,7 +235,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.hideStoriesCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: CustomCss.hideStoriesCss.isEnabled(),
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
@@ -246,7 +246,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.centerTextPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: CustomCss.centerTextPostsCss.isEnabled(),
                 title: Text(CustomCss.centerTextPostsCss.key.tr()),
@@ -257,7 +257,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   setState(() {
                     sp.setBool(CustomCss.addSpaceBetweenPostsCss.key, value);
                   });
-                  ref.refresh(fbWebViewProvider);
+                  ref.invalidate(fbWebViewProvider);
                 },
                 initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
@@ -445,6 +445,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         case PermissionStatus.denied:
           await permission.request();
           break;
+        case PermissionStatus.provisional:
         case PermissionStatus.granted:
           break;
         case PermissionStatus.permanentlyDenied:
@@ -460,6 +461,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         case PermissionStatus.denied:
           break;
         case PermissionStatus.granted:
+        case PermissionStatus.provisional:
           await openAppSettings();
           print("revoke_permission".tr());
           break;
@@ -468,7 +470,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     return permission.status.isGranted;
   }
 
-  Future buildPaymentWidget(String idItem) async {
+  Future<void> buildPaymentWidget(String idItem) async {
     //get the product
     final response = await InAppPurchase.instance.queryProductDetails({idItem});
     if (response.notFoundIDs.isNotEmpty) {
@@ -502,7 +504,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         showToast("${"thankyou".tr()} ❤️");
         print("Close subscription");
       },
-      onError: (error) {
+      onError: (dynamic error) {
         print("Payment error: $error");
         showToast("error_trylater".tr());
       },
@@ -517,13 +519,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     return;
   }
 
-  Future showTextInputDialog({required String spKey, String? hint}) async {
+  Future<void> showTextInputDialog({
+    required String spKey,
+    String? hint,
+  }) async {
     final spKeyEnabled = "${spKey}_enabled";
 
     final _textEditingController = TextEditingController();
     _textEditingController.text = sp.getString(spKey) ?? "";
 
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -588,7 +593,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     var sendJs = true;
     var sendUserAgent = true;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -675,7 +680,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     }
   }
 
-  Future showProxyDialog() async {
+  Future<void> showProxyDialog() async {
     const spKey = "custom_proxy";
     const spKeyEnabled = "${spKey}_enabled";
     const spKeyIp = "${spKey}_ip";
@@ -686,7 +691,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     final _portController = TextEditingController();
     _portController.text = sp.getString(spKeyPort) ?? "";
 
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

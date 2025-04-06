@@ -154,8 +154,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     for (final other in kPermittedHostnamesMessenger) {
       if (uri.host.endsWith(other)) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
             builder: (context) => MessengerPage(initialUrl: uri.toString()),
           ),
         );
@@ -190,7 +190,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //go back to the previous location
             if (y > 0 || x > 0) {
-              await Future.delayed(const Duration(milliseconds: 1500));
+              await Future<void>.delayed(const Duration(milliseconds: 1500));
               print("restoring  $x, $y");
               await _controller.scrollTo(x.toInt(), y.toInt());
             }
@@ -257,8 +257,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (sp.getBool("enable_messenger") ?? true)
             IconButton(
               onPressed: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+                await Navigator.of(context).push(
+                  MaterialPageRoute<void>(
                     builder: (context) => const MessengerPage(),
                   ),
                 );
@@ -282,9 +282,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   _controller.scrollTo(0, 0);
                   break;
                 case "support":
-                  Navigator.push(
+                  await Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (context) =>
                           SettingsPage(productId: "donation_1"),
                     ),
