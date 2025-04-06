@@ -4,7 +4,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 10.1.1+115
 
 environment:
-  sdk: ">=2.19.6 <3.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -37,6 +37,7 @@ dependencies:
       url: https://github.com/postflow/open_file_plus.git
   native_flutter_proxy: 0.2.3
 
+  webview_flutter_android: any
 dev_dependencies:
   flutter_launcher_icons: 0.14.3
   custom_lint: 0.7.5

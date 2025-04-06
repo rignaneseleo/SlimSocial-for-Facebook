@@ -54,7 +54,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
           },
           onPageFinished: (String url) async {
             await runJs();
-            if (kDebugMode) print(url);
+            if (kDebugMode) debugPrint(url);
           },
           onProgress: (int progress) {
             setState(() {
@@ -107,7 +107,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
               );
             }
           },
-          onHidePrompt: () => print("Geolocation permission prompt hidden"),
+          onHidePrompt: () =>
+              debugPrint("Geolocation permission prompt hidden"),
         );
     }
     return controller;
@@ -123,18 +124,20 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   ) async {
     final uri = Uri.parse(request.url);
 
-    for (final other in kPermittedHostnamesMessenger)
+    for (final other in kPermittedHostnamesMessenger) {
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
       }
+    }
 
-    for (final other in kPermittedHostnamesFb)
+    for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         ref.read(fbWebViewProvider.notifier).updateUrl(request.url);
         Navigator.of(context).pop();
         //todo hide msg
         return NavigationDecision.prevent;
       }
+    }
 
     // open on webview
     print("Launching external url: ${request.url}");
@@ -152,7 +155,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         if (currentUrl != null) {
           final currentUri = Uri.parse(currentUrl);
           if (currentUri.toString() == next.toString()) {
-            print("refreshing keeping the y index...");
+            debugPrint("refreshing keeping the y index...");
             //if I'm refreshing the page, I need to save the current scroll position
             final position = await _controller.getScrollPosition();
             final x = position.dx;
@@ -164,7 +167,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
             //go back to the previous location
             if (y > 0 || x > 0) {
               await Future<void>.delayed(const Duration(milliseconds: 1500));
-              print("restoring  $x, $y");
+              debugPrint("restoring  $x, $y");
               await _controller.scrollTo(x.toInt(), y.toInt());
             }
             return;
@@ -227,15 +230,17 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
   Future<void> runJs() async {
     final userCustomJs = PrefController.getUserCustomJs();
-    if (userCustomJs?.isNotEmpty ?? false)
+    if (userCustomJs?.isNotEmpty ?? false) {
       await _controller.runJavaScript(userCustomJs!);
+    }
   }
 
   Future<void> injectCss() async {
     var cssList = "";
 
-    if (CustomCss.darkThemeCss.isEnabled())
+    if (CustomCss.darkThemeCss.isEnabled()) {
       cssList += CustomCss.darkThemeMessengerCss.code;
+    }
 
     final userCustomCss = PrefController.getUserCustomCss();
     if (userCustomCss?.isNotEmpty ?? false) cssList += userCustomCss!;
@@ -254,7 +259,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       name: 'Toaster',
       onMessageReceived: (JavascriptMessage message) {
         // ignore: deprecated_member_use
-        print('Message received: ${message.message}');
+        debugPrint('Message received: ${message.message}');
       },
     );
   }*/

@@ -2,17 +2,18 @@ import 'package:easy_localization/easy_localization.dart';
 
 class CustomJs {
   static String injectCssFunc(String css) {
-    var str = '''
+    final str = '''
       (function (css) {
         var node = document.createElement('style');
         node.innerHTML = css;
         document.body.appendChild(node);
-      }) ('${css}');
+      }) ('$css');
     ''';
     return str;
   }
 
-  static String exampleJs = """javascript:function foo() {
+  static String exampleJs = """
+javascript:function foo() {
 	     document.body.innerHTML = '';
 		}
 		foo();""";
@@ -117,7 +118,8 @@ if (typeof newPostsObserver !== 'undefined') {
   """;
 }
 
-String createFabFunc = """javascript:function createFab() {
+String createFabFunc = """
+javascript:function createFab() {
 		var button = document.createElement('button');
 		button.type = 'button';
   		button.innerHTML = '▲';

@@ -37,7 +37,7 @@ Future<void> main() async {
 
   // Subscribe to all events when app is started.
   _appLinks.uriLinkStream.listen((uri) {
-    print("Received uri: $uri");
+    debugPrint("Received uri: $uri");
     //run the app with the uri
     container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
   });
@@ -156,7 +156,7 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
       themeMode: _themeMode,
       home: const HomePage(),
       routes: {
-        "/settings": (context) => SettingsPage(),
+        "/settings": (context) => const SettingsPage(),
       },
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

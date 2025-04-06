@@ -1,26 +1,27 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../consts.dart';
-import '../main.dart';
+import 'package:slimsocial_for_facebook/consts.dart';
+import 'package:slimsocial_for_facebook/main.dart';
 
 class PrefController {
   static String getHomePage() {
-    String initialURl = kTouchFacebookHomeUrl;
+    var initialURl = kTouchFacebookHomeUrl;
 
     if (sp.getBool("use_mbasic") ?? false) initialURl = kFacebookHomeBasicUrl;
 
-    if (sp.getBool("recent_first") ?? false)
+    if (sp.getBool("recent_first") ?? false) {
       return initialURl + suffixRecentFirst;
+    }
 
     return initialURl + suffixDefault;
   }
 
   static String getUserAgent() {
-    String spKeyEnabled = "custom_useragent_enabled";
+    const spKeyEnabled = "custom_useragent_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
-      var customUserAgent = sp.getString("custom_useragent");
+      final customUserAgent = sp.getString("custom_useragent");
       if (customUserAgent?.isNotEmpty ?? false) {
-        print("Using custom user agent: $customUserAgent");
+        debugPrint("Using custom user agent: $customUserAgent");
         return customUserAgent!;
       }
     }
@@ -31,11 +32,11 @@ class PrefController {
   }
 
   static String? getUserCustomCss() {
-    String spKeyEnabled = "custom_css_enabled";
+    const spKeyEnabled = "custom_css_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
-      var customCss = sp.getString("custom_css");
+      final customCss = sp.getString("custom_css");
       if (customCss?.isNotEmpty ?? false) {
-        print("Using custom css: $customCss");
+        debugPrint("Using custom css: $customCss");
         return customCss!;
       }
     }
@@ -44,11 +45,11 @@ class PrefController {
   }
 
   static String? getUserCustomJs() {
-    String spKeyEnabled = "custom_js_enabled";
+    const spKeyEnabled = "custom_js_enabled";
     if (sp.getBool(spKeyEnabled) ?? false) {
-      var customJs = sp.getString("custom_js");
+      final customJs = sp.getString("custom_js");
       if (customJs?.isNotEmpty ?? false) {
-        print("Using custom js: $customJs");
+        debugPrint("Using custom js: $customJs");
         return customJs!;
       }
     }
