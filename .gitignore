@@ -32,3 +32,4 @@ proguard/
 *.aab
 SlimFacebook/app/release/output.json
 SlimSocial_for_Facebook/.metadata
+/SlimSocial_for_Facebook/android/app/.cxx
