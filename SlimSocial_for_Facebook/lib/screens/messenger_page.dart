@@ -163,7 +163,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
             //go back to the previous location
             if (y > 0 || x > 0) {
-              await Future.delayed(const Duration(milliseconds: 1500));
+              await Future<void>.delayed(const Duration(milliseconds: 1500));
               print("restoring  $x, $y");
               await _controller.scrollTo(x.toInt(), y.toInt());
             }
