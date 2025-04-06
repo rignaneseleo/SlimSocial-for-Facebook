@@ -15,6 +15,8 @@ analyzer:
     unrelated_type_equality_checks: warning
     invalid_annotation_target: ignore
     one_member_abstracts: ignore
+    lines_longer_than_80_chars: ignore
+    cascade_invocations: ignore
 
   exclude:
     - "**/*.g.dart"

@@ -463,7 +463,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         case PermissionStatus.granted:
         case PermissionStatus.provisional:
           await openAppSettings();
-          print("revoke_permission".tr());
+          debugPrint("revoke_permission".tr());
           break;
       }
     }
@@ -474,7 +474,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     //get the product
     final response = await InAppPurchase.instance.queryProductDetails({idItem});
     if (response.notFoundIDs.isNotEmpty) {
-      print("Product not found");
+      debugPrint("Product not found");
       showToast("error_trylater".tr());
       return;
     }
@@ -502,10 +502,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       },
       onDone: () {
         showToast("${"thankyou".tr()} ❤️");
-        print("Close subscription");
+        debugPrint("Close subscription");
       },
       onError: (dynamic error) {
-        print("Payment error: $error");
+        debugPrint("Payment error: $error");
         showToast("error_trylater".tr());
       },
     );
@@ -545,8 +545,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       _setState(() {
                         sp.setBool(spKeyEnabled, value);
                       });
-                      if (value)
+                      if (value) {
                         showToast("default value will be overwritten".tr());
+                      }
                     },
                   ),
                   TextField(
@@ -645,15 +646,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 String myUserAgent;
                 myCss = myJs = myUserAgent = "";
 
-                if (sendCss)
+                if (sendCss) {
                   myCss = Uri.encodeFull(sp.getString("custom_css") ?? "");
+                }
 
-                if (sendJs)
+                if (sendJs) {
                   myJs = Uri.encodeFull(sp.getString("custom_js") ?? "");
+                }
 
-                if (sendUserAgent)
+                if (sendUserAgent) {
                   myUserAgent =
                       Uri.encodeFull(sp.getString("custom_useragent") ?? "");
+                }
 
                 final link =
                     "mailto:$kDevEmail?subject=SlimSocial%3A%20new%20code%20suggestion&body=Hi%20Leo%2C%0A%0Athis%20code%20is%20good%20for%20these%20reasons%3A%0A-%20...%0A-%20...%0A%0AMy%20CSS%3A%20%0A$myCss%0A%0A-----%0A%0AMy%20js%3A%20%0A$myJs%0A%0A---%0A%0AMy%20user%20agent%3A%20%0A$myUserAgent%0A";
@@ -708,8 +712,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       _setState(() {
                         sp.setBool(spKeyEnabled, value);
                       });
-                      if (value)
+                      if (value) {
                         showToast("default value will be overwritten".tr());
+                      }
                     },
                   ),
                   Row(
