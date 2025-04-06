@@ -14,7 +14,8 @@ dependencies:
     git:
       url: https://github.com/pdurasie-ecovery/flutter_jailbreak_detection.git
       ref: add-namespace
-  webview_flutter: 4.10.0
+  #webview_flutter: 4.10.0
+  adblocker_webview: ^2.0.0-beta
   flutter_custom_tabs: 2.2.1
   url_launcher: 6.1.10
   permission_handler: 11.3.1

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:adblocker_webview/adblocker_webview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   late WebViewController _controller;
+  late AdBlockerWebviewController _controllerAdBlocker;
   bool isLoading = false;
   bool isScontentUrl = false;
 
@@ -40,6 +42,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
 
     _controller = _initWebViewController();
+    _controllerAdBlocker = AdBlockerWebviewController.instance
+      ..setInternalController(_controller);
   }
 
   WebViewController _initWebViewController() {
@@ -370,6 +374,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
+            /*  AdBlockerWebview(
+              shouldBlockAds: true,
+              url: Uri.parse(PrefController.getHomePage()),
+              adBlockerWebviewController: _controllerAdBlocker,
+            ), */
             WebViewWidget(
               controller: _controller,
             ),

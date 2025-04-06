@@ -14,6 +14,30 @@ packages:
     description: dart
     source: sdk
     version: "0.3.3"
+  adblocker_core:
+    dependency: transitive
+    description:
+      name: adblocker_core
+      sha256: "21ffe452054160fe5df2d2bef2c2f9a6aa4c7184650527a099da8979a104308f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
+  adblocker_manager:
+    dependency: transitive
+    description:
+      name: adblocker_manager
+      sha256: e9a6afe9f4be07f1ba6b07094a46d9f1c9de0572b302601f3ddd1c698be25ebf
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  adblocker_webview:
+    dependency: "direct main"
+    description:
+      name: adblocker_webview
+      sha256: "5d984a33983c2f0de9c5a4fa236f4d61febeee906c4bc212ca075ca5f9b5e550"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -1018,7 +1042,7 @@ packages:
     source: hosted
     version: "1.0.0"
   webview_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: webview_flutter
       sha256: "889a0a678e7c793c308c68739996227c9661590605e70b1f6cf6b9a6634f7aec"
@@ -1082,5 +1106,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.7.0-0 <4.0.0"
-  flutter: ">=3.27.0"
+  dart: ">=3.7.0 <4.0.0"
+  flutter: ">=3.29.0"

@@ -1,3 +1,4 @@
+import 'package:adblocker_webview/adblocker_webview.dart';
 import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,17 @@ late PackageInfo packageInfo;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  await AdBlockerWebviewController.instance.initialize(
+    FilterConfig(
+      filterTypes: [
+        FilterType.easyList,
+        FilterType.adGuard,
+      ],
+    ),
+    [],
+  );
+
   packageInfo = await PackageInfo.fromPlatform();
   sp = await SharedPreferences.getInstance();
   final container = ProviderContainer();
