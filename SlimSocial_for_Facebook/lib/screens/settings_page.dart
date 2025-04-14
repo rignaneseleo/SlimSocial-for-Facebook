@@ -108,6 +108,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
+                    sp.setBool("hide_suggested", value);
+                  });
+                  ref.refresh(fbWebViewProvider);
+                },
+                initialValue: sp.getBool("hide_suggested") ?? true,
+                leading: const Icon(Icons.hide_source),
+                title: Text('hide_suggested'.tr()),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
                     sp.setBool("recent_first", value);
                   });
                   ref
