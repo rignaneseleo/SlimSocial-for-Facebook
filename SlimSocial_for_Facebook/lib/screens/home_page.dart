@@ -65,7 +65,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           },
           onPageFinished: (String url) async {
             await runJs();
-            if (kDebugMode) print(url);
+            if (kDebugMode) debugPrint(url);
           },
           onProgress: (int progress) {
             setState(() {
@@ -134,7 +134,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             }
           },
-          onHidePrompt: () => print("Geolocation permission prompt hidden"),
+          onHidePrompt: () =>
+              debugPrint("Geolocation permission prompt hidden"),
         );
     }
     return controller;
@@ -149,17 +150,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     NavigationRequest request,
   ) async {
     final uri = Uri.parse(request.url);
-    print("onNavigationRequest: ${request.url}");
+    debugPrint("onNavigationRequest: ${request.url}");
 
-    for (final other in kPermittedHostnamesFb)
+    for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
       }
+    }
 
     for (final other in kPermittedHostnamesMessenger) {
       if (uri.host.endsWith(other)) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
             builder: (context) => MessengerPage(initialUrl: uri.toString()),
           ),
         );
@@ -183,7 +185,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         if (currentUrl != null) {
           final currentUri = Uri.parse(currentUrl);
           if (currentUri.toString() == next.toString()) {
-            print("refreshing keeping the y index...");
+            debugPrint("refreshing keeping the y index...");
             //if I'm refreshing the page, I need to save the current scroll position
             final position = await _controller.getScrollPosition();
             final x = position.dx;
@@ -194,8 +196,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //go back to the previous location
             if (y > 0 || x > 0) {
-              await Future.delayed(const Duration(milliseconds: 1500));
-              print("restoring  $x, $y");
+              await Future<void>.delayed(const Duration(milliseconds: 1500));
+              debugPrint("restoring  $x, $y");
               await _controller.scrollTo(x.toInt(), y.toInt());
             }
             return;
@@ -251,7 +253,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onPressed: () async {
                 final url = await _controller.currentUrl();
                 if (url != null) {
-                  print("${"sharing".tr()}...");
+                  debugPrint("${"sharing".tr()}...");
                   final path = await downloadImage(url);
                   if (path != null) Share.shareXFiles([XFile(path)]);
                 }
@@ -261,8 +263,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (sp.getBool("enable_messenger") ?? true)
             IconButton(
               onPressed: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+                await Navigator.of(context).push(
+                  MaterialPageRoute<void>(
                     builder: (context) => const MessengerPage(),
                   ),
                 );
@@ -286,11 +288,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                   _controller.scrollTo(0, 0);
                   break;
                 case "support":
-                  Navigator.push(
+                  await Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (context) =>
-                          SettingsPage(productId: "donation_1"),
+                          const SettingsPage(productId: "donation_1"),
                     ),
                   );
                   break;
@@ -300,7 +302,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   _controller = _initWebViewController();
                   break;
                 default:
-                  print("Unknown menu item: $item");
+                  debugPrint("Unknown menu item: $item");
                   break;
               }
             },
@@ -432,7 +434,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       name: 'Toaster',
       onMessageReceived: (JavascriptMessage message) {
         // ignore: deprecated_member_use
-        print('Message received: ${message.message}');
+        debugPrint('Message received: ${message.message}');
       },
     );
   }*/
