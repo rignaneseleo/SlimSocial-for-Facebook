@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 
@@ -56,12 +55,4 @@ class PrefController {
 
     return null;
   }
-}
-
-class webViewUriState extends StateNotifier<Uri> {
-  webViewUriState(this.ref) : super(Uri.parse(kTouchFacebookHomeUrl));
-
-  final Ref ref;
-
-  void updateUrl(String _url) => state = Uri.parse(_url);
 }

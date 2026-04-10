@@ -1,4 +1,4 @@
-include: package:very_good_analysis/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   language:
@@ -10,9 +10,6 @@ analyzer:
     close_sinks: ignore
     missing_required_param: error
     missing_return: error
-    record_literal_one_positional_no_trailing_comma: error
-    collection_methods_unrelated_type: warning
-    unrelated_type_equality_checks: warning
     invalid_annotation_target: ignore
     one_member_abstracts: ignore
     lines_longer_than_80_chars: ignore
@@ -27,9 +24,72 @@ analyzer:
   plugins:
     - custom_lint
 
-#https://github.com/VeryGoodOpenSource/very_good_analysis/blob/main/lib/analysis_options.5.1.0.yaml
 linter:
   rules:
+    # Disabled rules from flutter_lints
     public_member_api_docs: false
     prefer_single_quotes: false
     no_leading_underscores_for_local_identifiers: false
+
+    # Additional modern rules
+    always_declare_return_types: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_dynamic_calls: true
+    avoid_multiple_declarations_per_line: true
+    avoid_redundant_argument_values: true
+    avoid_returning_null_for_void: true
+    avoid_void_async: true
+    cancel_subscriptions: true
+    cast_nullable_to_non_nullable: true
+    directives_ordering: true
+    eol_at_end_of_file: true
+    leading_newlines_in_multiline_strings: true
+    matching_super_parameters: true
+    missing_whitespace_between_adjacent_strings: true
+    no_literal_bool_comparisons: true
+    noop_primitive_operations: true
+    parameter_assignments: true
+    prefer_asserts_in_initializer_lists: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_expression_function_bodies: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_foreach: true
+    prefer_if_elements_to_conditional_expressions: true
+    prefer_initializing_formals: true
+    prefer_inlined_adds: true
+    prefer_int_literals: true
+    prefer_interpolation_to_compose_strings: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_is_not_operator: true
+    prefer_iterable_whereType: true
+    prefer_null_aware_method_calls: true
+    require_trailing_commas: true
+    sized_box_for_whitespace: true
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    type_annotate_public_apis: true
+    unawaited_futures: true
+    unnecessary_await_in_return: true
+    unnecessary_breaks: true
+    unnecessary_lambdas: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_null_checks: true
+    unnecessary_parenthesis: true
+    unnecessary_raw_strings: true
+    use_build_context_synchronously: true
+    use_colored_box: true
+    use_decorated_box: true
+    use_enums: true
+    use_full_hex_values_for_flutter_colors: true
+    use_if_null_to_convert_nulls_to_bools: true
+    use_is_even_rather_than_modulo: true
+    use_named_constants: true
+    use_raw_strings: true
+    use_string_buffers: true
+    use_super_parameters: true

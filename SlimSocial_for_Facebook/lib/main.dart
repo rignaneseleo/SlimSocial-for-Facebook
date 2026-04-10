@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:native_flutter_proxy/native_flutter_proxy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
@@ -14,13 +13,6 @@ import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
 late SharedPreferences sp;
-
-//riverpod state
-final fbWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
-final messengerWebViewProvider =
-    StateNotifierProvider<webViewUriState, Uri>(webViewUriState.new);
-
 late PackageInfo packageInfo;
 
 Future<void> main() async {
@@ -28,23 +20,11 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   packageInfo = await PackageInfo.fromPlatform();
   sp = await SharedPreferences.getInstance();
-  final container = ProviderContainer();
 
   if (sp.getBool("custom_proxy_enabled") ?? false) _setupProxy();
 
-  //library to handle app links (link that open the app)
-  final _appLinks = AppLinks();
-
-  // Subscribe to all events when app is started.
-  _appLinks.uriLinkStream.listen((uri) {
-    debugPrint("Received uri: $uri");
-    //run the app with the uri
-    container.read(fbWebViewProvider.notifier).updateUrl(uri.toString());
-  });
-
   runApp(
     ProviderScope(
-      parent: container,
       child: EasyLocalization(
         supportedLocales: const [
           Locale('it', 'IT'),
@@ -126,11 +106,26 @@ class SlimSocialApp extends StatefulWidget {
 }
 
 class _SlimSocialAppState extends State<SlimSocialApp> {
-  _SlimSocialAppState() {
+  late ThemeMode _themeMode;
+
+  @override
+  void initState() {
+    super.initState();
     _themeMode =
         CustomCss.darkThemeCss.isEnabled() ? ThemeMode.dark : ThemeMode.light;
+    _setupAppLinks();
   }
-  late ThemeMode _themeMode;
+
+  void _setupAppLinks() {
+    // Library to handle app links (links that open the app)
+    final appLinks = AppLinks();
+
+    // Subscribe to all events when app is started
+    appLinks.uriLinkStream.listen((uri) {
+      debugPrint('Received uri: $uri');
+      // Navigation will be handled by the HomePage when it builds
+    });
+  }
 
   // This widget is the root of your application.
   @override
@@ -140,23 +135,19 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
     return MaterialApp(
       title: 'SlimSocial for Facebook',
       theme: ThemeData(
-        useMaterial3: false,
+        useMaterial3: true,
         colorScheme: lightColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(
-          ThemeData(brightness: Brightness.light).textTheme,
-        ),
+        textTheme: GoogleFonts.robotoTextTheme(),
       ),
       darkTheme: ThemeData(
-        useMaterial3: false,
+        useMaterial3: true,
         colorScheme: darkColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(
-          ThemeData(brightness: Brightness.dark).textTheme,
-        ),
+        textTheme: GoogleFonts.robotoTextTheme(),
       ),
       themeMode: _themeMode,
       home: const HomePage(),
       routes: {
-        "/settings": (context) => const SettingsPage(),
+        '/settings': (context) => const SettingsPage(),
       },
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

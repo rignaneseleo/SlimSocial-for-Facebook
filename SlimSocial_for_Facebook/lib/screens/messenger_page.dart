@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/providers/webview_providers.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
@@ -202,13 +203,16 @@ class _HomePageState extends ConsumerState<MessengerPage> {
           ),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          if (await _controller.canGoBack()) {
-            _controller.goBack();
-            return false;
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) async {
+          if (didPop) {
+            return;
           }
-          return true;
+
+          if (await _controller.canGoBack()) {
+            await _controller.goBack();
+          }
         },
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,

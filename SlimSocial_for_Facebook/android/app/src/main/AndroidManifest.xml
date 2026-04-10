@@ -16,7 +16,8 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="SlimSocial for Facebook">
+        android:label="SlimSocial for Facebook"
+        android:allowNativeHeapPointerTagging="false">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

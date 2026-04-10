@@ -20,12 +20,12 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -37,12 +37,21 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // Suppress 16KB page size warnings until all native libraries are compatible
+        multiDexEnabled = true
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
     }
 
     signingConfigs {
         create("release") {
-            if (System.getenv("CI") != null) { // CI=true is exported by Codemagic
-                storeFile = file(System.getenv("CM_KEYSTORE_PATH"))
+            // Check if running on Codemagic CI (has CM_KEYSTORE_PATH set)
+            val cmKeystorePath = System.getenv("CM_KEYSTORE_PATH")
+            if (cmKeystorePath != null && cmKeystorePath.isNotEmpty()) {
+                storeFile = file(cmKeystorePath)
                 storePassword = System.getenv("CM_KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("CM_KEY_ALIAS")
                 keyPassword = System.getenv("CM_KEY_PASSWORD")
@@ -58,6 +67,12 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
         }
     }
 }

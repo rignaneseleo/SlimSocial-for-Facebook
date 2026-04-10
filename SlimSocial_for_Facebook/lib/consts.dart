@@ -1,4 +1,4 @@
-const String kFacebookHomeUrl = 'https://facebook.com/home.php';
+const String kFacebookHomeUrl = 'https://facebook.com/';
 const String kTouchFacebookHomeUrl = 'https://touch.facebook.com/home.php';
 const String kFacebookHomeBasicUrl = 'https://mbasic.facebook.com/home.php';
 const String kMessengerUrl = 'https://www.messenger.com';
@@ -9,10 +9,7 @@ const List<String> kPermittedHostnamesFb = [
   "fb.com",
   "fb.me",
 ];
-const List<String> kPermittedHostnamesMessenger = [
-  "messenger.com",
-  "m.me",
-];
+const List<String> kPermittedHostnamesMessenger = ["messenger.com", "m.me"];
 
 //suffix for the feed
 const String suffixRecentFirst = "?sk=h_chr";

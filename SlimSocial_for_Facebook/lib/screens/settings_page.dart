@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/providers/webview_providers.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
@@ -361,7 +362,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.share),
                 title: Text('shareapp'.tr()),
                 onPressed: (BuildContext context) async {
-                  Share.share(kPlayStoreUrl);
+                  SharePlus.instance.share(ShareParams(text: kPlayStoreUrl));
                 },
               ),
               SettingsTile.navigation(

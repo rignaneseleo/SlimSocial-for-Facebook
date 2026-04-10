@@ -12,6 +12,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/providers/webview_providers.dart';
 import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
@@ -251,7 +252,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 if (url != null) {
                   debugPrint("${"sharing".tr()}...");
                   final path = await downloadImage(url);
-                  if (path != null) Share.shareXFiles([XFile(path)]);
+                  if (path != null) {
+                    SharePlus.instance.share(ShareParams(files: [XFile(path)]));
+                  }
                 }
               },
               icon: const Icon(Icons.ios_share_outlined),
@@ -272,8 +275,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               switch (item) {
                 case "share_url":
                   final url = await _controller.currentUrl();
-                  if (url != null) Share.share(url);
-                  break;
+                  if (url != null) {
+                    SharePlus.instance.share(ShareParams(text: url));
+                  }
                 case "refresh":
                   _controller.reload();
                   break;
@@ -356,18 +360,21 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
-      body: WillPopScope(
-        onWillPop: () async {
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) async {
+          if (didPop) {
+            return;
+          }
+
           if (await _controller.canGoBack()) {
-            _controller.goBack();
+            await _controller.goBack();
 
             if (isScontentUrl) {
               //gotta go back twice to leave scontent (facebook bug?)
-              _controller.goBack();
+              await _controller.goBack();
             }
-            return false;
           }
-          return true;
         },
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
