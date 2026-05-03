@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="flutter.enable_messenger" value="false" />
+    <boolean name="flutter.hide_ads" value="false" />
+    <boolean name="flutter.recent_first" value="true" />
+    <boolean name="flutter.use_mbasic" value="true" />
+    <boolean name="flutter.gps_permission" value="true" />
+    <boolean name="flutter.camera_permission" value="true" />
+    <boolean name="flutter.photo_permission" value="true" />
+    <boolean name="flutter.photos_permission" value="true" />
+    <boolean name="flutter.dark_theme" value="true" />
+    <boolean name="flutter.fixed_bar" value="false" />
+    <boolean name="flutter.hide_stories" value="true" />
+    <boolean name="flutter.center_text" value="true" />
+    <boolean name="flutter.add_space" value="true" />
+    <boolean name="flutter.hide_messenger_sidebar" value="false" />
+    <boolean name="flutter.custom_useragent_enabled" value="true" />
+    <string name="flutter.custom_useragent">Mozilla/5.0 LegacyImported</string>
+    <boolean name="flutter.custom_js_enabled" value="true" />
+    <string name="flutter.custom_js">console.log('legacy')</string>
+    <boolean name="flutter.custom_css_enabled" value="true" />
+    <string name="flutter.custom_css">body { background: red }</string>
+    <boolean name="flutter.custom_proxy_enabled" value="true" />
+    <string name="flutter.custom_proxy_ip">10.0.0.1</string>
+    <string name="flutter.custom_proxy_port">8888</string>
+</map>
