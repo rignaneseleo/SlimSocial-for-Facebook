@@ -87,7 +87,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.webkit:webkit:1.12.1")
+    implementation("androidx.webkit:webkit:1.15.0")
+    implementation("androidx.browser:browser:1.8.0")
 
     implementation("com.google.accompanist:accompanist-permissions:0.36.0")
 
@@ -100,6 +101,10 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.13")
     testImplementation("androidx.test:core-ktx:1.6.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+
+    // JUnit4 + Vintage engine — Robolectric WebView tests run on JUnit4
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.11.3")
 }
 
 tasks.withType<Test> {
