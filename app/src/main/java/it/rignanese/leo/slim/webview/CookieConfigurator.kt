@@ -10,15 +10,15 @@ import android.webkit.WebView
  * `setAcceptThirdPartyCookies` does not support an allowlist. The WebView only
  * ever loads Facebook surfaces, so this is acceptable.
  */
-class CookieConfigurator {
-    fun configure(webView: WebView) {
+open class CookieConfigurator {
+    open fun configure(webView: WebView) {
         val mgr = CookieManager.getInstance()
         mgr.setAcceptCookie(true)
         mgr.setAcceptThirdPartyCookies(webView, true)
     }
 
     /** Force-write the in-memory cookie store to disk. Call from `onPause`. */
-    fun flush() {
+    open fun flush() {
         CookieManager.getInstance().flush()
     }
 }
