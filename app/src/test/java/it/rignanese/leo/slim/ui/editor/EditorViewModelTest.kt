@@ -22,7 +22,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -81,7 +80,7 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `toggle CSS snippet on adds id to activeCssIds`() = runTest {
+    fun `toggle CSS snippet on adds id to activeCssIds`() = runBlocking {
         val s = NamedSnippet(
             id = LEGACY_SNIPPET_ID,
             name = LEGACY_SNIPPET_NAME,
@@ -103,7 +102,7 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `toggle JS snippet on without prior acknowledgement still adds it (VM does not gate)`() = runTest {
+    fun `toggle JS snippet on without prior acknowledgement still adds it (VM does not gate)`() = runBlocking {
         // The dialog flow lives in the UI layer; the VM toggle is a pure setter.
         val s = NamedSnippet(
             id = LEGACY_SNIPPET_ID,
@@ -150,7 +149,7 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `saveSnippet upserts existing id (replace by id)`() = runTest {
+    fun `saveSnippet upserts existing id (replace by id)`() = runBlocking {
         val original = NamedSnippet(
             id = LEGACY_SNIPPET_ID,
             name = LEGACY_SNIPPET_NAME,
@@ -176,7 +175,7 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `saveSnippet appends when list is empty`() = runTest {
+    fun `saveSnippet appends when list is empty`() = runBlocking {
         val vm = EditorViewModel(repo, SnippetType.CSS)
         val newSnippet = NamedSnippet(
             id = LEGACY_SNIPPET_ID,
@@ -196,7 +195,7 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `deleteSnippet removes from list and from active set`() = runTest {
+    fun `deleteSnippet removes from list and from active set`() = runBlocking {
         val s = NamedSnippet(
             id = LEGACY_SNIPPET_ID,
             name = LEGACY_SNIPPET_NAME,

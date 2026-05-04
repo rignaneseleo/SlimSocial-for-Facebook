@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -86,7 +86,7 @@ class MainViewModelTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `homeUrl emits TOUCH+default when settings are default`() = runTest {
+    fun `homeUrl emits TOUCH+default when settings are default`() = runBlocking {
         val vm = newVm()
         vm.homeUrl.test(timeout = 30.seconds) {
             // The seed value matches the DataStore-mapped value for default
@@ -97,7 +97,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `homeUrl switches to MBASIC when useMbasic toggled`() = runTest {
+    fun `homeUrl switches to MBASIC when useMbasic toggled`() = runBlocking {
         val vm = newVm()
         vm.homeUrl.test(timeout = 30.seconds) {
             // Drain initial value(s) until we see the seeded TOUCH URL.
@@ -114,7 +114,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `homeUrl switches to recent suffix when recentFirst toggled`() = runTest {
+    fun `homeUrl switches to recent suffix when recentFirst toggled`() = runBlocking {
         val vm = newVm()
         vm.homeUrl.test(timeout = 30.seconds) {
             var current = awaitItem()
@@ -134,7 +134,7 @@ class MainViewModelTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `userAgent starts as Firefox UA`() = runTest {
+    fun `userAgent starts as Firefox UA`() = runBlocking {
         val vm = newVm()
         vm.userAgent.test(timeout = 30.seconds) {
             var current = awaitItem()
@@ -145,7 +145,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `userAgent switches to Opera Mini when useMbasic toggled`() = runTest {
+    fun `userAgent switches to Opera Mini when useMbasic toggled`() = runBlocking {
         val vm = newVm()
         vm.userAgent.test(timeout = 30.seconds) {
             var current = awaitItem()
@@ -159,7 +159,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `userAgent returns custom UA when configured`() = runTest {
+    fun `userAgent returns custom UA when configured`() = runBlocking {
         val vm = newVm()
         val custom = "Mozilla/5.0 SlimTest"
         vm.userAgent.test(timeout = 30.seconds) {
@@ -178,7 +178,7 @@ class MainViewModelTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `renderGone emits the didCrash flag`() = runTest {
+    fun `renderGone emits the didCrash flag`() = runBlocking {
         val vm = newVm()
         vm.renderGone.test(timeout = 30.seconds) {
             vm.onRenderGone(true)
@@ -192,7 +192,7 @@ class MainViewModelTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `composeInjection produces non-empty CSS for default settings on FB host`() = runTest {
+    fun `composeInjection produces non-empty CSS for default settings on FB host`() = runBlocking {
         val vm = newVm()
         // Allow the StateFlow to seed from DataStore before composing.
         vm.settings.first()
@@ -207,7 +207,7 @@ class MainViewModelTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `handleDeeplink emits the URL on deeplinkUrl`() = runTest {
+    fun `handleDeeplink emits the URL on deeplinkUrl`() = runBlocking {
         val vm = newVm()
         vm.deeplinkUrl.test(timeout = 30.seconds) {
             vm.handleDeeplink("https://m.facebook.com/")
@@ -217,7 +217,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `flushCookies does not throw with no-op configurator`() = runTest {
+    fun `flushCookies does not throw with no-op configurator`() = runBlocking {
         val vm = newVm()
         vm.flushCookies()
     }
