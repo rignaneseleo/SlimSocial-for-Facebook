@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
+import kotlin.time.Duration.Companion.seconds
 import io.kotest.matchers.shouldBe
 import it.rignanese.leo.slim.data.SettingsRepository
 import it.rignanese.leo.slim.domain.FbConstants
@@ -87,7 +88,7 @@ class MainViewModelTest {
     @Test
     fun `homeUrl emits TOUCH+default when settings are default`() = runTest {
         val vm = newVm()
-        vm.homeUrl.test {
+        vm.homeUrl.test(timeout = 30.seconds) {
             // The seed value matches the DataStore-mapped value for default
             // settings; we just observe the first stable emission.
             awaitItem() shouldBe FbConstants.URL_TOUCH + FbConstants.SUFFIX_DEFAULT
@@ -98,7 +99,7 @@ class MainViewModelTest {
     @Test
     fun `homeUrl switches to MBASIC when useMbasic toggled`() = runTest {
         val vm = newVm()
-        vm.homeUrl.test {
+        vm.homeUrl.test(timeout = 30.seconds) {
             // Drain initial value(s) until we see the seeded TOUCH URL.
             var current = awaitItem()
             while (current != FbConstants.URL_TOUCH + FbConstants.SUFFIX_DEFAULT) {
@@ -115,7 +116,7 @@ class MainViewModelTest {
     @Test
     fun `homeUrl switches to recent suffix when recentFirst toggled`() = runTest {
         val vm = newVm()
-        vm.homeUrl.test {
+        vm.homeUrl.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current != FbConstants.URL_TOUCH + FbConstants.SUFFIX_DEFAULT) {
                 current = awaitItem()
@@ -135,7 +136,7 @@ class MainViewModelTest {
     @Test
     fun `userAgent starts as Firefox UA`() = runTest {
         val vm = newVm()
-        vm.userAgent.test {
+        vm.userAgent.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current != UserAgentResolver.UA_FIREFOX) current = awaitItem()
             current shouldBe UserAgentResolver.UA_FIREFOX
@@ -146,7 +147,7 @@ class MainViewModelTest {
     @Test
     fun `userAgent switches to Opera Mini when useMbasic toggled`() = runTest {
         val vm = newVm()
-        vm.userAgent.test {
+        vm.userAgent.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current != UserAgentResolver.UA_FIREFOX) current = awaitItem()
             repo.update { it.copy(features = it.features.copy(useMbasic = true)) }
@@ -161,7 +162,7 @@ class MainViewModelTest {
     fun `userAgent returns custom UA when configured`() = runTest {
         val vm = newVm()
         val custom = "Mozilla/5.0 SlimTest"
-        vm.userAgent.test {
+        vm.userAgent.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current != UserAgentResolver.UA_FIREFOX) current = awaitItem()
             repo.update { it.copy(webView = it.webView.copy(customUserAgent = custom)) }
@@ -179,7 +180,7 @@ class MainViewModelTest {
     @Test
     fun `renderGone emits the didCrash flag`() = runTest {
         val vm = newVm()
-        vm.renderGone.test {
+        vm.renderGone.test(timeout = 30.seconds) {
             vm.onRenderGone(true)
             awaitItem() shouldBe true
             cancelAndIgnoreRemainingEvents()
@@ -208,7 +209,7 @@ class MainViewModelTest {
     @Test
     fun `handleDeeplink emits the URL on deeplinkUrl`() = runTest {
         val vm = newVm()
-        vm.deeplinkUrl.test {
+        vm.deeplinkUrl.test(timeout = 30.seconds) {
             vm.handleDeeplink("https://m.facebook.com/")
             awaitItem() shouldBe "https://m.facebook.com/"
             cancelAndIgnoreRemainingEvents()

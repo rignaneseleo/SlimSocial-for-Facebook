@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
+import kotlin.time.Duration.Companion.seconds
 import io.kotest.matchers.shouldBe
 import it.rignanese.leo.slim.data.SettingsRepository
 import it.rignanese.leo.slim.domain.Settings
@@ -67,7 +68,7 @@ class SettingsViewModelTest {
     @Test
     fun `initial settings emit defaults from repository`() = runTest {
         val vm = newVm()
-        vm.settings.test {
+        vm.settings.test(timeout = 30.seconds) {
             // First emission is the seed (Settings.DEFAULT). Subsequent emissions
             // come from DataStore, which for an empty file also resolves to the
             // mapped defaults — both have hideAds = true.
@@ -88,7 +89,7 @@ class SettingsViewModelTest {
     @Test
     fun `update writes through to repository`() = runTest {
         val vm = newVm()
-        vm.settings.test {
+        vm.settings.test(timeout = 30.seconds) {
             // Drain to a stable initial value.
             var current = awaitItem()
             while (current.features.hideAds.not()) current = awaitItem()
@@ -105,7 +106,7 @@ class SettingsViewModelTest {
     @Test
     fun `update preserves unrelated fields`() = runTest {
         val vm = newVm()
-        vm.settings.test {
+        vm.settings.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.features.hideAds.not()) current = awaitItem()
 
@@ -131,7 +132,10 @@ class SettingsViewModelTest {
     @Test
     fun `update can change webView custom user agent and proxy in one transform`() = runTest {
         val vm = newVm()
-        vm.settings.test {
+        // Turbine's 3s default budget races real DataStore IO on slow CI
+        // runners — the underlying write is bounded by disk, not virtual time,
+        // so we extend the budget rather than try to make it deterministic.
+        vm.settings.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.features.hideAds.not()) current = awaitItem()
 

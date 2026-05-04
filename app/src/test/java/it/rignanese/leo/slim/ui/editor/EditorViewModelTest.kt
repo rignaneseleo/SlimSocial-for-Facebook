@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
+import kotlin.time.Duration.Companion.seconds
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
@@ -91,7 +92,7 @@ class EditorViewModelTest {
 
         val vm = EditorViewModel(repo, SnippetType.CSS)
         // Subscribe FIRST so the WhileSubscribed flow is hot before we toggle.
-        vm.activeIds.test {
+        vm.activeIds.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.contains(LEGACY_SNIPPET_ID)) current = awaitItem()  // drain to clean
             vm.toggle(LEGACY_SNIPPET_ID, enabled = true)
@@ -115,7 +116,7 @@ class EditorViewModelTest {
         val vm = EditorViewModel(repo, SnippetType.JS)
         repo.settings.first().privacy.customJsAcknowledged shouldBe false
 
-        vm.activeIds.test {
+        vm.activeIds.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.contains(LEGACY_SNIPPET_ID)) current = awaitItem()  // drain
             vm.toggle(LEGACY_SNIPPET_ID, enabled = true)
@@ -160,7 +161,7 @@ class EditorViewModelTest {
 
         val vm = EditorViewModel(repo, SnippetType.CSS)
         // Subscribe first so the upstream flow is hot before we save.
-        vm.snippets.test {
+        vm.snippets.test(timeout = 30.seconds) {
             var current = awaitItem()
             // Drain to the seeded value.
             while (current.firstOrNull()?.code != "old") current = awaitItem()
@@ -183,7 +184,7 @@ class EditorViewModelTest {
             code = "body { font-size: 14px }",
             updatedAt = 99L,
         )
-        vm.snippets.test {
+        vm.snippets.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.isNotEmpty()) current = awaitItem()  // drain to empty
             vm.saveSnippet(newSnippet)
@@ -212,14 +213,14 @@ class EditorViewModelTest {
             )
         }
         // Wait for write to land.
-        repo.settings.test {
+        repo.settings.test(timeout = 30.seconds) {
             var s2 = awaitItem()
             while (!s2.customization.activeCssIds.contains(LEGACY_SNIPPET_ID)) s2 = awaitItem()
             cancelAndIgnoreRemainingEvents()
         }
 
         val vm = EditorViewModel(repo, SnippetType.CSS)
-        vm.snippets.test {
+        vm.snippets.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.none { it.id == LEGACY_SNIPPET_ID }) current = awaitItem()
             // Now trigger deletion.

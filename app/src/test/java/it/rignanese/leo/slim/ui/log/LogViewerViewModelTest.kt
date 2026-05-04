@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
+import kotlin.time.Duration.Companion.seconds
 import io.kotest.matchers.shouldBe
 import it.rignanese.leo.slim.data.LogBuffer
 import it.rignanese.leo.slim.data.LogCategory
@@ -62,7 +63,7 @@ class LogViewerViewModelTest {
         logBuffer.record(LogCategory.NAV, "first")
         val vm = LogViewerViewModel(logBuffer, repo, pollIntervalMs = 10)
 
-        vm.events.test {
+        vm.events.test(timeout = 30.seconds) {
             var snapshot = awaitItem()
             while (snapshot.isEmpty()) snapshot = awaitItem()
             snapshot.size shouldBe 1
@@ -84,7 +85,7 @@ class LogViewerViewModelTest {
         logBuffer.record(LogCategory.NAV, "before-pause")
         val vm = LogViewerViewModel(logBuffer, repo, pollIntervalMs = 10)
 
-        vm.events.test {
+        vm.events.test(timeout = 30.seconds) {
             var snapshot = awaitItem()
             while (snapshot.isEmpty()) snapshot = awaitItem()
             snapshot.size shouldBe 1
@@ -102,7 +103,7 @@ class LogViewerViewModelTest {
 
         // Resume — events should now include the new entries.
         vm.togglePause()
-        vm.events.test {
+        vm.events.test(timeout = 30.seconds) {
             var current = awaitItem()
             while (current.size < 3) current = awaitItem()
             current.map { it.message } shouldBe listOf(
@@ -116,7 +117,7 @@ class LogViewerViewModelTest {
     fun `setDebugMode true writes through to repo`() = runTest {
         val vm = LogViewerViewModel(logBuffer, repo, pollIntervalMs = 10)
 
-        repo.settings.test {
+        repo.settings.test(timeout = 30.seconds) {
             var s = awaitItem()
             while (s.privacy.debugMode) s = awaitItem()  // drain to false
             s.privacy.debugMode shouldBe false
@@ -128,7 +129,7 @@ class LogViewerViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
         // VM-derived debugMode flow becomes true once subscribed.
-        vm.debugMode.test {
+        vm.debugMode.test(timeout = 30.seconds) {
             var dm = awaitItem()
             while (!dm) dm = awaitItem()
             dm shouldBe true
