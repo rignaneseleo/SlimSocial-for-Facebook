@@ -29,6 +29,14 @@ To get started with SlimSocial for Facebook, you can download the app from the s
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="50"/></a>
 
 
+## Kotlin rewrite (in progress)
+
+The Kotlin rewrite lives under `app/`. See `docs/superpowers/specs/` for design and plan documents.
+
+CI:
+- `Build & Test` workflow runs on every push/PR
+- `Release` workflow runs on tags matching `v*` and produces signed Play AAB + F-Droid APK
+
 ## Contributing
 [![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
 
