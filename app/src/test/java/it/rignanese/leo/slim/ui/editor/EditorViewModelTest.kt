@@ -17,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -127,18 +128,22 @@ class EditorViewModelTest {
     }
 
     @Test
-    fun `acknowledgeJsWarning sets customJsAcknowledged to true`() = runTest {
+    fun `acknowledgeJsWarning sets customJsAcknowledged to true`() = runBlocking {
+        // Deliberately NOT runTest. acknowledgeJsWarning() launches a coroutine
+        // on viewModelScope (= Main = test dispatcher) which then suspends on a
+        // real-IO continuation inside DataStore. runTest's scheduler reports
+        // idle as soon as the body returns and then errors with
+        // UncompletedCoroutinesError because the launched job is still active
+        // — virtual time can't observe the real-IO completion. runBlocking
+        // does no such bookkeeping; the predicated `first` blocks the JVM
+        // thread on the real dispatcher until the write actually lands, which
+        // is what we want.
         val vm = EditorViewModel(repo, SnippetType.JS)
 
-        // Initial state.
         repo.settings.first().privacy.customJsAcknowledged shouldBe false
 
         vm.acknowledgeJsWarning()
 
-        // Suspend on the predicate rather than poking Turbine. DataStore writes
-        // run on real Dispatchers.IO, which can outpace Turbine's 3s awaitItem
-        // budget on contended CI runners — `first { ... }` is bounded only by
-        // runTest's 60s budget, which is plenty.
         repo.settings.first { it.privacy.customJsAcknowledged }
             .privacy.customJsAcknowledged shouldBe true
     }
