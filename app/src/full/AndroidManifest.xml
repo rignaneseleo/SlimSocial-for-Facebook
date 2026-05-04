@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!--
+          We control Sentry's lifecycle from SlimApplication.onCreate so we
+          can honour the user's opt-in and skip init when the DSN is empty
+          (dev / local builds). Disable the SDK's auto-init.
+        -->
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
+    </application>
+</manifest>

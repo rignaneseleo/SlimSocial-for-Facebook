@@ -23,10 +23,17 @@ android {
         create("full") {
             dimension = "store"
             buildConfigField("boolean", "IS_FULL_FLAVOR", "true")
+            // SECRET — empty default for dev/local builds; CI injects via env.
+            buildConfigField(
+                "String",
+                "SENTRY_DSN",
+                "\"${System.getenv("SENTRY_DSN") ?: ""}\""
+            )
         }
         create("fdroid") {
             dimension = "store"
             buildConfigField("boolean", "IS_FULL_FLAVOR", "false")
+            // No SENTRY_DSN field in this flavor — only src/full references it.
         }
     }
 
@@ -100,6 +107,12 @@ dependencies {
     implementation("com.google.accompanist:accompanist-permissions:0.36.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    // Proprietary deps — only land in the `full` (Play Store) flavor so the
+    // F-Droid APK contains zero Sentry / Billing / Review classes.
+    "fullImplementation"("io.sentry:sentry-android:7.+")
+    "fullImplementation"("com.android.billingclient:billing-ktx:7.+")
+    "fullImplementation"("com.google.android.play:review-ktx:2.+")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
     testImplementation("io.kotest:kotest-assertions-core:5.9.1")
