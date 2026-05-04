@@ -16,6 +16,7 @@ import it.rignanese.leo.slim.rules.RuleRegistry
 import it.rignanese.leo.slim.webview.CookieConfigurator
 import it.rignanese.leo.slim.webview.CustomTabsUrlOpener
 import it.rignanese.leo.slim.webview.DarkModeConfigurator
+import it.rignanese.leo.slim.webview.LiveWebViewHost
 import it.rignanese.leo.slim.webview.ProxyConfigurator
 import it.rignanese.leo.slim.webview.UrlOpener
 
@@ -50,4 +51,12 @@ class AppContainer(appContext: Context) {
     val askedPermissionFlag: AskedPermissionFlag = AskedPermissionFlag(appContext)
     val osPermissionReader: OsPermissionStateReader =
         OsPermissionStateReader(askedPermissionFlag::wasAsked)
+
+    /**
+     * Mutable holder for the currently-mounted [it.rignanese.leo.slim.webview.WebViewHost].
+     * Set by [it.rignanese.leo.slim.ui.BrowserScreen] when the WebView factory runs;
+     * read by the editor's "Test" button so it can route a one-off injection through
+     * the live WebView. Cleared on disposal to avoid retaining a destroyed view.
+     */
+    val liveWebViewHost: LiveWebViewHost = LiveWebViewHost()
 }

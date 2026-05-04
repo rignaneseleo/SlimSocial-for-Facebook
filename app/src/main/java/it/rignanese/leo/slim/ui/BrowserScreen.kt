@@ -64,6 +64,10 @@ fun BrowserScreen(
             )
             host.setUserAgent(userAgent)
             host.load(homeUrl)
+            // Publish the live host into the process-scoped holder so the editor's
+            // "Test" button can inject through it without threading callbacks
+            // through the navigation graph.
+            container.liveWebViewHost.current = host
             onHostReady(host)
             webView
         },
