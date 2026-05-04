@@ -1,0 +1,64 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [master, main, kotlin]
+  pull_request:
+    branches: [master, main, kotlin]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Lint, test, assemble both flavors
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-disabled: false
+
+      - name: Lint (full + fdroid)
+        run: ./gradlew :app:lintFullDebug :app:lintFdroidDebug --console=plain
+
+      - name: Unit tests (full + fdroid)
+        run: ./gradlew :app:testFullDebugUnitTest :app:testFdroidDebugUnitTest --console=plain
+
+      - name: Assemble debug APKs
+        run: ./gradlew :app:assembleFullDebug :app:assembleFdroidDebug --console=plain
+
+      - name: Upload debug APKs
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apks
+          path: |
+            app/build/outputs/apk/full/debug/*.apk
+            app/build/outputs/apk/fdroid/debug/*.apk
+          retention-days: 14
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: app/build/reports/tests/
+          retention-days: 7
+
+      - name: Upload lint reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: app/build/reports/lint-results-*.html
+          retention-days: 7

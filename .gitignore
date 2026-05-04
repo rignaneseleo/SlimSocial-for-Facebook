@@ -33,3 +33,18 @@ proguard/
 SlimFacebook/app/release/output.json
 SlimSocial_for_Facebook/.metadata
 /SlimSocial_for_Facebook/android/app/.cxx
+
+# Signing secrets — never commit
+release.keystore
+*.keystore
+*.jks
+
+# IDE: ignore everything under .idea except shared run configs and code styles
+.idea/*
+!.idea/runConfigurations/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+
+# IDE: macOS file metadata
+.DS_Store
+/SlimSocial_for_Facebook/android/.idea
