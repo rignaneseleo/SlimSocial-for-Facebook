@@ -86,9 +86,10 @@ class UserAgentResolverTest {
     }
 
     @Test
-    fun `UA constants match Flutter consts dart strings verbatim`() {
+    fun `UA constants are a current mobile Chrome and Opera Mini`() {
         UserAgentResolver.UA_FIREFOX shouldBe
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0"
+            "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
         UserAgentResolver.UA_OPERA_MINI shouldBe
             "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16"
     }
