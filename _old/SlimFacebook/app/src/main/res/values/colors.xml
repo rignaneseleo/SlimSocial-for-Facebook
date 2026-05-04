@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="officialBlueFacebook">#3B5998</color><!--The original color of Facebook-->
-
-    <!--standard theme-->
-    <color name="blueSlimFacebookTheme">#37538f</color>
-    <color name="darkBlueSlimFacebookTheme">#2d3a6b</color>
-    <color name="color_devider">#3C3A3A</color>
-</resources>
