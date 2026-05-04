@@ -50,7 +50,7 @@ fun BrowserScreen(
             )
             webView.webChromeClient = AppWebChromeClient(
                 gate = gate,
-                onConsoleMessage = { msg ->
+                onConsole = { msg ->
                     container.logBuffer.record(LogCategory.CONSOLE, msg.message())
                 },
                 // Phase 8 wires SAF; for now decline the chooser cleanly so JS
@@ -59,8 +59,8 @@ fun BrowserScreen(
                     cb.onReceiveValue(emptyArray())
                     true
                 },
-                onShowCustomView = { _, _ -> },
-                onHideCustomView = { },
+                onShowCustom = { _, _ -> },
+                onHideCustom = { },
             )
             host.setUserAgent(userAgent)
             host.load(homeUrl)
