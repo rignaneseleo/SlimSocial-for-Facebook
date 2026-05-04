@@ -3,30 +3,68 @@ package it.rignanese.leo.slim.ui
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import it.rignanese.leo.slim.MainViewModel
 import it.rignanese.leo.slim.app.SlimApplication
 import it.rignanese.leo.slim.permissions.RealPermissionGate
+import it.rignanese.leo.slim.ui.settings.SettingsNavGraph
 import it.rignanese.leo.slim.webview.WebViewHost
 
 /**
  * Top-level Compose root. Owns the cross-cutting state for the WebView host
- * surface: render-gone overlay flag and the [WebViewHost] reference used to
- * deliver deeplinks and reload after a renderer crash.
+ * surface plus the top-level navigation graph that switches between the
+ * browser surface ("home") and the Settings tree ("settings").
  *
- * Phase 7 renders only the browser surface; Phase 8 will introduce navigation
- * to settings/editor/log screens.
+ * Phase 8 adds:
+ *  - A top-level `NavHost` with two destinations.
+ *  - An overlay icon button on the browser surface that pushes "settings".
+ *  - Delegation to [SettingsNavGraph] for nested settings navigation.
  */
 @Composable
 fun AppRoot(vm: MainViewModel) {
+    val rootNav: NavHostController = rememberNavController()
+
+    NavHost(navController = rootNav, startDestination = "home") {
+        composable("home") {
+            HomeScreen(
+                vm = vm,
+                onOpenSettings = { rootNav.navigate("settings") },
+            )
+        }
+        composable("settings") {
+            val container = (LocalContext.current.applicationContext as SlimApplication).container
+            val settingsNav = rememberNavController()
+            SettingsNavGraph(
+                navController = settingsNav,
+                container = container,
+                onExitSettings = { rootNav.popBackStack() },
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeScreen(vm: MainViewModel, onOpenSettings: () -> Unit) {
     val homeUrl by vm.homeUrl.collectAsStateWithLifecycle()
     val userAgent by vm.userAgent.collectAsStateWithLifecycle()
 
@@ -68,6 +106,22 @@ fun AppRoot(vm: MainViewModel) {
             onRenderGone = { didCrash -> vm.onRenderGone(didCrash) },
             onHostReady = { hostRef = it },
         )
+
+        // Top-right overlay shortcut into the Settings tree. The Flutter app
+        // showed an AppBar with a gear icon — we emulate it with a single
+        // floating button so the WebView keeps the full viewport.
+        FilledTonalIconButton(
+            onClick = onOpenSettings,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 16.dp, end = 8.dp)
+                .size(40.dp),
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Settings,
+                contentDescription = "Settings",
+            )
+        }
 
         if (showRenderGone) {
             RenderGoneOverlay(
