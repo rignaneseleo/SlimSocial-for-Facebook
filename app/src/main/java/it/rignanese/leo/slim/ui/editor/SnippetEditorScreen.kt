@@ -33,11 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.data.SettingsRepository
 import it.rignanese.leo.slim.domain.NamedSnippet
 import java.util.UUID
@@ -95,20 +97,23 @@ internal fun SnippetEditorScreenContent(
     var name by remember(existing?.id) { mutableStateOf(existing?.name.orEmpty()) }
     var code by remember(existing?.id) { mutableStateOf(existing?.code.orEmpty()) }
 
-    val title = when {
-        isNew && type == SnippetType.CSS -> "New CSS snippet"
-        isNew -> "New JS snippet"
-        type == SnippetType.CSS -> "Edit CSS snippet"
-        else -> "Edit JS snippet"
+    val titleRes = when {
+        isNew && type == SnippetType.CSS -> R.string.editor_title_new_css
+        isNew -> R.string.editor_title_new_js
+        type == SnippetType.CSS -> R.string.editor_title_edit_css
+        else -> R.string.editor_title_edit_js
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(title) },
+                title = { Text(stringResource(titleRes)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
@@ -128,7 +133,7 @@ internal fun SnippetEditorScreenContent(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Name") },
+                label = { Text(stringResource(R.string.editor_name_label)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -156,14 +161,15 @@ internal fun SnippetEditorScreenContent(
                     onClick = { onTest(code) },
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text("Test")
+                    Text(stringResource(R.string.editor_test_button))
                 }
+                val untitled = stringResource(R.string.editor_untitled)
                 Button(
                     onClick = {
                         val nowId = if (isNew) UUID.randomUUID().toString() else snippetId
                         val saved = NamedSnippet(
                             id = nowId,
-                            name = name.trim().ifBlank { "Untitled" },
+                            name = name.trim().ifBlank { untitled },
                             code = code,
                             updatedAt = System.currentTimeMillis(),
                         )
@@ -172,7 +178,7 @@ internal fun SnippetEditorScreenContent(
                     },
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text("Save")
+                    Text(stringResource(R.string.editor_save_button))
                 }
             }
         }
@@ -199,8 +205,7 @@ private fun JsHeaderStrip() {
             tint = fg,
         )
         Text(
-            text = "JavaScript runs with full Facebook session DOM access. " +
-                "Only paste code from sources you trust.",
+            text = stringResource(R.string.js_warning_strip),
             style = MaterialTheme.typography.bodySmall,
             color = fg,
         )

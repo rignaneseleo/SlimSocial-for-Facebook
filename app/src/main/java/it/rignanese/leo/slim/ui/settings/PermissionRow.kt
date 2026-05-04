@@ -18,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.permissions.OsPermissionStatus
 
 /**
@@ -45,10 +47,10 @@ fun PermissionRow(
 ) {
     val permanentlyDenied = appEnabled && osStatus == OsPermissionStatus.PermanentlyDenied
     val statusLine = when {
-        !appEnabled -> "Off"
-        osStatus == OsPermissionStatus.Granted -> "On"
-        permanentlyDenied -> "On (denied by OS — tap to fix)"
-        else -> "On"
+        !appEnabled -> stringResource(R.string.permission_state_off)
+        osStatus == OsPermissionStatus.Granted -> stringResource(R.string.permission_state_on)
+        permanentlyDenied -> stringResource(R.string.permission_state_denied_by_os_tap_to_fix)
+        else -> stringResource(R.string.permission_state_on)
     }
 
     Column(
@@ -78,7 +80,7 @@ fun PermissionRow(
         if (permanentlyDenied) {
             AssistChip(
                 onClick = onOpenSystemSettings,
-                label = { Text("Open system settings") },
+                label = { Text(stringResource(R.string.open_system_settings)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Warning,

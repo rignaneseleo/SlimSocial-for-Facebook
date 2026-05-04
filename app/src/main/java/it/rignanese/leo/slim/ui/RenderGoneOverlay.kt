@@ -12,7 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import it.rignanese.leo.slim.R
 
 /**
  * Full-screen overlay shown when the WebView's render process dies. Lets the
@@ -28,12 +30,12 @@ fun RenderGoneOverlay(onReload: () -> Unit) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Facebook stopped responding",
+                text = stringResource(R.string.facebook_stopped_responding),
                 style = MaterialTheme.typography.titleLarge,
             )
             Spacer(Modifier.height(16.dp))
             Button(onClick = onReload) {
-                Text("Reload")
+                Text(stringResource(R.string.reload))
             }
         }
     }

@@ -25,8 +25,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.ui.settings.SettingsViewModel
 
 /**
@@ -48,10 +50,13 @@ fun UserAgentScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Custom user agent") },
+                title = { Text(stringResource(R.string.user_agent_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
@@ -66,14 +71,14 @@ fun UserAgentScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                "Leave empty to use the default user agent.",
+                stringResource(R.string.user_agent_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             OutlinedTextField(
                 value = input,
                 onValueChange = { input = it },
-                label = { Text("User agent") },
+                label = { Text(stringResource(R.string.user_agent_label)) },
                 singleLine = false,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -86,7 +91,7 @@ fun UserAgentScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         }
     }
