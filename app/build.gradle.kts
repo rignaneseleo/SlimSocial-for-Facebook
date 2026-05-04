@@ -37,16 +37,33 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("SIGNING_KEYSTORE_PATH")
+                ?: rootProject.file("release.keystore").absolutePath
+            storeFile = file(keystorePath)
+            storePassword = System.getenv("SIGNING_KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS") ?: ""
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD") ?: ""
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Only attach signing config if env vars are present, so a
+            // local `assembleRelease` doesn't fail on missing keystore.
+            if (System.getenv("SIGNING_KEYSTORE_PASSWORD")?.isNotBlank() == true) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
