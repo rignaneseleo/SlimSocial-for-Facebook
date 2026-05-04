@@ -1,19 +1,20 @@
 package it.rignanese.leo.slim.ui.settings
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import it.rignanese.leo.slim.app.AppContainer
+import it.rignanese.leo.slim.ui.editor.SnippetEditorScreen
+import it.rignanese.leo.slim.ui.editor.SnippetListScreen
+import it.rignanese.leo.slim.ui.editor.SnippetType
+import it.rignanese.leo.slim.ui.log.LogViewerScreen
 import it.rignanese.leo.slim.ui.settings.advanced.ProxySettingsScreen
 import it.rignanese.leo.slim.ui.settings.advanced.UserAgentScreen
 
@@ -23,13 +24,18 @@ import it.rignanese.leo.slim.ui.settings.advanced.UserAgentScreen
  * vs "settings/root" while this composable owns transitions between settings
  * screens.
  *
- * Editor and debug routes resolve to placeholders for Phase 8; Phase 9 will
- * fill them in with real Compose screens.
+ * Phase 9 fills in real Compose screens for editor/css, editor/js, and debug.
+ *
+ * @param currentUrl the URL the production WebView is currently displaying;
+ *   surfaced in the log viewer's state-snapshot card.
+ * @param userAgent the resolved user agent — same source as the WebView's UA.
  */
 @Composable
 fun SettingsNavGraph(
     navController: NavHostController,
     container: AppContainer,
+    currentUrl: String,
+    userAgent: String,
     onExitSettings: () -> Unit,
 ) {
     val vm: SettingsViewModel = viewModel(
@@ -65,16 +71,63 @@ fun SettingsNavGraph(
                 onNavigate = { route -> navController.navigate(route) },
             )
         }
-        composable("editor/css") { PlaceholderScreen("Custom CSS Editor — Phase 9") }
-        composable("editor/js") { PlaceholderScreen("Custom JS Editor — Phase 9") }
-        composable("debug") { PlaceholderScreen("Debug / Log Viewer — Phase 9") }
-        composable("donate") { PlaceholderScreen("Donate — Phase 10") }
-    }
-}
-
-@Composable
-private fun PlaceholderScreen(label: String) {
-    Box(modifier = Modifier.fillMaxSize().padding(24.dp)) {
-        Text(label, style = MaterialTheme.typography.bodyLarge)
+        composable("editor/css") {
+            SnippetListScreen(
+                type = SnippetType.CSS,
+                repo = container.settingsRepository,
+                onEditSnippet = { id -> navController.navigate("editor/css/$id") },
+                onBack = { navController.popBackStack() },
+            )
+        }
+        composable("editor/js") {
+            SnippetListScreen(
+                type = SnippetType.JS,
+                repo = container.settingsRepository,
+                onEditSnippet = { id -> navController.navigate("editor/js/$id") },
+                onBack = { navController.popBackStack() },
+            )
+        }
+        composable(
+            route = "editor/css/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType }),
+        ) { entry ->
+            val id = entry.arguments?.getString("id") ?: "new"
+            SnippetEditorScreen(
+                type = SnippetType.CSS,
+                snippetId = id,
+                repo = container.settingsRepository,
+                onTest = { code -> container.liveWebViewHost.current?.injectCss(code) },
+                onBack = { navController.popBackStack() },
+            )
+        }
+        composable(
+            route = "editor/js/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType }),
+        ) { entry ->
+            val id = entry.arguments?.getString("id") ?: "new"
+            SnippetEditorScreen(
+                type = SnippetType.JS,
+                snippetId = id,
+                repo = container.settingsRepository,
+                onTest = { code -> container.liveWebViewHost.current?.injectJs(code) },
+                onBack = { navController.popBackStack() },
+            )
+        }
+        composable("debug") {
+            val settings by vm.settings.collectAsStateWithLifecycle()
+            val activeRuleIds = remember(settings) {
+                container.ruleRegistry.activeRules(settings).map { it.id }
+            }
+            LogViewerScreen(
+                logBuffer = container.logBuffer,
+                repo = container.settingsRepository,
+                settings = settings,
+                currentUrl = currentUrl,
+                userAgent = userAgent,
+                activeRuleIds = activeRuleIds,
+                onBack = { navController.popBackStack() },
+            )
+        }
+        composable("donate") { /* Phase 10 placeholder — intentionally empty. */ }
     }
 }

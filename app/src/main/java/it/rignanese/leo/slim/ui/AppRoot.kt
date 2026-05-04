@@ -43,20 +43,27 @@ import it.rignanese.leo.slim.webview.WebViewHost
 @Composable
 fun AppRoot(vm: MainViewModel) {
     val rootNav: NavHostController = rememberNavController()
+    // Tracks the most recently observed URL from the WebView for use by the
+    // Settings sub-graph (specifically the Log Viewer's state-snapshot card).
+    var currentUrl by remember { mutableStateOf("") }
 
     NavHost(navController = rootNav, startDestination = "home") {
         composable("home") {
             HomeScreen(
                 vm = vm,
                 onOpenSettings = { rootNav.navigate("settings") },
+                onUrlChange = { currentUrl = it },
             )
         }
         composable("settings") {
             val container = (LocalContext.current.applicationContext as SlimApplication).container
             val settingsNav = rememberNavController()
+            val userAgent by vm.userAgent.collectAsStateWithLifecycle()
             SettingsNavGraph(
                 navController = settingsNav,
                 container = container,
+                currentUrl = currentUrl,
+                userAgent = userAgent,
                 onExitSettings = { rootNav.popBackStack() },
             )
         }
@@ -64,7 +71,11 @@ fun AppRoot(vm: MainViewModel) {
 }
 
 @Composable
-private fun HomeScreen(vm: MainViewModel, onOpenSettings: () -> Unit) {
+private fun HomeScreen(
+    vm: MainViewModel,
+    onOpenSettings: () -> Unit,
+    onUrlChange: (String) -> Unit = {},
+) {
     val homeUrl by vm.homeUrl.collectAsStateWithLifecycle()
     val userAgent by vm.userAgent.collectAsStateWithLifecycle()
 
@@ -99,6 +110,7 @@ private fun HomeScreen(vm: MainViewModel, onOpenSettings: () -> Unit) {
             container = container,
             gate = gate,
             onPageReady = { url, host ->
+                onUrlChange(url)
                 val payload = vm.composeInjection(url)
                 if (payload.css.isNotEmpty()) host.injectCss(payload.css)
                 if (payload.js.isNotEmpty()) host.injectJs(payload.js)
