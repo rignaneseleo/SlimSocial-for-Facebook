@@ -19,9 +19,14 @@ class UserAgentResolver {
     }
 
     companion object {
-        // Verbatim from SlimSocial_for_Facebook/lib/consts.dart:22-23
+        // The legacy Flutter app shipped a desktop Firefox 124 UA. Meta now
+        // 301-redirects that combo from m./touch. to www.facebook.com/home.php,
+        // which returns "Not Found" for unauthenticated users. A current mobile
+        // Chrome UA keeps the request on the mobile surface and serves the
+        // proper login/feed flow. Name retained for backwards compatibility.
         const val UA_FIREFOX =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0"
+            "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
 
         // Verbatim from SlimSocial_for_Facebook/lib/consts.dart:26-27
         const val UA_OPERA_MINI =

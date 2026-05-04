@@ -1,11 +1,14 @@
 package it.rignanese.leo.slim.domain
 
 /**
- * Facebook URL/suffix constants ported verbatim from
- * `SlimSocial_for_Facebook/lib/consts.dart` (lines 1-3, 17-19).
+ * Facebook URL/suffix constants. Originally ported from the Flutter app's
+ * `lib/consts.dart`, which used `touch.facebook.com`. Meta now 301-redirects
+ * that host to `www.facebook.com/home.php`, which serves a bare "Not Found"
+ * page when unauthenticated — so we point the default at `m.facebook.com`,
+ * the live mobile surface that still serves a proper login flow.
  */
 object FbConstants {
-    const val URL_TOUCH = "https://touch.facebook.com/home.php"
+    const val URL_TOUCH = "https://m.facebook.com/home.php"
     const val URL_MBASIC = "https://mbasic.facebook.com/home.php"
     const val SUFFIX_RECENT = "?sk=h_chr"
     const val SUFFIX_DEFAULT = "?sk=h_nor"
