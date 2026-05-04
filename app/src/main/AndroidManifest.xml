@@ -2,24 +2,116 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Hardware features used by web content; declare as not required so
+         the app installs on devices (incl. Chrome OS) that lack them. -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+
+    <!-- API 33+ photo picker -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Optional download integration via DownloadManager (replicating Flutter app) -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
+    <!-- Note: legacy external-storage write permission intentionally dropped;
+         minSdk 24 with SAF/MediaStore doesn't need it. -->
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
 
     <application
         android:name=".app.SlimApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:hardwareAccelerated="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SlimSocial">
+        android:theme="@style/Theme.SlimSocial"
+        android:allowBackup="false"
+        android:usesCleartextTraffic="false">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Replicate Flutter app's app-links — verbatim from
+                 SlimSocial_for_Facebook/android/app/src/main/AndroidManifest.xml:30-81 -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+
+                <!-- Wildcard hosts -->
+                <data android:host="*.facebook.com" />
+                <data android:host="*.fb.com" />
+                <data android:host="*.messenger.com" />
+                <data android:host="*.m.me" />
+                <data android:host="*.instagram.com" />
+                <data android:host="*.workplace.com" />
+                <data android:host="*.pixel.facebook.com" />
+                <data android:host="*.developers.facebook.com" />
+                <data android:host="*.connect.facebook.com" />
+                <data android:host="*.creativehub.facebook.com" />
+                <data android:host="*.enterprise.facebook.com" />
+                <data android:host="*.expresswifi.com" />
+                <data android:host="*.fb.gg" />
+                <data android:host="*.fbmarketplace.com" />
+                <data android:host="*.fbsbx.com" />
+                <data android:host="*.fb.watch" />
+                <data android:host="*.fwdproxy.com" />
+                <data android:host="*.business.facebook.com" />
+
+                <!-- Exact hosts -->
+                <data android:host="fb.com" />
+                <data android:host="m.fb.com" />
+                <data android:host="touch.facebook.com" />
+                <data android:host="touch.fb.com" />
+                <data android:host="facebook.com" />
+                <data android:host="mbasic.facebook.com" />
+                <data android:host="h.facebook.com" />
+                <data android:host="fb.me" />
+                <data android:host="www.facebook.com" />
+                <data android:host="www.fb.com" />
+                <data android:host="apps.facebook.com" />
+                <data android:host="apps.fb.com" />
+                <data android:host="messenger.com" />
+                <data android:host="www.messenger.com" />
+                <data android:host="m.me" />
+                <data android:host="www.m.me" />
+                <data android:host="fb.watch" />
+                <data android:host="free.facebook.com" />
+                <data android:host="m.free.facebook.com" />
+                <data android:host="0.free.facebook.com" />
+            </intent-filter>
         </activity>
     </application>
-
 </manifest>

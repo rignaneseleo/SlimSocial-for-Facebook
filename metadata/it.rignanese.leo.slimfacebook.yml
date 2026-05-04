@@ -1,0 +1,24 @@
+Categories:
+  - Internet
+License: GPL-2.0-only
+SourceCode: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+IssueTracker: https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues
+Changelog: https://github.com/rignaneseleo/SlimSocial-for-Facebook/blob/master/Changelog.txt
+
+AutoName: SlimSocial for Facebook
+
+RepoType: git
+Repo: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+
+Builds:
+  - versionName: '26.05.03+117'
+    versionCode: 117
+    commit: v26.05.03
+    subdir: app
+    gradle:
+      - fdroid
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: '26.05.03+117'
+CurrentVersionCode: 117
