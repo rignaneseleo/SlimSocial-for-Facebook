@@ -130,18 +130,17 @@ class EditorViewModelTest {
     fun `acknowledgeJsWarning sets customJsAcknowledged to true`() = runTest {
         val vm = EditorViewModel(repo, SnippetType.JS)
 
-        repo.settings.test {
-            var s = awaitItem()
-            while (s.privacy.customJsAcknowledged) s = awaitItem()  // drain to false
-            s.privacy.customJsAcknowledged shouldBe false
+        // Initial state.
+        repo.settings.first().privacy.customJsAcknowledged shouldBe false
 
-            vm.acknowledgeJsWarning()
+        vm.acknowledgeJsWarning()
 
-            // Wait for the write to land in the flow.
-            while (!s.privacy.customJsAcknowledged) s = awaitItem()
-            s.privacy.customJsAcknowledged shouldBe true
-            cancelAndIgnoreRemainingEvents()
-        }
+        // Suspend on the predicate rather than poking Turbine. DataStore writes
+        // run on real Dispatchers.IO, which can outpace Turbine's 3s awaitItem
+        // budget on contended CI runners — `first { ... }` is bounded only by
+        // runTest's 60s budget, which is plenty.
+        repo.settings.first { it.privacy.customJsAcknowledged }
+            .privacy.customJsAcknowledged shouldBe true
     }
 
     @Test
