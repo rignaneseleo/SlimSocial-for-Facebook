@@ -16,7 +16,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -66,7 +66,7 @@ class SettingsViewModelTest {
     private fun newVm(): SettingsViewModel = SettingsViewModel(repo)
 
     @Test
-    fun `initial settings emit defaults from repository`() = runTest {
+    fun `initial settings emit defaults from repository`() = runBlocking {
         val vm = newVm()
         vm.settings.test(timeout = 30.seconds) {
             // First emission is the seed (Settings.DEFAULT). Subsequent emissions
@@ -87,7 +87,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `update writes through to repository`() = runTest {
+    fun `update writes through to repository`() = runBlocking {
         val vm = newVm()
         vm.settings.test(timeout = 30.seconds) {
             // Drain to a stable initial value.
@@ -104,7 +104,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `update preserves unrelated fields`() = runTest {
+    fun `update preserves unrelated fields`() = runBlocking {
         val vm = newVm()
         vm.settings.test(timeout = 30.seconds) {
             var current = awaitItem()
@@ -130,7 +130,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `update can change webView custom user agent and proxy in one transform`() = runTest {
+    fun `update can change webView custom user agent and proxy in one transform`() = runBlocking {
         val vm = newVm()
         // Turbine's 3s default budget races real DataStore IO on slow CI
         // runners — the underlying write is bounded by disk, not virtual time,
