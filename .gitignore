@@ -47,3 +47,4 @@ release.keystore
 
 # IDE: macOS file metadata
 .DS_Store
+/SlimSocial_for_Facebook/android/.idea
