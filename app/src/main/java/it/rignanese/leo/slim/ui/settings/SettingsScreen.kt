@@ -27,9 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import it.rignanese.leo.slim.BuildConfig
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.permissions.OsPermissionStateReader
 import it.rignanese.leo.slim.permissions.OsPermissionStatus
 
@@ -85,12 +87,12 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.settings)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
@@ -105,31 +107,31 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(0.dp),
         ) {
             // ---------------- Facebook ----------------
-            SectionHeader("Facebook")
+            SectionHeader(stringResource(R.string.section_facebook))
             ToggleRow(
-                title = "Enable Messenger",
+                title = stringResource(R.string.enable_messenger),
                 checked = settings.features.enableMessenger,
                 onCheckedChange = { v ->
                     vm.update { it.copy(features = it.features.copy(enableMessenger = v)) }
                 },
             )
             ToggleRow(
-                title = "Hide some ads (experimental)",
+                title = stringResource(R.string.hide_ads),
                 checked = settings.features.hideAds,
                 onCheckedChange = { v ->
                     vm.update { it.copy(features = it.features.copy(hideAds = v)) }
                 },
             )
             ToggleRow(
-                title = "Show recent posts first",
+                title = stringResource(R.string.recent_first),
                 checked = settings.features.recentFirst,
                 onCheckedChange = { v ->
                     vm.update { it.copy(features = it.features.copy(recentFirst = v)) }
                 },
             )
             ToggleRow(
-                title = "Use basic version of Facebook",
-                subtitle = "It works better on older devices or slower connections",
+                title = stringResource(R.string.use_mbasic),
+                subtitle = stringResource(R.string.use_mbasic_desc),
                 checked = settings.features.useMbasic,
                 onCheckedChange = { v ->
                     vm.update { it.copy(features = it.features.copy(useMbasic = v)) }
@@ -139,86 +141,86 @@ fun SettingsScreen(
             HorizontalDivider()
 
             // ---------------- Style ----------------
-            SectionHeader("Style")
+            SectionHeader(stringResource(R.string.section_style))
             ToggleRow(
-                title = "Enable dark theme",
+                title = stringResource(R.string.dark_theme),
                 checked = settings.style.darkTheme,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(darkTheme = v)) }
                 },
             )
             ToggleRow(
-                title = "Fixed top bar",
+                title = stringResource(R.string.fixed_bar),
                 checked = settings.style.fixedBar,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(fixedBar = v)) }
                 },
             )
             ToggleRow(
-                title = "Hide stories",
+                title = stringResource(R.string.hide_stories),
                 checked = settings.style.hideStories,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(hideStories = v)) }
                 },
             )
             ToggleRow(
-                title = "Center text on posts",
+                title = stringResource(R.string.center_text),
                 checked = settings.style.centerText,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(centerText = v)) }
                 },
             )
             ToggleRow(
-                title = "Add space between posts",
+                title = stringResource(R.string.add_space),
                 checked = settings.style.addSpace,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(addSpace = v)) }
                 },
             )
             ToggleRow(
-                title = "Hide Messenger sidebar",
+                title = stringResource(R.string.hide_messenger_sidebar),
                 checked = settings.style.hideMessengerSidebar,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(hideMessengerSidebar = v)) }
                 },
             )
             ToggleRow(
-                title = "Dark theme for Messenger",
+                title = stringResource(R.string.dark_theme_messenger),
                 checked = settings.style.darkThemeMessenger,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(darkThemeMessenger = v)) }
                 },
             )
             ToggleRow(
-                title = "Remove Messenger download prompt",
+                title = stringResource(R.string.remove_messenger_download),
                 checked = settings.style.removeMessengerDownload,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(removeMessengerDownload = v)) }
                 },
             )
             ToggleRow(
-                title = "Remove \"browser not supported\" notice",
+                title = stringResource(R.string.remove_browser_not_supported),
                 checked = settings.style.removeBrowserNotSupported,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(removeBrowserNotSupported = v)) }
                 },
             )
             ToggleRow(
-                title = "Hide ads and \"People You May Know\"",
+                title = stringResource(R.string.hide_ads_and_pymk),
                 checked = settings.style.hideAdsAndPeopleYouMayKnow,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(hideAdsAndPeopleYouMayKnow = v)) }
                 },
             )
             ToggleRow(
-                title = "Floating action button",
+                title = stringResource(R.string.fab_btn),
                 checked = settings.style.fabBtn,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(fabBtn = v)) }
                 },
             )
             ToggleRow(
-                title = "Adapt Messenger layout",
+                title = stringResource(R.string.adapt_messenger),
                 checked = settings.style.adaptMessenger,
                 onCheckedChange = { v ->
                     vm.update { it.copy(style = it.style.copy(adaptMessenger = v)) }
@@ -228,10 +230,10 @@ fun SettingsScreen(
             HorizontalDivider()
 
             // ---------------- Permissions ----------------
-            SectionHeader("Permissions")
+            SectionHeader(stringResource(R.string.section_permissions))
             PermissionRow(
-                title = "GPS permission",
-                description = "Allow Facebook to access your location",
+                title = stringResource(R.string.gps_permission),
+                description = stringResource(R.string.gps_permission_desc),
                 appEnabled = settings.permissions.gps,
                 osStatus = osReader.read(
                     context = context,
@@ -249,8 +251,8 @@ fun SettingsScreen(
                 onOpenSystemSettings = openAppSettings,
             )
             PermissionRow(
-                title = "Camera permission",
-                description = "Allow Facebook to access the camera",
+                title = stringResource(R.string.camera_permission),
+                description = stringResource(R.string.camera_permission_desc),
                 appEnabled = settings.permissions.camera,
                 osStatus = osReader.read(
                     context = context,
@@ -268,8 +270,8 @@ fun SettingsScreen(
                 onOpenSystemSettings = openAppSettings,
             )
             PermissionRow(
-                title = "Gallery permission",
-                description = "Allow Facebook to read photos from your gallery",
+                title = stringResource(R.string.photo_permission),
+                description = stringResource(R.string.gallery_permission_desc),
                 appEnabled = settings.permissions.photo,
                 // Photos uses the Storage Access Framework — no OS runtime perm.
                 osStatus = if (settings.permissions.photo) OsPermissionStatus.Granted
@@ -280,8 +282,8 @@ fun SettingsScreen(
                 onOpenSystemSettings = openAppSettings,
             )
             PermissionRow(
-                title = "Photos permission (legacy alias)",
-                description = "Legacy duplicate of the gallery permission used by older flows",
+                title = stringResource(R.string.photos_permission_legacy),
+                description = stringResource(R.string.photos_permission_legacy_desc),
                 appEnabled = settings.permissions.photos,
                 osStatus = if (settings.permissions.photos) OsPermissionStatus.Granted
                 else OsPermissionStatus.Deniable,
@@ -294,31 +296,32 @@ fun SettingsScreen(
             HorizontalDivider()
 
             // ---------------- Advanced ----------------
-            SectionHeader("Advanced")
+            SectionHeader(stringResource(R.string.section_advanced))
             NavigationRow(
-                title = "Use custom CSS style",
+                title = stringResource(R.string.custom_css),
                 onClick = { onNavigate("editor/css") },
             )
             NavigationRow(
-                title = "Run custom JS code",
+                title = stringResource(R.string.custom_js),
                 onClick = { onNavigate("editor/js") },
             )
             NavigationRow(
-                title = "Set a custom user agent",
+                title = stringResource(R.string.custom_useragent),
                 onClick = { onNavigate("settings/useragent") },
             )
             NavigationRow(
-                title = "Custom proxy",
+                title = stringResource(R.string.custom_proxy),
                 onClick = { onNavigate("settings/proxy") },
             )
+            val sendToDevSubject = stringResource(R.string.send_to_dev_subject)
             SettingsRow(
-                title = "Send the code to the developer",
-                subtitle = "If the code is safe and useful, it will be included in the next release",
+                title = stringResource(R.string.send_to_dev),
+                subtitle = stringResource(R.string.send_to_dev_desc_v2),
                 trailing = {},
                 onClick = {
                     val intent = Intent(Intent.ACTION_SENDTO).apply {
                         data = Uri.parse("mailto:rignanese.leo@gmail.com")
-                        putExtra(Intent.EXTRA_SUBJECT, "SlimSocial custom code submission")
+                        putExtra(Intent.EXTRA_SUBJECT, sendToDevSubject)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     runCatching { context.startActivity(intent) }
@@ -328,11 +331,11 @@ fun SettingsScreen(
             HorizontalDivider()
 
             // ---------------- Privacy ----------------
-            SectionHeader("Privacy")
+            SectionHeader(stringResource(R.string.section_privacy))
             if (BuildConfig.IS_FULL_FLAVOR) {
                 ToggleRow(
-                    title = "Send anonymous crash reports (Sentry)",
-                    subtitle = "No personal or device information is ever collected",
+                    title = stringResource(R.string.send_anonymous_crash_reports),
+                    subtitle = stringResource(R.string.send_anonymous_crash_reports_desc),
                     checked = settings.privacy.sentryEnabled,
                     onCheckedChange = { v ->
                         vm.update { it.copy(privacy = it.privacy.copy(sentryEnabled = v)) }
@@ -340,8 +343,8 @@ fun SettingsScreen(
                 )
             }
             ToggleRow(
-                title = "Debug mode",
-                subtitle = "Show extra logging in the log viewer",
+                title = stringResource(R.string.debug_mode),
+                subtitle = stringResource(R.string.debug_mode_desc),
                 checked = settings.privacy.debugMode,
                 onCheckedChange = { v ->
                     vm.update { it.copy(privacy = it.privacy.copy(debugMode = v)) }
@@ -351,20 +354,20 @@ fun SettingsScreen(
             HorizontalDivider()
 
             // ---------------- Debug ----------------
-            SectionHeader("Debug")
+            SectionHeader(stringResource(R.string.section_debug))
             NavigationRow(
-                title = "Log viewer",
-                subtitle = "View recent navigation, console, and rule events",
+                title = stringResource(R.string.log_viewer),
+                subtitle = stringResource(R.string.log_viewer_desc),
                 onClick = { onNavigate("debug") },
             )
 
             HorizontalDivider()
 
             // ---------------- About ----------------
-            SectionHeader("About")
+            SectionHeader(stringResource(R.string.section_about))
             NavigationRow(
-                title = "About SlimSocial",
-                subtitle = "Version ${BuildConfig.VERSION_NAME}",
+                title = stringResource(R.string.about_slimsocial),
+                subtitle = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
                 onClick = { onNavigate("about") },
             )
         }

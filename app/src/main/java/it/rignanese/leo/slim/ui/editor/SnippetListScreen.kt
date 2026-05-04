@@ -33,9 +33,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.data.SettingsRepository
 import it.rignanese.leo.slim.domain.NamedSnippet
 
@@ -86,7 +88,10 @@ internal fun SnippetListScreenContent(
     var pendingDelete by remember { mutableStateOf<NamedSnippet?>(null) }
     var pendingJsEnable by remember { mutableStateOf<String?>(null) }
 
-    val title = if (type == SnippetType.CSS) "Custom CSS" else "Custom JS"
+    val title = stringResource(
+        if (type == SnippetType.CSS) R.string.editor_title_custom_css
+        else R.string.editor_title_custom_js,
+    )
 
     Scaffold(
         topBar = {
@@ -94,14 +99,20 @@ internal fun SnippetListScreenContent(
                 title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { onEditSnippet("new") }) {
-                Icon(Icons.Filled.Add, contentDescription = "New snippet")
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.editor_new_snippet),
+                )
             }
         },
     ) { padding ->
@@ -137,16 +148,22 @@ internal fun SnippetListScreenContent(
     pendingDelete?.let { target ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("Delete snippet?") },
-            text = { Text("This will remove \"${target.name}\" permanently.") },
+            title = { Text(stringResource(R.string.editor_delete_snippet_title)) },
+            text = {
+                Text(
+                    stringResource(R.string.editor_delete_snippet_message, target.name),
+                )
+            },
             confirmButton = {
                 TextButton(onClick = {
                     vm.deleteSnippet(target.id)
                     pendingDelete = null
-                }) { Text("Delete") }
+                }) { Text(stringResource(R.string.delete)) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text("Cancel") }
+                TextButton(onClick = { pendingDelete = null }) {
+                    Text(stringResource(R.string.cancel))
+                }
             },
         )
     }
@@ -181,25 +198,35 @@ private fun SnippetRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        val unnamed = stringResource(R.string.editor_unnamed)
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = snippet.name.ifBlank { "(unnamed)" },
+                text = snippet.name.ifBlank { unnamed },
                 style = MaterialTheme.typography.bodyLarge,
             )
         }
         Switch(checked = enabled, onCheckedChange = onToggle)
         IconButton(onClick = onEdit) {
-            Icon(Icons.Filled.Edit, contentDescription = "Edit")
+            Icon(
+                Icons.Filled.Edit,
+                contentDescription = stringResource(R.string.editor_edit),
+            )
         }
         IconButton(onClick = onDelete) {
-            Icon(Icons.Filled.Delete, contentDescription = "Delete")
+            Icon(
+                Icons.Filled.Delete,
+                contentDescription = stringResource(R.string.delete),
+            )
         }
     }
 }
 
 @Composable
 private fun EmptyState(padding: PaddingValues, type: SnippetType) {
-    val noun = if (type == SnippetType.CSS) "CSS" else "JavaScript"
+    val noun = stringResource(
+        if (type == SnippetType.CSS) R.string.editor_noun_css
+        else R.string.editor_noun_js,
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -208,7 +235,7 @@ private fun EmptyState(padding: PaddingValues, type: SnippetType) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "No $noun snippets yet. Tap + to add one.",
+            text = stringResource(R.string.editor_no_snippets_yet, noun),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

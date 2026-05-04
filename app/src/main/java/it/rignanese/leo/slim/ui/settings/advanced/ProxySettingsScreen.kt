@@ -28,9 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.ui.settings.SettingsViewModel
 import it.rignanese.leo.slim.webview.ProxyConfigurator
 
@@ -67,10 +69,13 @@ fun ProxySettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Custom proxy") },
+                title = { Text(stringResource(R.string.custom_proxy)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
@@ -86,7 +91,7 @@ fun ProxySettingsScreen(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Enable proxy",
+                    text = stringResource(R.string.proxy_enable),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
                 )
@@ -95,7 +100,7 @@ fun ProxySettingsScreen(
             OutlinedTextField(
                 value = host,
                 onValueChange = { host = it },
-                label = { Text("Host") },
+                label = { Text(stringResource(R.string.proxy_host_label)) },
                 singleLine = true,
                 enabled = enabled,
                 modifier = Modifier.fillMaxWidth(),
@@ -103,12 +108,12 @@ fun ProxySettingsScreen(
             OutlinedTextField(
                 value = port,
                 onValueChange = { input -> port = input.filter { it.isDigit() } },
-                label = { Text("Port") },
+                label = { Text(stringResource(R.string.proxy_port_label)) },
                 singleLine = true,
                 enabled = enabled,
                 isError = !portValid,
                 supportingText = {
-                    if (!portValid) Text("Port must be between 1 and 65535")
+                    if (!portValid) Text(stringResource(R.string.proxy_port_invalid))
                 },
                 keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -135,7 +140,7 @@ fun ProxySettingsScreen(
                 enabled = canApply,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Apply")
+                Text(stringResource(R.string.editor_apply_button))
             }
         }
     }

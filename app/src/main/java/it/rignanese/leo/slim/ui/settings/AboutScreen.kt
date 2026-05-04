@@ -20,8 +20,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import it.rignanese.leo.slim.BuildConfig
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.webview.UrlOpener
 
 /**
@@ -40,10 +42,13 @@ fun AboutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About") },
+                title = { Text(stringResource(R.string.about)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
@@ -56,17 +61,20 @@ fun AboutScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("SlimSocial for Facebook", style = MaterialTheme.typography.headlineSmall)
                 Text(
-                    text = "Version ${BuildConfig.VERSION_NAME}",
+                    stringResource(R.string.about_app_name),
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+                Text(
+                    text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             HorizontalDivider()
             NavigationRow(
-                title = "Source code",
-                subtitle = "GitHub repository",
+                title = stringResource(R.string.source_code),
+                subtitle = stringResource(R.string.source_code_subtitle),
                 onClick = {
                     runCatching {
                         urlOpener.open(context, "https://github.com/rignaneseleo/SlimSocial-for-Facebook")
@@ -81,7 +89,7 @@ fun AboutScreen(
                 },
             )
             NavigationRow(
-                title = "License (GPL-3.0)",
+                title = stringResource(R.string.license_gpl3),
                 onClick = {
                     runCatching {
                         urlOpener.open(context, "https://www.gnu.org/licenses/gpl-3.0.html")
@@ -89,7 +97,7 @@ fun AboutScreen(
                 },
             )
             NavigationRow(
-                title = "Changelog",
+                title = stringResource(R.string.changelog),
                 onClick = {
                     runCatching {
                         urlOpener.open(
@@ -100,8 +108,8 @@ fun AboutScreen(
                 },
             )
             NavigationRow(
-                title = "Donate / Become a hero",
-                subtitle = "Get your name on the list of important supporters",
+                title = stringResource(R.string.donate_become_hero),
+                subtitle = stringResource(R.string.become_hero_desc),
                 onClick = { onNavigate("donate") },
             )
         }

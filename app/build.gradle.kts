@@ -74,6 +74,18 @@ android {
         unitTests.isReturnDefaultValues = true
         unitTests.isIncludeAndroidResources = true
     }
+
+    lint {
+        // Phase 11 ports ~70 keys × 42 locales from Flutter JSON. Many
+        // legacy locale files don't carry every new Kotlin-port key; the
+        // English fallback covers them at runtime, so demote
+        // MissingTranslation from error to warning rather than dropping the
+        // affected strings.
+        warning += "MissingTranslation"
+        // Likewise extra translations in old locale files (keys that no
+        // longer exist in the canonical en-US.json) are informational only.
+        warning += "ExtraTranslation"
+    }
 }
 
 kotlin {

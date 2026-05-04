@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.webkit.WebViewCompat
 import it.rignanese.leo.slim.BuildConfig
+import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.data.LogBuffer
 import it.rignanese.leo.slim.data.LogCategory
 import it.rignanese.leo.slim.data.LogEvent
@@ -116,10 +118,13 @@ internal fun LogViewerScreenContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Log viewer") },
+                title = { Text(stringResource(R.string.log_viewer)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
             )
@@ -155,6 +160,11 @@ internal fun LogViewerScreenContent(
             HorizontalDivider()
 
             // ---------------- Action buttons ----------------
+            val exportChooserLabel = stringResource(R.string.log_export_chooser)
+            val sendSubject = stringResource(
+                R.string.log_send_subject,
+                BuildConfig.VERSION_NAME,
+            )
             ActionButtonsRow(
                 paused = paused,
                 onPauseToggle = { vm.togglePause() },
@@ -165,17 +175,14 @@ internal fun LogViewerScreenContent(
                         putExtra(Intent.EXTRA_TEXT, vm.exportRedacted())
                     }
                     runCatching {
-                        context.startActivity(Intent.createChooser(intent, "Export log"))
+                        context.startActivity(Intent.createChooser(intent, exportChooserLabel))
                     }
                 },
                 onSendToDev = {
                     val intent = Intent(Intent.ACTION_SEND).apply {
                         setType("message/rfc822")
                         putExtra(Intent.EXTRA_EMAIL, arrayOf("rignanese.leo@gmail.com"))
-                        putExtra(
-                            Intent.EXTRA_SUBJECT,
-                            "SlimSocial debug log v${BuildConfig.VERSION_NAME}",
-                        )
+                        putExtra(Intent.EXTRA_SUBJECT, sendSubject)
                         putExtra(Intent.EXTRA_TEXT, vm.exportRedacted())
                     }
                     runCatching { context.startActivity(intent) }
@@ -204,9 +211,12 @@ private fun ReproduceModeCard(debugMode: Boolean, onChange: (Boolean) -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("Reproduce mode", style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Records extra detail to help reproduce bugs.",
+                    stringResource(R.string.reproduce_mode),
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                Text(
+                    stringResource(R.string.reproduce_mode_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -227,10 +237,13 @@ private fun StateSnapshotCard(
     val webViewVersion = remember(context) {
         WebViewCompat.getCurrentWebViewPackage(context)?.versionName ?: "unknown"
     }
+    val noneLabel = stringResource(R.string.state_snapshot_none)
+    val proxyOffLabel = stringResource(R.string.state_snapshot_proxy_off)
+    val urlNoneLabel = stringResource(R.string.state_snapshot_url_none)
     val proxyState = if (settings.webView.customProxyEnabled) {
         "${settings.webView.customProxyHost}:${settings.webView.customProxyPort}"
     } else {
-        "off"
+        proxyOffLabel
     }
     val grants = settings.permissions
     val permissionsLabel = listOfNotNull(
@@ -240,25 +253,52 @@ private fun StateSnapshotCard(
         if (grants.photos) "photos" else null,
         if (grants.mic) "mic" else null,
         if (grants.notifications) "notifications" else null,
-    ).joinToString(", ").ifBlank { "none" }
-    val activeRulesLabel = activeRuleIds.joinToString(", ").ifBlank { "none" }
-    val activeCss = settings.customization.activeCssIds.joinToString(", ").ifBlank { "none" }
-    val activeJs = settings.customization.activeJsIds.joinToString(", ").ifBlank { "none" }
+    ).joinToString(", ").ifBlank { noneLabel }
+    val activeRulesLabel = activeRuleIds.joinToString(", ").ifBlank { noneLabel }
+    val activeCss = settings.customization.activeCssIds.joinToString(", ").ifBlank { noneLabel }
+    val activeJs = settings.customization.activeJsIds.joinToString(", ").ifBlank { noneLabel }
 
     Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp)) {
         Column(
             modifier = Modifier.padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            Text("State snapshot", style = MaterialTheme.typography.titleSmall)
-            SnapshotLine(label = "WebView", value = webViewVersion)
-            SnapshotLine(label = "URL", value = currentUrl.ifBlank { "(none)" })
-            SnapshotLine(label = "UA", value = userAgent)
-            SnapshotLine(label = "Active rules", value = activeRulesLabel)
-            SnapshotLine(label = "Active CSS", value = activeCss)
-            SnapshotLine(label = "Active JS", value = activeJs)
-            SnapshotLine(label = "Proxy", value = proxyState)
-            SnapshotLine(label = "Permissions", value = permissionsLabel)
+            Text(
+                stringResource(R.string.state_snapshot),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_webview),
+                value = webViewVersion,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_url),
+                value = currentUrl.ifBlank { urlNoneLabel },
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_user_agent),
+                value = userAgent,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_active_rules),
+                value = activeRulesLabel,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_active_css),
+                value = activeCss,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_active_js),
+                value = activeJs,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_proxy),
+                value = proxyState,
+            )
+            SnapshotLine(
+                label = stringResource(R.string.state_snapshot_permissions),
+                value = permissionsLabel,
+            )
         }
     }
 }
@@ -325,11 +365,22 @@ private fun ActionButtonsRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         OutlinedButton(onClick = onPauseToggle) {
-            Text(if (paused) "Resume" else "Pause")
+            Text(
+                stringResource(
+                    if (paused) R.string.log_resume_button
+                    else R.string.log_pause_button,
+                ),
+            )
         }
-        OutlinedButton(onClick = onClear) { Text("Clear") }
-        OutlinedButton(onClick = onExport) { Text("Export") }
-        OutlinedButton(onClick = onSendToDev) { Text("Send to dev") }
+        OutlinedButton(onClick = onClear) {
+            Text(stringResource(R.string.log_clear_button))
+        }
+        OutlinedButton(onClick = onExport) {
+            Text(stringResource(R.string.log_export_button))
+        }
+        OutlinedButton(onClick = onSendToDev) {
+            Text(stringResource(R.string.log_send_to_dev_button))
+        }
     }
 }
 
@@ -346,7 +397,7 @@ private fun LogList(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "No log events match the current filter.",
+                text = stringResource(R.string.log_empty_filter),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
