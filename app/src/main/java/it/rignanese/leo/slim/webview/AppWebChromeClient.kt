@@ -16,10 +16,15 @@ import android.webkit.WebView
  */
 class AppWebChromeClient(
     private val gate: PermissionGate,
-    private val onConsoleMessage: (ConsoleMessage) -> Unit,
+    // Lambda parameters intentionally NOT named after the WebChromeClient
+    // overrides they back. Same name + same arity = Kotlin resolves the call
+    // inside the override to the member function itself, producing an infinite
+    // recursion that detonates as a StackOverflowError on the first console
+    // log. Disambiguated by renaming the lambdas.
+    private val onConsole: (ConsoleMessage) -> Unit,
     private val onShowFileChooser: (ValueCallback<Array<Uri>>, FileChooserParams) -> Boolean,
-    private val onShowCustomView: (View, CustomViewCallback) -> Unit,
-    private val onHideCustomView: () -> Unit,
+    private val onShowCustom: (View, CustomViewCallback) -> Unit,
+    private val onHideCustom: () -> Unit,
 ) : WebChromeClient() {
 
     override fun onPermissionRequest(request: PermissionRequest) {
@@ -58,15 +63,15 @@ class AppWebChromeClient(
     }
 
     override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-        onConsoleMessage(message)
+        onConsole(message)
         return true
     }
 
     override fun onShowCustomView(view: View, callback: CustomViewCallback) {
-        onShowCustomView(view, callback)
+        onShowCustom(view, callback)
     }
 
     override fun onHideCustomView() {
-        onHideCustomView()
+        onHideCustom()
     }
 }

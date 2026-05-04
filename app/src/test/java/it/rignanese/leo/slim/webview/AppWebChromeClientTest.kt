@@ -3,6 +3,7 @@ package it.rignanese.leo.slim.webview
 import android.net.Uri
 import android.webkit.GeolocationPermissions
 import android.webkit.PermissionRequest
+import android.webkit.ConsoleMessage
 import android.webkit.ValueCallback
 import io.mockk.every
 import io.mockk.mockk
@@ -19,10 +20,10 @@ class AppWebChromeClientTest {
 
     private fun makeClient(gate: PermissionGate) = AppWebChromeClient(
         gate = gate,
-        onConsoleMessage = {},
+        onConsole = {},
         onShowFileChooser = { _, _ -> true },
-        onShowCustomView = { _, _ -> },
-        onHideCustomView = {},
+        onShowCustom = { _, _ -> },
+        onHideCustom = {},
     )
 
     @Test
@@ -86,5 +87,30 @@ class AppWebChromeClientTest {
         assert(handled)
         verify { pathCallback.onReceiveValue(capture(capture)) }
         assert(capture.captured.isEmpty())
+    }
+
+    @Test
+    fun `onConsoleMessage forwards to lambda without recursing`() {
+        // Regression: a previous version named the constructor lambda
+        // `onConsoleMessage`, identical to the WebChromeClient override. Kotlin
+        // resolved the in-override call to the member function itself, so the
+        // first JS console log produced a StackOverflowError that crashed the
+        // app. This test invokes the override directly and asserts the lambda
+        // fires exactly once — if the recursion bug regresses, the JVM blows
+        // its stack here instead of merely failing an assertion.
+        var received: ConsoleMessage? = null
+        val client = AppWebChromeClient(
+            gate = FakePermissionGate.denyAll(),
+            onConsole = { received = it },
+            onShowFileChooser = { _, _ -> true },
+            onShowCustom = { _, _ -> },
+            onHideCustom = {},
+        )
+        val message = mockk<ConsoleMessage>(relaxed = true)
+
+        val handled = client.onConsoleMessage(message)
+
+        assert(handled)
+        assert(received === message)
     }
 }
