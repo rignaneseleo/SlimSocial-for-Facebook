@@ -39,7 +39,7 @@
     </queries>
 
     <application
-        android:name=".app.SlimApplication"
+        android:name="it.rignanese.leo.slim.app.SlimApplication"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -50,7 +50,7 @@
         android:usesCleartextTraffic="false">
 
         <activity
-            android:name=".MainActivity"
+            android:name="it.rignanese.leo.slim.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
