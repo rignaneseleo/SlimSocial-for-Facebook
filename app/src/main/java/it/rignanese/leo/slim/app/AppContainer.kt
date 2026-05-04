@@ -12,6 +12,8 @@ import it.rignanese.leo.slim.domain.InjectionComposer
 import it.rignanese.leo.slim.domain.UrlRouter
 import it.rignanese.leo.slim.domain.UserAgentResolver
 import it.rignanese.leo.slim.permissions.OsPermissionStateReader
+import it.rignanese.leo.slim.platform.Platform
+import it.rignanese.leo.slim.platform.providePlatform
 import it.rignanese.leo.slim.rules.RuleRegistry
 import it.rignanese.leo.slim.webview.CookieConfigurator
 import it.rignanese.leo.slim.webview.CustomTabsUrlOpener
@@ -47,6 +49,14 @@ class AppContainer(appContext: Context) {
     val proxyConfigurator: ProxyConfigurator = ProxyConfigurator()
     val darkModeConfigurator: DarkModeConfigurator = DarkModeConfigurator()
     val urlOpener: UrlOpener = CustomTabsUrlOpener()
+
+    /**
+     * Flavor-provided platform services (crash reporting, donations, reviews).
+     * Resolved at compile time via the `providePlatform(Context)` function
+     * defined in `src/full/.../platform/PlatformProvider.kt` or
+     * `src/fdroid/.../platform/PlatformProvider.kt`.
+     */
+    val platform: Platform = providePlatform(appContext)
 
     val askedPermissionFlag: AskedPermissionFlag = AskedPermissionFlag(appContext)
     val osPermissionReader: OsPermissionStateReader =
