@@ -1,0 +1,39 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "android",
+            "request": "launch",
+            "name": "Debug (full)",
+            "appSrcRoot": "${workspaceFolder}/app/src/main",
+            "preLaunchTask": "install fullDebug",
+            "packageName": "it.rignanese.leo.slimfacebook",
+            "launchActivity": "it.rignanese.leo.slim.MainActivity"
+        },
+        {
+            "type": "android",
+            "request": "launch",
+            "name": "Debug (full, allow downgrade)",
+            "appSrcRoot": "${workspaceFolder}/app/src/main",
+            "preLaunchTask": "install fullDebug (allow downgrade)",
+            "packageName": "it.rignanese.leo.slimfacebook",
+            "launchActivity": "it.rignanese.leo.slim.MainActivity"
+        },
+        {
+            "type": "android",
+            "request": "launch",
+            "name": "Debug (fdroid)",
+            "appSrcRoot": "${workspaceFolder}/app/src/main",
+            "preLaunchTask": "install fdroidDebug",
+            "packageName": "it.rignanese.leo.slimfacebook",
+            "launchActivity": "it.rignanese.leo.slim.MainActivity"
+        },
+        {
+            "type": "android",
+            "request": "attach",
+            "name": "Attach to running app",
+            "appSrcRoot": "${workspaceFolder}/app/src/main",
+            "packageName": "it.rignanese.leo.slimfacebook"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "fwcd.kotlin",
+        "mathiasfrohlich.kotlin",
+        "vscjava.vscode-gradle",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "adelphes.android-dev-ext"
+    ]
+}

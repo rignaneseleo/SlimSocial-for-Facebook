@@ -1,0 +1,118 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "JAVA_HOME": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home"
+        }
+    },
+    "tasks": [
+        {
+            "label": "install fullDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["installFullDebug", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "install fdroidDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["installFdroidDebug", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "install fullDebug (allow downgrade)",
+            "detail": "Use when a higher version is already installed (e.g. Play Store build).",
+            "type": "shell",
+            "command": "./gradlew :app:assembleFullDebug --console=plain && $ANDROID_HOME/platform-tools/adb install -r -d app/build/outputs/apk/full/debug/app-full-debug.apk",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "test fullDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["testFullDebugUnitTest", "--console=plain"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "test fdroidDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["testFdroidDebugUnitTest", "--console=plain"],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "test both flavors",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": [
+                "testFullDebugUnitTest",
+                "testFdroidDebugUnitTest",
+                "--console=plain"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "lint fullDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["lintFullDebug", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "assemble fullDebug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["assembleFullDebug", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "assemble both debug",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": [
+                "assembleFullDebug",
+                "assembleFdroidDebug",
+                "--console=plain"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "assemble fullRelease",
+            "detail": "Requires SIGNING_KEYSTORE_* env vars; produces unsigned APK if absent.",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["assembleFullRelease", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "assemble fdroidRelease",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["assembleFdroidRelease", "--console=plain"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "verify fdroid APK is FOSS-clean",
+            "detail": "Greps the dex strings for proprietary class refs. Must report 0.",
+            "type": "shell",
+            "command": "APK=$(ls app/build/outputs/apk/fdroid/release/*.apk 2>/dev/null | head -1); if [ -z \"$APK\" ]; then echo 'No fdroid release APK; run \"assemble fdroidRelease\" first.'; exit 1; fi; HITS=$(unzip -p \"$APK\" 'classes*.dex' | strings | grep -cE '^Lio/sentry/|^Lcom/android/billingclient/|^Lcom/google/android/play/review/'); echo \"Proprietary class refs in fdroid APK: $HITS (must be 0)\"; [ \"$HITS\" -eq 0 ]",
+            "group": "test",
+            "problemMatcher": []
+        }
+    ]
+}

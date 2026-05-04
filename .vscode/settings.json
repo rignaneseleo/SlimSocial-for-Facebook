@@ -1,0 +1,37 @@
+{
+    "files.associations": {
+        "*.kt": "kotlin",
+        "*.kts": "kotlin",
+        "gradle.properties": "properties",
+        "*.pro": "proguard"
+    },
+    "files.exclude": {
+        "**/.gradle": true,
+        "**/build": true,
+        "**/.idea/workspace.xml": true,
+        "**/.idea/caches": true,
+        "**/.idea/shelf": true
+    },
+    "search.exclude": {
+        "**/build": true,
+        "**/.gradle": true,
+        "app/build/**": true
+    },
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+            "default": true
+        }
+    ],
+    "kotlin.languageServer.enabled": true,
+    "kotlin.compiler.jvm.target": "17",
+    "[kotlin]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true
+    },
+    "[xml]": {
+        "editor.tabSize": 4
+    }
+}
