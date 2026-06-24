@@ -17,32 +17,25 @@ import kotlin.coroutines.resume
 /**
  * Play Billing-backed [DonationLauncher] for the `full` flavor.
  *
- * Donations are non-consumable in-app products configured on Play Console:
- * `donation_1`, `donation_2`, `donation_3`, `donation_4`. We acknowledge —
- * but never consume — successful purchases so users keep the entitlement
- * forever (it's a "thanks", not a stockable item).
- *
- * Each call builds, connects, and tears down a [BillingClient] lifetime
- * around the suspending continuation. That's heavier than reusing one client
- * but matches the app's actual usage (one-shot donation flow) without
- * leaking a connection across the activity's lifecycle.
+ * Support tiers are **annual subscriptions** configured on Play Console:
+ * [SupportSubscriptions.TIER_1] … [SupportSubscriptions.TIER_4]. Each tier is a
+ * separate subscription product with one base plan; the donate slider picks
+ * which plan to offer. Purchases are acknowledged but never consumed.
  */
 class PlayBillingDonationLauncher(private val context: Context) : DonationLauncher {
 
     override suspend fun launch(activity: Activity, productId: String): DonationResult =
         suspendCancellableCoroutine { cont ->
-            val client = BillingClient.newBuilder(context)
+            lateinit var client: BillingClient
+            client = BillingClient.newBuilder(context)
                 .enablePendingPurchases(
                     PendingPurchasesParams.newBuilder()
                         .enableOneTimeProducts()
+                        .enablePrepaidPlans()
                         .build()
                 )
                 .setListener { billingResult, purchases ->
-                    handlePurchaseUpdate(billingResult, purchases, productId, cont) { acknowledged ->
-                        // Acknowledge happens via the same client; ignore failures —
-                        // Play retries, and the user has already paid.
-                        acknowledged()
-                    }
+                    handlePurchaseUpdate(billingResult, purchases, productId, cont, client)
                 }
                 .build()
 
@@ -72,22 +65,21 @@ class PlayBillingDonationLauncher(private val context: Context) : DonationLaunch
         purchases: List<Purchase>?,
         productId: String,
         cont: CancellableContinuation<DonationResult>,
-        acknowledgeOnSameClient: (() -> Unit) -> Unit,
+        client: BillingClient,
     ) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                val purchased = purchases
-                    ?.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                val purchased = purchases?.firstOrNull { purchase ->
+                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                        purchase.products.contains(productId)
+                }
                 if (purchased != null) {
                     if (!purchased.isAcknowledged) {
-                        // Acknowledge on the same client — we can't easily get a handle
-                        // here so we let the flow complete; ack failure is non-fatal
-                        // (Play will retry and the user remains entitled).
-                        acknowledgeOnSameClient { /* no-op: acknowledge inline below */ }
+                        acknowledge(client, purchased)
                     }
                     if (cont.isActive) cont.resume(DonationResult.Success)
                 }
-                // No PURCHASED entries — likely a pending purchase; we let Play handle it.
+                // No PURCHASED entries — likely a pending purchase; Play handles it.
             }
 
             BillingClient.BillingResponseCode.USER_CANCELED ->
@@ -113,16 +105,28 @@ class PlayBillingDonationLauncher(private val context: Context) : DonationLaunch
                 listOf(
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(productId)
-                        .setProductType(BillingClient.ProductType.INAPP)
+                        .setProductType(BillingClient.ProductType.SUBS)
                         .build()
                 )
             )
             .build()
 
         client.queryProductDetailsAsync(params) { _, list ->
-            val pd = list.firstOrNull()
-            if (pd == null) {
-                if (cont.isActive) cont.resume(DonationResult.Error("Product not found: $productId"))
+            val productDetails = list.firstOrNull()
+            if (productDetails == null) {
+                if (cont.isActive) {
+                    cont.resume(DonationResult.Error("Subscription not found: $productId"))
+                }
+                return@queryProductDetailsAsync
+            }
+
+            val offerToken = productDetails.subscriptionOfferDetails
+                ?.firstOrNull()
+                ?.offerToken
+            if (offerToken == null) {
+                if (cont.isActive) {
+                    cont.resume(DonationResult.Error("No offer for subscription: $productId"))
+                }
                 return@queryProductDetailsAsync
             }
 
@@ -130,7 +134,8 @@ class PlayBillingDonationLauncher(private val context: Context) : DonationLaunch
                 .setProductDetailsParamsList(
                     listOf(
                         BillingFlowParams.ProductDetailsParams.newBuilder()
-                            .setProductDetails(pd)
+                            .setProductDetails(productDetails)
+                            .setOfferToken(offerToken)
                             .build()
                     )
                 )
@@ -146,11 +151,6 @@ class PlayBillingDonationLauncher(private val context: Context) : DonationLaunch
         }
     }
 
-    /**
-     * Acknowledge a non-consumable purchase. Exposed for testability and to
-     * keep [handlePurchaseUpdate] free of client references it doesn't have.
-     */
-    @Suppress("unused")
     internal fun acknowledge(client: BillingClient, purchase: Purchase) {
         if (purchase.isAcknowledged) return
         val ackParams = AcknowledgePurchaseParams.newBuilder()

@@ -45,7 +45,7 @@ class ExternalDonationLauncherTest {
     @Test
     fun `launch returns External and starts ACTION_VIEW for paypal url`() {
         runBlocking {
-            val result = launcher.launch(activity, productId = "donation_1")
+            val result = launcher.launch(activity, productId = SupportSubscriptions.TIER_1)
 
             result shouldBe DonationResult.External
 
