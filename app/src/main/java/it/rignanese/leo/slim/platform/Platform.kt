@@ -29,8 +29,8 @@ sealed class DonationResult {
 }
 
 /**
- * Donation flow abstraction. `full` flavor uses Play Billing; `fdroid` opens
- * an external donation URL.
+ * Support / donation flow abstraction. `full` flavor launches annual Play
+ * Billing subscriptions; `fdroid` opens an external donation URL.
  */
 interface DonationLauncher {
     suspend fun launch(activity: Activity, productId: String): DonationResult

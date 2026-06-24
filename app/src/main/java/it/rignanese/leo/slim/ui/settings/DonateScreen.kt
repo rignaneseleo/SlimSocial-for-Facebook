@@ -50,10 +50,11 @@ import it.rignanese.leo.slim.BuildConfig
 import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.platform.DonationLauncher
 import it.rignanese.leo.slim.platform.DonationResult
+import it.rignanese.leo.slim.platform.SupportSubscriptions
 import kotlinx.coroutines.launch
 
 /**
- * Donation tiers configured on Play Console as non-consumable IAPs.
+ * Annual support tiers configured on Play Console as subscriptions.
  * The slider snaps to these discrete products — Play Billing cannot charge
  * arbitrary amounts, so the Yuka-style UX maps mood + copy onto fixed SKUs.
  */
@@ -71,10 +72,10 @@ internal enum class DonateMascotMood {
 }
 
 internal val DonationTiers = listOf(
-    DonationTier("donation_1", R.string.buy_coffee, DonateMascotMood.Sad),
-    DonationTier("donation_2", R.string.buy_pizza, DonateMascotMood.Neutral),
-    DonationTier("donation_3", R.string.become_an_hero, DonateMascotMood.Happy),
-    DonationTier("donation_4", R.string.become_hero, DonateMascotMood.Excited),
+    DonationTier(SupportSubscriptions.TIER_1, R.string.donate_tier_modest, DonateMascotMood.Sad),
+    DonationTier(SupportSubscriptions.TIER_2, R.string.donate_tier_fair, DonateMascotMood.Neutral),
+    DonationTier(SupportSubscriptions.TIER_3, R.string.donate_tier_generous, DonateMascotMood.Happy),
+    DonationTier(SupportSubscriptions.TIER_4, R.string.donate_tier_hero, DonateMascotMood.Excited),
 )
 
 /** Default tier index — anchors the slider toward the middle, like Yuka's $15 default. */
@@ -172,14 +173,16 @@ fun DonateScreen(
                     .padding(horizontal = 8.dp),
             )
 
-            if (!BuildConfig.IS_FULL_FLAVOR) {
-                Text(
-                    text = stringResource(R.string.donate_fdroid_note),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-            }
+            Text(
+                text = if (BuildConfig.IS_FULL_FLAVOR) {
+                    stringResource(R.string.donate_subscription_note)
+                } else {
+                    stringResource(R.string.donate_fdroid_note)
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
