@@ -37,6 +37,15 @@
     <string name="disclaimer_privacy">No personal or device information is ever collected or transmitted by this app.</string>
     <string name="donate">donate</string>
     <string name="donate_become_hero">Donate / Become a hero</string>
+    <string name="donate_support_headline">Support SlimSocial</string>
+    <string name="donate_support_body">SlimSocial is free and open source. Choose what feels right — every bit helps keep the project alive.</string>
+    <string name="donate_cta">Support the project</string>
+    <string name="donate_mood_low">Every bit helps, even a small coffee.</string>
+    <string name="donate_mood_neutral">A fair way to say thanks.</string>
+    <string name="donate_mood_high">You\'re making a real difference!</string>
+    <string name="donate_mood_excited">Wow — you\'re a true hero!</string>
+    <string name="donate_fdroid_note">Opens PayPal in your browser.</string>
+    <string name="donate_external_opened">Thanks! Complete your donation in the browser.</string>
     <string name="downloading">Downloading</string>
     <string name="editor_apply_button">Apply</string>
     <string name="editor_cancel_button">Cancel</string>

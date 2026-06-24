@@ -128,6 +128,11 @@ fun SettingsNavGraph(
                 onBack = { navController.popBackStack() },
             )
         }
-        composable("donate") { /* Phase 10 placeholder — intentionally empty. */ }
+        composable("donate") {
+            DonateScreen(
+                donationLauncher = container.platform.donationLauncher,
+                onBack = { navController.popBackStack() },
+            )
+        }
     }
 }
