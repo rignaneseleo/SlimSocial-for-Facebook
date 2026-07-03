@@ -50,6 +50,7 @@ import it.rignanese.leo.slim.BuildConfig
 import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.platform.DonationLauncher
 import it.rignanese.leo.slim.platform.DonationResult
+import it.rignanese.leo.slim.platform.ProEntitlement
 import it.rignanese.leo.slim.platform.SupportSubscriptions
 import kotlinx.coroutines.launch
 
@@ -85,6 +86,7 @@ private const val DefaultTierIndex = 2
 @Composable
 fun DonateScreen(
     donationLauncher: DonationLauncher,
+    proEntitlement: ProEntitlement,
     onBack: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -192,6 +194,11 @@ fun DonateScreen(
                     scope.launch {
                         isLoading = true
                         val result = donationLauncher.launch(activity, tier.productId)
+                        if (result is DonationResult.Success) {
+                            // Unlock gated features immediately (spec §3.2). Fail-soft:
+                            // the background verification retries on next app start.
+                            runCatching { proEntitlement.refresh() }
+                        }
                         isLoading = false
                         val message = when (result) {
                             DonationResult.Success ->

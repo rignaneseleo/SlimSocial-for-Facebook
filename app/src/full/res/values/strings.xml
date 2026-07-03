@@ -6,4 +6,22 @@
     <string name="theme_accent_purple">Purple accent</string>
     <string name="theme_accent_orange">Orange accent</string>
     <string name="theme_compact">Compact mode</string>
+
+    <!-- Get PRO reframe — overrides the main donate strings (spec §3.2).
+         Safe: the donate keys exist only in the default values/strings.xml,
+         so this flavor override wins for every locale. -->
+    <string name="donate">Get PRO</string>
+    <string name="donate_become_hero">Get PRO / Support the project</string>
+    <string name="donate_support_headline">Get PRO — support the project and unlock extras</string>
+    <string name="donate_support_body">SlimSocial is free and open source. Pick an annual contribution that feels right — any tier unlocks PRO page themes and keeps an indie project alive.</string>
+    <string name="donate_cta">Get PRO yearly</string>
+
+    <!-- Themes picker + PRO badge (full flavor only) -->
+    <string name="themes">Themes</string>
+    <string name="themes_desc">AMOLED, accent colors, compact mode</string>
+    <string name="themes_locked_subtitle">PRO feature — tap to preview</string>
+    <string name="theme_default">Default (no theme)</string>
+    <string name="pro_badge">PRO</string>
+    <string name="get_pro_cta">Get PRO</string>
+    <string name="themes_locked_banner">Themes are a PRO extra. Any yearly support tier unlocks them — and keeps SlimSocial alive.</string>
 </resources>

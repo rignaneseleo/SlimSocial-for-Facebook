@@ -49,6 +49,7 @@ fun SettingsNavGraph(
                 onNavigate = { route -> navController.navigate(route) },
                 onBack = onExitSettings,
                 osReader = container.osPermissionReader,
+                proEntitlement = container.platform.proEntitlement,
             )
         }
         composable("settings/proxy") {
@@ -132,8 +133,10 @@ fun SettingsNavGraph(
         composable("donate") {
             DonateScreen(
                 donationLauncher = container.platform.donationLauncher,
+                proEntitlement = container.platform.proEntitlement,
                 onBack = { navController.popBackStack() },
             )
         }
+        proDestinations(container = container, navController = navController, vm = vm)
     }
 }
