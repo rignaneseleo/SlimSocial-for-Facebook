@@ -63,11 +63,14 @@ interface ProEntitlement {
 
 /**
  * Aggregator of platform-flavored services. Constructed via the
- * `providePlatform(Context)` top-level factory function provided by each
- * flavor source set (`src/full` and `src/fdroid`).
+ * `providePlatform(Context, DataStore<Preferences>, CoroutineScope)` top-level
+ * factory function provided by each flavor source set (`src/full` and
+ * `src/fdroid`). The DataStore and scope are used by the `full` flavor's
+ * [ProEntitlement] for its offline cache and background re-verification.
  */
 interface Platform {
     val crashReporter: CrashReporter
     val donationLauncher: DonationLauncher
     val reviewLauncher: ReviewLauncher
+    val proEntitlement: ProEntitlement
 }
