@@ -10,14 +10,20 @@ import it.rignanese.leo.slim.data.SettingsRepository
 import it.rignanese.leo.slim.domain.FbConstants
 import it.rignanese.leo.slim.domain.HomeUrlBuilder
 import it.rignanese.leo.slim.domain.InjectionComposer
+import it.rignanese.leo.slim.domain.InjectionRule
 import it.rignanese.leo.slim.domain.UserAgentResolver
+import it.rignanese.leo.slim.platform.ProEntitlement
 import it.rignanese.leo.slim.rules.RuleRegistry
+import it.rignanese.leo.slim.rules.ThemeDescriptor
+import it.rignanese.leo.slim.rules.ThemeRuleSource
 import it.rignanese.leo.slim.webview.CookieConfigurator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -72,13 +78,33 @@ class MainViewModelTest {
         override fun flush() = Unit
     }
 
-    private fun newVm(): MainViewModel = MainViewModel(
+    private class FakeProEntitlement(active: Boolean) : ProEntitlement {
+        private val state = MutableStateFlow(active)
+        override val isPro: StateFlow<Boolean> = state
+        override suspend fun refresh() {}
+    }
+
+    private object FakeThemeSource : ThemeRuleSource {
+        override val availableThemes = listOf(ThemeDescriptor("test_theme", 0, 0xFF000000))
+        override fun ruleFor(themeId: String): InjectionRule? =
+            if (themeId == "test_theme") {
+                object : InjectionRule {
+                    override val id = "test_theme"
+                    override fun cssFor(url: String) = "/* pro theme marker */"
+                }
+            } else {
+                null
+            }
+    }
+
+    private fun newVm(isPro: Boolean = false): MainViewModel = MainViewModel(
         settingsRepository = repo,
         homeUrlBuilder = HomeUrlBuilder(),
         userAgentResolver = UserAgentResolver(),
         injectionComposer = InjectionComposer(),
-        ruleRegistry = RuleRegistry(),
+        ruleRegistry = RuleRegistry(FakeThemeSource),
         cookieConfigurator = NoopCookieConfigurator(),
+        proEntitlement = FakeProEntitlement(isPro),
     )
 
     // ---------------------------------------------------------------------
@@ -200,6 +226,24 @@ class MainViewModelTest {
         // Defaults enable `fixedBar`, `hideMessengerSidebar`, and `hideAds` —
         // the FixedBar and HideMessengerSidebar rules emit CSS on FB hosts.
         (payload.css.isNotEmpty()) shouldBe true
+    }
+
+    @Test
+    fun `composeInjection includes the selected theme for PRO users`() = runBlocking {
+        repo.update { it.copy(style = it.style.copy(selectedTheme = "test_theme")) }
+        val vm = newVm(isPro = true)
+        vm.settings.first { it.style.selectedTheme == "test_theme" }
+        val payload = vm.composeInjection("https://m.facebook.com/")
+        payload.css.contains("/* pro theme marker */") shouldBe true
+    }
+
+    @Test
+    fun `composeInjection ignores the selected theme for non-PRO users`() = runBlocking {
+        repo.update { it.copy(style = it.style.copy(selectedTheme = "test_theme")) }
+        val vm = newVm(isPro = false)
+        vm.settings.first { it.style.selectedTheme == "test_theme" }
+        val payload = vm.composeInjection("https://m.facebook.com/")
+        payload.css.contains("/* pro theme marker */") shouldBe false
     }
 
     // ---------------------------------------------------------------------

@@ -115,8 +115,9 @@ fun SettingsNavGraph(
         }
         composable("debug") {
             val settings by vm.settings.collectAsStateWithLifecycle()
-            val activeRuleIds = remember(settings) {
-                container.ruleRegistry.activeRules(settings).map { it.id }
+            val isPro by container.platform.proEntitlement.isPro.collectAsStateWithLifecycle()
+            val activeRuleIds = remember(settings, isPro) {
+                container.ruleRegistry.activeRules(settings, isPro).map { it.id }
             }
             LogViewerScreen(
                 logBuffer = container.logBuffer,
