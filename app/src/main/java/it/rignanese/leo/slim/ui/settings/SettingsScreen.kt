@@ -34,6 +34,7 @@ import it.rignanese.leo.slim.BuildConfig
 import it.rignanese.leo.slim.R
 import it.rignanese.leo.slim.permissions.OsPermissionStateReader
 import it.rignanese.leo.slim.permissions.OsPermissionStatus
+import it.rignanese.leo.slim.platform.ProEntitlement
 
 /**
  * Top-level Settings screen. Material 3 sectioned list. Each toggle reads
@@ -51,6 +52,7 @@ fun SettingsScreen(
     onNavigate: (route: String) -> Unit,
     onBack: () -> Unit,
     osReader: OsPermissionStateReader,
+    proEntitlement: ProEntitlement,
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -226,6 +228,9 @@ fun SettingsScreen(
                     vm.update { it.copy(style = it.style.copy(adaptMessenger = v)) }
                 },
             )
+            // PRO themes entry — full flavor renders the row (+ badge/lock),
+            // fdroid's ProSettingsSection is an empty composable.
+            ProSettingsSection(proEntitlement = proEntitlement, onNavigate = onNavigate)
 
             HorizontalDivider()
 
