@@ -2,6 +2,7 @@ package it.rignanese.leo.slim.platform
 
 import android.app.Activity
 import android.app.Application
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Crash / non-fatal reporter abstraction.
@@ -42,6 +43,22 @@ interface DonationLauncher {
  */
 interface ReviewLauncher {
     fun maybeRequest(activity: Activity)
+}
+
+/**
+ * PRO entitlement abstraction. Any active `support_yearly_*` subscription
+ * (see [SupportSubscriptions]) makes the user PRO.
+ *
+ * `full` flavor backs this with Play Billing plus a DataStore cache that
+ * tolerates up to 30 days offline; `fdroid` is constant `false` and all
+ * PRO-gated UI is compiled out of that flavor.
+ */
+interface ProEntitlement {
+    /** Reactive PRO state; seeded from cache at startup, re-verified in background. */
+    val isPro: StateFlow<Boolean>
+
+    /** Re-query the billing backend and update [isPro] plus the cached state. */
+    suspend fun refresh()
 }
 
 /**
