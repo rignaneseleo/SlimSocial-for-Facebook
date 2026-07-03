@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PRO theme names (full flavor only — the picker is compiled out of fdroid) -->
+    <string name="theme_amoled">AMOLED black</string>
+    <string name="theme_accent_green">Green accent</string>
+    <string name="theme_accent_purple">Purple accent</string>
+    <string name="theme_accent_orange">Orange accent</string>
+    <string name="theme_compact">Compact mode</string>
+</resources>
