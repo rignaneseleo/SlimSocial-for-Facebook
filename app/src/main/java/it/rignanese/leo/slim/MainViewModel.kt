@@ -11,6 +11,7 @@ import it.rignanese.leo.slim.domain.InjectionPayload
 import it.rignanese.leo.slim.domain.PermissionGrants
 import it.rignanese.leo.slim.domain.Settings
 import it.rignanese.leo.slim.domain.UserAgentResolver
+import it.rignanese.leo.slim.platform.ProEntitlement
 import it.rignanese.leo.slim.rules.RuleRegistry
 import it.rignanese.leo.slim.webview.CookieConfigurator
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -38,6 +39,7 @@ class MainViewModel internal constructor(
     private val injectionComposer: InjectionComposer,
     private val ruleRegistry: RuleRegistry,
     private val cookieConfigurator: CookieConfigurator,
+    private val proEntitlement: ProEntitlement,
 ) : ViewModel() {
 
     constructor(container: AppContainer) : this(
@@ -47,6 +49,7 @@ class MainViewModel internal constructor(
         injectionComposer = container.injectionComposer,
         ruleRegistry = container.ruleRegistry,
         cookieConfigurator = container.cookieConfigurator,
+        proEntitlement = container.platform.proEntitlement,
     )
 
     val settings: StateFlow<Settings> = settingsRepository.settings
@@ -85,7 +88,7 @@ class MainViewModel internal constructor(
      * snapshot. Called on every page-ready event from the WebView client.
      */
     fun composeInjection(currentUrl: String): InjectionPayload {
-        val rules = ruleRegistry.activeRules(settings.value)
+        val rules = ruleRegistry.activeRules(settings.value, isPro = proEntitlement.isPro.value)
         return injectionComposer.compose(rules, currentUrl)
     }
 

@@ -15,6 +15,8 @@ import it.rignanese.leo.slim.permissions.OsPermissionStateReader
 import it.rignanese.leo.slim.platform.Platform
 import it.rignanese.leo.slim.platform.providePlatform
 import it.rignanese.leo.slim.rules.RuleRegistry
+import it.rignanese.leo.slim.rules.ThemeRuleSource
+import it.rignanese.leo.slim.rules.provideThemeRuleSource
 import it.rignanese.leo.slim.webview.CookieConfigurator
 import it.rignanese.leo.slim.webview.CustomTabsUrlOpener
 import it.rignanese.leo.slim.webview.DarkModeConfigurator
@@ -53,7 +55,10 @@ class AppContainer(appContext: Context) {
     val homeUrlBuilder: HomeUrlBuilder = HomeUrlBuilder()
     val userAgentResolver: UserAgentResolver = UserAgentResolver()
     val injectionComposer: InjectionComposer = InjectionComposer()
-    val ruleRegistry: RuleRegistry = RuleRegistry()
+
+    /** Flavor-resolved PRO theme catalog (full: real themes; fdroid: empty). */
+    val themeRuleSource: ThemeRuleSource = provideThemeRuleSource()
+    val ruleRegistry: RuleRegistry = RuleRegistry(themeRuleSource)
 
     val cookieConfigurator: CookieConfigurator = CookieConfigurator()
     val proxyConfigurator: ProxyConfigurator = ProxyConfigurator()

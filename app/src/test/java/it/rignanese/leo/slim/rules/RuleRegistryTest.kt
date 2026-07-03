@@ -3,6 +3,7 @@ package it.rignanese.leo.slim.rules
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import it.rignanese.leo.slim.domain.InjectionRule
 import it.rignanese.leo.slim.domain.Settings
 import org.junit.jupiter.api.Test
 
@@ -85,4 +86,66 @@ class RuleRegistryTest {
         )
         (expected - ids) shouldBe emptySet()
     }
+
+    // ------------------------------------------------------------------
+    // PRO theme gating
+    // ------------------------------------------------------------------
+
+    private val themedRegistry = RuleRegistry(FakeThemeRuleSource)
+
+    private fun themedSettings(theme: String? = "test_theme") = Settings.DEFAULT.copy(
+        style = Settings.DEFAULT.style.copy(darkTheme = true, selectedTheme = theme),
+    )
+
+    @Test
+    fun `pro user with a selected theme gets the theme rule`() {
+        val ids = themedRegistry.activeRules(themedSettings(), isPro = true).map { it.id }
+        ids shouldContain "test_theme"
+    }
+
+    @Test
+    fun `theme rule composes after dark theme and before user custom rules`() {
+        val ids = themedRegistry.activeRules(themedSettings(), isPro = true).map { it.id }
+        // Later CSS wins on equal-specificity !important conflicts, so the
+        // theme must come after the free dark rule; user snippets stay last.
+        (ids.indexOf("test_theme") > ids.indexOf("dark_theme")) shouldBe true
+        (ids.indexOf("test_theme") < ids.indexOf("user_css")) shouldBe true
+    }
+
+    @Test
+    fun `non-pro user never gets the theme rule even with a stored selection`() {
+        val ids = themedRegistry.activeRules(themedSettings(), isPro = false).map { it.id }
+        (ids.contains("test_theme")) shouldBe false
+    }
+
+    @Test
+    fun `pro user with no selected theme gets no theme rule`() {
+        val ids = themedRegistry.activeRules(themedSettings(theme = null), isPro = true).map { it.id }
+        (ids.contains("test_theme")) shouldBe false
+    }
+
+    @Test
+    fun `unknown theme id resolves to no rule`() {
+        val ids = themedRegistry.activeRules(themedSettings(theme = "gone"), isPro = true).map { it.id }
+        (ids.contains("gone")) shouldBe false
+    }
+
+    @Test
+    fun `default registry has no theme source and stays theme-free`() {
+        val ids = registry.activeRules(themedSettings(), isPro = true).map { it.id }
+        (ids.contains("test_theme")) shouldBe false
+    }
+}
+
+private object FakeThemeRuleSource : ThemeRuleSource {
+    override val availableThemes = listOf(ThemeDescriptor("test_theme", 0, 0xFF000000))
+    override fun ruleFor(themeId: String): InjectionRule? =
+        if (themeId == "test_theme") {
+            object : InjectionRule {
+                override val id = "test_theme"
+                override fun cssFor(url: String) = "/* test theme css */"
+            }
+        } else {
+            null
+        }
 }
