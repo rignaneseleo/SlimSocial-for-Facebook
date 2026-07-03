@@ -6,7 +6,7 @@ This document tracks acceptance criteria from the [design spec §13](docs/superp
 
 | Criterion | Where | Pass condition |
 |---|---|---|
-| 213 unit/Robolectric tests pass on each flavor | `:app:testFullDebugUnitTest`, `:app:testFdroidDebugUnitTest` | exit 0 |
+| 246 (full) / 221 (fdroid) unit/Robolectric tests pass | `:app:testFullDebugUnitTest`, `:app:testFdroidDebugUnitTest` | exit 0 |
 | Both flavors build a debug APK | `:app:assembleFullDebug`, `:app:assembleFdroidDebug` | exit 0 |
 | Lint reports zero errors | `:app:lintFullDebug` | "0 errors" in report |
 | F-Droid APK contains zero proprietary classes | release.yml's dex string check | exit 0; `0` matches |
@@ -91,6 +91,35 @@ adb shell am crash com.android.webview:webview_service
   - [ ] `request.queryString` is null
   - [ ] No occurrence of `c_user`, `xs`, `fr`, `presence`, `wd`, `dpr`, `sb`, or `datr` in any field
   - [ ] `release` matches `it.rignanese.leo.slimfacebook@<versionName>+<versionCode>`
+
+### PRO purchase / restore (full flavor only, requires a Play license-tester account)
+
+Play Billing cannot run on the JVM; the entitlement mapping/cache logic is unit-tested
+with fakes (`PlayBillingProEntitlementTest`), but the end-to-end purchase path needs a
+real device with Play services and a license-tester Google account.
+
+- [ ] Fresh install (non-PRO): Settings → Style shows a **Themes** row with a lock icon
+- [ ] Themes picker: all 5 themes show a lock; tapping one opens the **Get PRO** screen
+- [ ] Get PRO screen shows the reframed copy ("Get PRO — support the project and unlock extras")
+- [ ] Purchase tier 1 with a license tester → snackbar thank-you → back in Settings the
+      **Themes** row now shows the **PRO** badge (no app restart required)
+- [ ] Select **AMOLED black** → open Facebook → page background is true black
+- [ ] Enable the free **Dark theme** toggle simultaneously → AMOLED still wins on
+      conflicting selectors (background stays #000)
+- [ ] Select an accent theme → top bar re-tints; select **Default** → theme cleared
+- [ ] Restore: uninstall + reinstall with the same Google account → first launch
+      re-verifies in background → PRO badge returns without a new purchase
+- [ ] Offline grace: with PRO active, enable airplane mode, force-stop, relaunch →
+      still PRO (cache honored; 30-day expiry not manually testable — covered by unit tests)
+- [ ] Cancel the subscription in Play → after the subscription period lapses, relaunch
+      online → PRO badge and themes revert to locked
+- [ ] Each tier (`support_yearly_1..4`) individually unlocks PRO (spot-check at least two)
+
+### PRO absence (fdroid flavor)
+
+- [ ] Settings → Style has **no Themes row**, no PRO badge, no lock icons anywhere
+- [ ] The support screen keeps the donation copy ("Support SlimSocial") and opens PayPal
+- [ ] `release.yml` dex string check still reports `0` proprietary matches
 
 ## Sign-off before tagging
 
