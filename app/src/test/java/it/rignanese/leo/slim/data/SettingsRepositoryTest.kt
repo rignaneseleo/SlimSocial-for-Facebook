@@ -176,4 +176,17 @@ class SettingsRepositoryTest {
             out.style.darkTheme shouldBe true
         }
     }
+
+    @Test
+    fun `selectedTheme defaults to null, round-trips a value, and clears back to null`() {
+        runBlocking {
+            repo.settings.first().style.selectedTheme shouldBe null
+
+            repo.update { it.copy(style = it.style.copy(selectedTheme = "theme_amoled")) }
+            repo.settings.first().style.selectedTheme shouldBe "theme_amoled"
+
+            repo.update { it.copy(style = it.style.copy(selectedTheme = null)) }
+            repo.settings.first().style.selectedTheme shouldBe null
+        }
+    }
 }

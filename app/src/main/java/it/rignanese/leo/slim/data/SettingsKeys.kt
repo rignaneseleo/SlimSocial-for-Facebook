@@ -41,6 +41,9 @@ object SettingsKeys {
     val DEBUG_MODE = booleanPreferencesKey("debug_mode")
     val CUSTOM_JS_ACKNOWLEDGED = booleanPreferencesKey("custom_js_acknowledged")
 
+    // PRO page theme — new in WS1 (PRO + themes), no legacy equivalent
+    val SELECTED_THEME = stringPreferencesKey("selected_theme")
+
     /**
      * The set of legacy key names (without `flutter.` prefix) recognised by the
      * Flutter migrator. Used for migration coverage reports.
