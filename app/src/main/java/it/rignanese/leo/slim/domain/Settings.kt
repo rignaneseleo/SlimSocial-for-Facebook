@@ -51,6 +51,8 @@ data class StyleToggles(
     val hideAdsAndPeopleYouMayKnow: Boolean = false,
     val fabBtn: Boolean = false,
     val adaptMessenger: Boolean = false,
+    /** PRO page theme id (see ThemeRuleSource), or null for no theme. New in WS1, no legacy key. */
+    val selectedTheme: String? = null,
 )
 
 data class PermissionGrants(

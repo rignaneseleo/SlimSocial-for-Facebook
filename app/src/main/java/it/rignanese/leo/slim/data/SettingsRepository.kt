@@ -60,6 +60,7 @@ internal fun Preferences.toSettings(): Settings = Settings(
         centerText = this[SettingsKeys.CENTER_TEXT] ?: false,
         addSpace = this[SettingsKeys.ADD_SPACE] ?: false,
         hideMessengerSidebar = this[SettingsKeys.HIDE_MESSENGER_SIDEBAR] ?: true,
+        selectedTheme = this[SettingsKeys.SELECTED_THEME],
         // Remaining StyleToggles fields not represented in legacy XML — keep their data-class defaults.
     ),
     permissions = PermissionGrants(
@@ -136,6 +137,11 @@ internal fun Settings.writeInto(prefs: MutablePreferences) {
     prefs[SettingsKeys.CENTER_TEXT] = style.centerText
     prefs[SettingsKeys.ADD_SPACE] = style.addSpace
     prefs[SettingsKeys.HIDE_MESSENGER_SIDEBAR] = style.hideMessengerSidebar
+    if (style.selectedTheme != null) {
+        prefs[SettingsKeys.SELECTED_THEME] = style.selectedTheme
+    } else {
+        prefs.remove(SettingsKeys.SELECTED_THEME)
+    }
 
     // Permissions
     prefs[SettingsKeys.GPS_PERMISSION] = permissions.gps
