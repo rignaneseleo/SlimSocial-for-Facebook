@@ -5,6 +5,12 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * F-Droid flavor entry point. The same top-level function is declared in the
@@ -12,12 +18,18 @@ import android.net.Uri
  * time. Keeping this as a top-level function (rather than KMP `expect/actual`)
  * means we don't need the multiplatform plugin.
  */
-fun providePlatform(context: Context): Platform = FdroidPlatform()
+@Suppress("UNUSED_PARAMETER")
+fun providePlatform(
+    context: Context,
+    dataStore: DataStore<Preferences>,
+    scope: CoroutineScope,
+): Platform = FdroidPlatform()
 
 internal class FdroidPlatform : Platform {
     override val crashReporter: CrashReporter = NoOpCrashReporter()
     override val donationLauncher: DonationLauncher = ExternalDonationLauncher()
     override val reviewLauncher: ReviewLauncher = NoOpReviewLauncher()
+    override val proEntitlement: ProEntitlement = NoProEntitlement
 }
 
 /** No-op crash reporter: the F-Droid build links zero proprietary crash deps. */
@@ -48,4 +60,15 @@ internal class ExternalDonationLauncher : DonationLauncher {
 /** No-op review launcher: there is no F-Droid equivalent to Play In-App Review. */
 internal class NoOpReviewLauncher : ReviewLauncher {
     override fun maybeRequest(activity: Activity) {}
+}
+
+/**
+ * F-Droid has no billing, therefore no PRO: constant `false`. PRO UI is
+ * compiled out of this flavor entirely; this object only exists so shared
+ * code (e.g. rule gating) can consume the same [ProEntitlement] interface.
+ */
+internal object NoProEntitlement : ProEntitlement {
+    private val state = MutableStateFlow(false)
+    override val isPro: StateFlow<Boolean> = state.asStateFlow()
+    override suspend fun refresh() {}
 }

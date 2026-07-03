@@ -21,6 +21,9 @@ import it.rignanese.leo.slim.webview.DarkModeConfigurator
 import it.rignanese.leo.slim.webview.LiveWebViewHost
 import it.rignanese.leo.slim.webview.ProxyConfigurator
 import it.rignanese.leo.slim.webview.UrlOpener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -34,6 +37,13 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class AppContainer(appContext: Context) {
 
     val dataStore: DataStore<Preferences> = appContext.dataStore
+
+    /**
+     * Application-lifetime scope for platform background work (entitlement
+     * cache seeding + billing re-verification). Never cancelled — it dies
+     * with the process, like every other AppContainer singleton.
+     */
+    val appScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val settingsRepository: SettingsRepository = SettingsRepository(dataStore)
     val flutterMigrator: FlutterMigrator = FlutterMigrator(appContext, dataStore)
@@ -56,7 +66,7 @@ class AppContainer(appContext: Context) {
      * defined in `src/full/.../platform/PlatformProvider.kt` or
      * `src/fdroid/.../platform/PlatformProvider.kt`.
      */
-    val platform: Platform = providePlatform(appContext)
+    val platform: Platform = providePlatform(appContext, dataStore, appScope)
 
     val askedPermissionFlag: AskedPermissionFlag = AskedPermissionFlag(appContext)
     val osPermissionReader: OsPermissionStateReader =
