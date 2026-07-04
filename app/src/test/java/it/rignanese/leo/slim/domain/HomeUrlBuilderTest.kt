@@ -33,7 +33,7 @@ class HomeUrlBuilderTest {
 
     @Test
     fun `constants point at the live mobile FB surfaces`() {
-        FbConstants.URL_TOUCH shouldBe "https://m.facebook.com/home.php"
+        FbConstants.URL_TOUCH shouldBe "https://touch.facebook.com/home.php"
         FbConstants.URL_MBASIC shouldBe "https://mbasic.facebook.com/home.php"
         FbConstants.SUFFIX_RECENT shouldBe "?sk=h_chr"
         FbConstants.SUFFIX_DEFAULT shouldBe "?sk=h_nor"

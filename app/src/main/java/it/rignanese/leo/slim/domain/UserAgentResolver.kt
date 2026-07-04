@@ -19,14 +19,21 @@ class UserAgentResolver {
     }
 
     companion object {
-        // The legacy Flutter app shipped a desktop Firefox 124 UA. Meta now
-        // 301-redirects that combo from m./touch. to www.facebook.com/home.php,
-        // which returns "Not Found" for unauthenticated users. A current mobile
-        // Chrome UA keeps the request on the mobile surface and serves the
-        // proper login/feed flow. Name retained for backwards compatibility.
+        // A Chrome OS (Chromebook) UA — the exact approach the original native
+        // SlimSocial (pre-Flutter) shipped, which worked for years.
+        //
+        // Why not a mobile UA: Facebook fingerprints the Android WebView (mobile
+        // UA string + `Sec-CH-UA: "Android WebView"` client hint, which the UA
+        // string can't hide) and serves a "Bloks" mobile page that collapses to
+        // html/body height 0 in a plain WebView — a blank white screen. Verified
+        // on-device: every mobile UA => body height 0; a desktop-class UA =>
+        // renders. Chrome OS is a touch-capable desktop, so Facebook serves a
+        // responsive layout that scales to fit a phone (with wide-viewport +
+        // overview mode + zoom, mirroring the old app's `setDesktopMode(true)`).
+        // Name retained for backwards compatibility.
         const val UA_FIREFOX =
-            "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 " +
-                "(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
+            "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
         // Verbatim from SlimSocial_for_Facebook/lib/consts.dart:26-27
         const val UA_OPERA_MINI =
