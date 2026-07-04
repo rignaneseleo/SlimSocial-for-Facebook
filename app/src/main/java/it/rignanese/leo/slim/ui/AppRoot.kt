@@ -4,22 +4,30 @@ import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import it.rignanese.leo.slim.R
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -70,6 +78,7 @@ fun AppRoot(vm: MainViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
     vm: MainViewModel,
@@ -103,45 +112,94 @@ private fun HomeScreen(
         vm.deeplinkUrl.collect { url -> hostRef?.load(url) }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        BrowserScreen(
-            homeUrl = homeUrl,
-            userAgent = userAgent,
-            container = container,
-            gate = gate,
-            onPageReady = { url, host ->
-                onUrlChange(url)
-                val payload = vm.composeInjection(url)
-                if (payload.css.isNotEmpty()) host.injectCss(payload.css)
-                if (payload.js.isNotEmpty()) host.injectJs(payload.js)
-            },
-            onRenderGone = { didCrash -> vm.onRenderGone(didCrash) },
-            onHostReady = { hostRef = it },
-        )
-
-        // Top-right overlay shortcut into the Settings tree. The Flutter app
-        // showed an AppBar with a gear icon — we emulate it with a single
-        // floating button so the WebView keeps the full viewport.
-        FilledTonalIconButton(
-            onClick = onOpenSettings,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 16.dp, end = 8.dp)
-                .size(40.dp),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Settings,
-                contentDescription = "Settings",
-            )
-        }
-
-        if (showRenderGone) {
-            RenderGoneOverlay(
-                onReload = {
-                    showRenderGone = false
-                    hostRef?.reload()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    OverflowMenu(
+                        onSettings = onOpenSettings,
+                        onReload = { hostRef?.reload() },
+                        onHome = { hostRef?.load(homeUrl) },
+                    )
                 },
             )
+        },
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+        ) {
+            BrowserScreen(
+                homeUrl = homeUrl,
+                userAgent = userAgent,
+                container = container,
+                gate = gate,
+                onPageReady = { url, host ->
+                    onUrlChange(url)
+                    val payload = vm.composeInjection(url)
+                    if (payload.css.isNotEmpty()) host.injectCss(payload.css)
+                    if (payload.js.isNotEmpty()) host.injectJs(payload.js)
+                },
+                onRenderGone = { didCrash -> vm.onRenderGone(didCrash) },
+                onHostReady = { hostRef = it },
+            )
+
+            if (showRenderGone) {
+                RenderGoneOverlay(
+                    onReload = {
+                        showRenderGone = false
+                        hostRef?.reload()
+                    },
+                )
+            }
         }
+    }
+}
+
+/**
+ * The app bar's 3-dot overflow menu. Replaces the old floating gear button:
+ * a stable top-bar affordance that never overlaps web content and groups the
+ * navigation actions (Home, Reload, Settings) in one place.
+ */
+@Composable
+private fun OverflowMenu(
+    onSettings: () -> Unit,
+    onReload: () -> Unit,
+    onHome: () -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    IconButton(onClick = { expanded = true }) {
+        Icon(
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = stringResource(R.string.settings),
+        )
+    }
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.home)) },
+            leadingIcon = { Icon(Icons.Filled.Home, contentDescription = null) },
+            onClick = {
+                expanded = false
+                onHome()
+            },
+        )
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.reload)) },
+            leadingIcon = { Icon(Icons.Filled.Refresh, contentDescription = null) },
+            onClick = {
+                expanded = false
+                onReload()
+            },
+        )
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.settings)) },
+            leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+            onClick = {
+                expanded = false
+                onSettings()
+            },
+        )
     }
 }
