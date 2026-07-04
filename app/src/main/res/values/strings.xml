@@ -124,6 +124,7 @@
     <string name="recent_first">Show recent posts first</string>
     <string name="refresh">Refresh</string>
     <string name="reload">Reload</string>
+    <string name="home">Home</string>
     <string name="reloading">Reloading...</string>
     <string name="remove_browser_not_supported">Remove \"browser not supported\" notice</string>
     <string name="remove_messenger_download">Remove Messenger download prompt</string>
