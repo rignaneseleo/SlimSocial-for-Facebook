@@ -19,6 +19,14 @@ object WebViewFactory {
         with(webView.settings) {
             javaScriptEnabled = true
             domStorageEnabled = true
+            // Honor Facebook's <meta viewport> so the modern responsive
+            // m.facebook.com lays out against the device viewport. Without these
+            // the WebView uses a legacy layout viewport and pages built on
+            // 100vh / flex collapse to html/body height 0 → a blank white screen
+            // (the plain-HTML consent/mbasic pages are unaffected, which is why
+            // the bug only showed post-consent).
+            useWideViewPort = true
+            loadWithOverviewMode = true
             cacheMode = WebSettings.LOAD_DEFAULT
             allowFileAccess = false
             allowContentAccess = false

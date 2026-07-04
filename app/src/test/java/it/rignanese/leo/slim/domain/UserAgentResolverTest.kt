@@ -86,10 +86,13 @@ class UserAgentResolverTest {
     }
 
     @Test
-    fun `UA constants are a current mobile Chrome and Opera Mini`() {
+    fun `UA constants are a Chrome OS desktop-class UA and Opera Mini`() {
+        // Chrome OS UA (the proven native-app approach): a mobile UA gets a
+        // blank height-0 Bloks page in the WebView; a desktop-class UA renders
+        // (see UserAgentResolver KDoc).
         UserAgentResolver.UA_FIREFOX shouldBe
-            "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 " +
-            "(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
+            "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
         UserAgentResolver.UA_OPERA_MINI shouldBe
             "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16"
     }
