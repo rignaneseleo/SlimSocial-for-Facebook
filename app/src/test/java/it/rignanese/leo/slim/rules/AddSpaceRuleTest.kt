@@ -14,7 +14,10 @@ class AddSpaceRuleTest {
 
     @Test
     fun `applies on facebook`() {
-        rule.cssFor("https://m.facebook.com/foo")!! shouldContain "margin-top: 50px"
+        val css = rule.cssFor("https://m.facebook.com/foo")!!
+        css shouldContain "margin-top: 50px"
+        // Posts are div[role="article"] now; the bare `article` tag matches 0.
+        css shouldContain "[role=\"article\"]"
     }
 
     @Test

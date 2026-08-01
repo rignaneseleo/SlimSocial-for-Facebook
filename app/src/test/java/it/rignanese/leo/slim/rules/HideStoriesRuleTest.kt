@@ -14,7 +14,10 @@ class HideStoriesRuleTest {
 
     @Test
     fun `applies on facebook`() {
-        rule.cssFor("https://m.facebook.com/foo")!! shouldContain "#MStoriesTray"
+        val css = rule.cssFor("https://m.facebook.com/foo")!!
+        css shouldContain "#MStoriesTray"
+        // Best-effort modern hook — unverified, see the rule's KDoc.
+        css shouldContain "[aria-label=\"Stories\"]"
     }
 
     @Test

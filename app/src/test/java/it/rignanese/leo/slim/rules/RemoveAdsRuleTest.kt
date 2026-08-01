@@ -36,6 +36,15 @@ class RemoveAdsRuleTest {
     )
 
     @Test
+    fun `sweeps up to the modern post container, not just the article tag`() {
+        // Measured on a live session 2026-08-01: the `article` tag matches 0
+        // elements on today's Facebook, so a keyword hit could never reach a
+        // post and ad hiding silently did nothing.
+        val js = rule.jsFor("https://m.facebook.com/")!!
+        js shouldContain "[role=\"article\"]"
+    }
+
+    @Test
     fun `id matches`() {
         rule.id shouldBe "hide_ads"
     }
