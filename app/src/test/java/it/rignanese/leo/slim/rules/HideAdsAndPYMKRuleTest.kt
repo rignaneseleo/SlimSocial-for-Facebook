@@ -2,6 +2,7 @@ package it.rignanese.leo.slim.rules
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldNotContain
 import org.junit.jupiter.api.Test
 
 class HideAdsAndPYMKRuleTest {
@@ -16,9 +17,18 @@ class HideAdsAndPYMKRuleTest {
     fun `applies on facebook`() {
         val css = rule.cssFor("https://m.facebook.com/foo")!!
         css shouldContain ".ego"
-        // Flutter source had a malformed selector with `##` and an unclosed
-        // `:has(>div>div>div>div>div>` — preserved verbatim per spec.
-        css shouldContain "##[data-pagelet=RightRail]"
+        css shouldContain "[data-pagelet=\"RightRail\"]"
+    }
+
+    @Test
+    fun `css is parseable - no double hash and balanced parens`() {
+        // Regression guard for the ported Flutter bug: `##[data-pagelet=...]`
+        // plus an unclosed `:has(` made Chromium drop every block in this
+        // payload, including the unrelated `.ego` rule.
+        val css = rule.cssFor("https://m.facebook.com/")!!
+        css shouldNotContain "##"
+        css.count { it == '(' } shouldBe css.count { it == ')' }
+        css.count { it == '{' } shouldBe css.count { it == '}' }
     }
 
     @Test
