@@ -12,6 +12,12 @@ import it.rignanese.leo.slim.domain.InjectionRule
  * sponsor keyword list and the English replacement copy directly, so no such
  * runtime is needed.
  *
+ * The keyword sweep walks up from a matching `<span>` to its enclosing post.
+ * Flutter did that with `closest("article")`; measured on a live session
+ * 2026-08-01, the `article` **tag** matches 0 elements on today's Facebook —
+ * posts are `div[role="article"]` — so ad hiding had silently stopped working.
+ * Both are matched now, keeping mbasic mode working.
+ *
  * Applies to FB hosts (excluding messenger).
  */
 class RemoveAdsRule : InjectionRule {
@@ -85,7 +91,7 @@ class RemoveAdsRule : InjectionRule {
   );
   let adsCount = 0;
   for (const span of adSpans) {
-    const post = span.closest("article");
+    const post = span.closest('[role="article"], article');
     if(post == null) continue;
     post.innerHTML = myDiv;
     adsCount++;

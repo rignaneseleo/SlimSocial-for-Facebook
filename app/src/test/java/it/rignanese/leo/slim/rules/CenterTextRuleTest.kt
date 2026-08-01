@@ -16,6 +16,10 @@ class CenterTextRuleTest {
     fun `applies on facebook hosts`() {
         val css = rule.cssFor("https://m.facebook.com/foo")
         css!! shouldContain "._5rgt._5msi"
+        // Modern DOM hook. The legacy class pair matches 0 elements on the
+        // layout Facebook serves today (measured on a live session).
+        css shouldContain "[data-ad-preview=\"message\"]"
+        css shouldContain "[data-ad-rendering-role=\"story_message\"]"
     }
 
     @Test
