@@ -18,6 +18,9 @@ class RuleRegistry(
     private val themeRuleSource: ThemeRuleSource = NoThemeRuleSource,
 ) {
     fun activeRules(s: Settings, isPro: Boolean = false): List<InjectionRule> = buildList {
+        // First and unconditional: without it the desktop page Facebook serves
+        // to our UA lays out at 980px and spills off the right of the screen.
+        add(ViewportFitRule())
         if (s.style.centerText) add(CenterTextRule())
         if (s.style.hideMessengerSidebar) add(HideMessengerSidebarRule())
         if (s.style.addSpace) add(AddSpaceRule())
