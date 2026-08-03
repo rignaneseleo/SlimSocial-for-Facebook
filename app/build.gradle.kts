@@ -51,6 +51,14 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
+            // Distinct identity so a debug build installs alongside the
+            // released app (Play or F-Droid) instead of failing with a
+            // signature conflict on the shared applicationId. Lets the old
+            // Flutter build and this one sit side by side for comparison.
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            // Label override lives in src/debug/res so it doesn't collide with
+            // the app_name declared in the main source set.
         }
         release {
             isMinifyEnabled = true
