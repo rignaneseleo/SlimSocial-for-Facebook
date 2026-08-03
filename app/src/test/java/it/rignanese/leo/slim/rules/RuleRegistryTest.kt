@@ -14,10 +14,11 @@ class RuleRegistryTest {
     fun `default settings produces the five legacy-default rules`() {
         // Default settings enable: features.hideAds, style.fixedBar,
         // style.hideMessengerSidebar — plus the always-present user-custom
-        // rules. That is 5 rules total.
+        // rules. That is 5 rules total, led by the unconditional viewport fit.
         val rules = registry.activeRules(Settings.DEFAULT)
         val ids = rules.map { it.id }
         ids shouldContainExactly listOf(
+            "viewport_fit",
             "hide_messenger_sidebar",
             "fixed_bar",
             "hide_ads",
@@ -36,7 +37,7 @@ class RuleRegistryTest {
     }
 
     @Test
-    fun `disabling all toggles still yields the two user-custom rules`() {
+    fun `disabling all toggles still yields viewport fit and the user-custom rules`() {
         val s = Settings.DEFAULT.copy(
             features = Settings.DEFAULT.features.copy(hideAds = false),
             style = Settings.DEFAULT.style.copy(
@@ -45,7 +46,9 @@ class RuleRegistryTest {
             ),
         )
         val ids = registry.activeRules(s).map { it.id }
-        ids shouldContainExactly listOf("user_css", "user_js")
+        // viewport_fit is unconditional: it is a render-correctness fix, not a
+        // user preference, so it survives every toggle being off.
+        ids shouldContainExactly listOf("viewport_fit", "user_css", "user_js")
     }
 
     @Test
