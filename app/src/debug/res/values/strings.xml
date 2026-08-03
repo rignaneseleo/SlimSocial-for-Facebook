@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Debug builds carry the .debug applicationId suffix and install next to
+         the released app; a distinct launcher label keeps them apart. -->
+    <string name="app_name">SlimSocial (debug)</string>
+</resources>

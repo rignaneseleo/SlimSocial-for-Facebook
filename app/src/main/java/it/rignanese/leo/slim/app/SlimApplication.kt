@@ -1,6 +1,7 @@
 package it.rignanese.leo.slim.app
 
 import android.app.Application
+import it.rignanese.leo.slim.debug.startDebugDiagnostics
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -27,5 +28,12 @@ class SlimApplication : Application() {
             container.settingsRepository.settings.first().privacy.sentryEnabled
         }
         container.platform.crashReporter.init(this, sentryEnabled)
+
+        // Debug builds only (flavor-split top-level function; the release
+        // source set's version is a no-op). Streams the already-redacted
+        // LogBuffer — including every JS console message and page error — to a
+        // tailnet collector so WebView behaviour can be debugged remotely
+        // without the tester screenshotting the Log viewer.
+        startDebugDiagnostics(container.logBuffer, container.appScope)
     }
 }
