@@ -18,6 +18,8 @@ class AddSpaceRuleTest {
         css shouldContain "margin-top: 50px"
         // Posts are div[role="article"] now; the bare `article` tag matches 0.
         css shouldContain "[role=\"article\"]"
+        // Mobile Bloks DOM: a feed story is div[data-tracking-duration-id].
+        css shouldContain "div[data-tracking-duration-id]"
     }
 
     @Test

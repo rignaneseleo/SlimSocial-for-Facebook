@@ -20,6 +20,8 @@ class CenterTextRuleTest {
         // layout Facebook serves today (measured on a live session).
         css shouldContain "[data-ad-preview=\"message\"]"
         css shouldContain "[data-ad-rendering-role=\"story_message\"]"
+        // Mobile Bloks DOM: post copy is .native-text inside a TextArea.
+        css shouldContain "[data-mcomponent=\"TextArea\"] .native-text"
     }
 
     @Test

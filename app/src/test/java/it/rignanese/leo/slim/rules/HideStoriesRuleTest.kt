@@ -18,6 +18,10 @@ class HideStoriesRuleTest {
         css shouldContain "#MStoriesTray"
         // Best-effort modern hook — unverified, see the rule's KDoc.
         css shouldContain "[aria-label=\"Stories\"]"
+        // Mobile Bloks DOM: the tray is a horizontal scroller, and its parent
+        // carries an explicit height that has to be collapsed with it.
+        css shouldContain "[data-is-h-scrollable=\"true\"]"
+        css shouldContain ":has(> [data-is-h-scrollable=\"true\"])"
     }
 
     @Test

@@ -12,6 +12,11 @@ import it.rignanese.leo.slim.domain.InjectionRule
  * `50px` on every post (verified on 2 and on 10 posts).
  *
  * The tag selector stays for mbasic mode.
+ *
+ * Third selector added 2026-08-03 after the UA fix: Facebook now serves the
+ * mobile Bloks/MComponent DOM, where a feed story is
+ * `div[data-tracking-duration-id]` and `[role="article"]` matches 0. Verified
+ * on-device — computed `margin-top` moved 0px to 50px across 9 posts.
  */
 class AddSpaceRule : InjectionRule {
     override val id: String = "add_space"
@@ -23,6 +28,7 @@ class AddSpaceRule : InjectionRule {
 
     private companion object {
         const val CSS =
-            "article, [role=\"article\"] { margin-top: 50px !important; }"
+            "article, [role=\"article\"], div[data-tracking-duration-id] " +
+                "{ margin-top: 50px !important; }"
     }
 }

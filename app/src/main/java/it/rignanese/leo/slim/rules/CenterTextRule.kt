@@ -13,8 +13,16 @@ import it.rignanese.leo.slim.domain.InjectionRule
  * `data-ad-rendering-role="story_message"` — verified to flip computed
  * `text-align` from `start` to `center` on 4-14 posts.
  *
- * Both selectors ship: the legacy one still applies in mbasic mode, which the
- * app can still be switched to.
+ * All three ship: the legacy one still applies in mbasic mode, the
+ * `data-ad-*` pair to the desktop DOM, and the third to the mobile
+ * Bloks/MComponent DOM Facebook serves after the UA fix, where post copy is a
+ * `.native-text` div inside a `[data-mcomponent="TextArea"]`. Verified
+ * on-device 2026-08-03 — computed `text-align` moved start to center.
+ *
+ * Known imprecision on mobile: a post's author line and timestamp are also
+ * TextAreas, so they can centre too. Bloks exposes no attribute that marks the
+ * message specifically; distinguishing it would need JS to tag the longest
+ * block, which is not worth the machinery for a cosmetic toggle.
  */
 class CenterTextRule : InjectionRule {
     override val id: String = "center_text"
@@ -28,6 +36,8 @@ class CenterTextRule : InjectionRule {
         const val CSS =
             "._5rgt._5msi { text-align: center; } " +
                 "[data-ad-preview=\"message\"], [data-ad-rendering-role=\"story_message\"] " +
+                "{ text-align: center !important; } " +
+                "div[data-tracking-duration-id] [data-mcomponent=\"TextArea\"] .native-text " +
                 "{ text-align: center !important; }"
     }
 }
