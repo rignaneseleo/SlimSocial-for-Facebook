@@ -33,7 +33,23 @@ object WebViewFactory {
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             builtInZoomControls = true
             displayZoomControls = false
+            // Facebook opens some flows (login re-auth, share sheets) through
+            // window.open. Without these the call is silently dropped and the
+            // UI looks dead.
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(true)
         }
+        // Focusable in touch mode so text fields and the page behave normally.
+        //
+        // Deliberately NO setOnTouchListener that calls requestFocus(): that
+        // was tried while chasing the notifications panel and it swallowed the
+        // first gestures after load. Measured on a Pixel 10 Pro 2026-08-03 with
+        // 14 scripted swipes — swipes 1 and 2 moved scrollY by 0 while the
+        // remaining 12 moved it ~860px each. Requesting focus mid-gesture
+        // cancels that gesture. The panel bug was the WebView `wv` UA token
+        // (see UserAgentResolver), not focus.
+        webView.isFocusable = true
+        webView.isFocusableInTouchMode = true
         return webView
     }
 }

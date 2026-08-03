@@ -75,7 +75,14 @@ fun BrowserScreen(
             // Reactively follow Settings: only the UA mutates here. The home URL
             // change does NOT auto-navigate — that would yank the user out of
             // wherever they are. Initial URL is set once in `factory`.
-            webView.settings.userAgentString = userAgent
+            //
+            // Guarded on inequality: WebSettings.setUserAgentString reloads the
+            // page when the value changes, and this block runs on every
+            // recomposition. Assigning unconditionally risks yanking the page
+            // out from under whatever the user just opened.
+            if (webView.settings.userAgentString != userAgent) {
+                webView.settings.userAgentString = userAgent
+            }
         },
     )
 }
