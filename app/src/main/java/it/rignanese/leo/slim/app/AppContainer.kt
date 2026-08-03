@@ -53,7 +53,12 @@ class AppContainer(appContext: Context) {
 
     val urlRouter: UrlRouter = UrlRouter()
     val homeUrlBuilder: HomeUrlBuilder = HomeUrlBuilder()
-    val userAgentResolver: UserAgentResolver = UserAgentResolver()
+    // Seeded with this device's real WebView UA; the resolver strips the `wv`
+    // token from it (see UserAgentResolver.stripWebViewToken — Facebook serves
+    // a broken bundle to anything advertising itself as an Android WebView).
+    val userAgentResolver: UserAgentResolver = UserAgentResolver(
+        deviceUserAgent = android.webkit.WebSettings.getDefaultUserAgent(appContext),
+    )
     val injectionComposer: InjectionComposer = InjectionComposer()
 
     /** Flavor-resolved PRO theme catalog (full: real themes; fdroid: empty). */
