@@ -12,8 +12,8 @@ android {
         applicationId = "it.rignanese.leo.slimfacebook"
         minSdk = 24
         targetSdk = 36
-        versionCode = 117
-        versionName = "26.05.03+117"
+        versionCode = 118
+        versionName = "26.08.04+118"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -148,7 +148,7 @@ dependencies {
     // Proprietary deps — only land in the `full` (Play Store) flavor so the
     // F-Droid APK contains zero Sentry / Billing / Review classes.
     "fullImplementation"("io.sentry:sentry-android:7.+")
-    "fullImplementation"("com.android.billingclient:billing-ktx:7.+")
+    "fullImplementation"("com.android.billingclient:billing-ktx:8.0.0")
     "fullImplementation"("com.google.android.play:review-ktx:2.+")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
