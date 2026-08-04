@@ -44,6 +44,9 @@ void showToast(String text) => Fluttertoast.showToast(
 
 extension StringExtension on String {
   String capitalize() {
+    //a missing translation resolves to an empty string, and indexing it
+    //used to throw a RangeError while building the settings screen
+    if (isEmpty) return this;
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }

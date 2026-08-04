@@ -7,9 +7,11 @@ class PrefController {
   static String getHomePage() {
     var initialURl = kTouchFacebookHomeUrl;
 
-    if (sp.getBool("use_mbasic") ?? false) initialURl = kFacebookHomeBasicUrl;
+    if (sp.getBool(SpKeys.useMbasic) ?? false) {
+      initialURl = kFacebookHomeBasicUrl;
+    }
 
-    if (sp.getBool("recent_first") ?? false) {
+    if (sp.getBool(SpKeys.recentFirst) ?? false) {
       return initialURl + suffixRecentFirst;
     }
 
@@ -17,44 +19,38 @@ class PrefController {
   }
 
   static String getUserAgent() {
-    const spKeyEnabled = "custom_useragent_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
-      final customUserAgent = sp.getString("custom_useragent");
-      if (customUserAgent?.isNotEmpty ?? false) {
-        debugPrint("Using custom user agent: $customUserAgent");
-        return customUserAgent!;
-      }
+    final customUserAgent = _getOverride(SpKeys.customUserAgent);
+    if (customUserAgent != null) {
+      debugPrint("Using custom user agent: $customUserAgent");
+      return customUserAgent;
     }
 
-    if (sp.getBool("use_mbasic") ?? false) return kOperaMiniUserAgent;
+    if (sp.getBool(SpKeys.useMbasic) ?? false) return kOperaMiniUserAgent;
 
     return kFirefoxUserAgent;
   }
 
   static String? getUserCustomCss() {
-    const spKeyEnabled = "custom_css_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
-      final customCss = sp.getString("custom_css");
-      if (customCss?.isNotEmpty ?? false) {
-        debugPrint("Using custom css: $customCss");
-        return customCss!;
-      }
-    }
-
-    return null;
+    final customCss = _getOverride(SpKeys.customCss);
+    if (customCss != null) debugPrint("Using custom css: $customCss");
+    return customCss;
   }
 
   static String? getUserCustomJs() {
-    const spKeyEnabled = "custom_js_enabled";
-    if (sp.getBool(spKeyEnabled) ?? false) {
-      final customJs = sp.getString("custom_js");
-      if (customJs?.isNotEmpty ?? false) {
-        debugPrint("Using custom js: $customJs");
-        return customJs!;
-      }
-    }
+    final customJs = _getOverride(SpKeys.customJs);
+    if (customJs != null) debugPrint("Using custom js: $customJs");
+    return customJs;
+  }
 
-    return null;
+  /// Returns the value stored under [spKey], but only when its companion
+  /// `<spKey>_enabled` switch is on and the value is not blank.
+  static String? _getOverride(String spKey) {
+    if (!(sp.getBool(SpKeys.enabled(spKey)) ?? false)) return null;
+
+    final value = sp.getString(spKey);
+    if (value == null || value.isEmpty) return null;
+
+    return value;
   }
 }
 

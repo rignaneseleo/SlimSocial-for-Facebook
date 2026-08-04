@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,6 +19,7 @@ import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
@@ -44,7 +46,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   WebViewController _initWebViewController() {
     final homepage = PrefController.getHomePage();
-    final controller = (WebViewController())
+    final controller = WebViewController(
+      onPermissionRequest: handleWebViewPermissionRequest,
+    )
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
       ..setUserAgent(PrefController.getUserAgent())
@@ -74,6 +78,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (Platform.isAndroid) {
       (controller.platform as AndroidWebViewController)
+        //videos and reels are muted until the page sees a "user gesture", and
+        //the gesture the webview recognises is not the one that starts the
+        //video: without this the first taps only toggle the sound off again
+        ..setMediaPlaybackRequiresUserGesture(false)
         ..setCustomWidgetCallbacks(
           onShowCustomWidget:
               (Widget widget, OnHideCustomWidgetCallback callback) {
@@ -92,7 +100,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         )
         ..setOnShowFileSelector(
           (FileSelectorParams params) async {
-            final photosPermission = sp.getBool("photos_permission") ?? false;
+            final photosPermission =
+                sp.getBool(SpKeys.photosPermission) ?? false;
 
             if (photosPermission) {
               final result = await FilePicker.platform.pickFiles();
@@ -110,7 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         )
         ..setGeolocationPermissionsPromptCallbacks(
           onShowPrompt: (request) async {
-            final gpsPermission = sp.getBool("gps_permission") ?? false;
+            final gpsPermission = sp.getBool(SpKeys.gpsPermission) ?? false;
 
             if (gpsPermission) {
               // request location permission
@@ -256,7 +265,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
               icon: const Icon(Icons.ios_share_outlined),
             ),
-          if (sp.getBool("enable_messenger") ?? true)
+          if (sp.getBool(SpKeys.enableMessenger) ?? true)
             IconButton(
               onPressed: () async {
                 await Navigator.of(context).push(
@@ -296,6 +305,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   await _controller.clearCache();
                   await _controller.clearLocalStorage();
                   _controller = _initWebViewController();
+                  break;
+                case "exit":
+                  await SystemNavigator.pop();
                   break;
                 default:
                   debugPrint("Unknown menu item: $item");
@@ -352,6 +364,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                   title: Text("reset".tr().capitalize()),
                 ),
               ),
+              PopupMenuItem<String>(
+                value: "exit",
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.exit_to_app),
+                  title: Text("exit".tr().capitalize()),
+                ),
+              ),
             ],
           ),
         ],
@@ -388,10 +408,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> injectCss() async {
-    var cssList = "";
-    for (final css in CustomCss.cssList) {
-      if (css.isEnabled()) cssList += css.code;
-    }
+    final cssList =
+        CustomCss.buildFacebookCss(PrefController.getUserCustomCss());
 
     //create the function that will be called later
     await _controller.runJavaScript(CustomJs.removeAdsFunc);
@@ -402,14 +420,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
                         ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
                         ${CustomJs.injectCssFunc(cssList)}
-                         ${(sp.getBool('hide_ads') ?? true) ? "removeAds();" : ""}
+                         ${(sp.getBool(SpKeys.hideAds) ?? true) ? "removeAds();" : ""}
                     });"""
         .replaceAll("\n", " ");
     await _controller.runJavaScript(code);
   }
 
   Future<void> runJs() async {
-    if (sp.getBool('hide_ads') ?? true) {
+    if (sp.getBool(SpKeys.hideAds) ?? true) {
       //setup the observer to run on page updates
       await _controller.runJavaScript(CustomJs.removeAdsObserver);
     }
