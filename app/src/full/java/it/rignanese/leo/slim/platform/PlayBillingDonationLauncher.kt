@@ -111,8 +111,8 @@ class PlayBillingDonationLauncher(private val context: Context) : DonationLaunch
             )
             .build()
 
-        client.queryProductDetailsAsync(params) { _, list ->
-            val productDetails = list.firstOrNull()
+        client.queryProductDetailsAsync(params) { _, result ->
+            val productDetails = result.productDetailsList.firstOrNull()
             if (productDetails == null) {
                 if (cont.isActive) {
                     cont.resume(DonationResult.Error("Subscription not found: $productId"))
