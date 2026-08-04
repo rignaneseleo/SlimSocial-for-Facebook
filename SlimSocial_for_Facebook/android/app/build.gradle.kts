@@ -14,6 +14,16 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+// Codemagic exports CI=true and CM_KEYSTORE_* when Android code signing is configured.
+// Never call file(null) — that NPE's in :app:signReleaseBundle (local + misconfigured CI).
+val cmKeystorePath = System.getenv("CM_KEYSTORE_PATH")
+val useCodemagicSigning =
+    System.getenv("CI") != null && !cmKeystorePath.isNullOrBlank()
+val useLocalSigning =
+    !useCodemagicSigning &&
+        keystorePropertiesFile.exists() &&
+        keystoreProperties["storeFile"] != null
+
 android {
     namespace = "it.rignanese.leo.slimfacebook"
     compileSdk = flutter.compileSdkVersion
@@ -41,12 +51,12 @@ android {
 
     signingConfigs {
         create("release") {
-            if (System.getenv("CI") != null) { // CI=true is exported by Codemagic
-                storeFile = file(System.getenv("CM_KEYSTORE_PATH"))
+            if (useCodemagicSigning) {
+                storeFile = file(cmKeystorePath!!)
                 storePassword = System.getenv("CM_KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("CM_KEY_ALIAS")
                 keyPassword = System.getenv("CM_KEY_PASSWORD")
-            } else {
+            } else if (useLocalSigning) {
                 keyAlias = keystoreProperties["keyAlias"] as String?
                 keyPassword = keystoreProperties["keyPassword"] as String?
                 storeFile = keystoreProperties["storeFile"]?.let { storeFilePath -> file(storeFilePath as String) }
@@ -54,10 +64,13 @@ android {
             }
         }
     }
-    
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (useCodemagicSigning || useLocalSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            // else: unsigned release (debug keys not forced — Codemagic must supply CM_*)
         }
     }
 }
