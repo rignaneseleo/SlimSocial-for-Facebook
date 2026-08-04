@@ -67,5 +67,8 @@
   "permissions": "Permissions",
   "enable_messenger": "Enable Messenger",
   "report_issue": "Report an issue",
-  "source_code": "Source code"
+  "source_code": "Source code",
+  "top": "Scroll to the top",
+  "reset": "Reset",
+  "exit": "Exit app"
 }

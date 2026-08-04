@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 
 class CustomJs {
   static String injectCssFunc(String css) {
+    //jsonEncode gives us a valid JS string literal: it escapes quotes,
+    //backslashes and newlines, so user-provided CSS can't break out of the
+    //call and turn the whole injection into a syntax error
     final str = '''
       (function (css) {
         var node = document.createElement('style');
         node.innerHTML = css;
         document.body.appendChild(node);
-      }) ('$css');
+      }) (${jsonEncode(css)});
     ''';
     return str;
   }
@@ -92,12 +97,17 @@ javascript:function foo() {
 """;
 
   static String removeAdsObserver = """
-if (typeof newPostsObserver !== 'undefined') {
+// The observer is stored on `window` so it survives being re-injected on every
+// page load: without a global we cannot tell whether one is already running.
+// (The guard used to read `typeof newPostsObserver !== 'undefined'` against a
+// block-scoped `const` declared inside the branch, so it was always false and
+// the observer was never installed -- ads came back as soon as you scrolled.)
+if (typeof window.newPostsObserver === 'undefined') {
     // Select the node that will be observed for changes
     const bodyNode = document.body;
 
     // Create a new observer object
-    const newPostsObserver = new MutationObserver(function (mutations) {
+    window.newPostsObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             // Filter out added nodes that are not <section> elements
             const addedSections = Array.from(mutation.addedNodes).filter(node => node.nodeName === 'SECTION');
@@ -113,7 +123,7 @@ if (typeof newPostsObserver !== 'undefined') {
     const config = { childList: true, subtree: true };
 
     // Start observing the target node for configured mutations
-    newPostsObserver.observe(bodyNode, config);
+    window.newPostsObserver.observe(bodyNode, config);
 }
   """;
 }

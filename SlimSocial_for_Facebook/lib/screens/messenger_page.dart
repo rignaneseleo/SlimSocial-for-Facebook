@@ -14,6 +14,7 @@ import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
@@ -41,7 +42,9 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       homepage = '$kMessengerUrl$homepage';
     }
 
-    final controller = (WebViewController())
+    final controller = WebViewController(
+      onPermissionRequest: handleWebViewPermissionRequest,
+    )
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
       ..setUserAgent(PrefController.getUserAgent())
@@ -67,9 +70,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
     if (Platform.isAndroid) {
       (controller.platform as AndroidWebViewController)
+        //let videos and voice clips play with sound on the first tap
+        ..setMediaPlaybackRequiresUserGesture(false)
         ..setOnShowFileSelector(
           (FileSelectorParams params) async {
-            final photosPermission = sp.getBool("photos_permission") ?? false;
+            final photosPermission =
+                sp.getBool(SpKeys.photosPermission) ?? false;
 
             if (photosPermission) {
               final result = await FilePicker.platform.pickFiles();
@@ -87,7 +93,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         )
         ..setGeolocationPermissionsPromptCallbacks(
           onShowPrompt: (request) async {
-            final gpsPermission = sp.getBool("gps_permission") ?? false;
+            final gpsPermission = sp.getBool(SpKeys.gpsPermission) ?? false;
 
             if (gpsPermission) {
               // request location permission
@@ -236,14 +242,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<void> injectCss() async {
-    var cssList = "";
-
-    if (CustomCss.darkThemeCss.isEnabled()) {
-      cssList += CustomCss.darkThemeMessengerCss.code;
-    }
-
-    final userCustomCss = PrefController.getUserCustomCss();
-    if (userCustomCss?.isNotEmpty ?? false) cssList += userCustomCss!;
+    final cssList =
+        CustomCss.buildMessengerCss(PrefController.getUserCustomCss());
 
     final code = """
                     document.addEventListener("DOMContentLoaded", function() {

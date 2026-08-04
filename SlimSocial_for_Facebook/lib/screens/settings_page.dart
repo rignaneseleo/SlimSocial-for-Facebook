@@ -32,9 +32,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   bool isDev = false;
 
   final Map<String, Permission> permissions = const {
-    "gps_permission": Permission.locationWhenInUse,
-    "camera_permission": Permission.camera,
-    "photos_permission": Permission.photos,
+    SpKeys.gpsPermission: Permission.locationWhenInUse,
+    SpKeys.cameraPermission: Permission.camera,
+    SpKeys.photosPermission: Permission.photos,
   };
 
   @override
@@ -87,48 +87,48 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
-                    sp.setBool("enable_messenger", value);
+                    sp.setBool(SpKeys.enableMessenger, value);
                   });
                 },
-                initialValue: sp.getBool("enable_messenger") ?? true,
+                initialValue: sp.getBool(SpKeys.enableMessenger) ?? true,
                 leading: const Icon(Icons.messenger),
                 title: Text('enable_messenger'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
                   setState(() {
-                    sp.setBool("hide_ads", value);
+                    sp.setBool(SpKeys.hideAds, value);
                   });
                   ref.invalidate(fbWebViewProvider);
                 },
-                initialValue: sp.getBool("hide_ads") ?? true,
+                initialValue: sp.getBool(SpKeys.hideAds) ?? true,
                 leading: const Icon(Icons.hide_source),
                 title: Text('hide_ads'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
-                    sp.setBool("recent_first", value);
+                    sp.setBool(SpKeys.recentFirst, value);
                   });
                   ref
                       .read(fbWebViewProvider.notifier)
                       .updateUrl(PrefController.getHomePage());
                 },
-                initialValue: sp.getBool("recent_first"),
+                initialValue: sp.getBool(SpKeys.recentFirst),
                 leading: const Icon(Icons.rss_feed),
                 title: Text('recent_first'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
-                    sp.setBool("use_mbasic", value);
+                    sp.setBool(SpKeys.useMbasic, value);
                   });
                   ref
                       .read(fbWebViewProvider.notifier)
                       .updateUrl(PrefController.getHomePage());
                   Restart.restartApp();
                 },
-                initialValue: sp.getBool("use_mbasic") ?? false,
+                initialValue: sp.getBool(SpKeys.useMbasic) ?? false,
                 leading: const Icon(Icons.abc),
                 title: Text('use_mbasic'.tr()),
                 description: Text('use_mbasic_desc'.tr()),
@@ -146,7 +146,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   await handlePermission(value, permission);
 
                   setState(() {
-                    sp.setBool("gps_permission", value);
+                    sp.setBool(SpKeys.gpsPermission, value);
                   });
                   if (value == false) {
                     //restart so the weview is blocked
@@ -155,7 +155,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("gps_permission") ?? false,
+                initialValue: sp.getBool(SpKeys.gpsPermission) ?? false,
                 leading: const Icon(Icons.gps_fixed),
                 title: Text('gps_permission'.tr()),
               ),
@@ -169,13 +169,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                   if (oldVal != value) {
                     setState(() {
-                      sp.setBool("camera_permission", value);
+                      sp.setBool(SpKeys.cameraPermission, value);
                     });
                     ref.invalidate(fbWebViewProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("camera_permission") ?? false,
+                initialValue: sp.getBool(SpKeys.cameraPermission) ?? false,
                 leading: const Icon(Icons.camera_alt),
                 title: Text('camera_permission'.tr()),
               ),
@@ -189,13 +189,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                   if (oldVal != value) {
                     setState(() {
-                      sp.setBool("photo_permission", value);
+                      sp.setBool(SpKeys.photosPermission, value);
                     });
                     ref.invalidate(fbWebViewProvider);
                   }
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool("photo_permission") ?? false,
+                initialValue: sp.getBool(SpKeys.photosPermission) ?? false,
                 leading: const Icon(Icons.photo_camera_back_outlined),
                 title: Text('photo_permission'.tr()),
               ),
@@ -272,12 +272,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.person),
                 title: Text('custom_useragent'.tr()),
                 trailing: Visibility(
-                  visible: sp.getBool("custom_useragent_enabled") ?? false,
+                  visible: sp.getBool(SpKeys.enabled(SpKeys.customUserAgent)) ?? false,
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_useragent",
+                    spKey: SpKeys.customUserAgent,
                     hint: PrefController.getUserAgent(),
                   );
                   setState(() {});
@@ -287,12 +287,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.css),
                 title: Text('custom_js'.tr()),
                 trailing: Visibility(
-                  visible: sp.getBool("custom_js_enabled") ?? false,
+                  visible: sp.getBool(SpKeys.enabled(SpKeys.customJs)) ?? false,
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_js",
+                    spKey: SpKeys.customJs,
                     hint: CustomJs.exampleJs,
                   );
                   setState(() {});
@@ -302,12 +302,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.javascript_sharp),
                 title: Text('custom_css'.tr()),
                 trailing: Visibility(
-                  visible: sp.getBool("custom_css_enabled") ?? false,
+                  visible: sp.getBool(SpKeys.enabled(SpKeys.customCss)) ?? false,
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
                   await showTextInputDialog(
-                    spKey: "custom_css",
+                    spKey: SpKeys.customCss,
                     hint: '._5rgt._5msi { text-align: center;}',
                   );
                   setState(() {});
@@ -315,9 +315,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               ),
               if (isDev)
                 SettingsTile.navigation(
-                  enabled: !sp.getString("custom_css").isNullOrEmpty() ||
-                      !sp.getString("custom_js").isNullOrEmpty() ||
-                      !sp.getString("custom_useragent").isNullOrEmpty(),
+                  enabled: !sp.getString(SpKeys.customCss).isNullOrEmpty() ||
+                      !sp.getString(SpKeys.customJs).isNullOrEmpty() ||
+                      !sp.getString(SpKeys.customUserAgent).isNullOrEmpty(),
                   leading: const Icon(Icons.send_time_extension),
                   title: Text('send_to_dev'.tr()),
                   description: Text('send_to_dev_desc'.tr()),
@@ -327,14 +327,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.private_connectivity_outlined),
                 title: Text('custom_proxy'.tr()),
                 trailing: Visibility(
-                  visible: sp.getBool("custom_proxy_enabled") ?? false,
+                  visible: sp.getBool(SpKeys.enabled(SpKeys.customProxy)) ?? false,
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
-                  const spKey = "custom_proxy";
-                  const spKeyEnabled = "${spKey}_enabled";
-                  const spKeyIp = "${spKey}_ip";
-                  const spKeyPort = "${spKey}_port";
+                  const spKey = SpKeys.customProxy;
+                  final spKeyEnabled = SpKeys.enabled(spKey);
+                  final spKeyIp = SpKeys.customProxyIp;
+                  final spKeyPort = SpKeys.customProxyPort;
 
                   final ip = sp.getString(spKeyIp);
                   final port = sp.getString(spKeyPort);
@@ -523,7 +523,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     required String spKey,
     String? hint,
   }) async {
-    final spKeyEnabled = "${spKey}_enabled";
+    final spKeyEnabled = SpKeys.enabled(spKey);
 
     final _textEditingController = TextEditingController();
     _textEditingController.text = sp.getString(spKey) ?? "";
@@ -647,16 +647,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 myCss = myJs = myUserAgent = "";
 
                 if (sendCss) {
-                  myCss = Uri.encodeFull(sp.getString("custom_css") ?? "");
+                  myCss = Uri.encodeFull(sp.getString(SpKeys.customCss) ?? "");
                 }
 
                 if (sendJs) {
-                  myJs = Uri.encodeFull(sp.getString("custom_js") ?? "");
+                  myJs = Uri.encodeFull(sp.getString(SpKeys.customJs) ?? "");
                 }
 
                 if (sendUserAgent) {
                   myUserAgent =
-                      Uri.encodeFull(sp.getString("custom_useragent") ?? "");
+                      Uri.encodeFull(sp.getString(SpKeys.customUserAgent) ?? "");
                 }
 
                 final link =
@@ -685,10 +685,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   Future<void> showProxyDialog() async {
-    const spKey = "custom_proxy";
-    const spKeyEnabled = "${spKey}_enabled";
-    const spKeyIp = "${spKey}_ip";
-    const spKeyPort = "${spKey}_port";
+    const spKey = SpKeys.customProxy;
+    final spKeyEnabled = SpKeys.enabled(spKey);
+    final spKeyIp = SpKeys.customProxyIp;
+    final spKeyPort = SpKeys.customProxyPort;
 
     final _ipController = TextEditingController();
     _ipController.text = sp.getString(spKeyIp) ?? "";

@@ -11,6 +11,28 @@ class CustomCss {
     hideMessengerSidebar,
   ];
 
+  /// Assembles the stylesheet injected into the Facebook webview.
+  ///
+  /// [userCss] is the user's own stylesheet and goes last so it can override
+  /// the built-in rules. It used to be left out of this page altogether, which
+  /// made the "Use custom CSS style" setting look broken everywhere except
+  /// Messenger.
+  static String buildFacebookCss(String? userCss) {
+    return [
+      for (final css in cssList)
+        if (css.isEnabled()) css.code,
+      if (userCss != null && userCss.isNotEmpty) userCss,
+    ].join(' ');
+  }
+
+  /// Assembles the stylesheet injected into the Messenger webview.
+  static String buildMessengerCss(String? userCss) {
+    return [
+      if (darkThemeCss.isEnabled()) darkThemeMessengerCss.code,
+      if (userCss != null && userCss.isNotEmpty) userCss,
+    ].join(' ');
+  }
+
   static MyCss centerTextPostsCss = MyCss(
     key: 'center_text',
     code: '._5rgt._5msi { text-align: center;}',
@@ -518,10 +540,11 @@ class MyCss {
     required this.code,
     this.defaultEnabled = false,
   }) {
-    code = code
-        .replaceAll(RegExp(r'\s+'), '')
-        .replaceAll("'", r"\'")
-        .replaceAll("\n", " ");
+    //collapse the source formatting onto a single line, but keep one space:
+    //stripping whitespace entirely mangled every multi-token value, turning
+    //`border: 1px solid #333` into the unparseable `border:1pxsolid#333`.
+    //Quotes are not escaped here: CustomJs.injectCssFunc encodes the string.
+    code = code.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
   String key;
   String description;
