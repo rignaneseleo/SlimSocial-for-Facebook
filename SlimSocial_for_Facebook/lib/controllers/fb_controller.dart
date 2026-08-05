@@ -30,6 +30,23 @@ class PrefController {
     return kFirefoxUserAgent;
   }
 
+  /// Text scaling for the webview, as a percentage of the page's own size.
+  ///
+  /// Clamped on the way out as well as on the way in, so a value written by an
+  /// older build (or a corrupted preference) can never render the page
+  /// unreadable.
+  static int getTextZoom() =>
+      _clampTextZoom(sp.getInt(SpKeys.textZoom) ?? kDefaultTextZoom);
+
+  static Future<void> setTextZoom(int textZoom) =>
+      sp.setInt(SpKeys.textZoom, _clampTextZoom(textZoom));
+
+  static int _clampTextZoom(int textZoom) {
+    if (textZoom < kMinTextZoom) return kMinTextZoom;
+    if (textZoom > kMaxTextZoom) return kMaxTextZoom;
+    return textZoom;
+  }
+
   static String? getUserCustomCss() {
     final customCss = _getOverride(SpKeys.customCss);
     if (customCss != null) debugPrint("Using custom css: $customCss");

@@ -28,6 +28,17 @@ const String kIpadUserAgent =
 const String kOperaMiniUserAgent =
     "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
 
+//text scaling applied to the webview, as a percentage
+//
+//Android multiplies the page text by the system font scale, and Facebook's
+//layout overflows instead of reflowing when it grows: text ends up clipped or
+//running off the screen. Pinning the scale would take large-text accessibility
+//away from the people who rely on it, so the value is a setting and is only
+//clamped to a range the page survives.
+const int kMinTextZoom = 80;
+const int kMaxTextZoom = 150;
+const int kDefaultTextZoom = 100;
+
 const String kEmailToDevUrl =
     "mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
 const String kGithubIssuesUrl =
@@ -55,6 +66,8 @@ class SpKeys {
   static const String gpsPermission = "gps_permission";
   static const String cameraPermission = "camera_permission";
   static const String photosPermission = "photos_permission";
+
+  static const String textZoom = "text_zoom";
 
   static const String enableMessenger = "enable_messenger";
   static const String hideAds = "hide_ads";

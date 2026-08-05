@@ -28,6 +28,7 @@ class MessengerPage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<MessengerPage> {
   late WebViewController _controller;
+  AndroidWebViewController? _androidController;
   bool isLoading = false;
 
   @override
@@ -54,6 +55,10 @@ class _HomePageState extends ConsumerState<MessengerPage> {
           onPageStarted: (String url) async {
             //inject the css as soon as the DOM is loaded
             await injectCss();
+
+            //re-read the zoom, so changing it in the settings takes effect on
+            //the next load instead of needing the app restarted
+            await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
             await runJs();
@@ -69,9 +74,13 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       ..loadRequest(Uri.parse(homepage));
 
     if (Platform.isAndroid) {
-      (controller.platform as AndroidWebViewController)
+      final androidController = controller.platform as AndroidWebViewController;
+      _androidController = androidController;
+
+      androidController
         //let videos and voice clips play with sound on the first tap
         ..setMediaPlaybackRequiresUserGesture(false)
+        ..setTextZoom(PrefController.getTextZoom())
         ..setOnShowFileSelector(
           (FileSelectorParams params) async {
             final photosPermission =

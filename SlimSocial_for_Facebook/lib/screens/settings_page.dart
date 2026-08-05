@@ -263,6 +263,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
                 leading: const Icon(Icons.format_line_spacing),
               ),
+              SettingsTile.navigation(
+                leading: const Icon(Icons.format_size),
+                title: Text('text_zoom'.tr()),
+                description: Text('text_zoom_desc'.tr()),
+                trailing: Text("${PrefController.getTextZoom()}%"),
+                onPressed: (context) async {
+                  await showTextZoomDialog();
+                  setState(() {});
+                  //the webview re-reads the zoom while the page reloads
+                  ref.invalidate(fbWebViewProvider);
+                },
+              ),
             ],
           ),
           SettingsSection(
@@ -581,6 +593,59 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   sp.setString(spKey, _textEditingController.text.trim());
                 });
                 Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> showTextZoomDialog() async {
+    var textZoom = PrefController.getTextZoom();
+
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('text_zoom'.tr()),
+          content: StatefulBuilder(
+            builder: (context, StateSetter _setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("$textZoom%"),
+                  Slider(
+                    value: textZoom.toDouble(),
+                    min: kMinTextZoom.toDouble(),
+                    max: kMaxTextZoom.toDouble(),
+                    //one stop every 5%, finer than that is not noticeable
+                    divisions: (kMaxTextZoom - kMinTextZoom) ~/ 5,
+                    label: "$textZoom%",
+                    onChanged: (value) =>
+                        _setState(() => textZoom = value.round()),
+                  ),
+                ],
+              );
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('reset'.tr().capitalize()),
+              onPressed: () async {
+                await PrefController.setTextZoom(kDefaultTextZoom);
+                if (context.mounted) Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('cancel'.tr().capitalize()),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text('save'.tr().capitalize()),
+              onPressed: () async {
+                await PrefController.setTextZoom(textZoom);
+                if (context.mounted) Navigator.of(context).pop();
               },
             ),
           ],
