@@ -64,5 +64,13 @@
   "cancel": "Отмена",
   "save": "Сохранить",
   "permissions": "Разрешения",
-  "enable_messenger": "Включить Messenger"
+  "enable_messenger": "Включить Messenger",
+  "text_zoom": "Размер текста",
+  "text_zoom_desc": "Изменяет размер текста страницы, не ломая вёрстку",
+  "check_permission": "Проверьте разрешение в настройках",
+  "report_issue": "Сообщить о проблеме",
+  "source_code": "Исходный код",
+  "top": "Прокрутить наверх",
+  "reset": "Сбросить",
+  "exit": "Выйти из приложения"
 }
