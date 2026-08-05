@@ -1,31 +1,16 @@
-# Crowdin configuration for SlimSocial for Facebook
-# Project: https://crowdin.com/project/slimsocial
-# Docs: https://developer.crowdin.com/configuration-file/
-#
-# Sync is handled by the Crowdin GitHub integration, which reads this file and
-# needs no credentials here. The env vars below are only used if you run the
-# Crowdin CLI locally:
-#   CROWDIN_PROJECT_ID       - numeric project id
-#   CROWDIN_PERSONAL_TOKEN   - personal access token
 project_id_env: CROWDIN_PROJECT_ID
 api_token_env: CROWDIN_PERSONAL_TOKEN
-
-preserve_hierarchy: false
-
+preserve_hierarchy: 
 files:
   - source: /SlimSocial_for_Facebook/assets/lang/en-US.json
     translation: /SlimSocial_for_Facebook/assets/lang/%locale%.json
     type: json
-    # Keep translations when a source string only changes slightly;
-    # they come back as "unapproved" instead of being dropped.
     update_option: update_as_unapproved
-    # The app uses a few non-standard locale file names; map Crowdin's
-    # language codes onto them so exports land on the existing files.
     languages_mapping:
       locale:
-        ar: ar-AR      # app ships ar-AR.json (Crowdin default would be ar-SA)
-        bn: bn-IN      # app ships bn-IN.json (Crowdin default would be bn-BD)
-        "no": no-NO    # Norwegian
-        nb: no-NO      # Norwegian Bokmal -> same file
-        sr: sr-SP      # Serbian (Cyrillic)
-        ur: ur-PK      # Urdu
+        ar: ar-AR
+        bn: bn-IN
+        'no': no-NO
+        nb: no-NO
+        sr: sr-SP
+        ur: ur-PK
