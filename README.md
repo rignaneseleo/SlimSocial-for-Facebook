@@ -2,6 +2,7 @@
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+[![Crowdin](https://badges.crowdin.net/slimsocial/localized.svg)](https://crowdin.com/project/slimsocial)
 # SlimSocial for Facebook 
 
 
@@ -33,6 +34,14 @@ To get started with SlimSocial for Facebook, you can download the app from the s
 [![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
 
 SlimSocial for Facebook is an open-source project, and contributions are welcome! If you would like to contribute to the project, feel free to submit a pull request.
+
+## Translations
+
+[![Crowdin](https://badges.crowdin.net/slimsocial/localized.svg)](https://crowdin.com/project/slimsocial)
+
+Translations are managed on [Crowdin](https://crowdin.com/project/slimsocial). If you want to help translate SlimSocial into your language (or improve an existing translation), just join the project there — no coding required.
+
+Please don't edit the JSON files in `SlimSocial_for_Facebook/assets/lang/` directly: they are synced automatically from Crowdin, so manual changes would be overwritten. Only the English source file (`en-US.json`) is edited in this repository.
 
 ## Support
 
