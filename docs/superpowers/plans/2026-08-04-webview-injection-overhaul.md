@@ -415,7 +415,7 @@ git commit -m "fix: inject each stylesheet once, into head, as text"
 
 The keyword list covers roughly 24 strings, several of them machine translations that do not match what Facebook actually renders, and it appends only `"sponsored_keyword_fb".tr()` — the label for the **app's** locale.
 
-That last part is the real gap. Facebook renders the label in the language of the **Facebook account**, which is frequently not the language the app is running in, and a feed can mix several. All 41 locale files already carry a `sponsored_keyword_fb` value, so bundling every one of them costs nothing and covers the mismatch.
+That last part is the real gap. Facebook renders the label in the language of the **Facebook account**, which is frequently not the language the app is running in, and a feed can mix several. All 43 locale files already carry a `sponsored_keyword_fb` value, so bundling every one of them costs nothing and covers the mismatch.
 
 The list is self-contained and lands first, so that Task 4's detection script has something to compile against.
 
@@ -453,13 +453,24 @@ void main() {
       }
     });
 
-    test('every label is long enough to survive the length guard', () {
+    test('short labels exist and are the CJK ones', () {
+      // CJK ad labels are genuinely two characters ("広告", "광고"), so they
+      // cannot clear the substring floor. They are not dropped — Task 4 matches
+      // anything below the floor as a whole string instead, which is safer than
+      // a two-character substring test anyway. This asserts the split is real,
+      // because an empty short list would silently mean no CJK detection.
+      final short =
+          kSponsoredLabels.where((l) => l.length < kMinSponsoredLabelLength);
+
+      expect(short, isNotEmpty);
+      expect(short, contains('広告'));
+      expect(short, contains('광고'));
+    });
+
+    test('no label is a single character', () {
+      // One character would match far too much even as an exact string.
       for (final label in kSponsoredLabels) {
-        expect(
-          label.length,
-          greaterThanOrEqualTo(kMinSponsoredLabelLength),
-          reason: '"$label" is too short to ever match',
-        );
+        expect(label.length, greaterThanOrEqualTo(2), reason: '"$label"');
       }
     });
 
@@ -487,10 +498,14 @@ Expected: `Error: Couldn't resolve the package 'slimsocial_for_facebook/utils/ad
 - [ ] **Step 3: Create `lib/utils/ad_filter.dart`**
 
 ```dart
-/// Shortest label the text tier will consider.
+/// Shortest label that may be matched as a *substring*.
 ///
-/// Short strings appear all over Facebook's own chrome, so matching them
-/// produces false positives.
+/// A short substring appears all over Facebook's own chrome, so testing for one
+/// inside a longer string produces false positives. Labels below this length are
+/// not discarded: Task 4 compares them against the candidate's whole trimmed
+/// text instead, which cannot fire mid-sentence. CJK labels ("広告", "광고") are
+/// genuinely two characters, so without that second path there would be no ad
+/// detection at all in Chinese, Japanese or Korean.
 const int kMinSponsoredLabelLength = 4;
 
 /// Labels Facebook uses to mark a sponsored post, lowercase, one or more per
@@ -572,7 +587,7 @@ fvm flutter test test/utils/ad_filter_test.dart
 
 Expected: all tests pass.
 
-If `every label is long enough` fails, a label is shorter than `kMinSponsoredLabelLength` — delete it, because the guard makes it unreachable.
+If `short labels exist and are the CJK ones` fails, the CJK entries were dropped from the list — put them back. They are matched as whole strings by Task 4, not as substrings, so the substring floor does not apply to them.
 
 - [ ] **Step 5: Verify the whole project**
 
@@ -628,9 +643,28 @@ Add to `test/utils/ad_filter_test.dart`, inside `main()` and below the `kSponsor
       expect(script, contains('/ads/about/'));
     });
 
-    test('bounds the text tier so prose mentioning the word is spared', () {
-      expect(script, contains('> 3'));
-      expect(script, contains('< 25'));
+    test('bounds substring matching so prose mentioning the word is spared', () {
+      expect(script, contains('lower.length < MIN_LEN'));
+      expect(script, contains('lower.length >= MAX_LEN'));
+    });
+
+    test('matches short labels against the whole string, not a substring', () {
+      // A two-character CJK label tested as a substring would fire inside
+      // ordinary prose; compared whole it cannot.
+      expect(script, contains('EXACT_LABELS'));
+      expect(script, contains('lower === EXACT_LABELS[e]'));
+    });
+
+    test('bundles the CJK labels into the exact-match list', () {
+      // Guards the split itself: if these ended up in the substring list they
+      // would be unreachable, and CJK ad detection would silently be dead.
+      final exact = script.substring(
+        script.indexOf('var EXACT_LABELS ='),
+        script.indexOf('var MIN_LEN ='),
+      );
+
+      expect(exact, contains('広告'));
+      expect(exact, contains('광고'));
     });
 
     test('embeds the bundled labels and the runtime extras', () {
@@ -674,14 +708,35 @@ Add to `test/utils/ad_filter_test.dart`, inside `main()` and below the `kSponsor
       expect(withDuplicate, bundled);
     });
 
-    test('ignores a runtime extra that is too short to match', () {
-      final withShort = adFilterScript(
+    test('routes a short runtime extra into the exact-match list', () {
+      // This is the CJK app-locale case. Dropping it for being short would
+      // remove ad detection in exactly the locales that need it, so it must
+      // survive — as an exact match rather than a substring.
+      final script = adFilterScript(
         placeholderText: 'x',
-        extraLabels: const ['ad'],
+        extraLabels: const ['广告'],
+      );
+      final exact = script.substring(
+        script.indexOf('var EXACT_LABELS ='),
+        script.indexOf('var MIN_LEN ='),
+      );
+      final substrings = script.substring(
+        script.indexOf('var LABELS ='),
+        script.indexOf('var EXACT_LABELS ='),
+      );
+
+      expect(exact, contains('广告'));
+      expect(substrings, isNot(contains('广告')));
+    });
+
+    test('still ignores a runtime extra of a single character', () {
+      final withOneChar = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['a'],
       );
       final bundled = adFilterScript(placeholderText: 'x');
 
-      expect(withShort, bundled);
+      expect(withOneChar, bundled);
     });
   });
 ```
@@ -727,22 +782,44 @@ String adFilterScript({
   required String placeholderText,
   List<String> extraLabels = const [],
 }) {
-  final labels = <String>[
+  // A runtime extra is the app locale's own label. It must not be dropped for
+  // being short: in a CJK locale it is exactly the two-character case, which is
+  // precisely when it matters most. Short entries go to the exact-match list.
+  final all = <String>{
     ...kSponsoredLabels,
     for (final label in extraLabels)
-      if (label.trim().length >= kMinSponsoredLabelLength)
-        label.trim().toLowerCase(),
-  ].toSet().toList();
+      if (label.trim().length >= 2) label.trim().toLowerCase(),
+  };
+
+  final substringLabels =
+      all.where((l) => l.length >= kMinSponsoredLabelLength).toList();
+  final exactLabels =
+      all.where((l) => l.length < kMinSponsoredLabelLength).toList();
 
   return '''
 (function () {
-  var LABELS = ${jsonEncode(labels)};
+  var LABELS = ${jsonEncode(substringLabels)};
+  var EXACT_LABELS = ${jsonEncode(exactLabels)};
+  var MIN_LEN = $kMinSponsoredLabelLength;
+  var MAX_LEN = 25;
   var PLACEHOLDER = ${jsonEncode(placeholderText)};
   var memo = null;
 
   function isSponsoredLabel(text) {
     if (!text) return false;
     var lower = text.toLowerCase();
+
+    // CJK labels are two characters, so they are compared against the whole
+    // trimmed string. An exact match cannot fire inside prose, which is what
+    // makes a two-character label safe to test at all.
+    for (var e = 0; e < EXACT_LABELS.length; e++) {
+      if (lower === EXACT_LABELS[e]) return true;
+    }
+
+    // Everything else is a substring test, bounded so that an ordinary post
+    // merely mentioning the word is not hidden along with the real ads.
+    if (lower.length < MIN_LEN || lower.length >= MAX_LEN) return false;
+
     // Once one language has matched, every later post in the same feed is
     // almost certainly the same language, so try that one first.
     if (memo && lower.indexOf(memo) !== -1) return true;
@@ -765,11 +842,11 @@ String adFilterScript({
     var candidates = post.querySelectorAll('span, div, a');
     for (var i = 0; i < candidates.length; i++) {
       var text = (candidates[i].textContent || '').trim();
-      // Without this window an ordinary post that merely mentions the word
-      // would be hidden along with the real ads.
-      if (text.length > 3 && text.length < 25 && isSponsoredLabel(text)) {
-        return true;
-      }
+      // Skip empty nodes and anything long enough to be post body rather than a
+      // label. The lower bound lives in isSponsoredLabel, which applies it only
+      // to substring matching: a two-character CJK label has to reach it.
+      if (text.length === 0 || text.length >= MAX_LEN) continue;
+      if (isSponsoredLabel(text)) return true;
     }
     return false;
   }
@@ -1508,7 +1585,7 @@ String resolveCssPlaceholders(String css, {required String accent}) {
 }
 ```
 
-If the analyzer reports `toARGB32` as undefined, the SDK predates it — use `color.value & 0xFFFFFF` instead.
+`toARGB32()` exists in the pinned SDK (3.44.8) — this was checked. Do **not** substitute `color.value`: it is `@Deprecated` there, so `flutter analyze` would stop reporting `No issues found!` and every task in this plan gates on that.
 
 - [ ] **Step 4: Replace the hardcoded colour**
 
@@ -1865,6 +1942,12 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 **Names used consistently.** `window.slimRemoveAds` is defined in Task 4 and called in Task 5. `window.slimAdObserver` is only in Task 5. `slim-ad-handled` and `slim-ad-placeholder` match between the script in Task 4 and the stylesheet in Task 2. `CustomJs.injectCssFunc(css, {required String id})` and `CustomJs.whenDomReady(body)` keep the same signatures in Tasks 2, 4 and 8. `cssColorFromColor` and `resolveCssPlaceholders` are only in Task 8.
 
 **Existing tests updated, not duplicated.** Tasks 2 and 5 replace named groups in `test/utils/js_test.dart`, and Task 7 replaces the `kFirefoxUserAgent` group in `test/consts_test.dart`, because those groups assert on values these tasks change. Tasks 4 and 8 only add groups.
+
+**Validated before acceptance, not just proofread.** Every generated script in this plan (`injectCssFunc`, `whenDomReady`, `adFilterScript`, `removeAdsObserver`) was extracted, had its Dart interpolations substituted, and was parsed with `node --check` — all four are syntactically valid. Every assertion in Task 2 was executed against the proposed implementation and passes. `toARGB32()` was confirmed present in the pinned SDK. `ru-RU.json` was confirmed still invalid (line 53 by the parser's count) and `hide_messenger_sidebar` still absent from `en-US.json`, so Task 6's premises hold; all 43 locale files do carry `sponsored_keyword_fb`.
+
+The label matcher was not merely string-asserted but **executed**: `広告` and `광고` match, `Sponsored` matches, and neither a long English sentence containing "Sponsored" nor a long Japanese sentence containing `広告` matches. That last case is the whole reason short labels are compared as whole strings.
+
+**A blocker this validation caught.** An earlier draft asserted that every bundled label was at least `kMinSponsoredLabelLength` (4) characters while also asserting that `広告` and `광고` were present — two tests that cannot both pass, since those labels are two characters. Worse, the text tier's lower bound of `> 3` meant CJK labels could never have matched even if the list kept them, so ad filtering was silently dead in Chinese, Japanese and Korean. Labels below the substring floor are now compared against the candidate's whole trimmed text, and a short *runtime* extra — which in a CJK locale is the app's own `sponsored_keyword_fb` — is routed there too instead of being discarded.
 
 **The one risky task is 7.** Everything else is invisible to Facebook: it changes what the app injects, not what the app asks for. Task 7 changes what Facebook serves, so it can regress the whole feed rather than one feature — which is why it re-runs Task 1's recon (Step 8), owns any selector change that recon forces, and is gated first in Task 10 Step 1. Its two constants are not guesses: the feed agent is the exact string captured from the reference app's live server config — the value that serves the mobile layout in the regions where a desktop agent breaks — and the Messenger agent is that app's conversation agent. `consts_test.dart` pins the feed agent verbatim so a well-meaning version bump cannot silently switch the served layout back.
 
