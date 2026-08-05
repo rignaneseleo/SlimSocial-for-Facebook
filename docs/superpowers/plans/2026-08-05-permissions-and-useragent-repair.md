@@ -3,11 +3,13 @@
 Three defects that field reports and store reviews keep surfacing, all confirmed
 against the current code:
 
-1. **The camera / photos toggles lie.** Their on/off state is read from a stored
-   boolean, not from the actual OS grant, so a switch can show *off* while the
-   permission is granted (and the in-webview camera path, gated on that same
-   boolean, then does nothing). The code carries three `//fixme … should use the
-   permission handler .isgranted` notes admitting exactly this.
+1. **The photos toggle cannot stay on, and gates something that was never
+   restricted.** `Permission.photos` resolves to `READ_MEDIA_IMAGES`, which only
+   exists on API 33+, so on Android 12 and below the grant is unobtainable and
+   the screen's existing OS→preference sync rewrites the stored boolean to
+   `false` on every entry. Meanwhile the operation it guards — the system
+   document picker — needs no runtime permission at all, so photo posting works
+   regardless. Users see a dead switch next to a feature that works.
 2. **A custom user agent does nothing until the app is force-quit.** The agent is
    bound to the `WebViewController` when it is constructed. The settings dialog
    only writes the preference and pops; nothing rebuilds the controller or
@@ -57,8 +59,8 @@ Verified in the tree at planning time:
 
 | # | Problem | Task |
 |---|---|---|
-| 1 | Camera/photos toggle state comes from a stored bool, not the OS grant | 3 |
-| 2 | Turn-off bounces the user to system settings unnecessarily | 3 |
+| 1 | File upload is gated on `Permission.photos`, unobtainable below API 33 and unnecessary for the system picker | 3 |
+| 2 | Turn-off bounces the user to system settings unnecessarily; the sync `setState`s without a `mounted` check | 3 |
 | 3 | Custom user agent never re-applies without a manual force-quit | 4 |
 | 4 | Messenger cannot obtain the microphone; no `RECORD_AUDIO` | 2 |
 
@@ -334,48 +336,108 @@ git commit -m "feat: support the microphone for webview voice and video calls"
 
 ---
 
-## Task 3: Make the permission toggles tell the truth
+## Task 3: Stop gating file upload on a permission it never needed
 
-The camera / photos / mic toggles read their state from a stored boolean that
-can disagree with the real OS grant, and turning one off drags the user into
-system settings. Drive the displayed state from the live permission status, and
-make turn-off a local action.
+The reported symptom is a photos toggle that will not stay on while photo posting
+works anyway. The cause is not a missing OS→preference sync — that sync already
+exists and runs on every entry to the screen (`_updatePermissionsToggle`, called
+from `initState`). The cause is *what it syncs*:
 
-This is permission-plugin and UI behaviour that a unit test cannot reach without
-platform mocks, so it is verified on a device in Task 5. The change itself is
-small and mechanical.
+- `Permission.photos` maps to `READ_MEDIA_IMAGES`, which only exists on **API 33+**.
+  Below that the grant is unobtainable, so the sync writes `false` on every entry
+  and the toggle physically cannot stay on.
+- What the toggle gates — `FilePicker.platform.pickFiles()` in
+  `setOnShowFileSelector` — goes through the system document picker, which needs
+  **no runtime permission on any API level**. The app was refusing an operation
+  the OS never restricted.
+
+So the fix is to delete the gate, not to strengthen it. Camera and microphone
+keep their toggles: those gate real `WebViewPermissionRequest`s that genuinely
+require a grant.
+
+Two smaller defects in the same code are fixed here because this task is already
+editing it: `_updatePermissionsToggle` calls `setState` after an `await` with no
+`mounted` check, and `handlePermission`'s turn-*off* branch drags the user into
+system settings.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/screens/settings_page.dart`
+- Modify: `SlimSocial_for_Facebook/lib/screens/home_page.dart`
+- Modify: `SlimSocial_for_Facebook/lib/screens/messenger_page.dart`
 
-- [ ] **Step 1: Seed the stored booleans from the OS on screen load**
+- [ ] **Step 1: Open the file picker unconditionally**
 
-In the settings screen's `initState` (or the existing async init), for each of
-`Permission.camera`, `Permission.photos`, `Permission.microphone`, read
-`await <permission>.status` and write the matching `SpKeys` boolean to
-`isGranted`, then `setState`. This makes the stored gate — which the webview
-handler reads — match reality on every entry to the screen, and makes the
-switches' `initialValue` correct because they read the same booleans.
+`setOnShowFileSelector` is duplicated verbatim in `home_page.dart` (~line 101)
+and `messenger_page.dart` (~line 75). In **both**, replace the body with:
 
-Guard any `BuildContext` use after the `await` with a `mounted` check;
-`use_build_context_synchronously` will flag it otherwise.
+```dart
+        ..setOnShowFileSelector(
+          (FileSelectorParams params) async {
+            // The system document picker needs no runtime permission, so there
+            // is nothing to gate: SlimSocial used to refuse this when its own
+            // photos toggle was off, which on Android 12 and below could never
+            // be switched on.
+            final result = await FilePicker.platform.pickFiles();
 
-- [ ] **Step 2: Turn-off should not open system settings**
+            if (result != null && result.files.single.path != null) {
+              final file = File(result.files.single.path!);
+              return [file.uri.toString()];
+            }
+            return [];
+          },
+        )
+```
+
+Leave the manifest's storage and media permissions alone — the image-download
+path still relies on them.
+
+- [ ] **Step 2: Remove the photos toggle**
+
+In `lib/screens/settings_page.dart`:
+
+- delete the `SpKeys.photosPermission: Permission.photos` entry from the
+  `permissions` map, so the sync no longer clobbers a key nothing reads;
+- delete the photos `SettingsTile.switchTile` (the one titled
+  `'photo_permission'.tr()`).
+
+Keep the `SpKeys.photosPermission` constant and its assertion in
+`consts_test.dart`. The key exists on user devices, and the constant documents
+that the string is taken so a future setting does not silently reuse it.
+
+- [ ] **Step 3: Guard the sync against a disposed screen**
+
+`_updatePermissionsToggle` awaits inside a loop and then calls `setState`. If the
+user leaves the settings screen mid-loop that throws. Bail out instead:
+
+```dart
+  Future<void> _updatePermissionsToggle() async {
+    for (final entry in permissions.entries) {
+      final permissionValue = await entry.value.isGranted;
+      if (!mounted) return;
+      setState(() {
+        sp.setBool(entry.key, permissionValue);
+      });
+    }
+  }
+```
+
+- [ ] **Step 4: Turn-off should not open system settings**
 
 In `handlePermission`, delete the turn-off branch that calls `openAppSettings()`.
-Turning a toggle off is SlimSocial's own gate: set the boolean false and let the
-webview handler deny future requests. Revoking the OS grant itself remains the
-user's choice in system settings, but the app must not force them there.
+Turning a toggle off is SlimSocial's own gate: store `false` and let the webview
+handler deny future requests. Revoking the OS grant stays the user's choice, but
+the app must not force them into system settings to express "no".
 
-The turn-*on* branch is unchanged: request the permission, and reflect the real
-result.
+The turn-*on* branch is unchanged: request the permission, reflect the real result.
 
-- [ ] **Step 3: Drop the stale `//fixme` comments**
+- [ ] **Step 5: Drop the stale `//fixme` comments**
 
-Remove the three `//fixme bug on sp, I should use the permission handler
-.isgranted` comments — they describe the bug this task fixes.
+Remove the `//fixme bug on sp, I should use the permission handler .isgranted`
+comments on the remaining tiles. They are wrong: the toggles *are* driven from
+`isGranted` via `_updatePermissionsToggle`, and for camera and microphone that is
+the correct behaviour.
 
-- [ ] **Step 4: Verify the whole project**
+- [ ] **Step 6: Verify the whole project**
 
 ```bash
 fvm flutter analyze lib/ test/ && fvm flutter test
@@ -384,11 +446,11 @@ fvm flutter analyze lib/ test/ && fvm flutter test
 Expected: `No issues found!` then all tests pass. (Behaviour is device-verified
 in Task 5; this gate only proves nothing else regressed.)
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add SlimSocial_for_Facebook/lib/screens/settings_page.dart
-git commit -m "fix: drive permission toggles from the real OS grant"
+git add SlimSocial_for_Facebook/lib/screens/settings_page.dart SlimSocial_for_Facebook/lib/screens/home_page.dart SlimSocial_for_Facebook/lib/screens/messenger_page.dart
+git commit -m "fix: stop gating webview file upload on an unneeded permission"
 ```
 
 ---
@@ -496,8 +558,17 @@ settings, return: it is **off**.
 With the camera toggle on, open a Facebook composer that offers the camera and
 take a photo.
 
-Expected: the camera opens. Before this plan, a stale boolean could leave it
-dead despite an OS grant.
+Expected: the camera opens.
+
+- [ ] **Step 3b: File upload works with no photos toggle at all**
+
+This is the check on Task 3, and it matters most on an **API 29 or 31** device —
+the versions where the old gate could never be switched on. Attach a photo to a
+post or a message using the file picker (not the camera).
+
+Expected: the system document picker opens immediately and the file attaches.
+There is no photos toggle in settings any more, and no `check_permission` toast.
+Before this plan, on these API levels the picker refused to open.
 
 - [ ] **Step 4: Microphone in a Messenger call**
 
@@ -529,21 +600,40 @@ it). Before this plan the change did nothing until a manual force-quit.
 Task 3, problem 3 → Task 4, problem 4 → Task 2. Task 1 is the baseline gate; Task
 5 covers the behaviour no unit test can reach.
 
-**Every task commits green.** Tasks 2 and 4 are test-anchored (a pure function
-and the agent resolver). Task 3 is device-verified because the permission plugin
-needs platform mocks to unit-test; its `analyze && test` gate only proves nothing
-else regressed. Every task ends on `fvm flutter analyze lib/ test/ &&
-fvm flutter test` before its commit.
+**Every task commits green.** Only Task 2 is test-anchored, because
+`isWebViewPermissionSupported` is the only pure function this plan introduces.
+Tasks 3 and 4 are UI and permission-plugin behaviour that needs platform mocks to
+unit-test, so they are device-verified in Task 5 and their `analyze && test` gate
+only proves nothing else regressed. Every task ends on
+`fvm flutter analyze lib/ test/ && fvm flutter test` before its commit.
 
-**Cross-plan interactions.** Task 4's tests call `PrefController.getUserAgent()`
-with no argument; if the webview-injection plan's Task 7 has added a `role`
-parameter, the no-argument call still resolves to the feed default and the tests
-stay valid. Task 2 adds `mic_permission` to the locale files and, if the
-injection plan's `test/lang_test.dart` exists, to its key list — the two plans do
-not otherwise touch the same code.
+**Validated against the real APIs, not from memory.**
+`WebViewPermissionResourceType` is a class with exactly two members (`camera`,
+`microphone`); unsupported types come from platform packages, which is why Task 2
+uses `AndroidWebViewPermissionResourceType.midiSysex`. The class overrides no
+`==`, and the Android implementation returns the canonical `static const`
+instances, so `_supported.contains` is sound. `Permission.microphone` exists in
+the pinned `permission_handler`. `AndroidSettingsTile` is a `StatelessWidget`
+reading `initialValue` straight into `Switch(value:)`, so the toggles do track
+rebuilds — which is what ruled out the widget as the cause of the stuck switch
+and pointed at `Permission.photos` instead.
+
+**No duplicated tests.** Task 4 deliberately adds none: four existing tests in
+`fb_controller_test.dart` already specify the user-agent resolver, and an earlier
+draft of this plan duplicated two of them. Where preferences are seeded, the file's
+`withPrefs({...})` helper is used, never bare `sp.setBool`/`sp.setString`, so
+`setUp` can reset state between tests.
+
+**Cross-plan interactions.** Task 4 touches no tests, so it cannot collide with
+the injection plan's Task 7, which gives `getUserAgent` a `role` parameter; the
+existing no-argument calls stay valid either way. Task 2 adds `mic_permission` to
+the locale files and, if the injection plan's `test/lang_test.dart` exists, to its
+key list — the two plans do not otherwise touch the same code.
 
 **Names used consistently.** `SpKeys.micPermission` = `"mic_permission"` is
-defined in Task 2 and reused by the toggle (Task 2) and the status sync (Task 3).
+defined in Task 2 and reused by the toggle and the `permissions` map (both Task 2).
+`SpKeys.photosPermission` survives Task 3 as a reserved on-disk key with nothing
+reading it, kept referenced by `consts_test.dart`.
 `isWebViewPermissionSupported` and `handleWebViewPermissionRequest` keep their
 signatures. The manifest microphone entries mirror the existing camera ones.
 
