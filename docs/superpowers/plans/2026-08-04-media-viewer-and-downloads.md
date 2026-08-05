@@ -1,16 +1,18 @@
-# Media Viewer and Downloads — Implementation Plan
+# Photo Viewer and Downloads — Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Let the user open any photo in the feed full-screen and save it, without leaving the app — and save videos where the page exposes a real video URL.
+**Goal:** Let the user open any photo in the feed full-screen and save it, without leaving the app or losing their scroll position.
 
-**Architecture:** A small injected script decorates every sufficiently large image and every video container with two overlay buttons. Tapping one posts a JSON message over a `JavaScriptChannel` to Dart, which either pushes a Flutter full-screen viewer route or runs the existing download helper. No page navigation is involved, so the feed keeps its scroll position and the webview is never sent to a raw CDN URL. Video download is attempted only where the DOM exposes a plain URL; where Facebook uses MSE with `blob:` sources there is nothing to download and the button is not offered.
+**Architecture:** A small injected script decorates every sufficiently large image with two overlay buttons. Tapping one posts a JSON message over a `JavaScriptChannel` to Dart, which either pushes a Flutter full-screen viewer route or runs a download helper. No page navigation is involved, so the feed keeps its scroll position and the webview is never sent to a raw CDN URL.
 
-**Tech Stack:** Flutter 3.44.8 via fvm, Dart, `webview_flutter` 4.10.0, `flutter_file_downloader`, `share_plus`, `open_file_plus`, `permission_handler`, `flutter_test`.
+**Tech Stack:** Flutter 3.44.8 via fvm, Dart, `webview_flutter` 4.10.0, `flutter_file_downloader`, `share_plus`, `open_file_plus`, `flutter_test`.
 
 **Every command below runs from `SlimSocial_for_Facebook/`** and is prefixed with `fvm`.
 
-**Depends on:** `2026-08-04-webview-injection-overhaul.md`. That plan fixes `injectCssFunc` (stable ids, `textContent`, `<head>`), adds `CustomJs.whenDomReady`, and — critically — its Task 1 Step 5 records which markup Facebook actually serves. This plan's selectors are chosen from that recording. Do not start before it exists.
+**Depends on:** `2026-08-04-webview-injection-overhaul.md`. That plan fixes `injectCssFunc` (stable ids, `textContent`, `<head>`) and adds `resolveCssPlaceholders`, which Task 3 here uses. Land it first.
+
+**Not in scope: video.** Video full-screen already works — `setCustomWidgetCallbacks` at `home_page.dart:85` hands Facebook's own full-screen widget to a Flutter route, and nothing here touches it. Video *download* is deliberately excluded: where Facebook delivers video through Media Source Extensions, `<video>.src` is a `blob:` URL that exists only inside the page and cannot be handed to a downloader, so supporting it would mean intercepting network requests — something `webview_flutter` cannot do. Task 7 Step 7 confirms video playback and full-screen still work; no video button is offered anywhere.
 
 ---
 
@@ -18,15 +20,13 @@
 
 | Capability | Today |
 |---|---|
-| Video full-screen | **Works.** `setCustomWidgetCallbacks` at `home_page.dart:85` hands Facebook's own full-screen widget to a Flutter route. Nothing to build. |
+| Video full-screen | **Works**, untouched by this plan. |
 | Photo full-screen | Missing. Tapping a photo navigates the whole webview, and `fbcdn.net` is not in `kPermittedHostnamesFb`, so some taps leave the app for the system browser. |
 | Photo download | Only after the webview has already navigated to a `scontent.*` URL, via the `isScontentUrl` buttons in the app bar. Not available from the feed. |
-| Video download | Missing. |
-| Sharing a downloaded file | Works, same `isScontentUrl` path. |
+| Sharing a downloaded photo | Works, same `isScontentUrl` path. |
+| Video download | Out of scope, see above. |
 
-So this plan builds: an in-page affordance, a channel, a viewer, and a generalised download helper. It deliberately leaves the existing `isScontentUrl` buttons in place — they are the fallback for the case where the user has already navigated to a bare image.
-
-**Honest scope note on video.** On the legacy mobile layout Facebook exposes `data-video-url` / `data-store` attributes holding a plain `.mp4`. On the current layout video is delivered through Media Source Extensions and `<video>.src` is a `blob:` URL that exists only inside the page — it cannot be handed to a downloader. Task 6 detects which case applies and only offers the button when a real URL exists. If the recon shows this app only ever gets MSE video, Task 6 reduces to "do not offer the button", and downloading video would need request interception, which is a separate plan.
+This plan builds an in-page affordance, a channel, a viewer and a download helper. It leaves the existing `isScontentUrl` app-bar buttons in place — they remain the fallback for when the user has already navigated to a bare image.
 
 ---
 
@@ -35,14 +35,16 @@ So this plan builds: an in-page affordance, a channel, a viewer, and a generalis
 | File | Status | Responsibility |
 |---|---|---|
 | `lib/utils/media_overlay.dart` | Create | Generates the injected overlay script; defines the message contract |
-| `lib/utils/media_download.dart` | Create | Download, save and share a media URL; permission handling |
+| `lib/utils/media_download.dart` | Create | Download a URL to the device; filename derivation |
 | `lib/screens/media_viewer_page.dart` | Create | Full-screen photo viewer route |
 | `lib/utils/css.dart` | Modify | Overlay button styling |
 | `lib/screens/home_page.dart` | Modify | Register the channel, inject the overlay, route messages |
 | `lib/utils/utils.dart` | Modify | `downloadImage` becomes a thin wrapper over the new helper |
 | `assets/lang/en-US.json` | Modify | New strings |
 | `test/utils/media_overlay_test.dart` | Create | Message contract + generated-script tests |
-| `test/utils/media_download_test.dart` | Create | URL validation tests |
+| `test/utils/media_download_test.dart` | Create | Filename derivation tests |
+
+The names stay `media_*` rather than `photo_*`: the download helper and the viewer are URL-generic, and only the overlay's *scan* is photo-specific. That keeps the door open for video later without renaming three files.
 
 `media_overlay.dart` and `media_download.dart` are separate because one is a string generator with no I/O and the other is all I/O — they are tested completely differently.
 
@@ -68,50 +70,45 @@ import 'package:slimsocial_for_facebook/utils/media_overlay.dart';
 
 void main() {
   group('MediaRequest.fromJson', () {
-    test('parses a photo view request', () {
+    test('parses a view request', () {
       final request = MediaRequest.fromJson(
         jsonEncode({
           'action': 'view',
-          'kind': 'photo',
           'url': 'https://scontent.example/a.jpg',
         }),
       );
 
       expect(request, isNotNull);
       expect(request!.action, MediaAction.view);
-      expect(request.kind, MediaKind.photo);
       expect(request.url, 'https://scontent.example/a.jpg');
     });
 
-    test('parses a video save request', () {
+    test('parses a save request', () {
       final request = MediaRequest.fromJson(
         jsonEncode({
           'action': 'save',
-          'kind': 'video',
-          'url': 'https://video.example/a.mp4',
+          'url': 'https://scontent.example/a.jpg',
         }),
       );
 
       expect(request!.action, MediaAction.save);
-      expect(request.kind, MediaKind.video);
     });
 
     test('returns null for a malformed payload', () {
       expect(MediaRequest.fromJson('not json'), isNull);
+      expect(MediaRequest.fromJson('[]'), isNull);
       expect(MediaRequest.fromJson('{}'), isNull);
       expect(MediaRequest.fromJson(jsonEncode({'action': 'view'})), isNull);
-    });
-
-    test('returns null for an unknown action or kind', () {
       expect(
-        MediaRequest.fromJson(
-          jsonEncode({'action': 'delete', 'kind': 'photo', 'url': 'https://a'}),
-        ),
+        MediaRequest.fromJson(jsonEncode({'url': 'https://a.example/a.jpg'})),
         isNull,
       );
+    });
+
+    test('returns null for an unknown action', () {
       expect(
         MediaRequest.fromJson(
-          jsonEncode({'action': 'view', 'kind': 'audio', 'url': 'https://a'}),
+          jsonEncode({'action': 'delete', 'url': 'https://a.example/a.jpg'}),
         ),
         isNull,
       );
@@ -119,18 +116,18 @@ void main() {
 
     test('rejects a url that is not http(s)', () {
       // The page can post anything it likes down this channel, so the scheme is
-      // checked here rather than trusted.
+      // checked here rather than trusted. blob: and data: matter in particular:
+      // an <img> can carry either, and neither can be downloaded or shared.
       for (final url in const [
         'blob:https://facebook.com/abc',
+        'data:image/png;base64,iVBORw0KGgo=',
         'javascript:alert(1)',
         'file:///etc/passwd',
-        'data:text/html,<script>',
+        'https://',
         '',
       ]) {
         expect(
-          MediaRequest.fromJson(
-            jsonEncode({'action': 'save', 'kind': 'photo', 'url': url}),
-          ),
+          MediaRequest.fromJson(jsonEncode({'action': 'save', 'url': url})),
           isNull,
           reason: 'should have rejected $url',
         );
@@ -163,9 +160,6 @@ const String kMediaChannelName = 'SlimMedia';
 /// What the user asked for.
 enum MediaAction { view, save }
 
-/// What they asked for it on.
-enum MediaKind { photo, video }
-
 /// A request posted by the injected overlay.
 ///
 /// Anything can be posted down a JavaScript channel — the page's own scripts
@@ -173,11 +167,7 @@ enum MediaKind { photo, video }
 /// rather than a partly-populated object.
 @immutable
 class MediaRequest {
-  const MediaRequest({
-    required this.action,
-    required this.kind,
-    required this.url,
-  });
+  const MediaRequest({required this.action, required this.url});
 
   /// Parses [raw], returning null if it is not a well-formed request for an
   /// http(s) URL.
@@ -190,11 +180,14 @@ class MediaRequest {
     }
     if (decoded is! Map<String, dynamic>) return null;
 
-    final action = _byName(MediaAction.values, decoded['action']);
-    final kind = _byName(MediaKind.values, decoded['kind']);
     final url = decoded['url'];
+    if (url is! String) return null;
 
-    if (action == null || kind == null || url is! String) return null;
+    MediaAction? action;
+    for (final value in MediaAction.values) {
+      if (value.name == decoded['action']) action = value;
+    }
+    if (action == null) return null;
 
     // blob:, data:, javascript: and file: must never reach a downloader or an
     // Image widget.
@@ -203,19 +196,11 @@ class MediaRequest {
     if (uri.scheme != 'http' && uri.scheme != 'https') return null;
     if (uri.host.isEmpty) return null;
 
-    return MediaRequest(action: action, kind: kind, url: url);
+    return MediaRequest(action: action, url: url);
   }
 
   final MediaAction action;
-  final MediaKind kind;
   final String url;
-
-  static T? _byName<T extends Enum>(List<T> values, Object? name) {
-    for (final value in values) {
-      if (value.name == name) return value;
-    }
-    return null;
-  }
 }
 ```
 
@@ -238,12 +223,12 @@ git commit -m "feat: define the media request contract for the webview channel"
 
 ## Task 2: The overlay script
 
-Decorate images with a view button and a save button. The script runs on an interval rather than a `MutationObserver` because it has to react to images *growing* — Facebook swaps in a full-resolution source after layout, and an image that was 40px when first seen may be 400px a moment later.
+Decorate photos with a view button and a save button. The script runs on an interval rather than a `MutationObserver` because it has to react to images *growing*: Facebook swaps in a full-resolution source after layout, so an image that measured 40px when first seen can be 400px a moment later, and a mutation-driven pass would already have dismissed it.
 
 Two guards matter:
 
-- **A size floor.** Avatars, reaction icons and emoji are all `<img>`. Decorating them would put buttons over every face in the feed. Only images at least 200px on both axes get buttons.
-- **A processed marker.** Without one, the interval re-decorates the same image every tick.
+- **A size floor.** Avatars, reaction icons and emoji are all `<img>`. Decorating them would put a button over every face in the feed. Only images at least 200px on both axes qualify.
+- **A processed marker.** Without one the interval re-decorates the same image every tick.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/utils/media_overlay.dart`
@@ -255,27 +240,26 @@ Add to `test/utils/media_overlay_test.dart`, inside `main()`:
 
 ```dart
   group('mediaOverlayScript', () {
-    final script = mediaOverlayScript(
-      viewLabel: 'View',
-      saveLabel: 'Save',
-      offerVideoDownload: true,
-    );
+    final script = mediaOverlayScript(viewLabel: 'View', saveLabel: 'Save');
 
     test('posts to the agreed channel', () {
       expect(script, contains(kMediaChannelName));
     });
 
-    test('sends the agreed action and kind names', () {
+    test('sends the agreed action names', () {
       expect(script, contains(MediaAction.view.name));
       expect(script, contains(MediaAction.save.name));
-      expect(script, contains(MediaKind.photo.name));
-      expect(script, contains(MediaKind.video.name));
+    });
+
+    test('embeds the labels it was given', () {
+      expect(script, contains('View'));
+      expect(script, contains('Save'));
     });
 
     test('skips images too small to be content', () {
       // Avatars and reaction icons are <img> too; decorating them would put a
       // button over every face in the feed.
-      expect(script, contains('200'));
+      expect(script, contains('$kMinMediaEdge'));
     });
 
     test('marks decorated nodes so the interval does not re-decorate them', () {
@@ -290,20 +274,20 @@ Add to `test/utils/media_overlay_test.dart`, inside `main()`:
       expect(script, contains('if (window.slimMediaTimer) return;'));
     });
 
-    test('never posts a blob url', () {
-      // MSE video has a blob: src that means nothing outside the page.
+    test('never posts a blob or data url', () {
+      // An <img> can carry either, and neither survives outside the page.
       expect(script, contains("indexOf('blob:')"));
+      expect(script, contains("indexOf('data:')"));
     });
 
-    test('omits the video button when video download is unavailable', () {
-      final withoutVideo = mediaOverlayScript(
-        viewLabel: 'View',
-        saveLabel: 'Save',
-        offerVideoDownload: false,
-      );
+    test('touches no video element', () {
+      // Video is deliberately out of scope: MSE sources are blob: URLs.
+      expect(script, isNot(contains('video')));
+    });
 
-      expect(withoutVideo, contains('OFFER_VIDEO = false'));
-      expect(script, contains('OFFER_VIDEO = true'));
+    test('stops the tap from following the photo permalink', () {
+      expect(script, contains('preventDefault'));
+      expect(script, contains('stopPropagation'));
     });
 
     test('has balanced delimiters', () {
@@ -331,7 +315,7 @@ Add to `test/utils/media_overlay_test.dart`, inside `main()`:
 fvm flutter test test/utils/media_overlay_test.dart
 ```
 
-Expected: compile failure — `mediaOverlayScript` is not defined.
+Expected: compile failure — `mediaOverlayScript` and `kMinMediaEdge` are not defined.
 
 - [ ] **Step 3: Add the generator**
 
@@ -344,38 +328,34 @@ Append to `lib/utils/media_overlay.dart`:
 /// ends up with a button over every face.
 const int kMinMediaEdge = 200;
 
-/// Builds the script that puts view/save buttons on feed media.
+/// Builds the script that puts view/save buttons on feed photos.
 ///
 /// Runs on an interval rather than a MutationObserver: Facebook swaps in a
 /// full-resolution source after layout, so an image that measured 40px when it
 /// was first seen can be 400px a tick later, and a mutation-driven pass would
 /// have already dismissed it.
 ///
-/// [offerVideoDownload] should be false when the page delivers video through
-/// Media Source Extensions, because then `<video>.src` is a `blob:` URL that
-/// cannot be downloaded — see Task 6.
+/// Only `<img>` is scanned. Video is out of scope — its sources are `blob:`
+/// URLs from Media Source Extensions, which cannot be downloaded.
 String mediaOverlayScript({
   required String viewLabel,
   required String saveLabel,
-  required bool offerVideoDownload,
 }) {
   return '''
 (function () {
   if (window.slimMediaTimer) return;
 
   var MIN_EDGE = $kMinMediaEdge;
-  var OFFER_VIDEO = $offerVideoDownload;
   var VIEW_LABEL = ${jsonEncode(viewLabel)};
   var SAVE_LABEL = ${jsonEncode(saveLabel)};
 
-  function post(action, kind, url) {
+  function post(action, url) {
     if (!url) return;
     if (url.indexOf('blob:') === 0) return;
     if (url.indexOf('data:') === 0) return;
     try {
       window.$kMediaChannelName.postMessage(JSON.stringify({
         action: action,
-        kind: kind,
         url: url
       }));
     } catch (e) {}
@@ -387,7 +367,8 @@ String mediaOverlayScript({
     el.className = 'slim-media-btn';
     el.textContent = label;
     el.addEventListener('click', function (event) {
-      // The whole image is usually inside a link to the photo permalink.
+      // The photo is usually wrapped in a link to its permalink; without this
+      // the tap navigates the whole webview away from the feed.
       event.preventDefault();
       event.stopPropagation();
       onTap();
@@ -395,73 +376,39 @@ String mediaOverlayScript({
     return el;
   }
 
-  function decorate(node, kind, url) {
-    node.classList.add('slim-media-done');
+  function decorate(img, url) {
+    img.classList.add('slim-media-done');
 
     var bar = document.createElement('div');
     bar.className = 'slim-media-bar';
-
-    if (kind === '${MediaKind.photo.name}') {
-      bar.appendChild(button(VIEW_LABEL, function () {
-        post('${MediaAction.view.name}', kind, url);
-      }));
-    }
+    bar.appendChild(button(VIEW_LABEL, function () {
+      post('${MediaAction.view.name}', url);
+    }));
     bar.appendChild(button(SAVE_LABEL, function () {
-      post('${MediaAction.save.name}', kind, url);
+      post('${MediaAction.save.name}', url);
     }));
 
     // The bar is absolutely positioned, so it needs a positioned ancestor. Use
-    // the closest one that already exists rather than restyling the post.
-    var host = node.parentElement || node;
+    // the one that already wraps the image rather than restyling the post.
+    var host = img.parentElement || img;
     if (getComputedStyle(host).position === 'static') {
       host.classList.add('slim-media-host');
     }
     host.appendChild(bar);
   }
 
-  function scanImages() {
-    var images = document.querySelectorAll('img:not(.slim-media-done)');
-    for (var i = 0; i < images.length; i++) {
-      var img = images[i];
-      if (img.naturalWidth < MIN_EDGE || img.naturalHeight < MIN_EDGE) continue;
-      if (img.clientWidth < MIN_EDGE || img.clientHeight < MIN_EDGE) continue;
-      decorate(img, '${MediaKind.photo.name}', img.currentSrc || img.src);
-    }
-  }
-
-  function videoUrl(video) {
-    // A plain src is downloadable; a blob: from Media Source Extensions is not.
-    var direct = video.currentSrc || video.src || '';
-    if (direct && direct.indexOf('blob:') !== 0) return direct;
-
-    var source = video.querySelector('source[src]');
-    if (source && source.getAttribute('src').indexOf('blob:') !== 0) {
-      return source.getAttribute('src');
-    }
-
-    // Legacy mobile markup hangs the real URL off an ancestor.
-    var holder = video.closest('[data-video-url]');
-    if (holder) return holder.getAttribute('data-video-url');
-
-    return '';
-  }
-
-  function scanVideos() {
-    if (!OFFER_VIDEO) return;
-    var videos = document.querySelectorAll('video:not(.slim-media-done)');
-    for (var i = 0; i < videos.length; i++) {
-      var url = videoUrl(videos[i]);
-      // Mark it either way: without this a blob-only video is re-examined on
-      // every tick forever.
-      videos[i].classList.add('slim-media-done');
-      if (url) decorate(videos[i], '${MediaKind.video.name}', url);
-    }
-  }
-
   function scan() {
     try {
-      scanImages();
-      scanVideos();
+      var images = document.querySelectorAll('img:not(.slim-media-done)');
+      for (var i = 0; i < images.length; i++) {
+        var img = images[i];
+        // naturalWidth is the source's own size, clientWidth the rendered one.
+        // Both must clear the floor: a big source scaled down to an avatar is
+        // still an avatar.
+        if (img.naturalWidth < MIN_EDGE || img.naturalHeight < MIN_EDGE) continue;
+        if (img.clientWidth < MIN_EDGE || img.clientHeight < MIN_EDGE) continue;
+        decorate(img, img.currentSrc || img.src);
+      }
     } catch (e) {}
   }
 
@@ -472,8 +419,6 @@ String mediaOverlayScript({
 }
 ```
 
-Add `import 'dart:convert';` if the analyzer reports it missing — Task 1 already added it.
-
 - [ ] **Step 4: Run the tests to verify they pass**
 
 ```bash
@@ -482,20 +427,20 @@ fvm flutter test test/utils/media_overlay_test.dart
 
 Expected: all tests pass.
 
-If `has balanced delimiters` fails, there is a genuine typo in the generated JavaScript — fix it before moving on, because nothing downstream will catch it.
+If `has balanced delimiters` fails there is a genuine typo in the generated JavaScript — fix it before moving on, because nothing downstream will catch it.
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add SlimSocial_for_Facebook/lib/utils/media_overlay.dart SlimSocial_for_Facebook/test/utils/media_overlay_test.dart
-git commit -m "feat: generate the in-page media overlay script"
+git commit -m "feat: generate the in-page photo overlay script"
 ```
 
 ---
 
 ## Task 3: Overlay styling
 
-The buttons need to sit over the media without the page's own styles swallowing them, and without the overlay itself blocking a scroll gesture.
+The buttons need to sit over the photo without the page's own styles swallowing them, and without the overlay blocking a scroll gesture.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/utils/css.dart`
@@ -511,6 +456,7 @@ Add to `test/utils/css_test.dart`, inside `main()`:
       expect(CustomCss.mediaOverlayCss.key, 'media_overlay_style');
       expect(CustomCss.mediaOverlayCss.code, contains('.slim-media-bar'));
       expect(CustomCss.mediaOverlayCss.code, contains('.slim-media-btn'));
+      expect(CustomCss.mediaOverlayCss.code, contains('.slim-media-host'));
     });
 
     test('lets touches through the bar but not the buttons', () {
@@ -544,16 +490,16 @@ Expected: compile failure — `CustomCss.mediaOverlayCss` is not defined.
 In `lib/utils/css.dart`, add to the `CustomCss` class:
 
 ```dart
-  /// Styles the view/save buttons the media overlay injects.
+  /// Styles the view/save buttons the photo overlay injects.
   ///
   /// The bar itself is `pointer-events: none` so a swipe that starts on a photo
   /// still scrolls the feed; only the buttons take input.
   ///
   /// Not in [cssList]: that list drives the settings toggles, and this is
-  /// structural.
+  /// structural rather than a preference.
   static MyCss mediaOverlayCss = MyCss(
     key: 'media_overlay_style',
-    description: 'Media overlay buttons',
+    description: 'Photo overlay buttons',
     defaultEnabled: true,
     code: '.slim-media-host { position: relative !important; } '
         '.slim-media-bar { position: absolute; right: 8px; bottom: 8px; '
@@ -567,7 +513,7 @@ In `lib/utils/css.dart`, add to the `CustomCss` class:
   );
 ```
 
-`{accent}` is resolved by `resolveCssPlaceholders`, added in Task 8 of the injection-overhaul plan. If that task has not landed, this stylesheet will render a literal `{accent}` and the buttons will be unstyled — land it first.
+`{accent}` is resolved by `resolveCssPlaceholders` from the injection-overhaul plan's Task 8. If that has not landed, the buttons render with a literal `{accent}` and no background — land it first.
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
@@ -581,14 +527,14 @@ Expected: all tests pass.
 
 ```bash
 git add SlimSocial_for_Facebook/lib/utils/css.dart SlimSocial_for_Facebook/test/utils/css_test.dart
-git commit -m "feat: style the injected media overlay buttons"
+git commit -m "feat: style the injected photo overlay buttons"
 ```
 
 ---
 
 ## Task 4: Download and save
 
-`downloadImage` in `utils.dart` puts the file wherever `flutter_file_downloader` defaults to and reports errors by toast. Generalise it: one helper for photos and videos, an explicit result so callers can react, and no toast inside the helper so it stays testable.
+`downloadImage` in `utils.dart` puts the file wherever `flutter_file_downloader` defaults to and reports errors by toast. Generalise it: an explicit result so callers can react, a derived filename, and no toast inside the helper so it stays testable.
 
 **Files:**
 - Create: `SlimSocial_for_Facebook/lib/utils/media_download.dart`
@@ -613,25 +559,30 @@ void main() {
     });
 
     test('drops the query string', () {
+      // Facebook CDN URLs carry a long signed query that would otherwise end
+      // up in the filename.
       expect(
         mediaFileName('https://scontent.example/a.jpg?oh=1&oe=2&_nc_sid=x'),
         'a.jpg',
       );
     });
 
-    test('falls back to an extension-appropriate name when the path is bare', () {
+    test('falls back to a fixed name when the path is bare', () {
       expect(mediaFileName('https://scontent.example/'), 'slimsocial');
+      expect(mediaFileName('https://scontent.example'), 'slimsocial');
     });
 
     test('strips path separators so the name cannot escape the directory', () {
       expect(mediaFileName('https://x.example/a/../../etc/passwd'), 'passwd');
     });
 
-    test('does not return an empty string', () {
+    test('never returns an empty string', () {
       for (final url in const [
         'https://x.example',
         'https://x.example/',
         'https://x.example/?a=1',
+        'not a url at all',
+        '',
       ]) {
         expect(mediaFileName(url), isNotEmpty, reason: url);
       }
@@ -722,7 +673,7 @@ Future<String?> downloadImage(String url) async {
 }
 ```
 
-Add the import, keeping the block alphabetically ordered:
+Add the import, keeping the block alphabetically ordered — `very_good_analysis` enforces `directives_ordering`:
 
 ```dart
 import 'package:slimsocial_for_facebook/utils/media_download.dart';
@@ -757,7 +708,7 @@ git commit -m "feat: add a shared media download helper"
 
 ## Task 5: The full-screen photo viewer
 
-A Flutter route showing one image, pinch-zoomable, with save and share.
+A Flutter route showing one photo, pinch-zoomable, with save and share.
 
 **Files:**
 - Create: `SlimSocial_for_Facebook/lib/screens/media_viewer_page.dart`
@@ -770,8 +721,7 @@ In `assets/lang/en-US.json`, add:
 ```json
   "media_view": "View",
   "media_save": "Save",
-  "media_saved": "Saved",
-  "media_no_video_url": "This video cannot be saved"
+  "media_saved": "Saved"
 ```
 
 `downloading`, `sharing` and `error_trylater` already exist and are reused.
@@ -798,7 +748,7 @@ class MediaViewerPage extends StatelessWidget {
 
   final String url;
 
-  Future<void> _save(BuildContext context) async {
+  Future<void> _save() async {
     showToast("${"downloading".tr()}...");
     final result = await downloadMedia(url);
 
@@ -830,7 +780,7 @@ class MediaViewerPage extends StatelessWidget {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () => _save(context),
+            onPressed: _save,
             icon: const Icon(Icons.save_alt),
           ),
           IconButton(
@@ -849,9 +799,9 @@ class MediaViewerPage extends StatelessWidget {
               if (progress == null) return child;
               return const CircularProgressIndicator();
             },
-            errorBuilder: (context, error, stack) => Icon(
+            errorBuilder: (context, error, stack) => const Icon(
               Icons.broken_image_outlined,
-              color: Colors.white.withValues(alpha: 0.5),
+              color: Colors.white54,
               size: 64,
             ),
           ),
@@ -861,8 +811,6 @@ class MediaViewerPage extends StatelessWidget {
   }
 }
 ```
-
-If the analyzer rejects `withValues`, the SDK predates it — use `Colors.white.withOpacity(0.5)`.
 
 - [ ] **Step 3: Verify it compiles**
 
@@ -891,31 +839,12 @@ git commit -m "feat: add a full-screen photo viewer"
 
 ## Task 6: Wire it into the feed
 
-Register the channel, inject the overlay, and route messages. Whether the video button is offered at all is decided here.
+Register the channel, inject the overlay, and route messages.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/screens/home_page.dart`
 
-- [ ] **Step 1: Decide whether video download is possible**
-
-With the app running and attached via `chrome://inspect`, play a video in the feed, then run in the console:
-
-```js
-Array.from(document.querySelectorAll('video')).map(function (v) {
-  return {
-    currentSrc: (v.currentSrc || '').slice(0, 12),
-    hasSourceTag: !!v.querySelector('source[src]'),
-    ancestorUrl: !!v.closest('[data-video-url]'),
-  };
-})
-```
-
-- If `currentSrc` starts with `blob:` and both booleans are `false` on every entry, this layout uses Media Source Extensions and there is no URL to download. Set `offerVideoDownload: false` in Step 3, note the finding, and stop expecting video saves — that would need request interception, a separate plan.
-- If any entry shows an `http` `currentSrc`, a `<source>` tag, or an ancestor `data-video-url`, set `offerVideoDownload: true`.
-
-Record which case applies. Everything else in this task is the same either way.
-
-- [ ] **Step 2: Register the channel**
+- [ ] **Step 1: Register the channel**
 
 In `lib/screens/home_page.dart`, in `_initWebViewController`, add to the cascade immediately after `setNavigationDelegate(...)` and before `loadRequest`:
 
@@ -926,27 +855,25 @@ In `lib/screens/home_page.dart`, in `_initWebViewController`, add to the cascade
       )
 ```
 
-- [ ] **Step 3: Inject the overlay**
+- [ ] **Step 2: Inject the overlay**
 
-Still in `home_page.dart`, extend `runJs` so the overlay is installed after the page settles. Add this immediately before the `userCustomJs` block:
+Still in `home_page.dart`, extend `runJs` so the overlay is installed once the page has settled. Add this immediately before the `userCustomJs` block:
 
 ```dart
     await _controller.runJavaScript(
       mediaOverlayScript(
         viewLabel: 'media_view'.tr(),
         saveLabel: 'media_save'.tr(),
-        // Set from the finding in Step 1.
-        offerVideoDownload: false,
       ),
     );
 ```
 
-- [ ] **Step 4: Handle the messages**
+- [ ] **Step 3: Handle the messages**
 
 Add these two methods to `_HomePageState`:
 
 ```dart
-  /// Routes a request from the injected media overlay.
+  /// Routes a request from the injected photo overlay.
   ///
   /// The payload is page-supplied, so it is parsed defensively and a malformed
   /// message is dropped rather than trusted.
@@ -990,7 +917,7 @@ import 'package:slimsocial_for_facebook/utils/media_download.dart';
 import 'package:slimsocial_for_facebook/utils/media_overlay.dart';
 ```
 
-- [ ] **Step 5: Inject the overlay stylesheet**
+- [ ] **Step 4: Inject the overlay stylesheet**
 
 In `injectCss`, add an entry to the `sheets` map:
 
@@ -998,7 +925,7 @@ In `injectCss`, add an entry to the `sheets` map:
       'slim-media-overlay': CustomCss.mediaOverlayCss.code,
 ```
 
-- [ ] **Step 6: Verify**
+- [ ] **Step 5: Verify**
 
 ```bash
 fvm flutter analyze lib/ test/ && fvm flutter test
@@ -1008,11 +935,11 @@ Expected: `No issues found!` then all tests pass.
 
 If the analyzer reports `use_build_context_synchronously` on the `Navigator.of(context)` call, the `if (!mounted) return;` guard above it is missing — add it.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add SlimSocial_for_Facebook/lib/screens/home_page.dart
-git commit -m "feat: wire the media overlay into the feed webview"
+git commit -m "feat: wire the photo overlay into the feed webview"
 ```
 
 ---
@@ -1033,14 +960,15 @@ fvm flutter run --debug
 
 Scroll to a post with a photo.
 
-Expected: **View** and **Save** appear over the photo. No buttons on avatars, reaction icons or emoji. In the WebView console:
+Expected: **View** and **Save** appear over the photo, and no buttons appear on avatars, reaction icons or emoji. Attach via `chrome://inspect` and run in the WebView console:
 
 ```js
 [document.querySelectorAll('.slim-media-btn').length,
- document.querySelectorAll('img.slim-media-done').length]
+ document.querySelectorAll('img.slim-media-done').length,
+ document.querySelectorAll('img').length]
 ```
 
-Both greater than zero, and the second should be far smaller than `document.querySelectorAll('img').length`. If it is close to the total, the size floor is not working.
+The first two greater than zero, and the second far smaller than the third. If the second is close to the third, the size floor is not working.
 
 - [ ] **Step 3: Confirm scrolling still works over a photo**
 
@@ -1052,33 +980,32 @@ Expected: the feed scrolls. If it does not, `pointer-events: none` on `.slim-med
 
 Tap **View**.
 
-Expected: a black full-screen Flutter route with the photo, pinch-zoom works, and the webview behind it has **not** navigated. Go back.
+Expected: a black full-screen Flutter route with the photo; pinch-zoom works; the webview behind it has **not** navigated. Go back.
 
-Expected: the feed is exactly where it was, same scroll position.
+Expected: the feed is exactly where it was, same scroll position. This is the whole point of the plan — if the feed jumped or reloaded, the tap leaked through to the permalink link and `preventDefault` is not firing.
 
 - [ ] **Step 5: Confirm Save works from the feed**
 
 Tap **Save** on a photo.
 
-Expected: a "downloading" toast, then "Saved". Check the file is in the gallery or Downloads and opens.
+Expected: a "downloading" toast, then "Saved". Check the file lands in the gallery or Downloads, opens, and is named after the photo rather than carrying a query string.
 
 - [ ] **Step 6: Confirm no duplicate buttons**
 
-Scroll down several screens and back up.
+Scroll down several screens and back up, then:
 
 ```js
-document.querySelectorAll('.slim-media-bar').length
+[document.querySelectorAll('.slim-media-bar').length,
+ document.querySelectorAll('img.slim-media-done').length]
 ```
 
-Compare with `document.querySelectorAll('img.slim-media-done').length`. Expected: roughly equal, not a multiple. A multiple means the processed marker is not holding and the interval is re-decorating.
+Expected: roughly equal, not a multiple. A multiple means the processed marker is not holding and the interval is re-decorating.
 
-- [ ] **Step 7: Confirm the video decision from Task 6 Step 1**
+- [ ] **Step 7: Confirm video is untouched**
 
-Play a video.
+Play a video in the feed, then tap Facebook's own full-screen control.
 
-Expected: if `offerVideoDownload` was set `true`, a **Save** button appears and saves a playable file. If it was set `false`, no button appears on videos — and that is correct, not a bug.
-
-Either way, confirm Facebook's own full-screen button still opens the Flutter full-screen route, since that path is untouched by this plan.
+Expected: it plays, no overlay buttons appear on it, and full-screen still opens the Flutter route. Video is out of scope for this plan, so "no button on video" is the correct outcome, not a bug.
 
 - [ ] **Step 8: Confirm the fallback path still works**
 
@@ -1091,19 +1018,20 @@ Expected: the app-bar Download and Share buttons still appear and work. This pla
 In the WebView console:
 
 ```js
-window.SlimMedia.postMessage('{"action":"view","kind":"photo","url":"javascript:alert(1)"}');
+window.SlimMedia.postMessage('{"action":"view","url":"javascript:alert(1)"}');
+window.SlimMedia.postMessage('{"action":"save","url":"blob:https://x/y"}');
 window.SlimMedia.postMessage('garbage');
 ```
 
-Expected: nothing happens, and the Flutter log shows `ignored media message:` twice. No navigation, no crash.
+Expected: nothing happens, and the Flutter log shows `ignored media message:` three times. No navigation, no download, no crash.
 
 ---
 
 ## Self-Review
 
-**Requested scope coverage.** Photos full-screen → Tasks 2, 5, 6. Photos download → Tasks 2, 4, 6. Videos full-screen → already working, confirmed in Task 7 Step 7, no code. Videos download → Task 6 Step 1 decides feasibility, Task 2 supplies the URL extraction, Task 4 the download. Hiding stories and reels is **not** here — those are CSS toggles and live in Task 9 of the injection-overhaul plan.
+**Requested scope coverage.** Photos full-screen → Tasks 2, 5, 6. Photos download → Tasks 2, 4, 6. Video full-screen → already working, confirmed unbroken in Task 7 Step 7, no code. Video download → excluded by decision, stated at the top and re-stated in Tasks 2 and 7. Hiding stories and reels is **not** here — those are CSS toggles and live in Task 9 of the injection-overhaul plan.
 
-**Names used consistently.** `kMediaChannelName` is defined in Task 1 and used in Tasks 2 and 6. `MediaAction` / `MediaKind` / `MediaRequest.fromJson` are defined in Task 1 and used in Tasks 2 and 6. `mediaOverlayScript({viewLabel, saveLabel, offerVideoDownload})` keeps that signature in Tasks 2 and 6. `downloadMedia` / `MediaDownloadResult` / `mediaFileName` are defined in Task 4 and used in Tasks 4, 5 and 6. `MediaViewerPage({required url})` is defined in Task 5 and used in Task 6. The CSS classes `slim-media-bar`, `slim-media-btn`, `slim-media-host` and `slim-media-done` match between Task 2's script and Task 3's stylesheet.
+**Names used consistently.** `kMediaChannelName` is defined in Task 1 and used in Tasks 2 and 6. `MediaAction` and `MediaRequest.fromJson` are defined in Task 1 and used in Tasks 2 and 6. `kMinMediaEdge` is defined in Task 2 and asserted in Task 2's tests. `mediaOverlayScript({viewLabel, saveLabel})` keeps that signature in Tasks 2 and 6. `downloadMedia`, `MediaDownloadResult` and `mediaFileName` are defined in Task 4 and used in Tasks 4, 5 and 6. `MediaViewerPage({required url})` is defined in Task 5 and used in Task 6. The CSS classes `slim-media-bar`, `slim-media-btn`, `slim-media-host` and `slim-media-done` match between Task 2's script and Task 3's stylesheet.
 
 **Every task commits green.** Task 1 is self-contained. Task 2 depends only on Task 1. Task 3 depends only on `MyCss`. Task 4 is self-contained. Task 5 depends on Task 4. Task 6 depends on 1–5. No task references a symbol a later task creates.
 
@@ -1115,7 +1043,7 @@ Expected: nothing happens, and the Flutter log shows `ignored media message:` tw
 
 ## Follow-up work (separate plans)
 
-1. **Video download via request interception.** Only worth doing if Task 6 Step 1 finds MSE-only video. Needs a request-inspecting WebView, which `webview_flutter` does not offer.
-2. **Album gallery.** Swipe between the photos of one post. Needs a reliable way to enumerate an album from the DOM, which is the fragile part.
-3. **Long-press instead of buttons.** Less visual clutter than a permanent overlay, at the cost of discoverability. Worth testing against the button version once both exist.
-4. **Save location setting.** Let the user choose the download directory rather than accepting the downloader's default.
+1. **Album gallery.** Swipe between the photos of one post. Needs a reliable way to enumerate an album from the DOM, which is the fragile part.
+2. **Long-press instead of buttons.** Less visual clutter than a permanent overlay, at the cost of discoverability. Worth testing against the button version once both exist.
+3. **Save location setting.** Let the user choose the download directory rather than accepting the downloader's default.
+4. **Video download.** Only viable via request interception, which needs a WebView plugin that exposes it. Revisit only if that dependency is worth taking on.
