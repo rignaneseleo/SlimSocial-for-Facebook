@@ -1251,7 +1251,10 @@ Add to `test/controllers/fb_controller_test.dart`, inside `main()`:
     });
 
     test('basic mode overrides every role', () async {
-      await sp.setBool(SpKeys.useMbasic, true);
+      // This file seeds preferences with withPrefs (which calls
+      // SharedPreferences.setMockInitialValues and is reset by setUp), never
+      // bare sp.setBool — mixing the two leaks state between tests.
+      await withPrefs({SpKeys.useMbasic: true});
 
       for (final role in UserAgentRole.values) {
         expect(
@@ -1263,8 +1266,10 @@ Add to `test/controllers/fb_controller_test.dart`, inside `main()`:
     });
 
     test('a custom agent overrides every role', () async {
-      await sp.setBool(SpKeys.enabled(SpKeys.customUserAgent), true);
-      await sp.setString(SpKeys.customUserAgent, 'my-agent');
+      await withPrefs({
+        SpKeys.customUserAgent: 'my-agent',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
 
       for (final role in UserAgentRole.values) {
         expect(PrefController.getUserAgent(role: role), 'my-agent');

@@ -125,10 +125,13 @@ Add to `test/consts_test.dart`, inside the `SpKeys` group's disk-keys test:
 
 Create `test/utils/webview_permissions_test.dart`:
 
+`WebViewPermissionResourceType` is a **class with static consts, not an enum**, and it defines only `camera` and `microphone`. Anything else is contributed by a platform package — `webview_flutter_android` adds `midiSysex` and `protectedMediaId`. That package is already a direct dependency, so the test can import it to build a genuinely unsupported request.
+
 ```dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 void main() {
   group('isWebViewPermissionSupported', () {
@@ -168,12 +171,14 @@ void main() {
 
     test('still rejects an unknown resource type', () {
       // A request that mixes in anything we cannot satisfy must be refused
-      // whole, not partially granted.
+      // whole, not partially granted. `midiSysex` is a real Android-only type
+      // the webview can ask for, so this is the actual mixed request we must
+      // refuse — not a hypothetical one.
       expect(
         isWebViewPermissionSupported(
           const {
             WebViewPermissionResourceType.camera,
-            WebViewPermissionResourceType.midi,
+            AndroidWebViewPermissionResourceType.midiSysex,
           },
         ),
         isFalse,
@@ -285,13 +290,26 @@ treat a microphone as a hard device requirement:
         android:required="false" />
 ```
 
-- [ ] **Step 6: Add the settings toggle**
+- [ ] **Step 6: Add the settings toggle and register it for syncing**
 
-In `lib/screens/settings_page.dart`, in the permissions `SettingsSection`, add a
-tile after the camera tile, matching the camera tile's structure but using
-`Permission.microphone`, `SpKeys.micPermission`, `Icons.mic`, and title
-`'mic_permission'.tr()`. (Its `initialValue` is corrected in Task 3 along with
-the others, so wiring it the same way here is intentional.)
+Two edits in `lib/screens/settings_page.dart`.
+
+First, add the microphone to the `permissions` map (around line 34). Without
+this, `_updatePermissionsToggle()` never syncs the mic and its stored boolean
+drifts from the real grant:
+
+```dart
+  final Map<String, Permission> permissions = const {
+    SpKeys.gpsPermission: Permission.locationWhenInUse,
+    SpKeys.cameraPermission: Permission.camera,
+    SpKeys.photosPermission: Permission.photos,
+    SpKeys.micPermission: Permission.microphone,
+  };
+```
+
+Second, in the permissions `SettingsSection`, add a tile after the camera tile
+matching the camera tile's structure but using `Permission.microphone`,
+`SpKeys.micPermission`, `Icons.mic`, and title `'mic_permission'.tr()`.
 
 - [ ] **Step 7: Add the strings**
 
@@ -383,46 +401,36 @@ handles this class of change by restarting; do the same for the user agent.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/screens/settings_page.dart`
-- Modify: `SlimSocial_for_Facebook/test/controllers/fb_controller_test.dart`
 
-- [ ] **Step 1: Add a regression test for the resolved agent**
+- [ ] **Step 1: Confirm the resolver is already covered — do not add tests**
 
-The restart itself is UI flow, but the value that must change is
-`PrefController.getUserAgent()`. Add to
-`test/controllers/fb_controller_test.dart`, inside `main()`:
+The resolver is not the bug and is already fully specified by four existing tests
+in `test/controllers/fb_controller_test.dart`:
 
-```dart
-  group('custom user agent takes effect', () {
-    test('is ignored until its enabled switch is on', () async {
-      await sp.setString(SpKeys.customUserAgent, 'my-agent');
+- `honours the custom agent once it is enabled`
+- `ignores a custom agent that was saved but left disabled`
+- `ignores a blank custom agent`
+- `uses the light agent together with mbasic`
 
-      // Saved but not enabled: the resolver must not pick it up.
-      expect(PrefController.getUserAgent(), isNot('my-agent'));
-    });
+Read them and confirm they still pass. Do **not** add equivalents — an earlier
+draft of this plan proposed two tests that duplicated the first two outright.
 
-    test('is returned once enabled and non-blank', () async {
-      await sp.setBool(SpKeys.enabled(SpKeys.customUserAgent), true);
-      await sp.setString(SpKeys.customUserAgent, 'my-agent');
+There is nothing new to unit-test here: `getUserAgent()` already returns the
+right string, and the defect is purely that a running `WebViewController` never
+re-reads it. That is UI lifecycle, verified on a device in Task 5.
 
-      expect(PrefController.getUserAgent(), 'my-agent');
-    });
-  });
-```
-
-If the webview-injection plan's Task 7 has already landed (it gives
-`getUserAgent` a `role` parameter), keep these tests — they call it with no
-argument, which stays valid, and they still prove the override path.
-
-- [ ] **Step 2: Run the tests to verify they pass or fail as expected**
+Note the idiom if you touch this file: it seeds preferences with
+`await withPrefs({...})` (which calls `SharedPreferences.setMockInitialValues`
+and is reset by `setUp`), never bare `sp.setBool`/`sp.setString`. Mixing the two
+leaks state between tests.
 
 ```bash
 fvm flutter test test/controllers/fb_controller_test.dart
 ```
 
-Expected: green (this codifies existing resolver behaviour so the restart wiring
-in Step 3 cannot be "fixed" by weakening the resolver).
+Expected: green, unchanged.
 
-- [ ] **Step 3: Restart when the effective agent changed**
+- [ ] **Step 2: Restart when the effective agent changed**
 
 In `lib/screens/settings_page.dart`, in the `custom_useragent`
 `SettingsTile.navigation` `onPressed`, capture the resolved agent before and
@@ -447,7 +455,7 @@ This covers every path that changes the outcome — enabling or disabling the
 switch, editing the string, or deleting it — because all of them move
 `getUserAgent()`. Paths that do not change it (open and cancel) do not restart.
 
-- [ ] **Step 4: Verify the whole project**
+- [ ] **Step 3: Verify the whole project**
 
 ```bash
 fvm flutter analyze lib/ test/ && fvm flutter test
@@ -455,10 +463,10 @@ fvm flutter analyze lib/ test/ && fvm flutter test
 
 Expected: `No issues found!` then all tests pass.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
-git add SlimSocial_for_Facebook/lib/screens/settings_page.dart SlimSocial_for_Facebook/test/controllers/fb_controller_test.dart
+git add SlimSocial_for_Facebook/lib/screens/settings_page.dart
 git commit -m "fix: apply a changed custom user agent by restarting the app"
 ```
 
