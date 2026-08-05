@@ -1,0 +1,19 @@
+name: Crowdin MT pre-translate
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - SlimSocial_for_Facebook/assets/lang/en-US.json
+  workflow_dispatch:
+
+jobs:
+  pretranslate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload source and machine-translate new strings
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        run: python3 .github/scripts/crowdin_pretranslate.py
