@@ -34,14 +34,14 @@ Still open, and what this plan covers:
 |---|---|---|
 | 1 | CSS goes into `document.body` via `innerHTML`, with no element id, so navigations stack duplicate `<style>` tags | 2 |
 | 2 | `DOMContentLoaded` is awaited unconditionally, so injection is lost if parsing already finished | 2 |
-| 3 | Ad detection matches keywords in `span.textContent` with no length bound, so a post *mentioning* the word is destroyed | 3 |
-| 4 | Detection ignores `data-ft` / `data-xt-vimp` / ad-link markers, which are locale-independent and cheaper than text | 3 |
-| 5 | `post.innerHTML = myDiv` destroys the post subtree and breaks the virtualising scroller | 3 |
-| 6 | The keyword list covers ~24 strings and misses most supported locales | 4 |
+| 3 | Ad detection matches keywords in `span.textContent` with no length bound, so a post *mentioning* the word is destroyed | 4 |
+| 4 | Detection ignores `data-ft` / `data-xt-vimp` / ad-link markers, which are locale-independent and cheaper than text | 4 |
+| 5 | `post.innerHTML = myDiv` destroys the post subtree and breaks the virtualising scroller | 4 |
+| 6 | The keyword list covers ~24 strings and misses most supported locales | 3 |
 | 7 | The observer only reacts to added `SECTION` nodes, has no debounce, and assumes `removeAds` exists | 5 |
 | 8 | `assets/lang/ru-RU.json` is invalid JSON, so Russian falls back to English | 6 |
 | 9 | `hide_messenger_sidebar` is missing from `en-US.json`, so that settings row shows a raw key | 6 |
-| 10 | One desktop user agent for every surface | 7 |
+| 10 | A desktop user agent is used for the feed, so Facebook serves the desktop layout none of the injected selectors target | 7 |
 | 11 | `#3B5998` hardcoded twice in `fabBtnCss`, ignoring the app theme | 8 |
 | 12 | The stories toggle targets `#MStoriesTray`, a legacy id, so it likely hides nothing | 9 |
 | 13 | No way to hide reels | 9 |
@@ -55,7 +55,7 @@ Still open, and what this plan covers:
 | `lib/utils/js.dart` | Modify | JS source builders; ad-blocker strings move out |
 | `lib/utils/ad_filter.dart` | Create | Sponsored-label data + ad-detection script generation |
 | `lib/utils/css.dart` | Modify | Add placeholder substitution and the collapse stylesheet |
-| `lib/consts.dart` | Modify | Add user-agent roles |
+| `lib/consts.dart` | Modify | Replace the user agents; add roles |
 | `lib/controllers/fb_controller.dart` | Modify | `getUserAgent` gains a role |
 | `lib/screens/home_page.dart` | Modify | Injection call sites |
 | `lib/screens/messenger_page.dart` | Modify | Injection call sites |
@@ -66,6 +66,7 @@ Still open, and what this plan covers:
 | `test/utils/ad_filter_test.dart` | Create | Label list + generated-script tests |
 | `test/utils/css_test.dart` | Modify | Add placeholder tests |
 | `test/controllers/fb_controller_test.dart` | Modify | Add role tests |
+| `test/consts_test.dart` | Modify | Replace the user-agent assertions |
 | `test/lang_test.dart` | Create | Guards every locale file against invalid JSON |
 
 `ad_filter.dart` is split out of `js.dart` because the label data and the detection script change together and for the same reason, leaving `js.dart` as generic plumbing.
@@ -119,7 +120,15 @@ git commit -m "build: refresh dependency lockfile"
 
 - [ ] **Step 5: Record which markup Facebook actually serves**
 
-Tasks 3 and 9 pick DOM selectors. Which selectors are correct depends entirely on which layout Facebook returns for this app's URL and user agent, and that is not knowable from the source: the app requests `touch.facebook.com` but sends a desktop Firefox agent, and the stylesheets in `css.dart` contain selectors from *both* the legacy mobile layout (`._5rgt._5msi`, `#MStoriesTray`) and the current one (`x9f619…`). One of those sets is dead weight.
+Tasks 4 and 9 pick DOM selectors. Which selectors are correct depends entirely on which layout Facebook returns for this app's URL and user agent, and that is not knowable from the source: the app requests `touch.facebook.com` but sends a desktop Firefox agent, and the stylesheets in `css.dart` contain selectors from *both* the legacy mobile layout (`._5rgt._5msi`, `#MStoriesTray`) and the current one (`x9f619…`). One of those sets is dead weight.
+
+**Run this under the agent Task 7 installs, not the current one.** Task 7 moves the feed to a mobile agent, which changes the layout Facebook serves — recon done under today's desktop agent would describe markup the shipped app never sees. No code change is needed to do this: in Settings, switch on the custom user agent and paste
+
+```
+Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0
+```
+
+then force-restart the app. Switch it back off when you are done.
 
 Run the app, let the feed load, attach to the WebView from Chrome via `chrome://inspect`, and run in its console:
 
@@ -1164,17 +1173,58 @@ git commit -m "fix: repair ru-RU localisation file and add missing key"
 
 ## Task 7: A user agent per surface
 
-One desktop Firefox agent is used everywhere. Different surfaces behave differently: a mobile agent gets Facebook's lightweight mobile renderer, which is faster and much easier to restyle, while Messenger only ships its full markup to a desktop agent, and tablets are offered higher-bitrate video renditions.
+One **desktop** Firefox agent is used for everything, and that is the bug. Facebook decides which layout to serve from the user agent, and a desktop agent gets the desktop layout — heavier, harder to restyle, and in several countries served in a variant that renders badly on a phone. Every selector in this plan is written against the touch layout.
 
-Add a role so each call site asks for what it needs, leaving the existing custom-agent and basic-mode overrides in charge.
+Two changes fix it: a mobile Android Firefox agent for the feed, and a desktop agent for Messenger, which only ships its full markup to one.
+
+**These two strings are known-good in production.** Do not "modernise" them while applying this task — the version numbers are load-bearing, see Step 3.
 
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/consts.dart`
+- Modify: `SlimSocial_for_Facebook/test/consts_test.dart`
 - Modify: `SlimSocial_for_Facebook/lib/controllers/fb_controller.dart`
 - Modify: `SlimSocial_for_Facebook/test/controllers/fb_controller_test.dart`
 - Modify: `SlimSocial_for_Facebook/lib/screens/messenger_page.dart`
 
-- [ ] **Step 1: Write the failing tests**
+- [ ] **Step 1: Replace the user-agent tests in `consts_test.dart`**
+
+Replace the whole `group('kFirefoxUserAgent', ...)` block with:
+
+```dart
+  group('kMobileUserAgent', () {
+    test('asks Facebook for the mobile layout', () {
+      // This is the whole point of the constant: every selector this app
+      // injects is written against the touch layout, and Facebook picks the
+      // layout from the user agent.
+      expect(kMobileUserAgent, contains('Android'));
+      expect(kMobileUserAgent, contains('Mobile'));
+    });
+
+    test('is a Firefox agent recent enough not to be flagged as outdated', () {
+      final match = RegExp(r'Firefox/(\d+)\.0$').firstMatch(kMobileUserAgent);
+
+      expect(match, isNotNull, reason: 'unexpected user agent shape');
+      expect(int.parse(match!.group(1)!), greaterThanOrEqualTo(113));
+    });
+
+    test('keeps rv: pinned below the Firefox version', () {
+      // Firefox for Android freezes `rv:` at 109 while `Gecko/` and `Firefox/`
+      // track the real release. The desktop invariant — rv: equals the Firefox
+      // version — does not hold here, and "fixing" the mismatch changes which
+      // layout Facebook serves. Pinned so that does not happen by accident.
+      expect(kMobileUserAgent, contains('rv:109.0'));
+    });
+  });
+
+  group('kDesktopUserAgent', () {
+    test('is a desktop agent, which is what Messenger needs', () {
+      expect(kDesktopUserAgent, contains('Macintosh'));
+      expect(kDesktopUserAgent, isNot(contains('Mobile')));
+    });
+  });
+```
+
+- [ ] **Step 2: Write the failing controller tests**
 
 Add to `test/controllers/fb_controller_test.dart`, inside `main()`:
 
@@ -1187,17 +1237,17 @@ Add to `test/controllers/fb_controller_test.dart`, inside `main()`:
       );
     });
 
+    test('gives the feed the mobile agent', () {
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        kMobileUserAgent,
+      );
+    });
+
     test('gives Messenger the desktop agent', () {
       expect(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
         kDesktopUserAgent,
-      );
-    });
-
-    test('gives video the tablet agent', () {
-      expect(
-        PrefController.getUserAgent(role: UserAgentRole.video),
-        kTabletUserAgent,
       );
     });
 
@@ -1230,47 +1280,64 @@ Add to `test/controllers/fb_controller_test.dart`, inside `main()`:
   });
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+Then update the four existing references to `kFirefoxUserAgent` in this file to `kMobileUserAgent` — the constant is being replaced, not added alongside.
+
+- [ ] **Step 3: Run the tests to verify they fail**
 
 ```bash
-fvm flutter test test/controllers/fb_controller_test.dart
+fvm flutter test test/consts_test.dart test/controllers/fb_controller_test.dart
 ```
 
-Expected: compile failure — `Undefined name 'UserAgentRole'`, `kDesktopUserAgent`, `kTabletUserAgent`.
+Expected: compile failure — `Undefined name 'kMobileUserAgent'`, `kDesktopUserAgent`, `UserAgentRole`.
 
-- [ ] **Step 3: Add the constants and the role**
+- [ ] **Step 4: Replace the constants**
 
-In `lib/consts.dart`, add below the existing user-agent block. Leave `kFirefoxUserAgent` exactly as it is — `consts_test.dart` asserts on its version numbers, and it stays the feed default so this task changes no behaviour on its own.
+In `lib/consts.dart`, replace the whole user-agent block — `kFirefoxUserAgent` and `kIpadUserAgent` both go. `kIpadUserAgent` is referenced nowhere and its value is not even an iPad agent; the video-quality agent that would justify it arrives with the follow-up that uses it. Keep `kOperaMiniUserAgent`: basic mode still uses it.
 
 ```dart
-/// Desktop Safari. Some surfaces — Messenger in particular — only ship their
-/// full markup to a desktop agent.
-const String kDesktopUserAgent =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
-    "(KHTML, like Gecko) Version/17.0 Safari/605.1.15";
+//user agent for the webview
+//
+//Facebook picks which layout to serve from the user agent, so these strings
+//decide what every injected selector in this app has to match. A desktop agent
+//gets the desktop layout, which is heavier, harder to restyle, and in some
+//regions served in a variant that renders badly on a phone.
+//
+//Keep them reasonably recent: Facebook serves a "browser not supported" notice
+//and a degraded page to agents it considers outdated. Change the version
+//numbers only together with a device check on the feed — see the plan notes.
 
-/// Tablet Safari. Facebook offers higher-bitrate video renditions to tablets.
-const String kTabletUserAgent =
-    "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
-    "(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
+/// Firefox for Android. Gets Facebook's touch layout.
+///
+/// `rv:` is deliberately 109 while `Gecko/` and `Firefox/` are 113: Firefox for
+/// Android froze the `rv:` token, so a real agent looks exactly like this. Do
+/// not "correct" the mismatch — it is part of what makes this agent recognised.
+const String kMobileUserAgent =
+    "Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0";
+
+/// Desktop Chrome on macOS. Messenger only ships its full markup to a desktop
+/// agent; on a mobile one it pushes the native-app interstitial instead.
+const String kDesktopUserAgent =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36";
+
+/// Opera Mini. Used only by basic mode, which targets `mbasic.facebook.com`.
+const String kOperaMiniUserAgent =
+    "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
 
 /// Which surface a user agent is being requested for.
 ///
-/// Facebook varies both the markup it serves and the media quality it offers
-/// by user agent, so one string for the whole app leaves quality on the table.
+/// Facebook varies the markup it serves by user agent, so one string for the
+/// whole app means one of the two surfaces always gets the wrong layout.
 enum UserAgentRole {
   /// The main feed and everything reached from it.
   feed,
 
   /// The Messenger webview.
   messenger,
-
-  /// Video playback and downloads.
-  video,
 }
 ```
 
-- [ ] **Step 4: Make `getUserAgent` role-aware**
+- [ ] **Step 5: Make `getUserAgent` role-aware**
 
 In `lib/controllers/fb_controller.dart`, replace `getUserAgent` with:
 
@@ -1290,16 +1357,14 @@ In `lib/controllers/fb_controller.dart`, replace `getUserAgent` with:
 
     switch (role) {
       case UserAgentRole.feed:
-        return kFirefoxUserAgent;
+        return kMobileUserAgent;
       case UserAgentRole.messenger:
         return kDesktopUserAgent;
-      case UserAgentRole.video:
-        return kTabletUserAgent;
     }
   }
 ```
 
-- [ ] **Step 5: Have Messenger ask for its own role**
+- [ ] **Step 6: Have Messenger ask for its own role**
 
 In `lib/screens/messenger_page.dart`, change:
 
@@ -1317,19 +1382,25 @@ to:
 
 `home_page.dart` needs no change — `UserAgentRole.feed` is the default.
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [ ] **Step 7: Verify the whole project**
 
 ```bash
-fvm flutter test test/controllers/fb_controller_test.dart
+fvm flutter analyze lib/ test/ && fvm flutter test
 ```
 
-Expected: all tests pass, including the pre-existing ones.
+Expected: `No issues found!` then all tests pass. If `kFirefoxUserAgent` or `kIpadUserAgent` is still referenced anywhere, the analyzer says so.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Re-check the feed selectors against the new layout**
+
+The feed is now served a different layout, so the recon from Task 1 Step 5 has to be re-read and `_postSelector` in `lib/utils/ad_filter.dart` adjusted if the counts moved. If Step 5 of Task 1 was already run under this agent — as that step instructs — this is a no-op and can be ticked off immediately.
+
+Any selector change here belongs in this commit, because it is this task that invalidated it.
+
+- [ ] **Step 9: Commit**
 
 ```bash
-git add SlimSocial_for_Facebook/lib/consts.dart SlimSocial_for_Facebook/lib/controllers/fb_controller.dart SlimSocial_for_Facebook/lib/screens/messenger_page.dart SlimSocial_for_Facebook/test/controllers/fb_controller_test.dart
-git commit -m "feat: choose the user agent per surface"
+git add SlimSocial_for_Facebook/lib/consts.dart SlimSocial_for_Facebook/lib/controllers/fb_controller.dart SlimSocial_for_Facebook/lib/screens/messenger_page.dart SlimSocial_for_Facebook/lib/utils/ad_filter.dart SlimSocial_for_Facebook/test/consts_test.dart SlimSocial_for_Facebook/test/controllers/fb_controller_test.dart
+git commit -m "fix: serve the feed the mobile layout and Messenger the desktop one"
 ```
 
 ---
@@ -1693,6 +1764,18 @@ fvm flutter run --debug
 
 Wait for the feed and log in if needed.
 
+Before anything else, confirm the feed is being served the layout everything else here assumes. Attach to the WebView from Chrome via `chrome://inspect` and run:
+
+```js
+({
+  ua: navigator.userAgent,
+  url: location.href,
+  notice: document.body.innerText.indexOf('browser') !== -1,
+})
+```
+
+Expected: the agent contains `Android` and `Mobile`, and the feed renders as the touch layout — single column, no desktop sidebars. If a "browser not supported" notice is visible, the agent's version numbers are too old for what Facebook now accepts: bump `Gecko/` and `Firefox/` in `kMobileUserAgent` together, leave `rv:109.0` alone, and re-run. Stop here if the feed does not render — nothing below is meaningful on the wrong layout.
+
 - [ ] **Step 2: Confirm no duplicate stylesheets**
 
 Attach to the WebView from Chrome via `chrome://inspect`, then in its console:
@@ -1776,7 +1859,9 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 
 **Names used consistently.** `window.slimRemoveAds` is defined in Task 4 and called in Task 5. `window.slimAdObserver` is only in Task 5. `slim-ad-handled` and `slim-ad-placeholder` match between the script in Task 4 and the stylesheet in Task 2. `CustomJs.injectCssFunc(css, {required String id})` and `CustomJs.whenDomReady(body)` keep the same signatures in Tasks 2, 4 and 8. `cssColorFromColor` and `resolveCssPlaceholders` are only in Task 8.
 
-**Existing tests updated, not duplicated.** Tasks 2 and 5 replace named groups in `test/utils/js_test.dart` because those groups assert on generated strings that these tasks change. Tasks 4, 7 and 8 only add groups.
+**Existing tests updated, not duplicated.** Tasks 2 and 5 replace named groups in `test/utils/js_test.dart`, and Task 7 replaces the `kFirefoxUserAgent` group in `test/consts_test.dart`, because those groups assert on values these tasks change. Tasks 4 and 8 only add groups.
+
+**The one risky task is 7.** Everything else is invisible to Facebook: it changes what the app injects, not what the app asks for. Task 7 changes what Facebook serves, so it can regress the whole feed rather than one feature — which is why it re-runs Task 1's recon (Step 8), owns any selector change that recon forces, and is gated first in Task 10 Step 1. Its two constants are known-working values, and the version numbers inside them are load-bearing: the `rv:109.0` / `Firefox/113.0` mismatch is what a real Firefox for Android sends, and `consts_test.dart` pins it so a well-meaning bump does not silently switch the served layout back.
 
 ---
 
@@ -1786,5 +1871,5 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 2. **Word filter and post highlighting.** Hide or highlight posts matching user keywords, reusing the collapse mechanism from Task 4.
 3. **Per-URL styling.** Stamp the current URL onto `<html>` as a data attribute so stylesheets can target individual pages with no JavaScript.
 4. **Feature flags as `<html>` classes.** Toggle settings by adding and removing root classes instead of re-injecting, so changes apply without a reload.
-5. **Higher-quality video.** Use `UserAgentRole.video` from Task 7 when resolving video and image download URLs.
+5. **Higher-quality media.** Facebook offers higher-bitrate renditions to tablet agents. Add a `UserAgentRole.video` backed by an iPad agent — `Mozilla/5.0 (iPad; U; CPU OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/69.0.3497.105 Mobile/15E148 Safari/605.1` — and use it when resolving media URLs. Left out of Task 7 because nothing consumes it yet.
 6. **Undo for collapsed ads.** `data-slim-height-original` already makes this a small addition: a tap target on the stub that restores the post.
