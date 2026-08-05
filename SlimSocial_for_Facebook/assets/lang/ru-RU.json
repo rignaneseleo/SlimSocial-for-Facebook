@@ -14,6 +14,8 @@
   "hide_stories": "Скрыть истории",
   "center_text": "Выравнивать текст в сообщениях по центру",
   "add_space": "Добавлять пространство между публикациями",
+  "text_zoom": "Размер текста",
+  "text_zoom_desc": "Изменяет размер текста страницы, не ломая вёрстку",
   "advanced": "расширенные",
   "custom_useragent": "Установить свой пользовательский агент",
   "custom_js": "Выполнить свой JavaScript-код",
@@ -39,6 +41,7 @@
   "contactdev": "Связаться с разработчиком",
   "shareapp": "Поделиться приложением",
   "revoke_permission": "Отозвать разрешения в настройках",
+  "check_permission": "Проверьте разрешение в настройках",
   "gps_permission": "Доступ к местоположению",
   "camera_permission": "Доступ к камере",
   "photo_permission": "Доступ к галерее",
@@ -46,12 +49,12 @@
   "Image saved to {}": "Изображение сохранено в {}",
   "sharing": "Публикация",
   "downloading": "Загрузка",
+  "become_an_hero": "Стань героем",
   "custom_proxy": "Пользовательский прокси",
   "error_proxy with {}:{}": "Ошибка с прокси {}:{}",
   "error_proxy": "Ошибка с прокси",
-  "enabled": "Включен"
+  "enabled": "Включен",
   "proxy_is_active": "Прокси активен",
-  "become_an_hero": "Стань героем",
   "share_url": "Поделиться ссылкой",
   "refresh": "Обновить",
   "support": "Поддержать",
@@ -64,5 +67,10 @@
   "cancel": "Отмена",
   "save": "Сохранить",
   "permissions": "Разрешения",
-  "enable_messenger": "Включить Messenger"
+  "enable_messenger": "Включить Messenger",
+  "report_issue": "Сообщить о проблеме",
+  "source_code": "Исходный код",
+  "top": "Прокрутить наверх",
+  "reset": "Сбросить",
+  "exit": "Выйти из приложения"
 }
