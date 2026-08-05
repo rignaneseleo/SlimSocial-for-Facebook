@@ -266,6 +266,30 @@ Add to `test/utils/media_overlay_test.dart`, inside `main()`:
       expect(script, contains('slim-media-done'));
     });
 
+    test('retires icons from the scan under a separate class', () {
+      // Without this the interval re-measures every avatar and emoji in the
+      // whole loaded feed on every tick, and the feed only grows. The class
+      // differs from slim-media-done so the "how many did we decorate" count
+      // Task 7 relies on stays meaningful.
+      expect(script, contains('slim-media-skip'));
+      expect(
+        script,
+        contains("'img:not(.slim-media-done):not(.slim-media-skip)'"),
+      );
+    });
+
+    test('only retires an image once it has actually loaded', () {
+      // An unloaded image reports naturalWidth 0; retiring it would lose the
+      // progressive-thumbnail case the interval exists for.
+      expect(script, contains('img.complete'));
+    });
+
+    test('offsets a second bar sharing the same container', () {
+      // Albums put several qualifying images under one parent; identical
+      // offsets would stack the bars invisibly on top of each other.
+      expect(script, contains('stacked'));
+    });
+
     test('re-checks periodically because images grow after layout', () {
       expect(script, contains('setInterval'));
     });
@@ -394,19 +418,56 @@ String mediaOverlayScript({
     if (getComputedStyle(host).position === 'static') {
       host.classList.add('slim-media-host');
     }
+
+    // Albums and grids put several qualifying images under one container. Both
+    // bars would otherwise sit at the same offset, stacked on top of each
+    // other. Nudging each one up keeps them all reachable. A per-image wrapper
+    // would be tidier but means restructuring Facebook's DOM, which this plan
+    // avoids everywhere else.
+    var stacked = host.querySelectorAll('.slim-media-bar').length;
+    if (stacked > 0) {
+      bar.style.bottom = (8 + stacked * 44) + 'px';
+    }
+
     host.appendChild(bar);
   }
 
   function scan() {
     try {
-      var images = document.querySelectorAll('img:not(.slim-media-done)');
+      var images = document.querySelectorAll(
+        'img:not(.slim-media-done):not(.slim-media-skip)'
+      );
       for (var i = 0; i < images.length; i++) {
         var img = images[i];
         // naturalWidth is the source's own size, clientWidth the rendered one.
         // Both must clear the floor: a big source scaled down to an avatar is
         // still an avatar.
-        if (img.naturalWidth < MIN_EDGE || img.naturalHeight < MIN_EDGE) continue;
-        if (img.clientWidth < MIN_EDGE || img.clientHeight < MIN_EDGE) continue;
+        var sourceTooSmall =
+          img.naturalWidth < MIN_EDGE || img.naturalHeight < MIN_EDGE;
+        var boxTooSmall =
+          img.clientWidth < MIN_EDGE || img.clientHeight < MIN_EDGE;
+
+        if (sourceTooSmall || boxTooSmall) {
+          // An image that has finished loading, whose source is small AND whose
+          // box is small, is an avatar or an icon: it will never become
+          // content, so retire it from the scan. Without this every icon in the
+          // feed is re-measured on every tick, forever — and the feed only
+          // grows.
+          //
+          // Anything still loading (naturalWidth 0) or merely laid out small
+          // for now stays eligible: that is what lets a progressive thumbnail
+          // be picked up once the full-resolution source arrives.
+          //
+          // Retired images get their own class, not slim-media-done, so that
+          // "how many images did we decorate" stays answerable — Task 7 leans
+          // on that count.
+          if (img.complete && img.naturalWidth > 0 &&
+              sourceTooSmall && img.clientWidth > 0 && boxTooSmall) {
+            img.classList.add('slim-media-skip');
+          }
+          continue;
+        }
+
         decorate(img, img.currentSrc || img.src);
       }
     } catch (e) {}
@@ -427,9 +488,28 @@ fvm flutter test test/utils/media_overlay_test.dart
 
 Expected: all tests pass.
 
-If `has balanced delimiters` fails there is a genuine typo in the generated JavaScript — fix it before moving on, because nothing downstream will catch it.
+If `has balanced delimiters` fails there is a genuine typo in the generated JavaScript — fix it before moving on.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 5: Parse the generated script with a real JavaScript engine**
+
+The delimiter check above is a proxy. If `node` is on the machine, replace the proxy with the real thing — it catches every syntax error the `contains` assertions sail past, and costs one command. `media_overlay.dart` imports only `dart:convert`, so plain `dart run` can execute it without the Flutter runtime.
+
+```bash
+mkdir -p tool && printf "%s\n" \
+  "import 'package:slimsocial_for_facebook/utils/media_overlay.dart';" \
+  "" \
+  "void main() {" \
+  "  print(mediaOverlayScript(viewLabel: 'View', saveLabel: 'Save'));" \
+  "}" > tool/dump_overlay.dart
+fvm dart run tool/dump_overlay.dart > /tmp/slim_overlay.js && node --check /tmp/slim_overlay.js && echo "syntax OK"
+rm -f tool/dump_overlay.dart && rmdir tool 2>/dev/null
+```
+
+Expected: `syntax OK`. The dumper is a throwaway — delete it as shown and do **not** commit it.
+
+If `node` is unavailable, skip this step and rely on the delimiter check plus Task 7; say so in the task notes rather than silently skipping.
+
+- [ ] **Step 6: Commit**
 
 ```bash
 git add SlimSocial_for_Facebook/lib/utils/media_overlay.dart SlimSocial_for_Facebook/test/utils/media_overlay_test.dart
@@ -572,8 +652,18 @@ void main() {
       expect(mediaFileName('https://scontent.example'), 'slimsocial');
     });
 
-    test('strips path separators so the name cannot escape the directory', () {
+    test('does not let a traversal path escape the directory', () {
+      // Dart's Uri already collapses `..` for us, so pathSegments is
+      // [etc, passwd] and the last segment is harmless. Asserted anyway so a
+      // future rewrite that stops going through Uri cannot regress it.
       expect(mediaFileName('https://x.example/a/../../etc/passwd'), 'passwd');
+    });
+
+    test('strips a percent-encoded separator out of the name', () {
+      // This is what the strip regexp is actually for: pathSegments are
+      // percent-decoded, so %2F arrives as a real separator inside a single
+      // segment and would otherwise write outside the download directory.
+      expect(mediaFileName('https://x.example/a%2Fb.jpg'), 'ab.jpg');
     });
 
     test('never returns an empty string', () {
@@ -965,10 +1055,28 @@ Expected: **View** and **Save** appear over the photo, and no buttons appear on 
 ```js
 [document.querySelectorAll('.slim-media-btn').length,
  document.querySelectorAll('img.slim-media-done').length,
+ document.querySelectorAll('img.slim-media-skip').length,
  document.querySelectorAll('img').length]
 ```
 
-The first two greater than zero, and the second far smaller than the third. If the second is close to the third, the size floor is not working.
+The first two greater than zero, and the second far smaller than the fourth. If the second is close to the fourth, the size floor is not working.
+
+The third is the icons the scan has retired. It should be substantial — most images in a feed are avatars and reaction icons — and `done + skip` should account for most of the total once the page has settled. If `skip` stays at zero, the retirement branch is not firing and every tick is re-measuring the whole feed.
+
+- [ ] **Step 2b: Confirm the scan cost does not grow with the feed**
+
+Scroll through roughly twenty posts, then run:
+
+```js
+(function () {
+  var t = performance.now();
+  document.querySelectorAll('img:not(.slim-media-done):not(.slim-media-skip)');
+  return [performance.now() - t,
+          document.querySelectorAll('img').length];
+})()
+```
+
+Expected: the candidate query stays cheap (single-digit milliseconds) even as the image count climbs, because retired icons drop out of it. This is the check on the one-second interval being affordable on a low-end device — run it on the weakest device available, not only a fast one.
 
 - [ ] **Step 3: Confirm scrolling still works over a photo**
 
@@ -980,7 +1088,9 @@ Expected: the feed scrolls. If it does not, `pointer-events: none` on `.slim-med
 
 Tap **View**.
 
-Expected: a black full-screen Flutter route with the photo; pinch-zoom works; the webview behind it has **not** navigated. Go back.
+Expected: a black full-screen Flutter route **with the photo actually rendered** — not a spinner that never resolves and not the broken-image icon. This is the one thing in the plan that cannot be inferred from the code: `Image.network` fetches the URL from Dart, outside the webview, so it carries none of the page's cookies. Signed `scontent` URLs are normally fetchable that way — the existing app-bar Download button already relies on exactly that and works — but confirm it rather than assume it. If the image fails to load, the fallback is to render the photo in a small webview (which carries the session) instead of `Image.network`, and Task 5 needs revisiting before this plan ships.
+
+Then check pinch-zoom works and the webview behind it has **not** navigated. Go back.
 
 Expected: the feed is exactly where it was, same scroll position. This is the whole point of the plan — if the feed jumped or reloaded, the tap leaked through to the permalink link and `preventDefault` is not firing.
 
@@ -1035,7 +1145,9 @@ Expected: nothing happens, and the Flutter log shows `ignored media message:` th
 
 **Every task commits green.** Task 1 is self-contained. Task 2 depends only on Task 1. Task 3 depends only on `MyCss`. Task 4 is self-contained. Task 5 depends on Task 4. Task 6 depends on 1–5. No task references a symbol a later task creates.
 
-**Known limitation, stated rather than hidden.** The overlay script is verified by string assertions plus a delimiter-balance check; there is no JavaScript engine in `flutter test`. Task 7 is the real behavioural gate, and the plan does not claim otherwise.
+**Known limitation, stated rather than hidden.** There is no JavaScript engine inside `flutter test`, so the unit tests can only assert on the generated string. Task 2 narrows the gap in two ways: a delimiter-balance check inside the suite, and Step 5, which dumps the script and runs `node --check` over it for a real parse. Neither executes the script against a DOM, so Task 7 remains the behavioural gate and the plan does not claim otherwise.
+
+**Validated against the real APIs before this plan was accepted.** `addJavaScriptChannel(String name, {required void Function(JavaScriptMessage) onMessageReceived})` and `JavaScriptMessage.message` match `webview_flutter` 4.10.0. `FileDownloader.downloadFile` accepts `name:`, and its `OnDownloadError` is `void Function(String)` — the `(String? error)` closure used here is legal by parameter contravariance, and matches what `utils.dart` already does. `Share.shareXFiles([XFile(path)])` exists in `share_plus` 10.1.4, is not deprecated, and is the same call `home_page.dart` already makes. `showToast` is Fluttertoast-based and needs no `BuildContext`, so the viewer can call it from a `StatelessWidget` after an `await`. `_HomePageState` is a `ConsumerState`, so `mounted` is available for the guard in Task 6. `runJs` runs on `onPageFinished`, so the overlay installs once per load and the `slimMediaTimer` sentinel absorbs repeats. Every assertion in Tasks 2 and 4 was executed against the proposed implementations and passes, including `mediaFileName`'s behaviour on `..` segments (Dart's `Uri` normalises them) and on a percent-encoded `%2F` (which decodes to a real separator — this is what the strip regexp is actually for).
 
 **External dependency.** Task 3's `{accent}` needs `resolveCssPlaceholders` from the injection-overhaul plan's Task 8. Called out inline.
 
