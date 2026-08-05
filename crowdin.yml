@@ -25,7 +25,8 @@ files:
       locale:
         ar: ar-AR      # app ships ar-AR.json (Crowdin default would be ar-SA)
         bn: bn-IN      # app ships bn-IN.json (Crowdin default would be bn-BD)
+        ha: ha-NG      # app ships ha-NG.json (Crowdin default would be ha-HG)
         "no": no-NO    # Norwegian
         nb: no-NO      # Norwegian Bokmal -> same file
-        sr: sr-SP      # Serbian (Cyrillic)
+        sr: sr-SP      # Serbian (Latin content, legacy file name)
         ur: ur-PK      # Urdu

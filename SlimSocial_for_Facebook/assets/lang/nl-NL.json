@@ -64,5 +64,13 @@
   "cancel": "Annuleren",
   "save": "Opslaan",
   "permissions": "Machtigingen",
-  "enable_messenger": "Activeer Messenger"
+  "enable_messenger": "Activeer Messenger",
+  "text_zoom": "Tekstgrootte",
+  "text_zoom_desc": "Schaalt de paginatekst zonder de lay-out te breken",
+  "check_permission": "Controleer de toestemming in de instellingen",
+  "report_issue": "Een probleem melden",
+  "source_code": "Broncode",
+  "top": "Naar boven scrollen",
+  "reset": "Resetten",
+  "exit": "App afsluiten"
 }
