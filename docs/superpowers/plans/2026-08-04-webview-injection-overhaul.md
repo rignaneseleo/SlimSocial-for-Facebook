@@ -140,11 +140,11 @@ Run the app, let the feed load, attach to the WebView from Chrome via `chrome://
 
 Paste the result into the task notes. It decides three things:
 
-- **`_postSelector` in Task 3.** Use whichever of `article`, `div[data-tracking-duration-id]`, `[role="article"]` or `[data-pagelet^="FeedUnit"]` is non-zero. If the counts disagree with the plan's assumed `'article, div[data-tracking-duration-id]'`, change the plan, not the reality.
-- **Whether the `data-ft` / `data-xt-vimp` tiers are worth keeping.** If both are `0`, the attribute tiers cannot fire and Task 3's cascade collapses to the text tier alone — say so and keep the tiers only as forward-compatibility.
-- **Whether `data-actual-height` exists**, which is what Task 3's collapse rewrites and what Task 10 Step 4 verifies. If it is absent, the collapse still works (the write is guarded) but drop that assertion from Task 10.
+- **`_postSelector` in Task 4.** Use whichever of `article`, `div[data-tracking-duration-id]`, `[role="article"]` or `[data-pagelet^="FeedUnit"]` is non-zero. If the counts disagree with the plan's assumed `'article, div[data-tracking-duration-id]'`, change the plan, not the reality.
+- **Whether the `data-ft` / `data-xt-vimp` tiers are worth keeping.** If both are `0`, the attribute tiers cannot fire and Task 4's cascade collapses to the text tier alone — say so and keep the tiers only as forward-compatibility.
+- **Whether `data-actual-height` exists**, which is what Task 4's collapse rewrites and what Task 10 Step 4 verifies. If it is absent, the collapse still works (the write is guarded) but drop that assertion from Task 10.
 
-Do not start Task 3 before this step has an answer.
+Do not start Task 4 before this step has an answer.
 
 ---
 
@@ -163,6 +163,7 @@ Four problems in the current `injectCssFunc` and its call sites.
 **Files:**
 - Modify: `SlimSocial_for_Facebook/lib/utils/js.dart`
 - Modify: `SlimSocial_for_Facebook/test/utils/js_test.dart`
+- Modify: `SlimSocial_for_Facebook/lib/utils/css.dart`
 - Modify: `SlimSocial_for_Facebook/lib/screens/home_page.dart`
 - Modify: `SlimSocial_for_Facebook/lib/screens/messenger_page.dart`
 
@@ -199,9 +200,9 @@ In `test/utils/js_test.dart`, replace the whole `group('CustomJs.injectCssFunc',
       expect(js, contains(r'[aria-label=\"Next\"]'));
     });
 
-    test('encodes newlines so the caller can flatten the snippet', () {
-      // The generated code is flattened before it is handed to the webview, so
-      // a raw newline inside the string literal would be destroyed.
+    test('encodes newlines instead of breaking the string literal', () {
+      // A raw newline is not legal inside a JS string literal, so the whole
+      // injection would be a syntax error without this.
       final js = CustomJs.injectCssFunc('.a {\n  color: red;\n}', id: 'slim-a');
 
       expect(js, contains(r'\n'));
@@ -310,7 +311,28 @@ fvm flutter test test/utils/js_test.dart
 
 Expected: all tests in the file pass.
 
-- [ ] **Step 5: Update the Facebook call site**
+- [ ] **Step 5: Add the placeholder stylesheet**
+
+In `lib/utils/css.dart`, add to the `CustomCss` class alongside the other definitions:
+
+```dart
+  /// Styles the stub left behind where a sponsored post was collapsed.
+  ///
+  /// Deliberately not in [cssList]: that list drives the user-facing settings
+  /// toggles, and this is internal to ad hiding.
+  static MyCss adPlaceholderCss = MyCss(
+    key: 'ad_placeholder_style',
+    description: 'Collapsed sponsored-post placeholder',
+    defaultEnabled: true,
+    code: '.slim-ad-placeholder { display: flex; align-items: center; '
+        'justify-content: center; height: 60px; font-size: 13px; '
+        'letter-spacing: 0.5px; opacity: 0.55; }',
+  );
+```
+
+It is created here rather than in Task 4 so that the call site below compiles against code that already exists. Nothing produces `.slim-ad-placeholder` elements until Task 4, so injecting the sheet now is inert.
+
+- [ ] **Step 6: Update the Facebook call site**
 
 In `lib/screens/home_page.dart`, replace `injectCss` with:
 
@@ -324,21 +346,26 @@ In `lib/screens/home_page.dart`, replace `injectCss` with:
           CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
     };
 
-    final body = sheets.entries
-        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
-        .join('\n');
+    final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
 
-    await _controller.runJavaScript(
-      CustomJs.whenDomReady(body).replaceAll('\n', ' '),
-    );
+    // Defines removeAds(). Task 4 replaces both this and the call below with
+    // adFilterScript; until then ad hiding has to keep working.
+    if (hideAds) {
+      await _controller.runJavaScript(CustomJs.removeAdsFunc);
+    }
+
+    final body = [
+      ...sheets.entries.map((e) => CustomJs.injectCssFunc(e.value, id: e.key)),
+      if (hideAds) 'removeAds();',
+    ].join('\n');
+
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 ```
 
-`CustomCss.adPlaceholderCss` is added in Task 3 — the analyzer will flag it until then, which is expected.
+Two things this deliberately does *not* change. The ad injection stays put, so this commit is a pure injection-hygiene change and ad hiding is never broken in between — Task 4 moves it into `runJs` and deletes `removeAdsFunc` in the same commit that adds the replacement. And the body is handed to `runJavaScript` with its newlines intact: `jsonEncode` already escaped every newline *inside* the CSS string literals, so the remaining ones are only between statements. Flattening them is not just unnecessary, it is a hazard — a single `//` comment anywhere in the snippet would comment out the entire rest of the program once the line breaks are gone.
 
-The `removeAdsFunc` injection and the `removeAds();` call move out of `injectCss` and into `runJs` in Task 3, so that ad handling is set up in one place after the page has loaded rather than split across two lifecycle callbacks.
-
-- [ ] **Step 6: Update the Messenger call site**
+- [ ] **Step 7: Update the Messenger call site**
 
 In `lib/screens/messenger_page.dart`, replace `injectCss` with:
 
@@ -354,36 +381,38 @@ In `lib/screens/messenger_page.dart`, replace `injectCss` with:
         .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
         .join('\n');
 
-    await _controller.runJavaScript(
-      CustomJs.whenDomReady(body).replaceAll('\n', ' '),
-    );
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 ```
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Verify nothing regressed**
 
 ```bash
-git add SlimSocial_for_Facebook/lib/utils/js.dart SlimSocial_for_Facebook/lib/screens/home_page.dart SlimSocial_for_Facebook/lib/screens/messenger_page.dart SlimSocial_for_Facebook/test/utils/js_test.dart
+fvm flutter analyze lib/ test/ && fvm flutter test
+```
+
+Expected: `No issues found!` then all tests pass. Every task in this plan commits a green tree; if either command fails, fix it before committing.
+
+- [ ] **Step 9: Commit**
+
+```bash
+git add SlimSocial_for_Facebook/lib/utils/js.dart SlimSocial_for_Facebook/lib/utils/css.dart SlimSocial_for_Facebook/lib/screens/home_page.dart SlimSocial_for_Facebook/lib/screens/messenger_page.dart SlimSocial_for_Facebook/test/utils/js_test.dart
 git commit -m "fix: inject each stylesheet once, into head, as text"
 ```
 
 ---
 
-## Task 3: Layered ad detection
+## Task 3: Sponsored labels for every supported locale
 
-Three defects remain in `removeAdsFunc`.
+The keyword list covers roughly 24 strings, several of them machine translations that do not match what Facebook actually renders, and it appends only `"sponsored_keyword_fb".tr()` — the label for the **app's** locale.
 
-**No length bound on text matching.** `querySelectorAll('span')` returns thousands of nodes on a loaded feed, and `textContent` on an ancestor includes all descendant text. Any post whose *body* contains the word "Sponsored" — a status complaining about ads, a screenshot caption — is destroyed. A genuine label is a short standalone string, so bounding the match to 4–24 characters removes almost all of these false positives.
+That last part is the real gap. Facebook renders the label in the language of the **Facebook account**, which is frequently not the language the app is running in, and a feed can mix several. All 41 locale files already carry a `sponsored_keyword_fb` value, so bundling every one of them costs nothing and covers the mismatch.
 
-**Markup is ignored.** Facebook tags sponsored units with attributes: `data-ft` containing `is_sponsored` or `should_log_endpoint_info`, `data-xt-vimp`, and links to `/ads/about/`. These are locale-independent and vastly cheaper to test than walking every descendant's text. Checking them first means the text tier is only reached for units that carry no attribute at all.
-
-**The post subtree is destroyed.** `post.innerHTML = myDiv` throws away the post's children. Facebook's own scripts still hold references into that subtree, and the mobile feed virtualises on `data-actual-height`, so overwriting content leaves the scroller with wrong geometry. Hiding the children and appending a stub keeps both intact and makes the operation reversible.
+The list is self-contained and lands first, so that Task 4's detection script has something to compile against.
 
 **Files:**
 - Create: `SlimSocial_for_Facebook/lib/utils/ad_filter.dart`
 - Create: `SlimSocial_for_Facebook/test/utils/ad_filter_test.dart`
-- Modify: `SlimSocial_for_Facebook/lib/utils/css.dart`
-- Modify: `SlimSocial_for_Facebook/lib/screens/home_page.dart`
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -394,6 +423,186 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 
 void main() {
+  group('kSponsoredLabels', () {
+    test('is not empty', () {
+      expect(kSponsoredLabels, isNotEmpty);
+    });
+
+    test('is entirely lowercase so matching can be case-insensitive', () {
+      for (final label in kSponsoredLabels) {
+        expect(label, label.toLowerCase(), reason: '"$label" is not lowercase');
+      }
+    });
+
+    test('has no duplicates', () {
+      expect(kSponsoredLabels.toSet().length, kSponsoredLabels.length);
+    });
+
+    test('has no stray surrounding whitespace', () {
+      for (final label in kSponsoredLabels) {
+        expect(label, label.trim(), reason: '"$label" has stray whitespace');
+      }
+    });
+
+    test('every label is long enough to survive the length guard', () {
+      for (final label in kSponsoredLabels) {
+        expect(
+          label.length,
+          greaterThanOrEqualTo(kMinSponsoredLabelLength),
+          reason: '"$label" is too short to ever match',
+        );
+      }
+    });
+
+    test('covers the scripts used across the supported locales', () {
+      expect(kSponsoredLabels, contains('sponsored'));
+      expect(kSponsoredLabels, contains('sponsorizzato'));
+      expect(kSponsoredLabels, contains('gesponsert'));
+      expect(kSponsoredLabels, contains('patrocinado'));
+      expect(kSponsoredLabels, contains('реклама'));
+      expect(kSponsoredLabels, contains('広告'));
+      expect(kSponsoredLabels, contains('광고'));
+    });
+  });
+}
+```
+
+- [ ] **Step 2: Run the tests to verify they fail**
+
+```bash
+fvm flutter test test/utils/ad_filter_test.dart
+```
+
+Expected: `Error: Couldn't resolve the package 'slimsocial_for_facebook/utils/ad_filter.dart'`.
+
+- [ ] **Step 3: Create `lib/utils/ad_filter.dart`**
+
+```dart
+/// Shortest label the text tier will consider.
+///
+/// Short strings appear all over Facebook's own chrome, so matching them
+/// produces false positives.
+const int kMinSponsoredLabelLength = 4;
+
+/// Labels Facebook uses to mark a sponsored post, lowercase, one or more per
+/// supported locale.
+///
+/// The label is rendered in the language of the *Facebook account*, which is
+/// often not the language the app is running in, and a single feed can mix
+/// several — so every known variant is bundled rather than just the active
+/// locale's.
+///
+/// Values come from the `sponsored_keyword_fb` entries in `assets/lang/*.json`
+/// plus the variants below. Matching is a case-insensitive substring test
+/// guarded by a length window, so a variant that is wrong for some locale is
+/// inert rather than harmful. Still, prefer deleting a doubtful label over
+/// guessing at one: every entry widens the false-positive surface.
+const List<String> kSponsoredLabels = [
+  // Latin script
+  'gesponsert',
+  'gesponsord',
+  'hirdetés',
+  'patrocinado',
+  'publicidad',
+  'rėmėjas',
+  'sponsede',
+  'sponset',
+  'sponsora',
+  'sponsored',
+  'sponsoreeritud',
+  'sponsoreret',
+  'sponsorisé',
+  'sponsorisée',
+  'sponsorizat',
+  'sponsorizzato',
+  'sponsorlu',
+  'sponsoroidut',
+  'sponsoroitu',
+  'sponsorowane',
+  'sponsrad',
+  'sponsrat',
+  'sponzorirano',
+  'sponzorisano',
+  'sponzorované',
+  'sponzorováno',
+  'szponzorált',
+  'tài trợ',
+  // Cyrillic
+  'реклама',
+  'спонсорирано',
+  'спонсоровано',
+  // Hebrew, Arabic, Persian, Urdu
+  'ממומן',
+  'تعاون',
+  'حمایت شده',
+  'رعاية',
+  'ممول',
+  // Indic
+  'प्रायोजित',
+  'স্পনসরড',
+  'பரிந்துரைக்கப்பட்டது',
+  'ప్రాయోజించబడిన',
+  'പ്രവര്‍ത്തിച്ചിരിക്കുന്നത്',
+  // Thai
+  'โฆษณา',
+  // CJK
+  '広告',
+  'スポンサー',
+  '赞助',
+  '贊助',
+  '광고',
+  '스폰서',
+];
+```
+
+- [ ] **Step 4: Run the tests to verify they pass**
+
+```bash
+fvm flutter test test/utils/ad_filter_test.dart
+```
+
+Expected: all tests pass.
+
+If `every label is long enough` fails, a label is shorter than `kMinSponsoredLabelLength` — delete it, because the guard makes it unreachable.
+
+- [ ] **Step 5: Verify the whole project**
+
+```bash
+fvm flutter analyze lib/ test/ && fvm flutter test
+```
+
+Expected: `No issues found!` then all tests pass. Nothing imports `ad_filter.dart` yet, so this task adds a self-contained, green unit.
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add SlimSocial_for_Facebook/lib/utils/ad_filter.dart SlimSocial_for_Facebook/test/utils/ad_filter_test.dart
+git commit -m "feat: bundle sponsored-post labels for every supported locale"
+```
+
+---
+
+## Task 4: Layered ad detection
+
+Three defects remain in `removeAdsFunc`.
+
+**No length bound on text matching.** `querySelectorAll('span')` returns thousands of nodes on a loaded feed, and `textContent` on an ancestor includes all descendant text. Any post whose *body* contains the word "Sponsored" — a status complaining about ads, a screenshot caption — is destroyed. A genuine label is a short standalone string, so bounding the match to 4–24 characters removes almost all of these false positives.
+
+**Markup is ignored.** Facebook tags sponsored units with attributes: `data-ft` containing `is_sponsored` or `should_log_endpoint_info`, `data-xt-vimp`, and links to `/ads/about/`. These are locale-independent and vastly cheaper to test than walking every descendant's text. Checking them first means the text tier is only reached for units that carry no attribute at all.
+
+**The post subtree is destroyed.** `post.innerHTML = myDiv` throws away the post's children. Facebook's own scripts still hold references into that subtree, and the mobile feed virtualises on `data-actual-height`, so overwriting content leaves the scroller with wrong geometry. Hiding the children and appending a stub keeps both intact and makes the operation reversible.
+
+**Files:**
+- Modify: `SlimSocial_for_Facebook/lib/utils/ad_filter.dart`
+- Modify: `SlimSocial_for_Facebook/test/utils/ad_filter_test.dart`
+- Modify: `SlimSocial_for_Facebook/lib/utils/js.dart`
+- Modify: `SlimSocial_for_Facebook/lib/screens/home_page.dart`
+
+- [ ] **Step 1: Write the failing tests**
+
+Add to `test/utils/ad_filter_test.dart`, inside `main()` and below the `kSponsoredLabels` group that Task 3 created:
+
+```dart
   final script = adFilterScript(
     placeholderText: 'Ad removed',
     extraLabels: const ['werbung'],
@@ -443,7 +652,29 @@ void main() {
       expect(script, contains('Ad removed'));
     });
   });
-}
+
+  group('adFilterScript label handling', () {
+    test('drops a runtime extra that duplicates a bundled label', () {
+      final withDuplicate = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['Sponsored'],
+      );
+      final bundled = adFilterScript(placeholderText: 'x');
+
+      // The encoded array must be identical: no duplicate entry was added.
+      expect(withDuplicate, bundled);
+    });
+
+    test('ignores a runtime extra that is too short to match', () {
+      final withShort = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['ad'],
+      );
+      final bundled = adFilterScript(placeholderText: 'x');
+
+      expect(withShort, bundled);
+    });
+  });
 ```
 
 - [ ] **Step 2: Run the tests to verify they fail**
@@ -452,9 +683,11 @@ void main() {
 fvm flutter test test/utils/ad_filter_test.dart
 ```
 
-Expected: `Error: Couldn't resolve the package 'slimsocial_for_facebook/utils/ad_filter.dart'`.
+Expected: compile failure — `Method not found: 'adFilterScript'`.
 
-- [ ] **Step 3: Create `lib/utils/ad_filter.dart`**
+- [ ] **Step 3: Add the script generator to `lib/utils/ad_filter.dart`**
+
+Add the import and the three declarations below to the file Task 3 created, keeping `kSponsoredLabels` and `kMinSponsoredLabelLength` as they are:
 
 ```dart
 import 'dart:convert';
@@ -470,12 +703,6 @@ const String _sponsoredMarkerSelector =
 
 /// Containers that hold a single feed post across Facebook's mobile layouts.
 const String _postSelector = 'article, div[data-tracking-duration-id]';
-
-/// Shortest label the text tier will consider.
-///
-/// Short strings appear all over Facebook's own chrome, so matching them
-/// produces false positives.
-const int kMinSponsoredLabelLength = 4;
 
 /// Builds the ad-hiding script and installs it as `window.slimRemoveAds`.
 ///
@@ -580,30 +807,41 @@ String adFilterScript({
 }
 ```
 
-`kSponsoredLabels` is defined in Task 4. Until then the analyzer reports it as undefined — that is expected, and Task 4's tests are what prove the list is sound.
+`kSponsoredLabels` and `kMinSponsoredLabelLength` come from Task 3, so both already exist in this file.
 
-- [ ] **Step 4: Add the placeholder stylesheet**
+- [ ] **Step 4: Run the tests to verify they pass**
 
-In `lib/utils/css.dart`, add to the `CustomCss` class alongside the other definitions:
-
-```dart
-  /// Styles the stub left behind where a sponsored post was collapsed.
-  ///
-  /// Deliberately not in [cssList]: that list drives the user-facing settings
-  /// toggles, and this is internal to ad hiding.
-  static MyCss adPlaceholderCss = MyCss(
-    key: 'ad_placeholder_style',
-    description: 'Collapsed sponsored-post placeholder',
-    defaultEnabled: true,
-    code: '.slim-ad-placeholder { display: flex; align-items: center; '
-        'justify-content: center; height: 60px; font-size: 13px; '
-        'letter-spacing: 0.5px; opacity: 0.55; }',
-  );
+```bash
+fvm flutter test test/utils/ad_filter_test.dart
 ```
 
-- [ ] **Step 5: Switch the call site over**
+Expected: all tests in the file pass.
 
-In `lib/screens/home_page.dart`, replace `runJs` with:
+- [ ] **Step 5: Switch the call sites over**
+
+Ad handling moves out of `injectCss` and into `runJs`, so that it is set up in one place after the page has loaded rather than split across two lifecycle callbacks. Both halves of that move happen in this one commit: dropping `removeAdsFunc` before `adFilterScript` exists would leave a build with no ad hiding at all.
+
+In `lib/screens/home_page.dart`, drop the ad lines added in Task 2 from `injectCss`, leaving it as pure stylesheet injection:
+
+```dart
+  Future<void> injectCss() async {
+    final sheets = <String, String>{
+      'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
+      'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
+      'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
+      'slim-user-sheet':
+          CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
+    };
+
+    final body = sheets.entries
+        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
+        .join('\n');
+
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
+  }
+```
+
+Then replace `runJs` with:
 
 ```dart
   Future<void> runJs() async {
@@ -633,7 +871,7 @@ Add the import, keeping the block alphabetically ordered — `very_good_analysis
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 ```
 
-- [ ] **Step 6: Delete the superseded string**
+- [ ] **Step 6: Delete the superseded strings**
 
 Remove `CustomJs.removeAdsFunc` and `CustomJs.exampleJs` from `lib/utils/js.dart`. `removeAdsFunc` is replaced by `adFilterScript`; `exampleJs` is dead code that blanks the page body and is referenced nowhere.
 
@@ -643,205 +881,21 @@ Confirm nothing still refers to them:
 grep -rn "removeAdsFunc\|exampleJs" lib/ test/
 ```
 
-Expected: no output.
+Expected: no output. If `home_page.dart` still appears, Step 5's `injectCss` edit was missed.
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [ ] **Step 7: Verify the whole project**
 
 ```bash
-fvm flutter test test/utils/ad_filter_test.dart
+fvm flutter analyze lib/ test/ && fvm flutter test
 ```
 
-Expected: all 9 tests pass. They will only compile once Task 4 has added `kSponsoredLabels`, so if the analyzer still reports it missing, do Task 4 first and return here.
+Expected: `No issues found!` then all tests pass.
 
 - [ ] **Step 8: Commit**
 
 ```bash
-git add SlimSocial_for_Facebook/lib/utils/ad_filter.dart SlimSocial_for_Facebook/lib/utils/js.dart SlimSocial_for_Facebook/lib/utils/css.dart SlimSocial_for_Facebook/lib/screens/home_page.dart SlimSocial_for_Facebook/test/utils/ad_filter_test.dart
+git add SlimSocial_for_Facebook/lib/utils/ad_filter.dart SlimSocial_for_Facebook/lib/utils/js.dart SlimSocial_for_Facebook/lib/screens/home_page.dart SlimSocial_for_Facebook/test/utils/ad_filter_test.dart
 git commit -m "feat: detect sponsored posts by markup and collapse them in place"
-```
-
----
-
-## Task 4: Sponsored labels for every supported locale
-
-The keyword list covers roughly 24 strings, several of them machine translations that do not match what Facebook actually renders, and it appends only `"sponsored_keyword_fb".tr()` — the label for the **app's** locale.
-
-That last part is the real gap. Facebook renders the label in the language of the **Facebook account**, which is frequently not the language the app is running in, and a feed can mix several. All 41 locale files already carry a `sponsored_keyword_fb` value, so bundling every one of them costs nothing and covers the mismatch.
-
-**Files:**
-- Modify: `SlimSocial_for_Facebook/lib/utils/ad_filter.dart`
-- Modify: `SlimSocial_for_Facebook/test/utils/ad_filter_test.dart`
-
-- [ ] **Step 1: Write the failing tests**
-
-Add to `test/utils/ad_filter_test.dart`, inside `main()`:
-
-```dart
-  group('kSponsoredLabels', () {
-    test('is not empty', () {
-      expect(kSponsoredLabels, isNotEmpty);
-    });
-
-    test('is entirely lowercase so matching can be case-insensitive', () {
-      for (final label in kSponsoredLabels) {
-        expect(label, label.toLowerCase(), reason: '"$label" is not lowercase');
-      }
-    });
-
-    test('has no duplicates', () {
-      expect(kSponsoredLabels.toSet().length, kSponsoredLabels.length);
-    });
-
-    test('has no stray surrounding whitespace', () {
-      for (final label in kSponsoredLabels) {
-        expect(label, label.trim(), reason: '"$label" has stray whitespace');
-      }
-    });
-
-    test('every label is long enough to survive the length guard', () {
-      for (final label in kSponsoredLabels) {
-        expect(
-          label.length,
-          greaterThanOrEqualTo(kMinSponsoredLabelLength),
-          reason: '"$label" is too short to ever match',
-        );
-      }
-    });
-
-    test('covers the scripts used across the supported locales', () {
-      expect(kSponsoredLabels, contains('sponsored'));
-      expect(kSponsoredLabels, contains('sponsorizzato'));
-      expect(kSponsoredLabels, contains('gesponsert'));
-      expect(kSponsoredLabels, contains('patrocinado'));
-      expect(kSponsoredLabels, contains('реклама'));
-      expect(kSponsoredLabels, contains('広告'));
-      expect(kSponsoredLabels, contains('광고'));
-    });
-  });
-
-  group('adFilterScript label handling', () {
-    test('drops a runtime extra that duplicates a bundled label', () {
-      final withDuplicate = adFilterScript(
-        placeholderText: 'x',
-        extraLabels: const ['Sponsored'],
-      );
-      final bundled = adFilterScript(placeholderText: 'x');
-
-      // The encoded array must be identical: no duplicate entry was added.
-      expect(withDuplicate, bundled);
-    });
-
-    test('ignores a runtime extra that is too short to match', () {
-      final withShort = adFilterScript(
-        placeholderText: 'x',
-        extraLabels: const ['ad'],
-      );
-      final bundled = adFilterScript(placeholderText: 'x');
-
-      expect(withShort, bundled);
-    });
-  });
-```
-
-- [ ] **Step 2: Run the tests to verify they fail**
-
-```bash
-fvm flutter test test/utils/ad_filter_test.dart
-```
-
-Expected: compile failure — `Undefined name 'kSponsoredLabels'`.
-
-- [ ] **Step 3: Add the label list**
-
-Add to `lib/utils/ad_filter.dart`, above `adFilterScript`:
-
-```dart
-/// Labels Facebook uses to mark a sponsored post, lowercase, one or more per
-/// supported locale.
-///
-/// The label is rendered in the language of the *Facebook account*, which is
-/// often not the language the app is running in, and a single feed can mix
-/// several — so every known variant is bundled rather than just the active
-/// locale's.
-///
-/// Values come from the `sponsored_keyword_fb` entries in `assets/lang/*.json`
-/// plus the variants below. Matching is a case-insensitive substring test
-/// guarded by a length window, so a variant that is wrong for some locale is
-/// inert rather than harmful. Still, prefer deleting a doubtful label over
-/// guessing at one: every entry widens the false-positive surface.
-const List<String> kSponsoredLabels = [
-  // Latin script
-  'gesponsert',
-  'gesponsord',
-  'hirdetés',
-  'patrocinado',
-  'publicidad',
-  'rėmėjas',
-  'sponsede',
-  'sponset',
-  'sponsora',
-  'sponsored',
-  'sponsoreeritud',
-  'sponsoreret',
-  'sponsorisé',
-  'sponsorisée',
-  'sponsorizat',
-  'sponsorizzato',
-  'sponsorlu',
-  'sponsoroidut',
-  'sponsoroitu',
-  'sponsorowane',
-  'sponsrad',
-  'sponsrat',
-  'sponzorirano',
-  'sponzorisano',
-  'sponzorované',
-  'sponzorováno',
-  'szponzorált',
-  'tài trợ',
-  // Cyrillic
-  'реклама',
-  'спонсорирано',
-  'спонсоровано',
-  // Hebrew, Arabic, Persian, Urdu
-  'ממומן',
-  'تعاون',
-  'حمایت شده',
-  'رعاية',
-  'ممول',
-  // Indic
-  'प्रायोजित',
-  'স্পনসরড',
-  'பரிந்துரைக்கப்பட்டது',
-  'ప్రాయోజించబడిన',
-  'പ്രവര്‍ത്തിച്ചിരിക്കുന്നത്',
-  // Thai
-  'โฆษณา',
-  // CJK
-  '広告',
-  'スポンサー',
-  '赞助',
-  '贊助',
-  '광고',
-  '스폰서',
-];
-```
-
-- [ ] **Step 4: Run the tests to verify they pass**
-
-```bash
-fvm flutter test test/utils/ad_filter_test.dart
-```
-
-Expected: all tests pass.
-
-If `every label is long enough` fails, a label is shorter than `kMinSponsoredLabelLength` — delete it, because the guard makes it unreachable.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add SlimSocial_for_Facebook/lib/utils/ad_filter.dart SlimSocial_for_Facebook/test/utils/ad_filter_test.dart
-git commit -m "feat: bundle sponsored-post labels for every supported locale"
 ```
 
 ---
@@ -1422,9 +1476,7 @@ In `lib/screens/home_page.dart`, in `injectCss`, capture the colour before build
         )
         .join('\n');
 
-    await _controller.runJavaScript(
-      CustomJs.whenDomReady(body).replaceAll('\n', ' '),
-    );
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 ```
 
@@ -1718,11 +1770,11 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 
 ## Self-Review
 
-**Spec coverage.** Every numbered problem in *Current State* maps to a task: 1 and 2→2, 3–5→3, 6→4, 7→5, 8 and 9→6, 10→7, 11→8, 12 and 13→9. Task 1 is a preflight gate that records the baseline; Task 10 covers the behaviour no unit test can reach.
+**Spec coverage.** Every numbered problem in *Current State* maps to a task: 1 and 2→2, 3–5→4, 6→3, 7→5, 8 and 9→6, 10→7, 11→8, 12 and 13→9. Task 1 is a preflight gate that records the baseline; Task 10 covers the behaviour no unit test can reach.
 
-**Cross-task dependencies.** Task 2 references `CustomCss.adPlaceholderCss`, added in Task 3. Task 3 references `kSponsoredLabels`, added in Task 4. Both are called out inline where they occur. Executing in order leaves the analyzer briefly unhappy between Tasks 2 and 4; the first green `fvm flutter analyze` gate is at the end of Task 5.
+**Cross-task dependencies.** Every task commits a tree that compiles, passes `fvm flutter analyze lib/ test/` and passes the whole suite — there is no intermediate state where the app is broken or ad hiding is off. Three orderings enforce that. `CustomCss.adPlaceholderCss` is created in Task 2, where its call site first needs it, rather than in Task 4. `kSponsoredLabels` lands in Task 3, before Task 4's script references it, which is why the label list comes first even though the detection logic is the headline change. And Task 4 deletes `CustomJs.removeAdsFunc` in the same commit that adds `adFilterScript`, so Task 2 deliberately keeps the old ad injection in place.
 
-**Names used consistently.** `window.slimRemoveAds` is defined in Task 3 and called in Task 5. `window.slimAdObserver` is only in Task 5. `slim-ad-handled` and `slim-ad-placeholder` match between the script in Task 3 and the stylesheet in Task 3. `CustomJs.injectCssFunc(css, {required String id})` and `CustomJs.whenDomReady(body)` keep the same signatures in Tasks 2, 3 and 8. `cssColorFromColor` and `resolveCssPlaceholders` are only in Task 8.
+**Names used consistently.** `window.slimRemoveAds` is defined in Task 4 and called in Task 5. `window.slimAdObserver` is only in Task 5. `slim-ad-handled` and `slim-ad-placeholder` match between the script in Task 4 and the stylesheet in Task 2. `CustomJs.injectCssFunc(css, {required String id})` and `CustomJs.whenDomReady(body)` keep the same signatures in Tasks 2, 4 and 8. `cssColorFromColor` and `resolveCssPlaceholders` are only in Task 8.
 
 **Existing tests updated, not duplicated.** Tasks 2 and 5 replace named groups in `test/utils/js_test.dart` because those groups assert on generated strings that these tasks change. Tasks 4, 7 and 8 only add groups.
 
@@ -1731,7 +1783,7 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 ## Follow-up work (separate plans)
 
 1. **Background notifications.** Needs a headless-capable WebView plus a periodic worker at or above the platform's 15-minute floor, a foreground check, and notification channels. Largest remaining item by far.
-2. **Word filter and post highlighting.** Hide or highlight posts matching user keywords, reusing the collapse mechanism from Task 3.
+2. **Word filter and post highlighting.** Hide or highlight posts matching user keywords, reusing the collapse mechanism from Task 4.
 3. **Per-URL styling.** Stamp the current URL onto `<html>` as a data attribute so stylesheets can target individual pages with no JavaScript.
 4. **Feature flags as `<html>` classes.** Toggle settings by adding and removing root classes instead of re-injecting, so changes apply without a reload.
 5. **Higher-quality video.** Use `UserAgentRole.video` from Task 7 when resolving video and image download URLs.
