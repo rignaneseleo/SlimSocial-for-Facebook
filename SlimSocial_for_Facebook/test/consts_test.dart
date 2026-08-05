@@ -18,6 +18,7 @@ void main() {
       expect(SpKeys.customCss, 'custom_css');
       expect(SpKeys.customJs, 'custom_js');
       expect(SpKeys.customProxy, 'custom_proxy');
+      expect(SpKeys.textZoom, 'text_zoom');
     });
 
     test('derives the companion switch key', () {

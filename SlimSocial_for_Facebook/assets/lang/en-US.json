@@ -14,6 +14,8 @@
   "hide_stories": "Hide stories",
   "center_text": "Center text on posts",
   "add_space": "Add space between posts",
+  "text_zoom": "Text size",
+  "text_zoom_desc": "Scale the page text without breaking the layout",
   "advanced": "advanced",
   "custom_useragent": "Set a custom user agent",
   "custom_js": "Run custom JS code",

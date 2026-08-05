@@ -109,4 +109,45 @@ void main() {
       expect(PrefController.getUserCustomJs(), 'foo();');
     });
   });
+
+  group('text zoom', () {
+    test('leaves the page at its own size until the user asks otherwise', () {
+      expect(PrefController.getTextZoom(), kDefaultTextZoom);
+    });
+
+    test('returns the value the user picked', () async {
+      await PrefController.setTextZoom(130);
+
+      expect(PrefController.getTextZoom(), 130);
+    });
+
+    test('refuses to store a value outside the usable range', () async {
+      await PrefController.setTextZoom(1000);
+      expect(PrefController.getTextZoom(), kMaxTextZoom);
+
+      await PrefController.setTextZoom(0);
+      expect(PrefController.getTextZoom(), kMinTextZoom);
+    });
+
+    test('clamps a stored value it did not write itself', () async {
+      // A build with a wider range, or a hand-edited preferences file, must not
+      // be able to leave the page at an unreadable size.
+      await withPrefs({SpKeys.textZoom: 5});
+      expect(PrefController.getTextZoom(), kMinTextZoom);
+
+      await withPrefs({SpKeys.textZoom: 400});
+      expect(PrefController.getTextZoom(), kMaxTextZoom);
+    });
+
+    test('keeps the range wide enough to be worth offering', () {
+      expect(kMinTextZoom, lessThan(kDefaultTextZoom));
+      expect(kMaxTextZoom, greaterThan(kDefaultTextZoom));
+    });
+
+    test('the slider divides the range into whole steps', () {
+      // The dialog uses (max - min) / 5 divisions; a remainder would put the
+      // last stop somewhere the user cannot actually select.
+      expect((kMaxTextZoom - kMinTextZoom) % 5, 0);
+    });
+  });
 }

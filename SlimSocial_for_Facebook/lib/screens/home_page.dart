@@ -34,6 +34,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   late WebViewController _controller;
+  AndroidWebViewController? _androidController;
   bool isLoading = false;
   bool isScontentUrl = false;
 
@@ -62,6 +63,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+
+            //re-read the zoom, so changing it in the settings takes effect on
+            //the next load instead of needing the app restarted
+            await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
             await runJs();
@@ -77,11 +82,15 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..loadRequest(Uri.parse(homepage));
 
     if (Platform.isAndroid) {
-      (controller.platform as AndroidWebViewController)
+      final androidController = controller.platform as AndroidWebViewController;
+      _androidController = androidController;
+
+      androidController
         //videos and reels are muted until the page sees a "user gesture", and
         //the gesture the webview recognises is not the one that starts the
         //video: without this the first taps only toggle the sound off again
         ..setMediaPlaybackRequiresUserGesture(false)
+        ..setTextZoom(PrefController.getTextZoom())
         ..setCustomWidgetCallbacks(
           onShowCustomWidget:
               (Widget widget, OnHideCustomWidgetCallback callback) {
