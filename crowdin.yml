@@ -1,6 +1,6 @@
 project_id_env: CROWDIN_PROJECT_ID
 api_token_env: CROWDIN_PERSONAL_TOKEN
-preserve_hierarchy: 
+preserve_hierarchy: true
 files:
   - source: /SlimSocial_for_Facebook/assets/lang/en-US.json
     translation: /SlimSocial_for_Facebook/assets/lang/%locale%.json
@@ -10,6 +10,7 @@ files:
       locale:
         ar: ar-AR
         bn: bn-IN
+        ha: ha-NG
         'no': no-NO
         nb: no-NO
         sr: sr-SP
