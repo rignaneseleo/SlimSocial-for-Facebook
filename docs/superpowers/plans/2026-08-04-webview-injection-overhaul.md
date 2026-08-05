@@ -125,7 +125,7 @@ Tasks 4 and 9 pick DOM selectors. Which selectors are correct depends entirely o
 **Run this under the agent Task 7 installs, not the current one.** Task 7 moves the feed to a mobile agent, which changes the layout Facebook serves — recon done under today's desktop agent would describe markup the shipped app never sees. No code change is needed to do this: in Settings, switch on the custom user agent and paste
 
 ```
-Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0
+Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0
 ```
 
 then force-restart the app. Switch it back off when you are done.
@@ -1198,21 +1198,20 @@ Replace the whole `group('kFirefoxUserAgent', ...)` block with:
       // layout from the user agent.
       expect(kMobileUserAgent, contains('Android'));
       expect(kMobileUserAgent, contains('Mobile'));
+      expect(kMobileUserAgent, contains('Firefox/'));
     });
 
-    test('is a Firefox agent recent enough not to be flagged as outdated', () {
-      final match = RegExp(r'Firefox/(\d+)\.0$').firstMatch(kMobileUserAgent);
-
-      expect(match, isNotNull, reason: 'unexpected user agent shape');
-      expect(int.parse(match!.group(1)!), greaterThanOrEqualTo(113));
-    });
-
-    test('keeps rv: pinned below the Firefox version', () {
-      // Firefox for Android freezes `rv:` at 109 while `Gecko/` and `Firefox/`
-      // track the real release. The desktop invariant — rv: equals the Firefox
-      // version — does not hold here, and "fixing" the mismatch changes which
-      // layout Facebook serves. Pinned so that does not happen by accident.
-      expect(kMobileUserAgent, contains('rv:109.0'));
+    test('is pinned to the exact string known to serve the touch layout', () {
+      // Do not "modernise" this. The version numbers are load-bearing: this
+      // precise agent is what Facebook serves the mobile feed to across the
+      // regions where a desktop agent gets a broken layout. A newer Firefox
+      // is not automatically safer — it is untested against that behaviour.
+      // If Facebook ever rejects it as outdated (Task 10 Step 1 checks), bump
+      // `Gecko/` and `Firefox/` together and re-run the recon, in one commit.
+      expect(
+        kMobileUserAgent,
+        'Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
+      );
     });
   });
 
@@ -1302,17 +1301,18 @@ In `lib/consts.dart`, replace the whole user-agent block — `kFirefoxUserAgent`
 //gets the desktop layout, which is heavier, harder to restyle, and in some
 //regions served in a variant that renders badly on a phone.
 //
-//Keep them reasonably recent: Facebook serves a "browser not supported" notice
-//and a degraded page to agents it considers outdated. Change the version
-//numbers only together with a device check on the feed — see the plan notes.
+//Facebook serves a "browser not supported" notice and a degraded page to
+//agents it considers outdated, so if it ever rejects one of these, bump its
+//version numbers together with a device check on the feed — see the plan notes.
 
 /// Firefox for Android. Gets Facebook's touch layout.
 ///
-/// `rv:` is deliberately 109 while `Gecko/` and `Firefox/` are 113: Firefox for
-/// Android froze the `rv:` token, so a real agent looks exactly like this. Do
-/// not "correct" the mismatch — it is part of what makes this agent recognised.
+/// This exact string is a known-good production value: it is what serves the
+/// mobile feed correctly in the regions where a desktop agent gets a broken
+/// layout. The age of the version is not the point — the layout Facebook
+/// returns for it is — so do not "modernise" it without re-checking the feed.
 const String kMobileUserAgent =
-    "Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0";
+    "Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0";
 
 /// Desktop Chrome on macOS. Messenger only ships its full markup to a desktop
 /// agent; on a mobile one it pushes the native-app interstitial instead.
@@ -1774,7 +1774,7 @@ Before anything else, confirm the feed is being served the layout everything els
 })
 ```
 
-Expected: the agent contains `Android` and `Mobile`, and the feed renders as the touch layout — single column, no desktop sidebars. If a "browser not supported" notice is visible, the agent's version numbers are too old for what Facebook now accepts: bump `Gecko/` and `Firefox/` in `kMobileUserAgent` together, leave `rv:109.0` alone, and re-run. Stop here if the feed does not render — nothing below is meaningful on the wrong layout.
+Expected: the agent contains `Android` and `Mobile`, and the feed renders as the touch layout — single column, no desktop sidebars. If a "browser not supported" notice is visible, the agent's version numbers are too old for what Facebook now accepts: bump `rv:`, `Gecko/` and `Firefox/` in `kMobileUserAgent` together, re-run the Task 1 recon, and land the change in Task 7's commit. Stop here if the feed does not render — nothing below is meaningful on the wrong layout.
 
 - [ ] **Step 2: Confirm no duplicate stylesheets**
 
@@ -1861,7 +1861,7 @@ Expected: reel posts and any reels tray are gone, and ordinary posts are untouch
 
 **Existing tests updated, not duplicated.** Tasks 2 and 5 replace named groups in `test/utils/js_test.dart`, and Task 7 replaces the `kFirefoxUserAgent` group in `test/consts_test.dart`, because those groups assert on values these tasks change. Tasks 4 and 8 only add groups.
 
-**The one risky task is 7.** Everything else is invisible to Facebook: it changes what the app injects, not what the app asks for. Task 7 changes what Facebook serves, so it can regress the whole feed rather than one feature — which is why it re-runs Task 1's recon (Step 8), owns any selector change that recon forces, and is gated first in Task 10 Step 1. Its two constants are known-working values, and the version numbers inside them are load-bearing: the `rv:109.0` / `Firefox/113.0` mismatch is what a real Firefox for Android sends, and `consts_test.dart` pins it so a well-meaning bump does not silently switch the served layout back.
+**The one risky task is 7.** Everything else is invisible to Facebook: it changes what the app injects, not what the app asks for. Task 7 changes what Facebook serves, so it can regress the whole feed rather than one feature — which is why it re-runs Task 1's recon (Step 8), owns any selector change that recon forces, and is gated first in Task 10 Step 1. Its two constants are not guesses: the feed agent is the exact string captured from the reference app's live server config — the value that serves the mobile layout in the regions where a desktop agent breaks — and the Messenger agent is that app's conversation agent. `consts_test.dart` pins the feed agent verbatim so a well-meaning version bump cannot silently switch the served layout back.
 
 ---
 
