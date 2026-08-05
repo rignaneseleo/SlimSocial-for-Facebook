@@ -43,6 +43,8 @@ Still open, and what this plan covers:
 | 9 | `hide_messenger_sidebar` is missing from `en-US.json`, so that settings row shows a raw key | 6 |
 | 10 | One desktop user agent for every surface | 7 |
 | 11 | `#3B5998` hardcoded twice in `fabBtnCss`, ignoring the app theme | 8 |
+| 12 | The stories toggle targets `#MStoriesTray`, a legacy id, so it likely hides nothing | 9 |
+| 13 | No way to hide reels | 9 |
 
 ---
 
@@ -57,8 +59,9 @@ Still open, and what this plan covers:
 | `lib/controllers/fb_controller.dart` | Modify | `getUserAgent` gains a role |
 | `lib/screens/home_page.dart` | Modify | Injection call sites |
 | `lib/screens/messenger_page.dart` | Modify | Injection call sites |
+| `lib/screens/settings_page.dart` | Modify | Add the reels toggle |
 | `assets/lang/ru-RU.json` | Modify | Repair invalid JSON |
-| `assets/lang/en-US.json` | Modify | Add the missing key |
+| `assets/lang/en-US.json` | Modify | Add the missing keys |
 | `test/utils/js_test.dart` | Modify | Existing assertions need updating alongside the generator |
 | `test/utils/ad_filter_test.dart` | Create | Label list + generated-script tests |
 | `test/utils/css_test.dart` | Modify | Add placeholder tests |
@@ -113,6 +116,35 @@ Expected: no output. If `pubspec.lock` moved, commit it on its own before starti
 git add SlimSocial_for_Facebook/pubspec.lock
 git commit -m "build: refresh dependency lockfile"
 ```
+
+- [ ] **Step 5: Record which markup Facebook actually serves**
+
+Tasks 3 and 9 pick DOM selectors. Which selectors are correct depends entirely on which layout Facebook returns for this app's URL and user agent, and that is not knowable from the source: the app requests `touch.facebook.com` but sends a desktop Firefox agent, and the stylesheets in `css.dart` contain selectors from *both* the legacy mobile layout (`._5rgt._5msi`, `#MStoriesTray`) and the current one (`x9f619…`). One of those sets is dead weight.
+
+Run the app, let the feed load, attach to the WebView from Chrome via `chrome://inspect`, and run in its console:
+
+```js
+({
+  url: location.href,
+  ua: navigator.userAgent,
+  article: document.querySelectorAll('article').length,
+  roleArticle: document.querySelectorAll('[role="article"]').length,
+  dataFt: document.querySelectorAll('[data-ft]').length,
+  dataXtVimp: document.querySelectorAll('[data-xt-vimp]').length,
+  actualHeight: document.querySelectorAll('[data-actual-height]').length,
+  trackingId: document.querySelectorAll('[data-tracking-duration-id]').length,
+  feedUnit: document.querySelectorAll('[data-pagelet^="FeedUnit"]').length,
+  adsAboutLink: document.querySelectorAll('a[href*="/ads/about/"]').length,
+})
+```
+
+Paste the result into the task notes. It decides three things:
+
+- **`_postSelector` in Task 3.** Use whichever of `article`, `div[data-tracking-duration-id]`, `[role="article"]` or `[data-pagelet^="FeedUnit"]` is non-zero. If the counts disagree with the plan's assumed `'article, div[data-tracking-duration-id]'`, change the plan, not the reality.
+- **Whether the `data-ft` / `data-xt-vimp` tiers are worth keeping.** If both are `0`, the attribute tiers cannot fire and Task 3's cascade collapses to the text tier alone — say so and keep the tiers only as forward-compatibility.
+- **Whether `data-actual-height` exists**, which is what Task 3's collapse rewrites and what Task 10 Step 4 verifies. If it is absent, the collapse still works (the write is guarded) but drop that assertion from Task 10.
+
+Do not start Task 3 before this step has an answer.
 
 ---
 
@@ -1018,6 +1050,7 @@ void main() {
       'dark_theme',
       'hide_ads',
       'hide_messenger_sidebar',
+      'hide_stories',
       'sponsored_keyword_fb',
     ]) {
       expect(fallback.keys, contains(key), reason: '$key missing from en-US');
@@ -1422,7 +1455,179 @@ git commit -m "feat: drive injected accent colour from the app theme"
 
 ---
 
-## Task 9: Manual verification on a device
+## Task 9: Repair the stories toggle and add a reels toggle
+
+`hideStoriesCss` targets `#MStoriesTray` — an id from the legacy `m.facebook.com` layout. If the recon in Task 1 shows the app is not being served that layout, the toggle has been doing nothing, and users have been switching it on and concluding the app is broken. There is no reels toggle at all.
+
+Both are ordinary `MyCss` entries plus a settings tile, so this task is mostly mechanical. The one judgement call is the selector, and Task 1's recon output decides it.
+
+`:has()` is required to hide a post *because of* what it contains. It is supported in Android WebView 105+ and iOS 15.4+. Below that the rule is simply ignored — the toggle degrades to doing nothing rather than breaking the page.
+
+**Files:**
+- Modify: `SlimSocial_for_Facebook/lib/utils/css.dart`
+- Modify: `SlimSocial_for_Facebook/lib/screens/settings_page.dart`
+- Modify: `SlimSocial_for_Facebook/assets/lang/en-US.json`
+- Modify: `SlimSocial_for_Facebook/test/utils/css_test.dart`
+
+- [ ] **Step 1: Confirm which selectors are live**
+
+With the app running and attached via `chrome://inspect`, run in the WebView console:
+
+```js
+({
+  legacyStoriesTray: !!document.querySelector('#MStoriesTray'),
+  ariaStories: document.querySelectorAll('[aria-label="Stories"], [aria-label^="Stories"]').length,
+  reelLinks: document.querySelectorAll('a[href*="/reel/"], a[href*="/reels/"]').length,
+  reelsTray: document.querySelectorAll('[aria-label*="Reels"]').length,
+})
+```
+
+Record the output. If `legacyStoriesTray` is `false`, the shipped stories selector is confirmed dead and Step 3's replacement is required. If `reelLinks` is `0`, reels are not present on this surface — stop and report, because there is nothing to hide and the rest of this task would be guesswork.
+
+- [ ] **Step 2: Write the failing tests**
+
+Add to `test/utils/css_test.dart`, inside `main()`:
+
+```dart
+  group('media trays', () {
+    test('the stories rule is not limited to the legacy tray id', () {
+      // `#MStoriesTray` is an id from the old mobile layout. On its own it
+      // silently matched nothing, so the toggle appeared to do nothing.
+      expect(
+        CustomCss.hideStoriesCss.code,
+        contains('aria-label'),
+        reason: 'stories rule needs a selector for the current layout',
+      );
+    });
+
+    test('there is a reels stylesheet', () {
+      expect(CustomCss.hideReelsCss.key, 'hide_reels');
+      expect(CustomCss.hideReelsCss.code, contains('/reel/'));
+    });
+
+    test('both trays are offered as settings toggles', () {
+      final keys = CustomCss.cssList.map((c) => c.key);
+
+      expect(keys, contains('hide_stories'));
+      expect(keys, contains('hide_reels'));
+    });
+
+    test('neither rule hides the whole feed', () {
+      // A selector that matches an ancestor of the feed would blank the page.
+      for (final css in [CustomCss.hideStoriesCss, CustomCss.hideReelsCss]) {
+        expect(css.code, isNot(contains('body')), reason: css.key);
+        expect(css.code, isNot(contains('#root')), reason: css.key);
+      }
+    });
+  });
+```
+
+- [ ] **Step 3: Run the tests to verify they fail**
+
+```bash
+fvm flutter test test/utils/css_test.dart
+```
+
+Expected: compile failure — `CustomCss.hideReelsCss` does not exist.
+
+- [ ] **Step 4: Widen the stories rule and add the reels rule**
+
+In `lib/utils/css.dart`, replace `hideStoriesCss` and add `hideReelsCss` beside it:
+
+```dart
+  /// Hides the stories tray.
+  ///
+  /// `#MStoriesTray` is the legacy mobile id and is kept only so the toggle
+  /// keeps working for anyone still served that layout; the `aria-label`
+  /// selectors cover the current one.
+  static MyCss hideStoriesCss = MyCss(
+    key: 'hide_stories',
+    description: 'Hide stories',
+    code: '#MStoriesTray, '
+        'div[aria-label="Stories"], '
+        'div[aria-label^="Stories"] '
+        '{ display: none !important; }',
+  );
+
+  /// Hides reels: both a dedicated tray and any feed post that is a reel.
+  ///
+  /// The post rule needs `:has()` to match a container by what it contains.
+  /// Unsupported engines ignore the rule, so the toggle degrades to a no-op
+  /// rather than breaking the layout.
+  static MyCss hideReelsCss = MyCss(
+    key: 'hide_reels',
+    description: 'Hide reels',
+    code: 'div[aria-label*="Reels"], '
+        'article:has(a[href*="/reel/"]), '
+        'div[data-tracking-duration-id]:has(a[href*="/reel/"]), '
+        'div[role="article"]:has(a[href*="/reel/"]) '
+        '{ display: none !important; }',
+  );
+```
+
+Then add it to the toggle list:
+
+```dart
+  static List<MyCss> cssList = [
+    centerTextPostsCss,
+    addSpaceBetweenPostsCss,
+    hideStoriesCss,
+    hideReelsCss,
+    fixedBarCss,
+    //hideAdsAndPeopleYouMayKnowCss,
+    darkThemeCss,
+    hideMessengerSidebar,
+  ];
+```
+
+- [ ] **Step 5: Add the settings tile**
+
+In `lib/screens/settings_page.dart`, directly after the `hideStoriesCss` tile, add:
+
+```dart
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(CustomCss.hideReelsCss.key, value);
+                  });
+                  ref.invalidate(fbWebViewProvider);
+                },
+                initialValue: CustomCss.hideReelsCss.isEnabled(),
+                title: Text(CustomCss.hideReelsCss.key.tr()),
+                leading: const Icon(Icons.video_library_outlined),
+              ),
+```
+
+- [ ] **Step 6: Add the label and guard it**
+
+In `assets/lang/en-US.json`, add:
+
+```json
+  "hide_reels": "Hide reels"
+```
+
+Then extend the key list in the `the fallback locale defines every key the UI asks for` test in `test/lang_test.dart`, which Task 6 created, so the new key is guarded too — add `'hide_reels',` between `'hide_ads'` and `'hide_stories'`.
+
+- [ ] **Step 7: Run the tests to verify they pass**
+
+```bash
+fvm flutter test test/utils/css_test.dart test/lang_test.dart
+```
+
+Expected: all tests pass.
+
+The pre-existing `every bundled stylesheet is collapsed to one line` test also covers the two new entries — `MyCss` normalises them, so no extra work.
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add SlimSocial_for_Facebook/lib/utils/css.dart SlimSocial_for_Facebook/lib/screens/settings_page.dart SlimSocial_for_Facebook/assets/lang/en-US.json SlimSocial_for_Facebook/test/utils/css_test.dart SlimSocial_for_Facebook/test/lang_test.dart
+git commit -m "feat: add a reels toggle and repair the stories selector"
+```
+
+---
+
+## Task 10: Manual verification on a device
 
 Everything above is unit-tested Dart. The injected JavaScript has no Dart-side runtime, so its behaviour needs confirming once in the real app.
 
@@ -1499,11 +1704,21 @@ Switch the device language to Russian and relaunch.
 
 Expected: settings labels are Russian.
 
+- [ ] **Step 10: Confirm the stories and reels toggles do something**
+
+Turn **Hide stories** on, return to the feed, pull to refresh.
+
+Expected: the stories row is gone. If it is still there, the selector from Task 9 Step 1 was wrong — go back and re-read the live DOM rather than guessing again.
+
+Turn **Hide reels** on and refresh.
+
+Expected: reel posts and any reels tray are gone, and ordinary posts are untouched. Check the feed still scrolls: if it is empty, a `:has()` selector matched an ancestor of the feed and must be tightened.
+
 ---
 
 ## Self-Review
 
-**Spec coverage.** Every numbered problem in *Current State* maps to a task: 1 and 2→2, 3–5→3, 6→4, 7→5, 8 and 9→6, 10→7, 11→8. Task 1 is a preflight gate that records the baseline; Task 9 covers the behaviour no unit test can reach.
+**Spec coverage.** Every numbered problem in *Current State* maps to a task: 1 and 2→2, 3–5→3, 6→4, 7→5, 8 and 9→6, 10→7, 11→8, 12 and 13→9. Task 1 is a preflight gate that records the baseline; Task 10 covers the behaviour no unit test can reach.
 
 **Cross-task dependencies.** Task 2 references `CustomCss.adPlaceholderCss`, added in Task 3. Task 3 references `kSponsoredLabels`, added in Task 4. Both are called out inline where they occur. Executing in order leaves the analyzer briefly unhappy between Tasks 2 and 4; the first green `fvm flutter analyze` gate is at the end of Task 5.
 
