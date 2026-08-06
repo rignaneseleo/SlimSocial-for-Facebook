@@ -47,9 +47,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// network being briefly unavailable.
   bool _loadFailed = false;
 
-  /// Guards the automatic retry so a genuinely unreachable site does not become
-  /// a reload loop.
-  bool _retriedAfterFailure = false;
+  /// Automatic retries used since the last successful load.
+  ///
+  /// Bounded so a genuinely unreachable site does not become a reload loop.
+  int _loadRetries = 0;
+
+  /// How many times to retry before showing the error screen.
+  ///
+  /// Measured on a real device: opening the app as the phone wakes produces
+  /// `ERR_INTERNET_DISCONNECTED` first — no network attached at all — and only
+  /// then `ERR_NAME_NOT_RESOLVED` once DNS is reachable but not yet answering.
+  /// A single quick retry lands in the middle of that and still fails, so the
+  /// delay grows with each attempt.
+  static const int _maxLoadRetries = 3;
 
   @override
   void initState() {
@@ -87,10 +97,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           onPageFinished: (String url) async {
             //a page that finished loading is not a failed one, even if a
             //subresource errored on the way
-            if (_loadFailed) {
+            if (_loadFailed || _loadRetries > 0) {
               setState(() {
                 _loadFailed = false;
-                _retriedAfterFailure = false;
+                _loadRetries = 0;
               });
             }
             await runJs();
@@ -209,9 +219,12 @@ class _HomePageState extends ConsumerState<HomePage> {
       "load failed: ${error.errorType} ${error.errorCode} ${error.description}",
     );
 
-    if (!_retriedAfterFailure) {
-      _retriedAfterFailure = true;
-      Future<void>.delayed(const Duration(seconds: 2), () {
+    if (_loadRetries < _maxLoadRetries) {
+      _loadRetries++;
+      //2s, then 4s, then 6s — long enough in total to outlast a phone
+      //reattaching to the network, short enough not to feel stuck
+      final delay = Duration(seconds: 2 * _loadRetries);
+      Future<void>.delayed(delay, () {
         if (!mounted) return;
         _controller.reload();
       });
@@ -225,7 +238,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future<void> retryLoad() async {
     setState(() {
       _loadFailed = false;
-      _retriedAfterFailure = false;
+      _loadRetries = 0;
     });
     await _controller.loadRequest(Uri.parse(PrefController.getHomePage()));
   }
