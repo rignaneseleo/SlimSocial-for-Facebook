@@ -116,7 +116,7 @@ void main() {
       // Posts carry an inline `height:667px`. data-actual-height is metadata
       // for the scroller and changes no layout, so setting it alone leaves an
       // empty container the full size of the advert it replaced.
-      expect(script, contains("post.style.height = '60px'"));
+      expect(script, contains("post.style.height = '0px'"));
       expect(script, contains('data-slim-style-height'));
     });
 

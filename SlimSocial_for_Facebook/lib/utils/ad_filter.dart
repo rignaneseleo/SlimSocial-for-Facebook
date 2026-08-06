@@ -112,16 +112,6 @@ const String _sponsoredMarkerSelector =
 /// rather than a fallback.
 const String _postSelector = 'div[data-tracking-duration-id]';
 
-/// Builds the ad-hiding script and installs it as `window.slimRemoveAds`.
-///
-/// Detection runs cheapest-first and stops at the first hit:
-///   1. the post's own `data-ft` attribute
-///   2. a descendant carrying one of the sponsored markers
-///   3. a short standalone text label, bounded to 4..24 characters
-///
-/// A matched post is collapsed, not emptied: its children are hidden in place
-/// and `data-actual-height` is rewritten so the virtualising scroller keeps
-/// working, with the original value stashed so the change can be undone.
 /// Headings that introduce a "People You May Know" carousel.
 ///
 /// Matched against a whole trimmed heading, not as a substring, so a post that
@@ -142,6 +132,22 @@ const List<String> kPeopleYouMayKnowLabels = [
   'люди, которых вы можете знать',
 ];
 
+/// Builds the feed filter and installs it as `window.slimRemoveAds`.
+///
+/// Advert detection runs cheapest-first and stops at the first hit:
+///   1. the post's own `data-ft` attribute
+///   2. a descendant carrying one of the sponsored markers
+///   3. a short standalone text label
+///
+/// In practice only the third fires: the recon found no `data-ft` or
+/// `data-xt-vimp` anywhere on the served markup. The first two are kept as
+/// forward compatibility.
+///
+/// A matched post is taken out of layout entirely — display, inline height and
+/// `data-actual-height` all zeroed — with the originals stashed in
+/// `data-slim-*` attributes so the change can be undone. It leaves no
+/// placeholder: the running total reported over [kAdCountChannelName] is how
+/// the app shows the filter is working.
 String adFilterScript({
   required String placeholderText,
   List<String> extraLabels = const [],
@@ -244,10 +250,13 @@ String adFilterScript({
   function collapse(post) {
     post.classList.add('slim-ad-handled');
 
+    // The post is removed from layout below, so it occupies nothing. Telling
+    // the virtualising scroller it is still 60px tall leaves its model
+    // disagreeing with the page by that much for every advert hidden.
     var height = post.getAttribute('data-actual-height');
     if (height !== null) {
       post.setAttribute('data-slim-height-original', height);
-      post.setAttribute('data-actual-height', '60');
+      post.setAttribute('data-actual-height', '0');
     }
 
     // data-actual-height is only what the virtualising scroller reads. The box
@@ -256,7 +265,7 @@ String adFilterScript({
     // of exactly the same size — a large blank gap instead of an advert.
     if (post.style.height) {
       post.setAttribute('data-slim-style-height', post.style.height);
-      post.style.height = '60px';
+      post.style.height = '0px';
     }
     post.style.minHeight = '0';
     post.style.overflow = 'hidden';
