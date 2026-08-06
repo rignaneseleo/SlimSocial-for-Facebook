@@ -111,7 +111,13 @@ class CustomCss {
   static MyCss hideReelsCss = MyCss(
     key: 'hide_reels',
     description: 'Hide reels',
-    code: 'div[data-type="vscroller"] > div:has([aria-label*="reel" i]), '
+    // The :not() is load-bearing: feed posts are direct children of the same
+    // vscroller as the carousel, so without it one stray aria-label would hide
+    // real posts. It cannot be split across adjacent strings — a line break
+    // between `:not(...)` and `:has(...)` would need whitespace, and whitespace
+    // there is a descendant combinator, which changes what the rule matches.
+    // ignore: lines_longer_than_80_chars
+    code: 'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="reel" i]), '
         'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
         '{ display: none !important; }',
   );

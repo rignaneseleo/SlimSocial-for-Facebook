@@ -159,6 +159,17 @@ article {
       expect(CustomCss.hideReelsCss.code, isNot(contains('[data-is-reels]')));
     });
 
+    test('the carousel rule cannot swallow a feed post', () {
+      // Feed posts are direct children of the same vscroller as the reels
+      // carousel — 16 of 17 were, on the live layout. So the carousel rule is
+      // one stray aria-label away from hiding real posts. The :not() makes that
+      // impossible rather than merely unlikely.
+      expect(
+        CustomCss.hideReelsCss.code,
+        contains('> div:not([data-tracking-duration-id]):has('),
+      );
+    });
+
     test('both trays are offered as settings toggles', () {
       final keys = CustomCss.cssList.map((c) => c.key);
 
