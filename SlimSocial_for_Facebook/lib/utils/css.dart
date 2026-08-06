@@ -414,15 +414,42 @@ Colours below were sampled from the live DOM, not guessed:
 Brand colours (blue bg-s27/s32/s3, red bg-s8/s10) are deliberately left
 alone, as are the overlay fills bg-s29/s30/s31.
 --------------------------------------------------------------- */
+/* KNOWN LIMITATION — read before extending this list.
+
+   The bg-sN class names are generated per page, and the same number does NOT
+   mean the same colour between loads. Measured across two samples of the same
+   feed: bg-s3 was rgb(8,102,255) then rgb(255,255,255); bg-s8 was
+   rgb(221,35,52) then white; bg-s24 was rgb(66,103,178) then rgb(188,192,196).
+
+   So this map cannot be completed by adding more class numbers — it will always
+   leak on some page, and worse, a number that is a surface today may be a brand
+   blue or a red badge tomorrow, which this would then recolour.
+
+   The stable fix is to stop keying on class names: walk the surfaces in JS,
+   read the computed ::before/::after background, and darken only what actually
+   measures light. The existing feed observer already provides a place to do it.
+   Until then this covers the common case and the theme is a large improvement
+   on the `*` rule it replaced, but it is not complete by construction. */
 html, body { background-color: #18191a !important; }
 
-.bg-s18::before { background-color: #18191a !important; }
+/* Both pseudo-elements, not just ::before. The composer row is a bg-s11 that
+   paints through ::before AND ::after, and the ::after sits on top — so
+   overriding only ::before left exactly one white band on an otherwise dark
+   page, which is what the last round of this looked like. */
+.bg-s18::before, .bg-s18::after,
+.bg-s26::before, .bg-s26::after { background-color: #18191a !important; }
 
 .bg-s2::before, .bg-s7::before, .bg-s9::before, .bg-s11::before,
-.bg-s20::before { background-color: #242526 !important; }
+.bg-s20::before,
+.bg-s2::after, .bg-s7::after, .bg-s9::after, .bg-s11::after,
+.bg-s20::after { background-color: #242526 !important; }
 
-.bg-s5::before, .bg-s6::before, .bg-s12::before, .bg-s19::before,
-.bg-s23::before, .bg-s25::before, .bg-s33::before, .bg-s35::before
+.bg-s4::before, .bg-s5::before, .bg-s6::before, .bg-s12::before,
+.bg-s19::before, .bg-s23::before, .bg-s25::before, .bg-s29::before,
+.bg-s33::before, .bg-s35::before,
+.bg-s4::after, .bg-s5::after, .bg-s6::after, .bg-s12::after,
+.bg-s19::after, .bg-s23::after, .bg-s25::after, .bg-s29::after,
+.bg-s33::after, .bg-s35::after
 { background-color: #3a3b3c !important; }
 
 span.f1, span.f2, span.f3 { color: #e4e6eb !important; }
