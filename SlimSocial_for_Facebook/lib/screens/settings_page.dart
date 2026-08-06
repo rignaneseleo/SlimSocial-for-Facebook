@@ -244,6 +244,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
+                    sp.setBool(CustomCss.hideReelsCss.key, value);
+                  });
+                  ref.invalidate(fbWebViewProvider);
+                },
+                initialValue: CustomCss.hideReelsCss.isEnabled(),
+                title: Text(CustomCss.hideReelsCss.key.tr()),
+                leading: const Icon(Icons.video_library_outlined),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
                     sp.setBool(CustomCss.centerTextPostsCss.key, value);
                   });
                   ref.invalidate(fbWebViewProvider);

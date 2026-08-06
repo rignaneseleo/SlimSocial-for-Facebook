@@ -20,6 +20,7 @@ class CustomCss {
     centerTextPostsCss,
     addSpaceBetweenPostsCss,
     hideStoriesCss,
+    hideReelsCss,
     fixedBarCss,
     //hideAdsAndPeopleYouMayKnowCss,
     darkThemeCss,
@@ -68,10 +69,51 @@ class CustomCss {
     code: 'article { margin-top: 50px !important; }',
   );
 
+  /// Hides the stories tray.
+  ///
+  /// The live layout renders the feed as a `vscroller` whose direct children
+  /// are the trays and posts. Exactly one of those children carries
+  /// `data-srat`, and it is the stories tray — verified against the real DOM,
+  /// where the selector matched once and the match contained the create-story
+  /// tile. That attribute is language-independent, which the `aria-label`
+  /// fallbacks are not, so it leads.
+  ///
+  /// `#MStoriesTray` is the legacy id. The recon found zero of them, so it is
+  /// kept only for anyone still served that older layout.
   static MyCss hideStoriesCss = MyCss(
     key: 'hide_stories',
     description: 'Hide stories',
-    code: '#MStoriesTray { display: none !important; }',
+    code: '#MStoriesTray, '
+        'div[data-type="vscroller"] > div[data-srat], '
+        'div[data-type="vscroller"] > div:has([aria-label^="Create story"]), '
+        'div[data-type="vscroller"] > div:has([aria-label*="story" i]) '
+        '{ display: none !important; }',
+  );
+
+  /// Hides reels: the reels carousel, and any feed post that is a reel.
+  ///
+  /// Two things to know here.
+  ///
+  /// The obvious selector — `a[href*="/reel/"]` — does **not** work. This
+  /// layout barely uses hrefs at all; navigation runs through `data-action-id`,
+  /// and the recon found zero `/reel/` links while reels were plainly on
+  /// screen. An earlier draft of this rule was written that way and would have
+  /// hidden nothing.
+  ///
+  /// The reel *post* rule must test `[data-is-reels="true"]`, not merely the
+  /// presence of the attribute: every `data-is-reels` node in the recon carried
+  /// the value `"false"`, because ordinary video posts have it too. Matching on
+  /// presence would hide **every video in the feed**.
+  ///
+  /// Honest limitation: no reel posts were in the feed during the recon, so the
+  /// `="true"` rule is reasoned from the attribute's meaning rather than
+  /// observed matching. The carousel rule *was* observed. Task 10 verifies both.
+  static MyCss hideReelsCss = MyCss(
+    key: 'hide_reels',
+    description: 'Hide reels',
+    code: 'div[data-type="vscroller"] > div:has([aria-label*="reel" i]), '
+        'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
+        '{ display: none !important; }',
   );
 
   static MyCss fixedBarCss = MyCss(

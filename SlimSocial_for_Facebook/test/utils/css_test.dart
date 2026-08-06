@@ -128,6 +128,53 @@ article {
     });
   });
 
+  group('media trays', () {
+    test('the stories rule leads with a language-independent selector', () {
+      // `#MStoriesTray` is an id from the old mobile layout and matched nothing
+      // in the recon, so the toggle appeared to do nothing. The replacement
+      // keys off `data-srat`, which — unlike an aria-label — is the same in
+      // every locale.
+      expect(
+        CustomCss.hideStoriesCss.code,
+        contains('div[data-type="vscroller"] > div[data-srat]'),
+        reason: 'stories rule needs a selector for the current layout',
+      );
+    });
+
+    test('there is a reels stylesheet', () {
+      expect(CustomCss.hideReelsCss.key, 'hide_reels');
+    });
+
+    test('the reels rule does not rely on hrefs', () {
+      // This layout drives navigation through data-action-id and has almost no
+      // hrefs; the recon found zero `/reel/` links with reels on screen. A
+      // href-based rule silently matches nothing.
+      expect(CustomCss.hideReelsCss.code, isNot(contains('href')));
+    });
+
+    test('the reels rule tests the attribute value, not its presence', () {
+      // Ordinary video posts also carry data-is-reels, with the value "false".
+      // Matching on presence alone would hide every video in the feed.
+      expect(CustomCss.hideReelsCss.code, contains('[data-is-reels="true"]'));
+      expect(CustomCss.hideReelsCss.code, isNot(contains('[data-is-reels]')));
+    });
+
+    test('both trays are offered as settings toggles', () {
+      final keys = CustomCss.cssList.map((c) => c.key);
+
+      expect(keys, contains('hide_stories'));
+      expect(keys, contains('hide_reels'));
+    });
+
+    test('neither rule hides the whole feed', () {
+      // A selector that matches an ancestor of the feed would blank the page.
+      for (final css in [CustomCss.hideStoriesCss, CustomCss.hideReelsCss]) {
+        expect(css.code, isNot(contains('body')), reason: css.key);
+        expect(css.code, isNot(contains('#root')), reason: css.key);
+      }
+    });
+  });
+
   group('theme-aware stylesheets', () {
     test('no bundled stylesheet hardcodes the legacy accent hex', () {
       for (final css in CustomCss.cssList) {

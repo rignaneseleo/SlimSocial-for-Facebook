@@ -94,6 +94,10 @@ void main() {
       'ad_removed',
       'hide_ads',
       'hide_messenger_sidebar',
+      // `hide_stories` is deliberately absent: the fallback-translations group
+      // above already asserts it, against both fallback files rather than just
+      // en-US, which is the stronger check.
+      'hide_reels',
       'sponsored_keyword_fb',
     ]) {
       expect(fallback.keys, contains(key), reason: '$key missing from en-US');
