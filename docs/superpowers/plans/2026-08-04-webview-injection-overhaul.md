@@ -157,6 +157,48 @@ Run the app, let the feed load, attach to the WebView from Chrome via `chrome://
 })
 ```
 
+### Recon result — captured 2026-08-06, answered
+
+Run on an Android 16 emulator against a real logged-in account, reading the live WebView over the DevTools protocol. **This step is done; the numbers below are the answer.** Re-run it only if Facebook's layout visibly changes.
+
+Both agents were measured, because the difference *is* the finding:
+
+| Selector | Desktop UA (today's default) | **Mobile UA (Task 7)** |
+|---|---:|---:|
+| resolved URL | `www.facebook.com` | `www.facebook.com` |
+| `article` | 0 | **0** |
+| `[role="article"]` | 2 | 0 |
+| `div[data-tracking-duration-id]` | 0 | **30** |
+| `[data-actual-height]` | 0 | **713** |
+| `[data-ft]` | 0 | **0** |
+| `[data-xt-vimp]` | 0 | **0** |
+| `a[href*="/ads/about/"]` | 0 | **0** |
+| `#MStoriesTray` | 0 | **0** |
+| `a[href*="/reel/"]` | 2 | **0** |
+| `:has()` supported | yes | **yes** |
+| images | 8 | 81 |
+| `document.body.innerHTML.length` | 2,602,105 | **304,258** |
+
+What it settles:
+
+- **`_postSelector` is `div[data-tracking-duration-id]` — `article` matches nothing.** A post is `<div data-tracking-duration-id data-actual-height data-mcomponent="MContainer" data-type="container" class="m">`. Drop `article` from the selector; it is dead weight, not a fallback.
+- **`data-actual-height` is real** (713 nodes), so Task 4's collapse rewrite is valid and Task 10 Step 4 keeps its assertion.
+- **The `data-ft` and `data-xt-vimp` tiers cannot fire** — both zero on both agents. Keep them only as forward compatibility, and understand that in practice **the text tier is doing all the work today**. That raises the stakes on Task 3's label list and on the CJK exact-match path.
+- **`#MStoriesTray` is dead**, confirming Task 9's premise: the stories toggle has been doing nothing.
+- **This layout has almost no `href`s** — the only route seen was `/wui/`. Navigation is driven by `data-action-id`, so *any* selector written as `a[href*="…"]` is unreliable here. Task 9's original reels selector was written that way and had to change.
+- The mobile layout is **8.5× smaller** than the desktop one it currently gets. That is Task 7's justification, measured.
+
+Not observable in this session, and therefore still unverified:
+
+- **No sponsored posts were in the feed**, so ad detection was not exercised against a real ad. Task 10 remains the gate for that.
+- **No reels posts either**: every `[data-is-reels]` element carried the value `"false"` (they are ordinary videos). A reels *tray* was present; reel *posts* were not.
+
+Additional finding, recorded because it changes a decision in the media plan: video posts expose **`data-video-url` pointing at a plain `https://video-*.xx.fbcdn.net/…` URL**, not a `blob:`. The companion media plan excludes video download on the grounds that MSE blob URLs cannot be fetched; on this layout that reasoning does not hold. See that plan's follow-up list.
+
+---
+
+The original instructions for this step, kept for when it needs re-running:
+
 Paste the result into the task notes. It decides three things:
 
 - **`_postSelector` in Task 4.** Use whichever of `article`, `div[data-tracking-duration-id]`, `[role="article"]` or `[data-pagelet^="FeedUnit"]` is non-zero. If the counts disagree with the plan's assumed `'article, div[data-tracking-duration-id]'`, change the plan, not the reality.
@@ -622,7 +664,9 @@ Three defects remain in `removeAdsFunc`.
 
 **No length bound on text matching.** `querySelectorAll('span')` returns thousands of nodes on a loaded feed, and `textContent` on an ancestor includes all descendant text. Any post whose *body* contains the word "Sponsored" — a status complaining about ads, a screenshot caption — is destroyed. A genuine label is a short standalone string, so bounding the match to 4–24 characters removes almost all of these false positives.
 
-**Markup is ignored.** Facebook tags sponsored units with attributes: `data-ft` containing `is_sponsored` or `should_log_endpoint_info`, `data-xt-vimp`, and links to `/ads/about/`. These are locale-independent and vastly cheaper to test than walking every descendant's text. Checking them first means the text tier is only reached for units that carry no attribute at all.
+**Markup is ignored.** Facebook has historically tagged sponsored units with attributes: `data-ft` containing `is_sponsored` or `should_log_endpoint_info`, `data-xt-vimp`, and links to `/ads/about/`. These are locale-independent and vastly cheaper to test than walking every descendant's text, so they are checked first.
+
+**Be clear-eyed about this tier, though.** The Task 1 recon found **zero** `data-ft`, `data-xt-vimp` and `/ads/about/` nodes on the layout the app actually receives, under either user agent. So today the attribute tiers never fire and **the text tier does all of the work**. They are retained as forward compatibility — they cost one `querySelector` per post and would start working the moment Facebook reinstates the markup — but do not mistake them for the primary mechanism. The practical consequence is that Task 3's label list, and especially the CJK exact-match path, carry the whole feature.
 
 **The post subtree is destroyed.** `post.innerHTML = myDiv` throws away the post's children. Facebook's own scripts still hold references into that subtree, and the mobile feed virtualises on `data-actual-height`, so overwriting content leaves the scroller with wrong geometry. Hiding the children and appending a stub keeps both intact and makes the operation reversible.
 
@@ -775,8 +819,13 @@ const String _sponsoredMarkerSelector =
     '[data-ft*="is_sponsored"], [data-xt-vimp], a[href*="/ads/about/"], '
     'a[href*="client_token="], a[href*="sponsored"]';
 
-/// Containers that hold a single feed post across Facebook's mobile layouts.
-const String _postSelector = 'article, div[data-tracking-duration-id]';
+/// Containers that hold a single feed post.
+///
+/// Measured against the live mobile layout (Task 1 Step 5): 30 matches, while
+/// `article` and `[role="article"]` matched nothing at all. `article` was in an
+/// earlier draft of this selector and is deliberately gone — it was dead weight
+/// rather than a fallback.
+const String _postSelector = 'div[data-tracking-duration-id]';
 
 /// Builds the ad-hiding script and installs it as `window.slimRemoveAds`.
 ///
@@ -1697,7 +1746,7 @@ With the app running and attached via `chrome://inspect`, run in the WebView con
 })
 ```
 
-Record the output. If `legacyStoriesTray` is `false`, the shipped stories selector is confirmed dead and Step 3's replacement is required. If `reelLinks` is `0`, reels are not present on this surface — stop and report, because there is nothing to hide and the rest of this task would be guesswork.
+**This step is already answered by the Task 1 recon — do not redo it.** Results: `legacyStoriesTray` was `0`, confirming the shipped stories selector is dead and the replacement is required. `reelLinks` was `0` too, but that is *not* the "reels are absent, stop" case the earlier draft of this step described — it turned out to mean this layout does not use hrefs at all. A reels carousel was present and is matched by `aria-label`; reel *posts* were not present during the recon, so their rule is verified in Task 10 rather than here.
 
 - [ ] **Step 2: Write the failing tests**
 
@@ -1705,19 +1754,34 @@ Add to `test/utils/css_test.dart`, inside `main()`:
 
 ```dart
   group('media trays', () {
-    test('the stories rule is not limited to the legacy tray id', () {
-      // `#MStoriesTray` is an id from the old mobile layout. On its own it
-      // silently matched nothing, so the toggle appeared to do nothing.
+    test('the stories rule leads with a language-independent selector', () {
+      // `#MStoriesTray` is an id from the old mobile layout and matched nothing
+      // in the recon, so the toggle appeared to do nothing. The replacement
+      // keys off `data-srat`, which — unlike an aria-label — is the same in
+      // every locale.
       expect(
         CustomCss.hideStoriesCss.code,
-        contains('aria-label'),
+        contains('div[data-type="vscroller"] > div[data-srat]'),
         reason: 'stories rule needs a selector for the current layout',
       );
     });
 
     test('there is a reels stylesheet', () {
       expect(CustomCss.hideReelsCss.key, 'hide_reels');
-      expect(CustomCss.hideReelsCss.code, contains('/reel/'));
+    });
+
+    test('the reels rule does not rely on hrefs', () {
+      // This layout drives navigation through data-action-id and has almost no
+      // hrefs; the recon found zero `/reel/` links with reels on screen. A
+      // href-based rule silently matches nothing.
+      expect(CustomCss.hideReelsCss.code, isNot(contains('href')));
+    });
+
+    test('the reels rule tests the attribute value, not its presence', () {
+      // Ordinary video posts also carry data-is-reels, with the value "false".
+      // Matching on presence alone would hide every video in the feed.
+      expect(CustomCss.hideReelsCss.code, contains('[data-is-reels="true"]'));
+      expect(CustomCss.hideReelsCss.code, isNot(contains('[data-is-reels]')));
     });
 
     test('both trays are offered as settings toggles', () {
@@ -1752,30 +1816,48 @@ In `lib/utils/css.dart`, replace `hideStoriesCss` and add `hideReelsCss` beside 
 ```dart
   /// Hides the stories tray.
   ///
-  /// `#MStoriesTray` is the legacy mobile id and is kept only so the toggle
-  /// keeps working for anyone still served that layout; the `aria-label`
-  /// selectors cover the current one.
+  /// The live layout renders the feed as a `vscroller` whose direct children
+  /// are the trays and posts. Exactly one of those children carries
+  /// `data-srat`, and it is the stories tray — verified against the real DOM,
+  /// where the selector matched once and the match contained the create-story
+  /// tile. That attribute is language-independent, which the `aria-label`
+  /// fallbacks are not, so it leads.
+  ///
+  /// `#MStoriesTray` is the legacy id. The recon found zero of them, so it is
+  /// kept only for anyone still served that older layout.
   static MyCss hideStoriesCss = MyCss(
     key: 'hide_stories',
     description: 'Hide stories',
     code: '#MStoriesTray, '
-        'div[aria-label="Stories"], '
-        'div[aria-label^="Stories"] '
+        'div[data-type="vscroller"] > div[data-srat], '
+        'div[data-type="vscroller"] > div:has([aria-label^="Create story"]), '
+        'div[data-type="vscroller"] > div:has([aria-label*="story" i]) '
         '{ display: none !important; }',
   );
 
-  /// Hides reels: both a dedicated tray and any feed post that is a reel.
+  /// Hides reels: the reels carousel, and any feed post that is a reel.
   ///
-  /// The post rule needs `:has()` to match a container by what it contains.
-  /// Unsupported engines ignore the rule, so the toggle degrades to a no-op
-  /// rather than breaking the layout.
+  /// Two things to know here.
+  ///
+  /// The obvious selector — `a[href*="/reel/"]` — does **not** work. This
+  /// layout barely uses hrefs at all; navigation runs through `data-action-id`,
+  /// and the recon found zero `/reel/` links while reels were plainly on
+  /// screen. An earlier draft of this rule was written that way and would have
+  /// hidden nothing.
+  ///
+  /// The reel *post* rule must test `[data-is-reels="true"]`, not merely the
+  /// presence of the attribute: every `data-is-reels` node in the recon carried
+  /// the value `"false"`, because ordinary video posts have it too. Matching on
+  /// presence would hide **every video in the feed**.
+  ///
+  /// Honest limitation: no reel posts were in the feed during the recon, so the
+  /// `="true"` rule is reasoned from the attribute's meaning rather than
+  /// observed matching. The carousel rule *was* observed. Task 10 verifies both.
   static MyCss hideReelsCss = MyCss(
     key: 'hide_reels',
     description: 'Hide reels',
-    code: 'div[aria-label*="Reels"], '
-        'article:has(a[href*="/reel/"]), '
-        'div[data-tracking-duration-id]:has(a[href*="/reel/"]), '
-        'div[role="article"]:has(a[href*="/reel/"]) '
+    code: 'div[data-type="vscroller"] > div:has([aria-label*="reel" i]), '
+        'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
         '{ display: none !important; }',
   );
 ```
