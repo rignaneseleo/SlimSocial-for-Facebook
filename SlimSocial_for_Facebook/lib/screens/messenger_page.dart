@@ -253,6 +253,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<void> injectCss() async {
+    final accent = cssColorFromColor(Theme.of(context).colorScheme.primary);
+
     final sheets = <String, String>{
       'slim-messenger-adapt': CustomCss.adaptMessengerPageCss.code,
       'slim-user-sheet':
@@ -260,7 +262,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     };
 
     final body = sheets.entries
-        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
+        .map(
+          (e) => CustomJs.injectCssFunc(
+            resolveCssPlaceholders(e.value, accent: accent),
+            id: e.key,
+          ),
+        )
         .join('\n');
 
     await _controller.runJavaScript(CustomJs.whenDomReady(body));

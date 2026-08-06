@@ -426,6 +426,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> injectCss() async {
+    final accent = cssColorFromColor(Theme.of(context).colorScheme.primary);
+
     final sheets = <String, String>{
       'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
       'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
@@ -435,7 +437,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     };
 
     final body = sheets.entries
-        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
+        .map(
+          (e) => CustomJs.injectCssFunc(
+            resolveCssPlaceholders(e.value, accent: accent),
+            id: e.key,
+          ),
+        )
         .join('\n');
 
     await _controller.runJavaScript(CustomJs.whenDomReady(body));

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/main.dart';
@@ -90,6 +91,60 @@ article {
       await Future<void>.delayed(Duration.zero);
 
       expect(css.isEnabled(), isTrue);
+    });
+  });
+
+  group('resolveCssPlaceholders', () {
+    test('substitutes the accent colour', () {
+      expect(
+        resolveCssPlaceholders('a { color: {accent}; }', accent: '#112233'),
+        'a { color: #112233; }',
+      );
+    });
+
+    test('substitutes every occurrence', () {
+      final result = resolveCssPlaceholders(
+        'a { color: {accent}; border-color: {accent}; }',
+        accent: '#112233',
+      );
+
+      expect(result, isNot(contains('{accent}')));
+    });
+
+    test('leaves a stylesheet without placeholders untouched', () {
+      const css = 'a { color: red; }';
+
+      expect(resolveCssPlaceholders(css, accent: '#112233'), css);
+    });
+  });
+
+  group('cssColorFromColor', () {
+    test('formats a colour as a six-digit hex string', () {
+      expect(cssColorFromColor(const Color(0xFF3B5998)), '#3b5998');
+    });
+
+    test('drops the alpha channel', () {
+      expect(cssColorFromColor(const Color(0x803B5998)), '#3b5998');
+    });
+  });
+
+  group('theme-aware stylesheets', () {
+    test('no bundled stylesheet hardcodes the legacy accent hex', () {
+      for (final css in CustomCss.cssList) {
+        expect(
+          css.code.toLowerCase(),
+          isNot(contains('#3b5998')),
+          reason: '${css.key} should use the {accent} placeholder',
+        );
+      }
+    });
+
+    test('the floating button uses the placeholder', () {
+      expect(CustomCss.fabBtnCss.code, contains('{accent}'));
+      expect(
+        CustomCss.fabBtnCss.code.toLowerCase(),
+        isNot(contains('#3b5998')),
+      );
     });
   });
 }

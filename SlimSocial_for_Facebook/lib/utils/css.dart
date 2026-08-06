@@ -1,4 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+
+/// Formats [color] as a CSS six-digit hex string, discarding alpha.
+String cssColorFromColor(Color color) {
+  final rgb = color.toARGB32() & 0xFFFFFF;
+  return '#${rgb.toRadixString(16).padLeft(6, '0')}';
+}
+
+/// Replaces the placeholders in [css] with live theme values.
+///
+/// Stylesheets are authored with `{accent}` rather than a literal colour so one
+/// source of truth drives both the Flutter chrome and the injected CSS.
+String resolveCssPlaceholders(String css, {required String accent}) {
+  return css.replaceAll('{accent}', accent);
+}
 
 class CustomCss {
   static List<MyCss> cssList = [
@@ -103,8 +118,12 @@ class CustomCss {
   static MyCss fabBtnCss = MyCss(
     key: 'fabBtn',
     description: 'Floating action button',
-    code:
-        '.my_fab_btn { position: fixed; z-index: 6; bottom: 10px; right: 10px; background-color: #3B5998; width: 60px; height: 60px; border-radius: 100%; background: #3B5998; border: none; outline: none; color: #FFF; font-size: 23px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); transition: .3s; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
+    code: '.my_fab_btn { position: fixed; z-index: 6; bottom: 10px; '
+        'right: 10px; width: 60px; height: 60px; border-radius: 100%; '
+        'background: {accent}; border: none; outline: none; color: #FFF; '
+        'font-size: 23px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), '
+        '0 3px 6px rgba(0, 0, 0, 0.23); transition: .3s; '
+        '-webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
   );
 
   static MyCss adaptMessengerPageCss = MyCss(
