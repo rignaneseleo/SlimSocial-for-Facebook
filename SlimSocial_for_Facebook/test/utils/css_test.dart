@@ -174,6 +174,18 @@ article {
       expect(keys, isNot(contains('hide_app_upsell')));
     });
 
+    test('also hides the header pill on the reels and video pages', () {
+      // A second, separate upsell: the bottom bar is `.fixed-container.bottom`,
+      // this is a blue pill inside an unsuffixed `.fixed-container` at the top,
+      // so the first rule did not reach it. Scoped to a bar so an ordinary blue
+      // button in the feed is left alone.
+      expect(CustomCss.hideAppUpsellCss.code, contains('.bg-s32'));
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        contains('div.fixed-container'),
+      );
+    });
+
     test('can never hide a container holding a form control', () {
       // Facebook docks the comment composer in the same bottom container as
       // the upsell, so an unguarded rule removed the box you type a comment

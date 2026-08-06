@@ -208,7 +208,16 @@ class CustomCss {
     defaultEnabled: true,
     code: 'div.fixed-container.bottom'
         ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
-        ' { display: none !important; }',
+        ' { display: none !important; } '
+        //the second upsell: a blue "Open app" pill in the header of the Reels
+        //and video pages. A different element from the bottom bar — that one is
+        //`.fixed-container.bottom`, this one sits in an unsuffixed
+        //`.fixed-container` at the top, which is why the first rule missed it.
+        //Scoped to a bar so an ordinary blue button in the feed is untouched,
+        //and carrying the same form-control guard.
+        'div.fixed-container'
+        ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
+        ' .bg-s32 { display: none !important; }',
   );
 
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
