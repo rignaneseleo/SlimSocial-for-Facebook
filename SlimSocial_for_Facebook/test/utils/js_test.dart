@@ -82,27 +82,43 @@ void main() {
       // the observer was never created: ads reappeared as soon as you scrolled.
       expect(
         CustomJs.removeAdsObserver,
-        contains("typeof window.newPostsObserver === 'undefined'"),
+        contains('if (window.slimAdObserver) return;'),
       );
     });
 
     test('stores the observer globally so it is not re-created', () {
       expect(
         CustomJs.removeAdsObserver,
-        contains('window.newPostsObserver = new MutationObserver'),
+        contains('window.slimAdObserver = new MutationObserver'),
       );
     });
 
-    test('observes using the global reference', () {
-      expect(
-        CustomJs.removeAdsObserver,
-        contains('window.newPostsObserver.observe(bodyNode, config)'),
-      );
+    test('observes the document subtree for added nodes', () {
+      expect(CustomJs.removeAdsObserver, contains('.observe('));
+      expect(CustomJs.removeAdsObserver, contains('childList: true'));
+      expect(CustomJs.removeAdsObserver, contains('subtree: true'));
     });
 
     test('never declares a block-scoped observer again', () {
       expect(CustomJs.removeAdsObserver, isNot(contains('const newPosts')));
       expect(CustomJs.removeAdsObserver, isNot(contains('let newPosts')));
+    });
+
+    test('does not filter mutations down to SECTION elements', () {
+      // Posts arrive inside plain divs on most surfaces, so a SECTION-only
+      // filter matched nothing there.
+      expect(CustomJs.removeAdsObserver, isNot(contains("'SECTION'")));
+    });
+
+    test('coalesces bursts of mutations into a single pass', () {
+      expect(CustomJs.removeAdsObserver, contains('setTimeout'));
+    });
+
+    test('bails out when the filter was never installed', () {
+      expect(
+        CustomJs.removeAdsObserver,
+        contains("typeof window.slimRemoveAds !== 'function'"),
+      );
     });
   });
 }

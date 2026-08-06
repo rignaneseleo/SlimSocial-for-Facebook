@@ -52,36 +52,49 @@ javascript:function foo() {
 		}
 		foo();""";
 
+  /// Re-runs the ad filter as Facebook appends posts during infinite scroll.
+  ///
+  /// Kept on `window` so it survives being re-injected on every page load:
+  /// without a global we cannot tell whether one is already running. (The guard
+  /// used to read `typeof newPostsObserver !== 'undefined'` against a
+  /// block-scoped `const` declared inside the branch, so it was always false
+  /// and the observer was never installed — ads came back as soon as you
+  /// scrolled.)
   static String removeAdsObserver = """
-// The observer is stored on `window` so it survives being re-injected on every
-// page load: without a global we cannot tell whether one is already running.
-// (The guard used to read `typeof newPostsObserver !== 'undefined'` against a
-// block-scoped `const` declared inside the branch, so it was always false and
-// the observer was never installed -- ads came back as soon as you scrolled.)
-if (typeof window.newPostsObserver === 'undefined') {
-    // Select the node that will be observed for changes
-    const bodyNode = document.body;
+(function () {
+  if (window.slimAdObserver) return;
+  // The filter defines this. If its injection did not land, every mutation
+  // would otherwise throw a ReferenceError.
+  if (typeof window.slimRemoveAds !== 'function') return;
 
-    // Create a new observer object
-    window.newPostsObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            // Filter out added nodes that are not <section> elements
-            const addedSections = Array.from(mutation.addedNodes).filter(node => node.nodeName === 'SECTION');
+  var pending = null;
+  function schedule() {
+    if (pending) return;
+    // The feed can append dozens of nodes in one frame, and each pass walks
+    // the whole document, so coalesce a burst into a single run.
+    pending = setTimeout(function () {
+      pending = null;
+      window.slimRemoveAds();
+    }, 250);
+  }
 
-            // Check if any new <section> elements were added
-            if (addedSections.length) {
-                removeAds();
-            }
-        });
-    });
+  window.slimAdObserver = new MutationObserver(function (mutations) {
+    for (var i = 0; i < mutations.length; i++) {
+      // Any added node is worth a pass: posts arrive inside plain divs on most
+      // surfaces, so filtering on a specific tag name missed them.
+      if (mutations[i].addedNodes.length > 0) {
+        schedule();
+        return;
+      }
+    }
+  });
 
-    // Options for the observer (which mutations to observe)
-    const config = { childList: true, subtree: true };
-
-    // Start observing the target node for configured mutations
-    window.newPostsObserver.observe(bodyNode, config);
-}
-  """;
+  window.slimAdObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
+""";
 }
 
 String createFabFunc = """
