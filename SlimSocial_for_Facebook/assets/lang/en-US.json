@@ -75,5 +75,7 @@
   "source_code": "Source code",
   "top": "Scroll to the top",
   "reset": "Reset",
-  "exit": "Exit app"
+  "exit": "Exit app",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again"
 }

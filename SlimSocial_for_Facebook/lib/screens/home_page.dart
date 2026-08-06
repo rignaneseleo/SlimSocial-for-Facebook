@@ -39,6 +39,18 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool isLoading = false;
   bool isScontentUrl = false;
 
+  /// Set when the main frame fails to load, so the app can show its own error
+  /// state instead of the browser's.
+  ///
+  /// Without this the user gets Chrome's "webpage not available" page on a
+  /// near-black background, which reads as the app being broken rather than the
+  /// network being briefly unavailable.
+  bool _loadFailed = false;
+
+  /// Guards the automatic retry so a genuinely unreachable site does not become
+  /// a reload loop.
+  bool _retriedAfterFailure = false;
+
   @override
   void initState() {
     super.initState();
@@ -57,9 +69,12 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
+          onWebResourceError: onWebResourceError,
           onPageStarted: (String url) async {
             setState(() {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
+              //a new navigation started, so any previous failure is stale
+              _loadFailed = false;
             });
 
             //inject the css as soon as the DOM is loaded
@@ -70,6 +85,14 @@ class _HomePageState extends ConsumerState<HomePage> {
             await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
+            //a page that finished loading is not a failed one, even if a
+            //subresource errored on the way
+            if (_loadFailed) {
+              setState(() {
+                _loadFailed = false;
+                _retriedAfterFailure = false;
+              });
+            }
             await runJs();
             if (kDebugMode) debugPrint(url);
           },
@@ -167,6 +190,44 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  /// Handles a failed page load.
+  ///
+  /// Only main-frame failures matter: Facebook drops individual images and
+  /// beacons all the time, and treating those as a page failure would replace a
+  /// perfectly good feed with an error screen.
+  ///
+  /// The first failure is retried automatically once. The common case is a
+  /// transient DNS failure when the app is opened as the device wakes and the
+  /// network has not settled — the load fails, and without a retry the user is
+  /// left looking at an error until they think to reload themselves.
+  void onWebResourceError(WebResourceError error) {
+    if (error.isForMainFrame == false) return;
+
+    debugPrint(
+      "load failed: ${error.errorType} ${error.errorCode} ${error.description}",
+    );
+
+    if (!_retriedAfterFailure) {
+      _retriedAfterFailure = true;
+      Future<void>.delayed(const Duration(seconds: 2), () {
+        if (!mounted) return;
+        _controller.reload();
+      });
+      return;
+    }
+
+    if (!mounted) return;
+    setState(() => _loadFailed = true);
+  }
+
+  Future<void> retryLoad() async {
+    setState(() {
+      _loadFailed = false;
+      _retriedAfterFailure = false;
+    });
+    await _controller.loadRequest(Uri.parse(PrefController.getHomePage()));
   }
 
   Future<NavigationDecision> onNavigationRequest(
@@ -413,6 +474,39 @@ class _HomePageState extends ConsumerState<HomePage> {
             WebViewWidget(
               controller: _controller,
             ),
+            //covers the webview so the browser's own error page, sitting on a
+            //near-black background, is never what the user sees
+            if (_loadFailed)
+              ColoredBox(
+                color: Theme.of(context).colorScheme.surface,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.wifi_off_outlined,
+                          size: 48,
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          "error_page_offline".tr(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 24),
+                        FilledButton.icon(
+                          onPressed: retryLoad,
+                          icon: const Icon(Icons.refresh),
+                          label: Text("retry".tr()),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             if (isLoading)
               const LinearProgressIndicator(
                 valueColor:
