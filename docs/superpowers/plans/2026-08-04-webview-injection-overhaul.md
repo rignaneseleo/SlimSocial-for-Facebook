@@ -1018,12 +1018,16 @@ import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 
 - [ ] **Step 6: Delete the superseded strings**
 
-Remove `CustomJs.removeAdsFunc` and `CustomJs.exampleJs` from `lib/utils/js.dart`. `removeAdsFunc` is replaced by `adFilterScript`; `exampleJs` is dead code that blanks the page body and is referenced nowhere.
+Remove `CustomJs.removeAdsFunc` from `lib/utils/js.dart` — it is replaced by `adFilterScript`.
 
-Confirm nothing still refers to them:
+**Do not remove `CustomJs.exampleJs`.** An earlier draft of this plan called it dead code; that was wrong. It is live at `lib/screens/settings_page.dart:296`, where it is the hint text shown in the custom-JS settings dialog. Deleting it breaks the build.
+
+`removeAdsFunc` is the only thing in `js.dart` that calls `.tr()`, so removing it orphans the `easy_localization` import. Remove that import too, or the analyzer reports an `unused_import` — which is `warning`-level and therefore fails the gate.
+
+Confirm the replacement is complete:
 
 ```bash
-grep -rn "removeAdsFunc\|exampleJs" lib/ test/
+grep -rn "removeAdsFunc" lib/ test/
 ```
 
 Expected: no output. If `home_page.dart` still appears, Step 5's `injectCss` edit was missed.
