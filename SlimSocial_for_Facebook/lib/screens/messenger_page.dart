@@ -251,16 +251,17 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   Future<void> injectCss() async {
-    final cssList =
-        CustomCss.buildMessengerCss(PrefController.getUserCustomCss());
+    final sheets = <String, String>{
+      'slim-messenger-adapt': CustomCss.adaptMessengerPageCss.code,
+      'slim-user-sheet':
+          CustomCss.buildMessengerCss(PrefController.getUserCustomCss()),
+    };
 
-    final code = """
-                    document.addEventListener("DOMContentLoaded", function() {
-                        ${CustomJs.injectCssFunc(CustomCss.adaptMessengerPageCss.code)}
-                        ${CustomJs.injectCssFunc(cssList)}
-                    });"""
-        .replaceAll("\n", " ");
-    await _controller.runJavaScript(code);
+    final body = sheets.entries
+        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
+        .join('\n');
+
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {

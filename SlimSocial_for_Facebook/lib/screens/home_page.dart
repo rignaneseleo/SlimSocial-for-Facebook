@@ -417,22 +417,28 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> injectCss() async {
-    final cssList =
-        CustomCss.buildFacebookCss(PrefController.getUserCustomCss());
+    final sheets = <String, String>{
+      'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
+      'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
+      'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
+      'slim-user-sheet':
+          CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
+    };
 
-    //create the function that will be called later
-    await _controller.runJavaScript(CustomJs.removeAdsFunc);
+    final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
 
-    //it's important to remove the \n
-    final code = """
-                    document.addEventListener("DOMContentLoaded", function() {
-                        ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
-                        ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
-                        ${CustomJs.injectCssFunc(cssList)}
-                         ${(sp.getBool(SpKeys.hideAds) ?? true) ? "removeAds();" : ""}
-                    });"""
-        .replaceAll("\n", " ");
-    await _controller.runJavaScript(code);
+    // Defines removeAds(). Task 4 replaces both this and the call below with
+    // adFilterScript; until then ad hiding has to keep working.
+    if (hideAds) {
+      await _controller.runJavaScript(CustomJs.removeAdsFunc);
+    }
+
+    final body = [
+      ...sheets.entries.map((e) => CustomJs.injectCssFunc(e.value, id: e.key)),
+      if (hideAds) 'removeAds();',
+    ].join('\n');
+
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 
   Future<void> runJs() async {

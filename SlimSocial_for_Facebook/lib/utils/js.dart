@@ -3,18 +3,49 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 
 class CustomJs {
-  static String injectCssFunc(String css) {
-    //jsonEncode gives us a valid JS string literal: it escapes quotes,
-    //backslashes and newlines, so user-provided CSS can't break out of the
-    //call and turn the whole injection into a syntax error
-    final str = '''
-      (function (css) {
+  /// Builds JavaScript that appends [css] to the document in a `<style>` tag.
+  ///
+  /// [id] makes the operation idempotent. Injection runs on every page start,
+  /// and Facebook navigates in-page constantly, so without this each navigation
+  /// would append another copy of the same rules.
+  ///
+  /// jsonEncode gives us a valid JS string literal: it escapes quotes,
+  /// backslashes and newlines, so user-provided CSS cannot break out of the
+  /// call and turn the whole injection into a syntax error.
+  ///
+  /// The stylesheet is assigned with `textContent`, not `innerHTML`: CSS is not
+  /// markup, and the HTML entity parser mangles any `&` inside a selector.
+  /// It goes into `<head>` because `<body>` does not reliably exist yet when
+  /// this runs.
+  static String injectCssFunc(String css, {required String id}) {
+    return '''
+      (function (css, id) {
+        if (document.getElementById(id)) return;
         var node = document.createElement('style');
-        node.innerHTML = css;
-        document.body.appendChild(node);
-      }) (${jsonEncode(css)});
+        node.id = id;
+        node.textContent = css;
+        (document.head || document.documentElement).appendChild(node);
+      }) (${jsonEncode(css)}, ${jsonEncode(id)});
     ''';
-    return str;
+  }
+
+  /// Wraps [body] so it runs as soon as the document is parsed.
+  ///
+  /// Injection is triggered from `onPageStarted`, but there is no guarantee the
+  /// document is still parsing by the time the script evaluates. A bare
+  /// DOMContentLoaded listener registered after the event has already fired
+  /// never runs, and the styling is silently lost.
+  static String whenDomReady(String body) {
+    return '''
+      (function () {
+        function slimRun() { $body }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', slimRun);
+        } else {
+          slimRun();
+        }
+      })();
+    ''';
   }
 
   static String exampleJs = """

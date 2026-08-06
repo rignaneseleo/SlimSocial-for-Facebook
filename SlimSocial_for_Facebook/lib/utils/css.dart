@@ -74,6 +74,19 @@ class CustomCss {
         '._s15 { display: none; } input { -webkit-user-select: text; } [data-sigil*=m-promo-jewel-header] { display: none; }',
   );
 
+  /// Styles the stub left behind where a sponsored post was collapsed.
+  ///
+  /// Deliberately not in [cssList]: that list drives the user-facing settings
+  /// toggles, and this is internal to ad hiding.
+  static MyCss adPlaceholderCss = MyCss(
+    key: 'ad_placeholder_style',
+    description: 'Collapsed sponsored-post placeholder',
+    defaultEnabled: true,
+    code: '.slim-ad-placeholder { display: flex; align-items: center; '
+        'justify-content: center; height: 60px; font-size: 13px; '
+        'letter-spacing: 0.5px; opacity: 0.55; }',
+  );
+
   static MyCss removeBrowserNotSupportedCss = MyCss(
     key: 'removeBrowserNotSupported',
     description: 'Remove browser not supported notice',
