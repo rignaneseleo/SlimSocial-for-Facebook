@@ -147,6 +147,20 @@ article {
       );
     });
 
+    test('center text does not centre the post container itself', () {
+      // Centring the post shifted every video 197px right — half its width —
+      // because text-align on an ancestor moves the player's line box. The rule
+      // must reach only the text wrappers.
+      expect(
+        CustomCss.centerTextPostsCss.code,
+        contains('div[data-tracking-duration-id] .native-text'),
+      );
+      expect(
+        CustomCss.centerTextPostsCss.code,
+        isNot(contains('div[data-tracking-duration-id] {')),
+      );
+    });
+
     test('both keep their legacy selector as a fallback', () {
       // Harmless where it matches nothing, and still correct for anyone served
       // the older layout.

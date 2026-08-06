@@ -55,14 +55,20 @@ class CustomCss {
   /// nothing on the current one — measured live, zero hits — so this toggle had
   /// silently stopped doing anything.
   ///
-  /// The replacement centres the whole post rather than only its message. The
-  /// current layout gives the body no selector of its own: it is a `span.f1`
-  /// inside a `.native-text`, and both classes are shared with bylines, reaction
-  /// counts, "See translation" and icon glyphs, so there is nothing narrower to
-  /// aim at that does not also catch those.
+  /// The replacement centres the post's `.native-text` wrappers rather than the
+  /// post itself. Centring the post shifted every video 197px to the right —
+  /// exactly half its 393px width — because `text-align` on an ancestor moves
+  /// the player's line box. Measured, not guessed: `left` went from 0 to 197 and
+  /// back again.
+  ///
+  /// `.native-text` also wraps bylines, reaction counts and "See translation",
+  /// so those centre too. The layout gives the message body no selector of its
+  /// own — it is a `span.f1` inside a `.native-text`, and both classes are
+  /// shared with that chrome — so this is as narrow as CSS can get here, and it
+  /// leaves media alone, which is what actually matters.
   static MyCss centerTextPostsCss = MyCss(
     key: 'center_text',
-    code: '._5rgt._5msi, div[data-tracking-duration-id] '
+    code: '._5rgt._5msi, div[data-tracking-duration-id] .native-text '
         '{ text-align: center !important; }',
     description: 'Center text posts',
   );
