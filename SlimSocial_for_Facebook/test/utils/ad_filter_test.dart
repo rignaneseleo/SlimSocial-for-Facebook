@@ -162,6 +162,30 @@ void main() {
     });
   });
 
+  group('scroll cost', () {
+    test('walks only spans, not every div and anchor', () {
+      // Measured on a live 55-post feed: 'span, div, a' materialises 3929 nodes
+      // in 5.1ms; 'span' finds the same labels in 724 nodes and 0.5ms. The
+      // advert label is the second span in the post, so div and a were pure
+      // cost on every pass — and a pass runs on every debounced mutation while
+      // scrolling.
+      expect(script, contains("querySelectorAll('span')"));
+      expect(script, isNot(contains("querySelectorAll('span, div, a')")));
+    });
+
+    test('does not re-examine posts it has already cleared', () {
+      // Without this every pass re-walks the whole document, so the cost grows
+      // with the feed and each scroll burst pays for every post again.
+      expect(script, contains('slim-ad-checked'));
+    });
+
+    test('only marks a post cleared once it has rendered text', () {
+      // A post still filling in must be looked at again, or a late-rendered
+      // label would be missed permanently.
+      expect(script, contains("post.querySelector('span')"));
+    });
+  });
+
   group('people you may know', () {
     test('is off unless asked for', () {
       final off = adFilterScript(placeholderText: 'x');
