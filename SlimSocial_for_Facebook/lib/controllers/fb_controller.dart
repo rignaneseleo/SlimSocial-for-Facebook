@@ -18,7 +18,11 @@ class PrefController {
     return initialURl + suffixDefault;
   }
 
-  static String getUserAgent() {
+  /// Returns the user agent to use for [role].
+  ///
+  /// An explicit custom agent wins over everything, then basic mode, then the
+  /// per-role default.
+  static String getUserAgent({UserAgentRole role = UserAgentRole.feed}) {
     final customUserAgent = _getOverride(SpKeys.customUserAgent);
     if (customUserAgent != null) {
       debugPrint("Using custom user agent: $customUserAgent");
@@ -27,7 +31,12 @@ class PrefController {
 
     if (sp.getBool(SpKeys.useMbasic) ?? false) return kOperaMiniUserAgent;
 
-    return kFirefoxUserAgent;
+    switch (role) {
+      case UserAgentRole.feed:
+        return kMobileUserAgent;
+      case UserAgentRole.messenger:
+        return kDesktopUserAgent;
+    }
   }
 
   /// Text scaling for the webview, as a percentage of the page's own size.

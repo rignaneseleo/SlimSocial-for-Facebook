@@ -48,7 +48,9 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     )
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
-      ..setUserAgent(PrefController.getUserAgent())
+      ..setUserAgent(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,

@@ -38,7 +38,7 @@ void main() {
 
   group('getUserAgent', () {
     test('defaults to the bundled Firefox agent', () {
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
     });
 
     test('uses the light agent together with mbasic', () async {
@@ -59,7 +59,7 @@ void main() {
     test('ignores a custom agent that was saved but left disabled', () async {
       await withPrefs({SpKeys.customUserAgent: 'my-agent'});
 
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
     });
 
     test('ignores a blank custom agent', () async {
@@ -68,7 +68,67 @@ void main() {
         SpKeys.enabled(SpKeys.customUserAgent): true,
       });
 
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
+    });
+  });
+
+  group('getUserAgent roles', () {
+    test('defaults to the feed agent', () {
+      // The redundant-looking explicit role is the assertion: it pins the
+      // default to `feed`, so a change of default fails here rather than
+      // silently switching which layout Facebook serves.
+      // ignore: avoid_redundant_argument_values
+      final explicit = PrefController.getUserAgent(role: UserAgentRole.feed);
+
+      expect(PrefController.getUserAgent(), explicit);
+    });
+
+    test('gives the feed the mobile agent', () {
+      // The role is passed explicitly even though it is the default, because
+      // this test is about the feed role specifically, not about the default.
+      // ignore: avoid_redundant_argument_values
+      final feed = PrefController.getUserAgent(role: UserAgentRole.feed);
+
+      expect(feed, kMobileUserAgent);
+    });
+
+    test('gives Messenger the desktop agent', () {
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kDesktopUserAgent,
+      );
+    });
+
+    test('basic mode overrides every role', () async {
+      // This file seeds preferences with withPrefs (which calls
+      // SharedPreferences.setMockInitialValues and is reset by setUp), never
+      // bare sp.setBool — mixing the two leaks state between tests.
+      await withPrefs({SpKeys.useMbasic: true});
+
+      for (final role in UserAgentRole.values) {
+        expect(
+          PrefController.getUserAgent(role: role),
+          kOperaMiniUserAgent,
+          reason: 'role $role should honour basic mode',
+        );
+      }
+    });
+
+    test('a custom agent overrides every role', () async {
+      await withPrefs({
+        SpKeys.customUserAgent: 'my-agent',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      for (final role in UserAgentRole.values) {
+        expect(PrefController.getUserAgent(role: role), 'my-agent');
+      }
+    });
+
+    test('every role resolves to a non-empty agent', () {
+      for (final role in UserAgentRole.values) {
+        expect(PrefController.getUserAgent(role: role), isNotEmpty);
+      }
     });
   });
 
