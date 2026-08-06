@@ -170,6 +170,40 @@ void main() {
     });
   });
 
+  group('ads blocked total', () {
+    test('starts at zero', () {
+      expect(PrefController.getAdsBlockedTotal(), 0);
+    });
+
+    test('accumulates across calls, because each is one filter pass', () async {
+      await PrefController.addAdsBlocked(3);
+      await PrefController.addAdsBlocked(4);
+
+      expect(PrefController.getAdsBlockedTotal(), 7);
+    });
+
+    test('ignores counts that would walk the total backwards', () async {
+      // The number comes from the page, so it is not trusted.
+      await PrefController.addAdsBlocked(5);
+      await PrefController.addAdsBlocked(0);
+      await PrefController.addAdsBlocked(-10);
+
+      expect(PrefController.getAdsBlockedTotal(), 5);
+    });
+
+    test('returns the running total', () async {
+      expect(await PrefController.addAdsBlocked(2), 2);
+      expect(await PrefController.addAdsBlocked(3), 5);
+    });
+
+    test('survives a value already on disk', () async {
+      await withPrefs({SpKeys.adsBlockedTotal: 100});
+
+      expect(PrefController.getAdsBlockedTotal(), 100);
+      expect(await PrefController.addAdsBlocked(1), 101);
+    });
+  });
+
   group('text zoom', () {
     test('leaves the page at its own size until the user asks otherwise', () {
       expect(PrefController.getTextZoom(), kDefaultTextZoom);

@@ -77,5 +77,6 @@
   "reset": "Reset",
   "exit": "Exit app",
   "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
-  "retry": "Try again"
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }

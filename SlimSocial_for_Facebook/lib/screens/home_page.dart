@@ -76,6 +76,10 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
       ..setUserAgent(PrefController.getUserAgent())
+      ..addJavaScriptChannel(
+        kAdCountChannelName,
+        onMessageReceived: onAdCountMessage,
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
@@ -200,6 +204,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  /// Records how many feed items the injected filter hid.
+  ///
+  /// The payload comes from the page, so it is parsed defensively and anything
+  /// unexpected is dropped rather than trusted into the stored total.
+  void onAdCountMessage(JavaScriptMessage message) {
+    final count = int.tryParse(message.message.trim());
+    if (count == null || count <= 0) {
+      debugPrint("ignored ad count: ${message.message}");
+      return;
+    }
+    unawaited(PrefController.addAdsBlocked(count));
   }
 
   /// Handles a failed page load.

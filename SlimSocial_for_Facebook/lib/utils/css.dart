@@ -49,9 +49,21 @@ class CustomCss {
     ].join(' ');
   }
 
+  /// Centres the text of a feed post.
+  ///
+  /// `._5rgt._5msi` was the message body on the old mobile layout and matches
+  /// nothing on the current one — measured live, zero hits — so this toggle had
+  /// silently stopped doing anything.
+  ///
+  /// The replacement centres the whole post rather than only its message. The
+  /// current layout gives the body no selector of its own: it is a `span.f1`
+  /// inside a `.native-text`, and both classes are shared with bylines, reaction
+  /// counts, "See translation" and icon glyphs, so there is nothing narrower to
+  /// aim at that does not also catch those.
   static MyCss centerTextPostsCss = MyCss(
     key: 'center_text',
-    code: '._5rgt._5msi { text-align: center;}',
+    code: '._5rgt._5msi, div[data-tracking-duration-id] '
+        '{ text-align: center !important; }',
     description: 'Center text posts',
   );
 
@@ -63,10 +75,20 @@ class CustomCss {
     defaultEnabled: true,
   );
 
+  /// Puts a gap between feed posts.
+  ///
+  /// `article` matched nothing — measured live under both the desktop and the
+  /// mobile agent — so this toggle did nothing at all. Posts on the current
+  /// layout are the `data-tracking-duration-id` children of the feed scroller,
+  /// of which there were 37 on a loaded feed.
+  ///
+  /// Scoped to direct children of the scroller so a post nested inside another
+  /// container cannot pick up a second margin.
   static MyCss addSpaceBetweenPostsCss = MyCss(
     key: 'add_space',
     description: 'Add space between posts',
-    code: 'article { margin-top: 50px !important; }',
+    code: 'article, div[data-type="vscroller"] > div[data-tracking-duration-id] '
+        '{ margin-top: 50px !important; }',
   );
 
   /// Hides the stories tray.

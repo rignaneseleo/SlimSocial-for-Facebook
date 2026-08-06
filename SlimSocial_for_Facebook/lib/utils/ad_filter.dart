@@ -88,6 +88,13 @@ const List<String> kSponsoredLabels = [
   '스폰서',
 ];
 
+/// Name of the JavaScript channel the filter reports its tally on.
+///
+/// The page posts the number of items hidden by each pass, and Dart keeps the
+/// running total. Counting in Dart rather than in the page means the figure
+/// survives navigations, which reset every global the script defines.
+const String kAdCountChannelName = 'SlimAdCount';
+
 /// Markers Facebook puts on the descendants of a sponsored unit.
 ///
 /// Checked before any text matching: they do not depend on the viewer's
@@ -262,10 +269,11 @@ String adFilterScript({
       child = child.nextElementSibling;
     }
 
-    var stub = document.createElement('div');
-    stub.className = 'slim-ad-placeholder';
-    stub.textContent = PLACEHOLDER;
-    post.appendChild(stub);
+    // The advert leaves no trace. An earlier version left a labelled strip
+    // here, but a band of grey every few posts is its own kind of clutter, and
+    // the running total the app reports is a better way to show the filter is
+    // working than a placeholder in the feed.
+    post.style.display = 'none';
   }
 
   function isPeopleYouMayKnow(post) {
@@ -300,6 +308,15 @@ String adFilterScript({
       collapse(post);
       handled++;
     }
+
+    // Report only what this pass hid. Dart accumulates, so a reload or an
+    // in-page navigation does not restart the count from zero.
+    if (handled > 0) {
+      try {
+        window.$kAdCountChannelName.postMessage(String(handled));
+      } catch (e) {}
+    }
+
     return handled;
   };
 

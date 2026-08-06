@@ -128,6 +128,33 @@ article {
     });
   });
 
+  group('post-level toggles target the current layout', () {
+    test('add space no longer relies on <article> alone', () {
+      // `article` matched zero elements on the live layout under either user
+      // agent, so this toggle silently did nothing. Posts are the
+      // data-tracking-duration-id children of the feed scroller.
+      expect(
+        CustomCss.addSpaceBetweenPostsCss.code,
+        contains('div[data-type="vscroller"] > div[data-tracking-duration-id]'),
+      );
+    });
+
+    test('center text no longer relies on the legacy message class', () {
+      // `._5rgt._5msi` was the old mobile message body and matches nothing now.
+      expect(
+        CustomCss.centerTextPostsCss.code,
+        contains('div[data-tracking-duration-id]'),
+      );
+    });
+
+    test('both keep their legacy selector as a fallback', () {
+      // Harmless where it matches nothing, and still correct for anyone served
+      // the older layout.
+      expect(CustomCss.addSpaceBetweenPostsCss.code, contains('article'));
+      expect(CustomCss.centerTextPostsCss.code, contains('._5rgt._5msi'));
+    });
+  });
+
   group('app install upsell', () {
     test('targets the pinned bottom bar by class, not by its label', () {
       // The label is localised, so matching text would work in one language

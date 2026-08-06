@@ -104,6 +104,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool(SpKeys.hideAds) ?? true,
                 leading: const Icon(Icons.hide_source),
                 title: Text('hide_ads'.tr()),
+                description: Text(
+                  'ads_blocked_count'
+                      .tr(args: ['${PrefController.getAdsBlockedTotal()}']),
+                ),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
