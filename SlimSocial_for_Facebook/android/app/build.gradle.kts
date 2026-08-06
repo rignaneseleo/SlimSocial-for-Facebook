@@ -72,6 +72,15 @@ android {
             }
             // else: unsigned release (debug keys not forced — Codemagic must supply CM_*)
         }
+        debug {
+            // Debug builds carry their own application id so they install
+            // alongside the Play Store build instead of colliding with it.
+            // Without this, the two share an id but not a signing key, so
+            // installing a debug build onto a real phone means uninstalling the
+            // real app first — taking its Facebook session and settings with it.
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
     }
 }
 
