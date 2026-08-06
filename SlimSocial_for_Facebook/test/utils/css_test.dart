@@ -174,6 +174,18 @@ article {
       expect(keys, isNot(contains('hide_app_upsell')));
     });
 
+    test('can never hide a container holding a form control', () {
+      // Facebook docks the comment composer in the same bottom container as
+      // the upsell, so an unguarded rule removed the box you type a comment
+      // into. Checking the feed did not catch it: the composer only exists
+      // once a post is open.
+      final code = CustomCss.hideAppUpsellCss.code;
+
+      expect(code, contains(':not(:has(textarea))'));
+      expect(code, contains(':not(:has(input))'));
+      expect(code, contains(':not(:has([contenteditable]))'));
+    });
+
     test('does not hide every fixed container', () {
       // A bare `.fixed-container` rule would also catch the top bar and the
       // empty above-bottom spacer that sit alongside the upsell.

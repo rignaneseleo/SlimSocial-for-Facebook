@@ -192,11 +192,23 @@ class CustomCss {
   ///
   /// Deliberately not in [cssList]: like the other chrome removals above, it is
   /// structural rather than a preference.
+  /// The `:not(:has(...))` guards are the important part.
+  ///
+  /// Facebook docks the comment composer to the bottom of a post using this
+  /// same container, so hiding every `.fixed-container.bottom` also removed the
+  /// box you type a comment into. Checking the feed alone was not enough to
+  /// catch that — the composer only exists once a post is open.
+  ///
+  /// Excluding any container that holds a form control means a composer can
+  /// never be hidden, whatever Facebook renames the classes to, and without
+  /// depending on a label that changes with the interface language.
   static MyCss hideAppUpsellCss = MyCss(
     key: 'hide_app_upsell',
     description: 'Hide the install-the-app bar',
     defaultEnabled: true,
-    code: 'div.fixed-container.bottom { display: none !important; }',
+    code: 'div.fixed-container.bottom'
+        ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
+        ' { display: none !important; }',
   );
 
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
