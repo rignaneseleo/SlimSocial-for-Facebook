@@ -450,12 +450,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> runJs() async {
-    if (sp.getBool(SpKeys.hideAds) ?? true) {
+    final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
+    final hidePymk = sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false;
+
+    // One DOM walk serves both: the filter is injected when either setting
+    // wants it, and each half is switched on independently inside the script.
+    if (hideAds || hidePymk) {
       // Define and run the filter first: the observer below calls into it.
       await _controller.runJavaScript(
         adFilterScript(
           placeholderText: 'ad_removed'.tr(),
-          extraLabels: [ 'sponsored_keyword_fb'.tr() ],
+          extraLabels: hideAds ? ['sponsored_keyword_fb'.tr()] : const [],
+          hideSponsored: hideAds,
+          hidePeopleYouMayKnow: hidePymk,
         ),
       );
       await _controller.runJavaScript(CustomJs.removeAdsObserver);

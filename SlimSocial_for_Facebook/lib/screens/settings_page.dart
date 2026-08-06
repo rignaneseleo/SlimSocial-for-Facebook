@@ -108,6 +108,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               SettingsTile.switchTile(
                 onToggle: (value) {
                   setState(() {
+                    sp.setBool(SpKeys.hidePeopleYouMayKnow, value);
+                  });
+                  ref.invalidate(fbWebViewProvider);
+                },
+                initialValue:
+                    sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false,
+                leading: const Icon(Icons.person_off_outlined),
+                title: Text('hide_people_you_may_know'.tr()),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
                     sp.setBool(SpKeys.recentFirst, value);
                   });
                   ref

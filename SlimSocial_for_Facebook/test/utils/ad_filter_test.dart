@@ -125,6 +125,73 @@ void main() {
     });
   });
 
+  group('the label the live layout actually uses', () {
+    test('bundles the two-character "ad" label', () {
+      // Observed on a real feed: the label node is "Ad" plus two private-use
+      // glyphs, in English even on a non-English interface. Nine of 37 posts
+      // carried it and none of the 48 translated labels matched any of them.
+      expect(kSponsoredLabels, contains('ad'));
+    });
+
+    test('keeps "ad" out of the substring list', () {
+      // As a substring it would match "Add friend", "Download", "Read more" —
+      // most of the feed. It is only ever safe compared whole.
+      final substrings = script.substring(
+        script.indexOf('var LABELS ='),
+        script.indexOf('var EXACT_LABELS ='),
+      );
+
+      expect(substrings, isNot(contains('"ad"')));
+    });
+
+    test('strips the private-use glyphs fused into the label', () {
+      // Without this the label node reads as the word plus two glyphs from
+      // a private-use font, compares equal to nothing, and silently disables
+      // the entire exact-match tier.
+      expect(script, contains(r'\uE000-\uF8FF'));
+      expect(script, contains(r'\uDB80-\uDBFF'));
+      expect(script, contains('function clean('));
+    });
+  });
+
+  group('people you may know', () {
+    test('is off unless asked for', () {
+      final off = adFilterScript(placeholderText: 'x');
+
+      expect(off, contains('var PYMK_LABELS = []'));
+    });
+
+    test('embeds the headings when switched on', () {
+      final on = adFilterScript(
+        placeholderText: 'x',
+        hidePeopleYouMayKnow: true,
+      );
+
+      expect(on, contains('people you may know'));
+      expect(on, contains('persone che potresti conoscere'));
+    });
+
+    test('hides the carousel rather than collapsing it as an advert', () {
+      // It is not an advert, so it gets no "ad removed" stub.
+      expect(script, contains('isPeopleYouMayKnow'));
+      expect(script, contains("post.style.display = 'none'"));
+    });
+
+    test('can run with sponsored hiding switched off', () {
+      // The two settings are independent; turning ads back on must not be a
+      // precondition for hiding the friend carousel.
+      final pymkOnly = adFilterScript(
+        placeholderText: 'x',
+        hideSponsored: false,
+        hidePeopleYouMayKnow: true,
+      );
+
+      expect(pymkOnly, contains('var HIDE_SPONSORED = false'));
+      expect(pymkOnly, contains('people you may know'));
+      expect(pymkOnly, contains('if (!HIDE_SPONSORED) return false;'));
+    });
+  });
+
   group('adFilterScript label handling', () {
     test('drops a runtime extra that duplicates a bundled label', () {
       final withDuplicate = adFilterScript(

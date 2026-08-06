@@ -26,6 +26,12 @@ const int kMinSponsoredLabelLength = 4;
 /// deleting a doubtful label over guessing at one: every entry widens the
 /// false-positive surface.
 const List<String> kSponsoredLabels = [
+  // The label the current mobile layout actually uses. Observed on a live feed
+  // as the text node "Ad\u{F078B}\u{F17E1}" — the word plus two private-use
+  // icon glyphs — and rendered in English even when the interface is not. Two
+  // characters, so it is matched against the whole trimmed label and never as a
+  // substring, which would fire on "Add friend", "Download" and half the feed.
+  'ad',
   // Latin script
   'gesponsert',
   'gesponsord',
@@ -109,17 +115,43 @@ const String _postSelector = 'div[data-tracking-duration-id]';
 /// A matched post is collapsed, not emptied: its children are hidden in place
 /// and `data-actual-height` is rewritten so the virtualising scroller keeps
 /// working, with the original value stashed so the change can be undone.
+/// Headings that introduce a "People You May Know" carousel.
+///
+/// Matched against a whole trimmed heading, not as a substring, so a post that
+/// merely says the phrase is left alone.
+///
+/// The current layout renders this chrome in English even when the interface is
+/// another language — the same thing it does with the "Ad" label — so the
+/// English entry does most of the work and the rest are insurance.
+const List<String> kPeopleYouMayKnowLabels = [
+  'people you may know',
+  'persone che potresti conoscere',
+  'personas que quizá conozcas',
+  'personnes que vous pourriez connaître',
+  'personen, die du kennen könntest',
+  'pessoas que talvez você conheça',
+  'mensen die je misschien kent',
+  'osoby, które możesz znać',
+  'люди, которых вы можете знать',
+];
+
 String adFilterScript({
   required String placeholderText,
   List<String> extraLabels = const [],
+  bool hideSponsored = true,
+  bool hidePeopleYouMayKnow = false,
 }) {
   // A runtime extra is the app locale's own label. It must not be dropped for
   // being short: in a CJK locale it is exactly the two-character case, which is
   // precisely when it matters most. Short entries go to the exact-match list.
+  // With sponsored hiding off the label sets are emptied rather than the script
+  // being skipped, because "People you may know" may still want the same walk.
   final all = <String>{
-    ...kSponsoredLabels,
-    for (final label in extraLabels)
-      if (label.trim().length >= 2) label.trim().toLowerCase(),
+    if (hideSponsored) ...[
+      ...kSponsoredLabels,
+      for (final label in extraLabels)
+        if (label.trim().length >= 2) label.trim().toLowerCase(),
+    ],
   };
 
   final substringLabels =
@@ -131,14 +163,29 @@ String adFilterScript({
 (function () {
   var LABELS = ${jsonEncode(substringLabels)};
   var EXACT_LABELS = ${jsonEncode(exactLabels)};
+  var PYMK_LABELS = ${jsonEncode(hidePeopleYouMayKnow ? kPeopleYouMayKnowLabels : const <String>[])};
+  var HIDE_SPONSORED = $hideSponsored;
   var MIN_LEN = $kMinSponsoredLabelLength;
   var MAX_LEN = 25;
   var PLACEHOLDER = ${jsonEncode(placeholderText)};
   var memo = null;
 
+  // Facebook fuses the label with icon glyphs from a private-use font, so the
+  // node reads "Ad\\uF078B\\uF17E1" rather than "Ad", and bidi marks are
+  // sprinkled through bylines. Without stripping both, no label ever compares
+  // equal to anything and the exact-match tier is dead on arrival.
+  function clean(text) {
+    return text
+      .replace(/[\\uE000-\\uF8FF]/g, '')
+      .replace(/[\\uDB80-\\uDBFF][\\uDC00-\\uDFFF]/g, '')
+      .replace(/[\\u200E\\u200F\\u202A-\\u202E\\u2066-\\u2069]/g, '')
+      .trim();
+  }
+
   function isSponsoredLabel(text) {
     if (!text) return false;
-    var lower = text.toLowerCase();
+    var lower = clean(text).toLowerCase();
+    if (!lower) return false;
 
     // CJK labels are two characters, so they are compared against the whole
     // trimmed string. An exact match cannot fire inside prose, which is what
@@ -164,6 +211,11 @@ String adFilterScript({
   }
 
   function isSponsoredPost(post) {
+    // Emptying the label lists is not enough on its own: the attribute tiers
+    // below do not consult them, so they would still hide adverts with the
+    // setting switched off.
+    if (!HIDE_SPONSORED) return false;
+
     var dataFt = post.getAttribute('data-ft') || '';
     if (dataFt.indexOf('is_sponsored') !== -1) return true;
     if (dataFt.indexOf('should_log_endpoint_info') !== -1) return true;
@@ -205,12 +257,34 @@ String adFilterScript({
     post.appendChild(stub);
   }
 
+  function isPeopleYouMayKnow(post) {
+    if (!PYMK_LABELS.length) return false;
+    var els = post.querySelectorAll('span, div');
+    for (var i = 0; i < els.length; i++) {
+      if (els[i].children.length) continue;
+      var t = clean(els[i].textContent || '').toLowerCase();
+      if (!t || t.length > 40) continue;
+      if (PYMK_LABELS.indexOf(t) !== -1) return true;
+    }
+    return false;
+  }
+
   window.slimRemoveAds = function () {
     var handled = 0;
     var posts = document.querySelectorAll(${jsonEncode(_postSelector)});
     for (var i = 0; i < posts.length; i++) {
       var post = posts[i];
       if (post.classList.contains('slim-ad-handled')) continue;
+
+      // A friend carousel is not an advert, so it is hidden outright rather
+      // than collapsed behind the "ad removed" stub.
+      if (isPeopleYouMayKnow(post)) {
+        post.classList.add('slim-ad-handled');
+        post.style.display = 'none';
+        handled++;
+        continue;
+      }
+
       if (!isSponsoredPost(post)) continue;
       collapse(post);
       handled++;

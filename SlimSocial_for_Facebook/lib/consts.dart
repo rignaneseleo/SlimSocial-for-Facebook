@@ -103,6 +103,7 @@ class SpKeys {
 
   static const String enableMessenger = "enable_messenger";
   static const String hideAds = "hide_ads";
+  static const String hidePeopleYouMayKnow = "hide_people_you_may_know";
   static const String recentFirst = "recent_first";
   static const String useMbasic = "use_mbasic";
 
