@@ -16,6 +16,7 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
@@ -433,31 +434,28 @@ class _HomePageState extends ConsumerState<HomePage> {
           CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
     };
 
-    final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
-
-    // Defines removeAds(). Task 4 replaces both this and the call below with
-    // adFilterScript; until then ad hiding has to keep working.
-    if (hideAds) {
-      await _controller.runJavaScript(CustomJs.removeAdsFunc);
-    }
-
-    final body = [
-      ...sheets.entries.map((e) => CustomJs.injectCssFunc(e.value, id: e.key)),
-      if (hideAds) 'removeAds();',
-    ].join('\n');
+    final body = sheets.entries
+        .map((e) => CustomJs.injectCssFunc(e.value, id: e.key))
+        .join('\n');
 
     await _controller.runJavaScript(CustomJs.whenDomReady(body));
   }
 
   Future<void> runJs() async {
     if (sp.getBool(SpKeys.hideAds) ?? true) {
-      //setup the observer to run on page updates
+      // Define and run the filter first: the observer below calls into it.
+      await _controller.runJavaScript(
+        adFilterScript(
+          placeholderText: 'ad_removed'.tr(),
+          extraLabels: [ 'sponsored_keyword_fb'.tr() ],
+        ),
+      );
       await _controller.runJavaScript(CustomJs.removeAdsObserver);
     }
 
     final userCustomJs = PrefController.getUserCustomJs();
-    if (userCustomJs?.isNotEmpty ?? false) {
-      await _controller.runJavaScript(userCustomJs!);
+    if (userCustomJs != null) {
+      await _controller.runJavaScript(userCustomJs);
     }
   }
 

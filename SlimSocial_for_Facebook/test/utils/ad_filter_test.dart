@@ -55,4 +55,117 @@ void main() {
       expect(kSponsoredLabels, contains('광고'));
     });
   });
+
+  final script = adFilterScript(
+    placeholderText: 'Ad removed',
+    extraLabels: const ['werbung'],
+  );
+
+  group('adFilterScript detection tiers', () {
+    test('checks the post attribute before anything else', () {
+      expect(script, contains('is_sponsored'));
+      expect(script, contains('should_log_endpoint_info'));
+    });
+
+    test('checks the descendant markers Facebook puts on ad units', () {
+      expect(script, contains('data-xt-vimp'));
+      expect(script, contains('/ads/about/'));
+    });
+
+    test('bounds substring matching so prose mentioning the word is spared', () {
+      expect(script, contains('lower.length < MIN_LEN'));
+      expect(script, contains('lower.length >= MAX_LEN'));
+    });
+
+    test('matches short labels against the whole string, not a substring', () {
+      // A two-character CJK label tested as a substring would fire inside
+      // ordinary prose; compared whole it cannot.
+      expect(script, contains('EXACT_LABELS'));
+      expect(script, contains('lower === EXACT_LABELS[e]'));
+    });
+
+    test('bundles the CJK labels into the exact-match list', () {
+      // Guards the split itself: if these ended up in the substring list they
+      // would be unreachable, and CJK ad detection would silently be dead.
+      final exact = script.substring(
+        script.indexOf('var EXACT_LABELS ='),
+        script.indexOf('var MIN_LEN ='),
+      );
+
+      expect(exact, contains('広告'));
+      expect(exact, contains('광고'));
+    });
+
+    test('embeds the bundled labels and the runtime extras', () {
+      expect(script, contains('sponsored'));
+      expect(script, contains('werbung'));
+    });
+  });
+
+  group('adFilterScript collapsing', () {
+    test('marks handled posts so they are never processed twice', () {
+      expect(script, contains('slim-ad-handled'));
+    });
+
+    test('preserves the original virtual-scroller height', () {
+      expect(script, contains('data-actual-height'));
+      expect(script, contains('data-slim-height-original'));
+    });
+
+    test('never overwrites the post subtree', () {
+      expect(script, isNot(contains('innerHTML')));
+    });
+
+    test('exposes the entry point the observer calls', () {
+      expect(script, contains('window.slimRemoveAds'));
+    });
+
+    test('shows the placeholder text it was given', () {
+      expect(script, contains('Ad removed'));
+    });
+  });
+
+  group('adFilterScript label handling', () {
+    test('drops a runtime extra that duplicates a bundled label', () {
+      final withDuplicate = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['Sponsored'],
+      );
+      final bundled = adFilterScript(placeholderText: 'x');
+
+      // The encoded array must be identical: no duplicate entry was added.
+      expect(withDuplicate, bundled);
+    });
+
+    test('routes a short runtime extra into the exact-match list', () {
+      // This is the CJK app-locale case. Dropping it for being short would
+      // remove ad detection in exactly the locales that need it, so it must
+      // survive — as an exact match rather than a substring.
+      final script = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['广告'],
+      );
+      final exact = script.substring(
+        script.indexOf('var EXACT_LABELS ='),
+        script.indexOf('var MIN_LEN ='),
+      );
+      final substrings = script.substring(
+        script.indexOf('var LABELS ='),
+        script.indexOf('var EXACT_LABELS ='),
+      );
+
+      expect(exact, contains('广告'));
+      expect(substrings, isNot(contains('广告')));
+    });
+
+    test('still ignores a runtime extra of a single character', () {
+      final withOneChar = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const ['a'],
+      );
+      final bundled = adFilterScript(placeholderText: 'x');
+
+      expect(withOneChar, bundled);
+    });
+  });
 }
