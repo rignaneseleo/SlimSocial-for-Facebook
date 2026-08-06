@@ -18,6 +18,15 @@ Map<String, dynamic> _readLang(String path) {
   return jsonDecode(contents) as Map<String, dynamic>;
 }
 
+List<File> _allLangFiles() {
+  return Directory('assets/lang')
+      .listSync()
+      .whereType<File>()
+      .where((f) => f.path.endsWith('.json'))
+      .toList()
+    ..sort((a, b) => a.path.compareTo(b.path));
+}
+
 void main() {
   group('fallback translations', () {
     test('are valid JSON', () {
@@ -51,5 +60,43 @@ void main() {
         }
       }
     });
+  });
+
+  group('every locale file', () {
+    // Checking only the two fallbacks is not enough: ru-RU.json once shipped
+    // with a missing comma, so jsonDecode threw and every Russian user silently
+    // got English instead. One test per file, so a future break names the file
+    // that broke.
+    final files = _allLangFiles();
+
+    test('there are localisation files to check', () {
+      expect(files, isNotEmpty);
+    });
+
+    for (final file in files) {
+      test('${file.uri.pathSegments.last} is valid JSON', () {
+        expect(
+          () => jsonDecode(file.readAsStringSync()),
+          returnsNormally,
+          reason: '${file.path} does not parse, so that locale silently falls '
+              'back to English',
+        );
+      });
+    }
+  });
+
+  test('the fallback locale defines the keys the webview features ask for', () {
+    // Checked against en-US only, not `_.json`: en-US is the configured
+    // fallbackLocale, and several of these have never existed in `_.json`.
+    final fallback = _readLang('assets/lang/en-US.json');
+
+    for (final key in const [
+      'ad_removed',
+      'hide_ads',
+      'hide_messenger_sidebar',
+      'sponsored_keyword_fb',
+    ]) {
+      expect(fallback.keys, contains(key), reason: '$key missing from en-US');
+    }
   });
 }
