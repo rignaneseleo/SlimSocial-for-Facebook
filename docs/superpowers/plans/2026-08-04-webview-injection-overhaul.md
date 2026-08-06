@@ -89,13 +89,23 @@ Expected: `Flutter 3.44.8`.
 
 If dependency resolution fails with `in_app_purchase 3.3.0 requires SDK version ^3.10.0`, the SDK pin in `.fvmrc` has regressed below 3.10 — set it back to `3.44.8`, run `fvm install`, and retry before going further.
 
-- [ ] **Step 2: Confirm the analyzer is clean**
+- [ ] **Step 2: Record the analyzer baseline**
 
 ```bash
-fvm flutter analyze lib/ test/
+fvm flutter analyze lib/ test/ ; echo "exit=$?"
 ```
 
-Expected: `No issues found!`
+Expected at the time of writing: **`47 issues found.` and `exit=1`** — every one of them `info`-level and pre-existing (18 `unawaited_futures`, 11 `unnecessary_breaks`, 3 `deprecated_member_use`, and a tail of others).
+
+This matters more than it looks. `flutter analyze` exits non-zero on info-level lints, so the obvious gate — `fvm flutter analyze lib/ test/ && fvm flutter test` — **short-circuits before the tests ever run** on this repo. Every verification step in this plan therefore uses:
+
+```bash
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
+```
+
+which still fails on any `error` or `warning` while tolerating the pre-existing info baseline.
+
+Record the exact count. No task in this plan may increase it, and none may introduce an `error` or `warning`. Cleaning up the existing 47 is explicitly **not** in scope here — it would bury this plan's diffs in unrelated churn.
 
 - [ ] **Step 3: Record the baseline test count**
 
@@ -397,10 +407,10 @@ In `lib/screens/messenger_page.dart`, replace `injectCss` with:
 - [ ] **Step 8: Verify nothing regressed**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass. Every task in this plan commits a green tree; if either command fails, fix it before committing.
+Expected: analyze exits 0 (see the baseline note in Task 1 Step 2 — info-level lints are pre-existing and non-fatal here; **no new** `error` or `warning` lines), then all tests pass. Every task in this plan commits a green tree; if either command fails, fix it before committing.
 
 - [ ] **Step 9: Commit**
 
@@ -592,10 +602,10 @@ If `short labels exist and are the CJK ones` fails, the CJK entries were dropped
 - [ ] **Step 5: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass. Nothing imports `ad_filter.dart` yet, so this task adds a self-contained, green unit.
+Expected: analyze exits 0 (see the baseline note in Task 1 Step 2 — info-level lints are pre-existing and non-fatal here; **no new** `error` or `warning` lines), then all tests pass. Nothing imports `ad_filter.dart` yet, so this task adds a self-contained, green unit.
 
 - [ ] **Step 6: Commit**
 
@@ -972,10 +982,10 @@ Expected: no output. If `home_page.dart` still appears, Step 5's `injectCss` edi
 - [ ] **Step 7: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 (see the baseline note in Task 1 Step 2 — info-level lints are pre-existing and non-fatal here; **no new** `error` or `warning` lines), then all tests pass.
 
 - [ ] **Step 8: Commit**
 
@@ -1122,7 +1132,7 @@ Expected: all tests in the file pass.
 - [ ] **Step 5: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
 Expected: `No issues found!` then all tests pass, with a total above the 52 baseline.
@@ -1467,10 +1477,10 @@ to:
 - [ ] **Step 7: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass. If `kFirefoxUserAgent` or `kIpadUserAgent` is still referenced anywhere, the analyzer says so.
+Expected: analyze exits 0 (see the baseline note in Task 1 Step 2 — info-level lints are pre-existing and non-fatal here; **no new** `error` or `warning` lines), then all tests pass. If `kFirefoxUserAgent` or `kIpadUserAgent` is still referenced anywhere, the analyzer says so.
 
 - [ ] **Step 8: Re-check the feed selectors against the new layout**
 
@@ -1646,10 +1656,10 @@ Expected: all tests pass.
 - [ ] **Step 7: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 (see the baseline note in Task 1 Step 2 — info-level lints are pre-existing and non-fatal here; **no new** `error` or `warning` lines), then all tests pass.
 
 - [ ] **Step 8: Commit**
 

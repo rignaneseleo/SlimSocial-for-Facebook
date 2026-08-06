@@ -83,7 +83,7 @@ Expected: Flutter 3.44.8. If `fvm` reports a different pin, stop and reconcile
 - [ ] **Step 2: Analyzer and tests are clean**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
 Expected: `No issues found!` then the whole suite green. Record the test count.
@@ -322,10 +322,10 @@ the webview-injection plan), append `'mic_permission'` to its fallback key list.
 - [ ] **Step 8: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 and all tests pass. Note `--no-fatal-infos`: this repo carries ~47 pre-existing `info`-level lints, and without the flag `analyze` exits non-zero and the `&&` never reaches the tests. Any **new** `error` or `warning` is still a failure.
 
 - [ ] **Step 9: Commit**
 
@@ -440,10 +440,10 @@ the correct behaviour.
 - [ ] **Step 6: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass. (Behaviour is device-verified
+Expected: analyze exits 0 and all tests pass. Note `--no-fatal-infos`: this repo carries ~47 pre-existing `info`-level lints, and without the flag `analyze` exits non-zero and the `&&` never reaches the tests. Any **new** `error` or `warning` is still a failure. (Behaviour is device-verified
 in Task 5; this gate only proves nothing else regressed.)
 
 - [ ] **Step 7: Commit**
@@ -520,10 +520,10 @@ switch, editing the string, or deleting it — because all of them move
 - [ ] **Step 3: Verify the whole project**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 and all tests pass. Note `--no-fatal-infos`: this repo carries ~47 pre-existing `info`-level lints, and without the flag `analyze` exits non-zero and the `&&` never reaches the tests. Any **new** `error` or `warning` is still a failure.
 
 - [ ] **Step 4: Commit**
 
@@ -605,7 +605,7 @@ Task 3, problem 3 → Task 4, problem 4 → Task 2. Task 1 is the baseline gate;
 Tasks 3 and 4 are UI and permission-plugin behaviour that needs platform mocks to
 unit-test, so they are device-verified in Task 5 and their `analyze && test` gate
 only proves nothing else regressed. Every task ends on
-`fvm flutter analyze lib/ test/ && fvm flutter test` before its commit.
+`fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test` before its commit.
 
 **Validated against the real APIs, not from memory.**
 `WebViewPermissionResourceType` is a class with exactly two members (`camera`,

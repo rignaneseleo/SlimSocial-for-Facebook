@@ -782,10 +782,10 @@ Expected: all tests pass.
 - [ ] **Step 6: Verify nothing else broke**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 and all tests pass. Note `--no-fatal-infos`: this repo carries ~47 pre-existing `info`-level lints, and without the flag `analyze` exits non-zero and the `&&` never reaches the tests. Any **new** `error` or `warning` is still a failure.
 
 - [ ] **Step 7: Commit**
 
@@ -1018,10 +1018,10 @@ In `injectCss`, add an entry to the `sheets` map:
 - [ ] **Step 5: Verify**
 
 ```bash
-fvm flutter analyze lib/ test/ && fvm flutter test
+fvm flutter analyze --no-fatal-infos lib/ test/ && fvm flutter test
 ```
 
-Expected: `No issues found!` then all tests pass.
+Expected: analyze exits 0 and all tests pass. Note `--no-fatal-infos`: this repo carries ~47 pre-existing `info`-level lints, and without the flag `analyze` exits non-zero and the `&&` never reaches the tests. Any **new** `error` or `warning` is still a failure.
 
 If the analyzer reports `use_build_context_synchronously` on the `Navigator.of(context)` call, the `if (!mounted) return;` guard above it is missing — add it.
 
