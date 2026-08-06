@@ -499,12 +499,13 @@ td .inputtext {
     border-radius: 0px !important;
 }
 
-* {
-    border-color: transparent !important;
-    font-family: Arial !important;
-    color: #FFFFFF !important;
-    background-color: transparent !important;
-}
+/* The `*` rule that used to live here has been removed. It set
+   `font-family: Arial !important`, which replaced Facebook's icon font
+   everywhere and rendered every icon as a tofu box; `color: #FFFFFF
+   !important`, which put white text on any surface not darkened above and made
+   it invisible; and `background-color: transparent !important`, which fought
+   the surface rules. It was the single most damaging rule in this stylesheet
+   and the reason switching the theme on looked like the app breaking. */
 
 a:hover {
     text-decoration: none;
