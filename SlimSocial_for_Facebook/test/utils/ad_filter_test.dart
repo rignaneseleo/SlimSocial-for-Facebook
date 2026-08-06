@@ -112,6 +112,14 @@ void main() {
       expect(script, contains('data-slim-height-original'));
     });
 
+    test('shrinks the box the user actually sees, not just the attribute', () {
+      // Posts carry an inline `height:667px`. data-actual-height is metadata
+      // for the scroller and changes no layout, so setting it alone leaves an
+      // empty container the full size of the advert it replaced.
+      expect(script, contains("post.style.height = '60px'"));
+      expect(script, contains('data-slim-style-height'));
+    });
+
     test('never overwrites the post subtree', () {
       expect(script, isNot(contains('innerHTML')));
     });

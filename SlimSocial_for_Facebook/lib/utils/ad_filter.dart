@@ -243,6 +243,17 @@ String adFilterScript({
       post.setAttribute('data-actual-height', '60');
     }
 
+    // data-actual-height is only what the virtualising scroller reads. The box
+    // the user sees is sized by an inline `height:667px` on the post itself, so
+    // without shrinking that too the advert is replaced by an empty container
+    // of exactly the same size — a large blank gap instead of an advert.
+    if (post.style.height) {
+      post.setAttribute('data-slim-style-height', post.style.height);
+      post.style.height = '60px';
+    }
+    post.style.minHeight = '0';
+    post.style.overflow = 'hidden';
+
     // Hide the real content without detaching it: Facebook's own scripts still
     // hold references into this subtree.
     var child = post.firstElementChild;
