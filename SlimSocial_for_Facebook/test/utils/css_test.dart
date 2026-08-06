@@ -128,6 +128,35 @@ article {
     });
   });
 
+  group('app install upsell', () {
+    test('targets the pinned bottom bar by class, not by its label', () {
+      // The label is localised, so matching text would work in one language
+      // and silently stop working in every other.
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        contains('div.fixed-container.bottom'),
+      );
+      expect(CustomCss.hideAppUpsellCss.code, isNot(contains('Open app')));
+    });
+
+    test('is not offered as a user-facing toggle', () {
+      // Same treatment as the other chrome removals: structural, not a
+      // preference, so it is injected directly rather than via cssList.
+      final keys = CustomCss.cssList.map((c) => c.key);
+
+      expect(keys, isNot(contains('hide_app_upsell')));
+    });
+
+    test('does not hide every fixed container', () {
+      // A bare `.fixed-container` rule would also catch the top bar and the
+      // empty above-bottom spacer that sit alongside the upsell.
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        isNot(contains('div.fixed-container {')),
+      );
+    });
+  });
+
   group('media trays', () {
     test('the stories rule leads with a language-independent selector', () {
       // `#MStoriesTray` is an id from the old mobile layout and matched nothing

@@ -431,6 +431,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final sheets = <String, String>{
       'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
       'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
+      'slim-app-upsell': CustomCss.hideAppUpsellCss.code,
       'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
       'slim-user-sheet':
           CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),

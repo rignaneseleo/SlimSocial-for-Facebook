@@ -156,6 +156,27 @@ class CustomCss {
     code: '#header-notices { display: none; }',
   );
 
+  /// Hides the "Open app" bar Facebook pins to the bottom of the feed.
+  ///
+  /// It is an install upsell for the native app, which is the one thing a user
+  /// of this app has already decided against, and it covers the bottom of every
+  /// page until dismissed.
+  ///
+  /// Matched by class rather than by its label, which is localised. Verified
+  /// against the live layout: exactly one `.fixed-container.bottom` exists and
+  /// it is the upsell — the only other fixed container is an empty
+  /// `above-bottom` spacer, and the page carries no `role="navigation"` that
+  /// this could catch by accident.
+  ///
+  /// Deliberately not in [cssList]: like the other chrome removals above, it is
+  /// structural rather than a preference.
+  static MyCss hideAppUpsellCss = MyCss(
+    key: 'hide_app_upsell',
+    description: 'Hide the install-the-app bar',
+    defaultEnabled: true,
+    code: 'div.fixed-container.bottom { display: none !important; }',
+  );
+
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
     key: 'hideAdsAndPeopleYouMayKnow',
     description: 'Hide ads and people you may know',
