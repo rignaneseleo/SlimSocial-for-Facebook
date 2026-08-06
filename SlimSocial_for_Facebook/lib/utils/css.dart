@@ -391,6 +391,43 @@ a.x1i10hfl.x1qjc9v5.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x2
     key: 'dark_theme',
     description: 'dark theme messenger',
     code: """
+/* ---------------------------------------------------------------
+Rules for the layout Facebook actually serves today.
+
+Everything after this block targets the old m.facebook.com markup and
+matches nothing now — it is kept only for anyone still served that. Before
+these rules existed, the one legacy selector that DID still match was
+`body`, so the page went dark while Facebook's own dark text stayed dark:
+the setting made the feed unreadable rather than dark.
+
+The layout paints surfaces from a `::before` pseudo-element, not from
+background-color on the element, which is why every earlier attempt to
+override backgrounds did nothing and why computed styles read transparent.
+Colours below were sampled from the live DOM, not guessed:
+
+  bg-s18  rgb(188,192,196)  page background
+  bg-s2   rgb(255,255,255)  post card        (142 on one feed)
+  bg-s20  rgb(248,249,251)  raised surface   (39)
+  bg-s19  rgb(208,211,215)  divider / chip   (44)
+  f1/f2/f3  near-black text  f5  secondary text
+
+Brand colours (blue bg-s27/s32/s3, red bg-s8/s10) are deliberately left
+alone, as are the overlay fills bg-s29/s30/s31.
+--------------------------------------------------------------- */
+html, body { background-color: #18191a !important; }
+
+.bg-s18::before { background-color: #18191a !important; }
+
+.bg-s2::before, .bg-s7::before, .bg-s9::before, .bg-s11::before,
+.bg-s20::before { background-color: #242526 !important; }
+
+.bg-s5::before, .bg-s6::before, .bg-s12::before, .bg-s19::before,
+.bg-s23::before, .bg-s25::before, .bg-s33::before, .bg-s35::before
+{ background-color: #3a3b3c !important; }
+
+span.f1, span.f2, span.f3 { color: #e4e6eb !important; }
+span.f5 { color: #b0b3b8 !important; }
+
 /* ===========================
 Credits: Bean Verified Bean Terified
 https://userstyles.org/styles/160729/violet-nebula
