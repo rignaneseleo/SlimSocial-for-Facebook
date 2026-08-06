@@ -82,6 +82,14 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..loadRequest(Uri.parse(homepage));
 
     if (Platform.isAndroid) {
+      //debug builds only: lets `chrome://inspect` and the DevTools protocol
+      //attach to the webview. That is the only way to read the markup Facebook
+      //actually serves, which is what the injected selectors have to match.
+      //Never enabled in release.
+      if (kDebugMode) {
+        AndroidWebViewController.enableDebugging(true);
+      }
+
       final androidController = controller.platform as AndroidWebViewController;
       _androidController = androidController;
 
