@@ -18,6 +18,7 @@ import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
@@ -576,6 +577,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   Future<void> runJs() async {
     final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
     final hidePymk = sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false;
+
+    // The dark theme's surface colours cannot be shipped as CSS: Facebook
+    // generates the class that carries each surface per page render, so the
+    // palette has to be read back out of the page. Runs after injectCss so the
+    // generated sheet lands last and wins the ties.
+    if (CustomCss.darkThemeCss.isEnabled()) {
+      await _controller.runJavaScript(darkThemeScript());
+    }
 
     // One DOM walk serves both: the filter is injected when either setting
     // wants it, and each half is switched on independently inside the script.

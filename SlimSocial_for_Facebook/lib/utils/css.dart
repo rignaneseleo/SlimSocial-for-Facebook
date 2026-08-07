@@ -403,57 +403,52 @@ the setting made the feed unreadable rather than dark.
 The layout paints surfaces from a `::before` pseudo-element, not from
 background-color on the element, which is why every earlier attempt to
 override backgrounds did nothing and why computed styles read transparent.
-Colours below were sampled from the live DOM, not guessed:
-
-  bg-s18  rgb(188,192,196)  page background
-  bg-s2   rgb(255,255,255)  post card        (142 on one feed)
-  bg-s20  rgb(248,249,251)  raised surface   (39)
-  bg-s19  rgb(208,211,215)  divider / chip   (44)
-  f1/f2/f3  near-black text  f5  secondary text
-
-Brand colours (blue bg-s27/s32/s3, red bg-s8/s10) are deliberately left
-alone, as are the overlay fills bg-s29/s30/s31.
+Those surfaces are handled by darkThemeScript(), which reads the colours out
+of the page because the class that carries them is renumbered per render.
+What is left here is the page underneath them and the text on top — the two
+parts whose selectors are stable.
 --------------------------------------------------------------- */
-/* KNOWN LIMITATION — read before extending this list.
-
-   The bg-sN class names are generated per page, and the same number does NOT
-   mean the same colour between loads. Measured across two samples of the same
-   feed: bg-s3 was rgb(8,102,255) then rgb(255,255,255); bg-s8 was
-   rgb(221,35,52) then white; bg-s24 was rgb(66,103,178) then rgb(188,192,196).
-
-   So this map cannot be completed by adding more class numbers — it will always
-   leak on some page, and worse, a number that is a surface today may be a brand
-   blue or a red badge tomorrow, which this would then recolour.
-
-   The stable fix is to stop keying on class names: walk the surfaces in JS,
-   read the computed ::before/::after background, and darken only what actually
-   measures light. The existing feed observer already provides a place to do it.
-   Until then this covers the common case and the theme is a large improvement
-   on the `*` rule it replaced, but it is not complete by construction. */
+/* Surfaces are NOT here. The bg-sN class that paints a surface is generated
+   per page render, so the same number is a card on one load and a brand blue
+   on the next — a hardcoded map both leaks and repaints things it should not.
+   darkThemeScript() reads the real colours out of the page's own stylesheet
+   instead; see lib/utils/dark_theme.dart for the measurements. */
 html, body { background-color: #18191a !important; }
 
-/* Both pseudo-elements, not just ::before. The composer row is a bg-s11 that
-   paints through ::before AND ::after, and the ::after sits on top — so
-   overriding only ::before left exactly one white band on an otherwise dark
-   page, which is what the last round of this looked like. */
-.bg-s18::before, .bg-s18::after,
-.bg-s26::before, .bg-s26::after { background-color: #18191a !important; }
+/* Text is a different problem from surfaces and needs a different key.
 
-.bg-s2::before, .bg-s7::before, .bg-s9::before, .bg-s11::before,
-.bg-s20::before,
-.bg-s2::after, .bg-s7::after, .bg-s9::after, .bg-s11::after,
-.bg-s20::after { background-color: #242526 !important; }
+   Facebook does not put text colour in a class at all — `.f1`, `.f4` and the
+   rest are font-size classes, and the whole served stylesheet declares `color`
+   on just 22 selectors, none of them the feed's. The colour arrives as an
+   inline style on the `.native-text` wrapper, e.g. `style="color:#65686c;"`.
 
-.bg-s4::before, .bg-s5::before, .bg-s6::before, .bg-s12::before,
-.bg-s19::before, .bg-s23::before, .bg-s25::before, .bg-s29::before,
-.bg-s33::before, .bg-s35::before,
-.bg-s4::after, .bg-s5::after, .bg-s6::after, .bg-s12::after,
-.bg-s19::after, .bg-s23::after, .bg-s25::after, .bg-s29::after,
-.bg-s33::after, .bg-s35::after
-{ background-color: #3a3b3c !important; }
+   Inline wins over an author rule, but NOT over an author `!important`, so
+   these still take effect.
 
-span.f1, span.f2, span.f3 { color: #e4e6eb !important; }
-span.f5 { color: #b0b3b8 !important; }
+   The catch-all comes first and is the safety net: anything inside a text
+   wrapper is legible even if Facebook introduces a token we have never seen.
+   The rules after it restore meaning to the tokens we do know — matching on
+   `color:` specifically, because a bare hex would also match a
+   `background-color` declaration in the same attribute and repaint the text
+   to match its own background. A token that changes value simply falls back to
+   the catch-all and reads as primary text: duller than intended, never
+   invisible. */
+.native-text, .native-text * { color: #e4e6eb !important; }
+
+[style*="color:#65686c"], [style*="color:#65686c"] *,
+[style*="color:#65676b"], [style*="color:#65676b"] *,
+[style*="color:#757575"], [style*="color:#757575"] *,
+[style*="color:#84878b"], [style*="color:#84878b"] *,
+[style*="color:#8a8d91"], [style*="color:#8a8d91"] *
+{ color: #b0b3b8 !important; }
+
+[style*="color:#1877f2"], [style*="color:#1877f2"] *,
+[style*="color:#0866ff"], [style*="color:#0866ff"] *,
+[style*="color:#0064d1"], [style*="color:#0064d1"] *
+{ color: #4599ff !important; }
+
+[style*="color:#45bd62"] { color: #45bd62 !important; }
+[style*="color:#ffffff"], [style*="color:white"] { color: #ffffff !important; }
 
 /* ===========================
 Credits: Bean Verified Bean Terified

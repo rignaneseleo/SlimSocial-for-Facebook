@@ -280,6 +280,68 @@ article {
     });
   });
 
+  group('dark theme', () {
+    test('no longer hardcodes a surface class', () {
+      // Two shipped attempts failed here. The bg-sN number is generated per
+      // page render, so a static map both misses light surfaces and repaints
+      // brand colours; darkThemeScript() derives it from the page instead.
+      expect(
+        RegExp(r'bg-s\d').hasMatch(CustomCss.darkThemeCss.code),
+        isFalse,
+        reason: 'surfaces belong in dark_theme.dart, keyed on measured colour',
+      );
+    });
+
+    test('still paints the page itself dark', () {
+      // The derived sheet covers Facebook's surfaces; the document underneath
+      // them is ours to set, and a white one shows through every gap.
+      expect(CustomCss.darkThemeCss.code, contains('html, body'));
+      expect(CustomCss.darkThemeCss.code, contains('#18191a'));
+    });
+
+    test('makes every wrapped text run legible before refining any of it', () {
+      // The catch-all is the safety net: Facebook inlines text colour, so an
+      // unrecognised token would otherwise stay near-black on a dark card. It
+      // has to come first, because the token rules that follow rely on source
+      // order to win.
+      final code = CustomCss.darkThemeCss.code;
+      final catchAll = code.indexOf('.native-text, .native-text *');
+      final firstToken = code.indexOf('[style*="color:#');
+
+      expect(catchAll, isNonNegative);
+      expect(firstToken, greaterThan(catchAll));
+    });
+
+    test('matches the colour declaration, not a bare hex', () {
+      // A style attribute holds background-color too. `[style*="#ffffff"]`
+      // would match an element with a white background and set its text white
+      // as well, hiding the text inside its own box.
+      final tokens = RegExp(r'\[style\*="([^"]+)"\]')
+          .allMatches(CustomCss.darkThemeCss.code)
+          .map((m) => m.group(1)!);
+
+      expect(tokens, isNotEmpty);
+      for (final t in tokens) {
+        expect(t, startsWith('color:'), reason: '"$t" could match a background');
+      }
+    });
+
+    test('leaves the brand colours reading as brand colours', () {
+      // Links and the green badge carry meaning; flattening them to body text
+      // is a regression even though it is perfectly legible.
+      expect(CustomCss.darkThemeCss.code, contains('#4599ff'));
+      expect(CustomCss.darkThemeCss.code, contains('#45bd62'));
+    });
+
+    test('no longer colours the font-size classes', () {
+      // `.f1`/`.f4` set font-size and line-height — the served stylesheet
+      // declares no colour on them at all. Colouring them was aiming at the
+      // wrong hook and missed every run whose class was not in the list.
+      expect(CustomCss.darkThemeCss.code, isNot(contains('span.f1')));
+      expect(CustomCss.darkThemeCss.code, isNot(contains('span.f5')));
+    });
+  });
+
   group('theme-aware stylesheets', () {
     test('no bundled stylesheet hardcodes the legacy accent hex', () {
       for (final css in CustomCss.cssList) {
