@@ -583,7 +583,14 @@ class _HomePageState extends ConsumerState<HomePage> {
     // palette has to be read back out of the page. Runs after injectCss so the
     // generated sheet lands last and wins the ties.
     if (CustomCss.darkThemeCss.isEnabled()) {
-      await _controller.runJavaScript(darkThemeScript());
+      // Isolated on purpose. Everything below runs in the same method, so an
+      // error thrown here would skip the ad filter entirely — a broken theme
+      // must not also turn the adverts back on.
+      try {
+        await _controller.runJavaScript(darkThemeScript());
+      } on Object catch (e) {
+        debugPrint('dark theme injection failed: $e');
+      }
     }
 
     // One DOM walk serves both: the filter is injected when either setting
