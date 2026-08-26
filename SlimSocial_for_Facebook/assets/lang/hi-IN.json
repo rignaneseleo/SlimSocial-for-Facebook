@@ -8,10 +8,13 @@
   "use_mbasic_desc": "यह पुराने डिवाइसों या धीमी कनेक्शन वाले उपयोगकर्ताओं के लिए अधिक उपयोगी होता है।",
   "recent_first": "हाल के पोस्ट पहले दिखाएं",
   "hide_ads": "कुछ विज्ञापनों को छुपाएं (प्रायोगिक)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "स्टाइल",
   "dark_theme": "डार्क थीम सक्षम करें",
   "fixed_bar": "फिक्स्ड टॉप बार",
   "hide_stories": "कहानियों को छुपाएं",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "पोस्ट में पाठ को लेखक की ओर मध्य स्थित करें",
   "add_space": "पोस्टों के बीच अंतर जोड़ें",
   "text_zoom": "टेक्स्ट का आकार",
@@ -72,5 +75,8 @@
   "source_code": "सोर्स कोड",
   "top": "सबसे ऊपर जाएं",
   "reset": "रीसेट करें",
-  "exit": "ऐप से बाहर निकलें"
+  "exit": "ऐप से बाहर निकलें",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
