@@ -8,10 +8,13 @@
   "use_mbasic_desc": "பழைய சாதனங்கள் அல்லது வேகம் குறைவான இணைய இணைப்பை சரிசெய்யும்",
   "recent_first": "புதிய பிளவுகளை முன்னோட்டுக் காட்டு",
   "hide_ads": "சில விளம்பரங்களை மறைக்கவும் (சோதனை)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "பாணி",
   "dark_theme": "கரை தீமையை செயல்படுத்தவும்",
   "fixed_bar": "நிலையான மேற்படி பட்டி",
   "hide_stories": "கதைகளை மறைத்துக் கொள்ளவும்",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "பிளவுகளின் மைய சேமிக்கவும்",
   "add_space": "பிளவுகளுக்கு இடைவெளி கொடுக்கவும்",
   "text_zoom": "எழுத்து அளவு",
@@ -72,5 +75,8 @@
   "source_code": "மூலக் குறியீடு",
   "top": "மேலே செல்லவும்",
   "reset": "மீட்டமை",
-  "exit": "செயலியிலிருந்து வெளியேறு"
+  "exit": "செயலியிலிருந்து வெளியேறு",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
