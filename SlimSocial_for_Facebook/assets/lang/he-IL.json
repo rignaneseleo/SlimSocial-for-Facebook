@@ -8,10 +8,13 @@
   "use_mbasic_desc": "זה עובד טוב יותר על מכשירים ישנים או חיבורים איטיים",
   "recent_first": "הצג פוסטים אחרונים ראשונים",
   "hide_ads": "הסתר פרסומות מסווגות (ניסיוני)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "סגנון",
   "dark_theme": "הפעל ערכת נושא כהה",
   "fixed_bar": "שורת תפריט עליונה קבועה",
   "hide_stories": "הסתר סיפורים",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "מרכז טקסט בפוסטים",
   "add_space": "הוספת מרווח בין פוסטים",
   "text_zoom": "גודל הטקסט",
@@ -72,5 +75,8 @@
   "source_code": "קוד מקור",
   "top": "גלילה לראש הדף",
   "reset": "איפוס",
-  "exit": "יציאה מהאפליקציה"
+  "exit": "יציאה מהאפליקציה",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
