@@ -8,10 +8,13 @@
   "use_mbasic_desc": "بر روی  دستگاه‌های قدیمی‌تر یا اتصالات اینترنت با سرعت کم‌تر بهتر کار می‌کند",
   "recent_first": "نمایش پست‌های اخیر اول",
   "hide_ads": "پنهان کردن تبلیغات (آزمایشی)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "سبک",
   "dark_theme": "فعال سازی تم تاریک",
   "fixed_bar": "نوار بالایی ثابت",
   "hide_stories": "پنهان کردن داستان‌ها",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "مرکز چین کردن متن پست‌ها",
   "add_space": "افزودن فاصله بین پست‌ها",
   "text_zoom": "اندازه متن",
@@ -72,5 +75,8 @@
   "source_code": "کد منبع",
   "top": "رفتن به بالای صفحه",
   "reset": "بازنشانی",
-  "exit": "خروج از برنامه"
+  "exit": "خروج از برنامه",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
