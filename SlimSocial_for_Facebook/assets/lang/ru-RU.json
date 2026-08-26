@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Она работает лучше на старых устройствах и при медленном интернет-соединении",
   "recent_first": "Показывать последние публикации в начале",
   "hide_ads": "Скрыть некоторые рекламные сообщения (экспериментальная функция)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "стиль",
   "dark_theme": "Включить темную тему",
   "fixed_bar": "Закрепить верхнюю панель",
   "hide_stories": "Скрыть истории",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Выравнивать текст в сообщениях по центру",
   "add_space": "Добавлять пространство между публикациями",
   "text_zoom": "Размер текста",
@@ -72,5 +75,8 @@
   "source_code": "Исходный код",
   "top": "Прокрутить наверх",
   "reset": "Сбросить",
-  "exit": "Выйти из приложения"
+  "exit": "Выйти из приложения",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
