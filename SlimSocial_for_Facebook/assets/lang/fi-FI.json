@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Toimii paremmin vanhemmilla laitteilla tai hitaammilla yhteyksillä",
   "recent_first": "Näytä uusimmat viestit ensin",
   "hide_ads": "Piilota joitakin mainoksia (kokeellinen)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "tyyli",
   "dark_theme": "Käytä tummaa teemaa",
   "fixed_bar": "Säädä yläpalkki kiinni",
   "hide_stories": "Piilota tarinat",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Keskitä tekstiä viesteissä",
   "add_space": "Lisää tilaa viestien välille",
   "text_zoom": "Tekstin koko",
@@ -72,5 +75,8 @@
   "source_code": "Lähdekoodi",
   "top": "Vieritä ylös",
   "reset": "Palauta",
-  "exit": "Sulje sovellus"
+  "exit": "Sulje sovellus",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
