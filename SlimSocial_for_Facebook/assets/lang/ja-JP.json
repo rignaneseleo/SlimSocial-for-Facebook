@@ -8,10 +8,13 @@
   "use_mbasic_desc": "古いデバイスや遅い接続でも動作が改善されます。",
   "recent_first": "最新の投稿を先に表示する",
   "hide_ads": "一部の広告を非表示にする（実験的機能）",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "スタイル",
   "dark_theme": "ダークテーマを有効にする",
   "fixed_bar": "固定トップバー",
   "hide_stories": "ストーリーを非表示にする",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "投稿のテキストを中央に揃える",
   "add_space": "投稿間にスペースを追加する",
   "text_zoom": "文字サイズ",
@@ -72,5 +75,8 @@
   "source_code": "ソースコード",
   "top": "一番上へスクロール",
   "reset": "リセット",
-  "exit": "アプリを終了"
+  "exit": "アプリを終了",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
