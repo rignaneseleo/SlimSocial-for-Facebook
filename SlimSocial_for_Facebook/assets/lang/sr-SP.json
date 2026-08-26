@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Bolje radi na starijim uređajima ili sporijoj konekciji",
   "recent_first": "Prikaži nedavne postove prvi",
   "hide_ads": "Sakrij neke reklame (eksperimentalno)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stil",
   "dark_theme": "Omogući tamni stil",
   "fixed_bar": "Fiksirana traka na vrhu",
   "hide_stories": "Sakrij priče",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centriraj tekst na postovima",
   "add_space": "Dodaj razmak između postova",
   "text_zoom": "Veličina teksta",
@@ -72,5 +75,8 @@
   "source_code": "Izvorni kod",
   "top": "Idi na vrh",
   "reset": "Resetuj",
-  "exit": "Izađi iz aplikacije"
+  "exit": "Izađi iz aplikacije",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
