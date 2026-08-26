@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Funcționează mai bine pe dispozitivele mai vechi sau pentru conexiuni mai lente",
   "recent_first": "Afișați cele mai recente postări prima",
   "hide_ads": "Ascundeți unele reclame (experimental)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "Stil",
   "dark_theme": "Activați tema întunecată",
   "fixed_bar": "Bara de sus fixă",
   "hide_stories": "Ascundeți poveștile",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centrați textul în postări",
   "add_space": "Adăugați spațiu între postări",
   "text_zoom": "Dimensiunea textului",
@@ -72,5 +75,8 @@
   "source_code": "Cod sursă",
   "top": "Derulează sus",
   "reset": "Resetează",
-  "exit": "Ieși din aplicație"
+  "exit": "Ieși din aplicație",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
