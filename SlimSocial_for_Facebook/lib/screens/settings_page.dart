@@ -104,6 +104,22 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool(SpKeys.hideAds) ?? true,
                 leading: const Icon(Icons.hide_source),
                 title: Text('hide_ads'.tr()),
+                description: Text(
+                  'ads_blocked_count'
+                      .tr(args: ['${PrefController.getAdsBlockedTotal()}']),
+                ),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(SpKeys.hidePeopleYouMayKnow, value);
+                  });
+                  ref.invalidate(fbWebViewProvider);
+                },
+                initialValue:
+                    sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false,
+                leading: const Icon(Icons.person_off_outlined),
+                title: Text('hide_people_you_may_know'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -240,6 +256,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: CustomCss.hideStoriesCss.isEnabled(),
                 title: Text(CustomCss.hideStoriesCss.key.tr()),
                 leading: const Icon(Icons.hide_image),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(CustomCss.hideReelsCss.key, value);
+                  });
+                  ref.invalidate(fbWebViewProvider);
+                },
+                initialValue: CustomCss.hideReelsCss.isEnabled(),
+                title: Text(CustomCss.hideReelsCss.key.tr()),
+                leading: const Icon(Icons.video_library_outlined),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) {

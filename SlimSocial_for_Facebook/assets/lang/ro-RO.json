@@ -72,5 +72,11 @@
   "source_code": "Cod sursă",
   "top": "Derulează sus",
   "reset": "Resetează",
-  "exit": "Ieși din aplicație"
+  "exit": "Ieși din aplicație",
+  "hide_people_you_may_know": "Ascundeți „Persoane pe care le-ați putea cunoaște”",
+  "hide_reels": "Ascundeți reels",
+  "hide_messenger_sidebar": "Ascundeți bara laterală Messenger",
+  "error_page_offline": "Facebook nu a putut fi încărcat. Verificați conexiunea și încercați din nou.",
+  "retry": "Reîncercați",
+  "ads_blocked_count": "{} ascunse până acum"
 }

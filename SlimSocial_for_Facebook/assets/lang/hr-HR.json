@@ -72,5 +72,11 @@
   "source_code": "Izvorni kod",
   "top": "Idi na vrh",
   "reset": "Resetiraj",
-  "exit": "Izađi iz aplikacije"
+  "exit": "Izađi iz aplikacije",
+  "hide_people_you_may_know": "Sakrij „Ljudi koje možda poznaješ”",
+  "hide_reels": "Sakrij reels",
+  "hide_messenger_sidebar": "Sakrij bočnu traku Messengera",
+  "error_page_offline": "Facebook se nije mogao učitati. Provjeri vezu i pokušaj ponovno.",
+  "retry": "Pokušaj ponovno",
+  "ads_blocked_count": "Dosad skriveno: {}"
 }

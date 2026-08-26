@@ -43,20 +43,34 @@ void main() {
     });
   });
 
-  group('kFirefoxUserAgent', () {
-    test('is recent enough that Facebook does not flag it as outdated', () {
-      final match =
-          RegExp(r'Firefox/(\d+)\.0$').firstMatch(kFirefoxUserAgent);
-
-      expect(match, isNotNull, reason: 'unexpected user agent shape');
-      expect(int.parse(match!.group(1)!), greaterThanOrEqualTo(140));
+  group('kMobileUserAgent', () {
+    test('asks Facebook for the mobile layout', () {
+      // This is the whole point of the constant: every selector this app
+      // injects is written against the touch layout, and Facebook picks the
+      // layout from the user agent.
+      expect(kMobileUserAgent, contains('Android'));
+      expect(kMobileUserAgent, contains('Mobile'));
+      expect(kMobileUserAgent, contains('Firefox/'));
     });
 
-    test('advertises the same version in rv: and Firefox/', () {
-      final rv = RegExp(r'rv:(\d+)\.0').firstMatch(kFirefoxUserAgent);
-      final firefox = RegExp(r'Firefox/(\d+)\.0').firstMatch(kFirefoxUserAgent);
+    test('is pinned to the exact string known to serve the touch layout', () {
+      // Do not "modernise" this. The version numbers are load-bearing: this
+      // precise agent is what Facebook serves the mobile feed to across the
+      // regions where a desktop agent gets a broken layout. A newer Firefox
+      // is not automatically safer — it is untested against that behaviour.
+      // If Facebook ever rejects it as outdated (Task 10 Step 1 checks), bump
+      // `Gecko/` and `Firefox/` together and re-run the recon, in one commit.
+      expect(
+        kMobileUserAgent,
+        'Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
+      );
+    });
+  });
 
-      expect(rv!.group(1), firefox!.group(1));
+  group('kDesktopUserAgent', () {
+    test('is a desktop agent, which is what Messenger needs', () {
+      expect(kDesktopUserAgent, contains('Macintosh'));
+      expect(kDesktopUserAgent, isNot(contains('Mobile')));
     });
   });
 }

@@ -38,7 +38,7 @@ void main() {
 
   group('getUserAgent', () {
     test('defaults to the bundled Firefox agent', () {
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
     });
 
     test('uses the light agent together with mbasic', () async {
@@ -59,7 +59,7 @@ void main() {
     test('ignores a custom agent that was saved but left disabled', () async {
       await withPrefs({SpKeys.customUserAgent: 'my-agent'});
 
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
     });
 
     test('ignores a blank custom agent', () async {
@@ -68,7 +68,67 @@ void main() {
         SpKeys.enabled(SpKeys.customUserAgent): true,
       });
 
-      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
+    });
+  });
+
+  group('getUserAgent roles', () {
+    test('defaults to the feed agent', () {
+      // The redundant-looking explicit role is the assertion: it pins the
+      // default to `feed`, so a change of default fails here rather than
+      // silently switching which layout Facebook serves.
+      // ignore: avoid_redundant_argument_values
+      final explicit = PrefController.getUserAgent(role: UserAgentRole.feed);
+
+      expect(PrefController.getUserAgent(), explicit);
+    });
+
+    test('gives the feed the mobile agent', () {
+      // The role is passed explicitly even though it is the default, because
+      // this test is about the feed role specifically, not about the default.
+      // ignore: avoid_redundant_argument_values
+      final feed = PrefController.getUserAgent(role: UserAgentRole.feed);
+
+      expect(feed, kMobileUserAgent);
+    });
+
+    test('gives Messenger the desktop agent', () {
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kDesktopUserAgent,
+      );
+    });
+
+    test('basic mode overrides every role', () async {
+      // This file seeds preferences with withPrefs (which calls
+      // SharedPreferences.setMockInitialValues and is reset by setUp), never
+      // bare sp.setBool — mixing the two leaks state between tests.
+      await withPrefs({SpKeys.useMbasic: true});
+
+      for (final role in UserAgentRole.values) {
+        expect(
+          PrefController.getUserAgent(role: role),
+          kOperaMiniUserAgent,
+          reason: 'role $role should honour basic mode',
+        );
+      }
+    });
+
+    test('a custom agent overrides every role', () async {
+      await withPrefs({
+        SpKeys.customUserAgent: 'my-agent',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      for (final role in UserAgentRole.values) {
+        expect(PrefController.getUserAgent(role: role), 'my-agent');
+      }
+    });
+
+    test('every role resolves to a non-empty agent', () {
+      for (final role in UserAgentRole.values) {
+        expect(PrefController.getUserAgent(role: role), isNotEmpty);
+      }
     });
   });
 
@@ -107,6 +167,40 @@ void main() {
       });
 
       expect(PrefController.getUserCustomJs(), 'foo();');
+    });
+  });
+
+  group('ads blocked total', () {
+    test('starts at zero', () {
+      expect(PrefController.getAdsBlockedTotal(), 0);
+    });
+
+    test('accumulates across calls, because each is one filter pass', () async {
+      await PrefController.addAdsBlocked(3);
+      await PrefController.addAdsBlocked(4);
+
+      expect(PrefController.getAdsBlockedTotal(), 7);
+    });
+
+    test('ignores counts that would walk the total backwards', () async {
+      // The number comes from the page, so it is not trusted.
+      await PrefController.addAdsBlocked(5);
+      await PrefController.addAdsBlocked(0);
+      await PrefController.addAdsBlocked(-10);
+
+      expect(PrefController.getAdsBlockedTotal(), 5);
+    });
+
+    test('returns the running total', () async {
+      expect(await PrefController.addAdsBlocked(2), 2);
+      expect(await PrefController.addAdsBlocked(3), 5);
+    });
+
+    test('survives a value already on disk', () async {
+      await withPrefs({SpKeys.adsBlockedTotal: 100});
+
+      expect(PrefController.getAdsBlockedTotal(), 100);
+      expect(await PrefController.addAdsBlocked(1), 101);
     });
   });
 

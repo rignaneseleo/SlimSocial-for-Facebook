@@ -16,7 +16,9 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
@@ -38,6 +40,43 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool isLoading = false;
   bool isScontentUrl = false;
 
+  /// Set when the main frame fails to load, so the app can show its own error
+  /// state instead of the browser's.
+  ///
+  /// Without this the user gets Chrome's "webpage not available" page on a
+  /// near-black background, which reads as the app being broken rather than the
+  /// network being briefly unavailable.
+  bool _loadFailed = false;
+
+  /// Whether the navigation currently in flight already reported an error.
+  ///
+  /// Android delivers `onPageFinished` for a failed main-frame load too: the
+  /// error page commits and finishes like any other document. Without this the
+  /// error page's own finish would look like a success and clear the retry
+  /// counter, so the ceiling below could never be reached.
+  bool _navigationFailed = false;
+
+  /// Automatic retries used since the last successful load.
+  ///
+  /// Bounded so a genuinely unreachable site does not become a reload loop.
+  int _loadRetries = 0;
+
+  /// The automatic retry waiting to fire, if any.
+  ///
+  /// Held so a retry that has been superseded — by a manual refresh, or by the
+  /// page coming back on its own — can be cancelled: reloading a healthy page
+  /// throws the user back to the top of the feed.
+  Timer? _retryTimer;
+
+  /// How many times to retry before showing the error screen.
+  ///
+  /// Measured on a real device: opening the app as the phone wakes produces
+  /// `ERR_INTERNET_DISCONNECTED` first — no network attached at all — and only
+  /// then `ERR_NAME_NOT_RESOLVED` once DNS is reachable but not yet answering.
+  /// A single quick retry lands in the middle of that and still fails, so the
+  /// delay grows with each attempt.
+  static const int _maxLoadRetries = 3;
+
   @override
   void initState() {
     super.initState();
@@ -53,22 +92,46 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
       ..setUserAgent(PrefController.getUserAgent())
+      ..addJavaScriptChannel(
+        kAdCountChannelName,
+        onMessageReceived: onAdCountMessage,
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
+          onWebResourceError: onWebResourceError,
           onPageStarted: (String url) async {
+            _navigationFailed = false;
             setState(() {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
+              //a new navigation started, so any previous failure is stale
+              _loadFailed = false;
             });
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+
+            //the dark theme's text colours ship in that css, but the surfaces
+            //they sit on are repainted by the script below. Running it only at
+            //page finish leaves pale text on still-white cards for as long as
+            //the rest of the page takes to arrive.
+            await injectDarkTheme();
 
             //re-read the zoom, so changing it in the settings takes effect on
             //the next load instead of needing the app restarted
             await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
+            //a page that finished loading is not a failed one, even if a
+            //subresource errored on the way
+            if (!_navigationFailed && (_loadFailed || _loadRetries > 0)) {
+              _retryTimer?.cancel();
+              setState(() {
+                _loadFailed = false;
+                _loadRetries = 0;
+              });
+            }
+            _navigationFailed = false;
             await runJs();
             if (kDebugMode) debugPrint(url);
           },
@@ -82,6 +145,14 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..loadRequest(Uri.parse(homepage));
 
     if (Platform.isAndroid) {
+      //debug builds only: lets `chrome://inspect` and the DevTools protocol
+      //attach to the webview. That is the only way to read the markup Facebook
+      //actually serves, which is what the injected selectors have to match.
+      //Never enabled in release.
+      if (kDebugMode) {
+        AndroidWebViewController.enableDebugging(true);
+      }
+
       final androidController = controller.platform as AndroidWebViewController;
       _androidController = androidController;
 
@@ -157,7 +228,81 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void dispose() {
+    _retryTimer?.cancel();
     super.dispose();
+  }
+
+  /// Records how many feed items the injected filter hid.
+  ///
+  /// The payload comes from the page, so it is parsed defensively and anything
+  /// unexpected is dropped rather than trusted into the stored total.
+  void onAdCountMessage(JavaScriptMessage message) {
+    final count = int.tryParse(message.message.trim());
+    if (count == null || count <= 0) {
+      debugPrint("ignored ad count: ${message.message}");
+      return;
+    }
+    unawaited(PrefController.addAdsBlocked(count));
+  }
+
+  /// Handles a failed page load.
+  ///
+  /// Only main-frame failures matter: Facebook drops individual images and
+  /// beacons all the time, and treating those as a page failure would replace a
+  /// perfectly good feed with an error screen.
+  ///
+  /// The first failure is retried automatically once. The common case is a
+  /// transient DNS failure when the app is opened as the device wakes and the
+  /// network has not settled — the load fails, and without a retry the user is
+  /// left looking at an error until they think to reload themselves.
+  void onWebResourceError(WebResourceError error) {
+    if (error.isForMainFrame == false) return;
+
+    debugPrint(
+      "load failed: ${error.errorType} ${error.errorCode} ${error.description}",
+    );
+
+    _navigationFailed = true;
+
+    if (_loadRetries < _maxLoadRetries) {
+      _loadRetries++;
+      //2s, then 4s, then 6s — long enough in total to outlast a phone
+      //reattaching to the network, short enough not to feel stuck
+      final delay = Duration(seconds: 2 * _loadRetries);
+      _retryTimer?.cancel();
+      _retryTimer = Timer(delay, () {
+        if (!mounted) return;
+        unawaited(reissueLoad(error.url));
+      });
+      return;
+    }
+
+    if (!mounted) return;
+    setState(() => _loadFailed = true);
+  }
+
+  /// Asks the webview for the failed page again.
+  ///
+  /// A plain `reload()` is not enough after a failed *first* load: iOS has no
+  /// committed navigation to reload at that point, so the call does nothing and
+  /// fires no callbacks at all — the retry would silently never happen. A null
+  /// current url is exactly that state.
+  Future<void> reissueLoad(String? url) async {
+    if (await _controller.currentUrl() != null) {
+      await _controller.reload();
+      return;
+    }
+    await _controller
+        .loadRequest(Uri.parse(url ?? PrefController.getHomePage()));
+  }
+
+  Future<void> retryLoad() async {
+    _retryTimer?.cancel();
+    setState(() {
+      _loadFailed = false;
+      _loadRetries = 0;
+    });
+    await _controller.loadRequest(Uri.parse(PrefController.getHomePage()));
   }
 
   Future<NavigationDecision> onNavigationRequest(
@@ -404,6 +549,39 @@ class _HomePageState extends ConsumerState<HomePage> {
             WebViewWidget(
               controller: _controller,
             ),
+            //covers the webview so the browser's own error page, sitting on a
+            //near-black background, is never what the user sees
+            if (_loadFailed)
+              ColoredBox(
+                color: Theme.of(context).colorScheme.surface,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.wifi_off_outlined,
+                          size: 48,
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          "error_page_offline".tr(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 24),
+                        FilledButton.icon(
+                          onPressed: retryLoad,
+                          icon: const Icon(Icons.refresh),
+                          label: Text("retry".tr()),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             if (isLoading)
               const LinearProgressIndicator(
                 valueColor:
@@ -417,33 +595,96 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> injectCss() async {
-    final cssList =
-        CustomCss.buildFacebookCss(PrefController.getUserCustomCss());
+    final accent = cssColorFromColor(Theme.of(context).colorScheme.primary);
 
-    //create the function that will be called later
-    await _controller.runJavaScript(CustomJs.removeAdsFunc);
+    final sheets = <String, String>{
+      'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
+      'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
+      'slim-app-upsell': CustomCss.hideAppUpsellCss.code,
+      'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
+      'slim-user-sheet':
+          CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
+    };
 
-    //it's important to remove the \n
-    final code = """
-                    document.addEventListener("DOMContentLoaded", function() {
-                        ${CustomJs.injectCssFunc(CustomCss.removeMessengerDownloadCss.code)}
-                        ${CustomJs.injectCssFunc(CustomCss.removeBrowserNotSupportedCss.code)}
-                        ${CustomJs.injectCssFunc(cssList)}
-                         ${(sp.getBool(SpKeys.hideAds) ?? true) ? "removeAds();" : ""}
-                    });"""
-        .replaceAll("\n", " ");
-    await _controller.runJavaScript(code);
+    final body = sheets.entries
+        .map(
+          (e) => CustomJs.injectCssFunc(
+            resolveCssPlaceholders(e.value, accent: accent),
+            id: e.key,
+          ),
+        )
+        .join('\n');
+
+    await _controller.runJavaScript(CustomJs.whenDomReady(body));
+  }
+
+  /// The dark theme's surface colours cannot be shipped as CSS: Facebook
+  /// generates the class that carries each surface per page render, so the
+  /// palette has to be read back out of the page. Called from both the
+  /// DOM-ready and the page-finished path — the script is idempotent, and a
+  /// second run only picks up the stylesheets that arrived in between.
+  Future<void> injectDarkTheme() async {
+    if (!CustomCss.darkThemeCss.isEnabled()) return;
+
+    await runIsolatedJs(
+      'dark theme',
+      () => _controller.runJavaScript(CustomJs.whenDomReady(darkThemeScript())),
+    );
+  }
+
+  /// Runs one injection step so that its failure cannot reach the others.
+  ///
+  /// iOS hands a page exception back through `runJavaScript`, so a single
+  /// throwing step left unguarded aborts every step queued behind it: the ad
+  /// observer never installs, and the user's own script never runs.
+  Future<void> runIsolatedJs(
+    String step,
+    Future<void> Function() inject,
+  ) async {
+    try {
+      await inject();
+    } on Object catch (e) {
+      debugPrint('$step injection failed: $e');
+    }
   }
 
   Future<void> runJs() async {
-    if (sp.getBool(SpKeys.hideAds) ?? true) {
-      //setup the observer to run on page updates
-      await _controller.runJavaScript(CustomJs.removeAdsObserver);
+    final hideAds = sp.getBool(SpKeys.hideAds) ?? true;
+    final hidePymk = sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false;
+
+    // Runs after injectCss so the generated sheet lands last and wins the ties.
+    await injectDarkTheme();
+
+    // One DOM walk serves both: the filter is injected when either setting
+    // wants it, and each half is switched on independently inside the script.
+    if (hideAds || hidePymk) {
+      // Two steps, not one: the filter script runs a first pass on the way in,
+      // and a page exception thrown by that pass would take the observer down
+      // with it — leaving the ads to come back on the first scroll. The observer
+      // checks for the filter itself before installing, so it is safe alone.
+      await runIsolatedJs(
+        'ad filter',
+        () => _controller.runJavaScript(
+          adFilterScript(
+            placeholderText: 'ad_removed'.tr(),
+            extraLabels: hideAds ? ['sponsored_keyword_fb'.tr()] : const [],
+            hideSponsored: hideAds,
+            hidePeopleYouMayKnow: hidePymk,
+          ),
+        ),
+      );
+      await runIsolatedJs(
+        'ad observer',
+        () => _controller.runJavaScript(CustomJs.removeAdsObserver),
+      );
     }
 
     final userCustomJs = PrefController.getUserCustomJs();
-    if (userCustomJs?.isNotEmpty ?? false) {
-      await _controller.runJavaScript(userCustomJs!);
+    if (userCustomJs != null) {
+      await runIsolatedJs(
+        'user script',
+        () => _controller.runJavaScript(userCustomJs),
+      );
     }
   }
 

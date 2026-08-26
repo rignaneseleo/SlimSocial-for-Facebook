@@ -72,5 +72,11 @@
   "source_code": "소스 코드",
   "top": "맨 위로 스크롤",
   "reset": "초기화",
-  "exit": "앱 종료"
+  "exit": "앱 종료",
+  "hide_people_you_may_know": "\"알 수도 있는 사람\" 가리기",
+  "hide_reels": "릴스 가리기",
+  "hide_messenger_sidebar": "메신저 사이드바 가리기",
+  "error_page_offline": "Facebook을 불러오지 못했습니다. 연결을 확인한 후 다시 시도하세요.",
+  "retry": "다시 시도",
+  "ads_blocked_count": "지금까지 {}개 숨김"
 }

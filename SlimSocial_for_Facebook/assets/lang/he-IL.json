@@ -72,5 +72,11 @@
   "source_code": "קוד מקור",
   "top": "גלילה לראש הדף",
   "reset": "איפוס",
-  "exit": "יציאה מהאפליקציה"
+  "exit": "יציאה מהאפליקציה",
+  "hide_people_you_may_know": "הסתר \"אנשים שאולי אתה מכיר\"",
+  "hide_reels": "הסתר Reels",
+  "hide_messenger_sidebar": "הסתר את סרגל הצד של מסרים",
+  "error_page_offline": "לא ניתן היה לטעון את פייסבוק. בדוק את החיבור ונסה שוב.",
+  "retry": "נסה שוב",
+  "ads_blocked_count": "{} הוסתרו עד כה"
 }

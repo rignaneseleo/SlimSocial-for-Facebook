@@ -1,10 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+
+/// Formats [color] as a CSS six-digit hex string, discarding alpha.
+String cssColorFromColor(Color color) {
+  final rgb = color.toARGB32() & 0xFFFFFF;
+  return '#${rgb.toRadixString(16).padLeft(6, '0')}';
+}
+
+/// Replaces the placeholders in [css] with live theme values.
+///
+/// Stylesheets are authored with `{accent}` rather than a literal colour so one
+/// source of truth drives both the Flutter chrome and the injected CSS.
+String resolveCssPlaceholders(String css, {required String accent}) {
+  return css.replaceAll('{accent}', accent);
+}
 
 class CustomCss {
   static List<MyCss> cssList = [
     centerTextPostsCss,
     addSpaceBetweenPostsCss,
     hideStoriesCss,
+    hideReelsCss,
     fixedBarCss,
     //hideAdsAndPeopleYouMayKnowCss,
     darkThemeCss,
@@ -33,9 +49,27 @@ class CustomCss {
     ].join(' ');
   }
 
+  /// Centres the text of a feed post.
+  ///
+  /// `._5rgt._5msi` was the message body on the old mobile layout and matches
+  /// nothing on the current one — measured live, zero hits — so this toggle had
+  /// silently stopped doing anything.
+  ///
+  /// The replacement centres the post's `.native-text` wrappers rather than the
+  /// post itself. Centring the post shifted every video 197px to the right —
+  /// exactly half its 393px width — because `text-align` on an ancestor moves
+  /// the player's line box. Measured, not guessed: `left` went from 0 to 197 and
+  /// back again.
+  ///
+  /// `.native-text` also wraps bylines, reaction counts and "See translation",
+  /// so those centre too. The layout gives the message body no selector of its
+  /// own — it is a `span.f1` inside a `.native-text`, and both classes are
+  /// shared with that chrome — so this is as narrow as CSS can get here, and it
+  /// leaves media alone, which is what actually matters.
   static MyCss centerTextPostsCss = MyCss(
     key: 'center_text',
-    code: '._5rgt._5msi { text-align: center;}',
+    code: '._5rgt._5msi, div[data-tracking-duration-id] .native-text '
+        '{ text-align: center !important; }',
     description: 'Center text posts',
   );
 
@@ -47,16 +81,90 @@ class CustomCss {
     defaultEnabled: true,
   );
 
+  /// Puts a gap between feed posts.
+  ///
+  /// `article` matched nothing — measured live under both the desktop and the
+  /// mobile agent — so this toggle did nothing at all. Posts on the current
+  /// layout are the `data-tracking-duration-id` children of the feed scroller,
+  /// of which there were 37 on a loaded feed.
+  ///
+  /// Scoped to direct children of the scroller so a post nested inside another
+  /// container cannot pick up a second margin.
   static MyCss addSpaceBetweenPostsCss = MyCss(
     key: 'add_space',
     description: 'Add space between posts',
-    code: 'article { margin-top: 50px !important; }',
+    code: 'article, div[data-type="vscroller"] > div[data-tracking-duration-id] '
+        '{ margin-top: 50px !important; }',
   );
 
+  /// Hides the stories tray.
+  ///
+  /// The live layout renders the feed as a `vscroller` whose direct children
+  /// are the trays and posts. Exactly one of those children carries
+  /// `data-srat`, and it is the stories tray — verified against the real DOM,
+  /// where the selector matched once and the match contained the create-story
+  /// tile. That attribute is language-independent, which the `aria-label`
+  /// fallbacks are not, so it leads.
+  ///
+  /// `#MStoriesTray` is the legacy id. The recon found zero of them, so it is
+  /// kept only for anyone still served that older layout.
   static MyCss hideStoriesCss = MyCss(
     key: 'hide_stories',
     description: 'Hide stories',
-    code: '#MStoriesTray { display: none !important; }',
+    // The `:has()` selectors are a rule of their own on purpose: an unsupported
+    // selector invalidates the entire selector list it sits in, so keeping them
+    // next to `#MStoriesTray` would drop that fallback on any WebView older
+    // than Chromium 105 — precisely the devices it is kept for.
+    //
+    // The :not() is the same guard the reels rule carries, and for the same
+    // reason: feed posts are direct children of this vscroller, so without it
+    // one stray aria-label — "Share to your story", or the "story" inside
+    // "History" — hides a real post.
+    code: '#MStoriesTray, '
+        'div[data-type="vscroller"] > div[data-srat] '
+        '{ display: none !important; } '
+        // The `:not(...):has(...)` chain cannot be split across adjacent
+        // strings: a line break between the two would need whitespace, and
+        // whitespace there is a descendant combinator, which changes what the
+        // rule matches.
+        // ignore: lines_longer_than_80_chars
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label^="Create story"]), '
+        // Same chain, unsplittable for the same reason.
+        // ignore: lines_longer_than_80_chars
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="story" i]) '
+        '{ display: none !important; }',
+  );
+
+  /// Hides reels: the reels carousel, and any feed post that is a reel.
+  ///
+  /// Two things to know here.
+  ///
+  /// The obvious selector — `a[href*="/reel/"]` — does **not** work. This
+  /// layout barely uses hrefs at all; navigation runs through `data-action-id`,
+  /// and the recon found zero `/reel/` links while reels were plainly on
+  /// screen. An earlier draft of this rule was written that way and would have
+  /// hidden nothing.
+  ///
+  /// The reel *post* rule must test `[data-is-reels="true"]`, not merely the
+  /// presence of the attribute: every `data-is-reels` node in the recon carried
+  /// the value `"false"`, because ordinary video posts have it too. Matching on
+  /// presence would hide **every video in the feed**.
+  ///
+  /// Honest limitation: no reel posts were in the feed during the recon, so the
+  /// `="true"` rule is reasoned from the attribute's meaning rather than
+  /// observed matching. The carousel rule *was* observed. Task 10 verifies both.
+  static MyCss hideReelsCss = MyCss(
+    key: 'hide_reels',
+    description: 'Hide reels',
+    // The :not() is load-bearing: feed posts are direct children of the same
+    // vscroller as the carousel, so without it one stray aria-label would hide
+    // real posts. It cannot be split across adjacent strings — a line break
+    // between `:not(...)` and `:has(...)` would need whitespace, and whitespace
+    // there is a descendant combinator, which changes what the rule matches.
+    // ignore: lines_longer_than_80_chars
+    code: 'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="reel" i]), '
+        'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
+        '{ display: none !important; }',
   );
 
   static MyCss fixedBarCss = MyCss(
@@ -74,10 +182,64 @@ class CustomCss {
         '._s15 { display: none; } input { -webkit-user-select: text; } [data-sigil*=m-promo-jewel-header] { display: none; }',
   );
 
+  /// Styles the stub left behind where a sponsored post was collapsed.
+  ///
+  /// Deliberately not in [cssList]: that list drives the user-facing settings
+  /// toggles, and this is internal to ad hiding.
+  static MyCss adPlaceholderCss = MyCss(
+    key: 'ad_placeholder_style',
+    description: 'Collapsed sponsored-post placeholder',
+    defaultEnabled: true,
+    code: '.slim-ad-placeholder { display: flex; align-items: center; '
+        'justify-content: center; height: 60px; font-size: 13px; '
+        'letter-spacing: 0.5px; opacity: 0.55; }',
+  );
+
   static MyCss removeBrowserNotSupportedCss = MyCss(
     key: 'removeBrowserNotSupported',
     description: 'Remove browser not supported notice',
     code: '#header-notices { display: none; }',
+  );
+
+  /// Hides the "Open app" bar Facebook pins to the bottom of the feed.
+  ///
+  /// It is an install upsell for the native app, which is the one thing a user
+  /// of this app has already decided against, and it covers the bottom of every
+  /// page until dismissed.
+  ///
+  /// Matched by class rather than by its label, which is localised. Verified
+  /// against the live layout: exactly one `.fixed-container.bottom` exists and
+  /// it is the upsell — the only other fixed container is an empty
+  /// `above-bottom` spacer, and the page carries no `role="navigation"` that
+  /// this could catch by accident.
+  ///
+  /// Deliberately not in [cssList]: like the other chrome removals above, it is
+  /// structural rather than a preference.
+  /// The `:not(:has(...))` guards are the important part.
+  ///
+  /// Facebook docks the comment composer to the bottom of a post using this
+  /// same container, so hiding every `.fixed-container.bottom` also removed the
+  /// box you type a comment into. Checking the feed alone was not enough to
+  /// catch that — the composer only exists once a post is open.
+  ///
+  /// Excluding any container that holds a form control means a composer can
+  /// never be hidden, whatever Facebook renames the classes to, and without
+  /// depending on a label that changes with the interface language.
+  ///
+  /// The other upsell — the blue "Open app" pill in the header of the Reels and
+  /// video pages — is deliberately not covered. The only thing that told it
+  /// apart from the rest of that unsuffixed `.fixed-container` was a `bg-sN`
+  /// class, and those numbers are assigned per page render: the same number is
+  /// a brand blue on one load and a divider grey on the next, so the rule hid
+  /// unrelated chrome far more often than it hid the pill. See
+  /// lib/utils/dark_theme.dart for the measurements.
+  static MyCss hideAppUpsellCss = MyCss(
+    key: 'hide_app_upsell',
+    description: 'Hide the install-the-app bar',
+    defaultEnabled: true,
+    code: 'div.fixed-container.bottom'
+        ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
+        ' { display: none !important; }',
   );
 
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
@@ -90,8 +252,12 @@ class CustomCss {
   static MyCss fabBtnCss = MyCss(
     key: 'fabBtn',
     description: 'Floating action button',
-    code:
-        '.my_fab_btn { position: fixed; z-index: 6; bottom: 10px; right: 10px; background-color: #3B5998; width: 60px; height: 60px; border-radius: 100%; background: #3B5998; border: none; outline: none; color: #FFF; font-size: 23px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); transition: .3s; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
+    code: '.my_fab_btn { position: fixed; z-index: 6; bottom: 10px; '
+        'right: 10px; width: 60px; height: 60px; border-radius: 100%; '
+        'background: {accent}; border: none; outline: none; color: #FFF; '
+        'font-size: 23px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), '
+        '0 3px 6px rgba(0, 0, 0, 0.23); transition: .3s; '
+        '-webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
   );
 
   static MyCss adaptMessengerPageCss = MyCss(
@@ -241,6 +407,65 @@ a.x1i10hfl.x1qjc9v5.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x2
     key: 'dark_theme',
     description: 'dark theme messenger',
     code: """
+/* ---------------------------------------------------------------
+Rules for the layout Facebook actually serves today.
+
+Everything after this block targets the old m.facebook.com markup and
+matches nothing now — it is kept only for anyone still served that. Before
+these rules existed, the one legacy selector that DID still match was
+`body`, so the page went dark while Facebook's own dark text stayed dark:
+the setting made the feed unreadable rather than dark.
+
+The layout paints surfaces from a `::before` pseudo-element, not from
+background-color on the element, which is why every earlier attempt to
+override backgrounds did nothing and why computed styles read transparent.
+Those surfaces are handled by darkThemeScript(), which reads the colours out
+of the page because the class that carries them is renumbered per render.
+What is left here is the page underneath them and the text on top — the two
+parts whose selectors are stable.
+--------------------------------------------------------------- */
+/* Surfaces are NOT here. The bg-sN class that paints a surface is generated
+   per page render, so the same number is a card on one load and a brand blue
+   on the next — a hardcoded map both leaks and repaints things it should not.
+   darkThemeScript() reads the real colours out of the page's own stylesheet
+   instead; see lib/utils/dark_theme.dart for the measurements. */
+html, body { background-color: #18191a !important; }
+
+/* Text is a different problem from surfaces and needs a different key.
+
+   Facebook does not put text colour in a class at all — `.f1`, `.f4` and the
+   rest are font-size classes, and the whole served stylesheet declares `color`
+   on just 22 selectors, none of them the feed's. The colour arrives as an
+   inline style on the `.native-text` wrapper, e.g. `style="color:#65686c;"`.
+
+   Inline wins over an author rule, but NOT over an author `!important`, so
+   these still take effect.
+
+   The catch-all comes first and is the safety net: anything inside a text
+   wrapper is legible even if Facebook introduces a token we have never seen.
+   The rules after it restore meaning to the tokens we do know — matching on
+   `color:` specifically, because a bare hex would also match a
+   `background-color` declaration in the same attribute and repaint the text
+   to match its own background. A token that changes value simply falls back to
+   the catch-all and reads as primary text: duller than intended, never
+   invisible. */
+.native-text, .native-text * { color: #e4e6eb !important; }
+
+[style*="color:#65686c"], [style*="color:#65686c"] *,
+[style*="color:#65676b"], [style*="color:#65676b"] *,
+[style*="color:#757575"], [style*="color:#757575"] *,
+[style*="color:#84878b"], [style*="color:#84878b"] *,
+[style*="color:#8a8d91"], [style*="color:#8a8d91"] *
+{ color: #b0b3b8 !important; }
+
+[style*="color:#1877f2"], [style*="color:#1877f2"] *,
+[style*="color:#0866ff"], [style*="color:#0866ff"] *,
+[style*="color:#0064d1"], [style*="color:#0064d1"] *
+{ color: #4599ff !important; }
+
+[style*="color:#45bd62"] { color: #45bd62 !important; }
+[style*="color:#ffffff"], [style*="color:white"] { color: #ffffff !important; }
+
 /* ===========================
 Credits: Bean Verified Bean Terified
 https://userstyles.org/styles/160729/violet-nebula
@@ -312,12 +537,13 @@ td .inputtext {
     border-radius: 0px !important;
 }
 
-* {
-    border-color: transparent !important;
-    font-family: Arial !important;
-    color: #FFFFFF !important;
-    background-color: transparent !important;
-}
+/* The `*` rule that used to live here has been removed. It set
+   `font-family: Arial !important`, which replaced Facebook's icon font
+   everywhere and rendered every icon as a tofu box; `color: #FFFFFF
+   !important`, which put white text on any surface not darkened above and made
+   it invisible; and `background-color: transparent !important`, which fought
+   the surface rules. It was the single most damaging rule in this stylesheet
+   and the reason switching the theme on looked like the app breaking. */
 
 a:hover {
     text-decoration: none;

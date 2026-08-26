@@ -72,5 +72,11 @@
   "source_code": "Broncode",
   "top": "Naar boven scrollen",
   "reset": "Resetten",
-  "exit": "App afsluiten"
+  "exit": "App afsluiten",
+  "hide_people_you_may_know": "Verberg \"Mensen die je misschien kent\"",
+  "hide_reels": "Verberg reels",
+  "hide_messenger_sidebar": "Verberg de Messenger-zijbalk",
+  "error_page_offline": "Facebook kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",
+  "retry": "Opnieuw proberen",
+  "ads_blocked_count": "{} tot nu toe verborgen"
 }

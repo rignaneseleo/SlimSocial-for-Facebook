@@ -72,5 +72,11 @@
   "source_code": "Kildekode",
   "top": "Rul til toppen",
   "reset": "Nulstil",
-  "exit": "Afslut appen"
+  "exit": "Afslut appen",
+  "hide_people_you_may_know": "Skjul \"Personer, du måske kender\"",
+  "hide_reels": "Skjul reels",
+  "hide_messenger_sidebar": "Skjul Messenger-sidepanelet",
+  "error_page_offline": "Facebook kunne ikke indlæses. Tjek din forbindelse, og prøv igen.",
+  "retry": "Prøv igen",
+  "ads_blocked_count": "{} skjult indtil videre"
 }

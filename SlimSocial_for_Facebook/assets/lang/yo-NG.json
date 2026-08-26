@@ -72,5 +72,11 @@
   "source_code": "Koodu orísun",
   "top": "Lọ sí òkè",
   "reset": "Tún ṣètò",
-  "exit": "Jáde nínú ìṣàmúlò"
+  "exit": "Jáde nínú ìṣàmúlò",
+  "hide_people_you_may_know": "Fi \"Àwọn ènìyàn tí o lè mọ̀\" pamọ́",
+  "hide_reels": "Fi àwọn reels pamọ́",
+  "hide_messenger_sidebar": "Fi pẹpẹ ẹ̀gbẹ́ Messenger pamọ́",
+  "error_page_offline": "A kò lè gbé Facebook wọlé. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì gbìyànjú lẹ́ẹ̀kansí.",
+  "retry": "Gbìyànjú lẹ́ẹ̀kansí",
+  "ads_blocked_count": "A ti fi {} pamọ́ títí di báyìí"
 }

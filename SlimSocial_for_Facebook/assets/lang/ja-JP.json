@@ -72,5 +72,11 @@
   "source_code": "ソースコード",
   "top": "一番上へスクロール",
   "reset": "リセット",
-  "exit": "アプリを終了"
+  "exit": "アプリを終了",
+  "hide_people_you_may_know": "「知り合いかも」を非表示にする",
+  "hide_reels": "リールを非表示にする",
+  "hide_messenger_sidebar": "Messengerのサイドバーを非表示にする",
+  "error_page_offline": "Facebookを読み込めませんでした。接続を確認してもう一度お試しください。",
+  "retry": "再試行",
+  "ads_blocked_count": "これまでに{}件を非表示にしました"
 }

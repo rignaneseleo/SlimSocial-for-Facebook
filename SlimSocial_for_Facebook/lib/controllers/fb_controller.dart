@@ -18,7 +18,11 @@ class PrefController {
     return initialURl + suffixDefault;
   }
 
-  static String getUserAgent() {
+  /// Returns the user agent to use for [role].
+  ///
+  /// An explicit custom agent wins over everything, then basic mode, then the
+  /// per-role default.
+  static String getUserAgent({UserAgentRole role = UserAgentRole.feed}) {
     final customUserAgent = _getOverride(SpKeys.customUserAgent);
     if (customUserAgent != null) {
       debugPrint("Using custom user agent: $customUserAgent");
@@ -27,7 +31,12 @@ class PrefController {
 
     if (sp.getBool(SpKeys.useMbasic) ?? false) return kOperaMiniUserAgent;
 
-    return kFirefoxUserAgent;
+    switch (role) {
+      case UserAgentRole.feed:
+        return kMobileUserAgent;
+      case UserAgentRole.messenger:
+        return kDesktopUserAgent;
+    }
   }
 
   /// Text scaling for the webview, as a percentage of the page's own size.
@@ -40,6 +49,21 @@ class PrefController {
 
   static Future<void> setTextZoom(int textZoom) =>
       sp.setInt(SpKeys.textZoom, _clampTextZoom(textZoom));
+
+  /// How many feed items the filter has hidden, across every session.
+  static int getAdsBlockedTotal() => sp.getInt(SpKeys.adsBlockedTotal) ?? 0;
+
+  /// Adds [count] to the running total and returns the new value.
+  ///
+  /// Negative and zero counts are ignored: the page is the source of this
+  /// number and nothing there should be able to walk the total backwards.
+  static Future<int> addAdsBlocked(int count) async {
+    if (count <= 0) return getAdsBlockedTotal();
+
+    final total = getAdsBlockedTotal() + count;
+    await sp.setInt(SpKeys.adsBlockedTotal, total);
+    return total;
+  }
 
   static int _clampTextZoom(int textZoom) {
     if (textZoom < kMinTextZoom) return kMinTextZoom;

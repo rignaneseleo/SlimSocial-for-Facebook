@@ -72,5 +72,11 @@
   "source_code": "Código fuente",
   "top": "Ir al principio",
   "reset": "Restablecer",
-  "exit": "Salir de la aplicación"
+  "exit": "Salir de la aplicación",
+  "hide_people_you_may_know": "Ocultar «Personas que quizá conozcas»",
+  "hide_reels": "Ocultar reels",
+  "hide_messenger_sidebar": "Ocultar la barra lateral de Messenger",
+  "error_page_offline": "No se pudo cargar Facebook. Comprueba tu conexión e inténtalo de nuevo.",
+  "retry": "Reintentar",
+  "ads_blocked_count": "{} ocultados hasta ahora"
 }

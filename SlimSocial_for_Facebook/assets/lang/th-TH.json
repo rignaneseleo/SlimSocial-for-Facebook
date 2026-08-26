@@ -72,5 +72,11 @@
   "source_code": "ซอร์สโค้ด",
   "top": "เลื่อนขึ้นด้านบน",
   "reset": "รีเซ็ต",
-  "exit": "ออกจากแอป"
+  "exit": "ออกจากแอป",
+  "hide_people_you_may_know": "ซ่อน \"คนที่คุณอาจรู้จัก\"",
+  "hide_reels": "ซ่อน Reels",
+  "hide_messenger_sidebar": "ซ่อนแถบด้านข้าง Messenger",
+  "error_page_offline": "โหลด Facebook ไม่สำเร็จ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง",
+  "retry": "ลองอีกครั้ง",
+  "ads_blocked_count": "ซ่อนไปแล้ว {} รายการ"
 }

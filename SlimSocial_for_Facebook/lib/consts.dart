@@ -19,12 +19,32 @@ const String suffixRecentFirst = "?sk=h_chr";
 const String suffixDefault = "?sk=h_nor";
 
 //user agent for the webview
-//keep this reasonably recent: Facebook serves a "browser not supported"
-//notice (and a degraded page) to user agents it considers outdated
-const String kFirefoxUserAgent =
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0";
-const String kIpadUserAgent =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36";
+//
+//Facebook picks which layout to serve from the user agent, so these strings
+//decide what every injected selector in this app has to match. A desktop agent
+//gets the desktop layout, which is heavier, harder to restyle, and in some
+//regions served in a variant that renders badly on a phone.
+//
+//Facebook serves a "browser not supported" notice and a degraded page to
+//agents it considers outdated, so if it ever rejects one of these, bump its
+//version numbers together with a device check on the feed — see the plan notes.
+
+/// Firefox for Android. Gets Facebook's touch layout.
+///
+/// This exact string is a known-good production value: it is what serves the
+/// mobile feed correctly in the regions where a desktop agent gets a broken
+/// layout. The age of the version is not the point — the layout Facebook
+/// returns for it is — so do not "modernise" it without re-checking the feed.
+const String kMobileUserAgent =
+    "Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0";
+
+/// Desktop Chrome on macOS. Messenger only ships its full markup to a desktop
+/// agent; on a mobile one it pushes the native-app interstitial instead.
+const String kDesktopUserAgent =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36";
+
+/// Opera Mini. Used only by basic mode, which targets `mbasic.facebook.com`.
 const String kOperaMiniUserAgent =
     "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
 
@@ -38,6 +58,18 @@ const String kOperaMiniUserAgent =
 const int kMinTextZoom = 80;
 const int kMaxTextZoom = 150;
 const int kDefaultTextZoom = 100;
+
+/// Which surface a user agent is being requested for.
+///
+/// Facebook varies the markup it serves by user agent, so one string for the
+/// whole app means one of the two surfaces always gets the wrong layout.
+enum UserAgentRole {
+  /// The main feed and everything reached from it.
+  feed,
+
+  /// The Messenger webview.
+  messenger,
+}
 
 const String kEmailToDevUrl =
     "mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
@@ -71,6 +103,10 @@ class SpKeys {
 
   static const String enableMessenger = "enable_messenger";
   static const String hideAds = "hide_ads";
+  static const String hidePeopleYouMayKnow = "hide_people_you_may_know";
+
+  /// Running total of feed items the filter has hidden, across all time.
+  static const String adsBlockedTotal = "ads_blocked_total";
   static const String recentFirst = "recent_first";
   static const String useMbasic = "use_mbasic";
 

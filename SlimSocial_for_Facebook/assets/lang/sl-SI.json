@@ -72,5 +72,11 @@
   "source_code": "Izvorna koda",
   "top": "Pomakni na vrh",
   "reset": "Ponastavi",
-  "exit": "Izhod iz aplikacije"
+  "exit": "Izhod iz aplikacije",
+  "hide_people_you_may_know": "Skrij »Ljudje, ki jih morda poznaš«",
+  "hide_reels": "Skrij reels",
+  "hide_messenger_sidebar": "Skrij stransko vrstico Messengerja",
+  "error_page_offline": "Facebooka ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.",
+  "retry": "Poskusi znova",
+  "ads_blocked_count": "Doslej skritih: {}"
 }

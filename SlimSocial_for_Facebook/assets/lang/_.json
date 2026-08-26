@@ -31,7 +31,7 @@
   "follow_me": "Follow me",
   "version": "version",
   "reloading...": "Reloading...",
-  "error_trylater": "Error, please try again later",
+  "error_trylater": "Error, please try later",
   "default value will be overwritten": "Default value will be overwritten",
   "thankyou": "Thank you!",
   "You are running ads free": "You are running ads free",
@@ -48,7 +48,6 @@
   "Image saved to {}": "Image saved to {}",
   "sharing": "Sharing",
   "downloading": "Downloading",
-  "error_trylater": "Error, please try later",
   "custom_proxy": "Custom proxy",
   "error_proxy with {}:{}": "Error with proxy {}:{}",
   "error_proxy": "Error with proxy",
@@ -68,5 +67,10 @@
   "report_issue": "Report an issue",
   "hide_messenger_sidebar": "Hide Messenger sidebar",
   "reset": "Reset",
-  "exit": "Exit app"
+  "exit": "Exit app",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
+  "hide_reels": "Hide reels"
 }

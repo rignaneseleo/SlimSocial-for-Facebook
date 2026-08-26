@@ -72,5 +72,11 @@
   "source_code": "Kod źródłowy",
   "top": "Przewiń na górę",
   "reset": "Resetuj",
-  "exit": "Wyjdź z aplikacji"
+  "exit": "Wyjdź z aplikacji",
+  "hide_people_you_may_know": "Ukryj „Osoby, które możesz znać”",
+  "hide_reels": "Ukryj reels",
+  "hide_messenger_sidebar": "Ukryj panel boczny Messengera",
+  "error_page_offline": "Nie udało się załadować Facebooka. Sprawdź połączenie i spróbuj ponownie.",
+  "retry": "Spróbuj ponownie",
+  "ads_blocked_count": "Do tej pory ukryto: {}"
 }
