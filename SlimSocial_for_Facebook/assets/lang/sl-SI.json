@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Deluje bolje na starejših napravah ali počasnih povezavah",
   "recent_first": "Prikaži najnovejše prispevke najprej",
   "hide_ads": "Skrij nekatere oglase (eksperimentalno)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "slog",
   "dark_theme": "Omogoči temni način",
   "fixed_bar": "Fiksna vrhnja vrstica",
   "hide_stories": "Skrij zgodbe",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Usredini besedilo na prispevkih",
   "add_space": "Dodaj prostor med prispevki",
   "text_zoom": "Velikost besedila",
@@ -72,5 +75,8 @@
   "source_code": "Izvorna koda",
   "top": "Pomakni na vrh",
   "reset": "Ponastavi",
-  "exit": "Izhod iz aplikacije"
+  "exit": "Izhod iz aplikacije",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
