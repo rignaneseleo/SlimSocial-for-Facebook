@@ -1,0 +1,46 @@
+# Codemagic CI configuration (https://docs.codemagic.io/)
+#
+# The release-android workflow is not triggered by Codemagic webhooks: it is
+# started through the Codemagic REST API by the GitHub Actions workflow
+# .github/workflows/release.yml whenever a release tag (e.g. 26.08.05+119)
+# is pushed to master. The GitHub workflow then waits for this build,
+# downloads the universal APK and publishes the GitHub release.
+
+workflows:
+  release-android:
+    name: Release Android APK
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    working_directory: SlimSocial_for_Facebook
+    environment:
+      android_signing:
+        # Must match the reference name of the upload keystore stored in
+        # Codemagic > Team settings > Code signing identities > Android.
+        # It exports CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS /
+        # CM_KEY_PASSWORD, which android/app/build.gradle.kts picks up.
+        - keystore_reference
+      flutter: fvm # version taken from .fvmrc in the repository root
+      java: 17
+    scripts:
+      - name: Flutter pub get
+        script: flutter pub get
+      - name: Build universal release APK with the version from the tag
+        script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          # RELEASE_TAG is passed by the GitHub Actions workflow; CM_TAG is set
+          # by Codemagic itself when the build is started from a tag.
+          TAG="${RELEASE_TAG:-${CM_TAG:-}}"
+          if [[ ! "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+\+[0-9]+$ ]]; then
+            echo "ERROR: no release tag found (RELEASE_TAG/CM_TAG)."
+            echo "Expected a tag like 26.08.05+119, got: '${TAG}'"
+            exit 1
+          fi
+          BUILD_NAME="${TAG%%+*}"
+          BUILD_NUMBER="${TAG##*+}"
+          echo "Building version ${BUILD_NAME} (build ${BUILD_NUMBER})"
+          flutter build apk --release \
+            --build-name="$BUILD_NAME" \
+            --build-number="$BUILD_NUMBER"
+    artifacts:
+      - SlimSocial_for_Facebook/build/**/outputs/**/*.apk
