@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Jobban működik régebbi eszközökön vagy lassú kapcsolatoknál",
   "recent_first": "Legújabb bejegyzések előre",
   "hide_ads": "Hirdetések elrejtése (kísérleti)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stílus",
   "dark_theme": "Sötét témák használata",
   "fixed_bar": "Rögzített felső sáv",
   "hide_stories": "Történetek elrejtése",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Szöveg középre igazítása a bejegyzéseknél",
   "add_space": "Terület hozzáadása a bejegyzések közé",
   "text_zoom": "Szövegméret",
@@ -72,5 +75,8 @@
   "source_code": "Forráskód",
   "top": "Görgetés a tetejére",
   "reset": "Visszaállítás",
-  "exit": "Kilépés az alkalmazásból"
+  "exit": "Kilépés az alkalmazásból",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
