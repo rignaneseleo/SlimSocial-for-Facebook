@@ -8,10 +8,13 @@
   "use_mbasic_desc": "对于旧设备或慢速连接来说更有效",
   "recent_first": "最新帖子优先显示",
   "hide_ads": "隐藏一些广告（实验性）",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "样式",
   "dark_theme": "启用黑暗主题",
   "fixed_bar": "固定顶部栏",
   "hide_stories": "隐藏故事",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "将帖子文本居中显示",
   "add_space": "在帖子之间添加间隔",
   "text_zoom": "文字大小",
@@ -72,5 +75,8 @@
   "source_code": "源代码",
   "top": "滚动到顶部",
   "reset": "重置",
-  "exit": "退出应用"
+  "exit": "退出应用",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
