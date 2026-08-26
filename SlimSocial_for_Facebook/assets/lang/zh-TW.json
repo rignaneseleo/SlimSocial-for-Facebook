@@ -8,10 +8,13 @@
   "use_mbasic_desc": "在較舊的裝置或較慢的網路上運作得更好",
   "recent_first": "優先顯示最新貼文",
   "hide_ads": "隱藏部分廣告（實驗性）",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "樣式",
   "dark_theme": "啟用深色主題",
   "fixed_bar": "固定頂部工具列",
   "hide_stories": "隱藏限時動態",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "貼文文字置中",
   "add_space": "在貼文之間加入間距",
   "text_zoom": "文字大小",
@@ -72,5 +75,8 @@
   "source_code": "原始碼",
   "top": "捲動至頂部",
   "reset": "重設",
-  "exit": "結束應用程式"
+  "exit": "結束應用程式",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
