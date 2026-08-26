@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Funziona meglio su dispositivi più vecchi o connessioni più lente.",
   "recent_first": "Mostra prima i post recenti",
   "hide_ads": "Nascondi alcuni annunci (sperimentale)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stile",
   "dark_theme": "Abilita il tema scuro",
   "fixed_bar": "Barra superiore fissa",
   "hide_stories": "Nascondi le storie",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centra il testo sui post",
   "add_space": "Aggiungi spazio tra i post",
   "text_zoom": "Dimensione del testo",
@@ -72,5 +75,8 @@
   "source_code": "Codice sorgente",
   "top": "Torna in cima",
   "reset": "Ripristina",
-  "exit": "Esci dall'app"
+  "exit": "Esci dall'app",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
