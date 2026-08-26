@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Tai geriau veikia senesniuose įrenginiuose ar lėtesniuose ryšiuose",
   "recent_first": "Rodyti naujus įrašus pirmiausia",
   "hide_ads": "Slėpti kai kuriuos skelbimus (eksperimentinis)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stilius",
   "dark_theme": "Įjungti tamsųjį režimą",
   "fixed_bar": "Fiksuotas viršutinis juostos",
   "hide_stories": "Slėpti istorijas",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centruoti tekstą įrašuose",
   "add_space": "Pridėti tarpą tarp įrašų",
   "text_zoom": "Teksto dydis",
@@ -72,5 +75,8 @@
   "source_code": "Išeitinis kodas",
   "top": "Slinkti į viršų",
   "reset": "Atstatyti",
-  "exit": "Išeiti iš programėlės"
+  "exit": "Išeiti iš programėlės",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
