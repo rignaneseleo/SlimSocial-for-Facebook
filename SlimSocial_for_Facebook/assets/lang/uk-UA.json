@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Працює краще на старих пристроях або при повільному підключенні до Інтернету",
   "recent_first": "Показувати останні записи першими",
   "hide_ads": "Приховувати деякі рекламні оголошення (експериментальна функція)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "стиль",
   "dark_theme": "Включити темний режим",
   "fixed_bar": "Нерухомий верхній рядок",
   "hide_stories": "Приховувати історії",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Центрувати текст у записах",
   "add_space": "Додавати проміжок між записами",
   "text_zoom": "Розмір тексту",
@@ -72,5 +75,8 @@
   "source_code": "Вихідний код",
   "top": "Прокрутити догори",
   "reset": "Скинути",
-  "exit": "Вийти з додатка"
+  "exit": "Вийти з додатка",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
