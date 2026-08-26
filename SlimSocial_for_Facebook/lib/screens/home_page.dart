@@ -20,6 +20,7 @@ import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -40,47 +41,22 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool isLoading = false;
   bool isScontentUrl = false;
 
-  /// Set when the main frame fails to load, so the app can show its own error
-  /// state instead of the browser's.
-  ///
-  /// Without this the user gets Chrome's "webpage not available" page on a
-  /// near-black background, which reads as the app being broken rather than the
-  /// network being briefly unavailable.
-  bool _loadFailed = false;
-
-  /// Whether the navigation currently in flight already reported an error.
-  ///
-  /// Android delivers `onPageFinished` for a failed main-frame load too: the
-  /// error page commits and finishes like any other document. Without this the
-  /// error page's own finish would look like a success and clear the retry
-  /// counter, so the ceiling below could never be reached.
-  bool _navigationFailed = false;
-
-  /// Automatic retries used since the last successful load.
-  ///
-  /// Bounded so a genuinely unreachable site does not become a reload loop.
-  int _loadRetries = 0;
-
-  /// The automatic retry waiting to fire, if any.
-  ///
-  /// Held so a retry that has been superseded — by a manual refresh, or by the
-  /// page coming back on its own — can be cancelled: reloading a healthy page
-  /// throws the user back to the top of the feed.
-  Timer? _retryTimer;
-
-  /// How many times to retry before showing the error screen.
-  ///
-  /// Measured on a real device: opening the app as the phone wakes produces
-  /// `ERR_INTERNET_DISCONNECTED` first — no network attached at all — and only
-  /// then `ERR_NAME_NOT_RESOLVED` once DNS is reachable but not yet answering.
-  /// A single quick retry lands in the middle of that and still fails, so the
-  /// delay grows with each attempt.
-  static const int _maxLoadRetries = 3;
+  /// Owns everything about a failed load: how many automatic retries are
+  /// left, how long to wait before each, and whether the app should be showing
+  /// its own error state instead of the browser's.
+  late final LoadRetryPolicy _retryPolicy;
 
   @override
   void initState() {
     super.initState();
 
+    _retryPolicy = LoadRetryPolicy(
+      target: _WebViewLoadTarget(() => _controller),
+      homeUrl: () => Uri.parse(PrefController.getHomePage()),
+      onChanged: () {
+        if (mounted) setState(() {});
+      },
+    );
     _controller = _initWebViewController();
   }
 
@@ -101,11 +77,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           onNavigationRequest: onNavigationRequest,
           onWebResourceError: onWebResourceError,
           onPageStarted: (String url) async {
-            _navigationFailed = false;
+            _retryPolicy.onNavigationStarted();
             setState(() {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
-              //a new navigation started, so any previous failure is stale
-              _loadFailed = false;
             });
 
             //inject the css as soon as the DOM is loaded
@@ -122,16 +96,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
-            //a page that finished loading is not a failed one, even if a
-            //subresource errored on the way
-            if (!_navigationFailed && (_loadFailed || _loadRetries > 0)) {
-              _retryTimer?.cancel();
-              setState(() {
-                _loadFailed = false;
-                _loadRetries = 0;
-              });
-            }
-            _navigationFailed = false;
+            _retryPolicy.onNavigationFinished();
             await runJs();
             if (kDebugMode) debugPrint(url);
           },
@@ -228,7 +193,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void dispose() {
-    _retryTimer?.cancel();
+    _retryPolicy.dispose();
     super.dispose();
   }
 
@@ -245,64 +210,20 @@ class _HomePageState extends ConsumerState<HomePage> {
     unawaited(PrefController.addAdsBlocked(count));
   }
 
-  /// Handles a failed page load.
-  ///
-  /// Only main-frame failures matter: Facebook drops individual images and
-  /// beacons all the time, and treating those as a page failure would replace a
-  /// perfectly good feed with an error screen.
-  ///
-  /// The first failure is retried automatically once. The common case is a
-  /// transient DNS failure when the app is opened as the device wakes and the
-  /// network has not settled — the load fails, and without a retry the user is
-  /// left looking at an error until they think to reload themselves.
+  /// Hands a failed page load to the retry policy.
   void onWebResourceError(WebResourceError error) {
-    if (error.isForMainFrame == false) return;
+    //a failure the platform will not classify is treated as the main frame's
+    final isForMainFrame = error.isForMainFrame ?? true;
 
-    debugPrint(
-      "load failed: ${error.errorType} ${error.errorCode} ${error.description}",
-    );
-
-    _navigationFailed = true;
-
-    if (_loadRetries < _maxLoadRetries) {
-      _loadRetries++;
-      //2s, then 4s, then 6s — long enough in total to outlast a phone
-      //reattaching to the network, short enough not to feel stuck
-      final delay = Duration(seconds: 2 * _loadRetries);
-      _retryTimer?.cancel();
-      _retryTimer = Timer(delay, () {
-        if (!mounted) return;
-        unawaited(reissueLoad(error.url));
-      });
-      return;
+    //Facebook drops individual images and beacons all the time, so only a
+    //main-frame failure is worth a line in the log
+    if (isForMainFrame) {
+      debugPrint(
+        "load failed: ${error.errorType} ${error.errorCode} ${error.description}",
+      );
     }
 
-    if (!mounted) return;
-    setState(() => _loadFailed = true);
-  }
-
-  /// Asks the webview for the failed page again.
-  ///
-  /// A plain `reload()` is not enough after a failed *first* load: iOS has no
-  /// committed navigation to reload at that point, so the call does nothing and
-  /// fires no callbacks at all — the retry would silently never happen. A null
-  /// current url is exactly that state.
-  Future<void> reissueLoad(String? url) async {
-    if (await _controller.currentUrl() != null) {
-      await _controller.reload();
-      return;
-    }
-    await _controller
-        .loadRequest(Uri.parse(url ?? PrefController.getHomePage()));
-  }
-
-  Future<void> retryLoad() async {
-    _retryTimer?.cancel();
-    setState(() {
-      _loadFailed = false;
-      _loadRetries = 0;
-    });
-    await _controller.loadRequest(Uri.parse(PrefController.getHomePage()));
+    _retryPolicy.onLoadError(url: error.url, isForMainFrame: isForMainFrame);
   }
 
   Future<NavigationDecision> onNavigationRequest(
@@ -551,7 +472,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             //covers the webview so the browser's own error page, sitting on a
             //near-black background, is never what the user sees
-            if (_loadFailed)
+            if (_retryPolicy.loadFailed)
               ColoredBox(
                 color: Theme.of(context).colorScheme.surface,
                 child: Center(
@@ -573,7 +494,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                         const SizedBox(height: 24),
                         FilledButton.icon(
-                          onPressed: retryLoad,
+                          onPressed: _retryPolicy.retryNow,
                           icon: const Icon(Icons.refresh),
                           label: Text("retry".tr()),
                         ),
@@ -697,4 +618,23 @@ class _HomePageState extends ConsumerState<HomePage> {
       },
     );
   }*/
+}
+
+/// Lets [LoadRetryPolicy] drive the webview without knowing about it.
+///
+/// The controller is reached through a callback because the policy is built
+/// first: it is what the controller's navigation callbacks report to.
+class _WebViewLoadTarget implements LoadRetryTarget {
+  const _WebViewLoadTarget(this._controller);
+
+  final WebViewController Function() _controller;
+
+  @override
+  Future<String?> currentUrl() => _controller().currentUrl();
+
+  @override
+  Future<void> reload() => _controller().reload();
+
+  @override
+  Future<void> loadRequest(Uri uri) => _controller().loadRequest(uri);
 }
