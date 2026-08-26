@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Тя работи по-добре на по-стари устройства или по-бавни връзки",
   "recent_first": "Показване на скорошни публикации първи",
   "hide_ads": "Скриване на някои реклами (експериментално)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "стил",
   "dark_theme": "Включете тъмен тема",
   "fixed_bar": "Фиксирана горна лента",
   "hide_stories": "Скриване на истории",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Центриране на текста в публикациите",
   "add_space": "Добавяне на място между публикациите",
   "text_zoom": "Размер на текста",
@@ -72,5 +75,8 @@
   "source_code": "Изходен код",
   "top": "Превъртане до началото",
   "reset": "Нулиране",
-  "exit": "Изход от приложението"
+  "exit": "Изход от приложението",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
