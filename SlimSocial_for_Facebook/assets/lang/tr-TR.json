@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Daha eski cihazlarda veya yavaş bağlantılarda daha iyi çalışır",
   "recent_first": "En son gönderileri önce göster",
   "hide_ads": "Reklamların bazılarını gizle (deneysel)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stil",
   "dark_theme": "Karanlık tema kullan",
   "fixed_bar": "Sabit üst çubuk",
   "hide_stories": "Hikayeleri gizle",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Gönderilerde metni ortala",
   "add_space": "Gönderiler arasına boşluk ekle",
   "text_zoom": "Metin boyutu",
@@ -72,5 +75,8 @@
   "source_code": "Kaynak kodu",
   "top": "En üste kaydır",
   "reset": "Sıfırla",
-  "exit": "Uygulamadan çık"
+  "exit": "Uygulamadan çık",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
