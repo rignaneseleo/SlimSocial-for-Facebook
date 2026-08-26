@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Het werkt beter op oudere apparaten of langzame verbindingen",
   "recent_first": "Toon recente berichten eerst",
   "hide_ads": "Verberg sommige advertenties (experimenteel)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stijl",
   "dark_theme": "Schakel donker thema in",
   "fixed_bar": "Vaste bovenbalk",
   "hide_stories": "Verberg verhalen",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centreer tekst in berichten",
   "add_space": "Voeg ruimte toe tussen berichten",
   "text_zoom": "Tekstgrootte",
@@ -72,5 +75,8 @@
   "source_code": "Broncode",
   "top": "Naar boven scrollen",
   "reset": "Resetten",
-  "exit": "App afsluiten"
+  "exit": "App afsluiten",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
