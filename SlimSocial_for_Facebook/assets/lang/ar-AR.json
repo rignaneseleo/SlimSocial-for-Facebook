@@ -8,10 +8,13 @@
   "use_mbasic_desc": "يعمل بشكل أفضل على الأجهزة القديمة أو الاتصالات البطيئة",
   "recent_first": "عرض المنشورات الحديثة أولاً",
   "hide_ads": "إخفاء بعض الإعلانات (تجريبي)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "الأسلوب",
   "dark_theme": "تمكين الوضع الداكن",
   "fixed_bar": "الشريط العلوي الثابت",
   "hide_stories": "إخفاء القصص",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "توسيط النص في المنشورات",
   "add_space": "إضافة مسافة بين المنشورات",
   "text_zoom": "حجم النص",
@@ -72,5 +75,8 @@
   "source_code": "الكود المصدري",
   "top": "الانتقال إلى الأعلى",
   "reset": "إعادة تعيين",
-  "exit": "الخروج من التطبيق"
+  "exit": "الخروج من التطبيق",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
