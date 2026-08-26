@@ -8,10 +8,13 @@
   "use_mbasic_desc": "느린 연결 또는 오래된 기기에서 더 잘 작동합니다.",
   "recent_first": "최신 포스트 먼저 보기",
   "hide_ads": "광고 가리기 (실험적 기능)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "스타일",
   "dark_theme": "어두운 테마 사용",
   "fixed_bar": "상단 바 고정",
   "hide_stories": "스토리 가리기",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "글 중앙 정렬",
   "add_space": "포스트 간격 늘리기",
   "text_zoom": "글자 크기",
@@ -72,5 +75,8 @@
   "source_code": "소스 코드",
   "top": "맨 위로 스크롤",
   "reset": "초기화",
-  "exit": "앱 종료"
+  "exit": "앱 종료",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
