@@ -8,10 +8,13 @@
   "use_mbasic_desc": "پرانے ڈیوائسز یا آہستہ کنکشنز پر بہتر کام کرتا ہے",
   "recent_first": "ابھی کے پوسٹ پہلے دکھائیں",
   "hide_ads": "کچھ جائزہ لینے والے اشتہارات کو چھپائیں (تجربہ)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "طریقہ",
   "dark_theme": "ڈارک ٹھیم چالو کریں",
   "fixed_bar": "بالائی بار قائم رکھیں",
   "hide_stories": "کہانیاں چھپائیں",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "مرکز پر پوسٹ پر متن",
   "add_space": "پوسٹ کے درمیان جگہ شامل کریں",
   "text_zoom": "متن کا سائز",
@@ -72,5 +75,8 @@
   "source_code": "سورس کوڈ",
   "top": "اوپر جائیں",
   "reset": "ری سیٹ",
-  "exit": "ایپ سے باہر نکلیں"
+  "exit": "ایپ سے باہر نکلیں",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
