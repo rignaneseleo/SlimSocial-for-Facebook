@@ -8,10 +8,13 @@
   "use_mbasic_desc": "ทำงานได้ดีกว่าบนอุปกรณ์ที่เก่าหรืออินเทอร์เน็ตที่ช้า",
   "recent_first": "แสดงโพสต์ที่อัพเดทล่าสุดก่อน",
   "hide_ads": "ซ่อนโฆษณาบางส่วน (การทดลอง)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "สไตล์",
   "dark_theme": "เปิดใช้งานธีมมืด",
   "fixed_bar": "แถบด้านบนคงที่",
   "hide_stories": "ซ่อนเรื่องราว",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "จัดกึ่งกลางข้อความในโพสต์",
   "add_space": "เพิ่มระยะห่างระหว่างโพสต์",
   "text_zoom": "ขนาดตัวอักษร",
@@ -72,5 +75,8 @@
   "source_code": "ซอร์สโค้ด",
   "top": "เลื่อนขึ้นด้านบน",
   "reset": "รีเซ็ต",
-  "exit": "ออกจากแอป"
+  "exit": "ออกจากแอป",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
