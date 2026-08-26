@@ -39,6 +39,7 @@ dependencies:
 
   webview_flutter_android: any
 dev_dependencies:
+  fake_async: 1.3.3
   flutter_launcher_icons: 0.14.3
   custom_lint: 0.7.5
   very_good_analysis: 7.0.0
