@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Λειτουργεί καλύτερα σε παλαιότερες συσκευές ή πιο αργές συνδέσεις",
   "recent_first": "Εμφάνιση πρόσφατων δημοσιεύσεων πρώτα",
   "hide_ads": "Απόκρυψη ορισμένων διαφημίσεων (πειραματικό)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "στυλ",
   "dark_theme": "Ενεργοποίηση σκούρου θέματος",
   "fixed_bar": "Σταθερή επάνω μπάρα",
   "hide_stories": "Απόκρυψη stories",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Κεντράρισμα κειμένου στις δημοσιεύσεις",
   "add_space": "Προσθήκη κενού μεταξύ δημοσιεύσεων",
   "text_zoom": "Μέγεθος κειμένου",
@@ -72,5 +75,8 @@
   "source_code": "Πηγαίος κώδικας",
   "top": "Κύλιση στην κορυφή",
   "reset": "Επαναφορά",
-  "exit": "Έξοδος από την εφαρμογή"
+  "exit": "Έξοδος από την εφαρμογή",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
