@@ -8,10 +8,13 @@
   "use_mbasic_desc": "പഴയ ഉപകരണങ്ങളിലും പിന്തുണയ്ക്കപ്പെടുന്ന പരിമിത കണക്ഷനിലും നന്നായി പ്രവര്‍ത്തിക്കും",
   "recent_first": "പുതിയ പോസ്റ്റുകള്‍ മുതല്‍ കാണിക്കുക",
   "hide_ads": "പാടില്ലാത്ത പരസ്യങ്ങളുകള്‍ (പുരോഗമം)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "ശൈലി",
   "dark_theme": "കറുപ്പത്തിന്‍റെ തീം സജ്ജമാക്കുക",
   "fixed_bar": "ഫിക്‌സ്ഡ് ടോപ്പ് പട്ടി കാണിക്കുക",
   "hide_stories": "കഥകള്‍ പാടില്ലാത്തതാക്കുക",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "പോസ്റ്റുകളില്‍ വാക്കുകള്‍ മധ്യത്തില്‍ കാണിക്കുക",
   "add_space": "പോസ്റ്റുകളുടെ മധ്യത്തില്‍ അടയാളം ചേര്‍ക്കുക",
   "text_zoom": "ടെക്സ്റ്റ് വലുപ്പം",
@@ -72,5 +75,8 @@
   "source_code": "സോഴ്സ് കോഡ്",
   "top": "മുകളിലേക്ക് പോകുക",
   "reset": "പുനഃസജ്ജമാക്കുക",
-  "exit": "ആപ്പിൽ നിന്ന് പുറത്തുകടക്കുക"
+  "exit": "ആപ്പിൽ നിന്ന് പുറത്തുകടക്കുക",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
