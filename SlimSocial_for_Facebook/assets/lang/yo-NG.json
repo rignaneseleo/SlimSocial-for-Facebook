@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Ó ń ṣiṣẹ́ dáadáa lórí àwọn ẹ̀rọ àtijọ́ tàbí àsopọ̀ tí ó lọ́ra",
   "recent_first": "Fi àwọn ìfiránṣẹ́ tuntun hàn ní àkọ́kọ́",
   "hide_ads": "Fi àwọn ìpolówó kan pamọ́ (àdánwò)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "ìrísí",
   "dark_theme": "Tan àwò dúdú",
   "fixed_bar": "Ọ̀pá òkè tí kò yí padà",
   "hide_stories": "Fi àwọn ìtàn pamọ́",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Gbé ọ̀rọ̀ sí àárín àwọn ìfiránṣẹ́",
   "add_space": "Fi àyè kún àárín àwọn ìfiránṣẹ́",
   "text_zoom": "Ìwọ̀n ọ̀rọ̀",
@@ -72,5 +75,8 @@
   "source_code": "Koodu orísun",
   "top": "Lọ sí òkè",
   "reset": "Tún ṣètò",
-  "exit": "Jáde nínú ìṣàmúlò"
+  "exit": "Jáde nínú ìṣàmúlò",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
