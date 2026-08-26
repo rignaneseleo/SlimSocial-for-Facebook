@@ -8,10 +8,13 @@
   "use_mbasic_desc": "పాత పరికరాలు లేదా నిండికపాటి కనెక్షన్లు మీకు కనిపిస్తాయి",
   "recent_first": "కొత్త పోస్టులను మొదలుపెట్టి చూపివేయి",
   "hide_ads": "కొనసాగింపు ప్రక్షేపణలను దాచు (ప్రయోగాన్ని ప్రయత్నించండి)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "శైలి",
   "dark_theme": "నిశ్శబ్ద థీమ్ పెట్టు",
   "fixed_bar": "ఫిక్స్ టాప్ బార్",
   "hide_stories": "కథలను దాచు",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "పోస్ట్‌ల మధ్యలో సెంటర్ టెక్స్ట్",
   "add_space": "పోస్ట్‌ల మధ్యలో ఖాళీ స్థలం జోడించు",
   "text_zoom": "టెక్స్ట్ పరిమాణం",
@@ -72,5 +75,8 @@
   "source_code": "సోర్స్ కోడ్",
   "top": "పైకి వెళ్లండి",
   "reset": "రీసెట్ చేయండి",
-  "exit": "యాప్ నుండి నిష్క్రమించండి"
+  "exit": "యాప్ నుండి నిష్క్రమించండి",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
