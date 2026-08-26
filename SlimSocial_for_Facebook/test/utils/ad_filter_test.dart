@@ -116,7 +116,10 @@ void main() {
           .map((l) => l.length)
           .reduce((a, b) => a < b ? a : b);
 
-      expect(shortest + kSponsoredLabelSlack, lessThan(_maxLen(script)));
+      // 25 was the fixed cap this replaced, and it was already wide enough to
+      // swallow a short sentence. Whatever the longest label drags the global
+      // bound up to, the shortest one has to stay well under that.
+      expect(shortest + kSponsoredLabelSlack, lessThan(25));
     });
 
     test('widens the window rather than dropping a long runtime extra', () {
