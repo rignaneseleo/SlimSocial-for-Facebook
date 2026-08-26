@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Yana aiki mafi kyau a tsofaffin na'urori ko haɗin intanet mai jinkiri",
   "recent_first": "Nuna sabbin saƙonni farko",
   "hide_ads": "Ɓoye wasu tallace-tallace (gwaji)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "salo",
   "dark_theme": "Kunna yanayin duhu",
   "fixed_bar": "Mashaya sama tsayayye",
   "hide_stories": "Ɓoye stories",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Daidaita rubutu a tsakiyar saƙonni",
   "add_space": "Ƙara tazara tsakanin saƙonni",
   "text_zoom": "Girman rubutu",
@@ -72,5 +75,8 @@
   "source_code": "Lambar tushe",
   "top": "Koma sama",
   "reset": "Sake saitawa",
-  "exit": "Fita daga manhaja"
+  "exit": "Fita daga manhaja",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
