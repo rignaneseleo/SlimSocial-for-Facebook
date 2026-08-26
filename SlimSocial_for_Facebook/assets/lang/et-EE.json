@@ -8,10 +8,13 @@
   "use_mbasic_desc": "See töötab paremini vanemates seadmetes või aeglasema ühenduse puhul.",
   "recent_first": "Kuva hiljuti postitatud postitused enne",
   "hide_ads": "Peida mõned reklaamid (eksperimentaalne)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stiil",
   "dark_theme": "Lülita sisse tumeda kujunduse teema",
   "fixed_bar": "Parandatud ülemine menüüriba",
   "hide_stories": "Peida lood",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Keskenda tekst postitustel",
   "add_space": "Lisa postituste vahele ruumi",
   "text_zoom": "Teksti suurus",
@@ -72,5 +75,8 @@
   "source_code": "Lähtekood",
   "top": "Keri üles",
   "reset": "Lähtesta",
-  "exit": "Välju rakendusest"
+  "exit": "Välju rakendusest",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
