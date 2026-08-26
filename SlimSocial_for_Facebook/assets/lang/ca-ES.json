@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Funciona millor en dispositius antics o connexions lentes",
   "recent_first": "Mostra primer les publicacions recents",
   "hide_ads": "Amaga alguns anuncis (experimental)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "estil",
   "dark_theme": "Activa el tema fosc",
   "fixed_bar": "Barra superior fixa",
   "hide_stories": "Amaga les històries",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centra el text de les publicacions",
   "add_space": "Afegeix espai entre publicacions",
   "text_zoom": "Mida del text",
@@ -72,5 +75,8 @@
   "source_code": "Codi font",
   "top": "Torna a dalt",
   "reset": "Restableix",
-  "exit": "Surt de l'aplicació"
+  "exit": "Surt de l'aplicació",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
