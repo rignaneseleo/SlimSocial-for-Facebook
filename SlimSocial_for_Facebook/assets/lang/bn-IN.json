@@ -8,10 +8,13 @@
   "use_mbasic_desc": "এটি পুরানো ডিভাইস বা ধীর সংযোগের ক্ষেত্রে ভালোভাবে কাজ করে",
   "recent_first": "সাম্প্রতিক পোস্টগুলি প্রথমে দেখান",
   "hide_ads": "কিছু বিজ্ঞাপন লুকান (পরীক্ষামূলক)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "স্টাইল",
   "dark_theme": "অন্ধকার থিম সক্ষম করুন",
   "fixed_bar": "ফিক্সড টপ বার",
   "hide_stories": "গল্পসমূহ লুকান",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "পোস্ট একটি কেন্দ্রবিন্দুতে লেখা হবে",
   "add_space": "পোস্টগুলি মধ্যে স্থান যুক্ত করুন",
   "text_zoom": "লেখার আকার",
@@ -72,5 +75,8 @@
   "source_code": "সোর্স কোড",
   "top": "শীর্ষে যান",
   "reset": "রিসেট",
-  "exit": "অ্যাপ থেকে বেরিয়ে যান"
+  "exit": "অ্যাপ থেকে বেরিয়ে যান",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
