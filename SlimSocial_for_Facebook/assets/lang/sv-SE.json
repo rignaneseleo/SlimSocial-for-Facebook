@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Det fungerar bättre på äldre enheter eller långsammare anslutningar",
   "recent_first": "Visa nyligen publicerade inlägg först",
   "hide_ads": "Dölj vissa annonser (experimentellt)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stil",
   "dark_theme": "Aktivera mörkt tema",
   "fixed_bar": "Fast toppfält",
   "hide_stories": "Dölj historier",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centrera text på inlägg",
   "add_space": "Lägg till utrymme mellan inlägg",
   "text_zoom": "Textstorlek",
@@ -72,5 +75,8 @@
   "source_code": "Källkod",
   "top": "Rulla till toppen",
   "reset": "Återställ",
-  "exit": "Avsluta appen"
+  "exit": "Avsluta appen",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
