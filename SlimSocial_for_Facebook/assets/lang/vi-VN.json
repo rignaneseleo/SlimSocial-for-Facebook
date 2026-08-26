@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Nó hoạt động tốt hơn trên các thiết bị cũ hoặc kết nối chậm",
   "recent_first": "Hiển thị bài đăng gần đây trước",
   "hide_ads": "Ẩn một số quảng cáo (thử nghiệm)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "phong cách",
   "dark_theme": "Kích hoạt chế độ tối",
   "fixed_bar": "Thanh bar cố định trên đầu trang",
   "hide_stories": "Ẩn câu chuyện",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Canh giữa văn bản trên bài đăng",
   "add_space": "Thêm khoảng trống giữa các bài đăng",
   "text_zoom": "Cỡ chữ",
@@ -72,5 +75,8 @@
   "source_code": "Mã nguồn",
   "top": "Cuộn lên đầu trang",
   "reset": "Đặt lại",
-  "exit": "Thoát ứng dụng"
+  "exit": "Thoát ứng dụng",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
