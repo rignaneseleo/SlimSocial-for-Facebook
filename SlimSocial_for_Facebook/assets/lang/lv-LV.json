@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Tas labāk darbojas uz vecākām ierīcēm vai lēniem savienojumiem",
   "recent_first": "Rādīt pēdējos ierakstus pirmajos",
   "hide_ads": "Paslēpt dažas reklāmas (eksperimentāla funkcija)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "stils",
   "dark_theme": "Ieslēgt tumsas režīmu",
   "fixed_bar": "Fiksēt augšējo joslu",
   "hide_stories": "Paslēpt stāstus",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Centrēt tekstu ierakstos",
   "add_space": "Pievienot atstarpi starp ierakstiem",
   "text_zoom": "Teksta izmērs",
@@ -72,5 +75,8 @@
   "source_code": "Pirmkods",
   "top": "Ritināt uz augšu",
   "reset": "Atiestatīt",
-  "exit": "Iziet no lietotnes"
+  "exit": "Iziet no lietotnes",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
