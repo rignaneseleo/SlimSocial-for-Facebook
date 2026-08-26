@@ -8,10 +8,13 @@
   "use_mbasic_desc": "Pracuje lepšie na starších zariadeniach alebo pomalších pripojeniach",
   "recent_first": "Zobraziť nedávne príspevky ako prvé",
   "hide_ads": "Skryť niektoré reklamy (experimentálne)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "štýl",
   "dark_theme": "Povoliť tmavý režim",
   "fixed_bar": "Pevná horná lišta",
   "hide_stories": "Skryť príbehy",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Vycentrovať text na príspevkoch",
   "add_space": "Pridať medzeru medzi príspevkami",
   "text_zoom": "Veľkosť textu",
@@ -72,5 +75,8 @@
   "source_code": "Zdrojový kód",
   "top": "Prejsť hore",
   "reset": "Resetovať",
-  "exit": "Ukončiť aplikáciu"
+  "exit": "Ukončiť aplikáciu",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
