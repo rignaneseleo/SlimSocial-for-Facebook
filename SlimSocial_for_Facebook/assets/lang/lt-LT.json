@@ -72,5 +72,11 @@
   "source_code": "Išeitinis kodas",
   "top": "Slinkti į viršų",
   "reset": "Atstatyti",
-  "exit": "Išeiti iš programėlės"
+  "exit": "Išeiti iš programėlės",
+  "hide_people_you_may_know": "Slėpti „Žmonės, kuriuos galbūt pažįstate“",
+  "hide_reels": "Slėpti reels",
+  "hide_messenger_sidebar": "Slėpti Messenger šoninę juostą",
+  "error_page_offline": "Nepavyko įkelti Facebook. Patikrinkite ryšį ir bandykite dar kartą.",
+  "retry": "Bandyti dar kartą",
+  "ads_blocked_count": "Iki šiol paslėpta: {}"
 }

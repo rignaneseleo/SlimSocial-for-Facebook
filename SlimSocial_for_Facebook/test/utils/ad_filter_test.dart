@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 
@@ -54,6 +56,15 @@ void main() {
       expect(kSponsoredLabels, contains('広告'));
       expect(kSponsoredLabels, contains('광고'));
     });
+
+    test('bundles the Indic labels no lang file can supply', () {
+      // Punjabi, Gujarati and Kannada have no `assets/lang` entry, so the
+      // runtime extra cannot put them back: dropping them from the bundle
+      // takes label detection away from those accounts entirely.
+      expect(kSponsoredLabels, contains('ਸਰਪ੍ਰਸਤ'));
+      expect(kSponsoredLabels, contains('સ્પોન્સર્ડ'));
+      expect(kSponsoredLabels, contains('ಪ್ರಾಯೋಜಿತ'));
+    });
   });
 
   final script = adFilterScript(
@@ -75,6 +86,73 @@ void main() {
     test('bounds substring matching so prose mentioning the word is spared', () {
       expect(script, contains('lower.length < MIN_LEN'));
       expect(script, contains('lower.length >= MAX_LEN'));
+    });
+
+    test('leaves every bundled label inside the length window', () {
+      // Both gates reject at `>= MAX_LEN`, so a label at or above the bound can
+      // never match no matter how many locales carry it.
+      final maxLen = _maxLen(script);
+
+      for (final label in kSponsoredLabels) {
+        expect(
+          label.length,
+          lessThan(maxLen),
+          reason: '"$label" is $maxLen units or longer and can never match',
+        );
+      }
+    });
+
+    test('bounds each label by its own length, not by the longest one', () {
+      // The global cap has to clear the longest label bundled, which on its own
+      // would let a sentence that long match the shortest one: "sponsored" is 9
+      // units, and a 30-unit line of prose containing it is not an advert.
+      expect(script, contains('function fits(text, label)'));
+      expect(script, contains('text.length < label.length + SLACK'));
+      expect(script, contains('if (!fits(lower, LABELS[i])) continue;'));
+      expect(script, contains('if (memo && fits(lower, memo)'));
+
+      final shortest = kSponsoredLabels
+          .where((l) => l.length >= kMinSponsoredLabelLength)
+          .map((l) => l.length)
+          .reduce((a, b) => a < b ? a : b);
+
+      expect(shortest + kSponsoredLabelSlack, lessThan(_maxLen(script)));
+    });
+
+    test('widens the window rather than dropping a long runtime extra', () {
+      // 33 UTF-16 units, longer than anything bundled, so the bound can only
+      // clear it if it is derived from the labels actually in the script.
+      const extra = 'പ്രവര്‍ത്തിച്ചിരിക്കുന്നത് പരസ്യം';
+      final withExtra = adFilterScript(
+        placeholderText: 'x',
+        extraLabels: const [extra],
+      );
+
+      expect(_maxLen(withExtra), greaterThan(extra.length));
+    });
+
+    test('pins every href marker to a Facebook address', () {
+      // This tier runs against the whole post container before any text is
+      // looked at, and a hit removes the post without a trace. A bare
+      // `a[href*="sponsored"]` therefore deleted an organic post that merely
+      // linked to some site's sponsored-content policy.
+      final start =
+          script.indexOf('post.querySelector(') + 'post.querySelector('.length;
+      final selector = jsonDecode(
+        script.substring(start, script.indexOf(')', start)),
+      ) as String;
+
+      final hrefMarkers =
+          selector.split(', ').where((s) => s.contains('href')).toList();
+
+      expect(hrefMarkers, isNotEmpty);
+      for (final marker in hrefMarkers) {
+        expect(
+          marker.contains('[href^="/') || marker.contains('facebook.com/'),
+          isTrue,
+          reason: '$marker matches an ordinary outbound link',
+        );
+      }
     });
 
     test('matches short labels against the whole string, not a substring', () {
@@ -179,10 +257,28 @@ void main() {
       expect(script, contains('slim-ad-checked'));
     });
 
-    test('only marks a post cleared once it has rendered text', () {
+    test('only marks a post cleared once it has stopped hydrating', () {
       // A post still filling in must be looked at again, or a late-rendered
-      // label would be missed permanently.
-      expect(script, contains("post.querySelector('span')"));
+      // label would be missed permanently. Facebook renders the spans first and
+      // streams the text in after, so neither a span existing nor the first
+      // words arriving proves the label is up — and the class is never removed,
+      // so marking too early hides the advert forever.
+      expect(script, contains('if (isSettled(post)) post.classList.add'));
+      expect(script, contains("(els[i].textContent || '').trim().length > 0"));
+      expect(
+        script,
+        isNot(contains("if (post.querySelector('span')) post.classList.add")),
+      );
+    });
+
+    test('settles a post on a span count that stopped moving', () {
+      // The count is what makes a late label buy another look: text arriving
+      // changes it, so the post cannot retire on the pass before its chip lands.
+      // Comparing against the stored count also retires a post that never fills
+      // in, so the skip list still bounds the work on a long feed.
+      expect(script, contains("post.getAttribute('data-slim-spans')"));
+      expect(script, contains("post.setAttribute('data-slim-spans', rendered)"));
+      expect(script, contains('return seen !== null && +seen === rendered;'));
     });
   });
 
@@ -203,10 +299,23 @@ void main() {
       expect(on, contains('persone che potresti conoscere'));
     });
 
-    test('hides the carousel rather than collapsing it as an advert', () {
-      // It is not an advert, so it gets no "ad removed" stub.
+    test('gives the carousel the same scroller bookkeeping as an advert', () {
+      // Setting display:none on its own leaves data-actual-height and the
+      // inline height untouched, so the virtualising scroller keeps a
+      // screen-tall slot reserved for a carousel that occupies nothing.
+      final branch = _pymkBranch(script);
+
       expect(script, contains('isPeopleYouMayKnow'));
-      expect(script, contains("post.style.display = 'none'"));
+      expect(branch, contains('collapse(post)'));
+      expect(branch, isNot(contains("post.style.display = 'none'")));
+    });
+
+    test('keeps the carousel out of the advert tally', () {
+      // The number is shown as the description of the "hide ads" tile, so a
+      // hidden carousel must not inflate it while that switch is off.
+      expect(_pymkBranch(script), isNot(contains('ads++')));
+      expect(script, contains('postMessage(String(ads))'));
+      expect(script, isNot(contains('postMessage(String(handled))')));
     });
 
     test('can run with sponsored hiding switched off', () {
@@ -268,3 +377,13 @@ void main() {
     });
   });
 }
+
+int _maxLen(String script) => int.parse(
+      RegExp(r'var MAX_LEN = (\d+);').firstMatch(script)!.group(1)!,
+    );
+
+/// The body of the "people you may know" branch of the filter's main loop.
+String _pymkBranch(String script) => script.substring(
+      script.indexOf('if (isPeopleYouMayKnow(post))'),
+      script.indexOf('if (!isSponsoredPost(post))'),
+    );

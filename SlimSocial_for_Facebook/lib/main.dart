@@ -100,6 +100,9 @@ Future<void> main() async {
         ],
         path: 'assets/lang',
         fallbackLocale: const Locale('en', 'US'),
+        // Without this the fallback file is never loaded, so a key missing from
+        // the active locale renders as the raw key string instead of English.
+        useFallbackTranslations: true,
         child: const SlimSocialApp(),
       ),
     ),

@@ -72,5 +72,11 @@
   "source_code": "Mã nguồn",
   "top": "Cuộn lên đầu trang",
   "reset": "Đặt lại",
-  "exit": "Thoát ứng dụng"
+  "exit": "Thoát ứng dụng",
+  "hide_people_you_may_know": "Ẩn \"Những người bạn có thể biết\"",
+  "hide_reels": "Ẩn Reels",
+  "hide_messenger_sidebar": "Ẩn thanh bên Messenger",
+  "error_page_offline": "Không thể tải Facebook. Hãy kiểm tra kết nối và thử lại.",
+  "retry": "Thử lại",
+  "ads_blocked_count": "Đã ẩn {} cho đến nay"
 }

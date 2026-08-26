@@ -72,5 +72,11 @@
   "source_code": "Källkod",
   "top": "Rulla till toppen",
   "reset": "Återställ",
-  "exit": "Avsluta appen"
+  "exit": "Avsluta appen",
+  "hide_people_you_may_know": "Dölj \"Personer du kanske känner\"",
+  "hide_reels": "Dölj reels",
+  "hide_messenger_sidebar": "Dölj Messengers sidofält",
+  "error_page_offline": "Facebook kunde inte läsas in. Kontrollera din anslutning och försök igen.",
+  "retry": "Försök igen",
+  "ads_blocked_count": "{} dolda hittills"
 }

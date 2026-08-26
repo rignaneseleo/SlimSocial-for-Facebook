@@ -10,6 +10,15 @@ import 'dart:convert';
 /// be no ad detection at all in Chinese, Japanese or Korean.
 const int kMinSponsoredLabelLength = 4;
 
+/// How much longer than a label the string carrying it may be before it stops
+/// looking like a label at all.
+///
+/// Facebook fuses two private-use glyphs into the live label and sprinkles bidi
+/// marks through bylines; `clean` strips both, but the raw-text gate sees them,
+/// so the allowance covers those four units plus the separator and punctuation a
+/// byline puts around the word.
+const int kSponsoredLabelSlack = 8;
+
 /// Labels Facebook uses to mark a sponsored post, lowercase, one or more per
 /// supported locale.
 ///
@@ -71,11 +80,15 @@ const List<String> kSponsoredLabels = [
   'حمایت شده',
   'رعاية',
   'ممول',
-  // Indic
+  // Indic. Punjabi, Gujarati and Kannada ship no `assets/lang` file, so the
+  // runtime extra cannot supply them and this bundle is their only source.
   'प्रायोजित',
   'স্পনসরড',
+  'ਸਰਪ੍ਰਸਤ',
+  'સ્પોન્સર્ડ',
   'பரிந்துரைக்கப்பட்டது',
   'ప్రాయోజించబడిన',
+  'ಪ್ರಾಯೋಜಿತ',
   'പ്രവര്‍ത്തിച്ചിരിക്കുന്നത്',
   // Thai
   'โฆษณา',
@@ -100,9 +113,16 @@ const String kAdCountChannelName = 'SlimAdCount';
 /// Checked before any text matching: they do not depend on the viewer's
 /// language and a single `querySelector` is far cheaper than walking every
 /// descendant's text content.
+///
+/// Every href marker is pinned to a Facebook address — a relative path, or the
+/// host written out — because this tier is tested against the whole post
+/// container and a match takes the post out of the feed without a trace. A bare
+/// `a[href*="sponsored"]` used to be here and matched any outbound link whose
+/// URL merely contained the word, so an organic post linking to a site's own
+/// sponsored-content policy disappeared with no way for the reader to find it.
 const String _sponsoredMarkerSelector =
-    '[data-ft*="is_sponsored"], [data-xt-vimp], a[href*="/ads/about/"], '
-    'a[href*="client_token="], a[href*="sponsored"]';
+    '[data-ft*="is_sponsored"], [data-xt-vimp], a[href^="/ads/about/"], '
+    'a[href*="facebook.com/ads/about/"], a[href^="/"][href*="client_token="]';
 
 /// Containers that hold a single feed post.
 ///
@@ -172,6 +192,17 @@ String adFilterScript({
   final exactLabels =
       all.where((l) => l.length < kMinSponsoredLabelLength).toList();
 
+  // Cheap upper bound on the length of a string worth testing at all, derived
+  // rather than fixed because a label longer than the bound is rejected by the
+  // very gates meant to protect it — that is how the 26-unit Malayalam entry
+  // became unreachable under a hard-coded 25. It only decides what reaches the
+  // matcher; each label carries its own tighter bound there.
+  final maxLength = all.fold<int>(
+        kMinSponsoredLabelLength,
+        (longest, l) => l.length > longest ? l.length : longest,
+      ) +
+      kSponsoredLabelSlack;
+
   return '''
 (function () {
   var LABELS = ${jsonEncode(substringLabels)};
@@ -179,7 +210,8 @@ String adFilterScript({
   var PYMK_LABELS = ${jsonEncode(hidePeopleYouMayKnow ? kPeopleYouMayKnowLabels : const <String>[])};
   var HIDE_SPONSORED = $hideSponsored;
   var MIN_LEN = $kMinSponsoredLabelLength;
-  var MAX_LEN = 25;
+  var MAX_LEN = $maxLength;
+  var SLACK = $kSponsoredLabelSlack;
   var PLACEHOLDER = ${jsonEncode(placeholderText)};
   var memo = null;
 
@@ -195,6 +227,13 @@ String adFilterScript({
       .trim();
   }
 
+  // A label may only be sought in a string it could plausibly be the label of.
+  // The slack is what a byline adds around it — the advertiser's name, a
+  // separator, the sponsored chip's own punctuation.
+  function fits(text, label) {
+    return text.length < label.length + SLACK;
+  }
+
   function isSponsoredLabel(text) {
     if (!text) return false;
     var lower = clean(text).toLowerCase();
@@ -208,13 +247,16 @@ String adFilterScript({
     }
 
     // Everything else is a substring test, bounded so that an ordinary post
-    // merely mentioning the word is not hidden along with the real ads.
+    // merely mentioning the word is not hidden along with the real ads. The
+    // bound is per label, not global: a single cap wide enough for the longest
+    // label would let a sentence of that length match the shortest one.
     if (lower.length < MIN_LEN || lower.length >= MAX_LEN) return false;
 
     // Once one language has matched, every later post in the same feed is
     // almost certainly the same language, so try that one first.
-    if (memo && lower.indexOf(memo) !== -1) return true;
+    if (memo && fits(lower, memo) && lower.indexOf(memo) !== -1) return true;
     for (var i = 0; i < LABELS.length; i++) {
+      if (!fits(lower, LABELS[i])) continue;
       if (lower.indexOf(LABELS[i]) !== -1) {
         memo = LABELS[i];
         return true;
@@ -249,6 +291,26 @@ String adFilterScript({
       if (isSponsoredLabel(text)) return true;
     }
     return false;
+  }
+
+  // Facebook renders a post's spans empty and streams the text in over several
+  // frames, so neither an empty post nor a half-filled one is evidence that the
+  // label has arrived: a post whose byline is up but whose sponsored chip lands
+  // a frame later would be retired before it ever looked like an advert.
+  //
+  // A post is settled once the count of spans holding text stops moving between
+  // passes. A label arriving late changes the count and buys another look; a
+  // post that never fills in — media only — matches itself on the second pass
+  // and retires, so the skip list still bounds the work on a long feed.
+  function isSettled(post) {
+    var els = post.querySelectorAll('span');
+    var rendered = 0;
+    for (var i = 0; i < els.length; i++) {
+      if ((els[i].textContent || '').trim().length > 0) rendered++;
+    }
+    var seen = post.getAttribute('data-slim-spans');
+    post.setAttribute('data-slim-spans', rendered);
+    return seen !== null && +seen === rendered;
   }
 
   function collapse(post) {
@@ -303,6 +365,7 @@ String adFilterScript({
 
   window.slimRemoveAds = function () {
     var handled = 0;
+    var ads = 0;
     var posts = document.querySelectorAll(${jsonEncode(_postSelector)});
     for (var i = 0; i < posts.length; i++) {
       var post = posts[i];
@@ -311,32 +374,34 @@ String adFilterScript({
       // Already examined and cleared. Without this every pass re-walks every
       // post in the document, so the cost grows as the feed grows and each
       // scroll burst pays for the whole feed again. Only marked once the post
-      // has actually rendered some text, so a placeholder that is still filling
-      // in gets looked at again on the next pass.
+      // has stopped hydrating, so one still filling in gets looked at again.
       if (post.classList.contains('slim-ad-checked')) continue;
 
-      // A friend carousel is not an advert, so it is hidden outright rather
-      // than collapsed behind the "ad removed" stub.
+      // A friend carousel is not an advert, but it is taken out of the page the
+      // same way: the scroller's bookkeeping is about the hole left behind, not
+      // about why the post went.
       if (isPeopleYouMayKnow(post)) {
-        post.classList.add('slim-ad-handled');
-        post.style.display = 'none';
+        collapse(post);
         handled++;
         continue;
       }
 
       if (!isSponsoredPost(post)) {
-        if (post.querySelector('span')) post.classList.add('slim-ad-checked');
+        if (isSettled(post)) post.classList.add('slim-ad-checked');
         continue;
       }
       collapse(post);
       handled++;
+      ads++;
     }
 
-    // Report only what this pass hid. Dart accumulates, so a reload or an
-    // in-page navigation does not restart the count from zero.
-    if (handled > 0) {
+    // Report only the adverts this pass hid: the tally is shown as the ad
+    // filter's own count, so a hidden friend carousel must not swell a number
+    // the user reads next to a switch that may well be off. Dart accumulates,
+    // so a reload or an in-page navigation does not restart from zero.
+    if (ads > 0) {
       try {
-        window.$kAdCountChannelName.postMessage(String(handled));
+        window.$kAdCountChannelName.postMessage(String(ads));
       } catch (e) {}
     }
 

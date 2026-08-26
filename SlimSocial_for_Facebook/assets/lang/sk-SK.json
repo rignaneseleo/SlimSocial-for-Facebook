@@ -72,5 +72,11 @@
   "source_code": "Zdrojový kód",
   "top": "Prejsť hore",
   "reset": "Resetovať",
-  "exit": "Ukončiť aplikáciu"
+  "exit": "Ukončiť aplikáciu",
+  "hide_people_you_may_know": "Skryť „Ľudia, ktorých možno poznáte“",
+  "hide_reels": "Skryť reels",
+  "hide_messenger_sidebar": "Skryť bočný panel Messengera",
+  "error_page_offline": "Facebook sa nepodarilo načítať. Skontrolujte pripojenie a skúste to znova.",
+  "retry": "Skúsiť znova",
+  "ads_blocked_count": "Zatiaľ skrytých: {}"
 }

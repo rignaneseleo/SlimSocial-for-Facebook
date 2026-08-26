@@ -72,5 +72,11 @@
   "source_code": "Bronkode",
   "top": "Rol na bo",
   "reset": "Stel terug",
-  "exit": "Verlaat app"
+  "exit": "Verlaat app",
+  "hide_people_you_may_know": "Versteek \"Mense wat jy dalk ken\"",
+  "hide_reels": "Versteek reels",
+  "hide_messenger_sidebar": "Versteek die Messenger-kantbalk",
+  "error_page_offline": "Kon nie Facebook laai nie. Kontroleer jou verbinding en probeer weer.",
+  "retry": "Probeer weer",
+  "ads_blocked_count": "{} tot dusver versteek"
 }

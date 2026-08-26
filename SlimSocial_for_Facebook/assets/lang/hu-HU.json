@@ -72,5 +72,11 @@
   "source_code": "Forráskód",
   "top": "Görgetés a tetejére",
   "reset": "Visszaállítás",
-  "exit": "Kilépés az alkalmazásból"
+  "exit": "Kilépés az alkalmazásból",
+  "hide_people_you_may_know": "Az „Ismerősnek tűnő emberek” elrejtése",
+  "hide_reels": "Reels elrejtése",
+  "hide_messenger_sidebar": "A Messenger oldalsávjának elrejtése",
+  "error_page_offline": "A Facebook nem tölthető be. Ellenőrizd a kapcsolatot, és próbáld újra.",
+  "retry": "Újrapróbálkozás",
+  "ads_blocked_count": "Eddig {} elrejtve"
 }

@@ -72,5 +72,11 @@
   "source_code": "Pirmkods",
   "top": "Ritināt uz augšu",
   "reset": "Atiestatīt",
-  "exit": "Iziet no lietotnes"
+  "exit": "Iziet no lietotnes",
+  "hide_people_you_may_know": "Paslēpt “Cilvēki, kurus tu varētu pazīt”",
+  "hide_reels": "Paslēpt reels",
+  "hide_messenger_sidebar": "Paslēpt Messenger sānjoslu",
+  "error_page_offline": "Neizdevās ielādēt Facebook. Pārbaudi savienojumu un mēģini vēlreiz.",
+  "retry": "Mēģināt vēlreiz",
+  "ads_blocked_count": "Līdz šim paslēpti: {}"
 }

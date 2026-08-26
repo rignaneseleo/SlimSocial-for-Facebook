@@ -72,5 +72,11 @@
   "source_code": "Lähdekoodi",
   "top": "Vieritä ylös",
   "reset": "Palauta",
-  "exit": "Sulje sovellus"
+  "exit": "Sulje sovellus",
+  "hide_people_you_may_know": "Piilota \"Ehkä tunnet nämä\"",
+  "hide_reels": "Piilota reelsit",
+  "hide_messenger_sidebar": "Piilota Messengerin sivupalkki",
+  "error_page_offline": "Facebookia ei voitu ladata. Tarkista yhteytesi ja yritä uudelleen.",
+  "retry": "Yritä uudelleen",
+  "ads_blocked_count": "Piilotettu {} tähän mennessä"
 }

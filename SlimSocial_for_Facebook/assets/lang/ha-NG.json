@@ -72,5 +72,11 @@
   "source_code": "Lambar tushe",
   "top": "Koma sama",
   "reset": "Sake saitawa",
-  "exit": "Fita daga manhaja"
+  "exit": "Fita daga manhaja",
+  "hide_people_you_may_know": "Ɓoye \"Mutanen da wataƙila ka sani\"",
+  "hide_reels": "Ɓoye reels",
+  "hide_messenger_sidebar": "Ɓoye sandar gefen Messenger",
+  "error_page_offline": "An kasa loda Facebook. Duba haɗin ka sannan ka sake gwadawa.",
+  "retry": "Sake gwadawa",
+  "ads_blocked_count": "An ɓoye {} zuwa yanzu"
 }

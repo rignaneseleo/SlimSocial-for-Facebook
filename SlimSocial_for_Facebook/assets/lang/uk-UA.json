@@ -72,5 +72,11 @@
   "source_code": "Вихідний код",
   "top": "Прокрутити догори",
   "reset": "Скинути",
-  "exit": "Вийти з додатка"
+  "exit": "Вийти з додатка",
+  "hide_people_you_may_know": "Приховувати «Люди, яких ви можете знати»",
+  "hide_reels": "Приховувати Reels",
+  "hide_messenger_sidebar": "Приховувати бічну панель Messenger",
+  "error_page_offline": "Не вдалося завантажити Facebook. Перевірте з'єднання та повторіть спробу.",
+  "retry": "Повторити",
+  "ads_blocked_count": "Приховано: {}"
 }

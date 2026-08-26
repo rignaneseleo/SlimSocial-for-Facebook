@@ -55,8 +55,13 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
           onPageStarted: (String url) async {
+            //the delegate outlives this State: the route pops while loads are
+            //still in flight, and context/ref are unusable once that happens
+            if (!mounted) return;
+
             //inject the css as soon as the DOM is loaded
             await injectCss();
+            if (!mounted) return;
 
             //re-read the zoom, so changing it in the settings takes effect on
             //the next load instead of needing the app restarted
@@ -67,6 +72,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
             if (kDebugMode) debugPrint(url);
           },
           onProgress: (int progress) {
+            if (!mounted) return;
+
             setState(() {
               isLoading = progress < 100;
             });
@@ -149,12 +156,16 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
+        if (!mounted) return NavigationDecision.prevent;
+
         ref.read(fbWebViewProvider.notifier).updateUrl(request.url);
         Navigator.of(context).pop();
         //todo hide msg
         return NavigationDecision.prevent;
       }
     }
+
+    if (!mounted) return NavigationDecision.prevent;
 
     // open on webview
     print("Launching external url: ${request.url}");

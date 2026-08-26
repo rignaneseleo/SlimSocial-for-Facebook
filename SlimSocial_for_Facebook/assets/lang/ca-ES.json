@@ -72,5 +72,11 @@
   "source_code": "Codi font",
   "top": "Torna a dalt",
   "reset": "Restableix",
-  "exit": "Surt de l'aplicació"
+  "exit": "Surt de l'aplicació",
+  "hide_people_you_may_know": "Amaga «Persones que potser coneixes»",
+  "hide_reels": "Amaga els reels",
+  "hide_messenger_sidebar": "Amaga la barra lateral del Messenger",
+  "error_page_offline": "No s'ha pogut carregar el Facebook. Comprova la connexió i torna-ho a provar.",
+  "retry": "Torna-ho a provar",
+  "ads_blocked_count": "{} amagats fins ara"
 }

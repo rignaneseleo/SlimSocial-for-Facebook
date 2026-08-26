@@ -111,10 +111,27 @@ class CustomCss {
   static MyCss hideStoriesCss = MyCss(
     key: 'hide_stories',
     description: 'Hide stories',
+    // The `:has()` selectors are a rule of their own on purpose: an unsupported
+    // selector invalidates the entire selector list it sits in, so keeping them
+    // next to `#MStoriesTray` would drop that fallback on any WebView older
+    // than Chromium 105 — precisely the devices it is kept for.
+    //
+    // The :not() is the same guard the reels rule carries, and for the same
+    // reason: feed posts are direct children of this vscroller, so without it
+    // one stray aria-label — "Share to your story", or the "story" inside
+    // "History" — hides a real post.
     code: '#MStoriesTray, '
-        'div[data-type="vscroller"] > div[data-srat], '
-        'div[data-type="vscroller"] > div:has([aria-label^="Create story"]), '
-        'div[data-type="vscroller"] > div:has([aria-label*="story" i]) '
+        'div[data-type="vscroller"] > div[data-srat] '
+        '{ display: none !important; } '
+        // The `:not(...):has(...)` chain cannot be split across adjacent
+        // strings: a line break between the two would need whitespace, and
+        // whitespace there is a descendant combinator, which changes what the
+        // rule matches.
+        // ignore: lines_longer_than_80_chars
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label^="Create story"]), '
+        // Same chain, unsplittable for the same reason.
+        // ignore: lines_longer_than_80_chars
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="story" i]) '
         '{ display: none !important; }',
   );
 
@@ -208,22 +225,21 @@ class CustomCss {
   /// Excluding any container that holds a form control means a composer can
   /// never be hidden, whatever Facebook renames the classes to, and without
   /// depending on a label that changes with the interface language.
+  ///
+  /// The other upsell — the blue "Open app" pill in the header of the Reels and
+  /// video pages — is deliberately not covered. The only thing that told it
+  /// apart from the rest of that unsuffixed `.fixed-container` was a `bg-sN`
+  /// class, and those numbers are assigned per page render: the same number is
+  /// a brand blue on one load and a divider grey on the next, so the rule hid
+  /// unrelated chrome far more often than it hid the pill. See
+  /// lib/utils/dark_theme.dart for the measurements.
   static MyCss hideAppUpsellCss = MyCss(
     key: 'hide_app_upsell',
     description: 'Hide the install-the-app bar',
     defaultEnabled: true,
     code: 'div.fixed-container.bottom'
         ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
-        ' { display: none !important; } '
-        //the second upsell: a blue "Open app" pill in the header of the Reels
-        //and video pages. A different element from the bottom bar — that one is
-        //`.fixed-container.bottom`, this one sits in an unsuffixed
-        //`.fixed-container` at the top, which is why the first rule missed it.
-        //Scoped to a bar so an ordinary blue button in the feed is untouched,
-        //and carrying the same form-control guard.
-        'div.fixed-container'
-        ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
-        ' .bg-s32 { display: none !important; }',
+        ' { display: none !important; }',
   );
 
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(

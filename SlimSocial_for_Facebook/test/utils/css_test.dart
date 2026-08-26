@@ -188,15 +188,16 @@ article {
       expect(keys, isNot(contains('hide_app_upsell')));
     });
 
-    test('also hides the header pill on the reels and video pages', () {
-      // A second, separate upsell: the bottom bar is `.fixed-container.bottom`,
-      // this is a blue pill inside an unsuffixed `.fixed-container` at the top,
-      // so the first rule did not reach it. Scoped to a bar so an ordinary blue
-      // button in the feed is left alone.
-      expect(CustomCss.hideAppUpsellCss.code, contains('.bg-s32'));
+    test('never keys off a generated surface class', () {
+      // The header pill was matched with `.bg-s32`, but the bg-sN number is
+      // assigned per page render: on most loads it was not the pill at all but
+      // some other chrome inside a fixed container, which then disappeared.
+      // This rule is injected unconditionally, so there is no toggle to undo
+      // it with.
       expect(
-        CustomCss.hideAppUpsellCss.code,
-        contains('div.fixed-container'),
+        RegExp(r'bg-s\d').hasMatch(CustomCss.hideAppUpsellCss.code),
+        isFalse,
+        reason: 'the bg-sN number means something different on every render',
       );
     });
 
@@ -233,6 +234,32 @@ article {
         contains('div[data-type="vscroller"] > div[data-srat]'),
         reason: 'stories rule needs a selector for the current layout',
       );
+    });
+
+    test('the stories rule cannot swallow a feed post', () {
+      // Same trap as the reels carousel: posts are direct children of the same
+      // vscroller, and "Share to your story" — or the "story" inside "History"
+      // — is one aria-label away from hiding one whole.
+      for (final selector in CustomCss.hideStoriesCss.code
+          .split(RegExp(r',|\{'))
+          .where((s) => s.contains(':has('))) {
+        expect(
+          selector,
+          contains(':not([data-tracking-duration-id]):has('),
+          reason: selector,
+        );
+      }
+    });
+
+    test('the legacy fallbacks do not share a rule with :has()', () {
+      // One unsupported selector invalidates the whole selector list, so on a
+      // WebView without :has() the `#MStoriesTray` fallback would be dropped
+      // along with it — and that fallback exists for exactly those devices.
+      final legacyRule = CustomCss.hideStoriesCss.code
+          .split('}')
+          .firstWhere((rule) => rule.contains('#MStoriesTray'));
+
+      expect(legacyRule, isNot(contains(':has(')));
     });
 
     test('there is a reels stylesheet', () {
