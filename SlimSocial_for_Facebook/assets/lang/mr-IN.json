@@ -8,10 +8,13 @@
   "use_mbasic_desc": "हिंडेरा विनंती किंवा संचार वेळाची माहिती संपूर्ण पाहण्यासाठी मूलभूत आवृत्ती चांगली काम करते",
   "recent_first": "नवीन संदेश पहिले दाखवा",
   "hide_ads": "काही प्रयोगशील प्रमाणावरती जाहिराती लपवा (प्रायोगिक)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "शैली",
   "dark_theme": "हिरवा थीम सक्षम करा",
   "fixed_bar": "फिक्सड टॉप बार",
   "hide_stories": "कथा लपवा",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "पोस्टवरील मध्यस्थान लावा",
   "add_space": "पोस्ट्स बीच जागा वाढवा",
   "text_zoom": "मजकुराचा आकार",
@@ -72,5 +75,8 @@
   "source_code": "सोर्स कोड",
   "top": "सर्वात वर जा",
   "reset": "रीसेट करा",
-  "exit": "अ‍ॅपमधून बाहेर पडा"
+  "exit": "अ‍ॅपमधून बाहेर पडा",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
