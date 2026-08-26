@@ -8,10 +8,13 @@
   "use_mbasic_desc": "E dey work beta for old phones or slow network",
   "recent_first": "Show new posts first",
   "hide_ads": "Hide some ads (we still dey test am)",
+  "hide_people_you_may_know": "Hide \"People you may know\"",
   "style": "style",
   "dark_theme": "Put on dark theme",
   "fixed_bar": "Top bar wey no dey move",
   "hide_stories": "Hide stories",
+  "hide_reels": "Hide reels",
+  "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Put post text for middle",
   "add_space": "Add space between posts",
   "text_zoom": "Text size",
@@ -72,5 +75,8 @@
   "source_code": "Source code",
   "top": "Go back up",
   "reset": "Reset",
-  "exit": "Comot from app"
+  "exit": "Comot from app",
+  "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
+  "retry": "Try again",
+  "ads_blocked_count": "{} hidden so far"
 }
