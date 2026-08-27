@@ -12,10 +12,15 @@ name: Release
 # The workflow can also be re-run for an existing tag via workflow_dispatch
 # (e.g. if Codemagic or the release step failed).
 
+# Deliberately NOT triggered by a tag push. Codemagic subscribes to tag pushes
+# itself (see triggering: in codemagic.yaml) and builds, publishes to Google Play
+# and needs no API token to do it. If this workflow also fired on a tag, two
+# builds would race to upload the same version code and one would be rejected.
+#
+# Kept as a manual entry point: once CODEMAGIC_API_TOKEN exists, running this by
+# hand against an existing tag rebuilds it and attaches the APK to a GitHub
+# release, which the Codemagic-only path does not do.
 on:
-  push:
-    tags:
-      - '[0-9]*.[0-9]*.[0-9]*\+[0-9]*'
   workflow_dispatch:
     inputs:
       tag:
