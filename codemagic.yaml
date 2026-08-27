@@ -1,46 +1,177 @@
 # Codemagic CI configuration (https://docs.codemagic.io/)
 #
-# The release-android workflow is not triggered by Codemagic webhooks: it is
-# started through the Codemagic REST API by the GitHub Actions workflow
-# .github/workflows/release.yml whenever a release tag (e.g. 26.08.05+119)
-# is pushed to master. The GitHub workflow then waits for this build,
-# downloads the universal APK and publishes the GitHub release.
+# The git tag is the single source of the version. Nothing here reads
+# pubspec.yaml's `version:` field: pubspec always describes the PREVIOUS
+# release, and reusing its build number is rejected by Play with
+# "Version code N has already been used" — which is exactly what happened
+# when the web-UI workflow built this app from pubspec.
+#
+# One build produces three things:
+#   * app bundle (.aab)    -> Google Play internal track, as a draft
+#   * universal APK (.apk) -> attached to the GitHub release by release.yml
+#   * mapping.txt          -> kept for crash deobfuscation
+#
+# Exactly ONE .apk is ever emitted. release.yml picks its release asset with
+#   jq -r '[.build.artefacts[] | select(.name | endswith(".apk"))][0].url'
+# which takes the first match with no tie-break, so a second .apk (from a
+# `flutter build apk` step, or --split-per-abi) would make the released binary
+# non-deterministic. Do not add one.
 
 workflows:
   release-android:
-    name: Release Android APK
+    # The workflow KEY must stay `release-android`: release.yml hardcodes it as
+    # CODEMAGIC_WORKFLOW_ID. The `name` below is cosmetic.
+    name: Release Android (Play internal draft + GitHub APK)
     instance_type: mac_mini_m2
+    # Kept at 45 deliberately: release.yml polls 90 times with sleep 30 (~45
+    # min). Raising this alone would let GitHub give up on a live build.
     max_build_duration: 45
     working_directory: SlimSocial_for_Facebook
     environment:
       android_signing:
-        # Must match the reference name of the upload keystore stored in
-        # Codemagic > Team settings > Code signing identities > Android.
-        # It exports CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS /
-        # CM_KEY_PASSWORD, which android/app/build.gradle.kts picks up.
+        # Reference name of the upload keystore in Codemagic > Team settings >
+        # Code signing identities > Android. Exports CM_KEYSTORE_PATH,
+        # CM_KEYSTORE_PASSWORD, CM_KEY_ALIAS and CM_KEY_PASSWORD, used by
+        # android/app/build.gradle.kts and by build-universal-apk below.
         - keystore_reference
+      groups:
+        # Must hold the secure variable GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        # (the full service-account JSON). Rename to the group's real name in
+        # the Codemagic UI.
+        - google_play
       flutter: fvm # version taken from .fvmrc in the repository root
       java: 17
     scripts:
       - name: Flutter pub get
         script: flutter pub get
-      - name: Build universal release APK with the version from the tag
+
+      - name: Resolve the version from the release tag
         script: |
           #!/usr/bin/env bash
           set -euo pipefail
-          # RELEASE_TAG is passed by the GitHub Actions workflow; CM_TAG is set
-          # by Codemagic itself when the build is started from a tag.
+          # RELEASE_TAG is passed by .github/workflows/release.yml in the REST
+          # API payload. CM_TAG is only set for builds started from a tag
+          # webhook, so it is unset on API-started builds; it is kept as
+          # defence in depth.
+          echo "trigger: ${CM_TRIGGER_SOURCE:-unknown} | CM_TAG='${CM_TAG:-}' | RELEASE_TAG='${RELEASE_TAG:-}'"
           TAG="${RELEASE_TAG:-${CM_TAG:-}}"
           if [[ ! "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+\+[0-9]+$ ]]; then
             echo "ERROR: no release tag found (RELEASE_TAG/CM_TAG)."
-            echo "Expected a tag like 26.08.05+119, got: '${TAG}'"
+            echo "Expected a tag like 26.08.28+121, got: '${TAG}'"
+            echo "This build publishes to Google Play, so it refuses to guess a version."
+            echo "To start it by hand, add RELEASE_TAG=<tag> as an environment variable"
+            echo "in the Codemagic 'Start new build' dialog. Picking the tag in the ref"
+            echo "selector is not enough - that is still an api-sourced build."
             exit 1
           fi
-          BUILD_NAME="${TAG%%+*}"
-          BUILD_NUMBER="${TAG##*+}"
+          BUILD_NAME="${TAG%%+*}"   # 26.08.28+121 -> 26.08.28  (versionName)
+          BUILD_NUMBER="${TAG##*+}" # 26.08.28+121 -> 121       (versionCode)
           echo "Building version ${BUILD_NAME} (build ${BUILD_NUMBER})"
-          flutter build apk --release \
+          mkdir -p build
+          {
+            echo "RELEASE_TAG_VALIDATED=${TAG}"
+            echo "BUILD_NAME=${BUILD_NAME}"
+            echo "BUILD_NUMBER=${BUILD_NUMBER}"
+          } > build/release_version.env
+
+      - name: Build the Android App Bundle with the version from the tag
+        script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          . build/release_version.env
+          flutter build appbundle --release \
             --build-name="$BUILD_NAME" \
             --build-number="$BUILD_NUMBER"
+
+      - name: Build the universal APK from the app bundle
+        script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          # Derived from the bundle so the GitHub APK and the Play artefact come
+          # from the same build and carry the same version code.
+          android-app-bundle build-universal-apk \
+            --bundle 'build/**/outputs/**/*.aab' \
+            --ks "$CM_KEYSTORE_PATH" \
+            --ks-pass "$CM_KEYSTORE_PASSWORD" \
+            --ks-key-alias "$CM_KEY_ALIAS" \
+            --key-pass "$CM_KEY_PASSWORD"
+
+      - name: Collect the release artefacts
+        script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          . build/release_version.env
+
+          # `sed -n 1p` rather than `head -1`: head closes the pipe early and
+          # SIGPIPE would trip `set -o pipefail`.
+          AAB="$(find build -type f -name '*.aab' | sed -n 1p)"
+          AAB_COUNT="$(find build -type f -name '*.aab' | wc -l | tr -d ' ')"
+          APK="$(find build -type f -name '*-universal.apk' | sed -n 1p)"
+          if [ -z "${APK}" ]; then
+            APK="$(find build -type f -name '*.apk' | sed -n 1p)"
+          fi
+          APK_COUNT="$(find build -type f -name '*.apk' | wc -l | tr -d ' ')"
+
+          if [ "$AAB_COUNT" != "1" ] || [ -z "$AAB" ]; then
+            echo "ERROR: expected exactly 1 .aab under build/, found ${AAB_COUNT}:"
+            find build -type f -name '*.aab'
+            exit 1
+          fi
+          if [ "$APK_COUNT" != "1" ] || [ -z "$APK" ]; then
+            echo "ERROR: expected exactly 1 .apk under build/, found ${APK_COUNT}:"
+            find build -type f -name '*.apk'
+            echo "release.yml attaches the FIRST .apk artefact to the GitHub release,"
+            echo "so more than one would make the released binary non-deterministic."
+            exit 1
+          fi
+
+          OUT="build/release_artifacts"
+          rm -rf "$OUT"
+          mkdir -p "$OUT"
+          BASE="SlimSocial-${BUILD_NAME}-${BUILD_NUMBER}"
+          cp "$AAB" "${OUT}/${BASE}.aab"
+          cp "$APK" "${OUT}/${BASE}.apk"
+          MAPPING="$(find build -type f -name 'mapping.txt' | sed -n 1p)"
+          if [ -n "$MAPPING" ]; then
+            cp "$MAPPING" "${OUT}/mapping.txt"
+          else
+            echo "note: no mapping.txt produced (code shrinking is probably off)."
+          fi
+          ls -lh "$OUT"
+
+      - name: Publish the app bundle to Google Play (internal track, draft)
+        script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          if [ ! -f build/release_version.env ]; then
+            echo "ERROR: build/release_version.env missing - refusing to publish."
+            exit 1
+          fi
+          . build/release_version.env
+          # Re-validated so this step can never publish from a build that did
+          # not pass the tag check above.
+          if [[ ! "${RELEASE_TAG_VALIDATED:-}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\+[0-9]+$ ]]; then
+            echo "ERROR: no validated release tag - refusing to publish to Google Play."
+            exit 1
+          fi
+          if [ -z "${GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS:-}" ]; then
+            echo "ERROR: GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS is not set."
+            echo "Add the Codemagic environment variable group that holds it to"
+            echo "environment.groups in codemagic.yaml (currently: 'google_play')."
+            exit 1
+          fi
+          AAB="build/release_artifacts/SlimSocial-${BUILD_NAME}-${BUILD_NUMBER}.aab"
+          echo "Publishing ${AAB} as versionCode ${BUILD_NUMBER} to the internal track (draft)"
+          # `@env:` is CLI-tools syntax and is correct here; it would be wrong
+          # inside a `publishing: google_play:` YAML block, which uses $VAR.
+          google-play bundles publish \
+            --credentials @env:GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS \
+            --bundle "$AAB" \
+            --track internal \
+            --in-app-update-priority 0 \
+            --draft
     artifacts:
-      - SlimSocial_for_Facebook/build/**/outputs/**/*.apk
+      # Relative to the clone root, so the SlimSocial_for_Facebook/ prefix stays
+      # even though working_directory is that folder. This directory is wiped
+      # and repopulated by the collect step: one .aab, one .apk, maybe mapping.
+      - SlimSocial_for_Facebook/build/release_artifacts/*
