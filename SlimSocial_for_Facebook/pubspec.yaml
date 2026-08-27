@@ -37,6 +37,8 @@ dependencies:
       url: https://github.com/postflow/open_file_plus.git
   native_flutter_proxy: 0.2.3
 
+  sentry_flutter: ^9.28.0
+
   webview_flutter_android: any
 dev_dependencies:
   fake_async: 1.3.3

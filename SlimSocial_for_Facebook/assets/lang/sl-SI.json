@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Skrij stransko vrstico Messengerja",
   "error_page_offline": "Facebooka ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.",
   "retry": "Poskusi znova",
-  "ads_blocked_count": "Doslej skritih: {}"
+  "ads_blocked_count": "Doslej skritih: {}",
+  "telemetry_reports": "Pošiljaj anonimna poročila",
+  "telemetry_reports_desc": "Anonimna poročila o sesutjih in okvarah pomagajo opaziti, kdaj sprememba na Facebooku pokvari aplikacijo. Osebni podatki in vsebina strani se ne pošiljajo. To lahko kadar koli izklopite."
 }

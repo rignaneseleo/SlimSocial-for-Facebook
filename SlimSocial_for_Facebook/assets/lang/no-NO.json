@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Skjul Messenger-sidepanelet",
   "error_page_offline": "Facebook kunne ikke lastes inn. Sjekk tilkoblingen og prøv igjen.",
   "retry": "Prøv igjen",
-  "ads_blocked_count": "{} skjult så langt"
+  "ads_blocked_count": "{} skjult så langt",
+  "telemetry_reports": "Send anonyme rapporter",
+  "telemetry_reports_desc": "Anonyme krasj- og feilrapporter hjelper med å oppdage når en endring på Facebook ødelegger appen. Ingen personopplysninger og ikke noe sideinnhold sendes. Du kan slå det av når som helst."
 }

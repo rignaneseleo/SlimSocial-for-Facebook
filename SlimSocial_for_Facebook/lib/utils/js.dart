@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
+
 class CustomJs {
   /// Builds JavaScript that appends [css] to the document in a `<style>` tag.
   ///
@@ -65,7 +67,20 @@ javascript:function foo() {
   if (window.slimAdObserver) return;
   // The filter defines this. If its injection did not land, every mutation
   // would otherwise throw a ReferenceError.
-  if (typeof window.slimRemoveAds !== 'function') return;
+  //
+  // Worth a word home before giving up. Android does not hand a page exception
+  // back through `runJavaScript`, so a filter that failed to install is
+  // invisible from Dart; this runs afterwards and is the only thing left that
+  // can see the gap. It reports at most once per injection, because the
+  // observer is installed — and this branch reached — once per page load.
+  if (typeof window.slimRemoveAds !== 'function') {
+    try {
+      window.$kDiagnosticsChannelName.postMessage(
+        JSON.stringify({ kind: ${jsonEncode(kDiagFilterMissing)}, data: {} })
+      );
+    } catch (e) {}
+    return;
+  }
 
   var pending = null;
   function schedule() {

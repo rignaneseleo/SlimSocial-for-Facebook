@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Messengerのサイドバーを非表示にする",
   "error_page_offline": "Facebookを読み込めませんでした。接続を確認してもう一度お試しください。",
   "retry": "再試行",
-  "ads_blocked_count": "これまでに{}件を非表示にしました"
+  "ads_blocked_count": "これまでに{}件を非表示にしました",
+  "telemetry_reports": "匿名レポートを送信",
+  "telemetry_reports_desc": "匿名のクラッシュ・不具合レポートは、Facebook側の変更でアプリが壊れたことに気づく助けになります。個人情報やページの内容は送信されません。いつでもオフにできます。"
 }

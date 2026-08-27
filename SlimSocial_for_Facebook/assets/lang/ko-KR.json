@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "메신저 사이드바 가리기",
   "error_page_offline": "Facebook을 불러오지 못했습니다. 연결을 확인한 후 다시 시도하세요.",
   "retry": "다시 시도",
-  "ads_blocked_count": "지금까지 {}개 숨김"
+  "ads_blocked_count": "지금까지 {}개 숨김",
+  "telemetry_reports": "익명 보고서 보내기",
+  "telemetry_reports_desc": "익명 오류 및 고장 보고서는 Facebook의 변경으로 앱이 망가진 시점을 파악하는 데 도움이 됩니다. 개인 정보나 페이지 내용은 전송되지 않습니다. 언제든지 끌 수 있습니다."
 }

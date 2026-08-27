@@ -72,5 +72,7 @@
   "retry": "Try again",
   "ads_blocked_count": "{} hidden so far",
   "hide_people_you_may_know": "Hide \"People you may know\"",
-  "hide_reels": "Hide reels"
+  "hide_reels": "Hide reels",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }

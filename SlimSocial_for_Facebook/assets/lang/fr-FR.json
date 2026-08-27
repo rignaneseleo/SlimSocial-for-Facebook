@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Masquer la barre latérale de Messenger",
   "error_page_offline": "Impossible de charger Facebook. Vérifiez votre connexion et réessayez.",
   "retry": "Réessayer",
-  "ads_blocked_count": "{} masqués jusqu'à présent"
+  "ads_blocked_count": "{} masqués jusqu'à présent",
+  "telemetry_reports": "Envoyer des rapports anonymes",
+  "telemetry_reports_desc": "Les rapports anonymes de plantage et de dysfonctionnement aident à repérer quand un changement de Facebook casse l'application. Aucune donnée personnelle ni contenu de page n'est envoyé. Vous pouvez le désactiver à tout moment."
 }

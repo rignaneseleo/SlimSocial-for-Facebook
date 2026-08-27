@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Nascondi la barra laterale di Messenger",
   "error_page_offline": "Impossibile caricare Facebook. Controlla la connessione e riprova.",
   "retry": "Riprova",
-  "ads_blocked_count": "{} nascosti finora"
+  "ads_blocked_count": "{} nascosti finora",
+  "telemetry_reports": "Invia segnalazioni anonime",
+  "telemetry_reports_desc": "Le segnalazioni anonime di crash e malfunzionamenti aiutano a capire quando una modifica di Facebook rompe l'app. Non vengono inviati dati personali né il contenuto delle pagine. Puoi disattivarle quando vuoi."
 }

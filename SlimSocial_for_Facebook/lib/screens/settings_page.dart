@@ -15,6 +15,7 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -214,6 +215,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 initialValue: sp.getBool(SpKeys.photosPermission) ?? false,
                 leading: const Icon(Icons.photo_camera_back_outlined),
                 title: Text('photo_permission'.tr()),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) async {
+                  await Telemetry.setEnabled(value);
+                  //Telemetry owns the stored value, so re-read it instead of
+                  //assuming the toggle took effect
+                  setState(() {});
+                },
+                initialValue: Telemetry.isEnabled,
+                leading: const Icon(Icons.bug_report_outlined),
+                title: Text('telemetry_reports'.tr()),
+                description: Text('telemetry_reports_desc'.tr()),
               ),
             ],
           ),

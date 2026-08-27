@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 
 void main() {
@@ -119,6 +120,58 @@ void main() {
         CustomJs.removeAdsObserver,
         contains("typeof window.slimRemoveAds !== 'function'"),
       );
+    });
+    test('says so when there was no filter to drive', () {
+      // Android does not hand a page exception back through `runJavaScript`, so
+      // a filter that failed to install leaves no trace on the Dart side. The
+      // observer runs after it and is the only thing left that can notice.
+      expect(
+        CustomJs.removeAdsObserver,
+        contains('window.$kDiagnosticsChannelName.postMessage'),
+      );
+      expect(
+        CustomJs.removeAdsObserver,
+        contains(jsonEncode(kDiagFilterMissing)),
+      );
+      expect(kDiagnosticFields, contains(kDiagFilterMissing));
+    });
+
+    test('still gives up when the filter is missing', () {
+      // Reporting is not a reason to carry on: installing an observer that
+      // calls a function which does not exist throws on every mutation.
+      final branch = CustomJs.removeAdsObserver.substring(
+        CustomJs.removeAdsObserver.indexOf("typeof window.slimRemoveAds"),
+        CustomJs.removeAdsObserver.indexOf('var pending'),
+      );
+
+      expect(branch, contains('return;'));
+      expect(branch, isNot(contains('observe(')));
+    });
+
+    test('reports nothing about the page itself', () {
+      // The signal is that the filter is absent. Nothing about what the page
+      // was showing when it happened belongs in it.
+      final payload = CustomJs.removeAdsObserver.substring(
+        CustomJs.removeAdsObserver.indexOf('postMessage'),
+        CustomJs.removeAdsObserver.indexOf('} catch (e) {}'),
+      );
+
+      expect(payload, contains('data: {}'));
+      expect(payload, isNot(contains('location')));
+      expect(payload, isNot(contains('textContent')));
+    });
+
+    test('posts a message the Dart side accepts and empties', () {
+      // The observer builds its payload by hand rather than through report(),
+      // so it is the one diagnostic that can drift out of step with what the
+      // channel will take.
+      final parsed = parseDiagnostic(
+        jsonEncode({'kind': kDiagFilterMissing, 'data': <String, Object?>{}}),
+      );
+
+      expect(parsed, isNotNull);
+      expect(parsed!.kind, kDiagFilterMissing);
+      expect(parsed.data, isEmpty);
     });
   });
 }

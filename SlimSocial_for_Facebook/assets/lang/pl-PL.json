@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Ukryj panel boczny Messengera",
   "error_page_offline": "Nie udało się załadować Facebooka. Sprawdź połączenie i spróbuj ponownie.",
   "retry": "Spróbuj ponownie",
-  "ads_blocked_count": "Do tej pory ukryto: {}"
+  "ads_blocked_count": "Do tej pory ukryto: {}",
+  "telemetry_reports": "Wysyłaj anonimowe raporty",
+  "telemetry_reports_desc": "Anonimowe raporty o awariach i usterkach pomagają zauważyć, kiedy zmiana na Facebooku psuje aplikację. Nie są wysyłane żadne dane osobowe ani treść stron. Możesz to wyłączyć w każdej chwili."
 }

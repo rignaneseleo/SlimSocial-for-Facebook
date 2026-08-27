@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Skrýt postranní panel Messengeru",
   "error_page_offline": "Facebook se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu.",
   "retry": "Zkusit znovu",
-  "ads_blocked_count": "Zatím skryto: {}"
+  "ads_blocked_count": "Zatím skryto: {}",
+  "telemetry_reports": "Odesílat anonymní hlášení",
+  "telemetry_reports_desc": "Anonymní hlášení o pádech a chybách pomáhají odhalit, když změna na Facebooku rozbije aplikaci. Neodesílají se žádné osobní údaje ani obsah stránek. Můžete to kdykoli vypnout."
 }

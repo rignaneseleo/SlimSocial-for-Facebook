@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Amaga la barra lateral del Messenger",
   "error_page_offline": "No s'ha pogut carregar el Facebook. Comprova la connexió i torna-ho a provar.",
   "retry": "Torna-ho a provar",
-  "ads_blocked_count": "{} amagats fins ara"
+  "ads_blocked_count": "{} amagats fins ara",
+  "telemetry_reports": "Envia informes anònims",
+  "telemetry_reports_desc": "Els informes anònims de fallades i errors ajuden a detectar quan un canvi de Facebook trenca l'aplicació. No s'envia cap dada personal ni cap contingut de les pàgines. Pots desactivar-ho quan vulguis."
 }

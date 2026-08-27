@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Fi pẹpẹ ẹ̀gbẹ́ Messenger pamọ́",
   "error_page_offline": "A kò lè gbé Facebook wọlé. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì gbìyànjú lẹ́ẹ̀kansí.",
   "retry": "Gbìyànjú lẹ́ẹ̀kansí",
-  "ads_blocked_count": "A ti fi {} pamọ́ títí di báyìí"
+  "ads_blocked_count": "A ti fi {} pamọ́ títí di báyìí",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }

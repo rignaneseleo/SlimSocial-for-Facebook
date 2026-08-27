@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Ɓoye sandar gefen Messenger",
   "error_page_offline": "An kasa loda Facebook. Duba haɗin ka sannan ka sake gwadawa.",
   "retry": "Sake gwadawa",
-  "ads_blocked_count": "An ɓoye {} zuwa yanzu"
+  "ads_blocked_count": "An ɓoye {} zuwa yanzu",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }

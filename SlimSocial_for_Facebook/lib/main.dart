@@ -11,6 +11,7 @@ import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
 late SharedPreferences sp;
@@ -24,7 +25,14 @@ final messengerWebViewProvider =
 late PackageInfo packageInfo;
 
 Future<void> main() async {
+  //the binding has to exist before Sentry can talk to the platform channel,
+  //and the rest of the startup runs inside the guarded runner so a failure
+  //while loading translations or preferences is reported instead of lost
   WidgetsFlutterBinding.ensureInitialized();
+  await Telemetry.init(_startApp);
+}
+
+Future<void> _startApp() async {
   await EasyLocalization.ensureInitialized();
   packageInfo = await PackageInfo.fromPlatform();
   sp = await SharedPreferences.getInstance();

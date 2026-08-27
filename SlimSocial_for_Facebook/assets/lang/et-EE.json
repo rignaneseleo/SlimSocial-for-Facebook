@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Peida Messengeri külgriba",
   "error_page_offline": "Facebooki ei õnnestunud laadida. Kontrolli ühendust ja proovi uuesti.",
   "retry": "Proovi uuesti",
-  "ads_blocked_count": "Seni peidetud: {}"
+  "ads_blocked_count": "Seni peidetud: {}",
+  "telemetry_reports": "Saada anonüümseid raporteid",
+  "telemetry_reports_desc": "Anonüümsed krahhi- ja tõrkeraportid aitavad märgata, kui Facebooki muudatus rakenduse katki teeb. Isikuandmeid ega lehtede sisu ei saadeta. Saad selle igal ajal välja lülitada."
 }

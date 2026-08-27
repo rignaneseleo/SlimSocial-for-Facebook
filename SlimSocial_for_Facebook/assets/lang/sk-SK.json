@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Skryť bočný panel Messengera",
   "error_page_offline": "Facebook sa nepodarilo načítať. Skontrolujte pripojenie a skúste to znova.",
   "retry": "Skúsiť znova",
-  "ads_blocked_count": "Zatiaľ skrytých: {}"
+  "ads_blocked_count": "Zatiaľ skrytých: {}",
+  "telemetry_reports": "Odosielať anonymné hlásenia",
+  "telemetry_reports_desc": "Anonymné hlásenia o pádoch a poruchách pomáhajú odhaliť, kedy zmena na Facebooku pokazí aplikáciu. Neodosielajú sa žiadne osobné údaje ani obsah stránok. Môžete to kedykoľvek vypnúť."
 }

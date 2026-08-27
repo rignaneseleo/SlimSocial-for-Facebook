@@ -336,6 +336,445 @@ void main() {
     });
   });
 
+  group('injection health', () {
+    final health = adFilterScript(placeholderText: 'x');
+
+    test('posts diagnostics on a channel of their own', () {
+      // The tally channel parses its payload as a bare integer, so a
+      // diagnostic sent there is dropped as garbage and vice versa.
+      expect(_diagnosticChannels(health), [kDiagnosticsChannelName]);
+      expect(kDiagnosticsChannelName, isNot(kAdCountChannelName));
+    });
+
+    test('funnels every diagnostic through the throttle', () {
+      // The gate is only worth anything if nothing can post around it: the
+      // filter runs on every debounced mutation, so a single unthrottled call
+      // site is thousands of messages per broken scroll.
+      final body = _functionBody(health, 'function report(kind, data)');
+
+      expect(body, contains('if (reported[kind]) return;'));
+      expect(body, contains('reported[kind] = true;'));
+      expect(
+        RegExp('window.$kDiagnosticsChannelName.postMessage')
+            .allMatches(health)
+            .length,
+        1,
+        reason: 'a diagnostic is posted outside report()',
+      );
+    });
+
+    test('reports only kinds the Dart side will accept', () {
+      // A kind the allowlist does not know is dropped on arrival, so an
+      // unlisted one is a signal that silently never reaches anybody.
+      final kinds = _reportedKinds(health);
+
+      expect(kinds, contains(kDiagNoPostsMatched));
+      expect(kinds, contains(kDiagScriptThrew));
+      for (final kind in kinds) {
+        expect(kDiagnosticFields, contains(kind));
+      }
+    });
+
+    test('sends only the fields declared for the kind it reports', () {
+      // Same trap in the other direction: a field added here but not to
+      // kDiagnosticFields is stripped before it leaves the app.
+      final stale = _objectKeys(_functionBody(health, 'function checkFeedHealth()'));
+      final threw = _objectKeys(_functionBody(health, 'function describe(e)'));
+
+      final staleFields = kDiagnosticFields[kDiagNoPostsMatched]!;
+      final threwFields = kDiagnosticFields[kDiagScriptThrew]!;
+
+      expect(stale, isNotEmpty);
+      expect(stale, everyElement(isIn(staleFields)));
+      expect(threw, isNotEmpty);
+      expect(threw, everyElement(isIn(threwFields)));
+    });
+
+    test('never reads anything out of the page into a payload', () {
+      // Post text, the address bar and the cookie jar all identify the person
+      // reading the feed. Counts and this file's own selectors do not.
+      for (final source in const [
+        'textContent',
+        'innerText',
+        'innerHTML',
+        'location.href',
+        'location.search',
+        'document.title',
+        'document.cookie',
+      ]) {
+        expect(
+          _functionBody(health, 'function checkFeedHealth()'),
+          isNot(contains(source)),
+        );
+        expect(_functionBody(health, 'function describe(e)'), isNot(contains(source)));
+      }
+    });
+
+    test('never sends the words an exception came with', () {
+      // The message is free text the page authors: a thrown string, an
+      // overridden toString, a TypeError quoting the expression that failed.
+      // Nothing here can tell those apart from the page writing a report of
+      // its own, so the message does not travel and is not even read.
+      final describe = _functionBody(health, 'function describe(e)');
+
+      expect(_objectKeys(describe).toSet(), {'error'});
+      expect(describe, isNot(contains('message')));
+      expect(kDiagnosticFields[kDiagScriptThrew], {'error'});
+    });
+
+    test('reduces the exception type to one of a handful of names', () {
+      // The type is the whole payload now, so it cannot be free text either:
+      // `e.name` is whatever the page assigned it.
+      final describe = _functionBody(health, 'function describe(e)');
+      final names = jsonDecode(
+        RegExp(r'var ERROR_NAMES = (\[.*?\]);').firstMatch(health)!.group(1)!,
+      ) as List<Object?>;
+
+      expect(names.toSet(), kDiagnosticErrorNames);
+      expect(names, contains('TypeError'));
+      expect(describe, contains('if (name === ERROR_NAMES[i]) return { error: name };'));
+      expect(describe, contains('return { error: OTHER };'));
+      expect(
+        jsonDecode(RegExp('var OTHER = (".*?");').firstMatch(health)!.group(1)!),
+        kDiagnosticOtherValue,
+      );
+    });
+
+    test('lets the Dart side check every string it may be sent', () {
+      // The channel is reachable by any script on the page, so the values are
+      // checked again on arrival — which only works if each one is a constant
+      // this file already knows.
+      for (final kind in _reportedKinds(health)) {
+        for (final field in kDiagnosticFields[kind]!) {
+          if (field == 'dom_size') continue;
+          expect(
+            kDiagnosticValues,
+            contains(field),
+            reason: '$field can carry a string nothing validates',
+          );
+        }
+      }
+      expect(kDiagnosticValues['error'], kDiagnosticErrorNames);
+      expect(kDiagnosticValues['selector'], {kPostSelector});
+      expect(kDiagnosticErrorNames, isNot(contains(kDiagnosticOtherValue)));
+    });
+
+    test('rounds the page size it reports', () {
+      // Only ever read as "did the page render at all", so an exact count is
+      // detail nobody needs and a fingerprint nobody should have.
+      expect(
+        _functionBody(health, 'function checkFeedHealth()'),
+        contains('Math.floor(divs / 100) * 100'),
+      );
+    });
+  });
+
+  group('the stale-selector signal', () {
+    final health = adFilterScript(placeholderText: 'x');
+
+    test('only fires where a feed was genuinely expected', () {
+      // Zero posts is the normal state of a photo view, a group, Marketplace
+      // and every settings page. Reporting from those is not a weaker signal,
+      // it is noise that buries the one case this exists for.
+      final body = _functionBody(health, 'function checkFeedHealth()');
+
+      expect(body, contains('if (sawPosts) return;'));
+      expect(body, contains('if (!isFeedPage()) return;'));
+      expect(body, contains("if (document.readyState !== 'complete') return;"));
+      expect(body, contains('if (divs < MIN_DIVS) return;'));
+    });
+
+    test("treats only the feed's own addresses as a feed", () {
+      final paths = jsonDecode(
+        RegExp(r'var FEED_PATHS = (\[.*?\]);').firstMatch(health)!.group(1)!,
+      ) as List<Object?>;
+
+      expect(paths, kFeedPaths);
+      expect(paths, contains('/'));
+      for (final other in const ['/watch', '/marketplace', '/groups', '/messages']) {
+        expect(paths, isNot(contains(other)));
+      }
+    });
+
+    test('stays quiet for a signed-out install', () {
+      // Facebook serves the login form at the feed's own address, so without
+      // this the signal fires on every launch of every signed-out install —
+      // the one population certain to see it.
+      final body = _functionBody(health, 'function isFeedPage()');
+
+      expect(body, contains('input[type="password"], input[name="pass"]'));
+      expect(body, contains('return false;'));
+    });
+
+    test('runs only on the layout the selector was measured against', () {
+      // Basic mode loads mbasic.facebook.com, whose markup has no
+      // data-tracking-duration-id at all: zero matched posts there is correct
+      // and permanent, so a domain-wide test would report a stale selector on
+      // every launch of every basic-mode install and never stop.
+      final body = _functionBody(health, 'function isFeedPage()');
+      final hosts = jsonDecode(
+        RegExp(r'var FEED_HOSTS = (\[.*?\]);').firstMatch(health)!.group(1)!,
+      ) as List<Object?>;
+
+      expect(hosts, kFeedHosts);
+      expect(hosts, contains('touch.facebook.com'));
+      expect(
+        body,
+        contains("FEED_HOSTS.indexOf(String(location.hostname || '')) === -1"),
+      );
+      // A suffix test on the domain is exactly what let the basic layout in.
+      expect(body, isNot(contains("'.facebook.com'")));
+    });
+
+    test('reports nothing at all from a layout it cannot read', () {
+      for (final other in const [
+        'mbasic.facebook.com',
+        'm.facebook.com',
+        'www.facebook.com',
+        'facebook.com',
+        'business.facebook.com',
+        'facebook.com.example.net',
+      ]) {
+        expect(kFeedHosts, isNot(contains(other)));
+      }
+    });
+
+    test('is the only thing the host gate decides', () {
+      // A narrow gate is safe precisely because losing it costs the signal and
+      // nothing else: the filter itself must never consult it.
+      expect(RegExp('isFeedPage').allMatches(health).length, 3);
+      expect(
+        _functionBody(health, 'function runPass()'),
+        isNot(contains('isFeedPage')),
+      );
+      expect(
+        _functionBody(health, 'function isSponsoredPost(post)'),
+        isNot(contains('isFeedPage')),
+      );
+    });
+
+    test('waits for the feed to arrive before judging it', () {
+      // The first pass runs at page-finished, when a feed legitimately holds
+      // no posts yet. One shot, late, is also the throttle for this signal.
+      final delay = int.parse(
+        RegExp(r'var HEALTH_DELAY_MS = (\d+);').firstMatch(health)!.group(1)!,
+      );
+
+      expect(delay, kFeedHealthDelayMs);
+      expect(delay, greaterThanOrEqualTo(5000));
+      expect(health, contains('setTimeout(checkFeedHealth, HEALTH_DELAY_MS)'));
+      expect(RegExp('checkFeedHealth').allMatches(health).length, 2);
+    });
+
+    test('one matched post anywhere in the page clears it', () {
+      // The scroller recycles nodes, so a later empty pass says nothing about
+      // the selector — only that nothing is on screen right now.
+      expect(health, contains('if (posts.length > 0) sawPosts = true;'));
+      expect(health, contains('var posts = document.querySelectorAll(POST_SELECTOR);'));
+    });
+
+    test('names the selector that went stale', () {
+      // Which selector broke is the whole point: the payload has to say it,
+      // and it is a constant from this file, not anything off the page.
+      final selector = jsonDecode(
+        RegExp('var POST_SELECTOR = (".*?");').firstMatch(health)!.group(1)!,
+      ) as String;
+
+      expect(selector, contains('data-tracking-duration-id'));
+      expect(
+        _functionBody(health, 'function checkFeedHealth()'),
+        contains('selector: POST_SELECTOR'),
+      );
+    });
+  });
+
+  group('a filter pass that throws', () {
+    final health = adFilterScript(placeholderText: 'x');
+
+    test('is reported instead of ending the pass in silence', () {
+      final wrapper = _functionBody(health, 'window.slimRemoveAds = function ()');
+
+      expect(wrapper, contains('return runPass();'));
+      expect(wrapper, contains('catch (e) {'));
+      expect(wrapper, contains('report(${jsonEncode(kDiagScriptThrew)}, describe(e));'));
+    });
+
+    test('keeps the observer alive afterwards', () {
+      // Re-throwing would take the observer's next mutation down with it, and
+      // a pass that failed on this mutation may well succeed on the next.
+      final wrapper = _functionBody(health, 'window.slimRemoveAds = function ()');
+
+      expect(wrapper, contains('return 0;'));
+      expect(wrapper, isNot(contains('throw e')));
+      expect(wrapper, isNot(contains('throw;')));
+    });
+  });
+
+  group('a message arriving on the diagnostics channel', () {
+    // The channel is registered into the page's own script world, so every
+    // test here is the case of a script on facebook.com posting to it directly
+    // rather than of our own filter reporting.
+    String post(String kind, Map<String, Object?> data) =>
+        jsonEncode({'kind': kind, 'data': data});
+
+    test('carries a known signal through', () {
+      final parsed = parseDiagnostic(
+        post(kDiagNoPostsMatched, {
+          'page': 'feed',
+          'selector': kPostSelector,
+          'dom_size': 400,
+        }),
+      );
+
+      expect(parsed, isNotNull);
+      expect(parsed!.kind, kDiagNoPostsMatched);
+      expect(parsed.data, {
+        'page': 'feed',
+        'selector': kPostSelector,
+        'dom_size': 400,
+      });
+    });
+
+    test('drops a signal the page named itself', () {
+      expect(parseDiagnostic(post('page.says.hello', {})), isNull);
+      expect(parseDiagnostic(post('injection', {})), isNull);
+      expect(
+        parseDiagnostic(jsonEncode({'kind': 42, 'data': <String, Object?>{}})),
+        isNull,
+      );
+      expect(parseDiagnostic(jsonEncode([kDiagScriptThrew])), isNull);
+      expect(parseDiagnostic('not json at all'), isNull);
+      expect(parseDiagnostic(''), isNull);
+    });
+
+    test('never lets a string field arrive as a number', () {
+      // Bounded, but a number in a field that is meant to be one of our own
+      // constants is still the page choosing what leaves the device, one value
+      // per page load. Only the field declared numeric may carry one.
+      final parsed = parseDiagnostic(
+        post(kDiagNoPostsMatched, {
+          'page': 1234,
+          'selector': 99,
+          'dom_size': 300,
+        }),
+      );
+
+      expect(parsed, isNotNull);
+      expect(parsed!.data.containsKey('page'), isFalse);
+      expect(parsed.data.containsKey('selector'), isFalse);
+      expect(parsed.data['dom_size'], 300);
+    });
+
+    test('never lets the numeric field arrive as a string', () {
+      final parsed = parseDiagnostic(
+        post(kDiagNoPostsMatched, {'dom_size': 'four hundred'}),
+      );
+
+      expect(parsed, isNotNull);
+      expect(parsed!.data.containsKey('dom_size'), isFalse);
+    });
+
+    test('cannot be told the user\'s own script failed', () {
+      // Raised from Dart only. The page must not be able to claim it, because
+      // the app treats that signal as one it may report without detail.
+      expect(parseDiagnostic(post(kDiagUserScriptThrew, {})), isNull);
+    });
+
+    test('never forwards a string the page wrote', () {
+      // The whole reason the free-text fields are gone: a script that has
+      // noticed the channel would otherwise use it to post whatever it liked
+      // off the device under a signal name the app does forward.
+      const secret = 'user@example.com read a post about being ill';
+      final parsed = parseDiagnostic(
+        post(kDiagNoPostsMatched, {
+          'page': secret,
+          'selector': secret,
+          'dom_size': 200,
+        }),
+      );
+
+      expect(parsed!.data['page'], kDiagnosticOtherValue);
+      expect(parsed.data['selector'], kDiagnosticOtherValue);
+      expect(parsed.data.values, isNot(contains(secret)));
+      expect(jsonEncode(parsed.data), isNot(contains('example.com')));
+    });
+
+    test('reduces an exception name to the allowlist', () {
+      for (final name in kDiagnosticErrorNames) {
+        expect(
+          parseDiagnostic(post(kDiagScriptThrew, {'error': name}))!.data,
+          {'error': name},
+        );
+      }
+
+      for (final hostile in const [
+        'https://facebook.com/story.php?id=1',
+        'CustomError: the page speaking',
+        'typeerror',
+        '',
+      ]) {
+        expect(
+          parseDiagnostic(post(kDiagScriptThrew, {'error': hostile}))!.data,
+          {'error': kDiagnosticOtherValue},
+        );
+      }
+    });
+
+    test('drops the message field the payload used to carry', () {
+      final parsed = parseDiagnostic(
+        post(kDiagScriptThrew, {
+          'error': 'TypeError',
+          'message': 'a is not a function at /friends/1234',
+        }),
+      );
+
+      expect(parsed!.data.keys, ['error']);
+      expect(parsed.data, isNot(contains('message')));
+    });
+
+    test('drops a field that is not listed for the signal', () {
+      final parsed = parseDiagnostic(
+        post(kDiagFilterMissing, {'page': 'feed', 'note': 'anything'}),
+      );
+
+      expect(parsed!.data, isEmpty);
+    });
+
+    test('drops a number wide enough to spell something out', () {
+      for (final value in const [-1, kDiagnosticIntLimit + 1, 1 << 52]) {
+        expect(
+          parseDiagnostic(post(kDiagNoPostsMatched, {'dom_size': value}))!.data,
+          isEmpty,
+        );
+      }
+      expect(
+        parseDiagnostic(post(kDiagNoPostsMatched, {'dom_size': 1.5}))!.data,
+        isEmpty,
+      );
+    });
+
+    test('survives a payload of the wrong shape entirely', () {
+      expect(parseDiagnostic(jsonEncode({'kind': kDiagScriptThrew})), isNotNull);
+      expect(
+        parseDiagnostic(
+          jsonEncode({'kind': kDiagScriptThrew, 'data': 'a string'}),
+        )!
+            .data,
+        isEmpty,
+      );
+      expect(
+        parseDiagnostic(
+          jsonEncode({
+            'kind': kDiagScriptThrew,
+            'data': <String, Object?>{'error': null},
+          }),
+        )!
+            .data,
+        isEmpty,
+      );
+    });
+  });
+
   group('adFilterScript label handling', () {
     test('drops a runtime extra that duplicates a bundled label', () {
       final withDuplicate = adFilterScript(
@@ -390,3 +829,37 @@ String _pymkBranch(String script) => script.substring(
       script.indexOf('if (isPeopleYouMayKnow(post))'),
       script.indexOf('if (!isSponsoredPost(post))'),
     );
+
+/// The body of a JavaScript function in [script], braces included.
+String _functionBody(String script, String header) {
+  final start = script.indexOf(header);
+  if (start == -1) throw StateError('no "$header" in the generated script');
+
+  final open = script.indexOf('{', start);
+  var depth = 0;
+  for (var i = open; i < script.length; i++) {
+    if (script[i] == '{') depth++;
+    if (script[i] == '}') {
+      depth--;
+      if (depth == 0) return script.substring(open, i + 1);
+    }
+  }
+  throw StateError('unbalanced braces after "$header"');
+}
+
+/// The channel names the script posts diagnostics on.
+List<String> _diagnosticChannels(String script) => RegExp(
+      r'window\.(\w+)\.postMessage\(\s*JSON\.stringify',
+    ).allMatches(script).map((m) => m.group(1)!).toSet().toList();
+
+/// The signal slugs the script can report.
+List<String> _reportedKinds(String script) =>
+    RegExp(r'report\(("(?:[^"\\]|\\.)*")').allMatches(script).map((m) {
+      return jsonDecode(m.group(1)!) as String;
+    }).toList();
+
+/// The keys of every object literal in [body].
+List<String> _objectKeys(String body) => RegExp(r'(?:\{|,)\s*(\w+):')
+    .allMatches(body)
+    .map((m) => m.group(1)!)
+    .toList();

@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Versteek die Messenger-kantbalk",
   "error_page_offline": "Kon nie Facebook laai nie. Kontroleer jou verbinding en probeer weer.",
   "retry": "Probeer weer",
-  "ads_blocked_count": "{} tot dusver versteek"
+  "ads_blocked_count": "{} tot dusver versteek",
+  "telemetry_reports": "Stuur anonieme verslae",
+  "telemetry_reports_desc": "Anonieme fout- en breukverslae help om raak te sien wanneer 'n verandering by Facebook die app breek. Geen persoonlike data en geen bladsy-inhoud word gestuur nie. Skakel dit enige tyd af."
 }

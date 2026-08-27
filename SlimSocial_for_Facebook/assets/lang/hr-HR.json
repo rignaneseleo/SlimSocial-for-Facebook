@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Sakrij bočnu traku Messengera",
   "error_page_offline": "Facebook se nije mogao učitati. Provjeri vezu i pokušaj ponovno.",
   "retry": "Pokušaj ponovno",
-  "ads_blocked_count": "Dosad skriveno: {}"
+  "ads_blocked_count": "Dosad skriveno: {}",
+  "telemetry_reports": "Šalji anonimne izvještaje",
+  "telemetry_reports_desc": "Anonimni izvještaji o rušenjima i kvarovima pomažu uočiti kada promjena na Facebooku pokvari aplikaciju. Ne šalju se nikakvi osobni podaci ni sadržaj stranica. To možete isključiti u bilo kojem trenutku."
 }

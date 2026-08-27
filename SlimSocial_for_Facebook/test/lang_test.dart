@@ -52,6 +52,10 @@ void main() {
         'permissions',
         'advanced',
         'style',
+        // The reporting toggle: an unlabelled row here would leave the user
+        // unable to tell what they are turning off.
+        'telemetry_reports',
+        'telemetry_reports_desc',
       ];
 
       for (final path in _fallbackLangFiles) {
@@ -131,6 +135,23 @@ void main() {
           reason: '$key in ${file.path} does not leave room for $count arg(s)',
         );
       });
+    }
+  });
+
+  test('the reporting toggle labels take no arguments in any locale', () {
+    // They are rendered with a bare `.tr()`, so a stray `{}` — easy to copy in
+    // from a neighbouring string — would reach the user verbatim.
+    for (final file in _allLangFiles()) {
+      final lang = _readLang(file.path);
+      for (final key in const ['telemetry_reports', 'telemetry_reports_desc']) {
+        final value = lang[key] as String?;
+        expect(value, isNotNull, reason: '$key missing from ${file.path}');
+        expect(
+          value,
+          isNot(contains('{}')),
+          reason: '$key in ${file.path} has a placeholder nothing fills',
+        );
+      }
     }
   });
 

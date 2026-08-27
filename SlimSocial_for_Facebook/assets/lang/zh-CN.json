@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "隐藏 Messenger 侧边栏",
   "error_page_offline": "无法加载 Facebook。请检查网络连接后重试。",
   "retry": "重试",
-  "ads_blocked_count": "已隐藏 {} 条"
+  "ads_blocked_count": "已隐藏 {} 条",
+  "telemetry_reports": "发送匿名报告",
+  "telemetry_reports_desc": "匿名的崩溃和故障报告有助于发现 Facebook 的改动何时让应用出问题。不会发送任何个人数据和页面内容。你可以随时关闭。"
 }

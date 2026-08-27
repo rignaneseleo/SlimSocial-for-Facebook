@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Paslēpt Messenger sānjoslu",
   "error_page_offline": "Neizdevās ielādēt Facebook. Pārbaudi savienojumu un mēģini vēlreiz.",
   "retry": "Mēģināt vēlreiz",
-  "ads_blocked_count": "Līdz šim paslēpti: {}"
+  "ads_blocked_count": "Līdz šim paslēpti: {}",
+  "telemetry_reports": "Sūtīt anonīmus ziņojumus",
+  "telemetry_reports_desc": "Anonīmi avāriju un kļūmju ziņojumi palīdz pamanīt, kad Facebook izmaiņas salauž lietotni. Netiek sūtīti nekādi personas dati un lapu saturs. To var izslēgt jebkurā brīdī."
 }

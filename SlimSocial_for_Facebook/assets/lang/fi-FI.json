@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Piilota Messengerin sivupalkki",
   "error_page_offline": "Facebookia ei voitu ladata. Tarkista yhteytesi ja yritä uudelleen.",
   "retry": "Yritä uudelleen",
-  "ads_blocked_count": "Piilotettu {} tähän mennessä"
+  "ads_blocked_count": "Piilotettu {} tähän mennessä",
+  "telemetry_reports": "Lähetä nimettömiä raportteja",
+  "telemetry_reports_desc": "Nimettömät kaatumis- ja virheraportit auttavat huomaamaan, kun Facebookin muutos rikkoo sovelluksen. Henkilötietoja tai sivujen sisältöä ei lähetetä. Voit kytkeä tämän pois päältä milloin tahansa."
 }
