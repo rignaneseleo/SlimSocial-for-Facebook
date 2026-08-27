@@ -27,6 +27,17 @@ workflows:
     # min). Raising this alone would let GitHub give up on a live build.
     max_build_duration: 45
     working_directory: SlimSocial_for_Facebook
+    # A tag push starts this build directly, so no API token is needed. CM_TAG
+    # is populated on a tag-triggered build and is what the version step reads.
+    # Because of this, .github/workflows/release.yml no longer starts a build on
+    # tag push - two builds racing to upload the same version code to Play is
+    # the failure this file exists to prevent.
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: '*'
+          include: true
     environment:
       android_signing:
         # Reference name of the upload keystore in Codemagic > Team settings >
