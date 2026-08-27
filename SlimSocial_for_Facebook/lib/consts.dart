@@ -110,6 +110,9 @@ class SpKeys {
   static const String recentFirst = "recent_first";
   static const String useMbasic = "use_mbasic";
 
+  /// Whether crash and health reporting may send anything. Unset means on.
+  static const String telemetryEnabled = "telemetry_enabled";
+
   static const String customUserAgent = "custom_useragent";
   static const String customCss = "custom_css";
   static const String customJs = "custom_js";

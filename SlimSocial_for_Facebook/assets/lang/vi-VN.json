@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Ẩn thanh bên Messenger",
   "error_page_offline": "Không thể tải Facebook. Hãy kiểm tra kết nối và thử lại.",
   "retry": "Thử lại",
-  "ads_blocked_count": "Đã ẩn {} cho đến nay"
+  "ads_blocked_count": "Đã ẩn {} cho đến nay",
+  "telemetry_reports": "Gửi báo cáo ẩn danh",
+  "telemetry_reports_desc": "Báo cáo sự cố và lỗi ẩn danh giúp phát hiện khi một thay đổi của Facebook làm hỏng ứng dụng. Không có dữ liệu cá nhân hay nội dung trang nào được gửi đi. Bạn có thể tắt bất cứ lúc nào."
 }

@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Skjul Messenger-sidepanelet",
   "error_page_offline": "Facebook kunne ikke indlæses. Tjek din forbindelse, og prøv igen.",
   "retry": "Prøv igen",
-  "ads_blocked_count": "{} skjult indtil videre"
+  "ads_blocked_count": "{} skjult indtil videre",
+  "telemetry_reports": "Send anonyme rapporter",
+  "telemetry_reports_desc": "Anonyme nedbruds- og fejlrapporter hjælper med at opdage, når en ændring på Facebook ødelægger appen. Der sendes ingen personlige data og intet sideindhold. Du kan slå det fra når som helst."
 }

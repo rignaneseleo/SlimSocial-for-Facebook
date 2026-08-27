@@ -21,6 +21,7 @@ import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
+import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -71,6 +72,10 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..addJavaScriptChannel(
         kAdCountChannelName,
         onMessageReceived: onAdCountMessage,
+      )
+      ..addJavaScriptChannel(
+        kDiagnosticsChannelName,
+        onMessageReceived: onDiagnosticsMessage,
       )
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -201,13 +206,39 @@ class _HomePageState extends ConsumerState<HomePage> {
   ///
   /// The payload comes from the page, so it is parsed defensively and anything
   /// unexpected is dropped rather than trusted into the stored total.
+  ///
+  /// A rejected payload is described, never quoted. Any script on facebook.com
+  /// can post here, `debugPrint` output is collected as a breadcrumb on
+  /// whatever is reported next, and a log line that reproduces the payload
+  /// turns the reject path into the page's own way off the device.
   void onAdCountMessage(JavaScriptMessage message) {
     final count = int.tryParse(message.message.trim());
     if (count == null || count <= 0) {
-      debugPrint("ignored ad count: ${message.message}");
+      debugPrint("ignored ad count: ${message.message.length} chars");
       return;
     }
     unawaited(PrefController.addAdsBlocked(count));
+  }
+
+  /// Forwards a health signal from the injected filter.
+  ///
+  /// This is how the app learns that Facebook changed its markup: nothing
+  /// crashes when a selector goes stale, the filter simply stops matching.
+  ///
+  /// [parseDiagnostic] does the deciding, because everything arriving here is
+  /// hostile input: any script on facebook.com can post on a channel the app
+  /// registers. A rejected message is described, never quoted — `debugPrint`
+  /// output is collected as a breadcrumb on whatever is reported next, so
+  /// echoing the payload would hand the page a way off the device through the
+  /// rejection path itself.
+  void onDiagnosticsMessage(JavaScriptMessage message) {
+    final diagnostic = parseDiagnostic(message.message);
+    if (diagnostic == null) {
+      debugPrint("ignored diagnostic: ${message.message.length} chars");
+      return;
+    }
+
+    Telemetry.captureIssue(diagnostic.kind, data: diagnostic.data);
   }
 
   /// Hands a failed page load to the retry policy.
@@ -230,7 +261,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     NavigationRequest request,
   ) async {
     final uri = Uri.parse(request.url);
-    debugPrint("onNavigationRequest: ${request.url}");
+    //a full Facebook address names the person reading it, and debugPrint output
+    //is collected as a breadcrumb on anything reported afterwards
+    if (kDebugMode) debugPrint("onNavigationRequest: ${request.url}");
 
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
@@ -250,7 +283,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     // open on webview
-    print("Launching external url: ${request.url}");
+    //the address of a link the user tapped is their browsing, and debugPrint
+    //output is collected as a breadcrumb on anything reported afterwards
+    if (kDebugMode) debugPrint("Launching external url: ${request.url}");
     launchInAppUrl(context, request.url);
     return NavigationDecision.prevent;
   }
@@ -558,14 +593,29 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// iOS hands a page exception back through `runJavaScript`, so a single
   /// throwing step left unguarded aborts every step queued behind it: the ad
   /// observer never installs, and the user's own script never runs.
+  ///
+  /// Carrying on is right, but doing it in silence is not: a step that fails on
+  /// every load is the app quietly not working, which is exactly what nothing
+  /// else here can see.
+  ///
+  /// [reportDetail] is false for a step running code the user wrote: iOS quotes
+  /// the failing source back in the exception, and their own script is not ours
+  /// to collect.
   Future<void> runIsolatedJs(
     String step,
-    Future<void> Function() inject,
-  ) async {
+    Future<void> Function() inject, {
+    bool reportDetail = true,
+  }) async {
     try {
       await inject();
-    } on Object catch (e) {
-      debugPrint('$step injection failed: $e');
+    } on Object catch (e, stack) {
+      if (reportDetail) {
+        debugPrint('$step injection failed: $e');
+        Telemetry.captureError(e, stack, hint: 'injection step: $step');
+      } else {
+        debugPrint('$step injection failed');
+        Telemetry.captureIssue(kDiagUserScriptThrew);
+      }
     }
   }
 
@@ -605,6 +655,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       await runIsolatedJs(
         'user script',
         () => _controller.runJavaScript(userCustomJs),
+        reportDetail: false,
       );
     }
   }

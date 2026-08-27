@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "隱藏 Messenger 側邊欄",
   "error_page_offline": "無法載入 Facebook。請檢查網路連線後重試。",
   "retry": "重試",
-  "ads_blocked_count": "已隱藏 {} 則"
+  "ads_blocked_count": "已隱藏 {} 則",
+  "telemetry_reports": "傳送匿名報告",
+  "telemetry_reports_desc": "匿名的當機與故障報告有助於發現 Facebook 的變動何時讓應用程式出問題。不會傳送任何個人資料或頁面內容。你可以隨時關閉。"
 }

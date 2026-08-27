@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Messenger-Seitenleiste ausblenden",
   "error_page_offline": "Facebook konnte nicht geladen werden. Überprüfe deine Verbindung und versuche es erneut.",
   "retry": "Erneut versuchen",
-  "ads_blocked_count": "Bisher {} ausgeblendet"
+  "ads_blocked_count": "Bisher {} ausgeblendet",
+  "telemetry_reports": "Anonyme Berichte senden",
+  "telemetry_reports_desc": "Anonyme Absturz- und Fehlerberichte helfen zu erkennen, wenn eine Änderung bei Facebook die App kaputt macht. Es werden keine personenbezogenen Daten und keine Seiteninhalte gesendet. Du kannst das jederzeit ausschalten."
 }

@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Messenger kenar çubuğunu gizle",
   "error_page_offline": "Facebook yüklenemedi. Bağlantını kontrol edip tekrar dene.",
   "retry": "Tekrar dene",
-  "ads_blocked_count": "Şimdiye kadar {} gizlendi"
+  "ads_blocked_count": "Şimdiye kadar {} gizlendi",
+  "telemetry_reports": "Anonim rapor gönder",
+  "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin."
 }

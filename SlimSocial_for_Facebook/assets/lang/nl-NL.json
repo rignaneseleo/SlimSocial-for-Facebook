@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Verberg de Messenger-zijbalk",
   "error_page_offline": "Facebook kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",
   "retry": "Opnieuw proberen",
-  "ads_blocked_count": "{} tot nu toe verborgen"
+  "ads_blocked_count": "{} tot nu toe verborgen",
+  "telemetry_reports": "Anonieme rapporten versturen",
+  "telemetry_reports_desc": "Anonieme crash- en storingsrapporten helpen te zien wanneer een wijziging bij Facebook de app kapotmaakt. Er worden geen persoonlijke gegevens en geen pagina-inhoud verstuurd. Je kunt dit altijd uitschakelen."
 }

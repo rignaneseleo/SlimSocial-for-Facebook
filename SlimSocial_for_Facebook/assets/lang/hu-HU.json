@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "A Messenger oldalsávjának elrejtése",
   "error_page_offline": "A Facebook nem tölthető be. Ellenőrizd a kapcsolatot, és próbáld újra.",
   "retry": "Újrapróbálkozás",
-  "ads_blocked_count": "Eddig {} elrejtve"
+  "ads_blocked_count": "Eddig {} elrejtve",
+  "telemetry_reports": "Névtelen jelentések küldése",
+  "telemetry_reports_desc": "A névtelen összeomlás- és hibajelentések segítenek észrevenni, ha a Facebook egy változtatása elrontja az alkalmazást. Semmilyen személyes adat és oldaltartalom nem kerül elküldésre. Bármikor kikapcsolhatod."
 }

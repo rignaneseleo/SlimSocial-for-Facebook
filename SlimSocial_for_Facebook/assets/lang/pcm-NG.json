@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Hide Messenger sidebar",
   "error_page_offline": "We no fit load Facebook. Check your connection make you try again.",
   "retry": "Try again",
-  "ads_blocked_count": "{} don hide so far"
+  "ads_blocked_count": "{} don hide so far",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }

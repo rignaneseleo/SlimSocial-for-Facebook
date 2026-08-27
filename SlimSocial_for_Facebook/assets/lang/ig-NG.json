@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Zoo mpaghara akụkụ Messenger",
   "error_page_offline": "Enweghị ike ibudata Facebook. Lelee njikọ gị wee nwaa ọzọ.",
   "retry": "Nwaa ọzọ",
-  "ads_blocked_count": "Ezochiela {} ruo ugbu a"
+  "ads_blocked_count": "Ezochiela {} ruo ugbu a",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }

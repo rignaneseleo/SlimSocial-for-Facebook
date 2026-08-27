@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Slėpti Messenger šoninę juostą",
   "error_page_offline": "Nepavyko įkelti Facebook. Patikrinkite ryšį ir bandykite dar kartą.",
   "retry": "Bandyti dar kartą",
-  "ads_blocked_count": "Iki šiol paslėpta: {}"
+  "ads_blocked_count": "Iki šiol paslėpta: {}",
+  "telemetry_reports": "Siųsti anoniminius pranešimus",
+  "telemetry_reports_desc": "Anoniminiai strigčių ir gedimų pranešimai padeda pastebėti, kai „Facebook“ pakeitimas sugadina programėlę. Jokie asmens duomenys ir puslapių turinys nesiunčiami. Tai galite išjungti bet kada."
 }

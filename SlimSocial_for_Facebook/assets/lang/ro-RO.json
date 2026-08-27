@@ -78,5 +78,7 @@
   "hide_messenger_sidebar": "Ascundeți bara laterală Messenger",
   "error_page_offline": "Facebook nu a putut fi încărcat. Verificați conexiunea și încercați din nou.",
   "retry": "Reîncercați",
-  "ads_blocked_count": "{} ascunse până acum"
+  "ads_blocked_count": "{} ascunse până acum",
+  "telemetry_reports": "Trimite rapoarte anonime",
+  "telemetry_reports_desc": "Rapoartele anonime despre blocări și defecțiuni ajută la observarea momentului în care o modificare Facebook strică aplicația. Nu sunt trimise date personale și nici conținutul paginilor. Poți dezactiva oricând."
 }
