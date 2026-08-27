@@ -90,9 +90,14 @@ workflows:
           #!/usr/bin/env bash
           set -euo pipefail
           . build/release_version.env
+          # SENTRY_DSN comes from the Codemagic environment variable group.
+          # When it is empty the app compiles the reporting out entirely and
+          # behaves exactly as a build without it, so an unset variable is a
+          # quiet no-op rather than a broken release.
           flutter build appbundle --release \
             --build-name="$BUILD_NAME" \
-            --build-number="$BUILD_NUMBER"
+            --build-number="$BUILD_NUMBER" \
+            --dart-define=SENTRY_DSN="${SENTRY_DSN:-}"
 
       - name: Build the universal APK from the app bundle
         script: |
