@@ -78,5 +78,7 @@
   "exit": "अ‍ॅपमधून बाहेर पडा",
   "error_page_offline": "Couldn't load Facebook. Check your connection and try again.",
   "retry": "Try again",
-  "ads_blocked_count": "{} hidden so far"
+  "ads_blocked_count": "{} hidden so far",
+  "telemetry_reports": "Send anonymous reports",
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
 }
