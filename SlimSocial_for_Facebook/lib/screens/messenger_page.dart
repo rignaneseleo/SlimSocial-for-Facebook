@@ -12,6 +12,7 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
@@ -153,6 +154,15 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         return NavigationDecision.navigate;
       }
     }
+
+    //Signing in belongs to this screen even though it is served from
+    //facebook.com. Messenger authenticates against Facebook, so the login-code
+    //prompt is a facebook.com page — and the branch below, which exists for a
+    //Facebook link tapped inside a conversation, used to send it to the feed.
+    //The screen closed itself half way through authenticating and the prompt
+    //surfaced in a webview that could not finish it, so Messenger could not be
+    //signed into at all.
+    if (isFacebookAuthUrl(uri)) return NavigationDecision.navigate;
 
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
