@@ -168,7 +168,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     if (!mounted) return NavigationDecision.prevent;
 
     // open on webview
-    print("Launching external url: ${request.url}");
+    //the address of a link the user tapped is their browsing, and this line
+    //used to run in release builds through a bare `print`: Sentry collects
+    //stdout as a breadcrumb, so every conversation and every link opened out of
+    //Messenger travelled with the next report. Gated the way the feed's own
+    //navigation logging in home_page.dart already was.
+    if (kDebugMode) debugPrint("Launching external url: ${request.url}");
     launchInAppUrl(context, request.url);
     return NavigationDecision.prevent;
   }

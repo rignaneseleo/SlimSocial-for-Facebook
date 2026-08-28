@@ -48,6 +48,113 @@ class CustomJs {
     ''';
   }
 
+  /// Builds JavaScript that hands pinch-to-zoom back to the reader.
+  ///
+  /// Facebook ships `width=device-width, initial-scale=1, maximum-scale=1,
+  /// user-scalable=no` as its viewport, and those last two clauses are exactly
+  /// what the browser reads as "this page does not zoom". The text-zoom setting
+  /// is no substitute: it reflows text and leaves an image, a screenshot
+  /// somebody posted, or a fixed-width table at whatever size it arrived in.
+  ///
+  /// Only the clauses that block the gesture are dropped. `minimum-scale` goes
+  /// with them because a `minimum-scale=1` is what stops the page being pinched
+  /// back out again. Every clause we do not recognise is copied through in
+  /// place: replacing the whole content string would take `width=device-width`
+  /// with it, and the page would come back laid out for a 980px desktop.
+  ///
+  /// The rewrite cannot be a one-shot. Metas are queried as a list because an
+  /// in-page navigation can leave a second viewport tag behind, and the
+  /// observer is there because that same navigation can replace the tag after
+  /// this script has already finished — the one we fixed is gone, and its
+  /// replacement carries `user-scalable=no` again.
+  ///
+  /// Everything is swallowed by a try/catch: on iOS a page exception comes back
+  /// through `runJavaScript`, and a throw here would take the injection steps
+  /// queued behind it down as well.
+  ///
+  /// This only lifts the lock the page puts on itself. The WebView has to allow
+  /// the gesture too (`enableZoom`), or none of this reaches the user.
+  static String unlockZoomFunc() {
+    return """
+(function () {
+  try {
+    var MARK = 'data-slim-zoom';
+
+    function unlockedContent(content) {
+      var out = [];
+      var sawUserScalable = false;
+      var clauses = content.split(',');
+      for (var i = 0; i < clauses.length; i++) {
+        var clause = clauses[i].trim();
+        if (!clause) continue;
+        var key = clause.split('=')[0].trim().toLowerCase();
+        if (key === 'maximum-scale' || key === 'minimum-scale') continue;
+        if (key === 'user-scalable') {
+          // Rewritten where it stands rather than dropped and re-appended, so
+          // a viewport that spells out its own order keeps it.
+          out.push('user-scalable=yes');
+          sawUserScalable = true;
+          continue;
+        }
+        out.push(clause);
+      }
+      if (!sawUserScalable) out.push('user-scalable=yes');
+      return out.join(', ');
+    }
+
+    function unlockAll() {
+      var metas = document.querySelectorAll('meta[name="viewport"]');
+      for (var i = 0; i < metas.length; i++) {
+        var meta = metas[i];
+        // Same guard as the stylesheet injection: this runs on every
+        // navigation, and Facebook navigates in-page constantly.
+        if (meta.getAttribute(MARK) === '1') continue;
+        var current = meta.getAttribute('content') || '';
+        var next = unlockedContent(current);
+        meta.setAttribute(MARK, '1');
+        // Assigning an identical value still produces a mutation record, and
+        // the observer below clears the mark before it re-runs: writing
+        // unconditionally is an endless ping-pong between the two.
+        if (next !== current) meta.setAttribute('content', next);
+      }
+    }
+
+    unlockAll();
+
+    // Kept on `window` for the same reason as the ad observer: a fresh
+    // injection cannot otherwise tell that one is already watching, and every
+    // page load would leave another observer behind on the same head.
+    if (!window.slimViewportObserver) {
+      window.slimViewportObserver = new MutationObserver(function (records) {
+        for (var i = 0; i < records.length; i++) {
+          // A `content` that has been written again can put maximum-scale
+          // back, so the mark from the previous pass has to go or the tag is
+          // skipped for the rest of the page's life.
+          if (records[i].type === 'attributes') {
+            records[i].target.removeAttribute(MARK);
+          }
+        }
+        unlockAll();
+      });
+
+      // `document.head` is still null while the head is being parsed, and
+      // injection starts from onPageStarted; documentElement exists from the
+      // first byte and its subtree covers the head once it arrives.
+      window.slimViewportObserver.observe(
+        document.head || document.documentElement,
+        {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['content']
+        }
+      );
+    }
+  } catch (e) {}
+})();
+""";
+  }
+
   static String exampleJs = """
 javascript:function foo() {
 	     document.body.innerHTML = '';

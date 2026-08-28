@@ -242,6 +242,47 @@ class CustomCss {
         ' { display: none !important; }',
   );
 
+  /// Hands the post text back to the reader: selectable, and so copyable.
+  ///
+  /// The touch layout declares `user-select: none` across the feed, so a long
+  /// press on a post yields nothing — no handles, no copy. That takes with it
+  /// every reason someone presses a post in the first place: a quoted
+  /// paragraph, an address, a phone number posted in a group. The same layout
+  /// sets `pointer-events: none` on feed images, which is why a long press on a
+  /// photo never reaches the browser at all and it never offers to save or
+  /// share it.
+  ///
+  /// Both prefixes are spelled out. Current Chromium reads the unprefixed
+  /// `user-select`; older Android WebViews only ever knew
+  /// `-webkit-user-select`, and those are exactly the devices whose owners are
+  /// least able to fall back to the native app. `!important` because what is
+  /// being overridden is Facebook's own author rule, not a default.
+  ///
+  /// `.native-text` is the post's text wrapper — see [centerTextPostsCss] for
+  /// why the message body has no selector of its own — and the descendant rule
+  /// catches the `span` runs inside it.
+  ///
+  /// Scoped to the post container on purpose, and that scoping is the whole
+  /// design of the rule: making the document selectable turns every mis-tap on
+  /// the app's own chrome into a text selection, complete with handles to
+  /// dismiss, which is a worse daily annoyance than the one being fixed.
+  /// [removeMessengerDownloadCss] already carries a far narrower version of the
+  /// selection half, for `input` elements only.
+  ///
+  /// Deliberately not in [cssList]: like [hideAppUpsellCss], this is a
+  /// structural fix rather than a preference, so there is nothing to toggle.
+  static MyCss selectableContentCss = MyCss(
+    key: 'selectable_content',
+    description: 'Let post text be selected and photos be long-pressed',
+    defaultEnabled: true,
+    code: 'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text * '
+        '{ -webkit-user-select: text !important; '
+        'user-select: text !important; } '
+        'div[data-tracking-duration-id] img '
+        '{ pointer-events: auto !important; }',
+  );
+
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
     key: 'hideAdsAndPeopleYouMayKnow',
     description: 'Hide ads and people you may know',

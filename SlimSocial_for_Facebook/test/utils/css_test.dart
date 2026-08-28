@@ -369,6 +369,90 @@ article {
     });
   });
 
+  group('selectable post content', () {
+    test('ships switched on', () {
+      // Nothing toggles it, so the default is the only setting it will ever
+      // have.
+      expect(CustomCss.selectableContentCss.key, 'selectable_content');
+      expect(CustomCss.selectableContentCss.isEnabled(), isTrue);
+    });
+
+    test('is not offered as a user-facing toggle', () {
+      // Same treatment as the other structural fixes: a reader who cannot copy
+      // a phone number out of a post is looking at a bug, not at a preference
+      // they forgot to switch on.
+      final keys = CustomCss.cssList.map((c) => c.key);
+
+      expect(keys, isNot(contains('selectable_content')));
+    });
+
+    test('sets user-select both prefixed and unprefixed', () {
+      // The unprefixed property is what current Chromium honours; the older
+      // Android WebViews this app still runs on only ever knew the -webkit-
+      // one, and shipping one of the two leaves half the fleet unable to
+      // select.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, contains('-webkit-user-select: text'));
+      expect(
+        RegExp(r'[;{]\s*user-select:\s*text').hasMatch(code),
+        isTrue,
+        reason: 'the unprefixed property is missing: $code',
+      );
+    });
+
+    test('re-enables pointer events on post images', () {
+      // pointer-events: none on feed images is what makes a long press on a
+      // photo do nothing at all, so the browser never gets as far as offering
+      // to save or share it.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, contains('div[data-tracking-duration-id] img'));
+      expect(code, contains('pointer-events: auto !important'));
+    });
+
+    test('scopes every selector to the post container', () {
+      // A document-wide rule here is not a bigger fix, it is a different bug:
+      // every mis-tap on the app's own chrome becomes a text selection with
+      // handles to dismiss. One escaped selector is enough to cause that, so
+      // each one is checked rather than the stylesheet as a whole.
+      final rules = CustomCss.selectableContentCss.code
+          .split('}')
+          .where((rule) => rule.contains('{'));
+
+      expect(rules, isNotEmpty);
+      for (final rule in rules) {
+        for (final selector in rule.split('{').first.split(',')) {
+          expect(
+            selector,
+            contains('div[data-tracking-duration-id]'),
+            reason: selector,
+          );
+        }
+      }
+    });
+
+    test('survives the whitespace collapsing intact', () {
+      // MyCss collapses the authored formatting, and stripping whitespace
+      // outright — which an earlier version of that collapse did — would fuse
+      // `-webkit-user-select:text!important` to the declaration after it and
+      // cost both.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, isNot(contains('\n')));
+      expect(code, isNot(contains('  ')));
+      expect(
+        code,
+        'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text * '
+        '{ -webkit-user-select: text !important; '
+        'user-select: text !important; } '
+        'div[data-tracking-duration-id] img '
+        '{ pointer-events: auto !important; }',
+      );
+    });
+  });
+
   group('theme-aware stylesheets', () {
     test('no bundled stylesheet hardcodes the legacy accent hex', () {
       for (final css in CustomCss.cssList) {
