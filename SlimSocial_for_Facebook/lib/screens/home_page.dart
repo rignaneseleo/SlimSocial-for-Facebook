@@ -82,6 +82,12 @@ class _HomePageState extends ConsumerState<HomePage> {
           onNavigationRequest: onNavigationRequest,
           onWebResourceError: onWebResourceError,
           onPageStarted: (String url) async {
+            //the controller outlives this State: its callbacks keep firing for
+            //a load already in flight after the widget is gone, and setState
+            //then dereferences a null element and takes the app down with it.
+            //Checked again after each await, because the widget can go away
+            //while one is outstanding.
+            if (!mounted) return;
             _retryPolicy.onNavigationStarted();
             setState(() {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
@@ -89,23 +95,27 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+            if (!mounted) return;
 
             //the dark theme's text colours ship in that css, but the surfaces
             //they sit on are repainted by the script below. Running it only at
             //page finish leaves pale text on still-white cards for as long as
             //the rest of the page takes to arrive.
             await injectDarkTheme();
+            if (!mounted) return;
 
             //re-read the zoom, so changing it in the settings takes effect on
             //the next load instead of needing the app restarted
             await _androidController?.setTextZoom(PrefController.getTextZoom());
           },
           onPageFinished: (String url) async {
+            if (!mounted) return;
             _retryPolicy.onNavigationFinished();
             await runJs();
             if (kDebugMode) debugPrint(url);
           },
           onProgress: (int progress) {
+            if (!mounted) return;
             setState(() {
               isLoading = progress < 100;
             });
@@ -551,6 +561,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> injectCss() async {
+    //reads the theme off this element's context, so it is only safe while the
+    //widget is still in the tree
+    if (!mounted) return;
     final accent = cssColorFromColor(Theme.of(context).colorScheme.primary);
 
     final sheets = <String, String>{
