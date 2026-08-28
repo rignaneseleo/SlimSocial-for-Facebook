@@ -5,6 +5,57 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 
 void main() {
+  group('messenger conversation list height', () {
+    final code = CustomCss.messengerListHeightCss.code;
+
+    test('ships switched on', () {
+      expect(CustomCss.messengerListHeightCss.isEnabled(), isTrue);
+    });
+
+    test('is not a settings toggle', () {
+      // Structural, like hideAppUpsellCss: cssList drives the settings screen.
+      expect(CustomCss.cssList, isNot(contains(CustomCss.messengerListHeightCss)));
+    });
+
+    test('never touches overflow', () {
+      // The regression this exists to prevent. Messenger's own scroller is a
+      // descendant of the list and already carries `overflow-y: auto`;
+      // overriding overflow up the chain took the scroller away from the
+      // virtualised list and scrolling stopped entirely. Measured on a device.
+      expect(code, isNot(contains('overflow')));
+    });
+
+    test('sizes the chain to content, not to the parent', () {
+      // `height: 100%` made every ancestor take its parent's full height and
+      // the content ran past the viewport with nothing to scroll it.
+      expect(code, contains('height: auto !important'));
+      expect(code, isNot(contains('height: 100%')));
+    });
+
+    test('lets each ancestor of the list grow', () {
+      expect(code, contains('flex-grow: 1 !important'));
+      expect(code, contains('min-height: 0 !important'));
+      expect(code, contains('max-height: none !important'));
+    });
+
+    test('keeps the :has() selectors in a rule of their own', () {
+      // An unsupported selector invalidates the whole list it sits in, so on a
+      // WebView older than Chromium 105 this must cost the fix and nothing
+      // else — the same guard hideStoriesCss documents.
+      final rules = code.split('}').where((r) => r.trim().isNotEmpty).toList();
+      final hasRules = rules.where((r) => r.contains(':has(')).toList();
+      expect(hasRules, hasLength(1));
+      expect(hasRules.single, isNot(contains('[role="grid"] {')));
+    });
+
+    test('targets the list by role rather than by a generated class', () {
+      // The lesson from adaptMessengerPageCss, whose hash-class selectors now
+      // match nothing at all: role attributes outlive Facebook's build hashes.
+      expect(code, contains('[role="grid"]'));
+      expect(code, isNot(matches(RegExp(r'\.x[0-9a-z]{5,}'))));
+    });
+  });
+
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
     sp = await SharedPreferences.getInstance();

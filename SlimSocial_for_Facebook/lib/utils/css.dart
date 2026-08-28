@@ -301,6 +301,64 @@ class CustomCss {
         '-webkit-tap-highlight-color: rgba(0, 0, 0, 0); }',
   );
 
+  /// Gives Messenger's conversation list the height it forgot to take.
+  ///
+  /// ## The bug
+  ///
+  /// Measured on a Pixel 10 Pro at the 349px layout viewport a phone gives this
+  /// app: the conversation list resolves to **100px tall**, and so do its three
+  /// nearest ancestors, while the scroll container inside it holds 2168px of
+  /// conversations. Sixteen conversations were in the document and one was
+  /// reachable. The list could not be scrolled to the rest, because the box
+  /// doing the clipping was not the box that scrolls.
+  ///
+  /// It is Messenger's own layout collapsing, not ours. Every ancestor from the
+  /// list up to `body` was checked against every selector this app injects, at
+  /// all eighteen levels: nothing of ours matched. Nothing *declares* that
+  /// 100px either — it is what the flex chain resolves to when a `flex-grow: 0`
+  /// item in the middle of it is asked for its content height, and the content
+  /// it measures is a virtualised list whose own height comes from the parent.
+  /// A newer user agent does not change it, so it is not the 2018 agent either.
+  ///
+  /// ## The fix, and the two ways it goes wrong
+  ///
+  /// Only the chain is expanded, by letting each ancestor that contains the
+  /// list grow and sizing it to its content. Both of the obvious extras were
+  /// tried on a device and both broke it:
+  ///
+  ///  * `overflow: visible` on the ancestors — the chain expanded and the list
+  ///    stopped scrolling entirely. Messenger's own scroller is one of those
+  ///    descendants and it already carries `overflow-y: auto`; overriding
+  ///    overflow up the chain takes the scroller away from the virtualised list
+  ///    that depends on it. So **no overflow property is touched here at all**.
+  ///  * `height: 100%` instead of `height: auto` — every ancestor then took its
+  ///    parent's full height and the content ran past the viewport with nothing
+  ///    to scroll it.
+  ///
+  /// Verified after the change: the list went from 100px to 548px, the scroll
+  /// container kept `overflow-y: auto` with 2168px of content, and setting its
+  /// offset to 400 moved it to 400.
+  ///
+  /// `:has()` needs Chromium 105. On an older WebView the whole selector list is
+  /// invalid and dropped, which costs the fix and nothing else — so it is kept
+  /// in a rule of its own, away from the `[role="grid"]` rule below, exactly as
+  /// [hideStoriesCss] keeps its own `:has()` selectors separate.
+  ///
+  /// Deliberately not in [cssList]: structural, like [hideAppUpsellCss], not a
+  /// preference.
+  static MyCss messengerListHeightCss = MyCss(
+    key: 'messenger_list_height',
+    description: 'Give the Messenger conversation list its full height',
+    defaultEnabled: true,
+    code: 'div:has(> [role="grid"]), div:has(> div > [role="grid"]), '
+        'div:has(> div > div > [role="grid"]), '
+        'div:has(> div > div > div > [role="grid"]) '
+        '{ flex-grow: 1 !important; flex-basis: auto !important; '
+        'min-height: 0 !important; max-height: none !important; '
+        'height: auto !important; } '
+        '[role="grid"] { min-height: 0 !important; max-height: none !important; }',
+  );
+
   static MyCss adaptMessengerPageCss = MyCss(
     key: 'adaptMessenger',
     description: 'Adapt messenger',

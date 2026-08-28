@@ -283,6 +283,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
     final sheets = <String, String>{
       'slim-messenger-adapt': CustomCss.adaptMessengerPageCss.code,
+      'slim-messenger-list-height': CustomCss.messengerListHeightCss.code,
       'slim-user-sheet':
           CustomCss.buildMessengerCss(PrefController.getUserCustomCss()),
     };
