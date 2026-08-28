@@ -361,6 +361,10 @@ const List<String> kPeopleYouMayKnowLabels = [
 /// placeholder: the running total reported over [kAdCountChannelName] is how
 /// the app shows the filter is working.
 ///
+/// Collapsing a post above the viewport takes the height it gave up off the
+/// scroll offset in the same turn, so the feed does not slide under a reader who
+/// is scrolling while the pass runs.
+///
 /// The script also reports on its own health over [kDiagnosticsChannelName]:
 /// the selectors here match markup Facebook rewrites without warning, and when
 /// they stop matching nothing throws and nothing crashes. Those signals carry
@@ -596,8 +600,75 @@ String adFilterScript({
     return seen !== null && +seen === rendered;
   }
 
+  // Which element actually scrolls has to be found rather than assumed: the
+  // touch layout renders the feed inside a div[data-type="vscroller"] that
+  // scrolls on its own, while the app also scrolls the document itself — the
+  // screens save and restore position through `getScrollPosition` and
+  // `scrollTo`, which are the document's. An ancestor only qualifies if it is
+  // both allowed to scroll and genuinely overflowing: an `overflow-y: auto` box
+  // that fits its content moves nothing, and correcting its offset would throw
+  // the correction away while the real scroller keeps the jump.
+  function scrollerFor(post) {
+    var node = post.parentElement;
+    while (node && node !== document.body && node !== document.documentElement) {
+      var overflowY = '';
+      try {
+        overflowY = window.getComputedStyle(node).overflowY;
+      } catch (e) {}
+      var scrollable =
+        overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay';
+      if (scrollable && node.scrollHeight > node.clientHeight) {
+        return { el: node, win: null };
+      }
+      node = node.parentElement;
+    }
+    // The document scroller reports its offset on the window, not on itself.
+    return {
+      el: document.scrollingElement || document.documentElement,
+      win: window
+    };
+  }
+
   function collapse(post) {
     post.classList.add('slim-ad-handled');
+
+    // Taking a post out of layout above the viewport used to slide the whole
+    // feed up under the reader's thumb. That is the common case rather than the
+    // corner one: the filter re-runs as posts stream in below and the observer
+    // fires while the reader scrolls, so the advert being retired has usually
+    // been scrolled past already — and a sponsored post is several hundred
+    // pixels leaving layout at once, which lands the reader mid-way through a
+    // different post. Measured here, given back to the offset after the hide.
+    var anchor = null;
+    try {
+      var scroller = scrollerFor(post);
+      var viewportTop = scroller.win
+        ? 0
+        : scroller.el.getBoundingClientRect().top;
+      // Two of the three positions need nothing done. A post below the fold
+      // takes its height out of a region the reader cannot see. A post still on
+      // screen is the one being looked at, and there is no offset that both
+      // removes it and leaves the view still. Only a post entirely above the
+      // viewport shortens the run of content the offset is measured against,
+      // and that is the one that drags the page.
+      if (post.getBoundingClientRect().bottom <= viewportTop) {
+        // Both numbers are read now, before anything is hidden. The offset
+        // matters as much as the height: Android WebView ships Chromium's
+        // scroll anchoring switched on (`overflow-anchor` defaults to `auto`,
+        // and nothing here sets it otherwise), so the engine may move the
+        // offset by itself the moment layout is recomputed. Reading the offset
+        // afterwards and subtracting from *that* counted the engine's own
+        // correction a second time and threw the feed a whole advert further up
+        // than it started — measured in Chromium 148 on both scroller kinds,
+        // and again, without anchoring, whenever the reader sat near the end of
+        // the feed and the engine clamped the offset to the shorter document.
+        anchor = {
+          scroller: scroller,
+          height: scroller.el.scrollHeight,
+          offset: scroller.win ? scroller.win.scrollY : scroller.el.scrollTop
+        };
+      }
+    } catch (e) {}
 
     // The post is removed from layout below, so it occupies nothing. Telling
     // the virtualising scroller it is still 60px tall leaves its model
@@ -632,6 +703,47 @@ String adFilterScript({
     // the running total the app reports is a better way to show the filter is
     // working than a placeholder in the feed.
     post.style.display = 'none';
+
+    // Hiding the advert is the job; not jumping is only the improvement — so
+    // the restore is guarded on its own, and a scroller that refuses to be
+    // measured or written still loses its advert.
+    try {
+      if (anchor) {
+        // Asking for scrollHeight here forces the layout the hide just
+        // invalidated. That is deliberate, and it has to happen in this same
+        // synchronous block: a correction deferred to a later frame is a
+        // correction the reader watches happen.
+        var lost = anchor.height - anchor.scroller.el.scrollHeight;
+        if (lost > 0) {
+          var win = anchor.scroller.win;
+          // Written as an absolute position derived from the pre-hide offset,
+          // never as a delta applied to whatever the offset reads now. The
+          // content above the viewport got `lost` shorter, so this is where the
+          // offset has to land for the view to hold still — and stating it
+          // absolutely means it lands there whether or not the engine already
+          // moved the offset on its own. See the note on scroll anchoring where
+          // the anchor is taken.
+          var next = anchor.offset - lost;
+          // A scroller can shed more height than there was offset above it —
+          // the feed's first advert, with the reader barely past it — and a
+          // negative offset bounces on one engine and is ignored on the next.
+          if (next < 0) next = 0;
+          if (win) {
+            // `scroll-behavior: smooth` anywhere up the tree would turn the
+            // two-argument form into an animation, which is the jump this is
+            // meant to prevent, arriving slowly. The object form can say
+            // otherwise; older WebViews that reject it fall back.
+            try {
+              win.scrollTo({ top: next, left: win.scrollX, behavior: 'instant' });
+            } catch (e) {
+              win.scrollTo(win.scrollX, next);
+            }
+          } else {
+            anchor.scroller.el.scrollTop = next;
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   function isPeopleYouMayKnow(post) {
@@ -667,8 +779,9 @@ String adFilterScript({
       if (post.classList.contains('slim-ad-checked')) continue;
 
       // A friend carousel is not an advert, but it is taken out of the page the
-      // same way: the scroller's bookkeeping is about the hole left behind, not
-      // about why the post went.
+      // same way: the scroller's bookkeeping, and the scroll correction for the
+      // height that disappears, are about the hole left behind rather than about
+      // why the post went.
       if (isPeopleYouMayKnow(post)) {
         collapse(post);
         handled++;

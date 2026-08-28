@@ -12,6 +12,7 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
@@ -154,6 +155,15 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       }
     }
 
+    //Signing in belongs to this screen even though it is served from
+    //facebook.com. Messenger authenticates against Facebook, so the login-code
+    //prompt is a facebook.com page — and the branch below, which exists for a
+    //Facebook link tapped inside a conversation, used to send it to the feed.
+    //The screen closed itself half way through authenticating and the prompt
+    //surfaced in a webview that could not finish it, so Messenger could not be
+    //signed into at all.
+    if (isFacebookAuthUrl(uri)) return NavigationDecision.navigate;
+
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         if (!mounted) return NavigationDecision.prevent;
@@ -168,7 +178,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     if (!mounted) return NavigationDecision.prevent;
 
     // open on webview
-    print("Launching external url: ${request.url}");
+    //the address of a link the user tapped is their browsing, and this line
+    //used to run in release builds through a bare `print`: Sentry collects
+    //stdout as a breadcrumb, so every conversation and every link opened out of
+    //Messenger travelled with the next report. Gated the way the feed's own
+    //navigation logging in home_page.dart already was.
+    if (kDebugMode) debugPrint("Launching external url: ${request.url}");
     launchInAppUrl(context, request.url);
     return NavigationDecision.prevent;
   }
@@ -268,6 +283,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
     final sheets = <String, String>{
       'slim-messenger-adapt': CustomCss.adaptMessengerPageCss.code,
+      'slim-messenger-list-height': CustomCss.messengerListHeightCss.code,
       'slim-user-sheet':
           CustomCss.buildMessengerCss(PrefController.getUserCustomCss()),
     };

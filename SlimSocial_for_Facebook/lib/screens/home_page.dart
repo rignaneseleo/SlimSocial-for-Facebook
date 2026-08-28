@@ -22,6 +22,7 @@ import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
+import 'package:slimsocial_for_facebook/utils/url_cleaner.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -69,6 +70,15 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
       ..setUserAgent(PrefController.getUserAgent())
+      //Facebook ships `maximum-scale=1, user-scalable=no` in its viewport, and
+      //that meta tag is the only thing standing between the reader and pinch
+      //zoom: the webview's own gesture is already on, because
+      //webview_flutter_android's controller sets `builtInZoomControls` itself
+      //(android_webview_controller.dart:91 in 4.3.4) and Android's
+      //`setSupportZoom` defaults to true. Asked for explicitly all the same —
+      //`webview_flutter_android` is pinned as `any` here, so that default is
+      //not ours to rely on. CustomJs.unlockZoomFunc does the other half.
+      ..enableZoom(true)
       ..addJavaScriptChannel(
         kAdCountChannelName,
         onMessageReceived: onAdCountMessage,
@@ -95,6 +105,15 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+            if (!mounted) return;
+
+            //before the dark theme, because unlocking the viewport reflows the
+            //page and the theme script reads colours back out of it
+            await runIsolatedJs(
+              'zoom unlock',
+              () => _controller
+                  .runJavaScript(CustomJs.whenDomReady(CustomJs.unlockZoomFunc())),
+            );
             if (!mounted) return;
 
             //the dark theme's text colours ship in that css, but the surfaces
@@ -275,6 +294,27 @@ class _HomePageState extends ConsumerState<HomePage> {
     //is collected as a breadcrumb on anything reported afterwards
     if (kDebugMode) debugPrint("onNavigationRequest: ${request.url}");
 
+    //Facebook's mobile web opens its own video player through an `fb://` link
+    //meant for the native app. Nothing below handles a scheme that is not http,
+    //so these used to fall all the way through to the Custom Tab — which either
+    //hands the reader to the official Facebook app or, if it is not installed,
+    //does nothing at all. Either way the tap is lost. Sent back to the web
+    //address for the same video instead.
+    //
+    //Skipped in basic mode: `/reel/` is a touch-layout address, mbasic does not
+    //serve it, and navigating the one webview to a page that 404s would strand
+    //the reader somewhere worse than where they started.
+    if (uri.scheme == "fb" && !(sp.getBool(SpKeys.useMbasic) ?? false)) {
+      final target = facebookAppLinkTarget(
+        uri,
+        host: Uri.parse(PrefController.getHomePage()).host,
+      );
+      if (target != null) {
+        await _controller.loadRequest(target);
+        return NavigationDecision.prevent;
+      }
+    }
+
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
@@ -401,7 +441,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               switch (item) {
                 case "share_url":
                   final url = await _controller.currentUrl();
-                  if (url != null) Share.share(url);
+                  //a Facebook address picked up off the feed carries `fbclid`,
+                  //`mibextid` and friends, and those identify the person who
+                  //did the sharing rather than the post being shared. Sending
+                  //them on hands that to every recipient and to whatever app
+                  //they paste it into.
+                  if (url != null) Share.share(stripTrackingParams(url));
                   break;
                 case "refresh":
                   _controller.reload();
@@ -570,6 +615,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
       'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
       'slim-app-upsell': CustomCss.hideAppUpsellCss.code,
+      'slim-selectable': CustomCss.selectableContentCss.code,
       'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
       'slim-user-sheet':
           CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),

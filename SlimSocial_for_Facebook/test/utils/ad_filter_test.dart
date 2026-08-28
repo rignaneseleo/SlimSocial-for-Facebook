@@ -214,6 +214,140 @@ void main() {
     });
   });
 
+  group('a collapse that does not move the feed', () {
+    final collapse = _functionBody(script, 'function collapse(post)');
+    final resolve = _functionBody(script, 'function scrollerFor(post)');
+
+    test('reads the offset off whichever element actually scrolls', () {
+      // The touch layout scrolls the feed inside div[data-type="vscroller"],
+      // and the app scrolls the document itself as well — the screens' saved
+      // position goes through the document scroller — so a fixed choice of
+      // either one is wrong half the time.
+      expect(collapse, contains('scrollerFor(post)'));
+      expect(resolve, contains('node = node.parentElement;'));
+      expect(resolve, contains('window.getComputedStyle(node).overflowY'));
+    });
+
+    test('accepts every overflow value that scrolls, and only if it does', () {
+      for (final value in const ['auto', 'scroll', 'overlay']) {
+        expect(resolve, contains("overflowY === '$value'"), reason: value);
+      }
+
+      // An `overflow-y: auto` box that fits its content scrolls nothing, so
+      // correcting its offset discards the correction and leaves the jump on
+      // whichever ancestor is really moving.
+      expect(resolve, contains('node.scrollHeight > node.clientHeight'));
+    });
+
+    test('falls back to the document scroller', () {
+      expect(
+        resolve,
+        contains('document.scrollingElement || document.documentElement'),
+      );
+      // The document's offset is read off the window rather than off the
+      // element, which is why the fallback has to say which one it is.
+      expect(resolve, contains('win: window'));
+      expect(
+        collapse,
+        contains('scroller.win ? scroller.win.scrollY : scroller.el.scrollTop'),
+      );
+    });
+
+    test('corrects only for a post that was entirely above the viewport', () {
+      // Below the fold the height leaves a region the reader cannot see, and a
+      // post still on screen is the one being looked at — no offset both
+      // removes it and holds the view still. Both must reach the hide with no
+      // anchor taken.
+      expect(collapse, contains('var anchor = null;'));
+      expect(
+        collapse,
+        contains('post.getBoundingClientRect().bottom <= viewportTop'),
+      );
+      expect(collapse, contains('if (anchor) {'));
+    });
+
+    test('takes the vanished height off the offset in the same turn', () {
+      // Asking for scrollHeight forces the layout the hide invalidated, inside
+      // the same synchronous block. A correction deferred to a later frame is
+      // one the reader watches happen.
+      expect(
+        collapse,
+        contains('anchor.height - anchor.scroller.el.scrollHeight'),
+      );
+      expect(collapse, isNot(contains('requestAnimationFrame')));
+      expect(collapse, isNot(contains('setTimeout')));
+    });
+
+    test('measures the offset before the hide, not after it', () {
+      // The regression this exists to prevent: Android WebView has Chromium's
+      // scroll anchoring on by default, so the engine can move the offset
+      // itself as soon as the forced layout runs. Reading the offset after the
+      // hide and subtracting from that applied the correction twice and threw
+      // the feed a whole advert too far up. So the offset is captured into the
+      // anchor alongside the height, and the write is absolute.
+      final anchorAssignment = collapse.substring(
+        collapse.indexOf('anchor = {'),
+        collapse.indexOf('};', collapse.indexOf('anchor = {')),
+      );
+      expect(anchorAssignment, contains('offset:'));
+      expect(collapse, contains('var next = anchor.offset - lost;'));
+      // Nothing may re-read the live offset on the restore path: that is the
+      // shape of the bug.
+      final restore = collapse.substring(collapse.indexOf('if (anchor) {'));
+      expect(restore, isNot(contains('.scrollY')));
+      expect(restore, isNot(contains('.scrollTop;')));
+    });
+
+    test('writes the corrected offset without animating it', () {
+      // `scroll-behavior: smooth` up the tree would turn the two-argument
+      // scrollTo into an animation, which is the jump arriving slowly rather
+      // than not at all. Older WebViews that reject the object form fall back.
+      expect(collapse, contains("behavior: 'instant'"));
+      expect(collapse, contains('win.scrollTo(win.scrollX, next);'));
+    });
+
+    test('clamps the corrected offset at zero', () {
+      // A scroller can shed more height than there was offset above it, and a
+      // negative offset is a bounce on one engine and ignored on the next.
+      expect(collapse, contains('if (next < 0) next = 0;'));
+    });
+
+    test('never lets the restore stop the advert being hidden', () {
+      // Hiding the advert is the job and not jumping is the improvement, so
+      // every line of the measure-and-restore is guarded and none of the hide
+      // is: a scroller that cannot be measured still loses its advert.
+      final guarded = _guardedBlocks(collapse);
+
+      // Three now: the measure, the restore, and the object-form scrollTo whose
+      // own fallback sits inside the restore.
+      expect(guarded, hasLength(3));
+      expect(guarded.first, contains('post.getBoundingClientRect().bottom'));
+
+      final restore = guarded.firstWhere(
+        (block) => block.contains('var next = anchor.offset - lost;'),
+      );
+      expect(restore, contains("behavior: 'instant'"));
+      expect(restore, contains('anchor.scroller.el.scrollTop = next;'));
+      expect(restore, endsWith('catch (e) {}'));
+
+      for (final block in guarded) {
+        expect(block, isNot(contains('slim-ad-handled')));
+        expect(block, isNot(contains("post.style.height = '0px'")));
+        expect(block, isNot(contains("post.style.display = 'none'")));
+      }
+    });
+
+    test('covers the friend carousel without a branch of its own', () {
+      // Both ways out of the loop hide the post by calling collapse, so the
+      // correction is not something the carousel can be missing.
+      final loop = _functionBody(script, 'function runPass()');
+
+      expect(_pymkBranch(script), contains('collapse(post)'));
+      expect(loop, isNot(contains('scrollerFor')));
+      expect(loop, isNot(contains('scrollTop')));
+    });
+  });
+
   group('the label the live layout actually uses', () {
     test('bundles the two-character "ad" label', () {
       // Observed on a real feed: the label node is "Ad" plus two private-use
@@ -829,6 +963,30 @@ String _pymkBranch(String script) => script.substring(
       script.indexOf('if (isPeopleYouMayKnow(post))'),
       script.indexOf('if (!isSponsoredPost(post))'),
     );
+
+/// Every `try { … } catch (…) { … }` region in [body], braces included.
+///
+/// The catch is part of the region on purpose: a `try` whose failure path is
+/// somewhere else swallows nothing, and what these tests assert is which lines
+/// a failure cannot take down with it.
+List<String> _guardedBlocks(String body) => RegExp(r'try\s*\{')
+    .allMatches(body)
+    .map((m) => body.substring(m.start, _blockEnd(body, _blockEnd(body, m.start)) + 1))
+    .toList();
+
+/// The index of the closing brace of the first `{ … }` block at or after [from].
+int _blockEnd(String body, int from) {
+  final open = body.indexOf('{', from);
+  var depth = 0;
+  for (var i = open; i < body.length; i++) {
+    if (body[i] == '{') depth++;
+    if (body[i] == '}') {
+      depth--;
+      if (depth == 0) return i;
+    }
+  }
+  throw StateError('unbalanced braces after offset $from');
+}
 
 /// The body of a JavaScript function in [script], braces included.
 String _functionBody(String script, String header) {

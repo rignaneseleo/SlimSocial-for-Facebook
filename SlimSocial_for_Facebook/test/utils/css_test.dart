@@ -5,6 +5,57 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 
 void main() {
+  group('messenger conversation list height', () {
+    final code = CustomCss.messengerListHeightCss.code;
+
+    test('ships switched on', () {
+      expect(CustomCss.messengerListHeightCss.isEnabled(), isTrue);
+    });
+
+    test('is not a settings toggle', () {
+      // Structural, like hideAppUpsellCss: cssList drives the settings screen.
+      expect(CustomCss.cssList, isNot(contains(CustomCss.messengerListHeightCss)));
+    });
+
+    test('never touches overflow', () {
+      // The regression this exists to prevent. Messenger's own scroller is a
+      // descendant of the list and already carries `overflow-y: auto`;
+      // overriding overflow up the chain took the scroller away from the
+      // virtualised list and scrolling stopped entirely. Measured on a device.
+      expect(code, isNot(contains('overflow')));
+    });
+
+    test('sizes the chain to content, not to the parent', () {
+      // `height: 100%` made every ancestor take its parent's full height and
+      // the content ran past the viewport with nothing to scroll it.
+      expect(code, contains('height: auto !important'));
+      expect(code, isNot(contains('height: 100%')));
+    });
+
+    test('lets each ancestor of the list grow', () {
+      expect(code, contains('flex-grow: 1 !important'));
+      expect(code, contains('min-height: 0 !important'));
+      expect(code, contains('max-height: none !important'));
+    });
+
+    test('keeps the :has() selectors in a rule of their own', () {
+      // An unsupported selector invalidates the whole list it sits in, so on a
+      // WebView older than Chromium 105 this must cost the fix and nothing
+      // else — the same guard hideStoriesCss documents.
+      final rules = code.split('}').where((r) => r.trim().isNotEmpty).toList();
+      final hasRules = rules.where((r) => r.contains(':has(')).toList();
+      expect(hasRules, hasLength(1));
+      expect(hasRules.single, isNot(contains('[role="grid"] {')));
+    });
+
+    test('targets the list by role rather than by a generated class', () {
+      // The lesson from adaptMessengerPageCss, whose hash-class selectors now
+      // match nothing at all: role attributes outlive Facebook's build hashes.
+      expect(code, contains('[role="grid"]'));
+      expect(code, isNot(matches(RegExp(r'\.x[0-9a-z]{5,}'))));
+    });
+  });
+
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
     sp = await SharedPreferences.getInstance();
@@ -366,6 +417,90 @@ article {
       // wrong hook and missed every run whose class was not in the list.
       expect(CustomCss.darkThemeCss.code, isNot(contains('span.f1')));
       expect(CustomCss.darkThemeCss.code, isNot(contains('span.f5')));
+    });
+  });
+
+  group('selectable post content', () {
+    test('ships switched on', () {
+      // Nothing toggles it, so the default is the only setting it will ever
+      // have.
+      expect(CustomCss.selectableContentCss.key, 'selectable_content');
+      expect(CustomCss.selectableContentCss.isEnabled(), isTrue);
+    });
+
+    test('is not offered as a user-facing toggle', () {
+      // Same treatment as the other structural fixes: a reader who cannot copy
+      // a phone number out of a post is looking at a bug, not at a preference
+      // they forgot to switch on.
+      final keys = CustomCss.cssList.map((c) => c.key);
+
+      expect(keys, isNot(contains('selectable_content')));
+    });
+
+    test('sets user-select both prefixed and unprefixed', () {
+      // The unprefixed property is what current Chromium honours; the older
+      // Android WebViews this app still runs on only ever knew the -webkit-
+      // one, and shipping one of the two leaves half the fleet unable to
+      // select.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, contains('-webkit-user-select: text'));
+      expect(
+        RegExp(r'[;{]\s*user-select:\s*text').hasMatch(code),
+        isTrue,
+        reason: 'the unprefixed property is missing: $code',
+      );
+    });
+
+    test('re-enables pointer events on post images', () {
+      // pointer-events: none on feed images is what makes a long press on a
+      // photo do nothing at all, so the browser never gets as far as offering
+      // to save or share it.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, contains('div[data-tracking-duration-id] img'));
+      expect(code, contains('pointer-events: auto !important'));
+    });
+
+    test('scopes every selector to the post container', () {
+      // A document-wide rule here is not a bigger fix, it is a different bug:
+      // every mis-tap on the app's own chrome becomes a text selection with
+      // handles to dismiss. One escaped selector is enough to cause that, so
+      // each one is checked rather than the stylesheet as a whole.
+      final rules = CustomCss.selectableContentCss.code
+          .split('}')
+          .where((rule) => rule.contains('{'));
+
+      expect(rules, isNotEmpty);
+      for (final rule in rules) {
+        for (final selector in rule.split('{').first.split(',')) {
+          expect(
+            selector,
+            contains('div[data-tracking-duration-id]'),
+            reason: selector,
+          );
+        }
+      }
+    });
+
+    test('survives the whitespace collapsing intact', () {
+      // MyCss collapses the authored formatting, and stripping whitespace
+      // outright — which an earlier version of that collapse did — would fuse
+      // `-webkit-user-select:text!important` to the declaration after it and
+      // cost both.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(code, isNot(contains('\n')));
+      expect(code, isNot(contains('  ')));
+      expect(
+        code,
+        'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text * '
+        '{ -webkit-user-select: text !important; '
+        'user-select: text !important; } '
+        'div[data-tracking-duration-id] img '
+        '{ pointer-events: auto !important; }',
+      );
     });
   });
 

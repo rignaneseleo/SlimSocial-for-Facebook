@@ -76,6 +76,105 @@ void main() {
     });
   });
 
+  group('CustomJs.unlockZoomFunc', () {
+    test('rewrites every viewport meta on the page', () {
+      // Facebook's SPA navigation can leave a second viewport tag behind, so
+      // fixing only the first one leaves the later tag deciding the scale.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('querySelectorAll'));
+      expect(js, contains('meta[name="viewport"]'));
+    });
+
+    test('skips a meta it has already rewritten', () {
+      // Injection runs on every navigation; without the mark each pass would
+      // walk and rewrite tags that are already unlocked.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains("var MARK = 'data-slim-zoom';"));
+      expect(js, contains("if (meta.getAttribute(MARK) === '1') continue;"));
+    });
+
+    test('drops the two clauses that block the gesture', () {
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains("key === 'maximum-scale'"));
+      expect(js, contains("key === 'minimum-scale'"));
+    });
+
+    test('forces user-scalable on, and adds it when it is absent', () {
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains("key === 'user-scalable'"));
+      expect(js, contains("out.push('user-scalable=yes');"));
+      expect(js, contains('if (!sawUserScalable)'));
+    });
+
+    test('never rewrites the whole content string', () {
+      // The other clauses have to survive: a hardcoded replacement would drop
+      // `width=device-width` and hand back the 980px desktop layout.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('out.push(clause);'));
+      expect(js, isNot(contains('width=device-width')));
+      expect(js, isNot(contains('initial-scale=1')));
+    });
+
+    test('installs exactly one observer, guarded by a global', () {
+      // The ad observer has the history here: a guard that never sees the
+      // previous observer stacks a new one on every page load.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('if (!window.slimViewportObserver) {'));
+      expect(js, contains('window.slimViewportObserver = new MutationObserver'));
+      expect('new MutationObserver'.allMatches(js), hasLength(1));
+      expect('.observe('.allMatches(js), hasLength(1));
+    });
+
+    test('watches the head for a replaced viewport tag', () {
+      // A single-page navigation can swap the tag out after this script has
+      // finished, and the replacement arrives locked again.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('document.head || document.documentElement'));
+      expect(js, contains('childList: true'));
+      expect(js, contains('attributes: true'));
+      expect(js, contains("attributeFilter: ['content']"));
+    });
+
+    test('clears the mark when the content was written again', () {
+      // Otherwise the tag keeps the mark from the first pass and is skipped
+      // forever, with maximum-scale back in place.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains("if (records[i].type === 'attributes')"));
+      expect(js, contains('records[i].target.removeAttribute(MARK);'));
+    });
+
+    test('does not write a value it did not change', () {
+      // setAttribute produces a mutation record either way, and the observer
+      // clears the mark before re-running: an unconditional write ping-pongs.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('if (next !== current)'));
+    });
+
+    test('runs as a self-invoking function that swallows its own failure', () {
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js.trim(), startsWith('(function () {'));
+      expect(js.trim(), endsWith('})();'));
+      expect(js, contains('try {'));
+      expect(js, contains('} catch (e) {}'));
+    });
+
+    test('carries no javascript: prefix', () {
+      // This is passed straight to runJavaScript, which evaluates the string as
+      // script; the prefix belongs to the older members that were used as URLs.
+      expect(CustomJs.unlockZoomFunc(), isNot(contains('javascript:')));
+    });
+  });
+
   group('CustomJs.removeAdsObserver', () {
     test('installs the observer when none is running yet', () {
       // The guard used to be `typeof newPostsObserver !== 'undefined'` against
