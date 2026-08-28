@@ -1,0 +1,116 @@
+name: Bug report
+description: Something in the app behaves wrongly
+labels: ["BUG"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this.
+
+        This app is a webview around Facebook's own mobile site, and Facebook
+        changes that site without warning. So the two most useful things you can
+        tell us are **which version of the app** you are on and **exactly where**
+        in it the problem appears — with those, a broken selector is usually
+        found in minutes.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before reporting
+      options:
+        - label: I searched the existing issues and this is not already reported
+          required: true
+        - label: I am on the latest version available to me
+          required: false
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happens
+      description: What you saw, and what you expected instead.
+      placeholder: |
+        Tapping a photo in the feed opens a blank white page.
+        I expected the photo to open full screen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Every step, from opening the app.
+      placeholder: |
+        1. Open the app on the feed
+        2. Scroll to any post with a single photo
+        3. Tap the photo
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      description: "Settings → scroll to the bottom → **Version**. Please give the exact value."
+      placeholder: "26.08.28"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where in the app
+      options:
+        - The feed
+        - Messenger
+        - Settings
+        - Opening a photo or video
+        - Somewhere else (say where below)
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Phone and Android version
+      placeholder: "Pixel 8, Android 15"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-source
+    attributes:
+      label: Where you installed it from
+      options:
+        - Google Play
+        - F-Droid
+        - APK from GitHub releases
+        - Built it myself
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: settings
+    attributes:
+      label: Which of these settings are switched on?
+      description: >-
+        These change what the app injects into the page, so they are the first
+        thing to rule out. If the problem disappears when you turn one off,
+        please say so — that alone usually identifies the cause.
+      options:
+        - label: "Use basic version of Facebook"
+        - label: "Hide some ads (experimental)"
+        - label: "Use custom CSS style"
+        - label: "Run custom JS code"
+        - label: "Set a custom user agent"
+        - label: "Custom proxy"
+        - label: None of these
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshot, recording or anything else
+      description: >-
+        A screenshot of the broken screen is worth a lot here. Please blank out
+        anything private first — names, messages, photos of people.
+    validations:
+      required: false

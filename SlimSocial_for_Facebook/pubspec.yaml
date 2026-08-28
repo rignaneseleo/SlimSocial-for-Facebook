@@ -1,7 +1,28 @@
 name: slimsocial_for_facebook
-description: Webview to securely navigate Facebook
+description: >-
+  A lightweight alternative to the official Facebook app: a hardened webview
+  that strips the advertising and the tracking rather than reimplementing
+  Facebook, with Messenger alongside it.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 26.08.30+123
+
+# The version is the release. The Codemagic build reads it from here, not from
+# the git tag, so this has to be bumped in its own commit *before* the matching
+# tag is pushed - a tag pushed first builds the previous version. Every release
+# tag from 117 onwards matches the value that was in this field at that commit.
+version: 26.08.28+124
+
+# Leonardo Rignanese <dev.rignaneseleo@gmail.com>
+#
+# Not an `author:` field: pubspec dropped it, and `flutter analyze` raises
+# `deprecated_field` as a *warning* for it — the one warning in an otherwise
+# warning-free tree. `flutter pub get` says nothing, so check with analyze.
+homepage: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+repository: https://github.com/rignaneseleo/SlimSocial-for-Facebook
+issue_tracker: https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues
+documentation: https://github.com/rignaneseleo/SlimSocial-for-Facebook#readme
+funding:
+  - https://www.paypal.me/LeonardoRignanese
+  - https://www.buymeacoffee.com/rignaneseleo
 
 environment:
   sdk: ">=3.7.0 <4.0.0"
