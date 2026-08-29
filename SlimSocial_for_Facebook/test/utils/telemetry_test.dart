@@ -269,6 +269,33 @@ void main() {
       expect(scrubbed!.message, "navigated to m.facebook.com/<other>");
     });
 
+    test('the registered callback scrubs feedback on its way out', () async {
+      //the assignment in configure() is the whole defence: every other
+      //feedback test calls scrubFeedbackEvent directly, so deleting the line
+      //would leave the raw sentence shipping with the suite still green
+      final options = configured();
+
+      expect(options.beforeSendFeedback, isNotNull);
+
+      final scrubbed = await options.beforeSendFeedback!(
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            feedback: SentryFeedback(
+              message: "broken on $_kStoryUrl for 100001234567890",
+            ),
+          ),
+        ),
+        Hint(),
+      );
+
+      final message = scrubbed!.contexts.feedback!.message;
+      expect(message, isNot(contains("story_fbid")));
+      expect(message, isNot(contains("100001234567890")));
+      expect(message, contains("<id>"));
+    });
+
     test('sends nothing that shows what is on screen', () {
       final options = configured();
 
