@@ -36,6 +36,10 @@ const String _needsDsn = 'needs a compiled-in dsn: fvm flutter test '
     '--dart-define=SENTRY_DSN=https://abc123def456@localhost:1/1 '
     'test/utils/telemetry_dsn_test.dart';
 
+/// The same dsn the app itself was compiled with, so a client started from a
+/// test behaves exactly like one [Telemetry] would have started.
+const String _dsn = String.fromEnvironment('SENTRY_DSN');
+
 Future<void> _prefs([Map<String, Object> values = const {}]) async {
   SharedPreferences.setMockInitialValues(values);
   sp = await SharedPreferences.getInstance();
@@ -46,6 +50,21 @@ SentryEvent _feedbackEvent(String message) => SentryEvent(
       type: 'feedback',
       level: SentryLevel.info,
       contexts: Contexts(feedback: SentryFeedback(message: message)),
+    );
+
+/// The same, as the sdk's own event processors leave it: they run ahead of
+/// every `beforeSend` callback in `sentry_client`, so `contexts` is already
+/// full of device, os, app and culture by the time the app is asked.
+SentryEvent _enrichedFeedbackEvent(String message) => SentryEvent(
+      type: 'feedback',
+      level: SentryLevel.info,
+      contexts: Contexts(
+        device: SentryDevice(model: 'Pixel 7', manufacturer: 'Google'),
+        operatingSystem: SentryOperatingSystem(name: 'Android', version: '14'),
+        app: SentryApp(version: '2.4.0'),
+        culture: SentryCulture(locale: 'it-IT', timezone: 'Europe/Rome'),
+        feedback: SentryFeedback(message: message),
+      ),
     );
 
 void main() {
@@ -97,14 +116,59 @@ void main() {
       //A throw out of the try is not reachable from a test: sentry's hub
       //catches and logs every error captureFeedback can raise, so the
       //unroutable dsn above fails silently instead. What is reachable is the
-      //other order-sensitive path through the same block — the close running
-      //first and the flag being cleared second, where anything going wrong
-      //in the close would strand the flag set for the rest of the session
+      //other order-sensitive path through the same block — the clear and the
+      //close, where a close that threw with the clear still queued behind it
+      //would strand the flag set for the rest of the session
       await _prefs({SpKeys.telemetryEnabled: false});
 
       await Telemetry.captureFeedback(stars: 1, text: 'hi');
 
+      //the close half really did run, so the clear is not passing merely by
+      //having skipped the half that can fail
+      expect(Telemetry.sdkRunning, isFalse);
+      expect(Sentry.isEnabled, isFalse);
+
+      //and the flag, which is the only thing between this user and every
+      //later event of theirs, did not outlive the call
       expect(Telemetry.scrubFeedbackEvent(_feedbackEvent('x')), isNull);
+    });
+
+    test('sends only the context blocks the notice names', () async {
+      final options = SentryFlutterOptions();
+      Telemetry.configure(options);
+
+      final scrubbed = await options.beforeSendFeedback!(
+        _enrichedFeedbackEvent('the feed is blank'),
+        Hint(),
+      );
+
+      //the dialog's notice promises an app version, a device model and an
+      //android version
+      expect(scrubbed!.contexts.app!.version, '2.4.0');
+      expect(scrubbed.contexts.device!.model, 'Pixel 7');
+      expect(scrubbed.contexts.operatingSystem!.version, '14');
+
+      //and promises nothing else, so nothing else the sdk attached may ride
+      //along: a locale and a timezone identify a person
+      expect(scrubbed.contexts.culture, isNull);
+      expect(scrubbed.contexts.toJson().keys, isNot(contains('culture')));
+    });
+
+    test('a client the flag never saw is still closed for an opted-out user',
+        () async {
+      //_start assigns _sdkRunning only once SentryFlutter.init has returned,
+      //so an init that raises after bringing the client up leaves exactly
+      //this state behind: no flag, live client. Starting one here reproduces
+      //it without needing init to fail
+      await Sentry.init((options) => options.dsn = _dsn);
+      expect(Sentry.isEnabled, isTrue);
+      expect(Telemetry.sdkRunning, isFalse);
+
+      await Telemetry.setEnabled(false);
+
+      //someone who has reporting off is left with no client, whatever the
+      //local flag happened to say
+      expect(Sentry.isEnabled, isFalse);
     });
 
     test('an opted-out send leaves no sdk running behind it', () async {

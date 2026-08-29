@@ -438,6 +438,40 @@ void main() {
       expect(event.contexts.feedback!.url, isNull);
     });
 
+    test('drops every context block the notice does not name', () {
+      //contexts reaches a beforeSend callback already filled in — sentry runs
+      //its event processors, LoadContextsIntegration and the flutter enricher
+      //among them, before any of the callbacks — so this is the shape a real
+      //feedback event has by the time the app sees it
+      final event = Telemetry.scrubFeedbackEvent(
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            device: SentryDevice(model: "Pixel 7", manufacturer: "Google"),
+            operatingSystem:
+                SentryOperatingSystem(name: "Android", version: "14"),
+            app: SentryApp(version: "2.4.0"),
+            culture: SentryCulture(locale: "it-IT", timezone: "Europe/Rome"),
+            feedback: SentryFeedback(message: "the feed is blank"),
+          ),
+        ),
+      );
+
+      //the notice names an app version, a device model and an android
+      //version, and nothing else: a locale and a timezone identify a person
+      //and tell a bug report nothing
+      expect(event!.contexts.culture, isNull);
+      expect(event.contexts.toJson().keys, isNot(contains("culture")));
+
+      //and the three it does name have to survive, or the notice would be
+      //untrue the other way round
+      expect(event.contexts.device!.model, "Pixel 7");
+      expect(event.contexts.operatingSystem!.version, "14");
+      expect(event.contexts.app!.version, "2.4.0");
+      expect(event.contexts.feedback!.message, "the feed is blank");
+    });
+
     test('sends nothing at all for a user who opted out', () async {
       await _prefs({SpKeys.telemetryEnabled: false});
 
