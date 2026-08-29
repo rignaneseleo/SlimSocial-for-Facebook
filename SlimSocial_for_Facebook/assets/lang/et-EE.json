@@ -81,13 +81,13 @@
   "ads_blocked_count": "Seni peidetud: {}",
   "telemetry_reports": "Saada anonüümseid raporteid",
   "telemetry_reports_desc": "Anonüümsed krahhi- ja tõrkeraportid aitavad märgata, kui Facebooki muudatus rakenduse katki teeb. Isikuandmeid ega lehtede sisu ei saadeta. Saad selle igal ajal välja lülitada.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Kas SlimSocial meeldib?",
+  "rate_subtitle": "Hindamiseks puuduta tärni",
+  "rate_later": "Mitte praegu",
+  "rate_low_title": "Kahju kuulda",
+  "rate_low_hint": "Mis läks valesti?",
+  "rate_send": "Saada",
+  "rate_sends_notice": "See saadab arendajale sinu sõnumi koos rakenduse versiooni, seadme mudeli ja Androidi versiooniga. Sinu veaaruannete säte jääb välja lülitatuks.",
+  "rate_thanks": "Aitäh — sellest on abi.",
+  "rate_failed": "Saatmine ebaõnnestus. Proovi hiljem uuesti."
 }

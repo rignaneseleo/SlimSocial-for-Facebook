@@ -81,13 +81,13 @@
   "ads_blocked_count": "已隐藏 {} 条",
   "telemetry_reports": "发送匿名报告",
   "telemetry_reports_desc": "匿名的崩溃和故障报告有助于发现 Facebook 的改动何时让应用出问题。不会发送任何个人数据和页面内容。你可以随时关闭。",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "喜欢 SlimSocial 吗？",
+  "rate_subtitle": "点按星星进行评分",
+  "rate_later": "以后再说",
+  "rate_low_title": "很抱歉听到这个",
+  "rate_low_hint": "出了什么问题？",
+  "rate_send": "发送",
+  "rate_sends_notice": "这会将你的留言连同应用版本、设备型号和 Android 版本一起发送给开发者。你的崩溃报告设置仍保持关闭。",
+  "rate_thanks": "谢谢 — 这很有帮助。",
+  "rate_failed": "发送失败。请稍后再试。"
 }

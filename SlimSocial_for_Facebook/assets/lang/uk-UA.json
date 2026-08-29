@@ -81,13 +81,13 @@
   "ads_blocked_count": "Приховано: {}",
   "telemetry_reports": "Надсилати анонімні звіти",
   "telemetry_reports_desc": "Анонімні звіти про збої та поломки допомагають помітити, коли зміна у Facebook ламає застосунок. Особисті дані й вміст сторінок не надсилаються. Це можна вимкнути будь-коли.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Подобається SlimSocial?",
+  "rate_subtitle": "Торкніться зірки, щоб оцінити",
+  "rate_later": "Не зараз",
+  "rate_low_title": "Прикро це чути",
+  "rate_low_hint": "Що пішло не так?",
+  "rate_send": "Надіслати",
+  "rate_sends_notice": "Це надішле розробнику ваше повідомлення разом із версією застосунку, моделлю пристрою та версією Android. Ваше налаштування звітів про помилки залишиться вимкненим.",
+  "rate_thanks": "Дякуємо — це допомагає.",
+  "rate_failed": "Не вдалося надіслати. Спробуйте пізніше."
 }

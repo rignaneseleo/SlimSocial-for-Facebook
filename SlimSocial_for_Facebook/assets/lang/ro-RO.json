@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} ascunse până acum",
   "telemetry_reports": "Trimite rapoarte anonime",
   "telemetry_reports_desc": "Rapoartele anonime despre blocări și defecțiuni ajută la observarea momentului în care o modificare Facebook strică aplicația. Nu sunt trimise date personale și nici conținutul paginilor. Poți dezactiva oricând.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Îți place SlimSocial?",
+  "rate_subtitle": "Atinge o stea pentru a evalua",
+  "rate_later": "Nu acum",
+  "rate_low_title": "Ne pare rău să auzim asta",
+  "rate_low_hint": "Ce nu a funcționat?",
+  "rate_send": "Trimite",
+  "rate_sends_notice": "Aceasta trimite mesajul tău către dezvoltator, împreună cu versiunea aplicației, modelul dispozitivului și versiunea Android. Setarea ta pentru rapoartele de eroare rămâne dezactivată.",
+  "rate_thanks": "Mulțumim — asta ajută.",
+  "rate_failed": "Trimiterea a eșuat. Încearcă din nou mai târziu."
 }

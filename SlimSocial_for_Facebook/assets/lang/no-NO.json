@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} skjult så langt",
   "telemetry_reports": "Send anonyme rapporter",
   "telemetry_reports_desc": "Anonyme krasj- og feilrapporter hjelper med å oppdage når en endring på Facebook ødelegger appen. Ingen personopplysninger og ikke noe sideinnhold sendes. Du kan slå det av når som helst.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
+  "rate_title": "Liker du SlimSocial?",
+  "rate_subtitle": "Trykk på en stjerne for å vurdere",
+  "rate_later": "Ikke nå",
+  "rate_low_title": "Det var leit å høre",
+  "rate_low_hint": "Hva gikk galt?",
   "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_sends_notice": "Dette sender meldingen din til utvikleren, sammen med appversjonen, enhetsmodellen og Android-versjonen. Innstillingen din for feilrapporter forblir av.",
+  "rate_thanks": "Takk — dette hjelper.",
+  "rate_failed": "Kunne ikke sende. Prøv igjen senere."
 }

@@ -81,13 +81,13 @@
   "ads_blocked_count": "Iki šiol paslėpta: {}",
   "telemetry_reports": "Siųsti anoniminius pranešimus",
   "telemetry_reports_desc": "Anoniminiai strigčių ir gedimų pranešimai padeda pastebėti, kai „Facebook“ pakeitimas sugadina programėlę. Jokie asmens duomenys ir puslapių turinys nesiunčiami. Tai galite išjungti bet kada.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Ar patinka „SlimSocial“?",
+  "rate_subtitle": "Palieskite žvaigždutę, kad įvertintumėte",
+  "rate_later": "Ne dabar",
+  "rate_low_title": "Gaila tai girdėti",
+  "rate_low_hint": "Kas nutiko?",
+  "rate_send": "Siųsti",
+  "rate_sends_notice": "Taip kūrėjui bus išsiųsta jūsų žinutė kartu su programėlės versija, įrenginio modeliu ir „Android“ versija. Jūsų klaidų ataskaitų nustatymas lieka išjungtas.",
+  "rate_thanks": "Ačiū — tai padeda.",
+  "rate_failed": "Nepavyko išsiųsti. Bandykite vėliau."
 }

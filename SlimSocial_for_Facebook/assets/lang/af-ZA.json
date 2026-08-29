@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} tot dusver versteek",
   "telemetry_reports": "Stuur anonieme verslae",
   "telemetry_reports_desc": "Anonieme fout- en breukverslae help om raak te sien wanneer 'n verandering by Facebook die app breek. Geen persoonlike data en geen bladsy-inhoud word gestuur nie. Skakel dit enige tyd af.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Geniet jy SlimSocial?",
+  "rate_subtitle": "Tik op 'n ster om te beoordeel",
+  "rate_later": "Nie nou nie",
+  "rate_low_title": "Jammer om dit te hoor",
+  "rate_low_hint": "Wat het verkeerd geloop?",
+  "rate_send": "Stuur",
+  "rate_sends_notice": "Dit stuur jou boodskap saam met die programweergawe, toestelmodel en Android-weergawe aan die ontwikkelaar. Jou instelling vir foutverslae bly af.",
+  "rate_thanks": "Dankie — dit help.",
+  "rate_failed": "Kon nie stuur nie. Probeer later weer."
 }

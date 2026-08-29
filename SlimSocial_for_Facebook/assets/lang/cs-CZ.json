@@ -81,13 +81,13 @@
   "ads_blocked_count": "Zatím skryto: {}",
   "telemetry_reports": "Odesílat anonymní hlášení",
   "telemetry_reports_desc": "Anonymní hlášení o pádech a chybách pomáhají odhalit, když změna na Facebooku rozbije aplikaci. Neodesílají se žádné osobní údaje ani obsah stránek. Můžete to kdykoli vypnout.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Líbí se vám SlimSocial?",
+  "rate_subtitle": "Klepnutím na hvězdičku aplikaci ohodnotíte",
+  "rate_later": "Teď ne",
+  "rate_low_title": "To nás mrzí",
+  "rate_low_hint": "Co se pokazilo?",
+  "rate_send": "Odeslat",
+  "rate_sends_notice": "Tímto odešlete vývojáři svou zprávu spolu s verzí aplikace, modelem zařízení a verzí Androidu. Vaše nastavení hlášení chyb zůstává vypnuté.",
+  "rate_thanks": "Děkujeme — to pomáhá.",
+  "rate_failed": "Odeslání se nezdařilo. Zkuste to prosím později."
 }

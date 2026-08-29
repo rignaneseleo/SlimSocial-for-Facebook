@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} masqués jusqu'à présent",
   "telemetry_reports": "Envoyer des rapports anonymes",
   "telemetry_reports_desc": "Les rapports anonymes de plantage et de dysfonctionnement aident à repérer quand un changement de Facebook casse l'application. Aucune donnée personnelle ni contenu de page n'est envoyé. Vous pouvez le désactiver à tout moment.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "SlimSocial vous plaît ?",
+  "rate_subtitle": "Touchez une étoile pour noter",
+  "rate_later": "Pas maintenant",
+  "rate_low_title": "Désolé de l'apprendre",
+  "rate_low_hint": "Qu'est-ce qui n'a pas fonctionné ?",
+  "rate_send": "Envoyer",
+  "rate_sends_notice": "Cela envoie votre message au développeur, ainsi que la version de l'application, le modèle de votre appareil et la version d'Android. Votre réglage des rapports d'erreur reste désactivé.",
+  "rate_thanks": "Merci — c'est utile.",
+  "rate_failed": "Envoi impossible. Réessayez plus tard."
 }

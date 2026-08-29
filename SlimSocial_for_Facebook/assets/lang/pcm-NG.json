@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} don hide so far",
   "telemetry_reports": "Send anonymous reports",
   "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
+  "rate_title": "You dey enjoy SlimSocial?",
+  "rate_subtitle": "Tap star make you rate am",
   "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
+  "rate_low_title": "Sorry to hear am",
+  "rate_low_hint": "Wetin happen?",
   "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_sends_notice": "Dis one go send your message give di developer, plus your app version, device model and Android version. Your crash report setting go still dey off.",
+  "rate_thanks": "Thank you — e dey help.",
+  "rate_failed": "E no fit send. Abeg try again later."
 }

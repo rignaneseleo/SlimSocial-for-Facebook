@@ -81,13 +81,13 @@
   "ads_blocked_count": "An ɓoye {} zuwa yanzu",
   "telemetry_reports": "Send anonymous reports",
   "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Kana jin daɗin SlimSocial?",
+  "rate_subtitle": "Taɓa tauraro don ba da kima",
+  "rate_later": "Ba yanzu ba",
+  "rate_low_title": "Mun yi hakuri da jin haka",
+  "rate_low_hint": "Me ya faru?",
+  "rate_send": "Aika",
+  "rate_sends_notice": "Wannan yana aika saƙonka ga mai haɓakawa, tare da sigar manhaja, samfurin na'ura da sigar Android. Saitin rahoton kuskure naka zai kasance a kashe.",
+  "rate_thanks": "Na gode — wannan yana taimakawa.",
+  "rate_failed": "An kasa aikawa. Da fatan a sake gwadawa daga baya."
 }

@@ -81,13 +81,13 @@
   "ads_blocked_count": "Līdz šim paslēpti: {}",
   "telemetry_reports": "Sūtīt anonīmus ziņojumus",
   "telemetry_reports_desc": "Anonīmi avāriju un kļūmju ziņojumi palīdz pamanīt, kad Facebook izmaiņas salauž lietotni. Netiek sūtīti nekādi personas dati un lapu saturs. To var izslēgt jebkurā brīdī.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Vai SlimSocial patīk?",
+  "rate_subtitle": "Pieskarieties zvaigznei, lai novērtētu",
+  "rate_later": "Ne tagad",
+  "rate_low_title": "Žēl to dzirdēt",
+  "rate_low_hint": "Kas nogāja greizi?",
+  "rate_send": "Sūtīt",
+  "rate_sends_notice": "Tas nosūta izstrādātājam jūsu ziņojumu kopā ar lietotnes versiju, ierīces modeli un Android versiju. Jūsu kļūdu ziņojumu iestatījums paliek izslēgts.",
+  "rate_thanks": "Paldies — tas palīdz.",
+  "rate_failed": "Neizdevās nosūtīt. Mēģiniet vēlreiz vēlāk."
 }

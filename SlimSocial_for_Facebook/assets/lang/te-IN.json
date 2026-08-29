@@ -81,13 +81,13 @@
   "ads_blocked_count": "ఇప్పటివరకు {} దాచబడ్డాయి",
   "telemetry_reports": "అనామక నివేదికలను పంపండి",
   "telemetry_reports_desc": "అనామక క్రాష్ మరియు లోపాల నివేదికలు Facebook లో వచ్చిన మార్పు యాప్‌ను ఎప్పుడు పాడు చేసిందో గుర్తించడంలో సహాయపడతాయి. వ్యక్తిగత సమాచారం గానీ పేజీ కంటెంట్ గానీ పంపబడదు. దీన్ని మీరు ఎప్పుడైనా ఆఫ్ చేయవచ్చు.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "SlimSocial నచ్చిందా?",
+  "rate_subtitle": "రేటింగ్ ఇవ్వడానికి ఒక నక్షత్రాన్ని నొక్కండి",
+  "rate_later": "ఇప్పుడు కాదు",
+  "rate_low_title": "అది వినడం బాధగా ఉంది",
+  "rate_low_hint": "ఏమి తప్పు జరిగింది?",
+  "rate_send": "పంపు",
+  "rate_sends_notice": "ఇది మీ సందేశాన్ని యాప్ వెర్షన్, పరికర మోడల్ మరియు Android వెర్షన్‌తో పాటు డెవలపర్‌కు పంపుతుంది. మీ క్రాష్ రిపోర్ట్ సెట్టింగ్ ఆఫ్‌లోనే ఉంటుంది.",
+  "rate_thanks": "ధన్యవాదాలు — ఇది సహాయపడుతుంది.",
+  "rate_failed": "పంపడం సాధ్యం కాలేదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి."
 }

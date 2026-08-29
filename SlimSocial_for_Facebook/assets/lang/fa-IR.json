@@ -81,13 +81,13 @@
   "ads_blocked_count": "تاکنون {} مورد پنهان شد",
   "telemetry_reports": "ارسال گزارش‌های ناشناس",
   "telemetry_reports_desc": "گزارش‌های ناشناس خرابی و اشکال کمک می‌کنند تشخیص دهیم چه زمانی تغییری در فیسبوک برنامه را خراب کرده است. هیچ داده شخصی و هیچ محتوای صفحه‌ای ارسال نمی‌شود. هر زمان بخواهید می‌توانید آن را خاموش کنید.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "از SlimSocial راضی هستید؟",
+  "rate_subtitle": "برای امتیازدهی روی یک ستاره ضربه بزنید",
+  "rate_later": "الان نه",
+  "rate_low_title": "متأسفیم که این را می‌شنویم",
+  "rate_low_hint": "چه مشکلی پیش آمد؟",
+  "rate_send": "ارسال",
+  "rate_sends_notice": "با این کار پیام شما همراه با نسخهٔ برنامه، مدل دستگاه و نسخهٔ Android برای توسعه‌دهنده ارسال می‌شود. تنظیم گزارش خطای شما خاموش باقی می‌ماند.",
+  "rate_thanks": "ممنون — این کمک می‌کند.",
+  "rate_failed": "ارسال نشد. لطفاً بعداً دوباره تلاش کنید."
 }

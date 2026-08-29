@@ -81,13 +81,13 @@
   "ads_blocked_count": "এখন পর্যন্ত {} লুকানো হয়েছে",
   "telemetry_reports": "বেনামী রিপোর্ট পাঠান",
   "telemetry_reports_desc": "বেনামী ক্র্যাশ ও ত্রুটির রিপোর্ট Facebook-এর কোনও পরিবর্তনে অ্যাপটি ভেঙে গেলে তা শনাক্ত করতে সাহায্য করে। কোনও ব্যক্তিগত তথ্য বা পৃষ্ঠার বিষয়বস্তু পাঠানো হয় না। আপনি যেকোনো সময় এটি বন্ধ করতে পারেন।",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "SlimSocial ভালো লাগছে?",
+  "rate_subtitle": "রেটিং দিতে একটি তারায় ট্যাপ করুন",
+  "rate_later": "এখন নয়",
+  "rate_low_title": "এটা শুনে দুঃখিত",
+  "rate_low_hint": "কী সমস্যা হয়েছে?",
+  "rate_send": "পাঠান",
+  "rate_sends_notice": "এটি আপনার বার্তা অ্যাপ সংস্করণ, ডিভাইস মডেল এবং Android সংস্করণ সহ ডেভেলপারের কাছে পাঠাবে। আপনার ক্র্যাশ রিপোর্ট সেটিং বন্ধ থাকবে।",
+  "rate_thanks": "ধন্যবাদ — এতে সাহায্য হয়।",
+  "rate_failed": "পাঠানো যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।"
 }

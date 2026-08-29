@@ -81,13 +81,13 @@
   "ads_blocked_count": "已隱藏 {} 則",
   "telemetry_reports": "傳送匿名報告",
   "telemetry_reports_desc": "匿名的當機與故障報告有助於發現 Facebook 的變動何時讓應用程式出問題。不會傳送任何個人資料或頁面內容。你可以隨時關閉。",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "喜歡 SlimSocial 嗎？",
+  "rate_subtitle": "點按星星進行評分",
+  "rate_later": "稍後再說",
+  "rate_low_title": "很抱歉聽到這個",
+  "rate_low_hint": "出了什麼問題？",
+  "rate_send": "傳送",
+  "rate_sends_notice": "這會將你的訊息連同應用程式版本、裝置型號和 Android 版本一併傳送給開發者。你的當機報告設定仍維持關閉。",
+  "rate_thanks": "謝謝 — 這很有幫助。",
+  "rate_failed": "傳送失敗。請稍後再試。"
 }

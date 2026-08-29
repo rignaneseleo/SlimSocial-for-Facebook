@@ -81,13 +81,13 @@
   "ads_blocked_count": "{} dolda hittills",
   "telemetry_reports": "Skicka anonyma rapporter",
   "telemetry_reports_desc": "Anonyma krasch- och felrapporter hjälper till att upptäcka när en ändring hos Facebook gör att appen slutar fungera. Inga personuppgifter och inget sidinnehåll skickas. Du kan stänga av det när som helst.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "Gillar du SlimSocial?",
+  "rate_subtitle": "Tryck på en stjärna för att betygsätta",
+  "rate_later": "Inte nu",
+  "rate_low_title": "Tråkigt att höra",
+  "rate_low_hint": "Vad gick fel?",
+  "rate_send": "Skicka",
+  "rate_sends_notice": "Detta skickar ditt meddelande till utvecklaren, tillsammans med appversionen, enhetsmodellen och Android-versionen. Din inställning för felrapporter förblir avstängd.",
+  "rate_thanks": "Tack — det hjälper.",
+  "rate_failed": "Kunde inte skicka. Försök igen senare."
 }

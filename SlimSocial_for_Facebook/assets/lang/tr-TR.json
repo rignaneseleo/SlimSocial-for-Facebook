@@ -81,13 +81,13 @@
   "ads_blocked_count": "Şimdiye kadar {} gizlendi",
   "telemetry_reports": "Anonim rapor gönder",
   "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin.",
-  "rate_title": "Enjoying SlimSocial?",
-  "rate_subtitle": "Tap a star to rate it",
-  "rate_later": "Not now",
-  "rate_low_title": "Sorry to hear that",
-  "rate_low_hint": "What went wrong?",
-  "rate_send": "Send",
-  "rate_sends_notice": "This sends your message, along with your app version, device model and Android version, to the developer. Your crash reporting setting stays off.",
-  "rate_thanks": "Thanks — this helps.",
-  "rate_failed": "Could not send. Please try again later."
+  "rate_title": "SlimSocial'ı beğendiniz mi?",
+  "rate_subtitle": "Puan vermek için bir yıldıza dokunun",
+  "rate_later": "Şimdi değil",
+  "rate_low_title": "Bunu duyduğumuza üzüldük",
+  "rate_low_hint": "Ne ters gitti?",
+  "rate_send": "Gönder",
+  "rate_sends_notice": "Bu, mesajınızı uygulama sürümü, cihaz modeli ve Android sürümüyle birlikte geliştiriciye gönderir. Hata raporu ayarınız kapalı kalır.",
+  "rate_thanks": "Teşekkürler — bu yardımcı oluyor.",
+  "rate_failed": "Gönderilemedi. Lütfen daha sonra tekrar deneyin."
 }
