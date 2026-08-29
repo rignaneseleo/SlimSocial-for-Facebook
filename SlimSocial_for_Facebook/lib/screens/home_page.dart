@@ -54,7 +54,18 @@ class _HomePageState extends ConsumerState<HomePage> {
   ///
   /// Deliberately a field and not a preference: "this session" is the whole
   /// point of it, and a field dies with the screen for free.
-  int _loadsThisSession = 0;
+  final SessionLoadCounter _loadsThisSession = SessionLoadCounter();
+
+  /// Set while the rating prompt is being written down or shown.
+  ///
+  /// [_maybeAskForRating] is started with `unawaited`, so the callback that
+  /// starts it can fire again while it is suspended on its first `await` — and
+  /// at that point the ask has been counted but the launch it was asked on has
+  /// not been recorded yet, so the second caller passes every gate and opens a
+  /// second dialog on top of the first. That spends two of the three lifetime
+  /// asks on one launch. A plain synchronous bool closes the window without
+  /// depending on `shared_preferences` answering a write from its own cache.
+  bool _askingForRating = false;
 
   @override
   void initState() {
@@ -107,6 +118,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             //while one is outstanding.
             if (!mounted) return;
             _retryPolicy.onNavigationStarted();
+            _loadsThisSession.onNavigationStarted();
             setState(() {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
             });
@@ -137,12 +149,19 @@ class _HomePageState extends ConsumerState<HomePage> {
           },
           onPageFinished: (String url) async {
             if (!mounted) return;
+            //asked before anything is awaited: a navigation starting while
+            //runJs is outstanding belongs to the next page, and it would clear
+            //the very failure this finish is reporting
+            final loadCompleted = _loadsThisSession.onNavigationFinished();
             _retryPolicy.onNavigationFinished();
             await runJs();
+            if (!mounted) return;
             if (kDebugMode) debugPrint(url);
 
-            _loadsThisSession++;
-            unawaited(_maybeAskForRating());
+            //a failed main-frame load finishes like any other document on
+            //Android, and asking for a rating over the error page is the
+            //one-star review this gate exists to avoid
+            if (loadCompleted) unawaited(_maybeAskForRating());
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -295,6 +314,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     _retryPolicy.onLoadError(url: error.url, isForMainFrame: isForMainFrame);
+    //fires before the error page's own onPageFinished, which is what keeps
+    //that finish from being counted as a load that worked
+    _loadsThisSession.onLoadError(isForMainFrame: isForMainFrame);
   }
 
   Future<NavigationDecision> onNavigationRequest(
@@ -736,6 +758,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// still in flight keeps calling back after the widget has gone.
   Future<void> _maybeAskForRating() async {
     if (!mounted) return;
+    //one prompt at a time: the gates below are read from storage that the
+    //first call has not finished writing yet
+    if (_askingForRating) return;
     //asking over a feed that is still retrying is asking about a broken app
     if (_retryPolicy.loadFailed) return;
 
@@ -747,21 +772,28 @@ class _HomePageState extends ConsumerState<HomePage> {
       asks: asks,
       answered: sp.getBool(SpKeys.ratingAnswered) ?? false,
       lastAskedOpen: sp.getInt(SpKeys.ratingLastAskedOpen) ?? 0,
-      loadsThisSession: _loadsThisSession,
+      loadsThisSession: _loadsThisSession.completed,
     )) {
       return;
     }
 
-    //written before the dialog opens, so a crash or a force-quit mid-prompt
-    //still costs this launch's single ask rather than looping on it
-    await sp.setInt(SpKeys.ratingAsks, asks + 1);
-    await sp.setInt(SpKeys.ratingLastAskedOpen, opens);
-    if (!mounted) return;
+    //set before the first await and cleared however this ends, including a
+    //dialog that throws
+    _askingForRating = true;
+    try {
+      //written before the dialog opens, so a crash or a force-quit mid-prompt
+      //still costs this launch's single ask rather than looping on it
+      await sp.setInt(SpKeys.ratingAsks, asks + 1);
+      await sp.setInt(SpKeys.ratingLastAskedOpen, opens);
+      if (!mounted) return;
 
-    await showRatingDialog(
-      context: context,
-      onRated: (stars) => sp.setBool(SpKeys.ratingAnswered, true),
-    );
+      await showRatingDialog(
+        context: context,
+        onRated: (stars) => sp.setBool(SpKeys.ratingAnswered, true),
+      );
+    } finally {
+      _askingForRating = false;
+    }
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {

@@ -82,4 +82,73 @@ void main() {
       expect(_ask(opens: 3, lastAskedOpen: 1), isTrue);
     });
   });
+
+  group('SessionLoadCounter', () {
+    late SessionLoadCounter counter;
+
+    setUp(() => counter = SessionLoadCounter());
+
+    /// One navigation, in the order the webview reports it. [failed] plays the
+    /// Android sequence for a failed load: the error arrives first, and then
+    /// the error page commits and finishes like any other document.
+    bool navigate({bool failed = false, bool isForMainFrame = true}) {
+      counter.onNavigationStarted();
+      if (failed) counter.onLoadError(isForMainFrame: isForMainFrame);
+      return counter.onNavigationFinished();
+    }
+
+    test('counts a load that finished with nothing reported against it', () {
+      expect(navigate(), isTrue);
+      expect(counter.completed, 1);
+    });
+
+    test('does not count the error page that a failed load finishes as', () {
+      expect(navigate(failed: true), isFalse);
+      expect(counter.completed, 0);
+    });
+
+    test('a whole retry sequence leaves the session with nothing loaded', () {
+      //the first attempt plus the three the retry policy makes: on the later
+      //trigger opens one of these counting is enough to put the prompt on top
+      //of the error screen
+      for (var attempt = 0; attempt < 4; attempt++) {
+        expect(navigate(failed: true), isFalse, reason: 'attempt $attempt');
+      }
+      expect(counter.completed, 0);
+    });
+
+    test('a dropped image does not spoil the page it fell out of', () {
+      expect(navigate(failed: true, isForMainFrame: false), isTrue);
+      expect(counter.completed, 1);
+    });
+
+    test('the failure belongs to its own navigation, not the next one', () {
+      expect(navigate(failed: true), isFalse);
+      expect(navigate(), isTrue);
+      expect(counter.completed, 1);
+    });
+
+    test('a second finish on a failed navigation still does not count', () {
+      counter.onNavigationStarted();
+      counter.onLoadError(isForMainFrame: true);
+      counter.onNavigationFinished();
+
+      expect(counter.onNavigationFinished(), isFalse);
+      expect(counter.completed, 0);
+    });
+
+    test('reaches the later asks only on loads that worked', () {
+      navigate(failed: true);
+      expect(
+        counter.completed,
+        lessThan(RatingPrompt.kLaterAskInteractions),
+        reason: 'a failed load must not open the lowest gate',
+      );
+      navigate();
+      expect(
+        counter.completed,
+        greaterThanOrEqualTo(RatingPrompt.kLaterAskInteractions),
+      );
+    });
+  });
 }

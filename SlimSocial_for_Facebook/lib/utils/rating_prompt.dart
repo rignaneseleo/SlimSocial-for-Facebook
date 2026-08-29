@@ -56,3 +56,47 @@ abstract final class RatingPrompt {
     return loadsThisSession >= requiredLoads(opens);
   }
 }
+
+/// Counts the feed loads that actually worked, for one run of the screen.
+///
+/// `onPageFinished` on its own cannot be that count. Android commits and
+/// finishes an error page like any other document, so a main-frame failure
+/// arrives as an ordinary finish — and since the retry policy only admits to a
+/// failure once its retries are spent, every attempt in a retry sequence would
+/// read as a completed load. A phone opened while it is still attaching to the
+/// network is enough to reach [RatingPrompt.kLaterAskInteractions] that way,
+/// and the prompt then opens on top of the error screen: exactly the one-star
+/// outcome the engagement gate exists to prevent.
+///
+/// So the failure is remembered per navigation, which is all the webview's
+/// callbacks can tell us: set when the main frame errors, cleared only when the
+/// next navigation starts.
+class SessionLoadCounter {
+  int _completed = 0;
+  bool _navigationFailed = false;
+
+  /// Loads that finished with no main-frame error reported against them.
+  int get completed => _completed;
+
+  /// A new navigation began, so the last one's failure is no longer ours.
+  void onNavigationStarted() => _navigationFailed = false;
+
+  /// Only main-frame failures count: Facebook drops individual images and
+  /// beacons on every page, and a feed that rendered is a feed that worked.
+  void onLoadError({required bool isForMainFrame}) {
+    if (!isForMainFrame) return;
+    _navigationFailed = true;
+  }
+
+  /// Records a finished load, and reports whether it was a real one.
+  ///
+  /// The failure is deliberately not cleared here. A navigation can report
+  /// finished more than once, and a second finish arriving after an error is
+  /// still that same broken page — counting it would put the prompt back over
+  /// the error screen by another route.
+  bool onNavigationFinished() {
+    if (_navigationFailed) return false;
+    _completed++;
+    return true;
+  }
+}
