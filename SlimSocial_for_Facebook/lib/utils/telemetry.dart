@@ -177,6 +177,22 @@ abstract final class Telemetry {
     }
   }
 
+  /// Records a breadcrumb from the app's own code.
+  ///
+  /// [message] must be a fixed literal this app chose, never page content or
+  /// anything the user typed — `enablePrintBreadcrumbs` is off precisely so
+  /// that nothing reaches Sentry by accident, and this is the one deliberate
+  /// way back in.
+  static void addBreadcrumb(String message) {
+    if (!_canReport || !isEnabled) return;
+
+    unawaited(
+      Sentry.addBreadcrumb(
+        Breadcrumb(message: scrubText(message), level: SentryLevel.info),
+      ),
+    );
+  }
+
   /// Reports a caught error.
   static void captureError(Object error, StackTrace? stack, {String? hint}) {
     if (!_canReport || !isEnabled) return;

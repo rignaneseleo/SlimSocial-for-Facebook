@@ -512,7 +512,7 @@ void main() {
     test('sends only the fields declared for the kind it reports', () {
       // Same trap in the other direction: a field added here but not to
       // kDiagnosticFields is stripped before it leaves the app.
-      final stale = _objectKeys(_functionBody(health, 'function checkFeedHealth()'));
+      final stale = _objectKeys(_functionBody(health, 'function checkFeedHealth(isFinal)'));
       final threw = _objectKeys(_functionBody(health, 'function describe(e)'));
 
       final staleFields = kDiagnosticFields[kDiagNoPostsMatched]!;
@@ -537,7 +537,7 @@ void main() {
         'document.cookie',
       ]) {
         expect(
-          _functionBody(health, 'function checkFeedHealth()'),
+          _functionBody(health, 'function checkFeedHealth(isFinal)'),
           isNot(contains(source)),
         );
         expect(_functionBody(health, 'function describe(e)'), isNot(contains(source)));
@@ -597,7 +597,7 @@ void main() {
       // Only ever read as "did the page render at all", so an exact count is
       // detail nobody needs and a fingerprint nobody should have.
       expect(
-        _functionBody(health, 'function checkFeedHealth()'),
+        _functionBody(health, 'function checkFeedHealth(isFinal)'),
         contains('Math.floor(divs / 100) * 100'),
       );
     });
@@ -610,9 +610,9 @@ void main() {
       // Zero posts is the normal state of a photo view, a group, Marketplace
       // and every settings page. Reporting from those is not a weaker signal,
       // it is noise that buries the one case this exists for.
-      final body = _functionBody(health, 'function checkFeedHealth()');
+      final body = _functionBody(health, 'function checkFeedHealth(isFinal)');
 
-      expect(body, contains('if (sawPosts) return;'));
+      expect(body, contains('if (sawPosts) {'));
       expect(body, contains('if (!isFeedPage()) return;'));
       expect(body, contains("if (document.readyState !== 'complete') return;"));
       expect(body, contains('if (divs < MIN_DIVS) return;'));
@@ -689,15 +689,61 @@ void main() {
 
     test('waits for the feed to arrive before judging it', () {
       // The first pass runs at page-finished, when a feed legitimately holds
-      // no posts yet. One shot, late, is also the throttle for this signal.
-      final delay = int.parse(
-        RegExp(r'var HEALTH_DELAY_MS = (\d+);').firstMatch(health)!.group(1)!,
-      );
+      // no posts yet, so every check is late. A low-end phone can still be
+      // painting at the first one, which is why there is more than one.
+      final delays = RegExp(r'var HEALTH_DELAYS_MS = \[([\d,\s]+)\];')
+          .firstMatch(health)!
+          .group(1)!
+          .split(',')
+          .map((d) => int.parse(d.trim()))
+          .toList();
 
-      expect(delay, kFeedHealthDelayMs);
-      expect(delay, greaterThanOrEqualTo(5000));
-      expect(health, contains('setTimeout(checkFeedHealth, HEALTH_DELAY_MS)'));
-      expect(RegExp('checkFeedHealth').allMatches(health).length, 2);
+      expect(delays, kFeedHealthDelaysMs);
+      expect(delays.first, greaterThanOrEqualTo(5000));
+      expect(delays, orderedEquals(List.of(delays)..sort()));
+      expect(delays.length, greaterThan(1));
+    });
+
+    test('only the last attempt is allowed to report', () {
+      // Every earlier attempt exists so a slow device can set sawPosts first.
+      // If one of them could report, the extra attempts would be pointless —
+      // the Dart-side throttle keeps only the first event per process, so an
+      // early false positive would be the one that survived.
+      expect(health, contains('function checkFeedHealth(isFinal)'));
+      expect(health, contains('if (!isFinal) return;'));
+      expect(health, contains('d === lastDelay'));
+
+      // The guard has to sit before the report, not after it.
+      final body = _functionBody(health, 'function checkFeedHealth(isFinal)');
+      expect(
+        body.indexOf('if (!isFinal) return;'),
+        lessThan(body.indexOf('report(')),
+      );
+    });
+
+    test('a rendered feed reports the denominator', () {
+      // no_posts_matched on its own is a numerator with nothing under it: six
+      // events reads the same whether it is six-in-six or six-in-six-thousand.
+      final body = _functionBody(health, 'function checkFeedHealth(isFinal)');
+      expect(body, contains(kDiagPostsMatched));
+
+      // Both signals have to leave from behind the same gates, or the ratio
+      // describes two different populations and means nothing.
+      final gateAt = body.indexOf('if (divs < MIN_DIVS) return;');
+      expect(gateAt, greaterThan(0));
+      expect(body.indexOf(kDiagPostsMatched), greaterThan(gateAt));
+      expect(body.indexOf(kDiagNoPostsMatched), greaterThan(gateAt));
+    });
+
+    test('the filter itself still never consults the telemetry gate', () {
+      // Restating the invariant from the host-gate test at the point where it
+      // was actually broken once: an earlier version of the denominator called
+      // isFeedPage() from inside runPass(), which would have let a fault in the
+      // signal take the ad filter down with it.
+      expect(
+        _functionBody(health, 'function runPass()'),
+        isNot(contains(kDiagPostsMatched)),
+      );
     });
 
     test('one matched post anywhere in the page clears it', () {
@@ -716,7 +762,7 @@ void main() {
 
       expect(selector, contains('data-tracking-duration-id'));
       expect(
-        _functionBody(health, 'function checkFeedHealth()'),
+        _functionBody(health, 'function checkFeedHealth(isFinal)'),
         contains('selector: POST_SELECTOR'),
       );
     });

@@ -123,6 +123,15 @@ const String kDiagnosticsChannelName = 'SlimDiag';
 /// hides nothing, and nothing crashes — adverts simply come back.
 const String kDiagNoPostsMatched = 'injection.no_posts_matched';
 
+/// The post-container selector matched at least one post.
+///
+/// The denominator [kDiagNoPostsMatched] never had. On its own a count of
+/// failures says nothing: six reports is indistinguishable from six-out-of-six
+/// and six-out-of-six-thousand. Raised once per process, exactly like the
+/// failure signal, so the two counts are directly comparable and the break rate
+/// is `no_posts_matched / (no_posts_matched + posts_matched)`.
+const String kDiagPostsMatched = 'injection.posts_matched';
+
 /// A pass of the injected filter threw.
 const String kDiagScriptThrew = 'injection.script_threw';
 
@@ -150,6 +159,7 @@ const String kDiagFilterMissing = 'injection.filter_missing';
 /// using the app as a way out for its own text.
 const Map<String, Set<String>> kDiagnosticFields = {
   kDiagNoPostsMatched: {'page', 'selector', 'dom_size'},
+  kDiagPostsMatched: <String>{},
   kDiagScriptThrew: {'error'},
   kDiagFilterMissing: <String>{},
 };
@@ -262,9 +272,13 @@ Diagnostic? parseDiagnostic(String message) {
   return Diagnostic(kind, data);
 }
 
-/// How long after a load the feed is given to render before zero posts is read
-/// as a stale selector rather than as a page still arriving.
-const int kFeedHealthDelayMs = 8000;
+/// When, after a load, the feed is checked for rendered posts.
+///
+/// Three attempts rather than one. A single 8 s shot cannot tell a stale
+/// selector from a low-end phone that simply had not painted yet — and the
+/// majority of this app's users are on exactly those devices. Only a page that
+/// still has no posts at 25 s is reported.
+const List<int> kFeedHealthDelaysMs = [8000, 15000, 25000];
 
 /// How many `div`s the page must hold before its post count means anything.
 ///
@@ -420,7 +434,7 @@ String adFilterScript({
   var FEED_HOSTS = ${jsonEncode(kFeedHosts)};
   var ERROR_NAMES = ${jsonEncode(kDiagnosticErrorNames.toList())};
   var OTHER = ${jsonEncode(kDiagnosticOtherValue)};
-  var HEALTH_DELAY_MS = $kFeedHealthDelayMs;
+  var HEALTH_DELAYS_MS = ${jsonEncode(kFeedHealthDelaysMs)};
   var MIN_DIVS = $kFeedHealthMinDivs;
   var memo = null;
   var reported = {};
@@ -485,13 +499,24 @@ String adFilterScript({
   // seconds of any load, so the check runs once, late, and only where a feed
   // was genuinely expected — on both sides of the wait, since the page can
   // navigate in place while it runs.
-  function checkFeedHealth() {
-    if (sawPosts) return;
+  function checkFeedHealth(isFinal) {
+    // Earlier attempts exist only to give a slow device a chance to paint and
+    // set sawPosts. Reporting from one of them is the false positive the
+    // schedule exists to remove, so only the last attempt may speak.
+    if (!isFinal) return;
     if (!isFeedPage()) return;
     if (document.readyState !== 'complete') return;
 
     var divs = document.getElementsByTagName('div').length;
     if (divs < MIN_DIVS) return;
+
+    // Both signals leave from here, past the same gates, so the pair describes
+    // one population and the ratio between them means something. A numerator
+    // counted against a different denominator would not.
+    if (sawPosts) {
+      report(${jsonEncode(kDiagPostsMatched)}, {});
+      return;
+    }
 
     report(${jsonEncode(kDiagNoPostsMatched)}, {
       page: 'feed',
@@ -828,7 +853,16 @@ String adFilterScript({
 
   if (isFeedPage()) {
     try {
-      setTimeout(checkFeedHealth, HEALTH_DELAY_MS);
+      var lastDelay = HEALTH_DELAYS_MS.length - 1;
+      for (var d = 0; d < HEALTH_DELAYS_MS.length; d++) {
+        // Only the last attempt reports. The earlier ones exist so that a feed
+        // which paints late clears sawPosts before anything is claimed.
+        (function (isFinal) {
+          setTimeout(function () {
+            checkFeedHealth(isFinal);
+          }, HEALTH_DELAYS_MS[d]);
+        })(d === lastDelay);
+      }
     } catch (e) {}
   }
 })();
