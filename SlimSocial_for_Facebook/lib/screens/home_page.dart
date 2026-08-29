@@ -21,10 +21,12 @@ import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
+import 'package:slimsocial_for_facebook/utils/rating_prompt.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/url_cleaner.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
+import 'package:slimsocial_for_facebook/widgets/rating_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
@@ -47,6 +49,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// left, how long to wait before each, and whether the app should be showing
   /// its own error state instead of the browser's.
   late final LoadRetryPolicy _retryPolicy;
+
+  /// Feed loads completed since this screen was built.
+  ///
+  /// Deliberately a field and not a preference: "this session" is the whole
+  /// point of it, and a field dies with the screen for free.
+  int _loadsThisSession = 0;
 
   @override
   void initState() {
@@ -132,6 +140,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             _retryPolicy.onNavigationFinished();
             await runJs();
             if (kDebugMode) debugPrint(url);
+
+            _loadsThisSession++;
+            unawaited(_maybeAskForRating());
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -717,6 +728,40 @@ class _HomePageState extends ConsumerState<HomePage> {
         reportDetail: false,
       );
     }
+  }
+
+  /// Shows the rating prompt if this is one of the launches it is due on.
+  ///
+  /// Every hop here is guarded: the controller outlives this State, so a load
+  /// still in flight keeps calling back after the widget has gone.
+  Future<void> _maybeAskForRating() async {
+    if (!mounted) return;
+    //asking over a feed that is still retrying is asking about a broken app
+    if (_retryPolicy.loadFailed) return;
+
+    final opens = sp.getInt(SpKeys.ratingOpens) ?? 0;
+    final asks = sp.getInt(SpKeys.ratingAsks) ?? 0;
+
+    if (!RatingPrompt.shouldAsk(
+      opens: opens,
+      asks: asks,
+      answered: sp.getBool(SpKeys.ratingAnswered) ?? false,
+      lastAskedOpen: sp.getInt(SpKeys.ratingLastAskedOpen) ?? 0,
+      loadsThisSession: _loadsThisSession,
+    )) {
+      return;
+    }
+
+    //written before the dialog opens, so a crash or a force-quit mid-prompt
+    //still costs this launch's single ask rather than looping on it
+    await sp.setInt(SpKeys.ratingAsks, asks + 1);
+    await sp.setInt(SpKeys.ratingLastAskedOpen, opens);
+    if (!mounted) return;
+
+    await showRatingDialog(
+      context: context,
+      onRated: (stars) => sp.setBool(SpKeys.ratingAnswered, true),
+    );
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {
