@@ -230,6 +230,65 @@ abstract final class Telemetry {
     );
   }
 
+  /// Whether a feedback box can do anything at all.
+  ///
+  /// False in a build compiled without a dsn, where there is nowhere for the
+  /// text to go. The dialog asks this before offering a box, because a Send
+  /// button that cannot send is worse than no box.
+  static bool get canCollectFeedback => _canReport;
+
+  /// Sends one report the user wrote, with the rating they gave.
+  ///
+  /// Returns whether it was handed to the sdk, so the caller can tell the
+  /// user the truth either way.
+  ///
+  /// Unlike [captureIssue] this is not throttled: the throttle there exists
+  /// because a stale selector fires on every scroll, which has no analogue in
+  /// a person pressing a button. The prompt's own ceiling bounds this.
+  static Future<bool> captureFeedback({
+    required int stars,
+    required String text,
+  }) async {
+    if (!_canReport) return false;
+
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return false;
+
+    //someone who turned reporting off still gets to send the message they
+    //just typed — pressing send is the consent — but their stored choice is
+    //not touched, and the client started for it does not outlive the send
+    _feedbackConsented = true;
+    try {
+      if (!_sdkRunning) await _start();
+
+      await Sentry.captureFeedback(
+        SentryFeedback(message: trimmed),
+        withScope: (scope) async {
+          //a number in the app's own context block stays filterable in
+          //sentry, where the same value inside the message would not
+          await scope.setContexts(_contextKey, <String, dynamic>{
+            'stars': stars,
+          });
+        },
+      );
+      return true;
+    }
+    //a failed send must not take the dialog down with it
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return false;
+    } finally {
+      //keyed on the stored preference rather than on whether the client was
+      //already running: an enabled user whose client had simply not started
+      //yet must keep the one this call started
+      if (!isEnabled && _sdkRunning) {
+        await Sentry.close();
+        _sdkRunning = false;
+      }
+      _feedbackConsented = false;
+    }
+  }
+
   /// Claims this session's single slot for [kind], returning false once it is
   /// taken.
   ///

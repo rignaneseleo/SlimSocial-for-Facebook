@@ -454,5 +454,35 @@ void main() {
       expect(event, isNotNull);
       expect(event!.contexts.feedback!.message, "hi");
     });
+
+    test('a build with no dsn cannot collect feedback at all', () {
+      //the tests run without --dart-define, so this is the f-droid build
+      expect(Telemetry.canCollectFeedback, isFalse);
+    });
+
+    test('captureFeedback reports failure rather than pretending', () async {
+      //a dialog that says "thanks, sent" when nothing was sent is a lie, so
+      //the return value has to be honest with no dsn compiled in
+      expect(
+        await Telemetry.captureFeedback(stars: 2, text: "the feed is blank"),
+        isFalse,
+      );
+    });
+
+    test('an empty message is never sent', () async {
+      expect(await Telemetry.captureFeedback(stars: 1, text: "   "), isFalse);
+    });
+
+    test('captureFeedback leaves consent off once it returns', () async {
+      await Telemetry.captureFeedback(stars: 1, text: "hi");
+
+      //the flag is the only thing standing between an opted-out user and a
+      //later unrelated event, so it must never be left set
+      await _prefs({SpKeys.telemetryEnabled: false});
+      expect(
+        Telemetry.scrubFeedbackEvent(feedbackEvent("unrelated")),
+        isNull,
+      );
+    });
   });
 }
