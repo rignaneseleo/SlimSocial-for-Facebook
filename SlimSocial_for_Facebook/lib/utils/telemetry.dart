@@ -35,6 +35,17 @@ abstract final class Telemetry {
   @visibleForTesting
   static bool get sdkRunning => _sdkRunning;
 
+  /// True only while a feedback send the user explicitly asked for is in
+  /// flight. Read by [scrubFeedbackEvent], which otherwise drops everything
+  /// coming from someone who turned reporting off.
+  static bool _feedbackConsented = false;
+
+  @visibleForTesting
+  //write-only on purpose: the flag exists to widen what leaves the device,
+  //so exposing a reader would only invite code that branches on it
+  // ignore: avoid_setters_without_getters
+  static set feedbackConsented(bool value) => _feedbackConsented = value;
+
   /// Initialises reporting (if a DSN was compiled in and the user allows it)
   /// and runs the app inside a guarded zone so uncaught errors are captured.
   static Future<void> init(Future<void> Function() appRunner) async {
@@ -127,6 +138,12 @@ abstract final class Telemetry {
     options.beforeBreadcrumb = (crumb, hint) => scrubCrumb(crumb);
 
     options.beforeSend = (event, hint) => scrubEvent(event);
+
+    //feedback is the one event whose body a person types. It arrives as
+    //contexts.feedback, and _rebuildScrubbed passes contexts straight
+    //through, so without this the raw sentence would leave the device.
+    //Sentry prefers this callback over beforeSend for type 'feedback'.
+    options.beforeSendFeedback = (event, hint) => scrubFeedbackEvent(event);
   }
 
   /// Whether the user currently allows reporting.
@@ -304,6 +321,36 @@ abstract final class Telemetry {
     try {
       //an opted-out user sends nothing at all, not even a scrubbed skeleton
       if (!isEnabled) return null;
+
+      return _rebuildScrubbed(event);
+    }
+    //deliberately everything: see the doc comment
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return null;
+    }
+  }
+
+  /// Last gate before a user's written feedback leaves the device.
+  ///
+  /// Fails closed for the same reason [scrubEvent] does: sentry keeps the
+  /// *unscrubbed* event when a callback throws.
+  @visibleForTesting
+  static SentryEvent? scrubFeedbackEvent(SentryEvent event) {
+    try {
+      //someone who opted out sends nothing, unless this is the message they
+      //just typed and pressed send on
+      if (!isEnabled && !_feedbackConsented) return null;
+
+      final feedback = event.contexts.feedback;
+      if (feedback != null) {
+        event.contexts.feedback = SentryFeedback(
+          message: scrubText(feedback.message),
+          //never collected by this app, and pinned to null so that a future
+          //sdk default cannot start filling them in
+          associatedEventId: feedback.associatedEventId,
+        );
+      }
 
       return _rebuildScrubbed(event);
     }

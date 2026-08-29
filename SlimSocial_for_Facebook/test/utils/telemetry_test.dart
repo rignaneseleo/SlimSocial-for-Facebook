@@ -361,4 +361,71 @@ void main() {
       expect(Telemetry.allowIssue('injection.no_posts_matched'), isFalse);
     });
   });
+
+  group('feedback events', () {
+    SentryEvent feedbackEvent(String message, {String? email, String? name}) =>
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            feedback: SentryFeedback(
+              message: message,
+              contactEmail: email,
+              name: name,
+            ),
+          ),
+        );
+
+    tearDown(() => Telemetry.feedbackConsented = false);
+
+    test('scrubs the url and the ids out of what the user typed', () {
+      //the whole reason beforeSendFeedback is set: contexts rides through
+      //_rebuildScrubbed untouched, so the message has to be cleaned here
+      final event = Telemetry.scrubFeedbackEvent(
+        feedbackEvent("broken on $_kStoryUrl for user 100001234567890"),
+      );
+
+      final message = event!.contexts.feedback!.message;
+      expect(message, isNot(contains("story_fbid")));
+      expect(message, isNot(contains("100001234567890")));
+      expect(message, contains("<id>"));
+      expect(message, contains("m.facebook.com"));
+    });
+
+    test('keeps the type so sentry still routes it to feedback', () {
+      final event =
+          Telemetry.scrubFeedbackEvent(feedbackEvent("the feed is blank"));
+
+      expect(event, isNotNull);
+      expect(event!.type, "feedback");
+      expect(event.contexts.feedback!.message, "the feed is blank");
+    });
+
+    test('drops a contact email and a name even when handed both', () {
+      final event = Telemetry.scrubFeedbackEvent(
+        feedbackEvent("hi", email: "someone@example.com", name: "Someone"),
+      );
+
+      expect(event!.contexts.feedback!.contactEmail, isNull);
+      expect(event.contexts.feedback!.name, isNull);
+      expect(event.contexts.feedback!.url, isNull);
+    });
+
+    test('sends nothing at all for a user who opted out', () async {
+      await _prefs({SpKeys.telemetryEnabled: false});
+
+      expect(Telemetry.scrubFeedbackEvent(feedbackEvent("hi")), isNull);
+    });
+
+    test('lets an opted-out user through only while they are sending',
+        () async {
+      await _prefs({SpKeys.telemetryEnabled: false});
+      Telemetry.feedbackConsented = true;
+
+      final event = Telemetry.scrubFeedbackEvent(feedbackEvent("hi"));
+
+      expect(event, isNotNull);
+      expect(event!.contexts.feedback!.message, "hi");
+    });
+  });
 }
