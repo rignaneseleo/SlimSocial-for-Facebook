@@ -80,5 +80,14 @@
   "retry": "再試行",
   "ads_blocked_count": "これまでに{}件を非表示にしました",
   "telemetry_reports": "匿名レポートを送信",
-  "telemetry_reports_desc": "匿名のクラッシュ・不具合レポートは、Facebook側の変更でアプリが壊れたことに気づく助けになります。個人情報やページの内容は送信されません。いつでもオフにできます。"
+  "telemetry_reports_desc": "匿名のクラッシュ・不具合レポートは、Facebook側の変更でアプリが壊れたことに気づく助けになります。個人情報やページの内容は送信されません。いつでもオフにできます。",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

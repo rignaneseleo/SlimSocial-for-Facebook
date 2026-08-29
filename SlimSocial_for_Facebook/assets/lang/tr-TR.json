@@ -80,5 +80,14 @@
   "retry": "Tekrar dene",
   "ads_blocked_count": "Şimdiye kadar {} gizlendi",
   "telemetry_reports": "Anonim rapor gönder",
-  "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin."
+  "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

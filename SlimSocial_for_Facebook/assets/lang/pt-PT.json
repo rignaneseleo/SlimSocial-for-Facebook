@@ -80,5 +80,14 @@
   "retry": "Tentar novamente",
   "ads_blocked_count": "{} ocultados até agora",
   "telemetry_reports": "Enviar relatórios anónimos",
-  "telemetry_reports_desc": "Os relatórios anónimos de falhas e erros ajudam a perceber quando uma alteração do Facebook estraga a aplicação. Não são enviados dados pessoais nem o conteúdo das páginas. Pode desativar isto a qualquer momento."
+  "telemetry_reports_desc": "Os relatórios anónimos de falhas e erros ajudam a perceber quando uma alteração do Facebook estraga a aplicação. Não são enviados dados pessoais nem o conteúdo das páginas. Pode desativar isto a qualquer momento.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

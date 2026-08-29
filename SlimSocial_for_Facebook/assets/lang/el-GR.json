@@ -80,5 +80,14 @@
   "retry": "Δοκιμή ξανά",
   "ads_blocked_count": "Έχουν αποκρυφτεί {} μέχρι τώρα",
   "telemetry_reports": "Αποστολή ανώνυμων αναφορών",
-  "telemetry_reports_desc": "Οι ανώνυμες αναφορές σφαλμάτων και βλαβών βοηθούν να εντοπίζεται πότε μια αλλαγή του Facebook χαλάει την εφαρμογή. Δεν αποστέλλονται προσωπικά δεδομένα ούτε περιεχόμενο σελίδων. Μπορείτε να το απενεργοποιήσετε όποτε θέλετε."
+  "telemetry_reports_desc": "Οι ανώνυμες αναφορές σφαλμάτων και βλαβών βοηθούν να εντοπίζεται πότε μια αλλαγή του Facebook χαλάει την εφαρμογή. Δεν αποστέλλονται προσωπικά δεδομένα ούτε περιεχόμενο σελίδων. Μπορείτε να το απενεργοποιήσετε όποτε θέλετε.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

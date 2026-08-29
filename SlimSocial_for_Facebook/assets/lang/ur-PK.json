@@ -80,5 +80,14 @@
   "retry": "دوبارہ کوشش کریں",
   "ads_blocked_count": "اب تک {} چھپائے گئے",
   "telemetry_reports": "گمنام رپورٹس بھیجیں",
-  "telemetry_reports_desc": "گمنام کریش اور خرابی کی رپورٹس یہ پہچاننے میں مدد دیتی ہیں کہ فیس بک کی کوئی تبدیلی ایپ کو کب خراب کرتی ہے۔ کوئی ذاتی معلومات یا صفحے کا مواد نہیں بھیجا جاتا۔ آپ اسے کسی بھی وقت بند کر سکتے ہیں۔"
+  "telemetry_reports_desc": "گمنام کریش اور خرابی کی رپورٹس یہ پہچاننے میں مدد دیتی ہیں کہ فیس بک کی کوئی تبدیلی ایپ کو کب خراب کرتی ہے۔ کوئی ذاتی معلومات یا صفحے کا مواد نہیں بھیجا جاتا۔ آپ اسے کسی بھی وقت بند کر سکتے ہیں۔",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

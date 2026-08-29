@@ -80,5 +80,14 @@
   "retry": "फिर से कोशिश करें",
   "ads_blocked_count": "अब तक {} छिपाए गए",
   "telemetry_reports": "गुमनाम रिपोर्ट भेजें",
-  "telemetry_reports_desc": "गुमनाम क्रैश और खराबी की रिपोर्ट यह पहचानने में मदद करती हैं कि Facebook में कोई बदलाव कब ऐप को तोड़ देता है। कोई निजी जानकारी या पेज की सामग्री नहीं भेजी जाती। आप इसे कभी भी बंद कर सकते हैं।"
+  "telemetry_reports_desc": "गुमनाम क्रैश और खराबी की रिपोर्ट यह पहचानने में मदद करती हैं कि Facebook में कोई बदलाव कब ऐप को तोड़ देता है। कोई निजी जानकारी या पेज की सामग्री नहीं भेजी जाती। आप इसे कभी भी बंद कर सकते हैं।",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

@@ -80,5 +80,14 @@
   "retry": "Pokušaj ponovo",
   "ads_blocked_count": "Dosad sakriveno: {}",
   "telemetry_reports": "Šalji anonimne izveštaje",
-  "telemetry_reports_desc": "Anonimni izveštaji o padovima i kvarovima pomažu da se primeti kada promena na Facebooku pokvari aplikaciju. Ne šalju se lični podaci ni sadržaj stranica. Ovo možete isključiti u bilo kom trenutku."
+  "telemetry_reports_desc": "Anonimni izveštaji o padovima i kvarovima pomažu da se primeti kada promena na Facebooku pokvari aplikaciju. Ne šalju se lični podaci ni sadržaj stranica. Ovo možete isključiti u bilo kom trenutku.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

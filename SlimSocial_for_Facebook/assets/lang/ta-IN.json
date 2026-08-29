@@ -80,5 +80,14 @@
   "retry": "மீண்டும் முயலவும்",
   "ads_blocked_count": "இதுவரை {} மறைக்கப்பட்டன",
   "telemetry_reports": "அநாமதேய அறிக்கைகளை அனுப்பு",
-  "telemetry_reports_desc": "அநாமதேய செயலிழப்பு மற்றும் கோளாறு அறிக்கைகள், Facebook-இல் ஏற்படும் மாற்றம் செயலியைப் பழுதாக்கும்போது அதைக் கண்டறிய உதவுகின்றன. தனிப்பட்ட தகவல்களோ பக்க உள்ளடக்கமோ அனுப்பப்படுவதில்லை. இதை எப்போது வேண்டுமானாலும் நிறுத்தலாம்."
+  "telemetry_reports_desc": "அநாமதேய செயலிழப்பு மற்றும் கோளாறு அறிக்கைகள், Facebook-இல் ஏற்படும் மாற்றம் செயலியைப் பழுதாக்கும்போது அதைக் கண்டறிய உதவுகின்றன. தனிப்பட்ட தகவல்களோ பக்க உள்ளடக்கமோ அனுப்பப்படுவதில்லை. இதை எப்போது வேண்டுமானாலும் நிறுத்தலாம்.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

@@ -80,5 +80,14 @@
   "retry": "Bandyti dar kartą",
   "ads_blocked_count": "Iki šiol paslėpta: {}",
   "telemetry_reports": "Siųsti anoniminius pranešimus",
-  "telemetry_reports_desc": "Anoniminiai strigčių ir gedimų pranešimai padeda pastebėti, kai „Facebook“ pakeitimas sugadina programėlę. Jokie asmens duomenys ir puslapių turinys nesiunčiami. Tai galite išjungti bet kada."
+  "telemetry_reports_desc": "Anoniminiai strigčių ir gedimų pranešimai padeda pastebėti, kai „Facebook“ pakeitimas sugadina programėlę. Jokie asmens duomenys ir puslapių turinys nesiunčiami. Tai galite išjungti bet kada.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

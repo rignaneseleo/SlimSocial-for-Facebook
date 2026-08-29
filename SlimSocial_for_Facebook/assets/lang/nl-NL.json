@@ -80,5 +80,14 @@
   "retry": "Opnieuw proberen",
   "ads_blocked_count": "{} tot nu toe verborgen",
   "telemetry_reports": "Anonieme rapporten versturen",
-  "telemetry_reports_desc": "Anonieme crash- en storingsrapporten helpen te zien wanneer een wijziging bij Facebook de app kapotmaakt. Er worden geen persoonlijke gegevens en geen pagina-inhoud verstuurd. Je kunt dit altijd uitschakelen."
+  "telemetry_reports_desc": "Anonieme crash- en storingsrapporten helpen te zien wanneer een wijziging bij Facebook de app kapotmaakt. Er worden geen persoonlijke gegevens en geen pagina-inhoud verstuurd. Je kunt dit altijd uitschakelen.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

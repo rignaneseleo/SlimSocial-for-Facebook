@@ -80,5 +80,14 @@
   "retry": "تلاش دوباره",
   "ads_blocked_count": "تاکنون {} مورد پنهان شد",
   "telemetry_reports": "ارسال گزارش‌های ناشناس",
-  "telemetry_reports_desc": "گزارش‌های ناشناس خرابی و اشکال کمک می‌کنند تشخیص دهیم چه زمانی تغییری در فیسبوک برنامه را خراب کرده است. هیچ داده شخصی و هیچ محتوای صفحه‌ای ارسال نمی‌شود. هر زمان بخواهید می‌توانید آن را خاموش کنید."
+  "telemetry_reports_desc": "گزارش‌های ناشناس خرابی و اشکال کمک می‌کنند تشخیص دهیم چه زمانی تغییری در فیسبوک برنامه را خراب کرده است. هیچ داده شخصی و هیچ محتوای صفحه‌ای ارسال نمی‌شود. هر زمان بخواهید می‌توانید آن را خاموش کنید.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

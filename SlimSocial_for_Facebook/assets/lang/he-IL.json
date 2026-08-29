@@ -80,5 +80,14 @@
   "retry": "נסה שוב",
   "ads_blocked_count": "{} הוסתרו עד כה",
   "telemetry_reports": "שליחת דוחות אנונימיים",
-  "telemetry_reports_desc": "דוחות אנונימיים על קריסות ותקלות עוזרים לזהות מתי שינוי בפייסבוק שובר את האפליקציה. לא נשלחים נתונים אישיים ולא תוכן של דפים. אפשר לכבות את זה בכל רגע."
+  "telemetry_reports_desc": "דוחות אנונימיים על קריסות ותקלות עוזרים לזהות מתי שינוי בפייסבוק שובר את האפליקציה. לא נשלחים נתונים אישיים ולא תוכן של דפים. אפשר לכבות את זה בכל רגע.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }

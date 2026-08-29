@@ -80,5 +80,14 @@
   "retry": "మళ్లీ ప్రయత్నించండి",
   "ads_blocked_count": "ఇప్పటివరకు {} దాచబడ్డాయి",
   "telemetry_reports": "అనామక నివేదికలను పంపండి",
-  "telemetry_reports_desc": "అనామక క్రాష్ మరియు లోపాల నివేదికలు Facebook లో వచ్చిన మార్పు యాప్‌ను ఎప్పుడు పాడు చేసిందో గుర్తించడంలో సహాయపడతాయి. వ్యక్తిగత సమాచారం గానీ పేజీ కంటెంట్ గానీ పంపబడదు. దీన్ని మీరు ఎప్పుడైనా ఆఫ్ చేయవచ్చు."
+  "telemetry_reports_desc": "అనామక క్రాష్ మరియు లోపాల నివేదికలు Facebook లో వచ్చిన మార్పు యాప్‌ను ఎప్పుడు పాడు చేసిందో గుర్తించడంలో సహాయపడతాయి. వ్యక్తిగత సమాచారం గానీ పేజీ కంటెంట్ గానీ పంపబడదు. దీన్ని మీరు ఎప్పుడైనా ఆఫ్ చేయవచ్చు.",
+  "rate_title": "Enjoying SlimSocial?",
+  "rate_subtitle": "Tap a star to rate it",
+  "rate_later": "Not now",
+  "rate_low_title": "Sorry to hear that",
+  "rate_low_hint": "What went wrong?",
+  "rate_send": "Send",
+  "rate_sends_notice": "This sends your message and app version to the developer. Your crash reporting setting stays off.",
+  "rate_thanks": "Thanks — this helps.",
+  "rate_failed": "Could not send. Please try again later."
 }
