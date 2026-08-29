@@ -6,8 +6,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- to allow to save photos -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- to allow to read photos -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- READ_MEDIA_IMAGES is deliberately not declared. Nothing requests it:
+         the file chooser hands the page a URI from the system document picker,
+         which grants access per-pick and needs no runtime permission. It used
+         to back a "photo permission" toggle that gated the picker, and because
+         READ_MEDIA_IMAGES only exists from API 33 that gate made photo upload
+         impossible on anything older. Play also treats broad media access as a
+         sensitive permission requiring a declaration form, and the listing says
+         this app asks for no special permissions. -->
     <!-- to take pictures from inside Facebook: without this the "Camera
          permission" toggle in the settings can never be turned on -->
     <uses-permission android:name="android.permission.CAMERA" />

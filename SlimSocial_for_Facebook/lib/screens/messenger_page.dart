@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +11,7 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
+import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
@@ -91,25 +90,7 @@ class _HomePageState extends ConsumerState<MessengerPage> {
         //let videos and voice clips play with sound on the first tap
         ..setMediaPlaybackRequiresUserGesture(false)
         ..setTextZoom(PrefController.getTextZoom())
-        ..setOnShowFileSelector(
-          (FileSelectorParams params) async {
-            final photosPermission =
-                sp.getBool(SpKeys.photosPermission) ?? false;
-
-            if (photosPermission) {
-              final result = await FilePicker.platform.pickFiles();
-
-              if (result != null && result.files.single.path != null) {
-                final file = File(result.files.single.path!);
-                return [file.uri.toString()];
-              }
-            } else {
-              // Handle the case when the permission is not granted
-              showToast("check_permission".tr());
-            }
-            return [];
-          },
-        )
+        ..setOnShowFileSelector(handleFileChooser)
         ..setGeolocationPermissionsPromptCallbacks(
           onShowPrompt: (request) async {
             final gpsPermission = sp.getBool(SpKeys.gpsPermission) ?? false;

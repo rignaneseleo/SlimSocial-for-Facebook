@@ -32,10 +32,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
   bool isDev = false;
 
+  //photosPermission is deliberately absent: the file chooser no longer gates on
+  //it. Permission.photos maps to READ_MEDIA_IMAGES, which only exists from API
+  //33, so below that it could never be granted and the gate blocked uploads
+  //outright. The SpKeys constant is kept — the key still exists on ~925k
+  //installs — but nothing reads it any more.
   final Map<String, Permission> permissions = const {
     SpKeys.gpsPermission: Permission.locationWhenInUse,
     SpKeys.cameraPermission: Permission.camera,
-    SpKeys.photosPermission: Permission.photos,
   };
 
   @override
@@ -178,43 +182,27 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
-                  final oldVal = value == true;
-                  const permission = Permission.camera;
+                  final wanted = value;
+                  final granted =
+                      await handlePermission(wanted, Permission.camera);
 
-                  //value is set based on the new value of granted
-                  value = await handlePermission(value, permission);
+                  //Turning on: the OS decides, so store what it actually
+                  //granted. Turning off: the user's intent wins. handlePermission
+                  //returns isGranted, and an OS grant survives until it is
+                  //revoked in system settings, so storing it here would pin the
+                  //switch on and make it impossible to turn off.
+                  final stored = wanted && granted;
 
-                  if (oldVal != value) {
-                    setState(() {
-                      sp.setBool(SpKeys.cameraPermission, value);
-                    });
-                    ref.invalidate(fbWebViewProvider);
-                  }
+                  if (!mounted) return;
+                  setState(() {
+                    sp.setBool(SpKeys.cameraPermission, stored);
+                  });
+                  ref.invalidate(fbWebViewProvider);
                 },
                 //fixme bug on sp, I shoudl use the permission handler .isgranted
                 initialValue: sp.getBool(SpKeys.cameraPermission) ?? false,
                 leading: const Icon(Icons.camera_alt),
                 title: Text('camera_permission'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  final oldVal = value == true;
-                  const permission = Permission.photos;
-
-                  //value is set based on the new value of granted
-                  value = await handlePermission(value, permission);
-
-                  if (oldVal != value) {
-                    setState(() {
-                      sp.setBool(SpKeys.photosPermission, value);
-                    });
-                    ref.invalidate(fbWebViewProvider);
-                  }
-                },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool(SpKeys.photosPermission) ?? false,
-                leading: const Icon(Icons.photo_camera_back_outlined),
-                title: Text('photo_permission'.tr()),
               ),
               SettingsTile.switchTile(
                 onToggle: (value) async {
@@ -523,8 +511,24 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   Future<void> buildPaymentWidget(String idItem) async {
+    try {
+      await _launchPurchase(idItem);
+    } on Object catch (e, stack) {
+      //Nothing used to catch here, so a throw anywhere in the billing flow left
+      //the user staring at a screen that did nothing.
+      Telemetry.captureError(e, stack, hint: 'donation flow');
+      showToast("error_trylater".tr());
+    }
+  }
+
+  Future<void> _launchPurchase(String idItem) async {
     //get the product
     final response = await InAppPurchase.instance.queryProductDetails({idItem});
+    if (response.error != null) {
+      Telemetry.captureIssue('billing.query_failed');
+      showToast("error_trylater".tr());
+      return;
+    }
     if (response.notFoundIDs.isNotEmpty) {
       debugPrint("Product not found");
       showToast("error_trylater".tr());
@@ -563,10 +567,26 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     );
 
     //show the dialog
-    final products = response.productDetails;
-    final product = products.first;
+    final product = response.productDetails.firstOrNull;
+    if (product == null) {
+      showToast("error_trylater".tr());
+      return;
+    }
     final purchaseParam = PurchaseParam(productDetails: product);
-    await InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
+
+    //One breadcrumb before the handoff. SLIMSOCIAL-5 is a crash inside Google's
+    //own ProxyBillingActivity.onCreate, which Dart cannot catch; this is what
+    //tells us on the next occurrence whether the app ever asked for it.
+    Telemetry.addBreadcrumb('billing.flow_launching');
+
+    //buyConsumable returns false when launchBillingFlow came back non-OK.
+    //Discarding it meant a declined flow looked identical to a successful one.
+    final started =
+        await InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
+    if (!started) {
+      Telemetry.captureIssue('billing.flow_not_started');
+      showToast("error_trylater".tr());
+    }
 
     return;
   }
@@ -783,6 +803,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       final spKey = entry.key;
 
       final permissionValue = await permission.isGranted;
+      if (!mounted) return;
       setState(() {
         sp.setBool(spKey, permissionValue);
       });
