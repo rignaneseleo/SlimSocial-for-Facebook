@@ -35,6 +35,17 @@ abstract final class Telemetry {
   @visibleForTesting
   static bool get sdkRunning => _sdkRunning;
 
+  /// True only while a feedback send the user explicitly asked for is in
+  /// flight. Read by [scrubFeedbackEvent], which otherwise drops everything
+  /// coming from someone who turned reporting off.
+  static bool _feedbackConsented = false;
+
+  @visibleForTesting
+  //write-only on purpose: the flag exists to widen what leaves the device,
+  //so exposing a reader would only invite code that branches on it
+  // ignore: avoid_setters_without_getters
+  static set feedbackConsented(bool value) => _feedbackConsented = value;
+
   /// Initialises reporting (if a DSN was compiled in and the user allows it)
   /// and runs the app inside a guarded zone so uncaught errors are captured.
   static Future<void> init(Future<void> Function() appRunner) async {
@@ -127,6 +138,12 @@ abstract final class Telemetry {
     options.beforeBreadcrumb = (crumb, hint) => scrubCrumb(crumb);
 
     options.beforeSend = (event, hint) => scrubEvent(event);
+
+    //feedback is the one event whose body a person types. It arrives as
+    //contexts.feedback, and _rebuildScrubbed passes contexts straight
+    //through, so without this the raw sentence would leave the device.
+    //Sentry prefers this callback over beforeSend for type 'feedback'.
+    options.beforeSendFeedback = (event, hint) => scrubFeedbackEvent(event);
   }
 
   /// Whether the user currently allows reporting.
@@ -171,8 +188,32 @@ abstract final class Telemetry {
       return;
     }
 
-    if (_sdkRunning) {
+    await _closeClient();
+  }
+
+  /// Shuts the client down, and neither throws nor leaves one running.
+  ///
+  /// [Sentry.isEnabled] is consulted alongside [_sdkRunning] because [_start]
+  /// only assigns that flag once `SentryFlutter.init` has returned: an init
+  /// that brings the client up and then throws leaves the flag false with a
+  /// live client behind it. Someone who has reporting off must end up with no
+  /// client whatever happened on the way here, so the sdk's own view of
+  /// itself gets a say too.
+  static Future<void> _closeClient() async {
+    if (!_sdkRunning && !Sentry.isEnabled) return;
+
+    try {
       await Sentry.close();
+    }
+    //deliberately everything: a close that fails is nothing the caller can
+    //act on, and letting it out would replace the dialog's own result with it
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      //left to the `finally` below: the flag has to be cleared either way
+    } finally {
+      //a failed close may well have left the native layer running, which is
+      //why the guard above asks [Sentry.isEnabled] rather than this flag
+      //alone — the next call through here tries again
       _sdkRunning = false;
     }
   }
@@ -227,6 +268,69 @@ abstract final class Telemetry {
         },
       ),
     );
+  }
+
+  /// Whether a feedback box can do anything at all.
+  ///
+  /// False in a build compiled without a dsn, where there is nowhere for the
+  /// text to go. The dialog asks this before offering a box, because a Send
+  /// button that cannot send is worse than no box.
+  static bool get canCollectFeedback => _canReport;
+
+  /// Sends one report the user wrote, with the rating they gave.
+  ///
+  /// Returns whether it was handed to the sdk, so the caller can tell the
+  /// user the truth either way.
+  ///
+  /// Unlike [captureIssue] this is not throttled: the throttle there exists
+  /// because a stale selector fires on every scroll, which has no analogue in
+  /// a person pressing a button. The prompt's own ceiling bounds this.
+  static Future<bool> captureFeedback({
+    required int stars,
+    required String text,
+  }) async {
+    if (!_canReport) return false;
+
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return false;
+
+    //someone who turned reporting off still gets to send the message they
+    //just typed — pressing send is the consent — but their stored choice is
+    //not touched, and the client started for it does not outlive the send
+    _feedbackConsented = true;
+    try {
+      if (!_sdkRunning) await _start();
+
+      await Sentry.captureFeedback(
+        SentryFeedback(message: trimmed),
+        withScope: (scope) async {
+          //a number in the app's own context block stays filterable in
+          //sentry, where the same value inside the message would not
+          await scope.setContexts(_contextKey, <String, dynamic>{
+            'stars': stars,
+          });
+        },
+      );
+      return true;
+    }
+    //a failed send must not take the dialog down with it
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return false;
+    } finally {
+      //cleared first, and before anything here that could fail: this flag is
+      //the only thing letting an opted-out user's events past
+      //[scrubFeedbackEvent], and the `catch` above belongs to the `try`, not
+      //to this block. A close that threw with the clear still queued behind
+      //it would leave the flag set for the rest of the process, and every
+      //later event of theirs would go out
+      _feedbackConsented = false;
+
+      //keyed on the stored preference rather than on whether the client was
+      //already running: an enabled user whose client had simply not started
+      //yet must keep the one this call started
+      if (!isEnabled) await _closeClient();
+    }
   }
 
   /// Claims this session's single slot for [kind], returning false once it is
@@ -330,11 +434,72 @@ abstract final class Telemetry {
     }
   }
 
+  /// Last gate before a user's written feedback leaves the device.
+  ///
+  /// Fails closed for the same reason [scrubEvent] does: sentry keeps the
+  /// *unscrubbed* event when a callback throws.
+  @visibleForTesting
+  static SentryEvent? scrubFeedbackEvent(SentryEvent event) {
+    try {
+      //someone who opted out sends nothing, unless this is the message they
+      //just typed and pressed send on
+      if (!isEnabled && !_feedbackConsented) return null;
+
+      return _rebuildScrubbed(
+        event,
+        contexts: _feedbackContexts(event.contexts),
+      );
+    }
+    //deliberately everything: see the doc comment
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return null;
+    }
+  }
+
+  /// The context blocks a feedback event is allowed to carry, rebuilt from
+  /// scratch for the same reason [_rebuildScrubbed] rebuilds the event.
+  ///
+  /// `contexts` reaches a `beforeSend` callback already filled in: sentry runs
+  /// its event processors first, and `LoadContextsIntegration` and the flutter
+  /// enricher are two of them. Passing it through untouched would send a
+  /// device fingerprint under a notice that promises a message, so only the
+  /// three blocks that notice names survive. `culture` is the one worth
+  /// naming: locale and timezone identify a person and tell a bug report
+  /// nothing.
+  static Contexts _feedbackContexts(Contexts contexts) {
+    final feedback = contexts.feedback;
+
+    final allowed = Contexts(
+      //"your device model"
+      device: contexts.device,
+      //"your Android version"
+      operatingSystem: contexts.operatingSystem,
+      //"your app version"
+      app: contexts.app,
+      feedback: feedback == null
+          ? null
+          : SentryFeedback(
+              message: scrubText(feedback.message),
+              //never collected by this app, and pinned to null so that a
+              //future sdk default cannot start filling them in
+              associatedEventId: feedback.associatedEventId,
+            ),
+    );
+
+    //the app's own block, which on this path is the star rating the user just
+    //picked — part of what they pressed send on, not something sentry added
+    final own = contexts[_contextKey];
+    if (own != null) allowed[_contextKey] = _scrubValue(own);
+
+    return allowed;
+  }
+
   /// Rebuilds [event] field by field instead of copying and patching it: a
   /// field this list does not name is dropped, so a future sdk version cannot
   /// start attaching something new that silently rides along. `user`,
   /// `serverName` and the unstructured `extra` bag are intentionally missing.
-  static SentryEvent _rebuildScrubbed(SentryEvent event) {
+  static SentryEvent _rebuildScrubbed(SentryEvent event, {Contexts? contexts}) {
     final message = event.message;
     final request = event.request;
 
@@ -350,7 +515,7 @@ abstract final class Telemetry {
       sdk: event.sdk,
       level: event.level,
       type: event.type,
-      contexts: event.contexts,
+      contexts: contexts ?? event.contexts,
       debugMeta: event.debugMeta,
       threads: event.threads,
       fingerprint: event.fingerprint,

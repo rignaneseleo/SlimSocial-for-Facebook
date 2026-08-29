@@ -80,5 +80,14 @@
   "retry": "Skúsiť znova",
   "ads_blocked_count": "Zatiaľ skrytých: {}",
   "telemetry_reports": "Odosielať anonymné hlásenia",
-  "telemetry_reports_desc": "Anonymné hlásenia o pádoch a poruchách pomáhajú odhaliť, kedy zmena na Facebooku pokazí aplikáciu. Neodosielajú sa žiadne osobné údaje ani obsah stránok. Môžete to kedykoľvek vypnúť."
+  "telemetry_reports_desc": "Anonymné hlásenia o pádoch a poruchách pomáhajú odhaliť, kedy zmena na Facebooku pokazí aplikáciu. Neodosielajú sa žiadne osobné údaje ani obsah stránok. Môžete to kedykoľvek vypnúť.",
+  "rate_title": "Páči sa vám SlimSocial?",
+  "rate_subtitle": "Klepnutím na hviezdičku aplikáciu ohodnotíte",
+  "rate_later": "Teraz nie",
+  "rate_low_title": "To nás mrzí",
+  "rate_low_hint": "Čo sa pokazilo?",
+  "rate_send": "Odoslať",
+  "rate_sends_notice": "Týmto odošlete vývojárovi svoju správu spolu s verziou aplikácie, modelom zariadenia a verziou Androidu. Vaše nastavenie hlásení chýb zostáva vypnuté.",
+  "rate_thanks": "Ďakujeme — to pomáha.",
+  "rate_failed": "Odoslanie zlyhalo. Skúste to znova neskôr."
 }

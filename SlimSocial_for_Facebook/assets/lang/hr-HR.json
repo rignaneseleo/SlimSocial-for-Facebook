@@ -80,5 +80,14 @@
   "retry": "Pokušaj ponovno",
   "ads_blocked_count": "Dosad skriveno: {}",
   "telemetry_reports": "Šalji anonimne izvještaje",
-  "telemetry_reports_desc": "Anonimni izvještaji o rušenjima i kvarovima pomažu uočiti kada promjena na Facebooku pokvari aplikaciju. Ne šalju se nikakvi osobni podaci ni sadržaj stranica. To možete isključiti u bilo kojem trenutku."
+  "telemetry_reports_desc": "Anonimni izvještaji o rušenjima i kvarovima pomažu uočiti kada promjena na Facebooku pokvari aplikaciju. Ne šalju se nikakvi osobni podaci ni sadržaj stranica. To možete isključiti u bilo kojem trenutku.",
+  "rate_title": "Sviđa li vam se SlimSocial?",
+  "rate_subtitle": "Dodirnite zvjezdicu za ocjenu",
+  "rate_later": "Ne sada",
+  "rate_low_title": "Žao nam je zbog toga",
+  "rate_low_hint": "Što je pošlo po zlu?",
+  "rate_send": "Pošalji",
+  "rate_sends_notice": "Ovo šalje vašu poruku razvijatelju zajedno s verzijom aplikacije, modelom uređaja i verzijom Androida. Vaša postavka izvješća o pogreškama ostaje isključena.",
+  "rate_thanks": "Hvala — ovo pomaže.",
+  "rate_failed": "Slanje nije uspjelo. Pokušajte ponovno kasnije."
 }

@@ -80,5 +80,14 @@
   "retry": "다시 시도",
   "ads_blocked_count": "지금까지 {}개 숨김",
   "telemetry_reports": "익명 보고서 보내기",
-  "telemetry_reports_desc": "익명 오류 및 고장 보고서는 Facebook의 변경으로 앱이 망가진 시점을 파악하는 데 도움이 됩니다. 개인 정보나 페이지 내용은 전송되지 않습니다. 언제든지 끌 수 있습니다."
+  "telemetry_reports_desc": "익명 오류 및 고장 보고서는 Facebook의 변경으로 앱이 망가진 시점을 파악하는 데 도움이 됩니다. 개인 정보나 페이지 내용은 전송되지 않습니다. 언제든지 끌 수 있습니다.",
+  "rate_title": "SlimSocial이 마음에 드시나요?",
+  "rate_subtitle": "별을 탭하여 평가해 주세요",
+  "rate_later": "나중에",
+  "rate_low_title": "불편을 드려 죄송합니다",
+  "rate_low_hint": "무엇이 문제였나요?",
+  "rate_send": "보내기",
+  "rate_sends_notice": "메시지가 앱 버전, 기기 모델, Android 버전과 함께 개발자에게 전송됩니다. 오류 보고 설정은 계속 꺼져 있습니다.",
+  "rate_thanks": "감사합니다 — 큰 도움이 됩니다.",
+  "rate_failed": "보내지 못했습니다. 나중에 다시 시도해 주세요."
 }

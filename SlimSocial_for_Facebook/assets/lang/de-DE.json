@@ -80,5 +80,14 @@
   "retry": "Erneut versuchen",
   "ads_blocked_count": "Bisher {} ausgeblendet",
   "telemetry_reports": "Anonyme Berichte senden",
-  "telemetry_reports_desc": "Anonyme Absturz- und Fehlerberichte helfen zu erkennen, wenn eine Änderung bei Facebook die App kaputt macht. Es werden keine personenbezogenen Daten und keine Seiteninhalte gesendet. Du kannst das jederzeit ausschalten."
+  "telemetry_reports_desc": "Anonyme Absturz- und Fehlerberichte helfen zu erkennen, wenn eine Änderung bei Facebook die App kaputt macht. Es werden keine personenbezogenen Daten und keine Seiteninhalte gesendet. Du kannst das jederzeit ausschalten.",
+  "rate_title": "Gefällt dir SlimSocial?",
+  "rate_subtitle": "Tippe auf einen Stern, um zu bewerten",
+  "rate_later": "Jetzt nicht",
+  "rate_low_title": "Das tut uns leid",
+  "rate_low_hint": "Was hat nicht funktioniert?",
+  "rate_send": "Senden",
+  "rate_sends_notice": "Dies sendet deine Nachricht zusammen mit der App-Version, dem Gerätemodell und der Android-Version an den Entwickler. Deine Einstellung für Fehlerberichte bleibt ausgeschaltet.",
+  "rate_thanks": "Danke — das hilft.",
+  "rate_failed": "Senden fehlgeschlagen. Bitte versuche es später erneut."
 }

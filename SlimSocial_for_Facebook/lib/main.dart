@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:native_flutter_proxy/native_flutter_proxy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
@@ -36,6 +37,9 @@ Future<void> _startApp() async {
   await EasyLocalization.ensureInitialized();
   packageInfo = await PackageInfo.fromPlatform();
   sp = await SharedPreferences.getInstance();
+  //counted here rather than in the home screen: this runs exactly once per
+  //cold start, while the screen can be rebuilt without the app restarting
+  await sp.setInt(SpKeys.ratingOpens, (sp.getInt(SpKeys.ratingOpens) ?? 0) + 1);
   final container = ProviderContainer();
 
   if (sp.getBool("custom_proxy_enabled") ?? false) _setupProxy();

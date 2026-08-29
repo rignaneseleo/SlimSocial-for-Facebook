@@ -80,5 +80,14 @@
   "retry": "Tekrar dene",
   "ads_blocked_count": "Şimdiye kadar {} gizlendi",
   "telemetry_reports": "Anonim rapor gönder",
-  "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin."
+  "telemetry_reports_desc": "Anonim çökme ve bozulma raporları, Facebook'taki bir değişikliğin uygulamayı ne zaman bozduğunu fark etmeye yardımcı olur. Hiçbir kişisel veri ve sayfa içeriği gönderilmez. Bunu istediğin zaman kapatabilirsin.",
+  "rate_title": "SlimSocial'ı beğendiniz mi?",
+  "rate_subtitle": "Puan vermek için bir yıldıza dokunun",
+  "rate_later": "Şimdi değil",
+  "rate_low_title": "Bunu duyduğumuza üzüldük",
+  "rate_low_hint": "Ne ters gitti?",
+  "rate_send": "Gönder",
+  "rate_sends_notice": "Bu, mesajınızı uygulama sürümü, cihaz modeli ve Android sürümüyle birlikte geliştiriciye gönderir. Hata raporu ayarınız kapalı kalır.",
+  "rate_thanks": "Teşekkürler — bu yardımcı oluyor.",
+  "rate_failed": "Gönderilemedi. Lütfen daha sonra tekrar deneyin."
 }

@@ -80,5 +80,14 @@
   "retry": "Reîncercați",
   "ads_blocked_count": "{} ascunse până acum",
   "telemetry_reports": "Trimite rapoarte anonime",
-  "telemetry_reports_desc": "Rapoartele anonime despre blocări și defecțiuni ajută la observarea momentului în care o modificare Facebook strică aplicația. Nu sunt trimise date personale și nici conținutul paginilor. Poți dezactiva oricând."
+  "telemetry_reports_desc": "Rapoartele anonime despre blocări și defecțiuni ajută la observarea momentului în care o modificare Facebook strică aplicația. Nu sunt trimise date personale și nici conținutul paginilor. Poți dezactiva oricând.",
+  "rate_title": "Îți place SlimSocial?",
+  "rate_subtitle": "Atinge o stea pentru a evalua",
+  "rate_later": "Nu acum",
+  "rate_low_title": "Ne pare rău să auzim asta",
+  "rate_low_hint": "Ce nu a funcționat?",
+  "rate_send": "Trimite",
+  "rate_sends_notice": "Aceasta trimite mesajul tău către dezvoltator, împreună cu versiunea aplicației, modelul dispozitivului și versiunea Android. Setarea ta pentru rapoartele de eroare rămâne dezactivată.",
+  "rate_thanks": "Mulțumim — asta ajută.",
+  "rate_failed": "Trimiterea a eșuat. Încearcă din nou mai târziu."
 }

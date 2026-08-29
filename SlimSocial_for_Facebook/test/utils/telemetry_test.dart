@@ -269,6 +269,33 @@ void main() {
       expect(scrubbed!.message, "navigated to m.facebook.com/<other>");
     });
 
+    test('the registered callback scrubs feedback on its way out', () async {
+      //the assignment in configure() is the whole defence: every other
+      //feedback test calls scrubFeedbackEvent directly, so deleting the line
+      //would leave the raw sentence shipping with the suite still green
+      final options = configured();
+
+      expect(options.beforeSendFeedback, isNotNull);
+
+      final scrubbed = await options.beforeSendFeedback!(
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            feedback: SentryFeedback(
+              message: "broken on $_kStoryUrl for 100001234567890",
+            ),
+          ),
+        ),
+        Hint(),
+      );
+
+      final message = scrubbed!.contexts.feedback!.message;
+      expect(message, isNot(contains("story_fbid")));
+      expect(message, isNot(contains("100001234567890")));
+      expect(message, contains("<id>"));
+    });
+
     test('sends nothing that shows what is on screen', () {
       final options = configured();
 
@@ -359,6 +386,137 @@ void main() {
       expect(Telemetry.allowIssue('injection.no_posts_matched'), isTrue);
       expect(Telemetry.allowIssue('injection.no_ads_matched'), isTrue);
       expect(Telemetry.allowIssue('injection.no_posts_matched'), isFalse);
+    });
+  });
+
+  group('feedback events', () {
+    SentryEvent feedbackEvent(String message, {String? email, String? name}) =>
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            feedback: SentryFeedback(
+              message: message,
+              contactEmail: email,
+              name: name,
+            ),
+          ),
+        );
+
+    tearDown(() => Telemetry.feedbackConsented = false);
+
+    test('scrubs the url and the ids out of what the user typed', () {
+      //the whole reason beforeSendFeedback is set: contexts rides through
+      //_rebuildScrubbed untouched, so the message has to be cleaned here
+      final event = Telemetry.scrubFeedbackEvent(
+        feedbackEvent("broken on $_kStoryUrl for user 100001234567890"),
+      );
+
+      final message = event!.contexts.feedback!.message;
+      expect(message, isNot(contains("story_fbid")));
+      expect(message, isNot(contains("100001234567890")));
+      expect(message, contains("<id>"));
+      expect(message, contains("m.facebook.com"));
+    });
+
+    test('keeps the type so sentry still routes it to feedback', () {
+      final event =
+          Telemetry.scrubFeedbackEvent(feedbackEvent("the feed is blank"));
+
+      expect(event, isNotNull);
+      expect(event!.type, "feedback");
+      expect(event.contexts.feedback!.message, "the feed is blank");
+    });
+
+    test('drops a contact email and a name even when handed both', () {
+      final event = Telemetry.scrubFeedbackEvent(
+        feedbackEvent("hi", email: "someone@example.com", name: "Someone"),
+      );
+
+      expect(event!.contexts.feedback!.contactEmail, isNull);
+      expect(event.contexts.feedback!.name, isNull);
+      expect(event.contexts.feedback!.url, isNull);
+    });
+
+    test('drops every context block the notice does not name', () {
+      //contexts reaches a beforeSend callback already filled in — sentry runs
+      //its event processors, LoadContextsIntegration and the flutter enricher
+      //among them, before any of the callbacks — so this is the shape a real
+      //feedback event has by the time the app sees it
+      final event = Telemetry.scrubFeedbackEvent(
+        SentryEvent(
+          type: 'feedback',
+          level: SentryLevel.info,
+          contexts: Contexts(
+            device: SentryDevice(model: "Pixel 7", manufacturer: "Google"),
+            operatingSystem:
+                SentryOperatingSystem(name: "Android", version: "14"),
+            app: SentryApp(version: "2.4.0"),
+            culture: SentryCulture(locale: "it-IT", timezone: "Europe/Rome"),
+            feedback: SentryFeedback(message: "the feed is blank"),
+          ),
+        ),
+      );
+
+      //the notice names an app version, a device model and an android
+      //version, and nothing else: a locale and a timezone identify a person
+      //and tell a bug report nothing
+      expect(event!.contexts.culture, isNull);
+      expect(event.contexts.toJson().keys, isNot(contains("culture")));
+
+      //and the three it does name have to survive, or the notice would be
+      //untrue the other way round
+      expect(event.contexts.device!.model, "Pixel 7");
+      expect(event.contexts.operatingSystem!.version, "14");
+      expect(event.contexts.app!.version, "2.4.0");
+      expect(event.contexts.feedback!.message, "the feed is blank");
+    });
+
+    test('sends nothing at all for a user who opted out', () async {
+      await _prefs({SpKeys.telemetryEnabled: false});
+
+      expect(Telemetry.scrubFeedbackEvent(feedbackEvent("hi")), isNull);
+    });
+
+    test('lets an opted-out user through only while they are sending',
+        () async {
+      await _prefs({SpKeys.telemetryEnabled: false});
+      Telemetry.feedbackConsented = true;
+
+      final event = Telemetry.scrubFeedbackEvent(feedbackEvent("hi"));
+
+      expect(event, isNotNull);
+      expect(event!.contexts.feedback!.message, "hi");
+    });
+
+    test('a build with no dsn cannot collect feedback at all', () {
+      //the tests run without --dart-define, so this is the f-droid build
+      expect(Telemetry.canCollectFeedback, isFalse);
+    });
+
+    test('captureFeedback reports failure rather than pretending', () async {
+      //a dialog that says "thanks, sent" when nothing was sent is a lie, so
+      //the return value has to be honest with no dsn compiled in
+      expect(
+        await Telemetry.captureFeedback(stars: 2, text: "the feed is blank"),
+        isFalse,
+      );
+    });
+
+    test('an empty message is never sent', () async {
+      expect(await Telemetry.captureFeedback(stars: 1, text: "   "), isFalse);
+    });
+
+    test('captureFeedback leaves consent off once it returns', () async {
+      await Telemetry.captureFeedback(stars: 1, text: "hi");
+
+      //the flag is the only thing standing between an opted-out user and a
+      //later unrelated event, so it must never be left set
+      await _prefs({SpKeys.telemetryEnabled: false});
+      expect(
+        Telemetry.scrubFeedbackEvent(feedbackEvent("unrelated")),
+        isNull,
+      );
     });
   });
 }

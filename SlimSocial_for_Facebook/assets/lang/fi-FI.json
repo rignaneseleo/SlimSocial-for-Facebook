@@ -80,5 +80,14 @@
   "retry": "Yritä uudelleen",
   "ads_blocked_count": "Piilotettu {} tähän mennessä",
   "telemetry_reports": "Lähetä nimettömiä raportteja",
-  "telemetry_reports_desc": "Nimettömät kaatumis- ja virheraportit auttavat huomaamaan, kun Facebookin muutos rikkoo sovelluksen. Henkilötietoja tai sivujen sisältöä ei lähetetä. Voit kytkeä tämän pois päältä milloin tahansa."
+  "telemetry_reports_desc": "Nimettömät kaatumis- ja virheraportit auttavat huomaamaan, kun Facebookin muutos rikkoo sovelluksen. Henkilötietoja tai sivujen sisältöä ei lähetetä. Voit kytkeä tämän pois päältä milloin tahansa.",
+  "rate_title": "Pidätkö SlimSocialista?",
+  "rate_subtitle": "Anna arvio napauttamalla tähteä",
+  "rate_later": "Ei nyt",
+  "rate_low_title": "Ikävä kuulla",
+  "rate_low_hint": "Mikä meni pieleen?",
+  "rate_send": "Lähetä",
+  "rate_sends_notice": "Tämä lähettää viestisi kehittäjälle sekä sovelluksen version, laitemallin ja Android-version. Virheraporttien asetuksesi pysyy pois päältä.",
+  "rate_thanks": "Kiitos — tästä on apua.",
+  "rate_failed": "Lähetys epäonnistui. Yritä myöhemmin uudelleen."
 }

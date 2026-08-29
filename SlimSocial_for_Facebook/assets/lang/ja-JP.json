@@ -80,5 +80,14 @@
   "retry": "再試行",
   "ads_blocked_count": "これまでに{}件を非表示にしました",
   "telemetry_reports": "匿名レポートを送信",
-  "telemetry_reports_desc": "匿名のクラッシュ・不具合レポートは、Facebook側の変更でアプリが壊れたことに気づく助けになります。個人情報やページの内容は送信されません。いつでもオフにできます。"
+  "telemetry_reports_desc": "匿名のクラッシュ・不具合レポートは、Facebook側の変更でアプリが壊れたことに気づく助けになります。個人情報やページの内容は送信されません。いつでもオフにできます。",
+  "rate_title": "SlimSocial はいかがですか？",
+  "rate_subtitle": "星をタップして評価してください",
+  "rate_later": "後で",
+  "rate_low_title": "ご不便をおかけしました",
+  "rate_low_hint": "何が問題でしたか？",
+  "rate_send": "送信",
+  "rate_sends_notice": "メッセージが、アプリのバージョン、端末のモデル、Android のバージョンとともに開発者に送信されます。クラッシュレポートの設定はオフのままです。",
+  "rate_thanks": "ありがとうございます — 助かります。",
+  "rate_failed": "送信できませんでした。後でもう一度お試しください。"
 }

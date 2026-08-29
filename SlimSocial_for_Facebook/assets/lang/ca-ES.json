@@ -80,5 +80,14 @@
   "retry": "Torna-ho a provar",
   "ads_blocked_count": "{} amagats fins ara",
   "telemetry_reports": "Envia informes anònims",
-  "telemetry_reports_desc": "Els informes anònims de fallades i errors ajuden a detectar quan un canvi de Facebook trenca l'aplicació. No s'envia cap dada personal ni cap contingut de les pàgines. Pots desactivar-ho quan vulguis."
+  "telemetry_reports_desc": "Els informes anònims de fallades i errors ajuden a detectar quan un canvi de Facebook trenca l'aplicació. No s'envia cap dada personal ni cap contingut de les pàgines. Pots desactivar-ho quan vulguis.",
+  "rate_title": "T'agrada SlimSocial?",
+  "rate_subtitle": "Toca una estrella per valorar",
+  "rate_later": "Ara no",
+  "rate_low_title": "Lamentem sentir-ho",
+  "rate_low_hint": "Què ha fallat?",
+  "rate_send": "Envia",
+  "rate_sends_notice": "Això envia el teu missatge al desenvolupador, juntament amb la versió de l'aplicació, el model del dispositiu i la versió d'Android. La teva configuració d'informes d'errors continua desactivada.",
+  "rate_thanks": "Gràcies — això ajuda.",
+  "rate_failed": "No s'ha pogut enviar. Torna-ho a provar més tard."
 }

@@ -80,5 +80,14 @@
   "retry": "Riprova",
   "ads_blocked_count": "{} nascosti finora",
   "telemetry_reports": "Invia segnalazioni anonime",
-  "telemetry_reports_desc": "Le segnalazioni anonime di crash e malfunzionamenti aiutano a capire quando una modifica di Facebook rompe l'app. Non vengono inviati dati personali né il contenuto delle pagine. Puoi disattivarle quando vuoi."
+  "telemetry_reports_desc": "Le segnalazioni anonime di crash e malfunzionamenti aiutano a capire quando una modifica di Facebook rompe l'app. Non vengono inviati dati personali né il contenuto delle pagine. Puoi disattivarle quando vuoi.",
+  "rate_title": "Ti piace SlimSocial?",
+  "rate_subtitle": "Tocca una stella per votare",
+  "rate_later": "Non ora",
+  "rate_low_title": "Ci dispiace",
+  "rate_low_hint": "Cosa non ha funzionato?",
+  "rate_send": "Invia",
+  "rate_sends_notice": "Questo invia il tuo messaggio allo sviluppatore, insieme alla versione dell'app, al modello del dispositivo e alla versione di Android. L'impostazione sulle segnalazioni di errori resta disattivata.",
+  "rate_thanks": "Grazie — è utile.",
+  "rate_failed": "Invio non riuscito. Riprova più tardi."
 }

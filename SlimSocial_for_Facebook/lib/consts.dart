@@ -113,6 +113,19 @@ class SpKeys {
   /// Whether crash and health reporting may send anything. Unset means on.
   static const String telemetryEnabled = "telemetry_enabled";
 
+  /// Cold starts counted since install, from 1. Drives the rating prompt.
+  static const String ratingOpens = "rating_opens";
+
+  /// How many times the rating prompt has been shown, ever.
+  static const String ratingAsks = "rating_asks";
+
+  /// Set once the user picks a star rating. Unset means never answered.
+  static const String ratingAnswered = "rating_answered";
+
+  /// The open number the prompt last appeared on, so a feed that reloads
+  /// cannot produce a second prompt in one launch.
+  static const String ratingLastAskedOpen = "rating_last_asked_open";
+
   static const String customUserAgent = "custom_useragent";
   static const String customCss = "custom_css";
   static const String customJs = "custom_js";

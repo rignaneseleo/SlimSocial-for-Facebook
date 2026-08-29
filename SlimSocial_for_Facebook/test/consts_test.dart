@@ -73,4 +73,24 @@ void main() {
       expect(kDesktopUserAgent, isNot(contains('Mobile')));
     });
   });
+
+  group('rating prompt keys', () {
+    test('are distinct from each other and from every other key', () {
+      const keys = <String>[
+        SpKeys.ratingOpens,
+        SpKeys.ratingAsks,
+        SpKeys.ratingAnswered,
+        SpKeys.ratingLastAskedOpen,
+      ];
+
+      expect(keys.toSet(), hasLength(keys.length));
+      //a collision with a live key silently reinterprets a stored value as
+      //something of a different type
+      for (final key in keys) {
+        expect(key, isNot(SpKeys.telemetryEnabled));
+        expect(key, isNot(SpKeys.adsBlockedTotal));
+        expect(key, isNot(SpKeys.textZoom));
+      }
+    });
+  });
 }

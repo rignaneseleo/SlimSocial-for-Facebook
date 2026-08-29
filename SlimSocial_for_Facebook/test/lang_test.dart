@@ -56,6 +56,18 @@ void main() {
         // unable to tell what they are turning off.
         'telemetry_reports',
         'telemetry_reports_desc',
+        // The rating prompt. A blank string here leaves a dialog with an
+        // unlabelled button, and the dialog is shown to people who have not
+        // gone looking for it.
+        'rate_title',
+        'rate_subtitle',
+        'rate_later',
+        'rate_low_title',
+        'rate_low_hint',
+        'rate_send',
+        'rate_sends_notice',
+        'rate_thanks',
+        'rate_failed',
       ];
 
       for (final path in _fallbackLangFiles) {

@@ -80,5 +80,14 @@
   "retry": "Újrapróbálkozás",
   "ads_blocked_count": "Eddig {} elrejtve",
   "telemetry_reports": "Névtelen jelentések küldése",
-  "telemetry_reports_desc": "A névtelen összeomlás- és hibajelentések segítenek észrevenni, ha a Facebook egy változtatása elrontja az alkalmazást. Semmilyen személyes adat és oldaltartalom nem kerül elküldésre. Bármikor kikapcsolhatod."
+  "telemetry_reports_desc": "A névtelen összeomlás- és hibajelentések segítenek észrevenni, ha a Facebook egy változtatása elrontja az alkalmazást. Semmilyen személyes adat és oldaltartalom nem kerül elküldésre. Bármikor kikapcsolhatod.",
+  "rate_title": "Tetszik a SlimSocial?",
+  "rate_subtitle": "Koppints egy csillagra az értékeléshez",
+  "rate_later": "Most nem",
+  "rate_low_title": "Sajnáljuk",
+  "rate_low_hint": "Mi nem működött?",
+  "rate_send": "Küldés",
+  "rate_sends_notice": "Ez elküldi az üzenetedet a fejlesztőnek az alkalmazás verziójával, az eszköz modelljével és az Android verziójával együtt. A hibajelentések beállítása kikapcsolva marad.",
+  "rate_thanks": "Köszönjük — ez segít.",
+  "rate_failed": "Nem sikerült elküldeni. Próbáld újra később."
 }

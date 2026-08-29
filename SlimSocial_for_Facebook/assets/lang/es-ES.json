@@ -80,5 +80,14 @@
   "retry": "Reintentar",
   "ads_blocked_count": "{} ocultados hasta ahora",
   "telemetry_reports": "Enviar informes anónimos",
-  "telemetry_reports_desc": "Los informes anónimos de fallos y errores ayudan a detectar cuándo un cambio de Facebook rompe la aplicación. No se envían datos personales ni el contenido de las páginas. Puedes desactivarlo cuando quieras."
+  "telemetry_reports_desc": "Los informes anónimos de fallos y errores ayudan a detectar cuándo un cambio de Facebook rompe la aplicación. No se envían datos personales ni el contenido de las páginas. Puedes desactivarlo cuando quieras.",
+  "rate_title": "¿Te gusta SlimSocial?",
+  "rate_subtitle": "Toca una estrella para valorar",
+  "rate_later": "Ahora no",
+  "rate_low_title": "Lamentamos oír eso",
+  "rate_low_hint": "¿Qué ha fallado?",
+  "rate_send": "Enviar",
+  "rate_sends_notice": "Esto envía tu mensaje al desarrollador, junto con la versión de la aplicación, el modelo del dispositivo y la versión de Android. Tu ajuste de informes de errores sigue desactivado.",
+  "rate_thanks": "Gracias — esto ayuda.",
+  "rate_failed": "No se pudo enviar. Inténtalo de nuevo más tarde."
 }

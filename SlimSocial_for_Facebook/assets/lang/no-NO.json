@@ -80,5 +80,14 @@
   "retry": "Prøv igjen",
   "ads_blocked_count": "{} skjult så langt",
   "telemetry_reports": "Send anonyme rapporter",
-  "telemetry_reports_desc": "Anonyme krasj- og feilrapporter hjelper med å oppdage når en endring på Facebook ødelegger appen. Ingen personopplysninger og ikke noe sideinnhold sendes. Du kan slå det av når som helst."
+  "telemetry_reports_desc": "Anonyme krasj- og feilrapporter hjelper med å oppdage når en endring på Facebook ødelegger appen. Ingen personopplysninger og ikke noe sideinnhold sendes. Du kan slå det av når som helst.",
+  "rate_title": "Liker du SlimSocial?",
+  "rate_subtitle": "Trykk på en stjerne for å vurdere",
+  "rate_later": "Ikke nå",
+  "rate_low_title": "Det var leit å høre",
+  "rate_low_hint": "Hva gikk galt?",
+  "rate_send": "Send",
+  "rate_sends_notice": "Dette sender meldingen din til utvikleren, sammen med appversjonen, enhetsmodellen og Android-versjonen. Innstillingen din for feilrapporter forblir av.",
+  "rate_thanks": "Takk — dette hjelper.",
+  "rate_failed": "Kunne ikke sende. Prøv igjen senere."
 }

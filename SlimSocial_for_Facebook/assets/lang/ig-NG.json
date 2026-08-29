@@ -80,5 +80,14 @@
   "retry": "Nwaa ọzọ",
   "ads_blocked_count": "Ezochiela {} ruo ugbu a",
   "telemetry_reports": "Send anonymous reports",
-  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time."
+  "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time.",
+  "rate_title": "SlimSocial ọ na-amasị gị?",
+  "rate_subtitle": "Pịa kpakpando iji nye ọkwa",
+  "rate_later": "Ọ bụghị ugbu a",
+  "rate_low_title": "Ọ dị nwute ịnụ nke ahụ",
+  "rate_low_hint": "Gịnị mere?",
+  "rate_send": "Zipu",
+  "rate_sends_notice": "Nke a na-ezigara onye mmepe ozi gị, tinyere ụdị ngwa, ụdị ngwaọrụ na ụdị Android. Ntọala mkpesa nkwubi gị ga-anọgide na-agbanyụ.",
+  "rate_thanks": "Daalụ — nke a na-enyere aka.",
+  "rate_failed": "Enweghị ike izipu. Biko nwaa ọzọ ma emesịa."
 }

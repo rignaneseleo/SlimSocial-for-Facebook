@@ -80,5 +80,14 @@
   "retry": "Mēģināt vēlreiz",
   "ads_blocked_count": "Līdz šim paslēpti: {}",
   "telemetry_reports": "Sūtīt anonīmus ziņojumus",
-  "telemetry_reports_desc": "Anonīmi avāriju un kļūmju ziņojumi palīdz pamanīt, kad Facebook izmaiņas salauž lietotni. Netiek sūtīti nekādi personas dati un lapu saturs. To var izslēgt jebkurā brīdī."
+  "telemetry_reports_desc": "Anonīmi avāriju un kļūmju ziņojumi palīdz pamanīt, kad Facebook izmaiņas salauž lietotni. Netiek sūtīti nekādi personas dati un lapu saturs. To var izslēgt jebkurā brīdī.",
+  "rate_title": "Vai SlimSocial patīk?",
+  "rate_subtitle": "Pieskarieties zvaigznei, lai novērtētu",
+  "rate_later": "Ne tagad",
+  "rate_low_title": "Žēl to dzirdēt",
+  "rate_low_hint": "Kas nogāja greizi?",
+  "rate_send": "Sūtīt",
+  "rate_sends_notice": "Tas nosūta izstrādātājam jūsu ziņojumu kopā ar lietotnes versiju, ierīces modeli un Android versiju. Jūsu kļūdu ziņojumu iestatījums paliek izslēgts.",
+  "rate_thanks": "Paldies — tas palīdz.",
+  "rate_failed": "Neizdevās nosūtīt. Mēģiniet vēlreiz vēlāk."
 }
