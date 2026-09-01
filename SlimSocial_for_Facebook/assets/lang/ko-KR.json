@@ -6,6 +6,8 @@
   "Facebook": "페이스북",
   "use_mbasic": "기본 버전의 페이스북 사용",
   "use_mbasic_desc": "느린 연결 또는 오래된 기기에서 더 잘 작동합니다.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "최신 포스트 먼저 보기",
   "hide_ads": "광고 가리기 (실험적 기능)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
