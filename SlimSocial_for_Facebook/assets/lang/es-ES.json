@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Usar versión básica de Facebook",
   "use_mbasic_desc": "Funciona mejor en dispositivos antiguos o conexiones lentas",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Mostrar publicaciones recientes primero",
   "hide_ads": "Ocultar algunos anuncios (experimental)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
