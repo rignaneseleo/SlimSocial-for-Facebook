@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "బేసిక్ వర్షన్‌ను ఉపయోగించు",
   "use_mbasic_desc": "పాత పరికరాలు లేదా నిండికపాటి కనెక్షన్లు మీకు కనిపిస్తాయి",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "కొత్త పోస్టులను మొదలుపెట్టి చూపివేయి",
   "hide_ads": "కొనసాగింపు ప్రక్షేపణలను దాచు (ప్రయోగాన్ని ప్రయత్నించండి)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
