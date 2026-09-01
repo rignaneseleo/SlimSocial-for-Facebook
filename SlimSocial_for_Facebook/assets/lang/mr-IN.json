@@ -6,6 +6,8 @@
   "Facebook": "फेसबुक",
   "use_mbasic": "फेसबुकचे मूलभूत आवृत्ती वापरा",
   "use_mbasic_desc": "हिंडेरा विनंती किंवा संचार वेळाची माहिती संपूर्ण पाहण्यासाठी मूलभूत आवृत्ती चांगली काम करते",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "नवीन संदेश पहिले दाखवा",
   "hide_ads": "काही प्रयोगशील प्रमाणावरती जाहिराती लपवा (प्रायोगिक)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
