@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Použít základní verzi Facebooku",
   "use_mbasic_desc": "Lepší funkčnost pro starší zařízení nebo pomalé připojení",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Zobrazit nejnovější příspěvky první",
   "hide_ads": "Skrýt některé reklamy (experimentální)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
