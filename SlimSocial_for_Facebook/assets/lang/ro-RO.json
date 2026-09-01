@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Folosiți versiunea de bază a Facebook-ului",
   "use_mbasic_desc": "Funcționează mai bine pe dispozitivele mai vechi sau pentru conexiuni mai lente",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Afișați cele mai recente postări prima",
   "hide_ads": "Ascundeți unele reclame (experimental)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
