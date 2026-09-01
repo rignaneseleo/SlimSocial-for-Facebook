@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "ใช้เวอร์ชันพื้นฐานของ Facebook",
   "use_mbasic_desc": "ทำงานได้ดีกว่าบนอุปกรณ์ที่เก่าหรืออินเทอร์เน็ตที่ช้า",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "แสดงโพสต์ที่อัพเดทล่าสุดก่อน",
   "hide_ads": "ซ่อนโฆษณาบางส่วน (การทดลอง)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
