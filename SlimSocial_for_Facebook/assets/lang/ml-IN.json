@@ -6,6 +6,8 @@
   "Facebook": "ഫേസ്ബുക്ക്",
   "use_mbasic": "'മൂല പതിപ്പ്' ഉപയോഗിക്കുക",
   "use_mbasic_desc": "പഴയ ഉപകരണങ്ങളിലും പിന്തുണയ്ക്കപ്പെടുന്ന പരിമിത കണക്ഷനിലും നന്നായി പ്രവര്‍ത്തിക്കും",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "പുതിയ പോസ്റ്റുകള്‍ മുതല്‍ കാണിക്കുക",
   "hide_ads": "പാടില്ലാത്ത പരസ്യങ്ങളുകള്‍ (പുരോഗമം)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
