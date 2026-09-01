@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Facebook'un temel sürümünü kullan",
   "use_mbasic_desc": "Daha eski cihazlarda veya yavaş bağlantılarda daha iyi çalışır",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "En son gönderileri önce göster",
   "hide_ads": "Reklamların bazılarını gizle (deneysel)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
