@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "A Facebook alap verziójának használata",
   "use_mbasic_desc": "Jobban működik régebbi eszközökön vagy lassú kapcsolatoknál",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Legújabb bejegyzések előre",
   "hide_ads": "Hirdetések elrejtése (kísérleti)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
