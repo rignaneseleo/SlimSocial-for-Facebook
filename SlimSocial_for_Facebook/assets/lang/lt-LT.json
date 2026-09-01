@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Naudoti Facebook pagrindinę versiją",
   "use_mbasic_desc": "Tai geriau veikia senesniuose įrenginiuose ar lėtesniuose ryšiuose",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Rodyti naujus įrašus pirmiausia",
   "hide_ads": "Slėpti kai kuriuos skelbimus (eksperimentinis)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
