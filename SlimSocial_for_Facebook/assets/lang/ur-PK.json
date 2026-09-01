@@ -6,6 +6,8 @@
   "Facebook": "فیس بک",
   "use_mbasic": "سادہ ورژن کے فیس بک کا استعمال کریں",
   "use_mbasic_desc": "پرانے ڈیوائسز یا آہستہ کنکشنز پر بہتر کام کرتا ہے",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "ابھی کے پوسٹ پہلے دکھائیں",
   "hide_ads": "کچھ جائزہ لینے والے اشتہارات کو چھپائیں (تجربہ)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
