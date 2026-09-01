@@ -6,6 +6,8 @@
   "Facebook": "பேஸ்புக்",
   "use_mbasic": "பேஸ்புகின் அடிப்படை பதிவைப் பயன்படுத்து",
   "use_mbasic_desc": "பழைய சாதனங்கள் அல்லது வேகம் குறைவான இணைய இணைப்பை சரிசெய்யும்",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "புதிய பிளவுகளை முன்னோட்டுக் காட்டு",
   "hide_ads": "சில விளம்பரங்களை மறைக்கவும் (சோதனை)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
