@@ -6,6 +6,8 @@
   "Facebook": "ফেসবুক",
   "use_mbasic": "ফেসবুকের বেসিক সংস্করণ ব্যবহার করুন",
   "use_mbasic_desc": "এটি পুরানো ডিভাইস বা ধীর সংযোগের ক্ষেত্রে ভালোভাবে কাজ করে",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "সাম্প্রতিক পোস্টগুলি প্রথমে দেখান",
   "hide_ads": "কিছু বিজ্ঞাপন লুকান (পরীক্ষামূলক)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
