@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Använd grundläggande version av Facebook",
   "use_mbasic_desc": "Det fungerar bättre på äldre enheter eller långsammare anslutningar",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Visa nyligen publicerade inlägg först",
   "hide_ads": "Dölj vissa annonser (experimentellt)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
