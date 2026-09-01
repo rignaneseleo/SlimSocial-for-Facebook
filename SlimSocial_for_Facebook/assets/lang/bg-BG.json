@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Използвайте основна версия на Facebook",
   "use_mbasic_desc": "Тя работи по-добре на по-стари устройства или по-бавни връзки",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Показване на скорошни публикации първи",
   "hide_ads": "Скриване на някои реклами (експериментално)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
