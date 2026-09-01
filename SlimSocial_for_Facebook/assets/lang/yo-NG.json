@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Lo ẹ̀yà Facebook tí ó rọrùn",
   "use_mbasic_desc": "Ó ń ṣiṣẹ́ dáadáa lórí àwọn ẹ̀rọ àtijọ́ tàbí àsopọ̀ tí ó lọ́ra",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Fi àwọn ìfiránṣẹ́ tuntun hàn ní àkọ́kọ́",
   "hide_ads": "Fi àwọn ìpolówó kan pamọ́ (àdánwò)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
