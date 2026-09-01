@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Yi amfani da sigar Facebook mai sauƙi",
   "use_mbasic_desc": "Yana aiki mafi kyau a tsofaffin na'urori ko haɗin intanet mai jinkiri",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Nuna sabbin saƙonni farko",
   "hide_ads": "Ɓoye wasu tallace-tallace (gwaji)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
