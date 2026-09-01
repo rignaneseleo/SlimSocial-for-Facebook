@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "基本バージョンのFacebookを使用する",
   "use_mbasic_desc": "古いデバイスや遅い接続でも動作が改善されます。",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "最新の投稿を先に表示する",
   "hide_ads": "一部の広告を非表示にする（実験的機能）",
   "hide_people_you_may_know": "Hide \"People you may know\"",
