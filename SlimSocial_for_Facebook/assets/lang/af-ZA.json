@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Gebruik basiese weergawe van Facebook",
   "use_mbasic_desc": "Dit werk beter op ouer toestelle of stadiger verbindings",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Wys onlangse plasings eerste",
   "hide_ads": "Versteek sommige advertensies (eksperimenteel)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
