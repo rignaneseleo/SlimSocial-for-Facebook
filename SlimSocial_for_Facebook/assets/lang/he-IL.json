@@ -6,6 +6,8 @@
   "Facebook": "פייסבוק",
   "use_mbasic": "השתמש בגרסה בסיסית של פייסבוק",
   "use_mbasic_desc": "זה עובד טוב יותר על מכשירים ישנים או חיבורים איטיים",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "הצג פוסטים אחרונים ראשונים",
   "hide_ads": "הסתר פרסומות מסווגות (ניסיוני)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
