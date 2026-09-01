@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "使用 Facebook 基本版",
   "use_mbasic_desc": "在較舊的裝置或較慢的網路上運作得更好",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "優先顯示最新貼文",
   "hide_ads": "隱藏部分廣告（實驗性）",
   "hide_people_you_may_know": "Hide \"People you may know\"",
