@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Izmantot Facebook pamata versiju",
   "use_mbasic_desc": "Tas labāk darbojas uz vecākām ierīcēm vai lēniem savienojumiem",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Rādīt pēdējos ierakstus pirmajos",
   "hide_ads": "Paslēpt dažas reklāmas (eksperimentāla funkcija)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
