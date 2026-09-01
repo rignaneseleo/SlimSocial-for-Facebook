@@ -89,5 +89,7 @@
   "rate_send": "ส่ง",
   "rate_sends_notice": "การดำเนินการนี้จะส่งข้อความของคุณไปยังผู้พัฒนา พร้อมกับเวอร์ชันแอป รุ่นอุปกรณ์ และเวอร์ชัน Android การตั้งค่ารายงานข้อขัดข้องของคุณจะยังคงปิดอยู่",
   "rate_thanks": "ขอบคุณ — ช่วยได้มาก",
-  "rate_failed": "ส่งไม่สำเร็จ โปรดลองอีกครั้งในภายหลัง"
+  "rate_failed": "ส่งไม่สำเร็จ โปรดลองอีกครั้งในภายหลัง",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

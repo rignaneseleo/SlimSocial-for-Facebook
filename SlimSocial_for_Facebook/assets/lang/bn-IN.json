@@ -89,5 +89,7 @@
   "rate_send": "পাঠান",
   "rate_sends_notice": "এটি আপনার বার্তা অ্যাপ সংস্করণ, ডিভাইস মডেল এবং Android সংস্করণ সহ ডেভেলপারের কাছে পাঠাবে। আপনার ক্র্যাশ রিপোর্ট সেটিং বন্ধ থাকবে।",
   "rate_thanks": "ধন্যবাদ — এতে সাহায্য হয়।",
-  "rate_failed": "পাঠানো যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।"
+  "rate_failed": "পাঠানো যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

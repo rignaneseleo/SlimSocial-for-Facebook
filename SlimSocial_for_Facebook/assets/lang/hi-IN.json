@@ -89,5 +89,7 @@
   "rate_send": "भेजें",
   "rate_sends_notice": "इससे आपका संदेश ऐप संस्करण, डिवाइस मॉडल और Android संस्करण के साथ डेवलपर को भेजा जाएगा। आपकी क्रैश रिपोर्ट सेटिंग बंद रहेगी।",
   "rate_thanks": "धन्यवाद — इससे मदद मिलती है।",
-  "rate_failed": "भेजा नहीं जा सका। कृपया बाद में पुनः प्रयास करें।"
+  "rate_failed": "भेजा नहीं जा सका। कृपया बाद में पुनः प्रयास करें।",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

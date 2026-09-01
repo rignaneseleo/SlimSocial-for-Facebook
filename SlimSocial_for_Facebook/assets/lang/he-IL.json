@@ -89,5 +89,7 @@
   "rate_send": "שליחה",
   "rate_sends_notice": "פעולה זו שולחת את ההודעה שלך למפתח, יחד עם גרסת האפליקציה, דגם המכשיר וגרסת Android. ההגדרה שלך לדוחות קריסה נשארת כבויה.",
   "rate_thanks": "תודה — זה עוזר.",
-  "rate_failed": "השליחה נכשלה. נסו שוב מאוחר יותר."
+  "rate_failed": "השליחה נכשלה. נסו שוב מאוחר יותר.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

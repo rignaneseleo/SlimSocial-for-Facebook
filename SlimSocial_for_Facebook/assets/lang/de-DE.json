@@ -89,5 +89,7 @@
   "rate_send": "Senden",
   "rate_sends_notice": "Dies sendet deine Nachricht zusammen mit der App-Version, dem Gerätemodell und der Android-Version an den Entwickler. Deine Einstellung für Fehlerberichte bleibt ausgeschaltet.",
   "rate_thanks": "Danke — das hilft.",
-  "rate_failed": "Senden fehlgeschlagen. Bitte versuche es später erneut."
+  "rate_failed": "Senden fehlgeschlagen. Bitte versuche es später erneut.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

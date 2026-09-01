@@ -89,5 +89,7 @@
   "rate_send": "Envia",
   "rate_sends_notice": "Això envia el teu missatge al desenvolupador, juntament amb la versió de l'aplicació, el model del dispositiu i la versió d'Android. La teva configuració d'informes d'errors continua desactivada.",
   "rate_thanks": "Gràcies — això ajuda.",
-  "rate_failed": "No s'ha pogut enviar. Torna-ho a provar més tard."
+  "rate_failed": "No s'ha pogut enviar. Torna-ho a provar més tard.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

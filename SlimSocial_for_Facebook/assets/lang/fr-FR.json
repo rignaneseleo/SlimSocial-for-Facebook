@@ -89,5 +89,7 @@
   "rate_send": "Envoyer",
   "rate_sends_notice": "Cela envoie votre message au développeur, ainsi que la version de l'application, le modèle de votre appareil et la version d'Android. Votre réglage des rapports d'erreur reste désactivé.",
   "rate_thanks": "Merci — c'est utile.",
-  "rate_failed": "Envoi impossible. Réessayez plus tard."
+  "rate_failed": "Envoi impossible. Réessayez plus tard.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

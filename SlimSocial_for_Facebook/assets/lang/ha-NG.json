@@ -89,5 +89,7 @@
   "rate_send": "Aika",
   "rate_sends_notice": "Wannan yana aika saƙonka ga mai haɓakawa, tare da sigar manhaja, samfurin na'ura da sigar Android. Saitin rahoton kuskure naka zai kasance a kashe.",
   "rate_thanks": "Na gode — wannan yana taimakawa.",
-  "rate_failed": "An kasa aikawa. Da fatan a sake gwadawa daga baya."
+  "rate_failed": "An kasa aikawa. Da fatan a sake gwadawa daga baya.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

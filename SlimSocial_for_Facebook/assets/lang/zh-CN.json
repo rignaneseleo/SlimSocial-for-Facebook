@@ -89,5 +89,7 @@
   "rate_send": "发送",
   "rate_sends_notice": "这会将你的留言连同应用版本、设备型号和 Android 版本一起发送给开发者。你的崩溃报告设置仍保持关闭。",
   "rate_thanks": "谢谢 — 这很有帮助。",
-  "rate_failed": "发送失败。请稍后再试。"
+  "rate_failed": "发送失败。请稍后再试。",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

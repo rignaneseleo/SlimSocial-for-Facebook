@@ -89,5 +89,7 @@
   "rate_send": "Sūtīt",
   "rate_sends_notice": "Tas nosūta izstrādātājam jūsu ziņojumu kopā ar lietotnes versiju, ierīces modeli un Android versiju. Jūsu kļūdu ziņojumu iestatījums paliek izslēgts.",
   "rate_thanks": "Paldies — tas palīdz.",
-  "rate_failed": "Neizdevās nosūtīt. Mēģiniet vēlreiz vēlāk."
+  "rate_failed": "Neizdevās nosūtīt. Mēģiniet vēlreiz vēlāk.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

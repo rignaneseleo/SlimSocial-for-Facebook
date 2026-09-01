@@ -89,5 +89,7 @@
   "rate_send": "Küldés",
   "rate_sends_notice": "Ez elküldi az üzenetedet a fejlesztőnek az alkalmazás verziójával, az eszköz modelljével és az Android verziójával együtt. A hibajelentések beállítása kikapcsolva marad.",
   "rate_thanks": "Köszönjük — ez segít.",
-  "rate_failed": "Nem sikerült elküldeni. Próbáld újra később."
+  "rate_failed": "Nem sikerült elküldeni. Próbáld újra később.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

@@ -89,5 +89,7 @@
   "rate_send": "إرسال",
   "rate_sends_notice": "سيؤدي هذا إلى إرسال رسالتك إلى المطور، مع إصدار التطبيق وطراز الجهاز وإصدار Android. يبقى إعداد تقارير الأعطال لديك متوقفًا.",
   "rate_thanks": "شكرًا — هذا يساعدنا.",
-  "rate_failed": "تعذّر الإرسال. حاول مرة أخرى لاحقًا."
+  "rate_failed": "تعذّر الإرسال. حاول مرة أخرى لاحقًا.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

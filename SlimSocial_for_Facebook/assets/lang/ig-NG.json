@@ -89,5 +89,7 @@
   "rate_send": "Zipu",
   "rate_sends_notice": "Nke a na-ezigara onye mmepe ozi gị, tinyere ụdị ngwa, ụdị ngwaọrụ na ụdị Android. Ntọala mkpesa nkwubi gị ga-anọgide na-agbanyụ.",
   "rate_thanks": "Daalụ — nke a na-enyere aka.",
-  "rate_failed": "Enweghị ike izipu. Biko nwaa ọzọ ma emesịa."
+  "rate_failed": "Enweghị ike izipu. Biko nwaa ọzọ ma emesịa.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

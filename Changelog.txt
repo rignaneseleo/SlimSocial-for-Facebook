@@ -1,3 +1,10 @@
+v26.09.01+126
+- Add a "Use desktop site" setting: the 119 Firefox user agent for the feed. Default stays mobile.
+- Messenger always uses desktop Chrome. A custom user agent no longer overrides it.
+- Changing the custom user agent restarts the app so it takes effect.
+- Facebook.com links stay in Messenger instead of popping to the feed (crash SLIMSOCIAL-A, black profile #337).
+- Unlock page scroll if Facebook's install overlay is left behind (#339).
+
 v1.0.0
 - First release
 

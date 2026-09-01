@@ -9,7 +9,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # the git tag, so this has to be bumped in its own commit *before* the matching
 # tag is pushed - a tag pushed first builds the previous version. Every release
 # tag from 117 onwards matches the value that was in this field at that commit.
-version: 26.08.28+124
+version: 26.09.01+126
 
 # Leonardo Rignanese <dev.rignaneseleo@gmail.com>
 #

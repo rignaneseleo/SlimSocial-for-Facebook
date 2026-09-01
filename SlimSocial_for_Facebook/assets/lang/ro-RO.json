@@ -89,5 +89,7 @@
   "rate_send": "Trimite",
   "rate_sends_notice": "Aceasta trimite mesajul tău către dezvoltator, împreună cu versiunea aplicației, modelul dispozitivului și versiunea Android. Setarea ta pentru rapoartele de eroare rămâne dezactivată.",
   "rate_thanks": "Mulțumim — asta ajută.",
-  "rate_failed": "Trimiterea a eșuat. Încearcă din nou mai târziu."
+  "rate_failed": "Trimiterea a eșuat. Încearcă din nou mai târziu.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

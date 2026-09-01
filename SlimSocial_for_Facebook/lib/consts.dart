@@ -44,6 +44,15 @@ const String kDesktopUserAgent =
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36";
 
+/// Desktop Firefox on Windows. The feed agent in 26.08.05+119.
+///
+/// Facebook serves the desktop site for this string: in-page chat and the
+/// share menu work, and the page is heavier. It is the Settings "Desktop site"
+/// option, not the default — the default is [kMobileUserAgent] so injected
+/// selectors keep matching the touch layout.
+const String kFirefoxUserAgent =
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0";
+
 /// Opera Mini. Used only by basic mode, which targets `mbasic.facebook.com`.
 const String kOperaMiniUserAgent =
     "Opera/9.80 (Android; Opera Mini/69.0.2254/191.303; U; en) Presto/2.12.423 Version/12.16";
@@ -109,6 +118,10 @@ class SpKeys {
   static const String adsBlockedTotal = "ads_blocked_total";
   static const String recentFirst = "recent_first";
   static const String useMbasic = "use_mbasic";
+
+  /// When true, the feed uses the 119 desktop Firefox user agent.
+  /// Unset or false keeps the mobile default. Messenger ignores this key.
+  static const String useDesktopSite = "use_desktop_site";
 
   /// Whether crash and health reporting may send anything. Unset means on.
   static const String telemetryEnabled = "telemetry_enabled";

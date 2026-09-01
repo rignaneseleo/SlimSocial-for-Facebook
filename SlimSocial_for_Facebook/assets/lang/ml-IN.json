@@ -89,5 +89,7 @@
   "rate_send": "അയയ്ക്കുക",
   "rate_sends_notice": "ഇത് നിങ്ങളുടെ സന്ദേശം ആപ്പ് പതിപ്പ്, ഉപകരണ മോഡൽ, Android പതിപ്പ് എന്നിവയ്‌ക്കൊപ്പം ഡെവലപ്പർക്ക് അയയ്ക്കും. നിങ്ങളുടെ ക്രാഷ് റിപ്പോർട്ട് ക്രമീകരണം ഓഫായി തുടരും.",
   "rate_thanks": "നന്ദി — ഇത് സഹായകരമാണ്.",
-  "rate_failed": "അയയ്ക്കാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക."
+  "rate_failed": "അയയ്ക്കാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

@@ -89,5 +89,7 @@
   "rate_send": "Надіслати",
   "rate_sends_notice": "Це надішле розробнику ваше повідомлення разом із версією застосунку, моделлю пристрою та версією Android. Ваше налаштування звітів про помилки залишиться вимкненим.",
   "rate_thanks": "Дякуємо — це допомагає.",
-  "rate_failed": "Не вдалося надіслати. Спробуйте пізніше."
+  "rate_failed": "Не вдалося надіслати. Спробуйте пізніше.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

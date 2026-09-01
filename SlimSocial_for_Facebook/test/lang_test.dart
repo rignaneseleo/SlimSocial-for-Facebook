@@ -43,6 +43,8 @@ void main() {
       const required = [
         'text_zoom',
         'text_zoom_desc',
+        'use_desktop_site',
+        'use_desktop_site_desc',
         'dark_theme',
         'fixed_bar',
         'hide_stories',

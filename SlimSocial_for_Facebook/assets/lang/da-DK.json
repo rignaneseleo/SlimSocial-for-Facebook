@@ -89,5 +89,7 @@
   "rate_send": "Send",
   "rate_sends_notice": "Dette sender din besked til udvikleren sammen med appversionen, enhedsmodellen og Android-versionen. Din indstilling for fejlrapporter forbliver slået fra.",
   "rate_thanks": "Tak — det hjælper.",
-  "rate_failed": "Kunne ikke sende. Prøv igen senere."
+  "rate_failed": "Kunne ikke sende. Prøv igen senere.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

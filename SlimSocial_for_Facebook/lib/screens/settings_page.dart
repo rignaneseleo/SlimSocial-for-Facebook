@@ -154,6 +154,19 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text('use_mbasic'.tr()),
                 description: Text('use_mbasic_desc'.tr()),
               ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(SpKeys.useDesktopSite, value);
+                  });
+                  showToast("rebooting".tr());
+                  Restart.restartApp();
+                },
+                initialValue: sp.getBool(SpKeys.useDesktopSite) ?? false,
+                leading: const Icon(Icons.desktop_windows_outlined),
+                title: Text('use_desktop_site'.tr()),
+                description: Text('use_desktop_site_desc'.tr()),
+              ),
             ],
           ),
           SettingsSection(
@@ -316,11 +329,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   child: const Icon(Icons.check_circle),
                 ),
                 onPressed: (context) async {
+                  final before = PrefController.getUserAgent();
                   await showTextInputDialog(
                     spKey: SpKeys.customUserAgent,
                     hint: PrefController.getUserAgent(),
                   );
                   setState(() {});
+                  if (PrefController.getUserAgent() != before) {
+                    showToast("rebooting".tr());
+                    Restart.restartApp();
+                  }
                 },
               ),
               SettingsTile.navigation(

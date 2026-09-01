@@ -89,5 +89,7 @@
   "rate_send": "Firánṣẹ́",
   "rate_sends_notice": "Èyí yóò fi iṣẹ́ rẹ ránṣẹ́ sí olùdàgbàsókè, pẹ̀lú ẹ̀yà app, àwòṣe ẹ̀rọ àti ẹ̀yà Android. Ètò ìròyìn àṣìṣe rẹ yóò wà ní pípa.",
   "rate_thanks": "O ṣeun — èyí ṣèrànwọ́.",
-  "rate_failed": "Kò lè fi ránṣẹ́. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi nígbà mìíràn."
+  "rate_failed": "Kò lè fi ránṣẹ́. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi nígbà mìíràn.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

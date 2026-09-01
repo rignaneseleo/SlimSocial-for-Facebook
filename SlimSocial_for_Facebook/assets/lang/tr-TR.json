@@ -89,5 +89,7 @@
   "rate_send": "Gönder",
   "rate_sends_notice": "Bu, mesajınızı uygulama sürümü, cihaz modeli ve Android sürümüyle birlikte geliştiriciye gönderir. Hata raporu ayarınız kapalı kalır.",
   "rate_thanks": "Teşekkürler — bu yardımcı oluyor.",
-  "rate_failed": "Gönderilemedi. Lütfen daha sonra tekrar deneyin."
+  "rate_failed": "Gönderilemedi. Lütfen daha sonra tekrar deneyin.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

@@ -1,3 +1,5 @@
+import 'package:slimsocial_for_facebook/consts.dart';
+
 /// First path segments of Facebook's sign-in and account-verification flow.
 ///
 /// One entry per *first* segment, matched exactly rather than as a prefix, so
@@ -78,4 +80,37 @@ bool isFacebookAuthUrl(Uri uri) {
   }
 
   return false;
+}
+
+/// What the Messenger webview should do with [uri].
+///
+/// Facebook.com addresses used to close this screen and hand the URL to the
+/// feed. That crashed when there was nothing to pop
+/// (SLIMSOCIAL-A, `StateError: No element`) and painted a black page when the
+/// feed's mobile webview tried to render a desktop Messenger profile (#337).
+/// Auth, profiles, and every other facebook.com page now stay here.
+enum MessengerNavAction {
+  /// Load [uri] in the Messenger webview.
+  stay,
+
+  /// Open [uri] outside the app (custom tab / external browser).
+  openExternal,
+}
+
+/// Decides [MessengerNavAction] for a navigation that started on Messenger.
+MessengerNavAction messengerNavigationFor(Uri uri) {
+  for (final host in kPermittedHostnamesMessenger) {
+    if (uri.host.endsWith(host)) return MessengerNavAction.stay;
+  }
+
+  for (final host in kPermittedHostnamesFb) {
+    if (uri.host.endsWith(host)) return MessengerNavAction.stay;
+  }
+
+  // Auth URLs are facebook.com, so the loop above already keeps them. This
+  // call is the belt: a future host that still serves the login flow is
+  // treated as Messenger's own, not as an external page.
+  if (isFacebookAuthUrl(uri)) return MessengerNavAction.stay;
+
+  return MessengerNavAction.openExternal;
 }

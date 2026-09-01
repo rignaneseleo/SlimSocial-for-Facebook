@@ -239,7 +239,8 @@ class CustomCss {
     defaultEnabled: true,
     code: 'div.fixed-container.bottom'
         ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
-        ' { display: none !important; }',
+        ' { display: none !important; }'
+        ' html, body { overflow: auto !important; }',
   );
 
   /// Hands the post text back to the reader: selectable, and so copyable.

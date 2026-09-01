@@ -89,5 +89,7 @@
   "rate_send": "Verzenden",
   "rate_sends_notice": "Hiermee stuur je je bericht naar de ontwikkelaar, samen met de app-versie, het apparaatmodel en de Android-versie. Je instelling voor foutrapporten blijft uitgeschakeld.",
   "rate_thanks": "Bedankt — hier hebben we wat aan.",
-  "rate_failed": "Verzenden mislukt. Probeer het later opnieuw."
+  "rate_failed": "Verzenden mislukt. Probeer het later opnieuw.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

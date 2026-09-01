@@ -89,5 +89,7 @@
   "rate_send": "傳送",
   "rate_sends_notice": "這會將你的訊息連同應用程式版本、裝置型號和 Android 版本一併傳送給開發者。你的當機報告設定仍維持關閉。",
   "rate_thanks": "謝謝 — 這很有幫助。",
-  "rate_failed": "傳送失敗。請稍後再試。"
+  "rate_failed": "傳送失敗。請稍後再試。",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

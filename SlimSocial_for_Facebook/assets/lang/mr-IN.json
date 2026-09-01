@@ -89,5 +89,7 @@
   "rate_send": "पाठवा",
   "rate_sends_notice": "यामुळे तुमचा संदेश अ‍ॅप आवृत्ती, डिव्हाइस मॉडेल आणि Android आवृत्तीसह विकसकाला पाठवला जाईल. तुमची क्रॅश अहवाल सेटिंग बंदच राहील.",
   "rate_thanks": "धन्यवाद — याची मदत होते.",
-  "rate_failed": "पाठवता आले नाही. कृपया नंतर पुन्हा प्रयत्न करा."
+  "rate_failed": "पाठवता आले नाही. कृपया नंतर पुन्हा प्रयत्न करा.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

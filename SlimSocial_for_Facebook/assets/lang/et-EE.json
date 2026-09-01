@@ -89,5 +89,7 @@
   "rate_send": "Saada",
   "rate_sends_notice": "See saadab arendajale sinu sõnumi koos rakenduse versiooni, seadme mudeli ja Androidi versiooniga. Sinu veaaruannete säte jääb välja lülitatuks.",
   "rate_thanks": "Aitäh — sellest on abi.",
-  "rate_failed": "Saatmine ebaõnnestus. Proovi hiljem uuesti."
+  "rate_failed": "Saatmine ebaõnnestus. Proovi hiljem uuesti.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

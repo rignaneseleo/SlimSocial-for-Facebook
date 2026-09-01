@@ -89,5 +89,7 @@
   "rate_send": "Отправить",
   "rate_sends_notice": "Это отправит разработчику ваше сообщение вместе с версией приложения, моделью устройства и версией Android. Настройка отчётов об ошибках останется выключенной.",
   "rate_thanks": "Спасибо — это помогает.",
-  "rate_failed": "Не удалось отправить. Повторите попытку позже."
+  "rate_failed": "Не удалось отправить. Повторите попытку позже.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

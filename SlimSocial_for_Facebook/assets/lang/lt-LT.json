@@ -89,5 +89,7 @@
   "rate_send": "Siųsti",
   "rate_sends_notice": "Taip kūrėjui bus išsiųsta jūsų žinutė kartu su programėlės versija, įrenginio modeliu ir „Android“ versija. Jūsų klaidų ataskaitų nustatymas lieka išjungtas.",
   "rate_thanks": "Ačiū — tai padeda.",
-  "rate_failed": "Nepavyko išsiųsti. Bandykite vėliau."
+  "rate_failed": "Nepavyko išsiųsti. Bandykite vėliau.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

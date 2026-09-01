@@ -272,6 +272,16 @@ article {
         isNot(contains('div.fixed-container {')),
       );
     });
+
+    test('unlocks page scroll if the install overlay is left behind', () {
+      // Hiding the bottom bar alone left a dimmer that locked scrolling on
+      // some devices (#339). Restoring overflow lets the feed move even when
+      // Facebook's modal chrome is incomplete.
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        contains('overflow: auto !important'),
+      );
+    });
   });
 
   group('media trays', () {
