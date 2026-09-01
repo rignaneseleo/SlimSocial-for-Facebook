@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Kasuta Facebooki põhiversiooni",
   "use_mbasic_desc": "See töötab paremini vanemates seadmetes või aeglasema ühenduse puhul.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Kuva hiljuti postitatud postitused enne",
   "hide_ads": "Peida mõned reklaamid (eksperimentaalne)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
