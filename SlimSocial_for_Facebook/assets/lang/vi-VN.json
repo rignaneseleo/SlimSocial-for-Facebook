@@ -6,6 +6,8 @@
   "Facebook": "Facebook",
   "use_mbasic": "Sử dụng phiên bản Facebook cơ bản",
   "use_mbasic_desc": "Nó hoạt động tốt hơn trên các thiết bị cũ hoặc kết nối chậm",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
   "recent_first": "Hiển thị bài đăng gần đây trước",
   "hide_ads": "Ẩn một số quảng cáo (thử nghiệm)",
   "hide_people_you_may_know": "Hide \"People you may know\"",
