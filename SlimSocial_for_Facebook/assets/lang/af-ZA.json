@@ -89,5 +89,7 @@
   "rate_send": "Stuur",
   "rate_sends_notice": "Dit stuur jou boodskap saam met die programweergawe, toestelmodel en Android-weergawe aan die ontwikkelaar. Jou instelling vir foutverslae bly af.",
   "rate_thanks": "Dankie — dit help.",
-  "rate_failed": "Kon nie stuur nie. Probeer later weer."
+  "rate_failed": "Kon nie stuur nie. Probeer later weer.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

@@ -89,5 +89,7 @@
   "rate_send": "Wyślij",
   "rate_sends_notice": "Spowoduje to wysłanie Twojej wiadomości do dewelopera wraz z wersją aplikacji, modelem urządzenia i wersją Androida. Twoje ustawienie raportów o błędach pozostaje wyłączone.",
   "rate_thanks": "Dziękujemy — to pomaga.",
-  "rate_failed": "Nie udało się wysłać. Spróbuj ponownie później."
+  "rate_failed": "Nie udało się wysłać. Spróbuj ponownie później.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

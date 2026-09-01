@@ -89,5 +89,7 @@
   "rate_send": "Lähetä",
   "rate_sends_notice": "Tämä lähettää viestisi kehittäjälle sekä sovelluksen version, laitemallin ja Android-version. Virheraporttien asetuksesi pysyy pois päältä.",
   "rate_thanks": "Kiitos — tästä on apua.",
-  "rate_failed": "Lähetys epäonnistui. Yritä myöhemmin uudelleen."
+  "rate_failed": "Lähetys epäonnistui. Yritä myöhemmin uudelleen.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

@@ -89,5 +89,7 @@
   "rate_send": "அனுப்பு",
   "rate_sends_notice": "இது உங்கள் செய்தியை ஆப் பதிப்பு, சாதன மாடல் மற்றும் Android பதிப்புடன் உருவாக்குநருக்கு அனுப்பும். உங்கள் செயலிழப்பு அறிக்கை அமைப்பு அணைக்கப்பட்டே இருக்கும்.",
   "rate_thanks": "நன்றி — இது உதவுகிறது.",
-  "rate_failed": "அனுப்ப முடியவில்லை. பிறகு மீண்டும் முயற்சிக்கவும்."
+  "rate_failed": "அனுப்ப முடியவில்லை. பிறகு மீண்டும் முயற்சிக்கவும்.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

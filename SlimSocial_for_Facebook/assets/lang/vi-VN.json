@@ -89,5 +89,7 @@
   "rate_send": "Gửi",
   "rate_sends_notice": "Thao tác này sẽ gửi tin nhắn của bạn đến nhà phát triển, cùng với phiên bản ứng dụng, kiểu thiết bị và phiên bản Android. Cài đặt báo cáo sự cố của bạn vẫn tắt.",
   "rate_thanks": "Cảm ơn — điều này rất hữu ích.",
-  "rate_failed": "Không thể gửi. Vui lòng thử lại sau."
+  "rate_failed": "Không thể gửi. Vui lòng thử lại sau.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

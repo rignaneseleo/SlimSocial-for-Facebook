@@ -14,6 +14,7 @@ void main() {
       expect(SpKeys.hideAds, 'hide_ads');
       expect(SpKeys.recentFirst, 'recent_first');
       expect(SpKeys.useMbasic, 'use_mbasic');
+      expect(SpKeys.useDesktopSite, 'use_desktop_site');
       expect(SpKeys.customUserAgent, 'custom_useragent');
       expect(SpKeys.customCss, 'custom_css');
       expect(SpKeys.customJs, 'custom_js');
@@ -71,6 +72,18 @@ void main() {
     test('is a desktop agent, which is what Messenger needs', () {
       expect(kDesktopUserAgent, contains('Macintosh'));
       expect(kDesktopUserAgent, isNot(contains('Mobile')));
+    });
+  });
+
+  group('kFirefoxUserAgent', () {
+    test('is the 119 desktop feed agent, pinned verbatim', () {
+      expect(
+        kFirefoxUserAgent,
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0',
+      );
+      expect(kFirefoxUserAgent, isNot(contains('Mobile')));
+      expect(kFirefoxUserAgent, isNot(kMobileUserAgent));
+      expect(kFirefoxUserAgent, isNot(kDesktopUserAgent));
     });
   });
 

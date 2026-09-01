@@ -89,5 +89,7 @@
   "rate_send": "పంపు",
   "rate_sends_notice": "ఇది మీ సందేశాన్ని యాప్ వెర్షన్, పరికర మోడల్ మరియు Android వెర్షన్‌తో పాటు డెవలపర్‌కు పంపుతుంది. మీ క్రాష్ రిపోర్ట్ సెట్టింగ్ ఆఫ్‌లోనే ఉంటుంది.",
   "rate_thanks": "ధన్యవాదాలు — ఇది సహాయపడుతుంది.",
-  "rate_failed": "పంపడం సాధ్యం కాలేదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి."
+  "rate_failed": "పంపడం సాధ్యం కాలేదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

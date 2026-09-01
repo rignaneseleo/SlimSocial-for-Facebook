@@ -20,9 +20,15 @@ class PrefController {
 
   /// Returns the user agent to use for [role].
   ///
-  /// An explicit custom agent wins over everything, then basic mode, then the
-  /// per-role default.
+  /// Messenger is pinned to [kDesktopUserAgent]. A custom string or the
+  /// desktop-site / basic-mode switches would otherwise send it a mobile
+  /// agent, and Facebook answers that with the native-app interstitial.
+  ///
+  /// For the feed: a custom agent wins, then basic mode, then the desktop-site
+  /// setting, then the mobile default.
   static String getUserAgent({UserAgentRole role = UserAgentRole.feed}) {
+    if (role == UserAgentRole.messenger) return kDesktopUserAgent;
+
     final customUserAgent = _getOverride(SpKeys.customUserAgent);
     if (customUserAgent != null) {
       debugPrint("Using custom user agent: $customUserAgent");
@@ -31,12 +37,9 @@ class PrefController {
 
     if (sp.getBool(SpKeys.useMbasic) ?? false) return kOperaMiniUserAgent;
 
-    switch (role) {
-      case UserAgentRole.feed:
-        return kMobileUserAgent;
-      case UserAgentRole.messenger:
-        return kDesktopUserAgent;
-    }
+    if (sp.getBool(SpKeys.useDesktopSite) ?? false) return kFirefoxUserAgent;
+
+    return kMobileUserAgent;
   }
 
   /// Text scaling for the webview, as a percentage of the page's own size.

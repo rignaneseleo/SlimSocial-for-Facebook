@@ -99,30 +99,75 @@ void main() {
       );
     });
 
-    test('basic mode overrides every role', () async {
+    test('basic mode overrides the feed, not Messenger', () async {
       // This file seeds preferences with withPrefs (which calls
       // SharedPreferences.setMockInitialValues and is reset by setUp), never
       // bare sp.setBool — mixing the two leaks state between tests.
       await withPrefs({SpKeys.useMbasic: true});
 
-      for (final role in UserAgentRole.values) {
-        expect(
-          PrefController.getUserAgent(role: role),
-          kOperaMiniUserAgent,
-          reason: 'role $role should honour basic mode',
-        );
-      }
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        kOperaMiniUserAgent,
+      );
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kDesktopUserAgent,
+      );
     });
 
-    test('a custom agent overrides every role', () async {
+    test('a custom agent overrides the feed, not Messenger', () async {
       await withPrefs({
         SpKeys.customUserAgent: 'my-agent',
         SpKeys.enabled(SpKeys.customUserAgent): true,
       });
 
-      for (final role in UserAgentRole.values) {
-        expect(PrefController.getUserAgent(role: role), 'my-agent');
-      }
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        'my-agent',
+      );
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kDesktopUserAgent,
+      );
+    });
+
+    test('the desktop-site setting serves 119\'s Firefox agent to the feed',
+        () async {
+      await withPrefs({SpKeys.useDesktopSite: true});
+
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        kFirefoxUserAgent,
+      );
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kDesktopUserAgent,
+      );
+    });
+
+    test('basic mode wins over the desktop-site setting', () async {
+      await withPrefs({
+        SpKeys.useDesktopSite: true,
+        SpKeys.useMbasic: true,
+      });
+
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        kOperaMiniUserAgent,
+      );
+    });
+
+    test('a custom agent wins over the desktop-site setting', () async {
+      await withPrefs({
+        SpKeys.useDesktopSite: true,
+        SpKeys.customUserAgent: 'my-agent',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.feed),
+        'my-agent',
+      );
     });
 
     test('every role resolves to a non-empty agent', () {

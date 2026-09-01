@@ -114,4 +114,36 @@ void main() {
       expect(isFacebookAuthUrl(Uri.parse('about:blank')), isFalse);
     });
   });
+
+  group('messengerNavigationFor', () {
+    MessengerNavAction nav(String url) =>
+        messengerNavigationFor(Uri.parse(url));
+
+    test('keeps messenger.com in the Messenger webview', () {
+      expect(nav('https://www.messenger.com/t/123'), MessengerNavAction.stay);
+      expect(nav('https://m.me/123'), MessengerNavAction.stay);
+    });
+
+    test('keeps facebook.com in the Messenger webview', () {
+      // Popping these to the feed crashed (SLIMSOCIAL-A) or painted black
+      // (#337). Profiles, photos, and login all stay here.
+      expect(
+        nav('https://www.facebook.com/someone'),
+        MessengerNavAction.stay,
+      );
+      expect(
+        nav('https://m.facebook.com/checkpoint/start/'),
+        MessengerNavAction.stay,
+      );
+      expect(
+        nav('https://www.facebook.com/photo.php?fbid=1'),
+        MessengerNavAction.stay,
+      );
+    });
+
+    test('sends anything else outside the app', () {
+      expect(nav('https://example.com/x'), MessengerNavAction.openExternal);
+      expect(nav('https://youtube.com/watch?v=1'), MessengerNavAction.openExternal);
+    });
+  });
 }

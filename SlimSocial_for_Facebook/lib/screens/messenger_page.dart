@@ -130,43 +130,19 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   ) async {
     final uri = Uri.parse(request.url);
 
-    for (final other in kPermittedHostnamesMessenger) {
-      if (uri.host.endsWith(other)) {
+    switch (messengerNavigationFor(uri)) {
+      case MessengerNavAction.stay:
         return NavigationDecision.navigate;
-      }
-    }
-
-    //Signing in belongs to this screen even though it is served from
-    //facebook.com. Messenger authenticates against Facebook, so the login-code
-    //prompt is a facebook.com page — and the branch below, which exists for a
-    //Facebook link tapped inside a conversation, used to send it to the feed.
-    //The screen closed itself half way through authenticating and the prompt
-    //surfaced in a webview that could not finish it, so Messenger could not be
-    //signed into at all.
-    if (isFacebookAuthUrl(uri)) return NavigationDecision.navigate;
-
-    for (final other in kPermittedHostnamesFb) {
-      if (uri.host.endsWith(other)) {
+      case MessengerNavAction.openExternal:
         if (!mounted) return NavigationDecision.prevent;
-
-        ref.read(fbWebViewProvider.notifier).updateUrl(request.url);
-        Navigator.of(context).pop();
-        //todo hide msg
+        //the address of a link the user tapped is their browsing, and this line
+        //used to run in release builds through a bare `print`: Sentry collects
+        //stdout as a breadcrumb, so every conversation and every link opened
+        //out of Messenger travelled with the next report.
+        if (kDebugMode) debugPrint("Launching external url: ${request.url}");
+        launchInAppUrl(context, request.url);
         return NavigationDecision.prevent;
-      }
     }
-
-    if (!mounted) return NavigationDecision.prevent;
-
-    // open on webview
-    //the address of a link the user tapped is their browsing, and this line
-    //used to run in release builds through a bare `print`: Sentry collects
-    //stdout as a breadcrumb, so every conversation and every link opened out of
-    //Messenger travelled with the next report. Gated the way the feed's own
-    //navigation logging in home_page.dart already was.
-    if (kDebugMode) debugPrint("Launching external url: ${request.url}");
-    launchInAppUrl(context, request.url);
-    return NavigationDecision.prevent;
   }
 
   @override

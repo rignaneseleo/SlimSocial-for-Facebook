@@ -89,5 +89,7 @@
   "rate_send": "بھیجیں",
   "rate_sends_notice": "اس سے آپ کا پیغام ایپ ورژن، ڈیوائس ماڈل اور Android ورژن کے ساتھ ڈویلپر کو بھیجا جائے گا۔ آپ کی کریش رپورٹ کی ترتیب بند رہے گی۔",
   "rate_thanks": "شکریہ — اس سے مدد ملتی ہے۔",
-  "rate_failed": "بھیجا نہیں جا سکا۔ براہ کرم بعد میں دوبارہ کوشش کریں۔"
+  "rate_failed": "بھیجا نہیں جا سکا۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

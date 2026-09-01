@@ -89,5 +89,7 @@
   "rate_send": "Invia",
   "rate_sends_notice": "Questo invia il tuo messaggio allo sviluppatore, insieme alla versione dell'app, al modello del dispositivo e alla versione di Android. L'impostazione sulle segnalazioni di errori resta disattivata.",
   "rate_thanks": "Grazie — è utile.",
-  "rate_failed": "Invio non riuscito. Riprova più tardi."
+  "rate_failed": "Invio non riuscito. Riprova più tardi.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

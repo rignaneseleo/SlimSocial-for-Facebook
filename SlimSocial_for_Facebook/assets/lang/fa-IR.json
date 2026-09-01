@@ -89,5 +89,7 @@
   "rate_send": "ارسال",
   "rate_sends_notice": "با این کار پیام شما همراه با نسخهٔ برنامه، مدل دستگاه و نسخهٔ Android برای توسعه‌دهنده ارسال می‌شود. تنظیم گزارش خطای شما خاموش باقی می‌ماند.",
   "rate_thanks": "ممنون — این کمک می‌کند.",
-  "rate_failed": "ارسال نشد. لطفاً بعداً دوباره تلاش کنید."
+  "rate_failed": "ارسال نشد. لطفاً بعداً دوباره تلاش کنید.",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }

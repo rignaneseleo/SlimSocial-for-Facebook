@@ -89,5 +89,7 @@
   "rate_send": "送信",
   "rate_sends_notice": "メッセージが、アプリのバージョン、端末のモデル、Android のバージョンとともに開発者に送信されます。クラッシュレポートの設定はオフのままです。",
   "rate_thanks": "ありがとうございます — 助かります。",
-  "rate_failed": "送信できませんでした。後でもう一度お試しください。"
+  "rate_failed": "送信できませんでした。後でもう一度お試しください。",
+  "use_desktop_site": "Use desktop site",
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
 }
