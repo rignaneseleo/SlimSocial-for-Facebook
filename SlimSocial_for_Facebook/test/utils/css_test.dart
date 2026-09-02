@@ -221,14 +221,20 @@ article {
   });
 
   group('app install upsell', () {
-    test('targets the pinned bottom bar by class, not by its label', () {
-      // The label is localised, so matching text would work in one language
-      // and silently stop working in every other.
+    test('no longer hides bottom containers from the stylesheet', () {
+      // The rule `div.fixed-container.bottom:not(:has(<form control>)) {
+      // display: none }` hid every bottom sheet without a form control: the
+      // share menu (#336) and a dialog whose dimmer stayed behind (#339).
+      // Whether a container is the upsell is decided in JavaScript now, from
+      // its structure — see CustomJs.hideAppUpsellFunc.
       expect(
         CustomCss.hideAppUpsellCss.code,
-        contains('div.fixed-container.bottom'),
+        isNot(contains('fixed-container.bottom')),
       );
-      expect(CustomCss.hideAppUpsellCss.code, isNot(contains('Open app')));
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        isNot(contains('display: none')),
+      );
     });
 
     test('is not offered as a user-facing toggle', () {
@@ -249,27 +255,6 @@ article {
         RegExp(r'bg-s\d').hasMatch(CustomCss.hideAppUpsellCss.code),
         isFalse,
         reason: 'the bg-sN number means something different on every render',
-      );
-    });
-
-    test('can never hide a container holding a form control', () {
-      // Facebook docks the comment composer in the same bottom container as
-      // the upsell, so an unguarded rule removed the box you type a comment
-      // into. Checking the feed did not catch it: the composer only exists
-      // once a post is open.
-      final code = CustomCss.hideAppUpsellCss.code;
-
-      expect(code, contains(':not(:has(textarea))'));
-      expect(code, contains(':not(:has(input))'));
-      expect(code, contains(':not(:has([contenteditable]))'));
-    });
-
-    test('does not hide every fixed container', () {
-      // A bare `.fixed-container` rule would also catch the top bar and the
-      // empty above-bottom spacer that sit alongside the upsell.
-      expect(
-        CustomCss.hideAppUpsellCss.code,
-        isNot(contains('div.fixed-container {')),
       );
     });
 

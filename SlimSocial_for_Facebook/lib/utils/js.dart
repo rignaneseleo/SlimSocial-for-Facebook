@@ -155,6 +155,89 @@ class CustomJs {
 """;
   }
 
+  /// Builds JavaScript that hides the "Open app" bar Facebook pins to the
+  /// bottom of the feed — and nothing else that docks there.
+  ///
+  /// This used to be a stylesheet rule: `div.fixed-container.bottom` without a
+  /// form control inside it was `display: none`. The guard was written for the
+  /// comment composer, which docks in the same container, and it was not
+  /// enough. Facebook renders its share menu (#336), its reaction picker and
+  /// its "turn on notifications" dialog (#339) in that container too. None of
+  /// them holds a form control, so all of them vanished — leaving the dimmer
+  /// they had opened over the page and nothing under it to tap. On the share
+  /// menu that read as a dead share button; on the dialog it read as a feed
+  /// that had gone dark and stopped scrolling.
+  ///
+  /// The stylesheet cannot ask the question that separates the upsell from a
+  /// sheet, which is *how many things there are to tap*. The upsell is one
+  /// label and one button (the structural test Nora uses, see
+  /// docs/research/2026-08-28-nora-comparative-study.md §2). A sheet is a
+  /// column of them. So a container is hidden only when it holds exactly one
+  /// tappable element, no form control, and no feed post — and the verdict
+  /// is re-checked on every pass, so a container that fills in later is put
+  /// back.
+  ///
+  /// Facebook is a single-page app and the bar is inserted after load and on
+  /// every in-page navigation, hence the observer, kept on `window` like the
+  /// others so re-injection does not stack another. Everything is swallowed
+  /// by a try/catch for the same reason as [unlockZoomFunc].
+  static String hideAppUpsellFunc() {
+    return """
+(function () {
+  try {
+    var MARK = 'data-slim-upsell';
+    // A composer, a search box, or a feed post inside the container means it
+    // is content, whatever else it looks like.
+    var CONTENT = 'textarea, input, [contenteditable], $kPostSelector';
+    var TAPPABLE = 'button, [role="button"], a[href]';
+
+    function isUpsell(node) {
+      if (node.querySelector(CONTENT)) return false;
+      // Exactly one: zero is a container still being filled in, and two or
+      // more is a sheet of options.
+      if (node.querySelectorAll(TAPPABLE).length !== 1) return false;
+      return true;
+    }
+
+    function pass() {
+      var nodes = document.querySelectorAll('div.fixed-container.bottom');
+      for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        var hidden = node.getAttribute(MARK) === '1';
+        if (isUpsell(node)) {
+          if (hidden) continue;
+          node.setAttribute(MARK, '1');
+          node.style.display = 'none';
+        } else if (hidden) {
+          // Re-used for something with more in it: give it back.
+          node.removeAttribute(MARK);
+          node.style.display = '';
+        }
+      }
+    }
+
+    pass();
+
+    if (!window.slimUpsellObserver) {
+      var pending = null;
+      window.slimUpsellObserver = new MutationObserver(function () {
+        if (pending) return;
+        // The feed appends dozens of nodes in a frame; one pass per burst.
+        pending = setTimeout(function () {
+          pending = null;
+          pass();
+        }, 250);
+      });
+      window.slimUpsellObserver.observe(
+        document.body || document.documentElement,
+        { childList: true, subtree: true }
+      );
+    }
+  } catch (e) {}
+})();
+""";
+  }
+
   static String exampleJs = """
 javascript:function foo() {
 	     document.body.innerHTML = '';
