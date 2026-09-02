@@ -1,3 +1,11 @@
+v26.09.02+127
+- Share menu and Facebook's own dialogs show again: the install-bar rule hid every bottom sheet (#336, #339).
+- The chat icon in the top bar opens the Messenger screen instead of a "Get Messenger" page (#338).
+- Fix a crash when a Facebook link is opened while the app is already running (SLIMSOCIAL-4).
+- Stop downloading Roboto from Google on every start; the system font is Roboto already (SLIMSOCIAL-7).
+- Fix a crash when two permission switches are tapped in a row (SLIMSOCIAL-V).
+- Photo upload lets you pick several files at once.
+
 v26.09.01+126
 - Add a "Use desktop site" setting: the 119 Firefox user agent for the feed. Default stays mobile.
 - Messenger always uses desktop Chrome. A custom user agent no longer overrides it.
