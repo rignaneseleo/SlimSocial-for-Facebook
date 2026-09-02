@@ -15,6 +15,7 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/permission_gate.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +32,11 @@ class SettingsPage extends ConsumerStatefulWidget {
 class _SettingsPageState extends ConsumerState<SettingsPage> {
   StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
   bool isDev = false;
+
+  //one OS permission dialog at a time: a second request while the first is
+  //still up is refused by permission_handler with an exception that used to
+  //take this screen down (SLIMSOCIAL-V)
+  final _permissionGate = PermissionRequestGate();
 
   //photosPermission is deliberately absent: the file chooser no longer gates on
   //it. Permission.photos maps to READ_MEDIA_IMAGES, which only exists from API
@@ -501,7 +507,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         case PermissionStatus.restricted:
         case PermissionStatus.limited:
         case PermissionStatus.denied:
-          await permission.request();
+          //null when another request's dialog is still up; the status read
+          //below is then simply what the OS already had
+          await _permissionGate.run(permission.request);
           break;
         case PermissionStatus.provisional:
         case PermissionStatus.granted:

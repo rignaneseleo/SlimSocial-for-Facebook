@@ -18,6 +18,7 @@ import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
+import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
@@ -125,6 +126,16 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+            if (!mounted) return;
+
+            //the install bar is decided by structure, in script, because the
+            //stylesheet rule that did this took the share menu with it (#336)
+            await runIsolatedJs(
+              'app upsell',
+              () => _controller.runJavaScript(
+                CustomJs.whenDomReady(CustomJs.hideAppUpsellFunc()),
+              ),
+            );
             if (!mounted) return;
 
             //before the dark theme, because unlocking the viewport reflows the
@@ -328,6 +339,21 @@ class _HomePageState extends ConsumerState<HomePage> {
         await _controller.loadRequest(target);
         return NavigationDecision.prevent;
       }
+    }
+
+    //the chat icon in the mobile top bar links to facebook.com/messages, and
+    //with the mobile user agent that page is only a "Get Messenger"
+    //interstitial (#338). The Messenger screen shows the same conversations.
+    final messengerTarget = facebookMessagesToMessenger(uri);
+    if (messengerTarget != null) {
+      if (!mounted) return NavigationDecision.prevent;
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) =>
+              MessengerPage(initialUrl: messengerTarget.toString()),
+        ),
+      );
+      return NavigationDecision.prevent;
     }
 
     for (final other in kPermittedHostnamesFb) {

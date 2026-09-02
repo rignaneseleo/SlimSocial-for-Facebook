@@ -2,7 +2,6 @@ import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:native_flutter_proxy/native_flutter_proxy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -163,19 +162,17 @@ class _SlimSocialAppState extends State<SlimSocialApp> {
 
     return MaterialApp(
       title: 'SlimSocial for Facebook',
+      //no textTheme: the platform default is Roboto, which is the font this
+      //used to download from fonts.gstatic.com on every cold start — a
+      //request that bought nothing and, when it failed, was reported as a
+      //fatal error (SLIMSOCIAL-7)
       theme: ThemeData(
         useMaterial3: false,
         colorScheme: lightColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(
-          ThemeData(brightness: Brightness.light).textTheme,
-        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: false,
         colorScheme: darkColorScheme,
-        textTheme: GoogleFonts.robotoTextTheme(
-          ThemeData(brightness: Brightness.dark).textTheme,
-        ),
       ),
       themeMode: _themeMode,
       home: const HomePage(),
