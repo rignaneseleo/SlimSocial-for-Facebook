@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 String _read(String path) => File(path).readAsStringSync();
 
@@ -78,12 +80,29 @@ void main() {
       expect(source.substring(catchAt), contains('return [];'));
     });
 
-    test('probes what Facebook actually asks for', () {
-      //acceptTypes is markup Facebook authored, not anything the user typed.
-      //Nothing in this repo records what arrives here, and the normaliser that
-      //would use it cannot be written until that is known.
-      expect(source, contains('file_chooser.params'));
-      expect(source, contains('params.acceptTypes'));
+    test('no longer probes what Facebook asks for', () {
+      //The probe ran once per process for four days (SLIMSOCIAL-9, 72 events)
+      //and every report said the same thing: an empty accept list and mode
+      //openMultiple. Answered, so it goes — the signal would otherwise keep an
+      //issue open forever.
+      expect(source, isNot(contains('file_chooser.params')));
+    });
+  });
+
+  group('pickerOptionsFor', () {
+    test('lets the reader pick several files when the page allows it', () {
+      //Facebook's composer asks with mode openMultiple — a photo post is
+      //usually more than one photo — and the picker used to be opened in
+      //single-file mode regardless.
+      expect(
+        pickerOptionsFor(FileSelectorMode.openMultiple).allowMultiple,
+        isTrue,
+      );
+    });
+
+    test('keeps a single-file request single', () {
+      expect(pickerOptionsFor(FileSelectorMode.open).allowMultiple, isFalse);
+      expect(pickerOptionsFor(FileSelectorMode.save).allowMultiple, isFalse);
     });
   });
 }

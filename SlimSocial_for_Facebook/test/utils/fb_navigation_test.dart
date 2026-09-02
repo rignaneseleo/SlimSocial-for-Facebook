@@ -146,4 +146,67 @@ void main() {
       expect(nav('https://youtube.com/watch?v=1'), MessengerNavAction.openExternal);
     });
   });
+
+  group('facebookMessagesToMessenger', () {
+    Uri? to(String url) => facebookMessagesToMessenger(Uri.parse(url));
+
+    // The chat icon in Facebook's mobile top bar links to /messages/ on
+    // facebook.com, and with a mobile user agent that page is nothing but a
+    // "Get Messenger" install interstitial — the same one Firefox for Android
+    // shows (#338). The app already has a Messenger screen that loads
+    // messenger.com with a desktop agent; these addresses belong there.
+    test('the inbox goes to the Messenger screen', () {
+      expect(
+        to('https://m.facebook.com/messages/'),
+        Uri.parse('https://www.messenger.com/'),
+      );
+      expect(
+        to('https://touch.facebook.com/messages'),
+        Uri.parse('https://www.messenger.com/'),
+      );
+    });
+
+    test('the jewel entry point and its query are dropped', () {
+      expect(
+        to('https://m.facebook.com/messages/?entrypoint=jewel&folder=inbox'),
+        Uri.parse('https://www.messenger.com/'),
+      );
+    });
+
+    test('a thread keeps its id', () {
+      expect(
+        to('https://m.facebook.com/messages/t/1234567890'),
+        Uri.parse('https://www.messenger.com/t/1234567890'),
+      );
+      expect(
+        to('https://m.facebook.com/messages/t/1234567890/'),
+        Uri.parse('https://www.messenger.com/t/1234567890'),
+      );
+    });
+
+    test('the legacy read view opens the inbox, not a guessed thread', () {
+      // `tid=cid.c.A:B` is not a messenger.com thread id.
+      expect(
+        to('https://m.facebook.com/messages/read/?tid=cid.c.1:2'),
+        Uri.parse('https://www.messenger.com/'),
+      );
+    });
+
+    test('only the exact /messages segment matches', () {
+      expect(to('https://m.facebook.com/messagesabc/'), isNull);
+      expect(to('https://m.facebook.com/home.php'), isNull);
+      expect(to('https://m.facebook.com/'), isNull);
+      expect(to('https://m.facebook.com/groups/messages/'), isNull);
+    });
+
+    test('other hosts are not touched', () {
+      expect(to('https://www.messenger.com/t/1'), isNull);
+      expect(to('https://example.com/messages/'), isNull);
+    });
+
+    test('mbasic is left alone: its messages page renders without Messenger',
+        () {
+      expect(to('https://mbasic.facebook.com/messages/'), isNull);
+    });
+  });
 }

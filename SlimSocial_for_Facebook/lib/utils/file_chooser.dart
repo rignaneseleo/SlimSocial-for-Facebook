@@ -4,6 +4,19 @@ import 'package:file_picker/file_picker.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
+/// How the picker is opened for a page request in [mode].
+///
+/// Facebook's composer asks with `openMultiple` and an empty accept list —
+/// measured in production, once per process, over four days (SLIMSOCIAL-9: 72
+/// reports, every one identical). The picker used to ignore the mode and open
+/// single-file regardless, so a photo post that is usually several photos
+/// took one pick per photo.
+///
+/// The accept list is not used: it was always empty, and `FileType.any` is
+/// what an empty list means.
+({bool allowMultiple}) pickerOptionsFor(FileSelectorMode mode) =>
+    (allowMultiple: mode == FileSelectorMode.openMultiple);
+
 /// Handles the WebView's request for files to hand back to a page `<input
 /// type="file">` — the Facebook composer's photo picker, in practice.
 ///
@@ -15,18 +28,12 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 /// document picker returns a URI the app is already granted access to, so it
 /// needs no runtime permission on any API level.
 Future<List<String>> handleFileChooser(FileSelectorParams params) async {
-  //One probe, once per process, to learn what Facebook actually asks for.
-  //`acceptTypes` is markup Facebook authored, not anything the user typed.
-  Telemetry.captureIssue(
-    'file_chooser.params',
-    data: {
-      'accept': params.acceptTypes.join('|'),
-      'mode': params.mode.name,
-    },
-  );
+  final options = pickerOptionsFor(params.mode);
 
   try {
-    final result = await FilePicker.platform.pickFiles();
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: options.allowMultiple,
+    );
     if (result == null) return [];
 
     //Walk the list rather than reading `.single`, which throws a StateError on

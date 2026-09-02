@@ -201,30 +201,29 @@ class CustomCss {
     code: '#header-notices { display: none; }',
   );
 
-  /// Hides the "Open app" bar Facebook pins to the bottom of the feed.
+  /// The stylesheet half of hiding the "Open app" bar Facebook pins to the
+  /// bottom of the feed. The bar itself is hidden by
+  /// `CustomJs.hideAppUpsellFunc`; this only keeps the page scrollable.
   ///
-  /// It is an install upsell for the native app, which is the one thing a user
-  /// of this app has already decided against, and it covers the bottom of every
-  /// page until dismissed.
+  /// The bar is an install upsell for the native app, which is the one thing a
+  /// user of this app has already decided against, and it covers the bottom
+  /// of every page until dismissed.
   ///
-  /// Matched by class rather than by its label, which is localised. Verified
-  /// against the live layout: exactly one `.fixed-container.bottom` exists and
-  /// it is the upsell — the only other fixed container is an empty
-  /// `above-bottom` spacer, and the page carries no `role="navigation"` that
-  /// this could catch by accident.
+  /// It used to be hidden from here, by class: every `.fixed-container.bottom`
+  /// without a form control inside it. The guard was written for the comment
+  /// composer, which docks in the same container, and it was not enough —
+  /// the share menu (#336) and Facebook's own dialogs (#339) dock there too,
+  /// hold no form control, and vanished with the bar, leaving their dimmer
+  /// over a page with nothing left to tap. Telling the bar apart from a sheet
+  /// takes counting what is in it, which a stylesheet cannot do, so the
+  /// decision moved to JavaScript.
+  ///
+  /// What stays here is the scroll unlock. A dialog Facebook opens locks
+  /// `overflow` on the body; if its chrome is ever left incomplete the feed
+  /// stops moving, and this puts it back.
   ///
   /// Deliberately not in [cssList]: like the other chrome removals above, it is
   /// structural rather than a preference.
-  /// The `:not(:has(...))` guards are the important part.
-  ///
-  /// Facebook docks the comment composer to the bottom of a post using this
-  /// same container, so hiding every `.fixed-container.bottom` also removed the
-  /// box you type a comment into. Checking the feed alone was not enough to
-  /// catch that — the composer only exists once a post is open.
-  ///
-  /// Excluding any container that holds a form control means a composer can
-  /// never be hidden, whatever Facebook renames the classes to, and without
-  /// depending on a label that changes with the interface language.
   ///
   /// The other upsell — the blue "Open app" pill in the header of the Reels and
   /// video pages — is deliberately not covered. The only thing that told it
@@ -237,10 +236,7 @@ class CustomCss {
     key: 'hide_app_upsell',
     description: 'Hide the install-the-app bar',
     defaultEnabled: true,
-    code: 'div.fixed-container.bottom'
-        ':not(:has(textarea)):not(:has(input)):not(:has([contenteditable]))'
-        ' { display: none !important; }'
-        ' html, body { overflow: auto !important; }',
+    code: 'html, body { overflow: auto !important; }',
   );
 
   /// Hands the post text back to the reader: selectable, and so copyable.

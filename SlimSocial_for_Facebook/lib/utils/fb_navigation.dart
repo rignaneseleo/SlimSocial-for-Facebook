@@ -114,3 +114,41 @@ MessengerNavAction messengerNavigationFor(Uri uri) {
 
   return MessengerNavAction.openExternal;
 }
+
+/// Where the Messenger screen should open for a facebook.com messages address,
+/// or null when [uri] is not one.
+///
+/// The chat icon in Facebook's mobile top bar links to `/messages/` on
+/// facebook.com, and with a mobile user agent that page is nothing but a "Get
+/// Messenger" install interstitial — Firefox for Android shows the same one
+/// (#338). The conversations themselves are served to a desktop agent on
+/// messenger.com, which is exactly what the Messenger screen loads, so these
+/// addresses are redirected there instead of being rendered in the feed.
+///
+/// `/messages/t/<id>` keeps its thread: messenger.com uses the same ids. The
+/// older `/messages/read/?tid=cid.c.A:B` form does not translate, so it and
+/// every other variant open the inbox.
+///
+/// Basic mode is left alone: `mbasic.facebook.com/messages/` still renders a
+/// usable inbox on its own, and the whole point of that mode is not loading
+/// the heavier surfaces.
+Uri? facebookMessagesToMessenger(Uri uri) {
+  final host = uri.host.toLowerCase();
+  if (host == 'mbasic.facebook.com') return null;
+
+  final isFacebook = kPermittedHostnamesFb
+      .any((other) => host == other || host.endsWith('.$other'));
+  if (!isFacebook) return null;
+
+  final segments =
+      uri.pathSegments.where((segment) => segment.isNotEmpty).toList();
+  if (segments.isEmpty || segments.first.toLowerCase() != 'messages') {
+    return null;
+  }
+
+  if (segments.length >= 3 && segments[1].toLowerCase() == 't') {
+    return Uri.parse('$kMessengerUrl/t/${segments[2]}');
+  }
+
+  return Uri.parse('$kMessengerUrl/');
+}

@@ -103,6 +103,14 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+            <!-- app_links reads the VIEW intents above itself. Left at the
+                 engine's default (true), Flutter also pushes every link opened
+                 while the app is running as a named route, and a MaterialApp
+                 with no route by that name crashes on a null onUnknownRoute
+                 (SLIMSOCIAL-4). -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

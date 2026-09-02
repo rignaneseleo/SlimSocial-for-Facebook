@@ -273,4 +273,77 @@ void main() {
       expect(parsed.data, isEmpty);
     });
   });
+
+  group('CustomJs.hideAppUpsellFunc', () {
+    late String js;
+
+    setUpAll(() => js = CustomJs.hideAppUpsellFunc());
+
+    test('looks only at bottom-docked fixed containers', () {
+      expect(js, contains('div.fixed-container.bottom'));
+    });
+
+    test('never touches a container holding a form control', () {
+      // The comment composer docks in the same container as the upsell.
+      expect(js, contains('textarea'));
+      expect(js, contains('input'));
+      expect(js, contains('[contenteditable]'));
+    });
+
+    test('never touches a container holding feed content', () {
+      expect(js, contains(kPostSelector));
+    });
+
+    test('hides only a bar with exactly one thing to tap', () {
+      // The upsell is one label and one button. A share sheet, a reaction
+      // picker or a "turn on notifications" dialog is a column of options,
+      // and the stylesheet rule that hid every bottom container took those
+      // out too — leaving the reader with a dimmer and nothing to tap (#336,
+      // #339). Zero is not hidden either: a container still being filled in
+      // has nothing tappable yet, and is not yet anything.
+      expect(js, contains('[role="button"]'));
+      expect(js, contains('a[href]'));
+      expect(js, contains('.length !== 1'));
+    });
+
+    test('gives a container back once it holds more than the bar', () {
+      // A verdict is re-checked on every pass: the same container filled in
+      // with a sheet must not stay hidden from an earlier pass.
+      expect(js, contains('node.removeAttribute(MARK)'));
+      expect(js, contains("node.style.display = ''"));
+    });
+
+    test('marks what it hid so a pass is idempotent', () {
+      expect(js, contains('data-slim-upsell'));
+      expect(js, contains("display = 'none'"));
+    });
+
+    test('watches for the bar arriving after the first pass', () {
+      // Facebook is a single-page app: the bar is inserted after load and on
+      // every in-page navigation. One observer, kept on window like the ad
+      // observer, so re-injection does not stack another.
+      expect(js, contains('if (!window.slimUpsellObserver) {'));
+      expect(js, contains('window.slimUpsellObserver = new MutationObserver'));
+      expect('new MutationObserver'.allMatches(js), hasLength(1));
+    });
+
+    test('coalesces bursts of mutations into a single pass', () {
+      expect(js, contains('setTimeout'));
+    });
+
+    test('runs as a self-invoking function that swallows its own failure', () {
+      expect(js.trim(), startsWith('(function () {'));
+      expect(js.trim(), endsWith('})();'));
+      expect(js, contains('try {'));
+      expect(js, contains('} catch (e) {}'));
+    });
+
+    test('is not the stylesheet rule that hid every bottom sheet', () {
+      // The old rule was `div.fixed-container.bottom:not(:has(...)) {
+      // display: none !important }`: any sheet without a form control
+      // vanished.
+      expect(js, isNot(contains('display: none !important')));
+      expect(js, isNot(contains(':has(')));
+    });
+  });
 }
