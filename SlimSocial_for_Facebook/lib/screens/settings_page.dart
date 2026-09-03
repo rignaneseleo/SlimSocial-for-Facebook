@@ -106,6 +106,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text('enable_messenger'.tr()),
               ),
               SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(SpKeys.startOnMessenger, value);
+                  });
+                },
+                initialValue: sp.getBool(SpKeys.startOnMessenger) ?? false,
+                leading: const Icon(Icons.chat_bubble_outline),
+                title: Text('start_on_messenger'.tr()),
+                description: Text('start_on_messenger_desc'.tr()),
+              ),
+              SettingsTile.switchTile(
                 onToggle: (value) async {
                   setState(() {
                     sp.setBool(SpKeys.hideAds, value);

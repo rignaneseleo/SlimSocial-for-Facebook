@@ -65,6 +65,8 @@
   "save": "Tallenna",
   "permissions": "Käyttöoikeudet",
   "enable_messenger": "Ota Messenger käyttöön",
+  "start_on_messenger": "Avaa Messenger käynnistyksessä",
+  "start_on_messenger_desc": "Aloita Messenger-näytöltä uutissyötteen sijaan. Messengerin on oltava käytössä",
   "text_zoom": "Tekstin koko",
   "text_zoom_desc": "Skaalaa sivun tekstiä rikkomatta asettelua",
   "check_permission": "Tarkista käyttöoikeus asetuksista",

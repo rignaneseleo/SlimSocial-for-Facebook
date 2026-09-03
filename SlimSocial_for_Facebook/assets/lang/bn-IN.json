@@ -65,6 +65,8 @@
   "save": "সংরক্ষণ করুন",
   "permissions": "অনুমতিসমূহ",
   "enable_messenger": "মেসেঞ্জার সক্ষম করুন",
+  "start_on_messenger": "চালু হলে Messenger খুলুন",
+  "start_on_messenger_desc": "ফিডের বদলে Messenger স্ক্রিনে শুরু করুন। Messenger চালু থাকতে হবে",
   "text_zoom": "লেখার আকার",
   "text_zoom_desc": "লেআউট না ভেঙে পৃষ্ঠার লেখার আকার পরিবর্তন করুন",
   "check_permission": "সেটিংসে অনুমতি যাচাই করুন",

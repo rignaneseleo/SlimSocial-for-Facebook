@@ -65,6 +65,8 @@
   "save": "Сохранить",
   "permissions": "Разрешения",
   "enable_messenger": "Включить Messenger",
+  "start_on_messenger": "Открывать Messenger при запуске",
+  "start_on_messenger_desc": "Начинать с экрана Messenger, а не с новостей. Messenger должен быть включён",
   "text_zoom": "Размер текста",
   "text_zoom_desc": "Изменяет размер текста страницы, не ломая вёрстку",
   "check_permission": "Проверьте разрешение в настройках",

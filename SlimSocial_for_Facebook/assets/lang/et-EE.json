@@ -65,6 +65,8 @@
   "save": "Salvesta",
   "permissions": "Õigused",
   "enable_messenger": "Luba Messenger",
+  "start_on_messenger": "Ava käivitamisel Messenger",
+  "start_on_messenger_desc": "Alusta uudisvoo asemel Messengeri ekraanilt. Messenger peab olema lubatud",
   "text_zoom": "Teksti suurus",
   "text_zoom_desc": "Muuda lehe teksti suurust ilma paigutust lõhkumata",
   "check_permission": "Kontrolli luba seadetes",

@@ -65,6 +65,8 @@
   "save": "Opslaan",
   "permissions": "Machtigingen",
   "enable_messenger": "Activeer Messenger",
+  "start_on_messenger": "Messenger openen bij opstarten",
+  "start_on_messenger_desc": "Start op het Messenger-scherm in plaats van de tijdlijn. Messenger moet aan staan",
   "text_zoom": "Tekstgrootte",
   "text_zoom_desc": "Schaalt de paginatekst zonder de lay-out te breken",
   "check_permission": "Controleer de toestemming in de instellingen",

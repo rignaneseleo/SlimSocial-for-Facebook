@@ -64,6 +64,8 @@
   "save": "Зберегти",
   "permissions": "Дозволи",
   "enable_messenger": "Увімкнути Messenger",
+  "start_on_messenger": "Відкривати Messenger при запуску",
+  "start_on_messenger_desc": "Починати з екрана Messenger, а не з новин. Messenger має бути ввімкнений",
   "text_zoom": "Розмір тексту",
   "text_zoom_desc": "Змінює розмір тексту сторінки, не ламаючи верстку",
   "check_permission": "Перевірте дозвіл у налаштуваннях",

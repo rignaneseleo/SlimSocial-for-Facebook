@@ -65,6 +65,8 @@
   "save": "സേവ് ചെയ്യുക",
   "permissions": "അനുമതികൾ",
   "enable_messenger": "മെസ്സേഞ്ചർ പ്രവർത്തനം പ്രാപ്തമാക്കുക",
+  "start_on_messenger": "ആരംഭത്തിൽ Messenger തുറക്കുക",
+  "start_on_messenger_desc": "ഫീഡിനു പകരം Messenger സ്ക്രീനിൽ ആരംഭിക്കുക. Messenger പ്രവർത്തനക്ഷമമാക്കണം",
   "text_zoom": "ടെക്സ്റ്റ് വലുപ്പം",
   "text_zoom_desc": "ലേഔട്ട് തകർക്കാതെ പേജിലെ ടെക്സ്റ്റിന്റെ വലുപ്പം മാറ്റുക",
   "check_permission": "ക്രമീകരണങ്ങളിൽ അനുമതി പരിശോധിക്കുക",

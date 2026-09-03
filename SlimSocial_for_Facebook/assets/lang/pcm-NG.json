@@ -68,6 +68,8 @@
   "save": "Save",
   "permissions": "Permissions",
   "enable_messenger": "Put on Messenger",
+  "start_on_messenger": "Open Messenger wen app start",
+  "start_on_messenger_desc": "Start on di Messenger screen instead of di feed. Messenger must dey on",
   "report_issue": "Report wetin no dey work",
   "source_code": "Source code",
   "top": "Go back up",

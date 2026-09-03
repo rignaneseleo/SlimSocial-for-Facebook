@@ -65,6 +65,8 @@
   "save": "Kaydet",
   "permissions": "İzinler",
   "enable_messenger": "Messenger\"ı Etkinleştir",
+  "start_on_messenger": "Başlangıçta Messenger'ı aç",
+  "start_on_messenger_desc": "Akış yerine Messenger ekranında başla. Messenger etkin olmalı",
   "text_zoom": "Metin boyutu",
   "text_zoom_desc": "Sayfa metnini düzeni bozmadan ölçeklendirir",
   "check_permission": "Ayarlardan izni kontrol edin",

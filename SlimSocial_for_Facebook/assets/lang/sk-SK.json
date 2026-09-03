@@ -65,6 +65,8 @@
   "save": "Uložiť",
   "permissions": "Oprávnenia",
   "enable_messenger": "Povoliť Messenger",
+  "start_on_messenger": "Otvoriť Messenger pri spustení",
+  "start_on_messenger_desc": "Začať na obrazovke Messengera namiesto noviniek. Messenger musí byť zapnutý",
   "text_zoom": "Veľkosť textu",
   "text_zoom_desc": "Zmení veľkosť textu stránky bez rozbitia rozloženia",
   "check_permission": "Skontrolujte povolenie v nastaveniach",

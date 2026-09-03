@@ -65,6 +65,8 @@
   "save": "Guardar",
   "permissions": "Permissões",
   "enable_messenger": "Ativar o Messenger",
+  "start_on_messenger": "Abrir o Messenger ao iniciar",
+  "start_on_messenger_desc": "Começar no ecrã do Messenger em vez do feed. É preciso ter o Messenger ativado",
   "text_zoom": "Tamanho do texto",
   "text_zoom_desc": "Ajusta o texto da página sem quebrar o layout",
   "check_permission": "Verifique a permissão nas definições",

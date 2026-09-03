@@ -65,6 +65,8 @@
   "save": "Speichern",
   "permissions": "Berechtigungen",
   "enable_messenger": "Messenger aktivieren",
+  "start_on_messenger": "Messenger beim Start öffnen",
+  "start_on_messenger_desc": "Statt mit dem Feed mit dem Messenger-Bildschirm starten. Messenger muss aktiviert sein",
   "text_zoom": "Textgröße",
   "text_zoom_desc": "Skaliert den Seitentext, ohne das Layout zu zerstören",
   "check_permission": "Berechtigung in den Einstellungen prüfen",

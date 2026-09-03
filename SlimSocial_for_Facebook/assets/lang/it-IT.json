@@ -65,6 +65,8 @@
   "save": "Salva",
   "permissions": "Permessi",
   "enable_messenger": "Abilita Messenger",
+  "start_on_messenger": "Apri Messenger all'avvio",
+  "start_on_messenger_desc": "Parti dalla schermata di Messenger invece che dal feed. Messenger deve essere attivo",
   "text_zoom": "Dimensione del testo",
   "text_zoom_desc": "Ridimensiona il testo della pagina senza rompere il layout",
   "check_permission": "Controlla il permesso nelle impostazioni",

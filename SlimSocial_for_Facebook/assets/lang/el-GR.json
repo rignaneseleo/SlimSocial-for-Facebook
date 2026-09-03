@@ -68,6 +68,8 @@
   "save": "Αποθήκευση",
   "permissions": "Άδειες",
   "enable_messenger": "Ενεργοποίηση Messenger",
+  "start_on_messenger": "Άνοιγμα του Messenger κατά την εκκίνηση",
+  "start_on_messenger_desc": "Ξεκινήστε στην οθόνη του Messenger αντί στη ροή. Το Messenger πρέπει να είναι ενεργό",
   "report_issue": "Αναφορά προβλήματος",
   "source_code": "Πηγαίος κώδικας",
   "top": "Κύλιση στην κορυφή",

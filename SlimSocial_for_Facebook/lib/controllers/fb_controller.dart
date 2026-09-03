@@ -18,6 +18,17 @@ class PrefController {
     return initialURl + suffixDefault;
   }
 
+  /// Whether a cold start should land on the Messenger screen.
+  ///
+  /// The Messenger switch wins: with Messenger off there is no screen to open,
+  /// and a stale `start_on_messenger` left over from before it was turned off
+  /// would otherwise push a screen the reader can no longer reach any other
+  /// way.
+  static bool startsOnMessenger() {
+    if (!(sp.getBool(SpKeys.enableMessenger) ?? true)) return false;
+    return sp.getBool(SpKeys.startOnMessenger) ?? false;
+  }
+
   /// Returns the user agent to use for [role].
   ///
   /// Messenger is pinned to [kFirefoxUserAgent]. A custom string or the

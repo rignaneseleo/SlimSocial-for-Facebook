@@ -103,6 +103,18 @@ class _HomePageState extends ConsumerState<HomePage> {
       },
     );
     _controller = _initWebViewController();
+
+    //the feed is still built and still what Back returns to: only the route on
+    //top of it changes. Pushed after the first frame because [initState] has no
+    //Navigator to push onto yet.
+    if (PrefController.startsOnMessenger()) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        unawaited(
+          _openMessenger(Uri.parse(kMessengerInboxUrl), source: 'startup'),
+        );
+      });
+    }
   }
 
   WebViewController _initWebViewController() {
@@ -404,7 +416,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// Opens the Messenger screen on [target], and puts the feed back afterwards
   /// if the tap that got here pushed a page onto it.
   ///
-  /// [source] names what asked — 'jewel', 'link' or 'app_bar'. It is a fixed
+  /// [source] names what asked — 'jewel', 'link', 'app_bar' or 'startup'. It
+  /// is a fixed
   /// slug this app chose, and it is all that is reported: the address itself is
   /// the reader's browsing.
   ///

@@ -65,6 +65,8 @@
   "save": "Saglabāt",
   "permissions": "Atļaujas",
   "enable_messenger": "Iespējot Messenger",
+  "start_on_messenger": "Palaižot atvērt Messenger",
+  "start_on_messenger_desc": "Sākt ar Messenger ekrānu, nevis ziņu plūsmu. Messenger jābūt ieslēgtam",
   "text_zoom": "Teksta izmērs",
   "text_zoom_desc": "Mērogo lapas tekstu, nesabojājot izkārtojumu",
   "check_permission": "Pārbaudiet atļauju iestatījumos",

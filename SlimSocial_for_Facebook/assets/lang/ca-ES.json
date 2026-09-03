@@ -68,6 +68,8 @@
   "save": "Desa",
   "permissions": "Permisos",
   "enable_messenger": "Activa Messenger",
+  "start_on_messenger": "Obre el Messenger a l'inici",
+  "start_on_messenger_desc": "Comença a la pantalla del Messenger en lloc del mur. Cal tenir el Messenger activat",
   "report_issue": "Informa d'un problema",
   "source_code": "Codi font",
   "top": "Torna a dalt",

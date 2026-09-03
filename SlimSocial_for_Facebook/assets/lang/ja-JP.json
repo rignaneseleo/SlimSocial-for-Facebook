@@ -65,6 +65,8 @@
   "save": "保存する",
   "permissions": "権限",
   "enable_messenger": "メッセンジャーを有効にする",
+  "start_on_messenger": "起動時に Messenger を開く",
+  "start_on_messenger_desc": "フィードではなく Messenger 画面から始めます。Messenger を有効にする必要があります",
   "text_zoom": "文字サイズ",
   "text_zoom_desc": "レイアウトを崩さずにページの文字サイズを変更します",
   "check_permission": "設定で権限を確認してください",

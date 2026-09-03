@@ -73,6 +73,8 @@
   "save": "Save",
   "permissions": "Permissions",
   "enable_messenger": "Enable Messenger",
+  "start_on_messenger": "Open Messenger at startup",
+  "start_on_messenger_desc": "Start on the Messenger screen instead of the feed. Needs Messenger enabled",
   "report_issue": "Report an issue",
   "source_code": "Source code",
   "top": "Scroll to the top",

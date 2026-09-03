@@ -65,6 +65,8 @@
   "save": "保存",
   "permissions": "权限",
   "enable_messenger": "启用Messenger",
+  "start_on_messenger": "启动时打开 Messenger",
+  "start_on_messenger_desc": "启动后直接进入 Messenger 界面，而不是信息流。需要启用 Messenger",
   "text_zoom": "文字大小",
   "text_zoom_desc": "缩放页面文字而不破坏布局",
   "check_permission": "请在设置中检查权限",

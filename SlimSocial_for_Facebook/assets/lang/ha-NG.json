@@ -68,6 +68,8 @@
   "save": "Ajiye",
   "permissions": "Izini",
   "enable_messenger": "Kunna Messenger",
+  "start_on_messenger": "Buɗe Messenger a farawa",
+  "start_on_messenger_desc": "Fara a shafin Messenger maimakon labarai. Dole Messenger ya kasance a kunne",
   "report_issue": "Bayar da rahoton matsala",
   "source_code": "Lambar tushe",
   "top": "Koma sama",

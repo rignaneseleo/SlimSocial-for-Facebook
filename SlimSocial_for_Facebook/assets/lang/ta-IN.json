@@ -65,6 +65,8 @@
   "save": "காப்பு",
   "permissions": "அனுமதிகள்",
   "enable_messenger": "தொடர்பு டெய்தாக்கு இயக்கு",
+  "start_on_messenger": "தொடங்கும்போது Messenger-ஐத் திறக்கவும்",
+  "start_on_messenger_desc": "ஊட்டத்திற்குப் பதிலாக Messenger திரையில் தொடங்கவும். Messenger இயக்கப்பட வேண்டும்",
   "text_zoom": "எழுத்து அளவு",
   "text_zoom_desc": "தளவமைப்பைக் குலைக்காமல் பக்க எழுத்தின் அளவை மாற்றவும்",
   "check_permission": "அமைப்புகளில் அனுமதியைச் சரிபார்க்கவும்",

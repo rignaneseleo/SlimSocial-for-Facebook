@@ -65,6 +65,8 @@
   "save": "Lagre",
   "permissions": "Tillatelser",
   "enable_messenger": "Aktiver Messenger",
+  "start_on_messenger": "Åpne Messenger ved oppstart",
+  "start_on_messenger_desc": "Start på Messenger-skjermen i stedet for feeden. Messenger må være slått på",
   "text_zoom": "Tekststørrelse",
   "text_zoom_desc": "Skalerer sideteksten uten å ødelegge oppsettet",
   "check_permission": "Sjekk tillatelsen i innstillingene",
