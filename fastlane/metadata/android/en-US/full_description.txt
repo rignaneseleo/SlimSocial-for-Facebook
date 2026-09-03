@@ -4,7 +4,7 @@ Lightweight design: the app stays fast and responsive, also on older devices.
 
 Customizable: change the app colors and fonts. You can also run your own custom CSS and JS directly from the app.
 
-Privacy: the app is built with privacy in mind. You use Facebook without worry about your data.
+Privacy: the app is built with privacy in mind. You use Facebook without worrying about your data.
 
 Hide ads: turn on the ad blocker for a cleaner, more streamlined feed.
 
