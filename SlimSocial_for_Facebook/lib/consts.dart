@@ -90,6 +90,12 @@ const String kGithubProjectUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook";
 const String kPlayStoreUrl =
     "https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";
+const String kFDroidStoreUrl =
+    "https://f-droid.org/packages/it.rignanese.leo.slimfacebook/";
+
+/// Where a build with no in-app billing sends someone who wants to give
+/// something anyway. Same address as the `funding:` entry in pubspec.yaml.
+const String kDonateUrl = "https://www.paypal.me/LeonardoRignanese";
 
 /// Keys used to store settings in [SharedPreferences].
 ///

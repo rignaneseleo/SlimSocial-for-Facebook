@@ -4,8 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -13,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/permission_gate.dart';
@@ -30,7 +29,6 @@ class SettingsPage extends ConsumerStatefulWidget {
 }
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
-  StreamSubscription<List<PurchaseDetails>>? _paymentSubscription;
   bool isDev = false;
 
   //one OS permission dialog at a time: a second request while the first is
@@ -52,9 +50,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   void initState() {
     _updatePermissionsToggle();
 
-    if (!widget.productId.isNullOrEmpty()) {
+    //the donation deep link is only answerable where there is a store to
+    //answer it with; in the F-Droid build it is a link to nothing
+    if (storeServices.canPurchase && !widget.productId.isNullOrEmpty()) {
       Future.delayed(const Duration(milliseconds: 1), () {
-        buildPaymentWidget(widget.productId!);
+        storeServices.donate(widget.productId!);
       });
     }
 
@@ -72,7 +72,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   void dispose() {
-    _paymentSubscription?.cancel();
+    storeServices.dispose();
     super.dispose();
   }
 
@@ -425,55 +425,47 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 leading: const Icon(Icons.share),
                 title: Text('shareapp'.tr()),
                 onPressed: (BuildContext context) async {
-                  Share.share(kPlayStoreUrl);
+                  Share.share(storeServices.appListingUrl);
                 },
               ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.star),
-                title: Text('review5stars_v1'.tr()),
-                onPressed: (BuildContext context) async {
-                  final inAppReview = InAppReview.instance;
-
-                  if (await inAppReview.isAvailable()) {
-                    inAppReview.requestReview();
-                  }
-                },
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.coffee),
-                title: Text('buy_coffee'.tr()),
-                onPressed: (BuildContext context) async {
-                  buildPaymentWidget("donation_2".tr());
-                },
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.local_pizza_outlined),
-                title: Text('buy_pizza'.tr()),
-                onPressed: (BuildContext context) async {
-                  buildPaymentWidget("donation_3".tr());
-                },
-              ),
-              /*  SettingsTile.navigation(
-                leading: const Icon(Icons.stars),
-                title: Text('become_hero'.tr()),
-                description: Text('become_hero_desc_v1'.tr()),
-                onPressed: (BuildContext context) async {
-                  buildPaymentWidget("donation_4");
-                },
-              ), */
+              //the store's own rating sheet, and billing, exist only where
+              //there is a store. The F-Droid build asks for neither and offers
+              //a plain donation link in their place.
+              if (storeServices.canRequestReview)
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.star),
+                  title: Text('review5stars_v1'.tr()),
+                  onPressed: (BuildContext context) async {
+                    await storeServices.requestReview();
+                  },
+                ),
+              if (storeServices.canPurchase) ...[
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.coffee),
+                  title: Text('buy_coffee'.tr()),
+                  onPressed: (BuildContext context) async {
+                    await storeServices.donate("donation_2".tr());
+                  },
+                ),
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.local_pizza_outlined),
+                  title: Text('buy_pizza'.tr()),
+                  onPressed: (BuildContext context) async {
+                    await storeServices.donate("donation_3".tr());
+                  },
+                ),
+              ] else
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.coffee),
+                  title: Text('donate'.tr().capitalize()),
+                  onPressed: (BuildContext context) =>
+                      launchUrl(Uri.parse(kDonateUrl)),
+                ),
             ],
           ),
           SettingsSection(
             title: Text('the_project'.tr().capitalize()),
             tiles: <SettingsTile>[
-              /*  SettingsTile.navigation(
-                leading: const Icon(Icons.email),
-                title: Text('contactdev'.tr()),
-                onPressed: (BuildContext context) async {
-                  await buildPaymentWidget("donation_2".tr());
-                  launchInAppUrl(context, kTwitterProfileUrl);
-                },
-              ), */
               SettingsTile.navigation(
                 leading: const Icon(Icons.bug_report),
                 title: Text('report_issue'.tr()),
@@ -534,87 +526,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       }
     }
     return permission.status.isGranted;
-  }
-
-  Future<void> buildPaymentWidget(String idItem) async {
-    try {
-      await _launchPurchase(idItem);
-    } on Object catch (e, stack) {
-      //Nothing used to catch here, so a throw anywhere in the billing flow left
-      //the user staring at a screen that did nothing.
-      Telemetry.captureError(e, stack, hint: 'donation flow');
-      showToast("error_trylater".tr());
-    }
-  }
-
-  Future<void> _launchPurchase(String idItem) async {
-    //get the product
-    final response = await InAppPurchase.instance.queryProductDetails({idItem});
-    if (response.error != null) {
-      Telemetry.captureIssue('billing.query_failed');
-      showToast("error_trylater".tr());
-      return;
-    }
-    if (response.notFoundIDs.isNotEmpty) {
-      debugPrint("Product not found");
-      showToast("error_trylater".tr());
-      return;
-    }
-
-    //set the listener
-    final purchaseUpdated = InAppPurchase.instance.purchaseStream;
-
-    _paymentSubscription ??= purchaseUpdated.listen(
-      (List<PurchaseDetails> purchaseDetailsList) {
-        // handle  purchaseDetailsList
-        purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-          if (purchaseDetails.status == PurchaseStatus.pending) {
-          } else {
-            if (purchaseDetails.status == PurchaseStatus.error) {
-              showToast("error_trylater".tr());
-            } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-                purchaseDetails.status == PurchaseStatus.restored) {
-              showToast("${"thankyou".tr()} ❤️");
-            }
-            if (purchaseDetails.pendingCompletePurchase) {
-              await InAppPurchase.instance.completePurchase(purchaseDetails);
-            }
-          }
-        });
-      },
-      onDone: () {
-        showToast("${"thankyou".tr()} ❤️");
-        debugPrint("Close subscription");
-      },
-      onError: (dynamic error) {
-        debugPrint("Payment error: $error");
-        showToast("error_trylater".tr());
-      },
-    );
-
-    //show the dialog
-    final product = response.productDetails.firstOrNull;
-    if (product == null) {
-      showToast("error_trylater".tr());
-      return;
-    }
-    final purchaseParam = PurchaseParam(productDetails: product);
-
-    //One breadcrumb before the handoff. SLIMSOCIAL-5 is a crash inside Google's
-    //own ProxyBillingActivity.onCreate, which Dart cannot catch; this is what
-    //tells us on the next occurrence whether the app ever asked for it.
-    Telemetry.addBreadcrumb('billing.flow_launching');
-
-    //buyConsumable returns false when launchBillingFlow came back non-OK.
-    //Discarding it meant a declined flow looked identical to a successful one.
-    final started =
-        await InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
-    if (!started) {
-      Telemetry.captureIssue('billing.flow_not_started');
-      showToast("error_trylater".tr());
-    }
-
-    return;
   }
 
   Future<void> showTextInputDialog({
