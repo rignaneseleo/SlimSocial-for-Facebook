@@ -38,9 +38,11 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   }
 
   WebViewController _initWebViewController() {
-    var homepage = widget.initialUrl ?? kMessengerUrl;
+    var homepage = widget.initialUrl ?? kMessengerInboxUrl;
     if (!homepage.startsWith('http')) {
-      homepage = '$kMessengerUrl$homepage';
+      //this screen is on facebook.com now, so a path handed to it belongs to
+      //that host and not to messenger.com
+      homepage = '${Uri.parse(kMessengerInboxUrl).origin}$homepage';
     }
 
     final controller = WebViewController(
@@ -241,6 +243,8 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     final sheets = <String, String>{
       'slim-messenger-adapt': CustomCss.adaptMessengerPageCss.code,
       'slim-messenger-list-height': CustomCss.messengerListHeightCss.code,
+      'slim-messenger-fb-chrome':
+          CustomCss.hideFacebookChromeOnMessengerCss.code,
       'slim-user-sheet':
           CustomCss.buildMessengerCss(PrefController.getUserCustomCss()),
     };

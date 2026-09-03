@@ -20,14 +20,14 @@ class PrefController {
 
   /// Returns the user agent to use for [role].
   ///
-  /// Messenger is pinned to [kDesktopUserAgent]. A custom string or the
+  /// Messenger is pinned to [kFirefoxUserAgent]. A custom string or the
   /// desktop-site / basic-mode switches would otherwise send it a mobile
   /// agent, and Facebook answers that with the native-app interstitial.
   ///
   /// For the feed: a custom agent wins, then basic mode, then the desktop-site
   /// setting, then the mobile default.
   static String getUserAgent({UserAgentRole role = UserAgentRole.feed}) {
-    if (role == UserAgentRole.messenger) return kDesktopUserAgent;
+    if (role == UserAgentRole.messenger) return kFirefoxUserAgent;
 
     final customUserAgent = _getOverride(SpKeys.customUserAgent);
     if (customUserAgent != null) {

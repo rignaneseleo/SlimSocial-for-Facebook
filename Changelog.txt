@@ -1,3 +1,9 @@
+v26.09.03+128
+- Facebook's chat icon opens the built-in Messenger screen. It used to show a "Get the Messenger app" page (#338).
+- Messenger uses your Facebook login. No second sign-in on messenger.com (#326, #300, #257).
+- messenger.com and m.me links open in the Messenger screen with your Facebook session.
+- The Messenger screen sends a current Firefox agent; Facebook no longer shows "Your browser is no longer supported".
+
 v26.09.02+127
 - Share menu and Facebook's own dialogs show again: the install-bar rule hid every bottom sheet (#336, #339).
 - The chat icon in the top bar opens the Messenger screen instead of a "Get Messenger" page (#338).

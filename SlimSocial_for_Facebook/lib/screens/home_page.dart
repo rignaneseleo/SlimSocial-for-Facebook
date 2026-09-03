@@ -68,6 +68,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// depending on `shared_preferences` answering a write from its own cache.
   bool _askingForRating = false;
 
+  /// Set while a Messenger route is on the stack.
+  ///
+  /// The chat icon raises a navigation request per tap, and a second tap
+  /// landing while the route is being pushed would stack a second Messenger
+  /// screen on the first.
+  bool _messengerOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -320,6 +327,19 @@ class _HomePageState extends ConsumerState<HomePage> {
     //is collected as a breadcrumb on anything reported afterwards
     if (kDebugMode) debugPrint("onNavigationRequest: ${request.url}");
 
+    //the chat icon in the mobile top bar is an `fb-messenger://` deep link, not
+    //a link to /messages/, so it used to fall through to the Custom Tab — which
+    //cannot open the scheme — and leave the feed on Facebook's "Get the
+    //Messenger app" page (#338). See [messengerScreenTargetFor].
+    final messengerTarget = messengerScreenTargetFor(uri);
+    if (messengerTarget != null) {
+      await _openMessenger(
+        messengerTarget,
+        source: uri.scheme == 'fb-messenger' ? 'jewel' : 'link',
+      );
+      return NavigationDecision.prevent;
+    }
+
     //Facebook's mobile web opens its own video player through an `fb://` link
     //meant for the native app. Nothing below handles a scheme that is not http,
     //so these used to fall all the way through to the Custom Tab — which either
@@ -341,35 +361,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     }
 
-    //the chat icon in the mobile top bar links to facebook.com/messages, and
-    //with the mobile user agent that page is only a "Get Messenger"
-    //interstitial (#338). The Messenger screen shows the same conversations.
-    final messengerTarget = facebookMessagesToMessenger(uri);
-    if (messengerTarget != null) {
-      if (!mounted) return NavigationDecision.prevent;
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) =>
-              MessengerPage(initialUrl: messengerTarget.toString()),
-        ),
-      );
-      return NavigationDecision.prevent;
-    }
-
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
-      }
-    }
-
-    for (final other in kPermittedHostnamesMessenger) {
-      if (uri.host.endsWith(other)) {
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => MessengerPage(initialUrl: uri.toString()),
-          ),
-        );
-        return NavigationDecision.prevent;
       }
     }
 
@@ -379,6 +373,72 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (kDebugMode) debugPrint("Launching external url: ${request.url}");
     launchInAppUrl(context, request.url);
     return NavigationDecision.prevent;
+  }
+
+  /// Opens the Messenger screen on [target], and puts the feed back afterwards
+  /// if the tap that got here pushed a page onto it.
+  ///
+  /// [source] names what asked — 'jewel', 'link' or 'app_bar'. It is a fixed
+  /// slug this app chose, and it is all that is reported: the address itself is
+  /// the reader's browsing.
+  ///
+  /// Every hop is guarded, in the style of the callbacks above: this can be
+  /// suspended for as long as the Messenger screen stays open, and the feed can
+  /// be gone by the time it resumes.
+  Future<void> _openMessenger(Uri target, {required String source}) async {
+    if (_messengerOpen) return;
+
+    //Facebook answers a tap on the chat icon by pushing its "Get the Messenger
+    //app" page as an in-page history entry, without changing the document url.
+    //Counted before the route opens so the feed can be walked back off it.
+    final before = await _historyLength();
+    if (!mounted) return;
+
+    Telemetry.captureIssue('messenger.opened', data: {'source': source});
+
+    _messengerOpen = true;
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => MessengerPage(initialUrl: target.toString()),
+        ),
+      );
+    } finally {
+      _messengerOpen = false;
+    }
+    if (!mounted) return;
+
+    final after = await _historyLength();
+    if (!mounted) return;
+
+    //nothing was pushed, or the count could not be read: leave the page alone.
+    //A back step taken on a guess would throw away the post the reader was on.
+    if (before == null || after == null || after <= before) return;
+
+    if (await _controller.canGoBack()) {
+      if (!mounted) return;
+      await _controller.goBack();
+    }
+  }
+
+  /// `history.length` for the page in the feed, or null when it cannot be read.
+  ///
+  /// Every failure is one answer, because the number is only ever used to ask
+  /// whether an entry appeared: "unknown" has to mean "change nothing".
+  Future<int?> _historyLength() async {
+    try {
+      final result =
+          await _controller.runJavaScriptReturningResult('history.length');
+      //Android hands numbers back as a String, iOS as a num
+      if (result is num) return result.toInt();
+      return int.tryParse(result.toString());
+    }
+    //deliberately everything: a page that will not run script must not stop
+    //the Messenger screen from opening
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return null;
+    }
   }
 
   @override
@@ -469,10 +529,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (sp.getBool(SpKeys.enableMessenger) ?? true)
             IconButton(
               onPressed: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const MessengerPage(),
-                  ),
+                await _openMessenger(
+                  Uri.parse(kMessengerInboxUrl),
+                  source: 'app_bar',
                 );
               },
               icon: Image.asset('assets/icons/ic_messenger.png', height: 22),

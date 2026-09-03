@@ -68,13 +68,6 @@ void main() {
     });
   });
 
-  group('kDesktopUserAgent', () {
-    test('is a desktop agent, which is what Messenger needs', () {
-      expect(kDesktopUserAgent, contains('Macintosh'));
-      expect(kDesktopUserAgent, isNot(contains('Mobile')));
-    });
-  });
-
   group('kFirefoxUserAgent', () {
     test('is the 119 desktop feed agent, pinned verbatim', () {
       expect(
@@ -83,7 +76,17 @@ void main() {
       );
       expect(kFirefoxUserAgent, isNot(contains('Mobile')));
       expect(kFirefoxUserAgent, isNot(kMobileUserAgent));
-      expect(kFirefoxUserAgent, isNot(kDesktopUserAgent));
+    });
+  });
+
+  group('kMessengerInboxUrl', () {
+    test("is Facebook's own inbox, not messenger.com", () {
+      // The host is the whole point: messenger.com keeps its own cookies and
+      // asks for a second sign-in even when facebook.com is logged in (#326,
+      // #300). This address renders the same inbox on the session the feed
+      // already has.
+      expect(Uri.parse(kMessengerInboxUrl).host, 'www.facebook.com');
+      expect(kMessengerInboxUrl, endsWith('/messages/'));
     });
   });
 
