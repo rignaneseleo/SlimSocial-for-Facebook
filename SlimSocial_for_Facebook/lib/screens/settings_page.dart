@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -547,7 +548,23 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     }
   }
 
+  //Google Play is the only installer whose store app answers the billing
+  //handshake. Anything else leaves the flow half built.
+  static const String _playStoreInstaller = 'com.android.vending';
+
   Future<void> _launchPurchase(String idItem) async {
+    //SLIMSOCIAL-5: buyConsumable hands off to Google's own ProxyBillingActivity,
+    //which crashes on a null PendingIntent when the install did not come from
+    //the Play Store. The crash is inside that activity, so no Dart try/catch can
+    //reach it — the only defence is to never start the handoff. Every event on
+    //that crash carried isSideLoaded:true.
+    if (Platform.isAndroid &&
+        packageInfo.installerStore != _playStoreInstaller) {
+      Telemetry.captureIssue('billing.not_play_install');
+      showToast("error_trylater".tr());
+      return;
+    }
+
     //get the product
     final response = await InAppPurchase.instance.queryProductDetails({idItem});
     if (response.error != null) {
