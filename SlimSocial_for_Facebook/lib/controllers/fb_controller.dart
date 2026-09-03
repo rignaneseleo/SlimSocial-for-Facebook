@@ -42,6 +42,12 @@ class PrefController {
     return kMobileUserAgent;
   }
 
+  /// Whether external links should open in the system browser app.
+  ///
+  /// Read on every link open, so the setting takes effect with no restart.
+  static bool usesSystemBrowser() =>
+      sp.getBool(SpKeys.useSystemBrowser) ?? false;
+
   /// Text scaling for the webview, as a percentage of the page's own size.
   ///
   /// Clamped on the way out as well as on the way in, so a value written by an

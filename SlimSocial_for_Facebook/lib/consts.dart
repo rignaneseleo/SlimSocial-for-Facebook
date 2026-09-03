@@ -142,6 +142,10 @@ class SpKeys {
   /// Unset or false keeps the mobile default. Messenger ignores this key.
   static const String useDesktopSite = "use_desktop_site";
 
+  /// When true, external links open in the system browser app instead of
+  /// the in-app custom tab. Unset or false keeps the in-app tab.
+  static const String useSystemBrowser = "use_system_browser";
+
   /// Whether crash and health reporting may send anything. Unset means on.
   static const String telemetryEnabled = "telemetry_enabled";
 

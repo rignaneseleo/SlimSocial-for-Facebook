@@ -8,6 +8,8 @@
   "use_mbasic_desc": "It works better on older devices or slower connections",
   "use_desktop_site": "Use desktop site",
   "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
+  "use_system_browser": "Open links in the system browser",
+  "use_system_browser_desc": "External links open in your browser app instead of the in-app tab",
   "recent_first": "Show recent posts first",
   "hide_all_ads": "Hide ads",
   "style": "style",
