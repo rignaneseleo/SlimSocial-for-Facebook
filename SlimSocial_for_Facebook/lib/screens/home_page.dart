@@ -75,6 +75,22 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// screen on the first.
   bool _messengerOpen = false;
 
+  /// The feed's `history.length` as of the last url it actually moved to, and
+  /// the url that reading was done on.
+  ///
+  /// Read here rather than when the chat icon is tapped, because the tap is a
+  /// race this cannot win. Measured on a Pixel 10 Pro on 2026-09-03: Facebook
+  /// pushed its "Get the Messenger app" page with `pushState` about 10ms
+  /// *before* the `fb-messenger://` request arrived, so a count taken inside
+  /// [_openMessenger] already included the pushed entry and the feed was left
+  /// sitting on the interstitial. A second run had the two the other way round,
+  /// which is what makes it a race rather than an order to code against.
+  ///
+  /// A `pushState` keeps the url it was called on, so it never updates these;
+  /// a real navigation to a different url does.
+  int? _feedHistoryLength;
+  String? _feedHistoryUrl;
+
   @override
   void initState() {
     super.initState();
@@ -176,10 +192,20 @@ class _HomePageState extends ConsumerState<HomePage> {
             if (!mounted) return;
             if (kDebugMode) debugPrint(url);
 
+            await _rememberHistory(url);
+            if (!mounted) return;
+
             //a failed main-frame load finishes like any other document on
             //Android, and asking for a rating over the error page is the
             //one-star review this gate exists to avoid
             if (loadCompleted) unawaited(_maybeAskForRating());
+          },
+          //Facebook's touch layout moves between pages in-document, and no
+          //load finishes for those: without this the remembered count would
+          //still describe whatever page the app last loaded outright
+          onUrlChange: (change) {
+            final url = change.url;
+            if (url != null) unawaited(_rememberHistory(url));
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -389,9 +415,15 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (_messengerOpen) return;
 
     //Facebook answers a tap on the chat icon by pushing its "Get the Messenger
-    //app" page as an in-page history entry, without changing the document url.
-    //Counted before the route opens so the feed can be walked back off it.
-    final before = await _historyLength();
+    //app" page as an in-page history entry, without changing the document url,
+    //and the feed has to be walked back off it afterwards. The count to compare
+    //against is the one from before that push, and reading it here is too late:
+    //measured on a Pixel 10 Pro on 2026-09-03 the push landed about 10ms
+    //*before* the `fb-messenger://` request did, so a fresh read already
+    //counted it and the feed stayed on the interstitial. [_rememberHistory]
+    //holds the value from the last real url change instead; reading it now is
+    //only the fallback for a feed that has not had one yet.
+    final before = _feedHistoryLength ?? await _historyLength();
     if (!mounted) return;
 
     Telemetry.captureIssue('messenger.opened', data: {'source': source});
@@ -419,6 +451,26 @@ class _HomePageState extends ConsumerState<HomePage> {
       if (!mounted) return;
       await _controller.goBack();
     }
+  }
+
+  /// Records the feed's history length for [url], at most once per url.
+  ///
+  /// Ignoring a url already seen is what makes this survive the race described
+  /// on [_feedHistoryLength]: Facebook's interstitial is pushed under the url
+  /// the feed is already on, so it never overwrites the count, and the stored
+  /// number keeps describing the page as it was before the chat icon was
+  /// tapped.
+  Future<void> _rememberHistory(String url) async {
+    if (url == _feedHistoryUrl) return;
+
+    //claimed before the await, so a second callback for the same url cannot
+    //race in and read the count twice
+    _feedHistoryUrl = url;
+
+    final length = await _historyLength();
+    if (!mounted) return;
+
+    _feedHistoryLength = length;
   }
 
   /// `history.length` for the page in the feed, or null when it cannot be read.
