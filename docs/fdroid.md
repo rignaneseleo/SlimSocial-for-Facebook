@@ -75,7 +75,7 @@ creation. There are two workflows, identical apart from four things:
 | Post-clone script | none | `cd "$CM_BUILD_DIR/SlimSocial_for_Facebook" && ./scripts/fdroid_prepare.sh` |
 | `SENTRY_DSN` | set | **absent** |
 | Google Play publishing | on | off |
-| `APK_SUFFIX` env var | empty | `-fdroid` |
+| APK name in the post-build script | `..._v<tag>.apk` | `..._v<tag>-fdroid.apk` |
 
 Putting the strip in the *post-clone* script matters: it has to happen before
 Codemagic resolves dependencies, so that `flutter packages get` never sees the
@@ -84,31 +84,39 @@ proprietary packages and the plugin registrant is generated without them.
 Leaving `SENTRY_DSN` out of the F-Droid workflow entirely, rather than having a
 script decline to pass it, means that build cannot carry a DSN by accident.
 
-Each workflow ends with the same post-build script, which attaches its APK to
-the GitHub release for the tag:
+Each workflow ends with this post-build script, which attaches its APK to the
+GitHub release for the tag. Only the `APK=` line differs between the two — it
+is `-fdroid` in the F-Droid workflow and absent in the Play one:
 
 ```bash
 set -euo pipefail
 [ -n "${CM_TAG:-}" ] || { echo "not a tag build, skipping"; exit 0; }
 cd "$CM_BUILD_DIR/SlimSocial_for_Facebook/build/app/outputs/flutter-apk"
-mv app-release.apk "SlimSocial_for_Facebook_v${CM_TAG}${APK_SUFFIX:-}.apk"
+APK="SlimSocial_for_Facebook_v${CM_TAG}-fdroid.apk"
+mv app-release.apk "$APK"
 gh release view "$CM_TAG" >/dev/null 2>&1 || \
   gh release create "$CM_TAG" --title "SlimSocial for Facebook $CM_TAG" --generate-notes || true
-gh release upload "$CM_TAG" "SlimSocial_for_Facebook_v${CM_TAG}${APK_SUFFIX:-}.apk" --clobber
+gh release upload "$CM_TAG" "$APK" --clobber
 ```
 
 The rename is needed because both workflows produce `app-release.apk`, so the
 variant has to be written into the file name before upload.
+
+The name is written out in each script rather than pulled from a shared
+environment variable on purpose. Codemagic groups its variables, and a suffix
+set in a group both workflows use would put `-fdroid` on both APKs.
 
 The `view || create || true` shape is needed because the two workflows run in
 parallel on the same tag. Whichever finishes first creates the release; the
 second either finds it, or loses the race on `create` and still succeeds at
 `upload --clobber`. Both orders work.
 
-`gh` reads `GH_TOKEN`. Codemagic's GitHub app connection lets it clone the
-repository and report build statuses, but does not hand build scripts a usable
-token, so `GH_TOKEN` has to be added as a secret environment variable holding a
-personal access token with write access to the repository.
+The token comes from `GITHUB_TOKEN`, a secret environment variable on both
+workflows holding a personal access token with write access to the repository.
+Codemagic's GitHub app connection lets it clone the repository and report build
+statuses, but does not hand build scripts a usable token, so this one has to be
+added by hand. (`gh` checks `GH_TOKEN` first and falls back to `GITHUB_TOKEN`,
+so either name works.)
 
 ## For the fdroiddata recipe
 
