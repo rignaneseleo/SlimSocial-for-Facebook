@@ -92,10 +92,13 @@ void main() {
       expect(feed, kMobileUserAgent);
     });
 
-    test('gives Messenger the desktop agent', () {
+    test('gives Messenger the current desktop Firefox agent', () {
+      // Desktop, because the inbox only ships its full markup to a desktop
+      // agent. Current, because on the 2018 Chrome string this used to send,
+      // facebook.com/messages/ carries a "browser no longer supported" banner.
       expect(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
-        kDesktopUserAgent,
+        kFirefoxUserAgent,
       );
     });
 
@@ -111,7 +114,7 @@ void main() {
       );
       expect(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
-        kDesktopUserAgent,
+        kFirefoxUserAgent,
       );
     });
 
@@ -127,7 +130,7 @@ void main() {
       );
       expect(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
-        kDesktopUserAgent,
+        kFirefoxUserAgent,
       );
     });
 
@@ -141,7 +144,7 @@ void main() {
       );
       expect(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
-        kDesktopUserAgent,
+        kFirefoxUserAgent,
       );
     });
 

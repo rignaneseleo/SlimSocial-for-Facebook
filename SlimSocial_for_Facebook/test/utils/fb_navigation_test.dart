@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 
 bool isAuth(String url) => isFacebookAuthUrl(Uri.parse(url));
@@ -147,66 +148,116 @@ void main() {
     });
   });
 
-  group('facebookMessagesToMessenger', () {
-    Uri? to(String url) => facebookMessagesToMessenger(Uri.parse(url));
+  group('messengerScreenTargetFor', () {
+    Uri? to(String url) => messengerScreenTargetFor(Uri.parse(url));
 
-    // The chat icon in Facebook's mobile top bar links to /messages/ on
-    // facebook.com, and with a mobile user agent that page is nothing but a
-    // "Get Messenger" install interstitial — the same one Firefox for Android
-    // shows (#338). The app already has a Messenger screen that loads
-    // messenger.com with a desktop agent; these addresses belong there.
-    test('the inbox goes to the Messenger screen', () {
-      expect(
-        to('https://m.facebook.com/messages/'),
-        Uri.parse('https://www.messenger.com/'),
-      );
-      expect(
-        to('https://touch.facebook.com/messages'),
-        Uri.parse('https://www.messenger.com/'),
-      );
+    final inbox = Uri.parse(kMessengerInboxUrl);
+    Uri thread(String id) => Uri.parse('${kMessengerInboxUrl}t/$id');
+
+    group('the chat icon in the top bar', () {
+      // Measured on a Pixel 10 Pro on 2026-09-03: the icon does not link to
+      // /messages/ at all. It asks for this custom scheme, the document url
+      // never changes, and nothing here used to match it — so the request fell
+      // through to the Custom Tab, which cannot open a scheme, and the feed was
+      // left on Facebook's "Get the Messenger app" page (#338).
+      test('the observed jewel deep link opens the inbox', () {
+        expect(
+          to('fb-messenger://threads?vcuid=100000000000000'
+              '&is_msite_sso_eligible=1&entry_point=jewel'
+              '&browser_name=Firefox&mb=AbCdEf123&src=mtouch_diode'),
+          inbox,
+        );
+      });
+
+      test('a deep link naming a thread keeps its id', () {
+        expect(to('fb-messenger://thread/123'), thread('123'));
+        expect(to('fb-messenger://user/123'), thread('123'));
+        expect(to('fb-messenger://user-thread/123'), thread('123'));
+        expect(to('fb-messenger://user/someone'), thread('someone'));
+      });
+
+      test('a deep link with no thread to name opens the inbox', () {
+        // The host says "thread" but there is no id behind it: guessing one
+        // would open somebody else's conversation.
+        expect(to('fb-messenger://thread'), inbox);
+        expect(to('fb-messenger://user/'), inbox);
+        expect(to('fb-messenger://compose'), inbox);
+        expect(to('fb-messenger://'), inbox);
+      });
     });
 
-    test('the jewel entry point and its query are dropped', () {
-      expect(
-        to('https://m.facebook.com/messages/?entrypoint=jewel&folder=inbox'),
-        Uri.parse('https://www.messenger.com/'),
-      );
+    group('facebook.com messages addresses', () {
+      // Same rules as the version this replaced, but pointed at facebook.com
+      // rather than messenger.com: messenger.com keeps its own cookies and
+      // asks for a second sign-in (#326, #300), while /messages/ renders the
+      // whole inbox on the session the feed is already using.
+      test('the inbox', () {
+        expect(to('https://m.facebook.com/messages/'), inbox);
+        expect(to('https://touch.facebook.com/messages'), inbox);
+      });
+
+      test('the jewel entry point and its query are dropped', () {
+        expect(
+          to('https://m.facebook.com/messages/?entrypoint=jewel&folder=inbox'),
+          inbox,
+        );
+      });
+
+      test('a thread keeps its id', () {
+        expect(to('https://m.facebook.com/messages/t/123'), thread('123'));
+        expect(to('https://m.facebook.com/messages/t/123/'), thread('123'));
+      });
+
+      test('the legacy read view opens the inbox, not a guessed thread', () {
+        // `tid=cid.c.A:B` is not a thread id in the /t/ form.
+        expect(
+          to('https://m.facebook.com/messages/read/?tid=cid.c.1:2'),
+          inbox,
+        );
+      });
+
+      test('only the exact /messages segment matches', () {
+        expect(to('https://m.facebook.com/messagesabc/'), isNull);
+        expect(to('https://m.facebook.com/home.php'), isNull);
+        expect(to('https://m.facebook.com/'), isNull);
+        expect(to('https://m.facebook.com/groups/messages/'), isNull);
+      });
+
+      test('mbasic is left alone: its messages page renders on its own', () {
+        expect(to('https://mbasic.facebook.com/messages/'), isNull);
+      });
     });
 
-    test('a thread keeps its id', () {
-      expect(
-        to('https://m.facebook.com/messages/t/1234567890'),
-        Uri.parse('https://www.messenger.com/t/1234567890'),
-      );
-      expect(
-        to('https://m.facebook.com/messages/t/1234567890/'),
-        Uri.parse('https://www.messenger.com/t/1234567890'),
-      );
+    group('messenger.com and m.me links', () {
+      // These used to open the Messenger screen on messenger.com itself, which
+      // is the second sign-in (#326, #300, #257). Mapped onto the facebook.com
+      // inbox they open on the session the user already has.
+      test('messenger.com goes to the inbox', () {
+        expect(to('https://www.messenger.com/'), inbox);
+        expect(to('https://messenger.com'), inbox);
+        expect(to('https://www.messenger.com/marketplace/'), inbox);
+      });
+
+      test('a messenger.com thread keeps its id', () {
+        expect(to('https://www.messenger.com/t/123'), thread('123'));
+        expect(to('https://www.messenger.com/t/123/'), thread('123'));
+      });
+
+      test('m.me goes to the inbox', () {
+        expect(to('https://m.me/'), inbox);
+      });
+
+      test('an m.me short link keeps the name it points at', () {
+        expect(to('https://m.me/someone'), thread('someone'));
+      });
     });
 
-    test('the legacy read view opens the inbox, not a guessed thread', () {
-      // `tid=cid.c.A:B` is not a messenger.com thread id.
-      expect(
-        to('https://m.facebook.com/messages/read/?tid=cid.c.1:2'),
-        Uri.parse('https://www.messenger.com/'),
-      );
-    });
-
-    test('only the exact /messages segment matches', () {
-      expect(to('https://m.facebook.com/messagesabc/'), isNull);
-      expect(to('https://m.facebook.com/home.php'), isNull);
-      expect(to('https://m.facebook.com/'), isNull);
-      expect(to('https://m.facebook.com/groups/messages/'), isNull);
-    });
-
-    test('other hosts are not touched', () {
-      expect(to('https://www.messenger.com/t/1'), isNull);
+    test('everything else is left to the feed', () {
       expect(to('https://example.com/messages/'), isNull);
-    });
-
-    test('mbasic is left alone: its messages page renders without Messenger',
-        () {
-      expect(to('https://mbasic.facebook.com/messages/'), isNull);
+      expect(to('https://youtube.com/watch?v=1'), isNull);
+      expect(to('https://touch.facebook.com/home.php'), isNull);
+      expect(to('fb://reel/123'), isNull);
+      expect(to('about:blank'), isNull);
     });
   });
 }

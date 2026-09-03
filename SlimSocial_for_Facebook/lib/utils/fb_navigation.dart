@@ -115,40 +115,87 @@ MessengerNavAction messengerNavigationFor(Uri uri) {
   return MessengerNavAction.openExternal;
 }
 
-/// Where the Messenger screen should open for a facebook.com messages address,
-/// or null when [uri] is not one.
+/// Hosts an `fb-messenger://` link uses when it names one conversation.
 ///
-/// The chat icon in Facebook's mobile top bar links to `/messages/` on
-/// facebook.com, and with a mobile user agent that page is nothing but a "Get
-/// Messenger" install interstitial — Firefox for Android shows the same one
-/// (#338). The conversations themselves are served to a desktop agent on
-/// messenger.com, which is exactly what the Messenger screen loads, so these
-/// addresses are redirected there instead of being rendered in the feed.
+/// Anything else the scheme carries — `threads`, `compose`, a host this does
+/// not know — opens the inbox rather than a guessed conversation.
+const Set<String> _kMessengerThreadHosts = {
+  'thread',
+  'user',
+  'user-thread',
+};
+
+/// Where the Messenger screen should open for [uri], or null when [uri] is not
+/// a Messenger address at all.
 ///
-/// `/messages/t/<id>` keeps its thread: messenger.com uses the same ids. The
-/// older `/messages/read/?tid=cid.c.A:B` form does not translate, so it and
-/// every other variant open the inbox.
+/// ## The chat icon is not a link
+///
+/// Measured on a device on 2026-09-03: tapping the chat icon in Facebook's
+/// mobile top bar does not navigate to `/messages/`. The page asks for
+/// `fb-messenger://threads?…&entry_point=jewel&…` and the document url never
+/// changes. That is why matching `/messages/` alone did not fix #338 — nothing
+/// matched, the request fell through to the Custom Tab, which cannot open a
+/// custom scheme, and the feed was left on a "Get the Messenger app" page.
+/// The request does reach the navigation delegate, so it is caught here.
+///
+/// ## Everything lands on facebook.com, not messenger.com
+///
+/// messenger.com keeps its own cookies and asks for a second sign-in even
+/// while facebook.com is logged in (#326, #300, #257). [kMessengerInboxUrl] is
+/// the same inbox on the session the feed already has, so messenger.com and
+/// `m.me` links are mapped onto it too.
+///
+/// A conversation id survives every form, because `/messages/t/<id>` takes the
+/// same ids messenger.com does. The older `/messages/read/?tid=cid.c.A:B` form
+/// does not translate, so it opens the inbox rather than a wrong thread.
 ///
 /// Basic mode is left alone: `mbasic.facebook.com/messages/` still renders a
 /// usable inbox on its own, and the whole point of that mode is not loading
 /// the heavier surfaces.
-Uri? facebookMessagesToMessenger(Uri uri) {
+Uri? messengerScreenTargetFor(Uri uri) {
+  final segments =
+      uri.pathSegments.where((segment) => segment.isNotEmpty).toList();
   final host = uri.host.toLowerCase();
+
+  if (uri.scheme == 'fb-messenger') {
+    if (_kMessengerThreadHosts.contains(host) && segments.isNotEmpty) {
+      return _messengerThread(segments.first);
+    }
+    return _messengerInbox();
+  }
+
+  //an m.me link is a page's short link, and the name in it is what the thread
+  //is addressed by
+  if (host == 'm.me') {
+    if (segments.length == 1) return _messengerThread(segments.first);
+    return _messengerInbox();
+  }
+
+  if (host == 'messenger.com' || host.endsWith('.messenger.com')) {
+    if (segments.length >= 2 && segments.first.toLowerCase() == 't') {
+      return _messengerThread(segments[1]);
+    }
+    return _messengerInbox();
+  }
+
   if (host == 'mbasic.facebook.com') return null;
 
   final isFacebook = kPermittedHostnamesFb
       .any((other) => host == other || host.endsWith('.$other'));
   if (!isFacebook) return null;
 
-  final segments =
-      uri.pathSegments.where((segment) => segment.isNotEmpty).toList();
   if (segments.isEmpty || segments.first.toLowerCase() != 'messages') {
     return null;
   }
 
   if (segments.length >= 3 && segments[1].toLowerCase() == 't') {
-    return Uri.parse('$kMessengerUrl/t/${segments[2]}');
+    return _messengerThread(segments[2]);
   }
 
-  return Uri.parse('$kMessengerUrl/');
+  return _messengerInbox();
 }
+
+Uri _messengerInbox() => Uri.parse(kMessengerInboxUrl);
+
+//[kMessengerInboxUrl] ends in a slash, so the thread id appends directly
+Uri _messengerThread(String id) => Uri.parse('${kMessengerInboxUrl}t/$id');

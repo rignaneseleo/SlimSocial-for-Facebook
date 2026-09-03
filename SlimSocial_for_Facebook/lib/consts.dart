@@ -1,7 +1,19 @@
 const String kFacebookHomeUrl = 'https://facebook.com/home.php';
 const String kTouchFacebookHomeUrl = 'https://touch.facebook.com/home.php';
 const String kFacebookHomeBasicUrl = 'https://mbasic.facebook.com/home.php';
+
+/// Messenger's own site. Nothing loads it any more — see [kMessengerInboxUrl]
+/// — and it is kept only as the name of a host the app knows about.
 const String kMessengerUrl = 'https://www.messenger.com';
+
+/// Facebook's own Messenger inbox. What the Messenger screen loads.
+///
+/// messenger.com has its own cookies, so it asks for a second sign-in even
+/// while facebook.com is logged in — the app's most reported complaint (#326,
+/// #300, #257). This address is the same inbox on the session the feed is
+/// already using: measured on a device with the desktop agent it renders the
+/// chats list, the compose button and the threads, with no login form.
+const String kMessengerInboxUrl = 'https://www.facebook.com/messages/';
 
 const List<String> kPermittedHostnamesFb = [
   "facebook.com",
@@ -38,18 +50,18 @@ const String suffixDefault = "?sk=h_nor";
 const String kMobileUserAgent =
     "Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0";
 
-/// Desktop Chrome on macOS. Messenger only ships its full markup to a desktop
-/// agent; on a mobile one it pushes the native-app interstitial instead.
-const String kDesktopUserAgent =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36";
-
-/// Desktop Firefox on Windows. The feed agent in 26.08.05+119.
+/// Desktop Firefox on Windows. The Messenger screen's agent, and the feed's
+/// "Desktop site" option.
 ///
 /// Facebook serves the desktop site for this string: in-page chat and the
-/// share menu work, and the page is heavier. It is the Settings "Desktop site"
-/// option, not the default — the default is [kMobileUserAgent] so injected
-/// selectors keep matching the touch layout.
+/// share menu work, and the page is heavier. On the feed it is the Settings
+/// "Desktop site" option, not the default — the default is [kMobileUserAgent]
+/// so injected selectors keep matching the touch layout.
+///
+/// The Messenger screen has no choice about it. [kMessengerInboxUrl] only
+/// ships its full markup to a desktop agent, and the agent has to be a current
+/// one: on the 2018 desktop Chrome string this replaced, Facebook adds a "Your
+/// browser is no longer supported" banner to the inbox.
 const String kFirefoxUserAgent =
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0";
 

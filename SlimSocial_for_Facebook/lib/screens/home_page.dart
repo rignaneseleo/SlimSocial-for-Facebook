@@ -68,6 +68,29 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// depending on `shared_preferences` answering a write from its own cache.
   bool _askingForRating = false;
 
+  /// Set while a Messenger route is on the stack.
+  ///
+  /// The chat icon raises a navigation request per tap, and a second tap
+  /// landing while the route is being pushed would stack a second Messenger
+  /// screen on the first.
+  bool _messengerOpen = false;
+
+  /// The feed's `history.length` as of the last url it actually moved to, and
+  /// the url that reading was done on.
+  ///
+  /// Read here rather than when the chat icon is tapped, because the tap is a
+  /// race this cannot win. Measured on a Pixel 10 Pro on 2026-09-03: Facebook
+  /// pushed its "Get the Messenger app" page with `pushState` about 10ms
+  /// *before* the `fb-messenger://` request arrived, so a count taken inside
+  /// [_openMessenger] already included the pushed entry and the feed was left
+  /// sitting on the interstitial. A second run had the two the other way round,
+  /// which is what makes it a race rather than an order to code against.
+  ///
+  /// A `pushState` keeps the url it was called on, so it never updates these;
+  /// a real navigation to a different url does.
+  int? _feedHistoryLength;
+  String? _feedHistoryUrl;
+
   @override
   void initState() {
     super.initState();
@@ -169,10 +192,20 @@ class _HomePageState extends ConsumerState<HomePage> {
             if (!mounted) return;
             if (kDebugMode) debugPrint(url);
 
+            await _rememberHistory(url);
+            if (!mounted) return;
+
             //a failed main-frame load finishes like any other document on
             //Android, and asking for a rating over the error page is the
             //one-star review this gate exists to avoid
             if (loadCompleted) unawaited(_maybeAskForRating());
+          },
+          //Facebook's touch layout moves between pages in-document, and no
+          //load finishes for those: without this the remembered count would
+          //still describe whatever page the app last loaded outright
+          onUrlChange: (change) {
+            final url = change.url;
+            if (url != null) unawaited(_rememberHistory(url));
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -320,6 +353,19 @@ class _HomePageState extends ConsumerState<HomePage> {
     //is collected as a breadcrumb on anything reported afterwards
     if (kDebugMode) debugPrint("onNavigationRequest: ${request.url}");
 
+    //the chat icon in the mobile top bar is an `fb-messenger://` deep link, not
+    //a link to /messages/, so it used to fall through to the Custom Tab — which
+    //cannot open the scheme — and leave the feed on Facebook's "Get the
+    //Messenger app" page (#338). See [messengerScreenTargetFor].
+    final messengerTarget = messengerScreenTargetFor(uri);
+    if (messengerTarget != null) {
+      await _openMessenger(
+        messengerTarget,
+        source: uri.scheme == 'fb-messenger' ? 'jewel' : 'link',
+      );
+      return NavigationDecision.prevent;
+    }
+
     //Facebook's mobile web opens its own video player through an `fb://` link
     //meant for the native app. Nothing below handles a scheme that is not http,
     //so these used to fall all the way through to the Custom Tab — which either
@@ -341,35 +387,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     }
 
-    //the chat icon in the mobile top bar links to facebook.com/messages, and
-    //with the mobile user agent that page is only a "Get Messenger"
-    //interstitial (#338). The Messenger screen shows the same conversations.
-    final messengerTarget = facebookMessagesToMessenger(uri);
-    if (messengerTarget != null) {
-      if (!mounted) return NavigationDecision.prevent;
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) =>
-              MessengerPage(initialUrl: messengerTarget.toString()),
-        ),
-      );
-      return NavigationDecision.prevent;
-    }
-
     for (final other in kPermittedHostnamesFb) {
       if (uri.host.endsWith(other)) {
         return NavigationDecision.navigate;
-      }
-    }
-
-    for (final other in kPermittedHostnamesMessenger) {
-      if (uri.host.endsWith(other)) {
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => MessengerPage(initialUrl: uri.toString()),
-          ),
-        );
-        return NavigationDecision.prevent;
       }
     }
 
@@ -379,6 +399,105 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (kDebugMode) debugPrint("Launching external url: ${request.url}");
     launchInAppUrl(context, request.url);
     return NavigationDecision.prevent;
+  }
+
+  /// Opens the Messenger screen on [target], and puts the feed back afterwards
+  /// if the tap that got here pushed a page onto it.
+  ///
+  /// [source] names what asked — 'jewel', 'link' or 'app_bar'. It is a fixed
+  /// slug this app chose, and it is all that is reported: the address itself is
+  /// the reader's browsing.
+  ///
+  /// Every hop is guarded, in the style of the callbacks above: this can be
+  /// suspended for as long as the Messenger screen stays open, and the feed can
+  /// be gone by the time it resumes.
+  Future<void> _openMessenger(Uri target, {required String source}) async {
+    if (_messengerOpen) return;
+
+    //Facebook answers a tap on the chat icon by pushing its "Get the Messenger
+    //app" page as an in-page history entry, without changing the document url,
+    //and the feed has to be walked back off it afterwards. The count to compare
+    //against is the one from before that push, and reading it here is too late:
+    //measured on a Pixel 10 Pro on 2026-09-03 the push landed about 10ms
+    //*before* the `fb-messenger://` request did, so a fresh read already
+    //counted it and the feed stayed on the interstitial. [_rememberHistory]
+    //holds the value from the last real url change instead; reading it now is
+    //only the fallback for a feed that has not had one yet.
+    final before = _feedHistoryLength ?? await _historyLength();
+    if (!mounted) return;
+
+    Telemetry.captureIssue('messenger.opened', data: {'source': source});
+
+    _messengerOpen = true;
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => MessengerPage(initialUrl: target.toString()),
+        ),
+      );
+    } finally {
+      _messengerOpen = false;
+    }
+    if (!mounted) return;
+
+    final after = await _historyLength();
+    if (!mounted) return;
+
+    //the count could not be read, or nothing moved: leave the page alone. A
+    //back step taken on a guess would throw away the post the reader was on.
+    //
+    //Any change counts, in either direction. `history.length` can also shrink
+    //on a jewel tap: a reader who has gone back off a post sits at position 1
+    //of 2, and Facebook's pushState truncates the forward entry before pushing
+    //its own, so the length can hold or drop instead of rising. A shrink is
+    //still proof that a page was pushed on top of the one that was remembered,
+    //and stepping back off it is right.
+    if (before == null || after == null || after == before) return;
+
+    if (await _controller.canGoBack()) {
+      if (!mounted) return;
+      await _controller.goBack();
+    }
+  }
+
+  /// Records the feed's history length for [url], at most once per url.
+  ///
+  /// Ignoring a url already seen is what makes this survive the race described
+  /// on [_feedHistoryLength]: Facebook's interstitial is pushed under the url
+  /// the feed is already on, so it never overwrites the count, and the stored
+  /// number keeps describing the page as it was before the chat icon was
+  /// tapped.
+  Future<void> _rememberHistory(String url) async {
+    if (url == _feedHistoryUrl) return;
+
+    //claimed before the await, so a second callback for the same url cannot
+    //race in and read the count twice
+    _feedHistoryUrl = url;
+
+    final length = await _historyLength();
+    if (!mounted) return;
+
+    _feedHistoryLength = length;
+  }
+
+  /// `history.length` for the page in the feed, or null when it cannot be read.
+  ///
+  /// Every failure is one answer, because the number is only ever used to ask
+  /// whether an entry appeared: "unknown" has to mean "change nothing".
+  Future<int?> _historyLength() async {
+    try {
+      final result =
+          await _controller.runJavaScriptReturningResult('history.length');
+      //Android hands numbers back as a String, iOS as a num
+      if (result is num) return result.toInt();
+      return int.tryParse(result.toString());
+    }
+    //deliberately everything: a page that will not run script must not stop
+    //the Messenger screen from opening
+    // ignore: avoid_catches_without_on_clauses
+    catch (_) {
+      return null;
+    }
   }
 
   @override
@@ -469,10 +588,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (sp.getBool(SpKeys.enableMessenger) ?? true)
             IconButton(
               onPressed: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => const MessengerPage(),
-                  ),
+                await _openMessenger(
+                  Uri.parse(kMessengerInboxUrl),
+                  source: 'app_bar',
                 );
               },
               icon: Image.asset('assets/icons/ic_messenger.png', height: 22),

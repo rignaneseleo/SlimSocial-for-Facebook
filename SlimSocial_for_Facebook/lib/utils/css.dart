@@ -356,6 +356,23 @@ class CustomCss {
         '[role="grid"] { min-height: 0 !important; max-height: none !important; }',
   );
 
+  /// Hides Facebook's own top bar on the Messenger screen.
+  ///
+  /// The screen loads the inbox from facebook.com now, so the page arrives
+  /// wrapped in the full site chrome: `[role="banner"]` is the blue bar with
+  /// the search box and the jewels. On the 349px viewport a phone gives this
+  /// app that is a strip of the conversation list spent on navigation nobody
+  /// can reach from here, and the app bar above it already carries Close.
+  ///
+  /// Deliberately not in [cssList]: structural, like [hideAppUpsellCss], not a
+  /// preference.
+  static MyCss hideFacebookChromeOnMessengerCss = MyCss(
+    key: 'hide_facebook_chrome_messenger',
+    description: 'Hide the Facebook top bar on the Messenger screen',
+    defaultEnabled: true,
+    code: '[role="banner"] { display: none !important; }',
+  );
+
   static MyCss adaptMessengerPageCss = MyCss(
     key: 'adaptMessenger',
     description: 'Adapt messenger',
