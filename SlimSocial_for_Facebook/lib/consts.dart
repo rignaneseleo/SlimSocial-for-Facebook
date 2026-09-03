@@ -91,6 +91,10 @@ const String kGithubProjectUrl =
 const String kPlayStoreUrl =
     "https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";
 
+/// Where donations go when the Play Store billing flow is not available.
+/// The settings page falls back to this on a non-Play install.
+const String kPayPalDonationUrl = "https://www.paypal.me/LeonardoRignanese";
+
 /// Keys used to store settings in [SharedPreferences].
 ///
 /// These literals live on the user's device: renaming a *value* here silently

@@ -561,7 +561,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     if (Platform.isAndroid &&
         packageInfo.installerStore != _playStoreInstaller) {
       Telemetry.captureIssue('billing.not_play_install');
-      showToast("error_trylater".tr());
+      //these users still want to donate, so send them to PayPal instead
+      await launchUrl(Uri.parse(kPayPalDonationUrl));
       return;
     }
 
