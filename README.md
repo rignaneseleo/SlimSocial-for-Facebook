@@ -35,6 +35,16 @@ To get started with SlimSocial for Facebook, you can download the app from the s
 
 SlimSocial for Facebook is an open-source project, and contributions are welcome! If you would like to contribute to the project, feel free to submit a pull request.
 
+### Building
+
+```bash
+cd SlimSocial_for_Facebook
+flutter pub get
+flutter build apk
+```
+
+That is the Google Play build. For the free-software build — the one F-Droid ships, with Play Billing and the Play rating sheet compiled out — run `./scripts/fdroid_prepare.sh` first. See [docs/fdroid.md](docs/fdroid.md).
+
 ## Translations
 
 [![Crowdin](https://badges.crowdin.net/slimsocial/localized.svg)](https://crowdin.com/project/slimsocial)

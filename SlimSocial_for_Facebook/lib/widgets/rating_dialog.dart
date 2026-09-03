@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:in_app_review/in_app_review.dart';
+import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
@@ -52,10 +52,14 @@ class _RatingDialogState extends State<RatingDialog> {
 
     if (stars >= RatingDialog.kPositiveStars) {
       Navigator.of(context).pop();
-      final review = InAppReview.instance;
-      if (await review.isAvailable()) {
-        await review.requestReview();
+      //no store sheet in an F-Droid build, so the thanks is all there is to
+      //give back; showing it unconditionally would double up on Play, where
+      //the sheet already appears
+      if (!storeServices.canRequestReview) {
+        showToast('rate_thanks'.tr());
+        return;
       }
+      await storeServices.requestReview();
       return;
     }
 

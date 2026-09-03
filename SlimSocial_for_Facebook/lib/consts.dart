@@ -90,9 +90,12 @@ const String kGithubProjectUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook";
 const String kPlayStoreUrl =
     "https://play.google.com/store/apps/details?id=it.rignanese.leo.slimfacebook";
+const String kFDroidStoreUrl =
+    "https://f-droid.org/packages/it.rignanese.leo.slimfacebook/";
 
-/// Where donations go when the Play Store billing flow is not available.
-/// The settings page falls back to this on a non-Play install.
+/// Where donations go when in-app billing is not available: a non-Play
+/// install, or the F-Droid build, which has no billing compiled in at all.
+/// Same address as the `funding:` entry in pubspec.yaml.
 const String kPayPalDonationUrl = "https://www.paypal.me/LeonardoRignanese";
 
 /// Keys used to store settings in [SharedPreferences].
