@@ -443,9 +443,16 @@ class _HomePageState extends ConsumerState<HomePage> {
     final after = await _historyLength();
     if (!mounted) return;
 
-    //nothing was pushed, or the count could not be read: leave the page alone.
-    //A back step taken on a guess would throw away the post the reader was on.
-    if (before == null || after == null || after <= before) return;
+    //the count could not be read, or nothing moved: leave the page alone. A
+    //back step taken on a guess would throw away the post the reader was on.
+    //
+    //Any change counts, in either direction. `history.length` can also shrink
+    //on a jewel tap: a reader who has gone back off a post sits at position 1
+    //of 2, and Facebook's pushState truncates the forward entry before pushing
+    //its own, so the length can hold or drop instead of rising. A shrink is
+    //still proof that a page was pushed on top of the one that was remembered,
+    //and stepping back off it is right.
+    if (before == null || after == null || after == before) return;
 
     if (await _controller.canGoBack()) {
       if (!mounted) return;
