@@ -417,9 +417,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// if the tap that got here pushed a page onto it.
   ///
   /// [source] names what asked — 'jewel', 'link', 'app_bar' or 'startup'. It
-  /// is a fixed
-  /// slug this app chose, and it is all that is reported: the address itself is
-  /// the reader's browsing.
+  /// is a fixed slug this app chose, and it is all that is reported: the
+  /// address itself is the reader's browsing.
   ///
   /// Every hop is guarded, in the style of the callbacks above: this can be
   /// suspended for as long as the Messenger screen stays open, and the feed can
