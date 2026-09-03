@@ -20,6 +20,15 @@ Recently, I updated the app with a new codebase using Flutter, making it more ef
 
 - Hide ads: SlimSocial for Facebook now allows you to hide ads, giving you a more streamlined experience.
 
+## Screenshots
+
+<p align="center">
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Screenshot 1" width="200"/>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Screenshot 2" width="200"/>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Screenshot 3" width="200"/>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Screenshot 4" width="200"/>
+</p>
+
 ## Getting Started
 
 To get started with SlimSocial for Facebook, you can download the app from the stores or download the latest release from Github.
