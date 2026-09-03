@@ -50,10 +50,9 @@ void main() {
       );
     });
 
-    test('the Play implementation is the file the script deletes', () {
-      //the guard above is only worth anything while the exemption it grants
-      //matches the file the script actually removes
-      expect(File(kPlayImplPath).existsSync(), isTrue);
+    test('the script deletes the one file the guard above exempts', () {
+      //the guard is only worth anything while the exemption it grants matches
+      //the file the script actually removes
       expect(
         File(kScriptPath).readAsStringSync(),
         contains(kPlayImplPath),
@@ -96,6 +95,23 @@ void main() {
       const entryPoint = 'StoreServices createStoreServices()';
       expect(File(kBindingPath).readAsStringSync(), contains(entryPoint));
       expect(File(kBindingFossPath).readAsStringSync(), contains(entryPoint));
+    });
+
+    test('this suite passes on a tree the script has already prepared', () {
+      //every test in this group has to hold in both states, because F-Droid
+      //runs the prepared tree and this repository holds the Play one. The
+      //assertion is the reminder: nothing above may require a file the script
+      //deletes.
+      final prepared = !File(kPlayImplPath).existsSync();
+      final binding = File(kBindingPath).readAsStringSync();
+      expect(
+        binding.contains('store_services_play.dart'),
+        equals(!prepared),
+        reason: prepared
+            ? '$kBindingPath still names the deleted Play implementation'
+            : '$kBindingPath should name the Play implementation until the '
+                'script swaps it',
+      );
     });
   });
 }

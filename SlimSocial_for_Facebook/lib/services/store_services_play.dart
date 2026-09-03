@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
+import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/services/store_services.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// The Play Store implementation: real billing, real rating sheet.
 ///
@@ -54,7 +57,28 @@ class PlayStoreServices implements StoreServices {
     }
   }
 
+  //Google Play is the only installer whose store app answers the billing
+  //handshake. Anything else leaves the flow half built.
+  static const String _playStoreInstaller = 'com.android.vending';
+
   Future<void> _launchPurchase(String idItem) async {
+    //SLIMSOCIAL-5: buyConsumable hands off to Google's own ProxyBillingActivity,
+    //which crashes on a null PendingIntent when the install did not come from
+    //the Play Store. The crash is inside that activity, so no Dart try/catch can
+    //reach it — the only defence is to never start the handoff. Every event on
+    //that crash carried isSideLoaded:true.
+    //
+    //This is the sideloaded *Play* apk. The F-Droid build never reaches here:
+    //it has no billing compiled in, so its settings screen offers the same
+    //PayPal link outright rather than a tile that ends up here.
+    if (Platform.isAndroid &&
+        packageInfo.installerStore != _playStoreInstaller) {
+      Telemetry.captureIssue('billing.not_play_install');
+      //these users still want to donate, so send them to PayPal instead
+      await launchUrl(Uri.parse(kPayPalDonationUrl));
+      return;
+    }
+
     //get the product
     final response = await InAppPurchase.instance.queryProductDetails({idItem});
     if (response.error != null) {

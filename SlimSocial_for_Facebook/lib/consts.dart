@@ -93,9 +93,10 @@ const String kPlayStoreUrl =
 const String kFDroidStoreUrl =
     "https://f-droid.org/packages/it.rignanese.leo.slimfacebook/";
 
-/// Where a build with no in-app billing sends someone who wants to give
-/// something anyway. Same address as the `funding:` entry in pubspec.yaml.
-const String kDonateUrl = "https://www.paypal.me/LeonardoRignanese";
+/// Where donations go when in-app billing is not available: a non-Play
+/// install, or the F-Droid build, which has no billing compiled in at all.
+/// Same address as the `funding:` entry in pubspec.yaml.
+const String kPayPalDonationUrl = "https://www.paypal.me/LeonardoRignanese";
 
 /// Keys used to store settings in [SharedPreferences].
 ///

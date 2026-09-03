@@ -459,7 +459,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   leading: const Icon(Icons.coffee),
                   title: Text('donate'.tr().capitalize()),
                   onPressed: (BuildContext context) =>
-                      launchUrl(Uri.parse(kDonateUrl)),
+                      launchUrl(Uri.parse(kPayPalDonationUrl)),
                 ),
             ],
           ),
