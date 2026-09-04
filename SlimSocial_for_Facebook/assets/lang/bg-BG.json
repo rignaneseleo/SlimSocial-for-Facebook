@@ -81,6 +81,8 @@
   "exit": "Изход от приложението",
   "hide_people_you_may_know": "Скриване на „Хора, които може да познавате“",
   "hide_reels": "Скриване на Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Скриване на страничната лента на Messenger",
   "error_page_offline": "Facebook не можа да се зареди. Проверете връзката си и опитайте отново.",
   "retry": "Опитайте отново",

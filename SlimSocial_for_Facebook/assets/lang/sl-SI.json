@@ -81,6 +81,8 @@
   "exit": "Izhod iz aplikacije",
   "hide_people_you_may_know": "Skrij »Ljudje, ki jih morda poznaš«",
   "hide_reels": "Skrij reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Skrij stransko vrstico Messengerja",
   "error_page_offline": "Facebooka ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.",
   "retry": "Poskusi znova",

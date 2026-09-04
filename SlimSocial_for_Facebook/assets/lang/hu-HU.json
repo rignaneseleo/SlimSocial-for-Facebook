@@ -81,6 +81,8 @@
   "exit": "Kilépés az alkalmazásból",
   "hide_people_you_may_know": "Az „Ismerősnek tűnő emberek” elrejtése",
   "hide_reels": "Reels elrejtése",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "A Messenger oldalsávjának elrejtése",
   "error_page_offline": "A Facebook nem tölthető be. Ellenőrizd a kapcsolatot, és próbáld újra.",
   "retry": "Újrapróbálkozás",

@@ -81,6 +81,8 @@
   "exit": "結束應用程式",
   "hide_people_you_may_know": "隱藏「你可能認識的人」",
   "hide_reels": "隱藏 Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "隱藏 Messenger 側邊欄",
   "error_page_offline": "無法載入 Facebook。請檢查網路連線後重試。",
   "retry": "重試",

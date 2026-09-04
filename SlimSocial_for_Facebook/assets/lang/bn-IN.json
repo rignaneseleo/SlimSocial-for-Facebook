@@ -81,6 +81,8 @@
   "exit": "অ্যাপ থেকে বেরিয়ে যান",
   "hide_people_you_may_know": "\"আপনি যাদের চিনতে পারেন\" লুকান",
   "hide_reels": "রিলস লুকান",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "মেসেঞ্জার সাইডবার লুকান",
   "error_page_offline": "Facebook লোড করা যায়নি। আপনার সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
   "retry": "আবার চেষ্টা করুন",

@@ -81,6 +81,8 @@
   "exit": "Avsluta appen",
   "hide_people_you_may_know": "Dölj \"Personer du kanske känner\"",
   "hide_reels": "Dölj reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Dölj Messengers sidofält",
   "error_page_offline": "Facebook kunde inte läsas in. Kontrollera din anslutning och försök igen.",
   "retry": "Försök igen",

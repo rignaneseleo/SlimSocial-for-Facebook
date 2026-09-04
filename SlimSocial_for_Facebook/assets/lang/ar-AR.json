@@ -81,6 +81,8 @@
   "exit": "الخروج من التطبيق",
   "hide_people_you_may_know": "إخفاء \"أشخاص قد تعرفهم\"",
   "hide_reels": "إخفاء الريلز",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "إخفاء الشريط الجانبي للمراسلة",
   "error_page_offline": "تعذّر تحميل فيسبوك. تحقق من اتصالك وحاول مرة أخرى.",
   "retry": "إعادة المحاولة",

@@ -2,6 +2,20 @@ import 'dart:convert';
 
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 
+/// Hosts the feed gate treats as the home feed.
+///
+/// Deliberately wider than [kFeedHosts], which stays narrow because a wrong
+/// host there turns a once-per-launch diagnostic into permanent noise. Here a
+/// wrong host costs one unused class on a page with no feed to hide, while a
+/// missing one costs the whole feature: signed-in home is `touch.facebook.com`
+/// for this app, but a redirect to the `m.` or `www.` host would otherwise
+/// leave the gate off and every post on screen.
+const List<String> kFeedGateHosts = [
+  ...kFeedHosts,
+  'm.facebook.com',
+  'www.facebook.com',
+];
+
 class CustomJs {
   /// Builds JavaScript that appends [css] to the document in a `<style>` tag.
   ///
@@ -331,6 +345,51 @@ class CustomJs {
       .catch(function (e) {});
   } catch (e) {}
 })(${jsonEncode(blobUrl)}, ${jsonEncode(channelName)});
+''';
+  }
+
+  /// Builds JavaScript that marks `<html>` while the reader is on the feed.
+  ///
+  /// The switch behind `CustomCss.hideFeedCss`. That stylesheet hides every
+  /// post it can see, so something has to say when it may see any, and the
+  /// answer cannot be "inject it only on the home page": Facebook is a
+  /// single-page app, and a sheet injected on the feed is still in the document
+  /// after the reader taps into a group. The class goes on and comes off as the
+  /// address changes, so the rule applies to the feed and to nothing else.
+  ///
+  /// pushState fires no event, and monkey-patching `history` to get one is a
+  /// large thing to do to another site's app for a boolean. So `location` is
+  /// re-read on `popstate` and on a half-second interval instead — a string
+  /// comparison twice a second, next to nothing beside the page itself.
+  ///
+  /// [hosts] and [paths] are put in by [jsonEncode], and the whole thing is
+  /// guarded by `window.__slimFeedGate` so re-injection on every navigation
+  /// leaves one interval behind rather than one per page. Everything is
+  /// swallowed by a try/catch for the same reason as [unlockZoomFunc].
+  static String feedGateFunc({
+    required List<String> hosts,
+    required List<String> paths,
+  }) {
+    return '''
+(function () {
+  try {
+    if (window.__slimFeedGate) return;
+    window.__slimFeedGate = true;
+
+    var HOSTS = ${jsonEncode(hosts)};
+    var PATHS = ${jsonEncode(paths)};
+
+    function update() {
+      var on = HOSTS.indexOf(location.hostname) !== -1 &&
+        PATHS.indexOf(location.pathname) !== -1;
+      document.documentElement.classList.toggle('slim-hide-feed', on);
+    }
+
+    update();
+    window.addEventListener('popstate', update);
+    setInterval(update, 500);
+  } catch (e) {}
+})();
 ''';
   }
 

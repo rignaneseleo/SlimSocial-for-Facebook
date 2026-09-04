@@ -83,6 +83,8 @@
   "ads_blocked_count": "{} hidden so far",
   "hide_people_you_may_know": "Hide \"People you may know\"",
   "hide_reels": "Hide reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "telemetry_reports": "Send anonymous reports",
   "telemetry_reports_desc": "Anonymous crash and breakage reports help spot when a Facebook change breaks the app. No personal data and no page content are sent. Turn this off any time.",
   "rate_title": "Enjoying SlimSocial?",

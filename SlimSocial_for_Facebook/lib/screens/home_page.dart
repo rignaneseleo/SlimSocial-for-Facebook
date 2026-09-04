@@ -196,6 +196,25 @@ class _HomePageState extends ConsumerState<HomePage> {
             );
             if (!mounted) return;
 
+            //the feed rule is gated on a class this script puts on <html>, and
+            //not shipped as a plain rule: Facebook navigates in-page, so a
+            //sheet injected on the home page is still there once the reader
+            //taps into a group, and the posts there would go too
+            if (CustomCss.hideFeedCss.isEnabled()) {
+              await runIsolatedJs(
+                'feed gate',
+                () => _controller.runJavaScript(
+                  CustomJs.whenDomReady(
+                    CustomJs.feedGateFunc(
+                      hosts: kFeedGateHosts,
+                      paths: kFeedPaths,
+                    ),
+                  ),
+                ),
+              );
+              if (!mounted) return;
+            }
+
             //before the dark theme, because unlocking the viewport reflows the
             //page and the theme script reads colours back out of it
             await runIsolatedJs(

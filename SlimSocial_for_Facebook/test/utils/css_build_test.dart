@@ -60,6 +60,17 @@ void main() {
       expect(css, isNot(contains('};')));
     });
 
+    test('carries the feed rule when the feed toggle is on', () async {
+      // The toggle is only a stored bool until this list picks it up, and the
+      // class gate the rule depends on is injected separately.
+      await withPrefs({CustomCss.hideFeedCss.key: true});
+
+      expect(
+        CustomCss.buildFacebookCss(null),
+        contains(CustomCss.hideFeedCss.code),
+      );
+    });
+
     test('handles a null and a blank user stylesheet', () {
       expect(CustomCss.buildFacebookCss(null), isNotNull);
       expect(CustomCss.buildFacebookCss(''), isNot(contains('  ')));

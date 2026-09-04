@@ -21,6 +21,7 @@ class CustomCss {
     addSpaceBetweenPostsCss,
     hideStoriesCss,
     hideReelsCss,
+    hideFeedCss,
     fixedBarCss,
     //hideAdsAndPeopleYouMayKnowCss,
     darkThemeCss,
@@ -165,6 +166,27 @@ class CustomCss {
     code: 'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="reel" i]), '
         'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
         '{ display: none !important; }',
+  );
+
+  /// Hides the posts on the home feed, and only there.
+  ///
+  /// For the reader who wants Facebook for notifications, groups and Messenger
+  /// without the feed to scroll (#213). Only the posts go: the top bar, the
+  /// tabs and every other page are untouched.
+  ///
+  /// The `html.slim-hide-feed` gate is what makes "only there" true. The
+  /// selector on its own — a direct child of the feed vscroller carrying
+  /// `data-tracking-duration-id` — matches posts in groups and on profiles as
+  /// well, and injecting the sheet only on the home page does not help:
+  /// Facebook navigates in-page with pushState, so the stylesheet injected on
+  /// the feed is still in the document once the reader taps into a group. So
+  /// the class is put on and taken off `<html>` by `CustomJs.feedGateFunc`,
+  /// which re-reads `location` as the address changes.
+  static MyCss hideFeedCss = MyCss(
+    key: 'hide_feed',
+    description: 'Hide the home feed',
+    code: 'html.slim-hide-feed div[data-type="vscroller"] > '
+        'div[data-tracking-duration-id] { display: none !important; }',
   );
 
   static MyCss fixedBarCss = MyCss(

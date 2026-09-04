@@ -81,6 +81,8 @@
   "exit": "Έξοδος από την εφαρμογή",
   "hide_people_you_may_know": "Απόκρυψη «Άτομα που ίσως γνωρίζετε»",
   "hide_reels": "Απόκρυψη reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Απόκρυψη της πλαϊνής μπάρας του Messenger",
   "error_page_offline": "Δεν ήταν δυνατή η φόρτωση του Facebook. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.",
   "retry": "Δοκιμή ξανά",

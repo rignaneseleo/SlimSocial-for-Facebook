@@ -81,6 +81,8 @@
   "exit": "Ieși din aplicație",
   "hide_people_you_may_know": "Ascundeți „Persoane pe care le-ați putea cunoaște”",
   "hide_reels": "Ascundeți reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Ascundeți bara laterală Messenger",
   "error_page_offline": "Facebook nu a putut fi încărcat. Verificați conexiunea și încercați din nou.",
   "retry": "Reîncercați",

@@ -50,6 +50,10 @@ void main() {
         'dark_theme',
         'fixed_bar',
         'hide_stories',
+        // The feed toggle turns off the app's main screen, so both its label
+        // and the line saying what still works have to be there.
+        'hide_feed',
+        'hide_feed_desc',
         'center_text',
         'add_space',
         'enable_messenger',

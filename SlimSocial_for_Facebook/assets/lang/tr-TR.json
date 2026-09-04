@@ -81,6 +81,8 @@
   "exit": "Uygulamadan çık",
   "hide_people_you_may_know": "\"Tanıyor olabileceğin kişiler\"i gizle",
   "hide_reels": "Reels'i gizle",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Messenger kenar çubuğunu gizle",
   "error_page_offline": "Facebook yüklenemedi. Bağlantını kontrol edip tekrar dene.",
   "retry": "Tekrar dene",

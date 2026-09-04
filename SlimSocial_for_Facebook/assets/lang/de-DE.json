@@ -81,6 +81,8 @@
   "exit": "App beenden",
   "hide_people_you_may_know": "„Personen, die du kennen könntest“ ausblenden",
   "hide_reels": "Reels ausblenden",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Messenger-Seitenleiste ausblenden",
   "error_page_offline": "Facebook konnte nicht geladen werden. Überprüfe deine Verbindung und versuche es erneut.",
   "retry": "Erneut versuchen",
