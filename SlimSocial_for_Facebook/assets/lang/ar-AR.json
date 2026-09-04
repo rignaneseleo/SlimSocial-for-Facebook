@@ -46,6 +46,7 @@
   "Image saved to {}": "تم حفظ الصورة في {}",
   "sharing": "مشاركة",
   "downloading": "تحميل",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "بروكسي مخصص",
   "error_proxy with {}:{}": "خطأ في البروكسي {}:{}",
   "error_proxy": "خطأ في البروكسي",

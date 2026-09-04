@@ -46,6 +46,7 @@
   "Image saved to {}": "చిత్రం {} కి సేవ్ చేయబడింది",
   "sharing": "భాగస్వామ్యం",
   "downloading": "డౌన్‌లోడ్ అవుతోంది",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "కస్టమ్ ప్రాక్సి",
   "error_proxy with {}:{}": "{}:{} ప్రాక్సితో లోపం",
   "error_proxy": "ప్రాక్సితో లోపం",

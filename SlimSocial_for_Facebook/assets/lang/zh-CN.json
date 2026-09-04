@@ -46,6 +46,7 @@
   "Image saved to {}": "图像已保存至{}",
   "sharing": "正在分享",
   "downloading": "正在下载",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "自定义代理",
   "error_proxy with {}:{}": "代理错误 {}:{}",
   "error_proxy": "代理错误",

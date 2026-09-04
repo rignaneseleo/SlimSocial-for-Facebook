@@ -49,6 +49,7 @@
   "Image saved to {}": "圖片已儲存至 {}",
   "sharing": "分享中",
   "downloading": "下載中",
+  "image_saved": "Image saved to Downloads",
   "become_an_hero": "成為英雄",
   "custom_proxy": "自訂代理伺服器",
   "error_proxy with {}:{}": "代理伺服器 {}:{} 發生錯誤",

@@ -46,6 +46,7 @@
   "Image saved to {}": "이미지가 {}에 저장되었습니다.",
   "sharing": "공유 중",
   "downloading": "다운로드 중",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "사용자 정의 프록시",
   "error_proxy with {}:{}": "{}:{} 프록시 오류",
   "error_proxy": "프록시 오류",

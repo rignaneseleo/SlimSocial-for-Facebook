@@ -46,6 +46,7 @@
   "Image saved to {}": "Obraz zapisany do {}",
   "sharing": "Dzielenie się",
   "downloading": "Pobieranie",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Niestandardowy serwer proxy",
   "error_proxy with {}:{}": "Błąd serwera proxy {}:{}",
   "error_proxy": "Błąd serwera proxy",

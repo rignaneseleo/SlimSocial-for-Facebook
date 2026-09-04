@@ -46,6 +46,7 @@
   "Image saved to {}": "Bilde lagret til {}",
   "sharing": "Deling",
   "downloading": "Laster ned",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Egendefinert-proxy",
   "error_proxy with {}:{}": "Feil med proxy {}:{}",
   "error_proxy": "Feil med proxy",

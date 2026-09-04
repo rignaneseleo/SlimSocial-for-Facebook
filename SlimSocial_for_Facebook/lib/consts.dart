@@ -26,6 +26,18 @@ const List<String> kPermittedHostnamesMessenger = [
   "m.me",
 ];
 
+/// Name of the JavaScript channel a blob download is handed back on.
+///
+/// Separate from the ad filter's channels (`kAdCountChannelName`,
+/// `kDiagnosticsChannelName`) because the payloads have nothing in common: a
+/// tally is parsed as a bare integer and a diagnostic against an allow-list of
+/// kinds, so a file posted on either would be dropped as garbage.
+///
+/// A `blob:` url names bytes that only the page can read — Dart cannot fetch
+/// one — so the file has to travel back through here. See
+/// `CustomJs.fetchBlobFunc`.
+const String kBlobDownloadChannelName = "SlimBlobDownload";
+
 //suffix for the feed
 const String suffixRecentFirst = "?sk=h_chr";
 const String suffixDefault = "?sk=h_nor";

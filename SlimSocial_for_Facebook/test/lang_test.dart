@@ -130,6 +130,9 @@ void main() {
       // above already asserts it, against both fallback files rather than just
       // en-US, which is the stronger check.
       'hide_reels',
+      // The confirmation for a photo saved out of the viewer (#348). A missing
+      // key here renders the raw slug as a toast.
+      'image_saved',
       'retry',
       'sponsored_keyword_fb',
     ]) {

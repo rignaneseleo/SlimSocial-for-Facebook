@@ -49,6 +49,7 @@
   "Image saved to {}": "Image don save for {}",
   "sharing": "E dey share",
   "downloading": "E dey download",
+  "image_saved": "Image saved to Downloads",
   "become_an_hero": "Be hero",
   "custom_proxy": "Your own proxy",
   "error_proxy with {}:{}": "Error with proxy {}:{}",

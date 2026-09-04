@@ -46,6 +46,7 @@
   "Image saved to {}": "{}-ലേക്ക് ചിത്രം സംരക്ഷിച്ചു",
   "sharing": "പങ്കിടുന്നു",
   "downloading": "ഡൗൺലോഡുചെയ്യുന്നു",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "കസ്റ്റം പ്രോക്സി",
   "error_proxy with {}:{}": "{}:{} പ്രോക്സി പിശക് സംബന്ധിച്ച്",
   "error_proxy": "പ്രോക്സി പിശക്",

@@ -46,6 +46,7 @@
   "Image saved to {}": "চিত্র {} সংরক্ষিত হয়েছে",
   "sharing": "ভাগাভাগি করা হচ্ছে",
   "downloading": "ডাউনলোড করা হচ্ছে",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "কাস্টম প্রক্সি",
   "error_proxy with {}:{}": "{}:{} প্রক্সিতে সমস্যা হচ্ছে",
   "error_proxy": "প্রক্সিতে সমস্যা হচ্ছে",

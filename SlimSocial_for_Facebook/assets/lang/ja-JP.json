@@ -46,6 +46,7 @@
   "Image saved to {}": "画像が{}に保存されました",
   "sharing": "共有中",
   "downloading": "ダウンロード中",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "カスタムプロキシ",
   "error_proxy with {}:{}": "{}:{} でのプロキシエラー",
   "error_proxy": "プロキシエラー",

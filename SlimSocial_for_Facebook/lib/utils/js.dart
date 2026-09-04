@@ -291,6 +291,49 @@ class CustomJs {
 ''';
   }
 
+  /// Builds JavaScript that reads a `blob:` url and posts the file back.
+  ///
+  /// A blob url is a handle into the page's own memory. Nothing outside the
+  /// page can resolve one — not Dart, not a Custom Tab, not the download
+  /// manager — so a photo Facebook offers as a blob cannot be saved by
+  /// fetching the address. It has to be read where it lives, which is here.
+  ///
+  /// The bytes come back as a `data:` url because a JavaScript channel carries
+  /// a string and nothing else. That doubles the payload, which is why the Dart
+  /// side caps what it accepts (`kMaxBlobDownloadBytes`).
+  ///
+  /// [channelName] is the channel Dart registered; it is read off `window`
+  /// rather than referenced by name so the identifier cannot be forged into the
+  /// script. Both arguments go through jsonEncode for the same reason as
+  /// [injectCssFunc]: a url is not ours to trust as source code.
+  ///
+  /// Everything is swallowed by a try/catch, and the async failure paths get
+  /// their own: a throw here would surface as nothing on Android, and there is
+  /// no recovery to attempt — the reader has already been told the download
+  /// started.
+  static String fetchBlobFunc(String blobUrl, String channelName) {
+    return '''
+(function (url, channel) {
+  try {
+    fetch(url)
+      .then(function (r) { return r.blob(); })
+      .then(function (b) {
+        var fr = new FileReader();
+        fr.onload = function () {
+          try {
+            window[channel].postMessage(
+              JSON.stringify({ type: b.type, data: fr.result })
+            );
+          } catch (e) {}
+        };
+        fr.readAsDataURL(b);
+      })
+      .catch(function (e) {});
+  } catch (e) {}
+})(${jsonEncode(blobUrl)}, ${jsonEncode(channelName)});
+''';
+  }
+
   static String exampleJs = """
 javascript:function foo() {
 	     document.body.innerHTML = '';

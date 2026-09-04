@@ -46,6 +46,7 @@
   "Image saved to {}": "Зображення збережено в {}",
   "sharing": "Поширення",
   "downloading": "Завантаження",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Користувацький проксі",
   "error_proxy with {}:{}": "Помилка з проксі {}:{}",
   "error_proxy": "Помилка з проксі",

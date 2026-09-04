@@ -46,6 +46,7 @@
   "Image saved to {}": "Billede gemt i {}",
   "sharing": "Deling",
   "downloading": "Downloader",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Brugerdefineret proxy",
   "error_proxy with {}:{}": "Fejl med proxy {}:{}",
   "error_proxy": "Fejl med proxy",

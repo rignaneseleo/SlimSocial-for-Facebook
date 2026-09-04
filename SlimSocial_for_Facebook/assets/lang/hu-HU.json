@@ -46,6 +46,7 @@
   "Image saved to {}": "Kép mentve a {} helyre",
   "sharing": "Megosztás",
   "downloading": "Letöltés",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Egyedi proxy",
   "error_proxy with {}:{}": "Hiba a proxy használatakor {}:{}",
   "error_proxy": "Hiba a proxy használatakor",

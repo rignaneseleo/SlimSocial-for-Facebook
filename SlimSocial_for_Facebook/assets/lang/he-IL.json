@@ -46,6 +46,7 @@
   "Image saved to {}": "תמונה נשמרה ב{}",
   "sharing": "משותף",
   "downloading": "מוריד",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "פרוקסי מותאם אישית",
   "error_proxy with {}:{}": "שגיאת פרוקסי עם {}:{}",
   "error_proxy": "שגיאת פרוקסי",

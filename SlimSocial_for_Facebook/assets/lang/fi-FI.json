@@ -46,6 +46,7 @@
   "Image saved to {}": "Kuva tallennettu sijaintiin {}",
   "sharing": "Jakaminen",
   "downloading": "Lataus",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Mukautettu välityspalvelin",
   "error_proxy with {}:{}": "Virhe välityspalvelimessa {}:{}",
   "error_proxy": "Virhe välityspalvelimessa",

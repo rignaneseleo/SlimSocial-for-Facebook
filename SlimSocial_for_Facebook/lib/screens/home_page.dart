@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:open_file_plus/open_file_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
@@ -18,6 +17,7 @@ import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
+import 'package:slimsocial_for_facebook/utils/download_request.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
@@ -146,6 +146,12 @@ class _HomePageState extends ConsumerState<HomePage> {
       ..addJavaScriptChannel(
         kLinkMenuChannelName,
         onMessageReceived: onLinkMenuMessage,
+      )
+      //the only way a `blob:` download can reach Dart: the bytes live in the
+      //page and no url outside it resolves them. See [onBlobDownloadMessage].
+      ..addJavaScriptChannel(
+        kBlobDownloadChannelName,
+        onMessageReceived: onBlobDownloadMessage,
       )
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -372,6 +378,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     unawaited(showLinkMenu(context, link));
   }
 
+  /// Hands the reader a file the page read out of a `blob:` url.
+  ///
+  /// See [shareBlobDownload]: the payload is treated as hostile input, exactly
+  /// like the diagnostics channel above.
+  void onBlobDownloadMessage(JavaScriptMessage message) =>
+      shareBlobDownload(message.message);
+
   /// Hands a failed page load to the retry policy.
   void onWebResourceError(WebResourceError error) {
     //a failure the platform will not classify is treated as the main frame's
@@ -431,6 +444,38 @@ class _HomePageState extends ConsumerState<HomePage> {
         await _controller.loadRequest(target);
         return NavigationDecision.prevent;
       }
+    }
+
+    //Facebook's photo viewer saves through a download, and on Android every
+    //download the webview starts is routed into this delegate — there is no
+    //separate callback (webview_flutter_android 4.3.4,
+    //android_webview_controller.dart:1455). So the Save menu item arrives here
+    //as an ordinary navigation to a cdn address or to a `blob:` url, neither of
+    //which is a permitted host, and both used to be handed to a Custom Tab: the
+    //cdn one opened a browser at best, and a Custom Tab cannot resolve a blob
+    //url at all, so the tap did nothing (#348).
+    //
+    //Only the kind is reported. The address is the photo the reader is looking
+    //at, which is their browsing.
+    switch (classifyDownloadRequest(uri)) {
+      case DownloadKind.image:
+        Telemetry.captureIssue('download.intercepted', data: {'kind': 'image'});
+        await saveImageFromUrl(request.url);
+        return NavigationDecision.prevent;
+      case DownloadKind.blob:
+        Telemetry.captureIssue('download.intercepted', data: {'kind': 'blob'});
+        showToast("${"downloading".tr()}...");
+        //the bytes come back on kBlobDownloadChannelName, asynchronously: see
+        //[onBlobDownloadMessage]
+        await runIsolatedJs(
+          'blob download',
+          () => _controller.runJavaScript(
+            CustomJs.fetchBlobFunc(request.url, kBlobDownloadChannelName),
+          ),
+        );
+        return NavigationDecision.prevent;
+      case DownloadKind.none:
+        break;
     }
 
     for (final other in kPermittedHostnamesFb) {
@@ -608,14 +653,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             IconButton(
               onPressed: () async {
                 final url = await _controller.currentUrl();
-                if (url != null) {
-                  showToast("${"downloading".tr()}...");
-                  final path = await downloadImage(url);
-                  if (path != null) {
-                    //showToast("Image saved to {}".tr(args: [path]));
-                    OpenFile.open(path);
-                  }
-                }
+                if (url != null) await saveImageFromUrl(url);
               },
               icon: const Icon(Icons.save),
             ),

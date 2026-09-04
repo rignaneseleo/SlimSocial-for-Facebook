@@ -46,6 +46,7 @@
   "Image saved to {}": "Bilden sparad till {}",
   "sharing": "Delar",
   "downloading": "Laddar ner",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Anpassad proxy",
   "error_proxy with {}:{}": "Fel med proxy {}:{}",
   "error_proxy": "Fel med proxy",

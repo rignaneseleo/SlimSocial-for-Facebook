@@ -46,6 +46,7 @@
   "Image saved to {}": "تصویر در {} ذخیره شد",
   "sharing": "اشتراک‌گذاری",
   "downloading": "دریافت",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "پروکسی اختصاصی",
   "error_proxy with {}:{}": "خطا در پروکسی با {}:{}",
   "error_proxy": "خطا در پروکسی",

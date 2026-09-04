@@ -49,6 +49,7 @@
   "Image saved to {}": "Η εικόνα αποθηκεύτηκε στο {}",
   "sharing": "Κοινοποίηση",
   "downloading": "Λήψη",
+  "image_saved": "Image saved to Downloads",
   "become_an_hero": "Γίνε ήρωας",
   "custom_proxy": "Προσαρμοσμένος διακομιστής μεσολάβησης",
   "error_proxy with {}:{}": "Σφάλμα με τον διακομιστή μεσολάβησης {}:{}",
