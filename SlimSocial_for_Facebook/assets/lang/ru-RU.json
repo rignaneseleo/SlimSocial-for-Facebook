@@ -91,5 +91,7 @@
   "rate_thanks": "Спасибо — это помогает.",
   "rate_failed": "Не удалось отправить. Повторите попытку позже.",
   "use_desktop_site": "Use desktop site",
-  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
+  "use_system_browser": "Open links in the system browser",
+  "use_system_browser_desc": "External links open in your browser app instead of the in-app tab"
 }

@@ -292,4 +292,24 @@ void main() {
       expect((kMaxTextZoom - kMinTextZoom) % 5, 0);
     });
   });
+
+  group('usesSystemBrowser', () {
+    test('defaults to the in-app custom tab', () {
+      // An unset key must keep the old behaviour: existing installs upgrade
+      // without their external links suddenly leaving the app.
+      expect(PrefController.usesSystemBrowser(), isFalse);
+    });
+
+    test('is true once the setting is on', () async {
+      await withPrefs({SpKeys.useSystemBrowser: true});
+
+      expect(PrefController.usesSystemBrowser(), isTrue);
+    });
+
+    test('is false once the setting is turned back off', () async {
+      await withPrefs({SpKeys.useSystemBrowser: false});
+
+      expect(PrefController.usesSystemBrowser(), isFalse);
+    });
+  });
 }

@@ -91,5 +91,7 @@
   "rate_thanks": "നന്ദി — ഇത് സഹായകരമാണ്.",
   "rate_failed": "അയയ്ക്കാനായില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.",
   "use_desktop_site": "Use desktop site",
-  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken"
+  "use_desktop_site_desc": "Facebook's desktop layout. Use this if chat, share, or the feed overlay is broken",
+  "use_system_browser": "Open links in the system browser",
+  "use_system_browser_desc": "External links open in your browser app instead of the in-app tab"
 }

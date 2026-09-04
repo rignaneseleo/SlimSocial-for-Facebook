@@ -45,6 +45,8 @@ void main() {
         'text_zoom_desc',
         'use_desktop_site',
         'use_desktop_site_desc',
+        'use_system_browser',
+        'use_system_browser_desc',
         'dark_theme',
         'fixed_bar',
         'hide_stories',

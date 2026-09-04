@@ -173,6 +173,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: Text('use_desktop_site'.tr()),
                 description: Text('use_desktop_site_desc'.tr()),
               ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  setState(() {
+                    sp.setBool(SpKeys.useSystemBrowser, value);
+                  });
+                },
+                initialValue: sp.getBool(SpKeys.useSystemBrowser) ?? false,
+                leading: const Icon(Icons.open_in_browser),
+                title: Text('use_system_browser'.tr()),
+                description: Text('use_system_browser_desc'.tr()),
+              ),
             ],
           ),
           SettingsSection(

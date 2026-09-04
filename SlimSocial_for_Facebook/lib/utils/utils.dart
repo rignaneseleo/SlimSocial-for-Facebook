@@ -3,10 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
+// flutter_custom_tabs also exports `launchUrl`, so this one needs a prefix.
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 Future<void> launchInAppUrl(BuildContext context, String url) async {
   try {
+    if (PrefController.usesSystemBrowser()) {
+      await url_launcher.launchUrl(
+        Uri.parse(url),
+        mode: url_launcher.LaunchMode.externalApplication,
+      );
+      return;
+    }
+
     await launchUrl(
       Uri.parse(url),
       customTabsOptions: const CustomTabsOptions(
