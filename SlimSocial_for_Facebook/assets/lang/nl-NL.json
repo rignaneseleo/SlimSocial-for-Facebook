@@ -46,6 +46,7 @@
   "Image saved to {}": "Afbeelding opgeslagen in {}",
   "sharing": "Delen",
   "downloading": "Bezig met downloaden",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Aangepaste proxy",
   "error_proxy with {}:{}": "Fout met proxy {}:{}",
   "error_proxy": "Fout met proxy",

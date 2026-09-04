@@ -46,6 +46,7 @@
   "Image saved to {}": "บันทึกรูปภาพใน {}",
   "sharing": "กำลังแชร์",
   "downloading": "กำลังดาวน์โหลด",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "โปรกิจฉบับเอง",
   "error_proxy with {}:{}": "เกิดข้อผิดพลาดกับพร็อกซี่ {}:{}",
   "error_proxy": "เกิดข้อผิดพลาดกับพร็อกซี่",

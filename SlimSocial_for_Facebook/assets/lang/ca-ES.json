@@ -49,6 +49,7 @@
   "Image saved to {}": "Imatge desada a {}",
   "sharing": "S'està compartint",
   "downloading": "S'està baixant",
+  "image_saved": "Image saved to Downloads",
   "become_an_hero": "Converteix-te en un heroi",
   "custom_proxy": "Proxy personalitzat",
   "error_proxy with {}:{}": "Error amb el proxy {}:{}",

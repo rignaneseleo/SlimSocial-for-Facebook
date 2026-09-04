@@ -46,6 +46,7 @@
   "Image saved to {}": "Obrázek uložen do {}",
   "sharing": "Sdílení",
   "downloading": "Stahuji",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Vlastní proxy",
   "error_proxy with {}:{}": "Chyba s proxy {}:{}",
   "error_proxy": "Chyba s proxy",

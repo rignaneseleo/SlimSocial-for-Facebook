@@ -46,6 +46,7 @@
   "Image saved to {}": "Đã lưu hình ảnh vào {}",
   "sharing": "Đang chia sẻ",
   "downloading": "Đang tải xuống",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Proxy tùy chỉnh",
   "error_proxy with {}:{}": "Lỗi với proxy {}:{}",
   "error_proxy": "Lỗi với proxy",

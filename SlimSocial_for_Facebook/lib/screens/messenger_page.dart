@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,10 +11,12 @@ import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/download_request.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/link_menu.dart';
+import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -57,6 +60,13 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       ..addJavaScriptChannel(
         kLinkMenuChannelName,
         onMessageReceived: onLinkMenuMessage,
+      )
+      //the only way a `blob:` download can reach Dart: the bytes live in the
+      //page and no url outside it resolves them. Registered here too because a
+      //photo in a chat saves through exactly the same path as one in the feed.
+      ..addJavaScriptChannel(
+        kBlobDownloadChannelName,
+        onMessageReceived: (message) => shareBlobDownload(message.message),
       )
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -161,6 +171,39 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     NavigationRequest request,
   ) async {
     final uri = Uri.parse(request.url);
+
+    //saving a photo out of a chat starts a download, and on Android every
+    //download the webview starts is routed into this delegate rather than into
+    //a callback of its own (webview_flutter_android 4.3.4,
+    //android_webview_controller.dart:1455). Without this the cdn address went
+    //to a Custom Tab and a `blob:` url went nowhere at all — see the feed's
+    //copy of this and #348.
+    //
+    //Only the kind is reported. The address is the photo the reader is looking
+    //at, which is their browsing.
+    switch (classifyDownloadRequest(uri)) {
+      case DownloadKind.image:
+        Telemetry.captureIssue('download.intercepted', data: {'kind': 'image'});
+        await saveImageFromUrl(request.url);
+        return NavigationDecision.prevent;
+      case DownloadKind.blob:
+        Telemetry.captureIssue('download.intercepted', data: {'kind': 'blob'});
+        showToast("${"downloading".tr()}...");
+        //the bytes come back on kBlobDownloadChannelName, asynchronously
+        try {
+          await _controller.runJavaScript(
+            CustomJs.fetchBlobFunc(request.url, kBlobDownloadChannelName),
+          );
+        }
+        //a page exception comes back through runJavaScript on iOS, and there is
+        //no recovery to attempt: the reader has already been told it started
+        on Object catch (e, stack) {
+          Telemetry.captureError(e, stack, hint: 'blob download');
+        }
+        return NavigationDecision.prevent;
+      case DownloadKind.none:
+        break;
+    }
 
     switch (messengerNavigationFor(uri)) {
       case MessengerNavAction.stay:

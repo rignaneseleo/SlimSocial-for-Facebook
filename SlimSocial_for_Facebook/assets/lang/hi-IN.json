@@ -46,6 +46,7 @@
   "Image saved to {}": "छवि {} में सहेजी गई",
   "sharing": "साझा करना",
   "downloading": "डाउनलोड हो रहा है",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "कस्टम प्रॉक्सी",
   "error_proxy with {}:{}": "{}:{} के साथ प्रॉक्सी में त्रुटि",
   "error_proxy": "प्रॉक्सी में त्रुटि",

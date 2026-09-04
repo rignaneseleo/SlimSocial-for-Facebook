@@ -46,6 +46,7 @@
   "Image saved to {}": "Attēls saglabāts {}",
   "sharing": "Dalīšanās",
   "downloading": "Lejupielādēšana",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Pielāgots proksija",
   "error_proxy with {}:{}": "Kļūda ar proksiju {}:{}",
   "error_proxy": "Kļūda ar proksiju",

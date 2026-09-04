@@ -46,6 +46,7 @@
   "Image saved to {}": "Pilt on salvestatud: {}",
   "sharing": "Jagamine",
   "downloading": "Laen alla",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Kohandatud proksü",
   "error_proxy with {}:{}": "Viga proksüga {}:{}",
   "error_proxy": "Viga proksüga",

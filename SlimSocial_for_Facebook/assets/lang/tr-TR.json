@@ -46,6 +46,7 @@
   "Image saved to {}": "Resim {} olarak kaydedildi",
   "sharing": "Paylaşılıyor",
   "downloading": "İndiriliyor",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Özel proxy",
   "error_proxy with {}:{}": "Proxy hatası {}:{}",
   "error_proxy": "Proxy hatası",

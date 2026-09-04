@@ -46,6 +46,7 @@
   "Image saved to {}": "Imaginea salvată la {}",
   "sharing": "Partajare",
   "downloading": "Se descarcă",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Proxy personalizat",
   "error_proxy with {}:{}": "Eroare cu proxy-ul {}:{}",
   "error_proxy": "Eroare cu proxy-ul",

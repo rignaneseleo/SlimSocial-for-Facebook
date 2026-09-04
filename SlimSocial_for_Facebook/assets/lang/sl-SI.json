@@ -46,6 +46,7 @@
   "Image saved to {}": "Slika shranjena v {}",
   "sharing": "Deljenje",
   "downloading": "Prenos",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Pretvornik po meri",
   "error_proxy with {}:{}": "Napaka s pretvornikom {}:{}",
   "error_proxy": "Napaka s pretvornikom",

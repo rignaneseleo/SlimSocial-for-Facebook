@@ -46,6 +46,7 @@
   "Image saved to {}": "تصویر {} میں محفوظ کر دی گئی",
   "sharing": "شئیرنگ",
   "downloading": "ڈاؤن لوڈنگ",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "کسٹم پراکسی",
   "error_proxy with {}:{}": "پراکسی میں خرابی {}:{}",
   "error_proxy": "پراکسی میں خرابی",

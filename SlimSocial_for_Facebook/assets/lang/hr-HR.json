@@ -46,6 +46,7 @@
   "Image saved to {}": "Slika spremljena u {}",
   "sharing": "Dijeljenje",
   "downloading": "Preuzimanje",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Prilagođeni proxy poslužitelj",
   "error_proxy with {}:{}": "Greška s proxy poslužiteljem {}:{}",
   "error_proxy": "Greška s proxy poslužiteljem",

@@ -46,6 +46,7 @@
   "Image saved to {}": "Paveikslėlis išsaugotas kaip {}",
   "sharing": "Dalijimasis",
   "downloading": "Atsisiunčiama",
+  "image_saved": "Image saved to Downloads",
   "custom_proxy": "Pasirinktinis serveris",
   "error_proxy with {}:{}": "Klaida su serveriu {}:{}",
   "error_proxy": "Klaida su serveriu",
