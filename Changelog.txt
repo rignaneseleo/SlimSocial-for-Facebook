@@ -1,3 +1,14 @@
+v26.09.04+129
+- The page stays above the transparent navigation bar; it no longer covers the bottom of the screen (#349).
+- Saving a photo works again: Facebook's Save menu item now downloads the image, or offers it through the share sheet (#348).
+- Back returns to the feed before it closes the app (#222).
+- New setting: hide the home feed. Notifications, groups, profiles and Messenger still work (#213).
+- New setting: open Messenger at startup (#194, #273).
+- New setting: open external links in the system browser instead of the in-app tab (#287).
+- Long-press a link to copy its URL or open it in the browser (#183).
+- Adaptive launcher icon with a Material You themed icon (#200).
+- Screenshots in the README and in the F-Droid listing (#330).
+
 v26.09.03+128
 - Facebook's chat icon opens the built-in Messenger screen. It used to show a "Get the Messenger app" page (#338).
 - Messenger uses your Facebook login. No second sign-in on messenger.com (#326, #300, #257).
