@@ -75,6 +75,10 @@ flutter_launcher_icons:
   android: true
   remove_alpha_ios: true
   image_path: "assets/logo.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#4762A2"
+  adaptive_icon_foreground: "assets/icon/adaptive_foreground.png"
+  adaptive_icon_monochrome: "assets/icon/adaptive_monochrome.png"
 
 flutter:
   uses-material-design: true
