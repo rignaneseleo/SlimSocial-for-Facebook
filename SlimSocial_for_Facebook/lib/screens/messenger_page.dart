@@ -212,19 +212,24 @@ class _HomePageState extends ConsumerState<MessengerPage> {
           }
           return true;
         },
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            WebViewWidget(
-              controller: _controller,
-            ),
-            if (isLoading)
-              const LinearProgressIndicator(
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(FacebookColors.official),
-                backgroundColor: Colors.transparent,
+        //edge-to-edge is enforced from target sdk 35+, so the transparent
+        //navigation bar overlays the page; the app bar already covers the top
+        child: SafeArea(
+          top: false,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              WebViewWidget(
+                controller: _controller,
               ),
-          ],
+              if (isLoading)
+                const LinearProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(FacebookColors.official),
+                  backgroundColor: Colors.transparent,
+                ),
+            ],
+          ),
         ),
       ),
     );

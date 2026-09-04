@@ -725,52 +725,57 @@ class _HomePageState extends ConsumerState<HomePage> {
           }
           return true;
         },
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            WebViewWidget(
-              controller: _controller,
-            ),
-            //covers the webview so the browser's own error page, sitting on a
-            //near-black background, is never what the user sees
-            if (_retryPolicy.loadFailed)
-              ColoredBox(
-                color: Theme.of(context).colorScheme.surface,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.wifi_off_outlined,
-                          size: 48,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          "error_page_offline".tr(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 24),
-                        FilledButton.icon(
-                          onPressed: _retryPolicy.retryNow,
-                          icon: const Icon(Icons.refresh),
-                          label: Text("retry".tr()),
-                        ),
-                      ],
+        //edge-to-edge is enforced from target sdk 35+, so the transparent
+        //navigation bar overlays the page; the app bar already covers the top
+        child: SafeArea(
+          top: false,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              WebViewWidget(
+                controller: _controller,
+              ),
+              //covers the webview so the browser's own error page, sitting on a
+              //near-black background, is never what the user sees
+              if (_retryPolicy.loadFailed)
+                ColoredBox(
+                  color: Theme.of(context).colorScheme.surface,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.wifi_off_outlined,
+                            size: 48,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            "error_page_offline".tr(),
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 24),
+                          FilledButton.icon(
+                            onPressed: _retryPolicy.retryNow,
+                            icon: const Icon(Icons.refresh),
+                            label: Text("retry".tr()),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            if (isLoading)
-              const LinearProgressIndicator(
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(FacebookColors.official),
-                backgroundColor: Colors.transparent,
-              ),
-          ],
+              if (isLoading)
+                const LinearProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(FacebookColors.official),
+                  backgroundColor: Colors.transparent,
+                ),
+            ],
+          ),
         ),
       ),
     );

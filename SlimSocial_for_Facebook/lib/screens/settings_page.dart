@@ -80,435 +80,442 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr().capitalize())),
-      body: SettingsList(
-        sections: [
-          SettingsSection(
-            title: Text('SlimSocial'.tr()),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                leading: const Icon(Icons.privacy_tip),
-                title: Text('privacy'.tr().capitalize()),
-                description: Text("disclaimer_privacy".tr()),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('Facebook'.tr()),
-            tiles: <SettingsTile>[
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.enableMessenger, value);
-                  });
-                },
-                initialValue: sp.getBool(SpKeys.enableMessenger) ?? true,
-                leading: const Icon(Icons.messenger),
-                title: Text('enable_messenger'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.startOnMessenger, value);
-                  });
-                },
-                initialValue: sp.getBool(SpKeys.startOnMessenger) ?? false,
-                leading: const Icon(Icons.chat_bubble_outline),
-                title: Text('start_on_messenger'.tr()),
-                description: Text('start_on_messenger_desc'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  setState(() {
-                    sp.setBool(SpKeys.hideAds, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: sp.getBool(SpKeys.hideAds) ?? true,
-                leading: const Icon(Icons.hide_source),
-                title: Text('hide_ads'.tr()),
-                description: Text(
-                  'ads_blocked_count'
-                      .tr(args: ['${PrefController.getAdsBlockedTotal()}']),
+      //edge-to-edge is enforced from target sdk 35+, so the transparent
+      //navigation bar overlays the page; the app bar already covers the top
+      body: SafeArea(
+        top: false,
+        child: SettingsList(
+          sections: [
+            SettingsSection(
+              title: Text('SlimSocial'.tr()),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.privacy_tip),
+                  title: Text('privacy'.tr().capitalize()),
+                  description: Text("disclaimer_privacy".tr()),
                 ),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.hidePeopleYouMayKnow, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue:
-                    sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false,
-                leading: const Icon(Icons.person_off_outlined),
-                title: Text('hide_people_you_may_know'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.recentFirst, value);
-                  });
-                  ref
-                      .read(fbWebViewProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
-                },
-                initialValue: sp.getBool(SpKeys.recentFirst),
-                leading: const Icon(Icons.rss_feed),
-                title: Text('recent_first'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.useMbasic, value);
-                  });
-                  ref
-                      .read(fbWebViewProvider.notifier)
-                      .updateUrl(PrefController.getHomePage());
-                  Restart.restartApp();
-                },
-                initialValue: sp.getBool(SpKeys.useMbasic) ?? false,
-                leading: const Icon(Icons.abc),
-                title: Text('use_mbasic'.tr()),
-                description: Text('use_mbasic_desc'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.useDesktopSite, value);
-                  });
-                  showToast("rebooting".tr());
-                  Restart.restartApp();
-                },
-                initialValue: sp.getBool(SpKeys.useDesktopSite) ?? false,
-                leading: const Icon(Icons.desktop_windows_outlined),
-                title: Text('use_desktop_site'.tr()),
-                description: Text('use_desktop_site_desc'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(SpKeys.useSystemBrowser, value);
-                  });
-                },
-                initialValue: sp.getBool(SpKeys.useSystemBrowser) ?? false,
-                leading: const Icon(Icons.open_in_browser),
-                title: Text('use_system_browser'.tr()),
-                description: Text('use_system_browser_desc'.tr()),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('permissions'.tr().capitalize()),
-            tiles: <SettingsTile>[
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  const Permission permission = Permission.locationWhenInUse;
-
-                  //for gps I don't care about updating value, because the webview can block it anyway
-                  await handlePermission(value, permission);
-
-                  setState(() {
-                    sp.setBool(SpKeys.gpsPermission, value);
-                  });
-                  if (value == false) {
-                    //restart so the weview is blocked
+              ],
+            ),
+            SettingsSection(
+              title: Text('Facebook'.tr()),
+              tiles: <SettingsTile>[
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.enableMessenger, value);
+                    });
+                  },
+                  initialValue: sp.getBool(SpKeys.enableMessenger) ?? true,
+                  leading: const Icon(Icons.messenger),
+                  title: Text('enable_messenger'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.startOnMessenger, value);
+                    });
+                  },
+                  initialValue: sp.getBool(SpKeys.startOnMessenger) ?? false,
+                  leading: const Icon(Icons.chat_bubble_outline),
+                  title: Text('start_on_messenger'.tr()),
+                  description: Text('start_on_messenger_desc'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    setState(() {
+                      sp.setBool(SpKeys.hideAds, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: sp.getBool(SpKeys.hideAds) ?? true,
+                  leading: const Icon(Icons.hide_source),
+                  title: Text('hide_ads'.tr()),
+                  description: Text(
+                    'ads_blocked_count'
+                        .tr(args: ['${PrefController.getAdsBlockedTotal()}']),
+                  ),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.hidePeopleYouMayKnow, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue:
+                      sp.getBool(SpKeys.hidePeopleYouMayKnow) ?? false,
+                  leading: const Icon(Icons.person_off_outlined),
+                  title: Text('hide_people_you_may_know'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.recentFirst, value);
+                    });
+                    ref
+                        .read(fbWebViewProvider.notifier)
+                        .updateUrl(PrefController.getHomePage());
+                  },
+                  initialValue: sp.getBool(SpKeys.recentFirst),
+                  leading: const Icon(Icons.rss_feed),
+                  title: Text('recent_first'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.useMbasic, value);
+                    });
+                    ref
+                        .read(fbWebViewProvider.notifier)
+                        .updateUrl(PrefController.getHomePage());
+                    Restart.restartApp();
+                  },
+                  initialValue: sp.getBool(SpKeys.useMbasic) ?? false,
+                  leading: const Icon(Icons.abc),
+                  title: Text('use_mbasic'.tr()),
+                  description: Text('use_mbasic_desc'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.useDesktopSite, value);
+                    });
                     showToast("rebooting".tr());
                     Restart.restartApp();
-                  }
-                },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool(SpKeys.gpsPermission) ?? false,
-                leading: const Icon(Icons.gps_fixed),
-                title: Text('gps_permission'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  final wanted = value;
-                  final granted =
-                      await handlePermission(wanted, Permission.camera);
-
-                  //Turning on: the OS decides, so store what it actually
-                  //granted. Turning off: the user's intent wins. handlePermission
-                  //returns isGranted, and an OS grant survives until it is
-                  //revoked in system settings, so storing it here would pin the
-                  //switch on and make it impossible to turn off.
-                  final stored = wanted && granted;
-
-                  if (!mounted) return;
-                  setState(() {
-                    sp.setBool(SpKeys.cameraPermission, stored);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                //fixme bug on sp, I shoudl use the permission handler .isgranted
-                initialValue: sp.getBool(SpKeys.cameraPermission) ?? false,
-                leading: const Icon(Icons.camera_alt),
-                title: Text('camera_permission'.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) async {
-                  await Telemetry.setEnabled(value);
-                  //Telemetry owns the stored value, so re-read it instead of
-                  //assuming the toggle took effect
-                  setState(() {});
-                },
-                initialValue: Telemetry.isEnabled,
-                leading: const Icon(Icons.bug_report_outlined),
-                title: Text('telemetry_reports'.tr()),
-                description: Text('telemetry_reports_desc'.tr()),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('style'.tr().capitalize()),
-            tiles: <SettingsTile>[
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.darkThemeCss.key, value);
-                  });
-                  //set dark theme
-
-                  final newTheme = value ? ThemeMode.dark : ThemeMode.light;
-                  SlimSocialApp.of(context).changeTheme(newTheme);
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.darkThemeCss.isEnabled(),
-                title: Text(CustomCss.darkThemeCss.key.tr()),
-                leading: const Icon(Icons.format_paint),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.fixedBarCss.key, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.fixedBarCss.isEnabled(),
-                leading: const Icon(Icons.vertical_align_top),
-                title: Text(CustomCss.fixedBarCss.key.tr()),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.hideStoriesCss.key, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.hideStoriesCss.isEnabled(),
-                title: Text(CustomCss.hideStoriesCss.key.tr()),
-                leading: const Icon(Icons.hide_image),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.hideReelsCss.key, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.hideReelsCss.isEnabled(),
-                title: Text(CustomCss.hideReelsCss.key.tr()),
-                leading: const Icon(Icons.video_library_outlined),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.centerTextPostsCss.key, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.centerTextPostsCss.isEnabled(),
-                title: Text(CustomCss.centerTextPostsCss.key.tr()),
-                leading: const Icon(Icons.format_align_center),
-              ),
-              SettingsTile.switchTile(
-                onToggle: (value) {
-                  setState(() {
-                    sp.setBool(CustomCss.addSpaceBetweenPostsCss.key, value);
-                  });
-                  ref.invalidate(fbWebViewProvider);
-                },
-                initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
-                title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
-                leading: const Icon(Icons.format_line_spacing),
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.format_size),
-                title: Text('text_zoom'.tr()),
-                description: Text('text_zoom_desc'.tr()),
-                trailing: Text("${PrefController.getTextZoom()}%"),
-                onPressed: (context) async {
-                  await showTextZoomDialog();
-                  setState(() {});
-                  //the webview re-reads the zoom while the page reloads
-                  ref.invalidate(fbWebViewProvider);
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('advanced'.tr().capitalize()),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                leading: const Icon(Icons.person),
-                title: Text('custom_useragent'.tr()),
-                trailing: Visibility(
-                  visible: sp.getBool(SpKeys.enabled(SpKeys.customUserAgent)) ?? false,
-                  child: const Icon(Icons.check_circle),
+                  },
+                  initialValue: sp.getBool(SpKeys.useDesktopSite) ?? false,
+                  leading: const Icon(Icons.desktop_windows_outlined),
+                  title: Text('use_desktop_site'.tr()),
+                  description: Text('use_desktop_site_desc'.tr()),
                 ),
-                onPressed: (context) async {
-                  final before = PrefController.getUserAgent();
-                  await showTextInputDialog(
-                    spKey: SpKeys.customUserAgent,
-                    hint: PrefController.getUserAgent(),
-                  );
-                  setState(() {});
-                  if (PrefController.getUserAgent() != before) {
-                    showToast("rebooting".tr());
-                    Restart.restartApp();
-                  }
-                },
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.css),
-                title: Text('custom_js'.tr()),
-                trailing: Visibility(
-                  visible: sp.getBool(SpKeys.enabled(SpKeys.customJs)) ?? false,
-                  child: const Icon(Icons.check_circle),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(SpKeys.useSystemBrowser, value);
+                    });
+                  },
+                  initialValue: sp.getBool(SpKeys.useSystemBrowser) ?? false,
+                  leading: const Icon(Icons.open_in_browser),
+                  title: Text('use_system_browser'.tr()),
+                  description: Text('use_system_browser_desc'.tr()),
                 ),
-                onPressed: (context) async {
-                  await showTextInputDialog(
-                    spKey: SpKeys.customJs,
-                    hint: CustomJs.exampleJs,
-                  );
-                  setState(() {});
-                },
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.javascript_sharp),
-                title: Text('custom_css'.tr()),
-                trailing: Visibility(
-                  visible: sp.getBool(SpKeys.enabled(SpKeys.customCss)) ?? false,
-                  child: const Icon(Icons.check_circle),
+              ],
+            ),
+            SettingsSection(
+              title: Text('permissions'.tr().capitalize()),
+              tiles: <SettingsTile>[
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    const Permission permission = Permission.locationWhenInUse;
+
+                    //for gps I don't care about updating value, because the webview can block it anyway
+                    await handlePermission(value, permission);
+
+                    setState(() {
+                      sp.setBool(SpKeys.gpsPermission, value);
+                    });
+                    if (value == false) {
+                      //restart so the weview is blocked
+                      showToast("rebooting".tr());
+                      Restart.restartApp();
+                    }
+                  },
+                  //fixme bug on sp, I shoudl use the permission handler .isgranted
+                  initialValue: sp.getBool(SpKeys.gpsPermission) ?? false,
+                  leading: const Icon(Icons.gps_fixed),
+                  title: Text('gps_permission'.tr()),
                 ),
-                onPressed: (context) async {
-                  await showTextInputDialog(
-                    spKey: SpKeys.customCss,
-                    hint: '._5rgt._5msi { text-align: center;}',
-                  );
-                  setState(() {});
-                },
-              ),
-              if (isDev)
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    final wanted = value;
+                    final granted =
+                        await handlePermission(wanted, Permission.camera);
+
+                    //Turning on: the OS decides, so store what it actually
+                    //granted. Turning off: the user's intent wins.
+                    //handlePermission returns isGranted, and an OS grant
+                    //survives until it is revoked in system settings, so
+                    //storing it here would pin the switch on and make it
+                    //impossible to turn off.
+                    final stored = wanted && granted;
+
+                    if (!mounted) return;
+                    setState(() {
+                      sp.setBool(SpKeys.cameraPermission, stored);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  //fixme bug on sp, I shoudl use the permission handler .isgranted
+                  initialValue: sp.getBool(SpKeys.cameraPermission) ?? false,
+                  leading: const Icon(Icons.camera_alt),
+                  title: Text('camera_permission'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    await Telemetry.setEnabled(value);
+                    //Telemetry owns the stored value, so re-read it instead of
+                    //assuming the toggle took effect
+                    setState(() {});
+                  },
+                  initialValue: Telemetry.isEnabled,
+                  leading: const Icon(Icons.bug_report_outlined),
+                  title: Text('telemetry_reports'.tr()),
+                  description: Text('telemetry_reports_desc'.tr()),
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('style'.tr().capitalize()),
+              tiles: <SettingsTile>[
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.darkThemeCss.key, value);
+                    });
+                    //set dark theme
+
+                    final newTheme = value ? ThemeMode.dark : ThemeMode.light;
+                    SlimSocialApp.of(context).changeTheme(newTheme);
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.darkThemeCss.isEnabled(),
+                  title: Text(CustomCss.darkThemeCss.key.tr()),
+                  leading: const Icon(Icons.format_paint),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.fixedBarCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.fixedBarCss.isEnabled(),
+                  leading: const Icon(Icons.vertical_align_top),
+                  title: Text(CustomCss.fixedBarCss.key.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.hideStoriesCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.hideStoriesCss.isEnabled(),
+                  title: Text(CustomCss.hideStoriesCss.key.tr()),
+                  leading: const Icon(Icons.hide_image),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.hideReelsCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.hideReelsCss.isEnabled(),
+                  title: Text(CustomCss.hideReelsCss.key.tr()),
+                  leading: const Icon(Icons.video_library_outlined),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.centerTextPostsCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.centerTextPostsCss.isEnabled(),
+                  title: Text(CustomCss.centerTextPostsCss.key.tr()),
+                  leading: const Icon(Icons.format_align_center),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
+                      sp.setBool(CustomCss.addSpaceBetweenPostsCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.addSpaceBetweenPostsCss.isEnabled(),
+                  title: Text(CustomCss.addSpaceBetweenPostsCss.key.tr()),
+                  leading: const Icon(Icons.format_line_spacing),
+                ),
                 SettingsTile.navigation(
-                  enabled: !sp.getString(SpKeys.customCss).isNullOrEmpty() ||
-                      !sp.getString(SpKeys.customJs).isNullOrEmpty() ||
-                      !sp.getString(SpKeys.customUserAgent).isNullOrEmpty(),
-                  leading: const Icon(Icons.send_time_extension),
-                  title: Text('send_to_dev'.tr()),
-                  description: Text('send_to_dev_desc'.tr()),
-                  onPressed: (context) => showSendCodeToDev(),
-                ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.private_connectivity_outlined),
-                title: Text('custom_proxy'.tr()),
-                trailing: Visibility(
-                  visible: sp.getBool(SpKeys.enabled(SpKeys.customProxy)) ?? false,
-                  child: const Icon(Icons.check_circle),
-                ),
-                onPressed: (context) async {
-                  const spKey = SpKeys.customProxy;
-                  final spKeyEnabled = SpKeys.enabled(spKey);
-                  final spKeyIp = SpKeys.customProxyIp;
-                  final spKeyPort = SpKeys.customProxyPort;
-
-                  final ip = sp.getString(spKeyIp);
-                  final port = sp.getString(spKeyPort);
-
-                  await showProxyDialog();
-
-                  final newIp = sp.getString(spKeyIp);
-                  final newPort = sp.getString(spKeyPort);
-                  final enabled = sp.getBool(spKeyEnabled) ?? false;
-
-                  if ((ip != newIp || port != newPort) && enabled) {
-                    Restart.restartApp();
-                  }
-
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('contribute'.tr().capitalize()),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                leading: const Icon(Icons.share),
-                title: Text('shareapp'.tr()),
-                onPressed: (BuildContext context) async {
-                  Share.share(storeServices.appListingUrl);
-                },
-              ),
-              //the store's own rating sheet, and billing, exist only where
-              //there is a store. The F-Droid build asks for neither and offers
-              //a plain donation link in their place.
-              if (storeServices.canRequestReview)
-                SettingsTile.navigation(
-                  leading: const Icon(Icons.star),
-                  title: Text('review5stars_v1'.tr()),
-                  onPressed: (BuildContext context) async {
-                    await storeServices.requestReview();
+                  leading: const Icon(Icons.format_size),
+                  title: Text('text_zoom'.tr()),
+                  description: Text('text_zoom_desc'.tr()),
+                  trailing: Text("${PrefController.getTextZoom()}%"),
+                  onPressed: (context) async {
+                    await showTextZoomDialog();
+                    setState(() {});
+                    //the webview re-reads the zoom while the page reloads
+                    ref.invalidate(fbWebViewProvider);
                   },
                 ),
-              if (storeServices.canPurchase) ...[
+              ],
+            ),
+            SettingsSection(
+              title: Text('advanced'.tr().capitalize()),
+              tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  leading: const Icon(Icons.coffee),
-                  title: Text('buy_coffee'.tr()),
-                  onPressed: (BuildContext context) async {
-                    await storeServices.donate("donation_2".tr());
+                  leading: const Icon(Icons.person),
+                  title: Text('custom_useragent'.tr()),
+                  trailing: Visibility(
+                    visible: sp.getBool(SpKeys.enabled(SpKeys.customUserAgent)) ?? false,
+                    child: const Icon(Icons.check_circle),
+                  ),
+                  onPressed: (context) async {
+                    final before = PrefController.getUserAgent();
+                    await showTextInputDialog(
+                      spKey: SpKeys.customUserAgent,
+                      hint: PrefController.getUserAgent(),
+                    );
+                    setState(() {});
+                    if (PrefController.getUserAgent() != before) {
+                      showToast("rebooting".tr());
+                      Restart.restartApp();
+                    }
                   },
                 ),
                 SettingsTile.navigation(
-                  leading: const Icon(Icons.local_pizza_outlined),
-                  title: Text('buy_pizza'.tr()),
-                  onPressed: (BuildContext context) async {
-                    await storeServices.donate("donation_3".tr());
+                  leading: const Icon(Icons.css),
+                  title: Text('custom_js'.tr()),
+                  trailing: Visibility(
+                    visible:
+                        sp.getBool(SpKeys.enabled(SpKeys.customJs)) ?? false,
+                    child: const Icon(Icons.check_circle),
+                  ),
+                  onPressed: (context) async {
+                    await showTextInputDialog(
+                      spKey: SpKeys.customJs,
+                      hint: CustomJs.exampleJs,
+                    );
+                    setState(() {});
                   },
                 ),
-              ] else
                 SettingsTile.navigation(
-                  leading: const Icon(Icons.coffee),
-                  title: Text('donate'.tr().capitalize()),
+                  leading: const Icon(Icons.javascript_sharp),
+                  title: Text('custom_css'.tr()),
+                  trailing: Visibility(
+                    visible: sp.getBool(SpKeys.enabled(SpKeys.customCss)) ?? false,
+                    child: const Icon(Icons.check_circle),
+                  ),
+                  onPressed: (context) async {
+                    await showTextInputDialog(
+                      spKey: SpKeys.customCss,
+                      hint: '._5rgt._5msi { text-align: center;}',
+                    );
+                    setState(() {});
+                  },
+                ),
+                if (isDev)
+                  SettingsTile.navigation(
+                    enabled: !sp.getString(SpKeys.customCss).isNullOrEmpty() ||
+                        !sp.getString(SpKeys.customJs).isNullOrEmpty() ||
+                        !sp.getString(SpKeys.customUserAgent).isNullOrEmpty(),
+                    leading: const Icon(Icons.send_time_extension),
+                    title: Text('send_to_dev'.tr()),
+                    description: Text('send_to_dev_desc'.tr()),
+                    onPressed: (context) => showSendCodeToDev(),
+                  ),
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.private_connectivity_outlined),
+                  title: Text('custom_proxy'.tr()),
+                  trailing: Visibility(
+                    visible: sp.getBool(SpKeys.enabled(SpKeys.customProxy)) ?? false,
+                    child: const Icon(Icons.check_circle),
+                  ),
+                  onPressed: (context) async {
+                    const spKey = SpKeys.customProxy;
+                    final spKeyEnabled = SpKeys.enabled(spKey);
+                    final spKeyIp = SpKeys.customProxyIp;
+                    final spKeyPort = SpKeys.customProxyPort;
+
+                    final ip = sp.getString(spKeyIp);
+                    final port = sp.getString(spKeyPort);
+
+                    await showProxyDialog();
+
+                    final newIp = sp.getString(spKeyIp);
+                    final newPort = sp.getString(spKeyPort);
+                    final enabled = sp.getBool(spKeyEnabled) ?? false;
+
+                    if ((ip != newIp || port != newPort) && enabled) {
+                      Restart.restartApp();
+                    }
+
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('contribute'.tr().capitalize()),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.share),
+                  title: Text('shareapp'.tr()),
+                  onPressed: (BuildContext context) async {
+                    Share.share(storeServices.appListingUrl);
+                  },
+                ),
+                //the store's own rating sheet, and billing, exist only where
+                //there is a store. The F-Droid build asks for neither and
+                //offers a plain donation link in their place.
+                if (storeServices.canRequestReview)
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.star),
+                    title: Text('review5stars_v1'.tr()),
+                    onPressed: (BuildContext context) async {
+                      await storeServices.requestReview();
+                    },
+                  ),
+                if (storeServices.canPurchase) ...[
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.coffee),
+                    title: Text('buy_coffee'.tr()),
+                    onPressed: (BuildContext context) async {
+                      await storeServices.donate("donation_2".tr());
+                    },
+                  ),
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.local_pizza_outlined),
+                    title: Text('buy_pizza'.tr()),
+                    onPressed: (BuildContext context) async {
+                      await storeServices.donate("donation_3".tr());
+                    },
+                  ),
+                ] else
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.coffee),
+                    title: Text('donate'.tr().capitalize()),
+                    onPressed: (BuildContext context) =>
+                        launchUrl(Uri.parse(kPayPalDonationUrl)),
+                  ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('the_project'.tr().capitalize()),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.bug_report),
+                  title: Text('report_issue'.tr()),
                   onPressed: (BuildContext context) =>
-                      launchUrl(Uri.parse(kPayPalDonationUrl)),
+                      launchUrl(Uri.parse(kGithubIssuesUrl)),
                 ),
-            ],
-          ),
-          SettingsSection(
-            title: Text('the_project'.tr().capitalize()),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                leading: const Icon(Icons.bug_report),
-                title: Text('report_issue'.tr()),
-                onPressed: (BuildContext context) =>
-                    launchUrl(Uri.parse(kGithubIssuesUrl)),
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.code),
-                title: const Text('GitHub'),
-                description: Text('source_code'.tr()),
-                onPressed: (BuildContext context) =>
-                    launchInAppUrl(context, kGithubProjectUrl),
-              ),
-              SettingsTile.navigation(
-                leading: const Icon(Icons.perm_device_info),
-                title: Text('version'.tr().capitalize()),
-                description: Text(packageInfo.version),
-              ),
-            ],
-          ),
-        ],
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.code),
+                  title: const Text('GitHub'),
+                  description: Text('source_code'.tr()),
+                  onPressed: (BuildContext context) =>
+                      launchInAppUrl(context, kGithubProjectUrl),
+                ),
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.perm_device_info),
+                  title: Text('version'.tr().capitalize()),
+                  description: Text(packageInfo.version),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
