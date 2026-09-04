@@ -199,3 +199,82 @@ Uri _messengerInbox() => Uri.parse(kMessengerInboxUrl);
 
 //[kMessengerInboxUrl] ends in a slash, so the thread id appends directly
 Uri _messengerThread(String id) => Uri.parse('${kMessengerInboxUrl}t/$id');
+
+/// Hosts that serve the same Facebook feed.
+///
+/// The home page setting names one of them — `touch.facebook.com` by default,
+/// `mbasic.facebook.com` in basic mode — while a link tapped inside the feed
+/// can land the webview on any of the others. Treating them as one host is
+/// what stops a plain `facebook.com/home.php` from being read as a page the
+/// reader navigated to.
+const Set<String> _kHomeFeedHostFamily = {
+  'facebook.com',
+  'www.facebook.com',
+  'm.facebook.com',
+  'touch.facebook.com',
+};
+
+/// Paths that render the feed itself.
+///
+/// The query is not compared: the feed carries `?sk=h_chr` or `?sk=h_nor`
+/// depending on the "most recent first" setting, and both are the same page.
+const Set<String> _kHomeFeedPaths = {
+  '',
+  '/',
+  '/home.php',
+};
+
+/// Whether [current] is the feed named by [home].
+bool isHomeFeed(Uri current, Uri home) {
+  final currentHost = current.host.toLowerCase();
+  final homeHost = home.host.toLowerCase();
+
+  final sameHost = currentHost == homeHost ||
+      (_kHomeFeedHostFamily.contains(currentHost) &&
+          _kHomeFeedHostFamily.contains(homeHost));
+  if (!sameHost) return false;
+
+  return _kHomeFeedPaths.contains(current.path);
+}
+
+/// What the system Back button should do.
+enum BackAction {
+  /// Step back through the webview's own history.
+  goBack,
+
+  /// Load the feed. There is no history to step back through, but the reader
+  /// is not on the feed either.
+  goHome,
+
+  /// Leave the app.
+  exit,
+}
+
+/// Decides [BackAction] for a Back press on the feed screen (#222).
+///
+/// Facebook's mobile site often replaces the current history entry instead of
+/// pushing a new one, so a post, group or profile opened from the feed can
+/// leave `canGoBack()` false. Back then closed the app from a page the reader
+/// had clearly navigated into, which is what #222 reports. Loading the feed
+/// instead gives that press somewhere to go; a second press, now on the feed,
+/// still exits.
+///
+/// The sign-in flow is the exception. It is not the feed, but sending it home
+/// would bounce a signed-out reader between the login form and the redirect
+/// back to it, so Back there keeps closing the app.
+BackAction backActionFor({
+  required bool canGoBack,
+  required Uri? current,
+  required Uri home,
+}) {
+  if (canGoBack) return BackAction.goBack;
+
+  //a url that could not be read says nothing about where the reader is, so the
+  //old behaviour stands rather than a guessed navigation
+  if (current == null) return BackAction.exit;
+
+  if (isHomeFeed(current, home)) return BackAction.exit;
+  if (isFacebookAuthUrl(current)) return BackAction.exit;
+
+  return BackAction.goHome;
+}
