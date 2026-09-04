@@ -68,6 +68,8 @@
   "save": "儲存",
   "permissions": "權限",
   "enable_messenger": "啟用 Messenger",
+  "start_on_messenger": "啟動時開啟 Messenger",
+  "start_on_messenger_desc": "啟動後直接進入 Messenger 畫面，而非動態消息。需要啟用 Messenger",
   "report_issue": "回報問題",
   "source_code": "原始碼",
   "top": "捲動至頂部",

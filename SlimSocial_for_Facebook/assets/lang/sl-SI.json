@@ -65,6 +65,8 @@
   "save": "Shrani",
   "permissions": "Dovoljenja",
   "enable_messenger": "Omogoči Messenger",
+  "start_on_messenger": "Odpri Messenger ob zagonu",
+  "start_on_messenger_desc": "Začni na zaslonu Messengerja namesto v viru. Messenger mora biti vklopljen",
   "text_zoom": "Velikost besedila",
   "text_zoom_desc": "Spremeni velikost besedila strani, ne da bi pokvaril postavitev",
   "check_permission": "Preverite dovoljenje v nastavitvah",

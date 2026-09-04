@@ -65,6 +65,8 @@
   "save": "Запази",
   "permissions": "Разрешения",
   "enable_messenger": "Разреши Messenger",
+  "start_on_messenger": "Отваряй Messenger при стартиране",
+  "start_on_messenger_desc": "Започвай от екрана на Messenger вместо от новините. Messenger трябва да е включен",
   "text_zoom": "Размер на текста",
   "text_zoom_desc": "Мащабира текста на страницата, без да разваля оформлението",
   "check_permission": "Проверете разрешението в настройките",

@@ -65,6 +65,8 @@
   "save": "Uložit",
   "permissions": "Oprávnění",
   "enable_messenger": "Zapnout Messenger",
+  "start_on_messenger": "Otevřít Messenger při spuštění",
+  "start_on_messenger_desc": "Začít na obrazovce Messengeru místo na zdi. Messenger musí být povolen",
   "text_zoom": "Velikost textu",
   "text_zoom_desc": "Změní velikost textu stránky bez rozbití rozložení",
   "check_permission": "Zkontrolujte oprávnění v nastavení",

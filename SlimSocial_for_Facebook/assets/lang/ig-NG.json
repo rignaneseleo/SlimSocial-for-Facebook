@@ -68,6 +68,8 @@
   "save": "Chekwaa",
   "permissions": "Ikike",
   "enable_messenger": "Kwado Messenger",
+  "start_on_messenger": "Mepee Messenger mgbe ị na-amalite",
+  "start_on_messenger_desc": "Malite na ihuenyo Messenger kama feed. Messenger ga-agbanyerịrị",
   "report_issue": "Kọọ nsogbu",
   "source_code": "Koodu isi mmalite",
   "top": "Gaa n'elu",

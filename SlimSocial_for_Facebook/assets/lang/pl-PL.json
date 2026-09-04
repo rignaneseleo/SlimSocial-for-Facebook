@@ -65,6 +65,8 @@
   "save": "Zapisz",
   "permissions": "Uprawnienia",
   "enable_messenger": "Włącz Messenger",
+  "start_on_messenger": "Otwieraj Messengera po uruchomieniu",
+  "start_on_messenger_desc": "Zaczynaj od ekranu Messengera, a nie od tablicy. Messenger musi być włączony",
   "text_zoom": "Rozmiar tekstu",
   "text_zoom_desc": "Skaluje tekst strony bez psucia układu",
   "check_permission": "Sprawdź uprawnienie w ustawieniach",

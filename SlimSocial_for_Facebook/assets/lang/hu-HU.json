@@ -65,6 +65,8 @@
   "save": "Mentés",
   "permissions": "Engedélyek",
   "enable_messenger": "Üzenetküldés engedélyezése",
+  "start_on_messenger": "Messenger megnyitása indításkor",
+  "start_on_messenger_desc": "A hírfolyam helyett a Messenger képernyőn induljon. A Messengernek bekapcsolva kell lennie",
   "text_zoom": "Szövegméret",
   "text_zoom_desc": "Az oldal szövegének átméretezése az elrendezés megbontása nélkül",
   "check_permission": "Ellenőrizd az engedélyt a beállításokban",

@@ -65,6 +65,8 @@
   "save": "Lưu",
   "permissions": "Quyền hạn",
   "enable_messenger": "Kích hoạt Messenger",
+  "start_on_messenger": "Mở Messenger khi khởi động",
+  "start_on_messenger_desc": "Bắt đầu ở màn hình Messenger thay vì bảng tin. Cần bật Messenger",
   "text_zoom": "Cỡ chữ",
   "text_zoom_desc": "Thay đổi cỡ chữ của trang mà không làm vỡ bố cục",
   "check_permission": "Kiểm tra quyền trong phần cài đặt",

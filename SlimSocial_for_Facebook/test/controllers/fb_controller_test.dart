@@ -36,6 +36,44 @@ void main() {
     });
   });
 
+  group('startsOnMessenger', () {
+    test('is off until it is asked for', () {
+      expect(PrefController.startsOnMessenger(), isFalse);
+    });
+
+    test('is on once set, with Messenger left at its default', () async {
+      await withPrefs({SpKeys.startOnMessenger: true});
+
+      expect(PrefController.startsOnMessenger(), isTrue);
+    });
+
+    test('is on with Messenger explicitly enabled', () async {
+      await withPrefs({
+        SpKeys.startOnMessenger: true,
+        SpKeys.enableMessenger: true,
+      });
+
+      expect(PrefController.startsOnMessenger(), isTrue);
+    });
+
+    test('stays off while Messenger is disabled', () async {
+      // The screen is unreachable in this state, so a preference left over
+      // from before Messenger was turned off must not push it anyway.
+      await withPrefs({
+        SpKeys.startOnMessenger: true,
+        SpKeys.enableMessenger: false,
+      });
+
+      expect(PrefController.startsOnMessenger(), isFalse);
+    });
+
+    test('stays off when Messenger is enabled but this is not', () async {
+      await withPrefs({SpKeys.enableMessenger: true});
+
+      expect(PrefController.startsOnMessenger(), isFalse);
+    });
+  });
+
   group('getUserAgent', () {
     test('defaults to the bundled Firefox agent', () {
       expect(PrefController.getUserAgent(), kMobileUserAgent);

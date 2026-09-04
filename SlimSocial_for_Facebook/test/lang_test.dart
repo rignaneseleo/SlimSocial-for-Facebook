@@ -53,6 +53,8 @@ void main() {
         'center_text',
         'add_space',
         'enable_messenger',
+        'start_on_messenger',
+        'start_on_messenger_desc',
         'permissions',
         'advanced',
         'style',

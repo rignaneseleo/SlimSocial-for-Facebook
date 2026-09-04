@@ -65,6 +65,8 @@
   "save": "حفظ",
   "permissions": "الصلاحيات",
   "enable_messenger": "تفعيل المراسلة",
+  "start_on_messenger": "افتح ماسنجر عند بدء التشغيل",
+  "start_on_messenger_desc": "ابدأ على شاشة ماسنجر بدلاً من التغذية. يجب تمكين ماسنجر",
   "text_zoom": "حجم النص",
   "text_zoom_desc": "تغيير حجم نص الصفحة دون كسر التخطيط",
   "check_permission": "تحقق من الإذن في الإعدادات",

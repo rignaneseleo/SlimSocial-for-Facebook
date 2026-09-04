@@ -65,6 +65,8 @@
   "save": "Salvează",
   "permissions": "Permisiuni",
   "enable_messenger": "Activează Messenger",
+  "start_on_messenger": "Deschide Messenger la pornire",
+  "start_on_messenger_desc": "Începe pe ecranul Messenger în loc de flux. Messenger trebuie să fie activat",
   "text_zoom": "Dimensiunea textului",
   "text_zoom_desc": "Scalează textul paginii fără a strica aspectul",
   "check_permission": "Verifică permisiunea în setări",

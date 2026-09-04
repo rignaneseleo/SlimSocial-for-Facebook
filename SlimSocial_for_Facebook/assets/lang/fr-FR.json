@@ -65,6 +65,8 @@
   "save": "Enregistrer",
   "permissions": "Autorisations",
   "enable_messenger": "Activer Messenger",
+  "start_on_messenger": "Ouvrir Messenger au démarrage",
+  "start_on_messenger_desc": "Démarrer sur l'écran Messenger au lieu du fil d'actualité. Messenger doit être activé",
   "text_zoom": "Taille du texte",
   "text_zoom_desc": "Redimensionne le texte de la page sans casser la mise en page",
   "check_permission": "Vérifiez l'autorisation dans les paramètres",

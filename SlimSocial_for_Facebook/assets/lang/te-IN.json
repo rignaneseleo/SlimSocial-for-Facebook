@@ -65,6 +65,8 @@
   "save": "సేవ్ చేయి",
   "permissions": "అనుమతులు",
   "enable_messenger": "మెస్సేంజర్ ప్రారంభించు",
+  "start_on_messenger": "ప్రారంభంలో Messenger తెరవండి",
+  "start_on_messenger_desc": "ఫీడ్‌కు బదులుగా Messenger స్క్రీన్‌లో ప్రారంభించండి. Messenger ప్రారంభించి ఉండాలి",
   "text_zoom": "టెక్స్ట్ పరిమాణం",
   "text_zoom_desc": "లేఅవుట్ చెడకుండా పేజీ టెక్స్ట్ పరిమాణాన్ని మార్చండి",
   "check_permission": "సెట్టింగ్‌లలో అనుమతిని తనిఖీ చేయండి",

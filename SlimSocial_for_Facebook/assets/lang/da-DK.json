@@ -65,6 +65,8 @@
   "save": "Gem",
   "permissions": "Tilladelser",
   "enable_messenger": "Aktivér Messenger",
+  "start_on_messenger": "Åbn Messenger ved start",
+  "start_on_messenger_desc": "Start på Messenger-skærmen i stedet for feedet. Messenger skal være slået til",
   "text_zoom": "Tekststørrelse",
   "text_zoom_desc": "Skaler sidens tekst uden at ødelægge layoutet",
   "check_permission": "Tjek tilladelsen i indstillingerne",

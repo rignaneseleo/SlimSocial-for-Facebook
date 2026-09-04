@@ -65,6 +65,8 @@
   "save": "שמור",
   "permissions": "הרשאות",
   "enable_messenger": "הפעל מסרים",
+  "start_on_messenger": "פתח את Messenger בהפעלה",
+  "start_on_messenger_desc": "התחל במסך Messenger במקום בפיד. נדרש ש-Messenger יהיה מופעל",
   "text_zoom": "גודל הטקסט",
   "text_zoom_desc": "שינוי גודל הטקסט בדף מבלי לשבור את הפריסה",
   "check_permission": "בדקו את ההרשאה בהגדרות",

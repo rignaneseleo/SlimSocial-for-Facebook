@@ -65,6 +65,8 @@
   "save": "Išsaugoti",
   "permissions": "Leidimai",
   "enable_messenger": "Įjungti Messenger",
+  "start_on_messenger": "Paleidus atidaryti „Messenger“",
+  "start_on_messenger_desc": "Pradėti nuo „Messenger“ ekrano, o ne nuo naujinių. „Messenger“ turi būti įjungtas",
   "text_zoom": "Teksto dydis",
   "text_zoom_desc": "Keičia puslapio teksto dydį nesugadinant išdėstymo",
   "check_permission": "Patikrinkite leidimą nustatymuose",

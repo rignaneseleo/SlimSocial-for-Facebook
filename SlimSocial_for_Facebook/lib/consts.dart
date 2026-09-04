@@ -130,6 +130,10 @@ class SpKeys {
   static const String textZoom = "text_zoom";
 
   static const String enableMessenger = "enable_messenger";
+
+  /// When true, a cold start opens the Messenger screen over the feed.
+  /// Ignored while [enableMessenger] is off, because that hides the screen.
+  static const String startOnMessenger = "start_on_messenger";
   static const String hideAds = "hide_ads";
   static const String hidePeopleYouMayKnow = "hide_people_you_may_know";
 

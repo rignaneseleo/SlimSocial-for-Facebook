@@ -65,6 +65,8 @@
   "save": "Sačuvaj",
   "permissions": "Dozvole",
   "enable_messenger": "Omogući Messenger",
+  "start_on_messenger": "Отвори Messenger при покретању",
+  "start_on_messenger_desc": "Почни на екрану Messenger-а уместо на фиду. Messenger мора бити укључен",
   "text_zoom": "Veličina teksta",
   "text_zoom_desc": "Menja veličinu teksta stranice bez narušavanja izgleda",
   "check_permission": "Proverite dozvolu u podešavanjima",

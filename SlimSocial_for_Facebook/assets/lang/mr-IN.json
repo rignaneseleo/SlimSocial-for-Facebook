@@ -65,6 +65,8 @@
   "save": "सेव्ह करा",
   "permissions": "परवानगी",
   "enable_messenger": "मेसेंजर सक्षम करा",
+  "start_on_messenger": "सुरू होताना Messenger उघडा",
+  "start_on_messenger_desc": "फीडऐवजी Messenger स्क्रीनवर सुरू करा. Messenger सुरू असणे आवश्यक आहे",
   "text_zoom": "मजकुराचा आकार",
   "text_zoom_desc": "लेआउट न बिघडवता पानावरील मजकुराचा आकार बदला",
   "check_permission": "सेटिंग्जमध्ये परवानगी तपासा",

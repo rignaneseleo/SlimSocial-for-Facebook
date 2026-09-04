@@ -65,6 +65,8 @@
   "save": "บันทึก",
   "permissions": "การอนุญาต",
   "enable_messenger": "เปิดใช้งาน Messenger",
+  "start_on_messenger": "เปิด Messenger เมื่อเริ่มแอป",
+  "start_on_messenger_desc": "เริ่มที่หน้าจอ Messenger แทนฟีด ต้องเปิดใช้ Messenger ไว้",
   "text_zoom": "ขนาดตัวอักษร",
   "text_zoom_desc": "ปรับขนาดตัวอักษรของหน้าโดยไม่ทำให้เค้าโครงเสีย",
   "check_permission": "ตรวจสอบสิทธิ์ในการตั้งค่า",

@@ -65,6 +65,8 @@
   "save": "Spara",
   "permissions": "Behörigheter",
   "enable_messenger": "Aktivera Messenger",
+  "start_on_messenger": "Öppna Messenger vid start",
+  "start_on_messenger_desc": "Starta på Messenger-skärmen i stället för flödet. Messenger måste vara aktiverat",
   "text_zoom": "Textstorlek",
   "text_zoom_desc": "Skalar sidans text utan att förstöra layouten",
   "check_permission": "Kontrollera behörigheten i inställningarna",

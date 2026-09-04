@@ -65,6 +65,8 @@
   "save": "저장",
   "permissions": "권한",
   "enable_messenger": "메신저 활성화",
+  "start_on_messenger": "시작할 때 Messenger 열기",
+  "start_on_messenger_desc": "피드 대신 Messenger 화면에서 시작합니다. Messenger를 켜 두어야 합니다",
   "text_zoom": "글자 크기",
   "text_zoom_desc": "레이아웃을 깨뜨리지 않고 페이지 글자 크기를 조절합니다",
   "check_permission": "설정에서 권한을 확인하세요",
