@@ -81,6 +81,8 @@
   "exit": "App afsluiten",
   "hide_people_you_may_know": "Verberg \"Mensen die je misschien kent\"",
   "hide_reels": "Verberg reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Verberg de Messenger-zijbalk",
   "error_page_offline": "Facebook kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",
   "retry": "Opnieuw proberen",

@@ -81,6 +81,8 @@
   "exit": "Выйти из приложения",
   "hide_people_you_may_know": "Скрыть «Возможные друзья»",
   "hide_reels": "Скрыть Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Скрыть боковую панель Messenger",
   "error_page_offline": "Не удалось загрузить Facebook. Проверьте подключение и повторите попытку.",
   "retry": "Повторить",

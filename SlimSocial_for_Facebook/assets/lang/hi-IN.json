@@ -81,6 +81,8 @@
   "exit": "ऐप से बाहर निकलें",
   "hide_people_you_may_know": "\"वे लोग जिन्हें आप जानते होंगे\" छिपाएं",
   "hide_reels": "रील्स छिपाएं",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "मैसेंजर साइडबार छिपाएं",
   "error_page_offline": "Facebook लोड नहीं हो सका। अपना कनेक्शन जांचें और फिर से कोशिश करें।",
   "retry": "फिर से कोशिश करें",

@@ -81,6 +81,8 @@
   "exit": "ആപ്പിൽ നിന്ന് പുറത്തുകടക്കുക",
   "hide_people_you_may_know": "\"നിങ്ങൾക്ക് അറിയാവുന്ന ആളുകൾ\" മറയ്ക്കുക",
   "hide_reels": "റീലുകൾ മറയ്ക്കുക",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "മെസ്സേഞ്ചർ സൈഡ്ബാർ മറയ്ക്കുക",
   "error_page_offline": "Facebook ലോഡ് ചെയ്യാനായില്ല. കണക്ഷൻ പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.",
   "retry": "വീണ്ടും ശ്രമിക്കുക",

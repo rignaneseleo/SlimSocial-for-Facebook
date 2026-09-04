@@ -81,6 +81,8 @@
   "exit": "Comot from app",
   "hide_people_you_may_know": "Hide \"People wey you fit know\"",
   "hide_reels": "Hide reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Hide Messenger sidebar",
   "error_page_offline": "We no fit load Facebook. Check your connection make you try again.",
   "retry": "Try again",

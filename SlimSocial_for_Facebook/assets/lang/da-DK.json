@@ -81,6 +81,8 @@
   "exit": "Afslut appen",
   "hide_people_you_may_know": "Skjul \"Personer, du måske kender\"",
   "hide_reels": "Skjul reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Skjul Messenger-sidepanelet",
   "error_page_offline": "Facebook kunne ikke indlæses. Tjek din forbindelse, og prøv igen.",
   "retry": "Prøv igen",

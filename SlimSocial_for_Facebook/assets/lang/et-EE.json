@@ -81,6 +81,8 @@
   "exit": "Välju rakendusest",
   "hide_people_you_may_know": "Peida „Inimesed, keda võid tunda”",
   "hide_reels": "Peida reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Peida Messengeri külgriba",
   "error_page_offline": "Facebooki ei õnnestunud laadida. Kontrolli ühendust ja proovi uuesti.",
   "retry": "Proovi uuesti",

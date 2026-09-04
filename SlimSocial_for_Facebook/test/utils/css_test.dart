@@ -344,6 +344,46 @@ article {
       expect(keys, contains('hide_reels'));
     });
 
+    test('the feed toggle is offered too', () {
+      expect(CustomCss.hideFeedCss.key, 'hide_feed');
+      expect(CustomCss.cssList.map((c) => c.key), contains('hide_feed'));
+    });
+
+    test('the feed rule only applies behind the class gate', () {
+      // Without the gate this rule hides posts in groups and on profiles as
+      // well: Facebook navigates in-page, so a sheet injected on the home page
+      // is still in the document afterwards. Every selector in the rule has to
+      // carry the class, or the scoping is a fiction.
+      final selectors = CustomCss.hideFeedCss.code
+          .split('{')
+          .first
+          .split(',')
+          .map((s) => s.trim())
+          .where((s) => s.isNotEmpty);
+
+      expect(selectors, isNotEmpty);
+      for (final selector in selectors) {
+        expect(selector, startsWith('html.slim-hide-feed '), reason: selector);
+      }
+    });
+
+    test('the feed rule hides posts rather than the page around them', () {
+      // The top bar, the tabs and the notification jewel are the reason the
+      // reader keeps the app, so the rule targets the post containers only.
+      expect(
+        CustomCss.hideFeedCss.code,
+        contains('div[data-type="vscroller"] > div[data-tracking-duration-id]'),
+      );
+      expect(CustomCss.hideFeedCss.code, isNot(contains('body')));
+      expect(CustomCss.hideFeedCss.code, isNot(contains('#root')));
+      expect(CustomCss.hideFeedCss.code, isNot(contains('#header')));
+    });
+
+    test('the feed toggle ships switched off', () {
+      // It blanks the app's main screen, so nobody gets it without asking.
+      expect(CustomCss.hideFeedCss.isEnabled(), isFalse);
+    });
+
     test('neither rule hides the whole feed', () {
       // A selector that matches an ancestor of the feed would blank the page.
       for (final css in [CustomCss.hideStoriesCss, CustomCss.hideReelsCss]) {

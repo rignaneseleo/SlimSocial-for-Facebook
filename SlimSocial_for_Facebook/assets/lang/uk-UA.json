@@ -81,6 +81,8 @@
   "exit": "Вийти з додатка",
   "hide_people_you_may_know": "Приховувати «Люди, яких ви можете знати»",
   "hide_reels": "Приховувати Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Приховувати бічну панель Messenger",
   "error_page_offline": "Не вдалося завантажити Facebook. Перевірте з'єднання та повторіть спробу.",
   "retry": "Повторити",

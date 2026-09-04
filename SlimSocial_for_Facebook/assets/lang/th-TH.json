@@ -81,6 +81,8 @@
   "exit": "ออกจากแอป",
   "hide_people_you_may_know": "ซ่อน \"คนที่คุณอาจรู้จัก\"",
   "hide_reels": "ซ่อน Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "ซ่อนแถบด้านข้าง Messenger",
   "error_page_offline": "โหลด Facebook ไม่สำเร็จ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง",
   "retry": "ลองอีกครั้ง",

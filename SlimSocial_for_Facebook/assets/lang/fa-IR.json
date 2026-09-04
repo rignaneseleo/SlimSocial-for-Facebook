@@ -81,6 +81,8 @@
   "exit": "خروج از برنامه",
   "hide_people_you_may_know": "پنهان کردن «افرادی که ممکن است بشناسید»",
   "hide_reels": "پنهان کردن ریلز",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "پنهان کردن نوار کناری پیام رسان",
   "error_page_offline": "فیس‌بوک بارگذاری نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
   "retry": "تلاش دوباره",

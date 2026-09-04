@@ -81,6 +81,8 @@
   "exit": "Salir de la aplicación",
   "hide_people_you_may_know": "Ocultar «Personas que quizá conozcas»",
   "hide_reels": "Ocultar reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Ocultar la barra lateral de Messenger",
   "error_page_offline": "No se pudo cargar Facebook. Comprueba tu conexión e inténtalo de nuevo.",
   "retry": "Reintentar",

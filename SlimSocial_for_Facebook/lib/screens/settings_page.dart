@@ -318,6 +318,20 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) {
                     setState(() {
+                      sp.setBool(CustomCss.hideFeedCss.key, value);
+                    });
+                    ref.invalidate(fbWebViewProvider);
+                  },
+                  initialValue: CustomCss.hideFeedCss.isEnabled(),
+                  title: Text(CustomCss.hideFeedCss.key.tr()),
+                  //spelled out because the row hides the main screen of the app,
+                  //and the title alone does not say what is left
+                  description: Text('hide_feed_desc'.tr()),
+                  leading: const Icon(Icons.newspaper_outlined),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) {
+                    setState(() {
                       sp.setBool(CustomCss.centerTextPostsCss.key, value);
                     });
                     ref.invalidate(fbWebViewProvider);

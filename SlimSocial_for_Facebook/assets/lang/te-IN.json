@@ -81,6 +81,8 @@
   "exit": "యాప్ నుండి నిష్క్రమించండి",
   "hide_people_you_may_know": "\"మీకు తెలిసి ఉండవచ్చు\" దాచు",
   "hide_reels": "రీల్స్‌ను దాచు",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "మెస్సేంజర్ సైడ్‌బార్‌ను దాచు",
   "error_page_offline": "Facebook లోడ్ కాలేదు. మీ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
   "retry": "మళ్లీ ప్రయత్నించండి",

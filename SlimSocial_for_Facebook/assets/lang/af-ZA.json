@@ -81,6 +81,8 @@
   "exit": "Verlaat app",
   "hide_people_you_may_know": "Versteek \"Mense wat jy dalk ken\"",
   "hide_reels": "Versteek reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Versteek die Messenger-kantbalk",
   "error_page_offline": "Kon nie Facebook laai nie. Kontroleer jou verbinding en probeer weer.",
   "retry": "Probeer weer",

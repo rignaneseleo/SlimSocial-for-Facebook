@@ -386,4 +386,60 @@ void main() {
       expect(js, contains('} catch (e) {}'));
     });
   });
+
+  group('CustomJs.feedGateFunc', () {
+    final js = CustomJs.feedGateFunc(hosts: kFeedGateHosts, paths: kFeedPaths);
+
+    test('installs itself once, guarded by a global', () {
+      // Injection runs on every page start, and the gate leaves an interval
+      // and a listener behind: without the guard each navigation stacks
+      // another one on the same page.
+      expect(js, contains('window.__slimFeedGate'));
+      expect(js, contains('if (window.__slimFeedGate) return;'));
+    });
+
+    test('toggles the class the stylesheet is scoped to', () {
+      expect(js, contains('slim-hide-feed'));
+      expect(js, contains('document.documentElement.classList.toggle'));
+    });
+
+    test('carries the hosts and the paths it was given', () {
+      for (final host in kFeedGateHosts) {
+        expect(js, contains(jsonEncode(host)), reason: host);
+      }
+      for (final path in kFeedPaths) {
+        expect(js, contains(jsonEncode(path)), reason: path);
+      }
+    });
+
+    test('covers the hosts a redirect can land on', () {
+      // Signed-in home is touch.facebook.com, but a redirect to either of the
+      // others would leave the gate off and every post on screen.
+      expect(kFeedGateHosts, containsAll(kFeedHosts));
+      expect(kFeedGateHosts, contains('m.facebook.com'));
+      expect(kFeedGateHosts, contains('www.facebook.com'));
+    });
+
+    test('decides on both the host and the path', () {
+      // Path alone would gate on `/` of any site the webview opens; host alone
+      // would keep the class on inside groups and profiles.
+      expect(js, contains('location.hostname'));
+      expect(js, contains('location.pathname'));
+      expect(js, contains('&&'));
+    });
+
+    test('re-runs as the address changes in-page', () {
+      // pushState fires no event, so a half-second re-read of location is what
+      // catches a navigation into a group and takes the class back off.
+      expect(js, contains("addEventListener('popstate', update)"));
+      expect(js, contains('setInterval(update, 500)'));
+    });
+
+    test('runs as a self-invoking function that swallows its own failure', () {
+      expect(js.trim(), startsWith('(function () {'));
+      expect(js.trim(), endsWith('})();'));
+      expect(js, contains('try {'));
+      expect(js, contains('} catch (e) {}'));
+    });
+  });
 }

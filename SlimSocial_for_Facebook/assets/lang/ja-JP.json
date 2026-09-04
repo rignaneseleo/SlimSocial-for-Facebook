@@ -81,6 +81,8 @@
   "exit": "アプリを終了",
   "hide_people_you_may_know": "「知り合いかも」を非表示にする",
   "hide_reels": "リールを非表示にする",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Messengerのサイドバーを非表示にする",
   "error_page_offline": "Facebookを読み込めませんでした。接続を確認してもう一度お試しください。",
   "retry": "再試行",

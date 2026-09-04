@@ -81,6 +81,8 @@
   "exit": "Sulje sovellus",
   "hide_people_you_may_know": "Piilota \"Ehkä tunnet nämä\"",
   "hide_reels": "Piilota reelsit",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Piilota Messengerin sivupalkki",
   "error_page_offline": "Facebookia ei voitu ladata. Tarkista yhteytesi ja yritä uudelleen.",
   "retry": "Yritä uudelleen",

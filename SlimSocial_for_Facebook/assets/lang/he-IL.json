@@ -81,6 +81,8 @@
   "exit": "יציאה מהאפליקציה",
   "hide_people_you_may_know": "הסתר \"אנשים שאולי אתה מכיר\"",
   "hide_reels": "הסתר Reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "הסתר את סרגל הצד של מסרים",
   "error_page_offline": "לא ניתן היה לטעון את פייסבוק. בדוק את החיבור ונסה שוב.",
   "retry": "נסה שוב",

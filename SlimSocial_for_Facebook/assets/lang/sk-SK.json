@@ -81,6 +81,8 @@
   "exit": "Ukončiť aplikáciu",
   "hide_people_you_may_know": "Skryť „Ľudia, ktorých možno poznáte“",
   "hide_reels": "Skryť reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Skryť bočný panel Messengera",
   "error_page_offline": "Facebook sa nepodarilo načítať. Skontrolujte pripojenie a skúste to znova.",
   "retry": "Skúsiť znova",

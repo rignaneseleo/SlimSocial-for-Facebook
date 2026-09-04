@@ -81,6 +81,8 @@
   "exit": "Iziet no lietotnes",
   "hide_people_you_may_know": "Paslēpt “Cilvēki, kurus tu varētu pazīt”",
   "hide_reels": "Paslēpt reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Paslēpt Messenger sānjoslu",
   "error_page_offline": "Neizdevās ielādēt Facebook. Pārbaudi savienojumu un mēģini vēlreiz.",
   "retry": "Mēģināt vēlreiz",

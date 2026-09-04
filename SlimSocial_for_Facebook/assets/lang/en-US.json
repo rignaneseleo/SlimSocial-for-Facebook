@@ -18,6 +18,8 @@
   "fixed_bar": "Fixed top bar",
   "hide_stories": "Hide stories",
   "hide_reels": "Hide reels",
+  "hide_feed": "Hide the home feed",
+  "hide_feed_desc": "No posts on the home page. Notifications, groups, profiles and Messenger still work",
   "hide_messenger_sidebar": "Hide Messenger sidebar",
   "center_text": "Center text on posts",
   "add_space": "Add space between posts",
