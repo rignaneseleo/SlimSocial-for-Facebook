@@ -74,6 +74,11 @@ void main() {
         'rate_sends_notice',
         'rate_thanks',
         'rate_failed',
+        // The long-press link sheet. An unlabelled row here leaves two
+        // identical-looking taps and no way to tell which one copies.
+        'copy_link',
+        'open_in_browser',
+        'link_copied',
       ];
 
       for (final path in _fallbackLangFiles) {
