@@ -748,16 +748,33 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          if (await _controller.canGoBack()) {
-            _controller.goBack();
+          //Facebook's mobile site often replaces the history entry instead of
+          //pushing one, so canGoBack() is false on a post or group the reader
+          //navigated into and Back closed the app (#222). The feed is the
+          //fallback; a second Back, now on the feed, exits as before.
+          final url = await _controller.currentUrl();
+          final action = backActionFor(
+            canGoBack: await _controller.canGoBack(),
+            current: Uri.tryParse(url ?? ''),
+            home: Uri.parse(PrefController.getHomePage()),
+          );
 
-            if (isScontentUrl) {
-              //gotta go back twice to leave scontent (facebook bug?)
-              _controller.goBack();
-            }
-            return false;
+          switch (action) {
+            case BackAction.goBack:
+              await _controller.goBack();
+
+              if (isScontentUrl) {
+                //gotta go back twice to leave scontent (facebook bug?)
+                await _controller.goBack();
+              }
+              return false;
+            case BackAction.goHome:
+              await _controller
+                  .loadRequest(Uri.parse(PrefController.getHomePage()));
+              return false;
+            case BackAction.exit:
+              return true;
           }
-          return true;
         },
         //edge-to-edge is enforced from target sdk 35+, so the transparent
         //navigation bar overlays the page; the app bar already covers the top

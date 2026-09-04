@@ -260,4 +260,83 @@ void main() {
       expect(to('about:blank'), isNull);
     });
   });
+
+  group('backActionFor gives Back somewhere to go before it exits (#222)', () {
+    BackAction actionFor(
+      String? current, {
+      bool canGoBack = false,
+      String home = '$kTouchFacebookHomeUrl?sk=h_nor',
+    }) {
+      return backActionFor(
+        canGoBack: canGoBack,
+        current: current == null ? null : Uri.parse(current),
+        home: Uri.parse(home),
+      );
+    }
+
+    test('webview history wins over everything else', () {
+      // Nothing below is consulted while there is a page to step back to.
+      expect(
+        actionFor('https://m.facebook.com/story.php?id=1', canGoBack: true),
+        BackAction.goBack,
+      );
+      expect(
+        actionFor(kTouchFacebookHomeUrl, canGoBack: true),
+        BackAction.goBack,
+      );
+    });
+
+    test('the feed itself still exits, whatever sort order it carries', () {
+      expect(actionFor('$kTouchFacebookHomeUrl?sk=h_nor'), BackAction.exit);
+      expect(actionFor('$kTouchFacebookHomeUrl?sk=h_chr'), BackAction.exit);
+      expect(actionFor(kTouchFacebookHomeUrl), BackAction.exit);
+    });
+
+    test('the feed on a sibling host is the feed too', () {
+      // The home setting names touch.facebook.com, but the webview reports
+      // whichever host Facebook last redirected to.
+      expect(actionFor('https://www.facebook.com/'), BackAction.exit);
+      expect(actionFor('https://m.facebook.com/home.php'), BackAction.exit);
+      expect(actionFor('https://facebook.com/home.php?sk=h_chr'),
+          BackAction.exit);
+    });
+
+    test('basic mode compares against its own home', () {
+      expect(
+        actionFor(kFacebookHomeBasicUrl, home: kFacebookHomeBasicUrl),
+        BackAction.exit,
+      );
+    });
+
+    test('a page reached without a history entry goes to the feed', () {
+      // This is #222: Facebook replaces the history entry, so canGoBack is
+      // false on a post the reader plainly navigated into, and Back used to
+      // close the app.
+      expect(
+        actionFor('https://www.facebook.com/story.php?story_fbid=1&id=2'),
+        BackAction.goHome,
+      );
+      expect(
+        actionFor('https://m.facebook.com/groups/123'),
+        BackAction.goHome,
+      );
+      expect(
+        actionFor('https://m.facebook.com/zuck'),
+        BackAction.goHome,
+      );
+    });
+
+    test('sign-in exits rather than bouncing back to the login form', () {
+      expect(actionFor('https://m.facebook.com/login'), BackAction.exit);
+      expect(actionFor('https://m.facebook.com/login/'), BackAction.exit);
+      expect(
+        actionFor('https://m.facebook.com/login.php?next=%2F'),
+        BackAction.exit,
+      );
+    });
+
+    test('an unreadable url keeps the old behaviour', () {
+      expect(actionFor(null), BackAction.exit);
+    });
+  });
 }
