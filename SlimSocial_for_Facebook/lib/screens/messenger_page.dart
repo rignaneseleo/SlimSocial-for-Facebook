@@ -13,6 +13,7 @@ import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/link_menu.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/utils/webview_permissions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -53,6 +54,10 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       ..setUserAgent(
         PrefController.getUserAgent(role: UserAgentRole.messenger),
       )
+      ..addJavaScriptChannel(
+        kLinkMenuChannelName,
+        onMessageReceived: onLinkMenuMessage,
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
@@ -63,6 +68,15 @@ class _HomePageState extends ConsumerState<MessengerPage> {
 
             //inject the css as soon as the DOM is loaded
             await injectCss();
+            if (!mounted) return;
+
+            //the webview offers no long-press callback, so the only way to
+            //reach a link's address is a listener the page itself carries
+            await _controller.runJavaScript(
+              CustomJs.whenDomReady(
+                CustomJs.linkLongPressFunc(kLinkMenuChannelName),
+              ),
+            );
             if (!mounted) return;
 
             //re-read the zoom, so changing it in the settings takes effect on
@@ -125,6 +139,22 @@ class _HomePageState extends ConsumerState<MessengerPage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  /// Offers to copy or open the link the reader long-pressed.
+  ///
+  /// Everything arriving here is hostile input — any script on the page can
+  /// post on a channel the app registers — so [parseLinkMenuMessage] does the
+  /// deciding, and a rejected message is described rather than quoted.
+  void onLinkMenuMessage(JavaScriptMessage message) {
+    final link = parseLinkMenuMessage(message.message);
+    if (link == null) {
+      debugPrint("ignored link menu message: ${message.message.length} chars");
+      return;
+    }
+
+    if (!mounted) return;
+    unawaited(showLinkMenu(context, link));
   }
 
   Future<NavigationDecision> onNavigationRequest(

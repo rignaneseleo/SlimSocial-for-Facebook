@@ -238,6 +238,59 @@ class CustomJs {
 """;
   }
 
+  /// Builds JavaScript that reports the link under a long press.
+  ///
+  /// Android's WebView fires `contextmenu` when a long press lands on a link,
+  /// and that is the only signal this app can see: `webview_flutter` exposes
+  /// no long-press or context-menu callback of its own (#183).
+  ///
+  /// The listener sits on `document` and uses `closest`, because the press
+  /// usually lands on a span inside the anchor rather than on the anchor
+  /// itself. The `href` property, not the attribute, is read so a relative
+  /// link arrives absolute. Anything that is not http(s) — `javascript:`,
+  /// `fb:`, `intent:` — is dropped here rather than in Dart, so nothing the
+  /// page can craft reaches the sheet as something tappable.
+  ///
+  /// `preventDefault` is deliberately not called: the platform's own selection
+  /// and image handling has to keep working, and release 26.08.28+124
+  /// re-enabled the long press on images on purpose.
+  ///
+  /// The guard is on `window` like the observers above: injection runs on
+  /// every page start, and without it each in-page navigation would leave
+  /// another listener behind and post the same link several times.
+  static String linkLongPressFunc(String channelName) {
+    return '''
+(function () {
+  try {
+    if (window.__slimLinkMenu) return;
+    window.__slimLinkMenu = true;
+
+    document.addEventListener('contextmenu', function (event) {
+      try {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        var a = target.closest('a[href]');
+        if (!a) return;
+
+        var href = a.href;
+        if (typeof href !== 'string') return;
+        if (href.indexOf('http://') !== 0 && href.indexOf('https://') !== 0) {
+          return;
+        }
+
+        // Trimmed short: the label only says which link this is, and a whole
+        // post pasted into a bottom sheet is not that.
+        var text = (a.textContent || '').trim().slice(0, 120);
+        window[${jsonEncode(channelName)}].postMessage(
+          JSON.stringify({ href: href, text: text })
+        );
+      } catch (e) {}
+    }, true);
+  } catch (e) {}
+})();
+''';
+  }
+
   static String exampleJs = """
 javascript:function foo() {
 	     document.body.innerHTML = '';

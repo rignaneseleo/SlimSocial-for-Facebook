@@ -21,6 +21,7 @@ import 'package:slimsocial_for_facebook/utils/dark_theme.dart';
 import 'package:slimsocial_for_facebook/utils/fb_navigation.dart';
 import 'package:slimsocial_for_facebook/utils/file_chooser.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/link_menu.dart';
 import 'package:slimsocial_for_facebook/utils/load_retry_policy.dart';
 import 'package:slimsocial_for_facebook/utils/rating_prompt.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
@@ -142,6 +143,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         kDiagnosticsChannelName,
         onMessageReceived: onDiagnosticsMessage,
       )
+      ..addJavaScriptChannel(
+        kLinkMenuChannelName,
+        onMessageReceived: onLinkMenuMessage,
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: onNavigationRequest,
@@ -169,6 +174,18 @@ class _HomePageState extends ConsumerState<HomePage> {
               'app upsell',
               () => _controller.runJavaScript(
                 CustomJs.whenDomReady(CustomJs.hideAppUpsellFunc()),
+              ),
+            );
+            if (!mounted) return;
+
+            //the webview offers no long-press callback, so the only way to
+            //reach a link's address is a listener the page itself carries
+            await runIsolatedJs(
+              'link menu',
+              () => _controller.runJavaScript(
+                CustomJs.whenDomReady(
+                  CustomJs.linkLongPressFunc(kLinkMenuChannelName),
+                ),
               ),
             );
             if (!mounted) return;
@@ -336,6 +353,23 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     Telemetry.captureIssue(diagnostic.kind, data: diagnostic.data);
+  }
+
+  /// Offers to copy or open the link the reader long-pressed.
+  ///
+  /// [parseLinkMenuMessage] does the deciding, for the same reason as
+  /// [onDiagnosticsMessage]: any script on facebook.com can post here, and
+  /// what comes back out of this is a url the app copies or hands to a
+  /// browser. A rejected message is described, never quoted.
+  void onLinkMenuMessage(JavaScriptMessage message) {
+    final link = parseLinkMenuMessage(message.message);
+    if (link == null) {
+      debugPrint("ignored link menu message: ${message.message.length} chars");
+      return;
+    }
+
+    if (!mounted) return;
+    unawaited(showLinkMenu(context, link));
   }
 
   /// Hands a failed page load to the retry policy.

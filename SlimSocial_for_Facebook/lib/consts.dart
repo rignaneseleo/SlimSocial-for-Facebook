@@ -178,3 +178,9 @@ class SpKeys {
   static String get customProxyIp => "${customProxy}_ip";
   static String get customProxyPort => "${customProxy}_port";
 }
+
+/// The channel a long-pressed link is reported on.
+///
+/// Kept separate from the ad channels because the payload has nothing in
+/// common with theirs: this one carries a url and its label, not a count.
+const String kLinkMenuChannelName = "SlimLinkMenu";

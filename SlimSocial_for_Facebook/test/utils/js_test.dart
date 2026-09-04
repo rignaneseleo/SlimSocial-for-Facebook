@@ -346,4 +346,44 @@ void main() {
       expect(js, isNot(contains(':has(')));
     });
   });
+
+  group('CustomJs.linkLongPressFunc', () {
+    final js = CustomJs.linkLongPressFunc('SlimLinkMenu');
+
+    test('posts on the channel it is given', () {
+      expect(js, contains(jsonEncode('SlimLinkMenu')));
+      expect(js, contains('.postMessage('));
+    });
+
+    test('installs the listener only once', () {
+      // Injection runs on every page start, and Facebook navigates in-page
+      // constantly: without the guard every navigation adds another listener
+      // and one long press reports the same link several times.
+      expect(js, contains('if (window.__slimLinkMenu) return;'));
+      expect(js, contains('window.__slimLinkMenu = true;'));
+    });
+
+    test('walks up to the anchor the press landed inside', () {
+      // The press usually lands on a span inside the link, never on the <a>.
+      expect(js, contains("closest('a[href]')"));
+      expect(js, contains("addEventListener('contextmenu'"));
+    });
+
+    test('reports http(s) links only', () {
+      expect(js, contains("href.indexOf('http://')"));
+      expect(js, contains("href.indexOf('https://')"));
+    });
+
+    test('leaves the platform long press alone', () {
+      // 26.08.28+124 re-enabled the long press on images on purpose, and
+      // text selection has to keep working too.
+      expect(js, isNot(contains('preventDefault')));
+    });
+
+    test('runs as a self-invoking function that swallows its own failure', () {
+      expect(js.trim(), startsWith('(function () {'));
+      expect(js.trim(), endsWith('})();'));
+      expect(js, contains('} catch (e) {}'));
+    });
+  });
 }
