@@ -1,0 +1,11 @@
+SlimSocial for Facebook is a lightweight and customizable alternative to the official Facebook app. It gives you Facebook and Messenger in one small, fast app, without the clutter.
+
+Lightweight design: the app stays fast and responsive, also on older devices.
+
+Customizable: change the app colors and fonts. You can also run your own custom CSS and JS directly from the app.
+
+Privacy: the app is built with privacy in mind. You use Facebook without worrying about your data.
+
+Hide ads: turn on the ad blocker for a cleaner, more streamlined feed.
+
+Built-in Messenger: read and send messages in the same app. You do not need to install a second app.
