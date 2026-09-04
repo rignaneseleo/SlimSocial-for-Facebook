@@ -39,6 +39,10 @@ To get started with SlimSocial for Facebook, you can download the app from the s
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="50"/></a>
 
 
+## Changelog
+
+Every version has its notes on the [releases page](https://github.com/rignaneseleo/SlimSocial-for-Facebook/releases).
+
 ## Contributing
 [![Codemagic build status](https://api.codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/status_badge.svg)](https://codemagic.io/apps/645a7fe598007bd18863656d/645a7fe598007bd18863656c/latest_build)
 
