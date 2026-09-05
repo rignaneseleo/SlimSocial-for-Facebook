@@ -127,10 +127,22 @@ const String kDiagNoPostsMatched = 'injection.no_posts_matched';
 ///
 /// The denominator [kDiagNoPostsMatched] never had. On its own a count of
 /// failures says nothing: six reports is indistinguishable from six-out-of-six
-/// and six-out-of-six-thousand. Raised once per process, exactly like the
-/// failure signal, so the two counts are directly comparable and the break rate
-/// is `no_posts_matched / (no_posts_matched + posts_matched)`.
+/// and six-out-of-six-thousand.
+///
+/// Raised once per process, like the failure signal, but sent from only 1 in
+/// [kDiagSampleOneIn] of those processes, so the break rate is
+/// `no_posts_matched / (no_posts_matched + 50 * posts_matched)`.
+/// Sampled because the Sentry plan counts every event against one monthly
+/// quota, and a success that fires for nearly every user would spend that
+/// quota on the half of the picture nobody has to read event by event. A
+/// failure is never sampled.
 const String kDiagPostsMatched = 'injection.posts_matched';
+
+/// How many processes raise a signal for each one that reports it.
+///
+/// A kind that is absent reports in full, which is every failure signal. Only
+/// a success counted in the thousands belongs here.
+const Map<String, int> kDiagSampleOneIn = {kDiagPostsMatched: 50};
 
 /// A pass of the injected filter threw.
 const String kDiagScriptThrew = 'injection.script_threw';

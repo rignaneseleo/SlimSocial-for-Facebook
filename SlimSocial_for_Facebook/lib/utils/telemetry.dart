@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -252,9 +253,18 @@ abstract final class Telemetry {
 
   /// Reports a named health signal, e.g. an injection that matched nothing.
   /// [kind] is a stable machine-readable slug like 'injection.no_posts_matched'.
-  static void captureIssue(String kind, {Map<String, Object?> data = const {}}) {
+  ///
+  /// [sampleOneIn] above 1 sends the signal from only that fraction of the
+  /// processes that raise it. It is for success signals, which are counted in
+  /// the thousands and are only ever read as a denominator; a failure is
+  /// always reported in full.
+  static void captureIssue(
+    String kind, {
+    Map<String, Object?> data = const {},
+    int sampleOneIn = 1,
+  }) {
     if (!_canReport || !isEnabled) return;
-    if (!allowIssue(kind)) return;
+    if (!allowSampled(kind, sampleOneIn)) return;
 
     unawaited(
       Sentry.captureMessage(
@@ -264,10 +274,40 @@ abstract final class Telemetry {
           //group on the slug alone: the same broken selector has to land in
           //one issue across every user, not one issue per stack trace
           scope.fingerprint = <String>[kind];
-          await scope.setContexts(_contextKey, scrubData(data));
+          await scope.setContexts(_contextKey, issueContext(data, sampleOneIn));
         },
       ),
     );
+  }
+
+  /// What an issue carries in the app's own context block.
+  ///
+  /// The sampling rate travels with the event because a sampled count means
+  /// nothing without it: the reader has to multiply by it to recover how many
+  /// processes the events stand for.
+  @visibleForTesting
+  static Map<String, dynamic> issueContext(
+    Map<String, Object?> data,
+    int sampleOneIn,
+  ) =>
+      <String, dynamic>{...scrubData(data), 'sample_one_in': sampleOneIn};
+
+  /// The random source sampling draws from, swapped out by tests.
+  @visibleForTesting
+  static Random random = Random();
+
+  /// Claims this session's slot for [kind], then decides whether this process
+  /// is one of the 1-in-[sampleOneIn] that report it.
+  ///
+  /// The slot is spent either way. Sampling is meant to reduce how many
+  /// processes report, not to give a process that drew a miss another go at
+  /// the same signal later on.
+  @visibleForTesting
+  static bool allowSampled(String kind, int sampleOneIn) {
+    if (!allowIssue(kind)) return false;
+    if (sampleOneIn <= 1) return true;
+
+    return random.nextInt(sampleOneIn) == 0;
   }
 
   /// Whether a feedback box can do anything at all.
