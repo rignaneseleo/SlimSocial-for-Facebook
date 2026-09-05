@@ -377,7 +377,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       return;
     }
 
-    Telemetry.captureIssue(diagnostic.kind, data: diagnostic.data);
+    Telemetry.captureIssue(
+      diagnostic.kind,
+      data: diagnostic.data,
+      sampleOneIn: kDiagSampleOneIn[diagnostic.kind] ?? 1,
+    );
   }
 
   /// Offers to copy or open the link the reader long-pressed.
@@ -536,7 +540,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     final before = _feedHistoryLength ?? await _historyLength();
     if (!mounted) return;
 
-    Telemetry.captureIssue('messenger.opened', data: {'source': source});
+    Telemetry.captureIssue(
+      'messenger.opened',
+      data: {'source': source},
+      //a usage counter, not a failure: see [kDiagSampleOneIn]
+      sampleOneIn: 50,
+    );
 
     _messengerOpen = true;
     try {

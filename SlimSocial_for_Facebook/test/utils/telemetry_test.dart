@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 
 /// A story link as Facebook actually serves it: the poster and the post are
@@ -18,6 +21,36 @@ class _Explosive {
   String toString() => throw StateError("boom");
 }
 
+/// A random source that always draws the same number, so a sampling decision
+/// is a fact of the test rather than a coin toss.
+class _FixedRandom implements Random {
+  _FixedRandom(this.value);
+
+  final int value;
+
+  @override
+  int nextInt(int max) => value;
+
+  @override
+  double nextDouble() => value.toDouble();
+
+  @override
+  bool nextBool() => value == 0;
+}
+
+/// A random source that cannot be drawn from, so a test can assert that a
+/// path never reaches one.
+class _ExplosiveRandom implements Random {
+  @override
+  int nextInt(int max) => throw StateError("drawn from");
+
+  @override
+  double nextDouble() => throw StateError("drawn from");
+
+  @override
+  bool nextBool() => throw StateError("drawn from");
+}
+
 Future<void> _prefs([Map<String, Object> values = const {}]) async {
   SharedPreferences.setMockInitialValues(values);
   sp = await SharedPreferences.getInstance();
@@ -29,6 +62,7 @@ void main() {
   setUp(() async {
     await _prefs();
     Telemetry.resetSession();
+    Telemetry.random = Random();
   });
 
   group('a build with no dsn', () {
@@ -386,6 +420,38 @@ void main() {
       expect(Telemetry.allowIssue('injection.no_posts_matched'), isTrue);
       expect(Telemetry.allowIssue('injection.no_ads_matched'), isTrue);
       expect(Telemetry.allowIssue('injection.no_posts_matched'), isFalse);
+    });
+  });
+
+  group('sampling a success signal', () {
+    test('a sampled-out kind sends nothing but still spends its slot', () {
+      //49 out of 50 draws miss
+      Telemetry.random = _FixedRandom(7);
+
+      expect(Telemetry.allowSampled(kDiagPostsMatched, 50), isFalse);
+      //once per process still means once: a miss does not hand the next call
+      //of the same kind a second chance
+      expect(Telemetry.allowIssue(kDiagPostsMatched), isFalse);
+    });
+
+    test('a sampled-in kind goes out saying what it was sampled at', () {
+      Telemetry.random = _FixedRandom(0);
+
+      expect(Telemetry.allowSampled(kDiagPostsMatched, 50), isTrue);
+      expect(
+        Telemetry.issueContext(const {'page': 'feed'}, 50),
+        {'page': 'feed', 'sample_one_in': 50},
+      );
+    });
+
+    test('an unsampled kind never draws from the random source', () {
+      Telemetry.random = _ExplosiveRandom();
+
+      expect(Telemetry.allowSampled(kDiagNoPostsMatched, 1), isTrue);
+    });
+
+    test('only the success signal is sampled', () {
+      expect(kDiagSampleOneIn.keys, [kDiagPostsMatched]);
     });
   });
 
