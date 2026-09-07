@@ -173,6 +173,42 @@ void main() {
       // script; the prefix belongs to the older members that were used as URLs.
       expect(CustomJs.unlockZoomFunc(), isNot(contains('javascript:')));
     });
+
+    test('leaves the width alone by default', () {
+      // The touch layout is built for the phone's width and has to keep it:
+      // every width rewrite sits behind the LAYOUT_WIDTH guard, and the guard
+      // is off unless a width was asked for.
+      final js = CustomJs.unlockZoomFunc();
+
+      expect(js, contains('var LAYOUT_WIDTH = null;'));
+      expect(js, contains('if (LAYOUT_WIDTH) {'));
+      expect(js, contains('if (LAYOUT_WIDTH && !sawWidth)'));
+    });
+
+    test('lays the page out at the asked-for width', () {
+      // Facebook ships width=device-width with the desktop layout too, so the
+      // desktop agent alone squeezes a 1000px page into the phone's width.
+      final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
+
+      expect(js, contains('var LAYOUT_WIDTH = 980;'));
+      expect(js, contains("if (key === 'width') {"));
+      expect(js, contains("out.push('width=' + LAYOUT_WIDTH);"));
+    });
+
+    test('adds the width when the page names none', () {
+      final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
+
+      expect(js, contains('if (LAYOUT_WIDTH && !sawWidth) out.push'));
+    });
+
+    test('drops a fixed initial scale along with the width rewrite', () {
+      // At initial-scale=1 a 980px page shows its top-left corner; without the
+      // clause the WebView scales the page to fit the screen, like Chrome's
+      // desktop-site mode.
+      final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
+
+      expect(js, contains("if (key === 'initial-scale') continue;"));
+    });
   });
 
   group('CustomJs.removeAdsObserver', () {
