@@ -53,6 +53,20 @@ class PrefController {
     return kMobileUserAgent;
   }
 
+  /// Whether the feed is served Facebook's desktop layout.
+  ///
+  /// True exactly when the feed is sent the desktop agent, so it follows the
+  /// same precedence as [getUserAgent]: basic mode and a custom agent both
+  /// win over the desktop-site switch.
+  ///
+  /// The feed screen uses this to give the page a desktop-sized viewport as
+  /// well as a desktop agent — see `CustomJs.unlockZoomFunc`. The agent alone
+  /// is not enough: Facebook ships `width=device-width` with the desktop
+  /// layout too, so the WebView lays a page built for ~1000px out at the
+  /// phone's 349px, where it overflows sideways, cannot be pinched out far
+  /// enough to fit a post, and stops scrolling after the first screen (#369).
+  static bool usesDesktopLayout() => getUserAgent() == kFirefoxUserAgent;
+
   /// Whether external links should open in the system browser app.
   ///
   /// Read on every link open, so the setting takes effect with no restart.

@@ -36,6 +36,34 @@ void main() {
     });
   });
 
+  group('usesDesktopLayout', () {
+    test('is off on the mobile default', () {
+      expect(PrefController.usesDesktopLayout(), isFalse);
+    });
+
+    test('is on with the desktop-site switch', () async {
+      await withPrefs({SpKeys.useDesktopSite: true});
+
+      expect(PrefController.usesDesktopLayout(), isTrue);
+    });
+
+    test('stays off when basic mode overrides the desktop site', () async {
+      await withPrefs({SpKeys.useDesktopSite: true, SpKeys.useMbasic: true});
+
+      expect(PrefController.usesDesktopLayout(), isFalse);
+    });
+
+    test('stays off when a custom agent overrides the desktop site', () async {
+      await withPrefs({
+        SpKeys.useDesktopSite: true,
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+        SpKeys.customUserAgent: 'Mozilla/5.0 (custom)',
+      });
+
+      expect(PrefController.usesDesktopLayout(), isFalse);
+    });
+  });
+
   group('startsOnMessenger', () {
     test('is off until it is asked for', () {
       expect(PrefController.startsOnMessenger(), isFalse);

@@ -88,15 +88,28 @@ class CustomJs {
   ///
   /// This only lifts the lock the page puts on itself. The WebView has to allow
   /// the gesture too (`enableZoom`), or none of this reaches the user.
-  static String unlockZoomFunc() {
+  ///
+  /// [layoutWidth], when given, also lays the page out that many CSS pixels
+  /// wide: the `width` clause is rewritten to it (or added when there is
+  /// none) and `initial-scale` is dropped, so the WebView picks the scale
+  /// that fits the whole width on screen. This is what "Desktop site" in
+  /// Chrome does. Facebook sends `width=device-width` with its desktop layout
+  /// as well, and the WebView honours it, so the desktop agent alone gets a
+  /// page built for a 1000px window squeezed into the phone's 349px: it
+  /// overflows sideways, cannot be pinched out far enough to fit a post, and
+  /// stops scrolling after the first screen (#369). Left null for the touch
+  /// layout, which is built for the phone's width and must keep it.
+  static String unlockZoomFunc({int? layoutWidth}) {
     return """
 (function () {
   try {
     var MARK = 'data-slim-zoom';
+    var LAYOUT_WIDTH = ${layoutWidth ?? 'null'};
 
     function unlockedContent(content) {
       var out = [];
       var sawUserScalable = false;
+      var sawWidth = false;
       var clauses = content.split(',');
       for (var i = 0; i < clauses.length; i++) {
         var clause = clauses[i].trim();
@@ -110,9 +123,20 @@ class CustomJs {
           sawUserScalable = true;
           continue;
         }
+        if (LAYOUT_WIDTH) {
+          if (key === 'width') {
+            out.push('width=' + LAYOUT_WIDTH);
+            sawWidth = true;
+            continue;
+          }
+          // A fixed initial scale would show the top-left corner of the wide
+          // page at 1:1; without one the WebView scales the page to fit.
+          if (key === 'initial-scale') continue;
+        }
         out.push(clause);
       }
       if (!sawUserScalable) out.push('user-scalable=yes');
+      if (LAYOUT_WIDTH && !sawWidth) out.push('width=' + LAYOUT_WIDTH);
       return out.join(', ');
     }
 

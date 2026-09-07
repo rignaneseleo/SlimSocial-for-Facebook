@@ -216,11 +216,21 @@ class _HomePageState extends ConsumerState<HomePage> {
             }
 
             //before the dark theme, because unlocking the viewport reflows the
-            //page and the theme script reads colours back out of it
+            //page and the theme script reads colours back out of it.
+            //The desktop layout also gets a desktop-sized viewport here; read
+            //per load like the agent is read per start, and the setting
+            //restarts the app anyway
             await runIsolatedJs(
               'zoom unlock',
-              () => _controller
-                  .runJavaScript(CustomJs.whenDomReady(CustomJs.unlockZoomFunc())),
+              () => _controller.runJavaScript(
+                CustomJs.whenDomReady(
+                  CustomJs.unlockZoomFunc(
+                    layoutWidth: PrefController.usesDesktopLayout()
+                        ? kDesktopLayoutWidth
+                        : null,
+                  ),
+                ),
+              ),
             );
             if (!mounted) return;
 
