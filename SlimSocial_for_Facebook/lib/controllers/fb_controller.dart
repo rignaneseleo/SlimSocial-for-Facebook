@@ -61,10 +61,11 @@ class PrefController {
   ///
   /// The feed screen uses this to give the page a desktop-sized viewport as
   /// well as a desktop agent — see `CustomJs.unlockZoomFunc`. The agent alone
-  /// is not enough: Facebook ships `width=device-width` with the desktop
-  /// layout too, so the WebView lays a page built for ~1000px out at the
-  /// phone's 349px, where it overflows sideways, cannot be pinched out far
-  /// enough to fit a post, and stops scrolling after the first screen (#369).
+  /// is not enough: Facebook's viewport tag names an `initial-scale` and no
+  /// width, which lays any page out at the phone's width, so a layout built
+  /// for ~1000px arrived at 393px — overflowing sideways, impossible to pinch
+  /// out far enough to fit a post, and unable to scroll past the first screen
+  /// (#369).
   static bool usesDesktopLayout() => getUserAgent() == kFirefoxUserAgent;
 
   /// Whether external links should open in the system browser app.

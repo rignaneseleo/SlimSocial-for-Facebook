@@ -64,17 +64,18 @@ class CustomJs {
 
   /// Builds JavaScript that hands pinch-to-zoom back to the reader.
   ///
-  /// Facebook ships `width=device-width, initial-scale=1, maximum-scale=1,
-  /// user-scalable=no` as its viewport, and those last two clauses are exactly
-  /// what the browser reads as "this page does not zoom". The text-zoom setting
-  /// is no substitute: it reflows text and leaves an image, a screenshot
-  /// somebody posted, or a fixed-width table at whatever size it arrived in.
+  /// Facebook ships `user-scalable=no,initial-scale=1,maximum-scale=1` as its
+  /// viewport — measured on a device; note there is no `width` clause — and the
+  /// first and last of those are exactly what the browser reads as "this page
+  /// does not zoom". The text-zoom setting is no substitute: it reflows text
+  /// and leaves an image, a screenshot somebody posted, or a fixed-width table
+  /// at whatever size it arrived in.
   ///
   /// Only the clauses that block the gesture are dropped. `minimum-scale` goes
   /// with them because a `minimum-scale=1` is what stops the page being pinched
   /// back out again. Every clause we do not recognise is copied through in
-  /// place: replacing the whole content string would take `width=device-width`
-  /// with it, and the page would come back laid out for a 980px desktop.
+  /// place: replacing the whole content string would drop whatever sets the
+  /// layout width, and the page would come back at a width nobody chose.
   ///
   /// The rewrite cannot be a one-shot. Metas are queried as a list because an
   /// in-page navigation can leave a second viewport tag behind, and the
@@ -93,12 +94,28 @@ class CustomJs {
   /// wide: the `width` clause is rewritten to it (or added when there is
   /// none) and `initial-scale` is dropped, so the WebView picks the scale
   /// that fits the whole width on screen. This is what "Desktop site" in
-  /// Chrome does. Facebook sends `width=device-width` with its desktop layout
-  /// as well, and the WebView honours it, so the desktop agent alone gets a
-  /// page built for a 1000px window squeezed into the phone's 349px: it
-  /// overflows sideways, cannot be pinched out far enough to fit a post, and
-  /// stops scrolling after the first screen (#369). Left null for the touch
-  /// layout, which is built for the phone's width and must keep it.
+  /// Chrome does.
+  ///
+  /// `initial-scale` is the clause that matters, not `width`. Facebook's
+  /// viewport tag carries no `width` at all — measured on a device, it is
+  /// `user-scalable=no,initial-scale=1,maximum-scale=1` — and a viewport with
+  /// an initial scale and no width lays the page out at `device-width /
+  /// initial-scale`. So the rewrite above, which kept `initial-scale=1`,
+  /// pinned even the desktop layout to the phone's width: a page built for a
+  /// ~1000px window at 393px, overflowing sideways, impossible to pinch out
+  /// far enough to fit a post, and unable to scroll past the first screen
+  /// (#369).
+  ///
+  /// Measured on an emulator at 393 CSS px, desktop agent, with the tag
+  /// Facebook serves injected into the page:
+  ///
+  /// | rewrite | resulting meta | layout width |
+  /// | --- | --- | --- |
+  /// | before | `user-scalable=yes, initial-scale=1` | 393 |
+  /// | after | `user-scalable=yes, width=980` | 980 |
+  ///
+  /// Left null for the touch layout, which is built for the phone's width and
+  /// must keep it.
   static String unlockZoomFunc({int? layoutWidth}) {
     return """
 (function () {

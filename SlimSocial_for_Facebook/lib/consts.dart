@@ -95,9 +95,10 @@ const int kDefaultTextZoom = 100;
 /// Layout width, in CSS pixels, given to Facebook's desktop layout.
 ///
 /// 980 is what a WebView with a wide viewport uses for a page that ships no
-/// viewport tag at all, so a desktop page is laid out the same whether
-/// Facebook sends `width=device-width` (which `CustomJs.unlockZoomFunc`
-/// rewrites to this) or nothing.
+/// viewport tag at all — measured: Facebook's logged-out desktop pages carry
+/// no viewport tag and land on exactly this width. Writing the same number
+/// into the tag when there is one (see `CustomJs.unlockZoomFunc`) means the
+/// desktop layout is laid out identically either way.
 const int kDesktopLayoutWidth = 980;
 
 /// Which surface a user agent is being requested for.
