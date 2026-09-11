@@ -1,6 +1,3 @@
-- The page stays above the transparent navigation bar (#349).
-- Saving a photo works again (#348).
-- Back returns to the feed before it closes the app (#222).
-- New settings: hide the home feed (#213), open Messenger at startup (#194), open links in the system browser (#287).
-- Long-press a link to copy its URL (#183).
-- Material You themed icon (#200).
+- Saving a photo from Facebook's viewer works again (#363).
+- Hiding reels or stories no longer hides the top bar.
+- "Show recent posts first" now says it needs the desktop site (#366).
