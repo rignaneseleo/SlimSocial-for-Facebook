@@ -82,6 +82,8 @@ void main() {
           });
       share = _RecordingSharePlatform();
       SharePlatform.instance = share;
+      //a plain global outlives the test that set it
+      blobDownloadPending = false;
     });
 
     tearDown(() {
@@ -114,6 +116,7 @@ void main() {
       // #363: Facebook revokes the blob url as soon as it has clicked its own
       // download link. The reader has already seen "Downloading...", so the
       // failure has to end in a word rather than in silence.
+      blobDownloadPending = true;
       shareBlobDownload(jsonEncode({'error': 'unavailable'}));
       await pumpEventQueue();
 
@@ -121,6 +124,28 @@ void main() {
       expect(toasts, hasLength(1));
       // `.tr()` yields the raw key here: no localization is loaded.
       expect((toasts.single.arguments as Map)['msg'], 'error_trylater');
+    });
+
+    test('stays silent on a failure the reader never asked for', () async {
+      // The channel is open to every script the page carries, so a bare
+      // `{"error":1}` posted on it would otherwise raise "try later" over a
+      // reader who tapped nothing at all.
+      shareBlobDownload(jsonEncode({'error': 'unavailable'}));
+      await pumpEventQueue();
+
+      expect(share.shared, isEmpty);
+      expect(toasts, isEmpty);
+    });
+
+    test('reports one failure only once', () async {
+      // The flag is cleared by the message that answers it: a second
+      // `{"error":1}` is no longer the reader's download.
+      blobDownloadPending = true;
+      shareBlobDownload(jsonEncode({'error': 'unavailable'}));
+      shareBlobDownload(jsonEncode({'error': 'unavailable'}));
+      await pumpEventQueue();
+
+      expect(toasts, hasLength(1));
     });
 
     test('stays silent on a message that is not ours', () async {

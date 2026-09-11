@@ -103,6 +103,20 @@ Future<void> saveImageFromUrl(String url) async {
   unawaited(OpenFile.open(path));
 }
 
+/// Whether a `blob:` Save the reader started is still waiting for its bytes.
+///
+/// The download channel is registered on the page, so any script the page
+/// carries can post on it whenever it likes — including a bare `{"error":1}`
+/// that would otherwise raise "try later" over a reader who tapped nothing.
+/// Only the navigation delegate sets this, immediately before it asks the page
+/// for the bytes, so the toast can be limited to a Save that actually started.
+///
+/// A plain global rather than state on a screen: the feed and Messenger each
+/// have their own screen, but only one download can be in flight at a time,
+/// and [shareBlobDownload] is reached from a channel callback that has no
+/// screen of its own.
+bool blobDownloadPending = false;
+
 /// Hands the reader a file the page read out of a `blob:` url.
 ///
 /// The share sheet, rather than a write into Downloads, because the bytes are
@@ -118,12 +132,18 @@ Future<void> saveImageFromUrl(String url) async {
 void shareBlobDownload(String message) {
   final result = parseBlobDownloadMessage(message);
 
+  //whatever the page posted, the download it could belong to is over: clear
+  //the flag before anything can return early, so one failed Save cannot leave
+  //a later unprompted `{"error":1}` armed to toast
+  final wasPending = blobDownloadPending;
+  blobDownloadPending = false;
+
   //the reader has already seen "Downloading...", so a download the page could
-  //not read has to end in a word rather than in nothing at all (#363). A
-  //message that is not ours at all still ends in silence: it is noise, and the
-  //reader is not waiting on it
+  //not read has to end in a word rather than in nothing at all (#363). With
+  //nothing pending the same message is a page shouting at a reader who tapped
+  //nothing, so it ends in silence — as does a message that is not ours at all
   if (result is BlobDownloadFailed) {
-    showToast("error_trylater".tr());
+    if (wasPending) showToast("error_trylater".tr());
     return;
   }
   if (result is! BlobDownloadFile) {
