@@ -7,6 +7,7 @@
   "use_mbasic": "Uporabi osnovno različico Facebooka",
   "use_mbasic_desc": "Deluje bolje na starejših napravah ali počasnih povezavah",
   "recent_first": "Prikaži najnovejše prispevke najprej",
+  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
   "hide_ads": "Skrij nekatere oglase (eksperimentalno)",
   "style": "slog",
   "dark_theme": "Omogoči temni način",
