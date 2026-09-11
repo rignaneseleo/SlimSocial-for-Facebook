@@ -109,6 +109,17 @@ class CustomCss {
   ///
   /// `#MStoriesTray` is the legacy id. The recon found zero of them, so it is
   /// kept only for anyone still served that older layout.
+  ///
+  /// Each `:has()` selector carries a set of `:not(:has(...))` guards, so a
+  /// container that holds navigation can never match: `[role="tablist"]`,
+  /// `[role="navigation"]`, `[role="tab"]`, `[role="search"]`,
+  /// `[aria-label*="search" i]` and `input`. The reason is the same one the
+  /// reels rule hit in the 26.09.05 Play Store review: on some layouts the
+  /// header / tab bar is a direct child of this same `vscroller`, and a header
+  /// with a "story" aria-label would take the whole top bar with it.
+  ///
+  /// Said plainly: these guards are reasoned from that review, not observed on
+  /// a device DOM. No DOM was available to verify them against.
   static MyCss hideStoriesCss = MyCss(
     key: 'hide_stories',
     description: 'Hide stories',
@@ -127,12 +138,13 @@ class CustomCss {
         // The `:not(...):has(...)` chain cannot be split across adjacent
         // strings: a line break between the two would need whitespace, and
         // whitespace there is a descendant combinator, which changes what the
-        // rule matches.
+        // rule matches. The trailing `:not(:has(...))` guards keep the header
+        // out of the match; see the doc comment.
         // ignore: lines_longer_than_80_chars
-        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label^="Create story"]), '
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label^="Create story"]):not(:has([role="tablist"])):not(:has([role="navigation"])):not(:has([role="tab"])):not(:has([aria-label*="search" i])):not(:has([role="search"])):not(:has(input)), '
         // Same chain, unsplittable for the same reason.
         // ignore: lines_longer_than_80_chars
-        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="story" i]) '
+        'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="story" i]):not(:has([role="tablist"])):not(:has([role="navigation"])):not(:has([role="tab"])):not(:has([aria-label*="search" i])):not(:has([role="search"])):not(:has(input)) '
         '{ display: none !important; }',
   );
 
@@ -154,6 +166,19 @@ class CustomCss {
   /// Honest limitation: no reel posts were in the feed during the recon, so the
   /// `="true"` rule is reasoned from the attribute's meaning rather than
   /// observed matching. The carousel rule *was* observed. Task 10 verifies both.
+  ///
+  /// The carousel selector carries `:not(:has(...))` guards for
+  /// `[role="tablist"]`, `[role="navigation"]`, `[role="tab"]`,
+  /// `[role="search"]`, `[aria-label*="search" i]` and `input`. A Play Store
+  /// review on 26.09.05 ("hiding reels causes the entire top bar to disappear
+  /// meaning you can't access marketplace etc.") showed that on some layouts
+  /// the header / tab bar is a direct child of the same `vscroller` as the
+  /// carousel, and that the header carries a "Reels" tab — so its aria-label
+  /// matched `*="reel" i` and the whole top bar went. The guards name what a
+  /// top bar has and a reels carousel does not.
+  ///
+  /// Said plainly: the guards are reasoned from that review, not observed on a
+  /// device DOM. No DOM was available to verify them against.
   static MyCss hideReelsCss = MyCss(
     key: 'hide_reels',
     description: 'Hide reels',
@@ -162,8 +187,11 @@ class CustomCss {
     // real posts. It cannot be split across adjacent strings — a line break
     // between `:not(...)` and `:has(...)` would need whitespace, and whitespace
     // there is a descendant combinator, which changes what the rule matches.
+    // The trailing `:not(:has(...))` guards keep the header out of the match;
+    // see the doc comment. The reel *post* rule below carries no guards: a
+    // post is not a navigation container.
     // ignore: lines_longer_than_80_chars
-    code: 'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="reel" i]), '
+    code: 'div[data-type="vscroller"] > div:not([data-tracking-duration-id]):has([aria-label*="reel" i]):not(:has([role="tablist"])):not(:has([role="navigation"])):not(:has([role="tab"])):not(:has([aria-label*="search" i])):not(:has([role="search"])):not(:has(input)), '
         'div[data-tracking-duration-id]:has([data-is-reels="true"]) '
         '{ display: none !important; }',
   );
