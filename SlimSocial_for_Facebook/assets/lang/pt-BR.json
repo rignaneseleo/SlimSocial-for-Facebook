@@ -7,6 +7,7 @@
   "use_mbasic": "Usar versão básica do Facebook",
   "use_mbasic_desc": "Funciona melhor em dispositivos mais antigos ou conexões mais lentas",
   "recent_first": "Mostrar postagens recentes primeiro",
+  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
   "hide_ads": "Ocultar alguns anúncios (experimental)",
   "style": "estilo",
   "dark_theme": "Ativar tema escuro",

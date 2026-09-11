@@ -7,6 +7,7 @@
   "use_mbasic": "Izmantot Facebook pamata versiju",
   "use_mbasic_desc": "Tas labāk darbojas uz vecākām ierīcēm vai lēniem savienojumiem",
   "recent_first": "Rādīt pēdējos ierakstus pirmajos",
+  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
   "hide_ads": "Paslēpt dažas reklāmas (eksperimentāla funkcija)",
   "style": "stils",
   "dark_theme": "Ieslēgt tumsas režīmu",

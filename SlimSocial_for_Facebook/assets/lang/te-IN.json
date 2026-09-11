@@ -7,6 +7,7 @@
   "use_mbasic": "బేసిక్ వర్షన్‌ను ఉపయోగించు",
   "use_mbasic_desc": "పాత పరికరాలు లేదా నిండికపాటి కనెక్షన్లు మీకు కనిపిస్తాయి",
   "recent_first": "కొత్త పోస్టులను మొదలుపెట్టి చూపివేయి",
+  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
   "hide_ads": "కొనసాగింపు ప్రక్షేపణలను దాచు (ప్రయోగాన్ని ప్రయత్నించండి)",
   "style": "శైలి",
   "dark_theme": "నిశ్శబ్ద థీమ్ పెట్టు",
