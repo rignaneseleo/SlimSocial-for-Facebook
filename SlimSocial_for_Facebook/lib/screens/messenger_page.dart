@@ -79,7 +79,15 @@ class _HomePageState extends ConsumerState<MessengerPage> {
             //first, and not wrapped in whenDomReady: a photo in a chat saves
             //through the same revoked-url race as one in the feed (#363), so
             //the Blob has to be kept before the page can let go of it
-            await _controller.runJavaScript(CustomJs.keepPageBlobsFunc());
+            //guarded like the blob fetch below: a platform throw out of
+            //runJavaScript used to take the rest of this callback with it, so
+            //one failed keep-script left the page with no css and no link menu
+            //— a visible break, for a helper that is only an optimisation
+            try {
+              await _controller.runJavaScript(CustomJs.keepPageBlobsFunc());
+            } on Object catch (e, stack) {
+              Telemetry.captureError(e, stack, hint: 'keep page blobs');
+            }
             if (!mounted) return;
 
             //inject the css as soon as the DOM is loaded
