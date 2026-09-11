@@ -7,7 +7,7 @@
   "use_mbasic": "A Facebook alap verziójának használata",
   "use_mbasic_desc": "Jobban működik régebbi eszközökön vagy lassú kapcsolatoknál",
   "recent_first": "Legújabb bejegyzések előre",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Hirdetések elrejtése (kísérleti)",
   "style": "stílus",
   "dark_theme": "Sötét témák használata",

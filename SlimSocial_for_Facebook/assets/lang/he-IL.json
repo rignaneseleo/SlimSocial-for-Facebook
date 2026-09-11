@@ -7,7 +7,7 @@
   "use_mbasic": "השתמש בגרסה בסיסית של פייסבוק",
   "use_mbasic_desc": "זה עובד טוב יותר על מכשירים ישנים או חיבורים איטיים",
   "recent_first": "הצג פוסטים אחרונים ראשונים",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "הסתר פרסומות מסווגות (ניסיוני)",
   "style": "סגנון",
   "dark_theme": "הפעל ערכת נושא כהה",

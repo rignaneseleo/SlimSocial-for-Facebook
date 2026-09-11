@@ -7,7 +7,7 @@
   "use_mbasic": "基本バージョンのFacebookを使用する",
   "use_mbasic_desc": "古いデバイスや遅い接続でも動作が改善されます。",
   "recent_first": "最新の投稿を先に表示する",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "一部の広告を非表示にする（実験的機能）",
   "style": "スタイル",
   "dark_theme": "ダークテーマを有効にする",

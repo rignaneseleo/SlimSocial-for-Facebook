@@ -7,7 +7,7 @@
   "use_mbasic": "기본 버전의 페이스북 사용",
   "use_mbasic_desc": "느린 연결 또는 오래된 기기에서 더 잘 작동합니다.",
   "recent_first": "최신 포스트 먼저 보기",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "광고 가리기 (실험적 기능)",
   "style": "스타일",
   "dark_theme": "어두운 테마 사용",

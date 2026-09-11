@@ -7,7 +7,7 @@
   "use_mbasic": "Använd grundläggande version av Facebook",
   "use_mbasic_desc": "Det fungerar bättre på äldre enheter eller långsammare anslutningar",
   "recent_first": "Visa nyligen publicerade inlägg först",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Dölj vissa annonser (experimentellt)",
   "style": "stil",
   "dark_theme": "Aktivera mörkt tema",

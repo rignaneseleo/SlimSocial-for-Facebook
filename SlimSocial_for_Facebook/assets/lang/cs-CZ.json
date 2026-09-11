@@ -7,7 +7,7 @@
   "use_mbasic": "Použít základní verzi Facebooku",
   "use_mbasic_desc": "Lepší funkčnost pro starší zařízení nebo pomalé připojení",
   "recent_first": "Zobrazit nejnovější příspěvky první",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Skrýt některé reklamy (experimentální)",
   "style": "styl",
   "dark_theme": "Povolit tmavý vzhled",

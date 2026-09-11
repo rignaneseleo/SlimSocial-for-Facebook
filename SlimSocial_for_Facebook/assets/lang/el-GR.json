@@ -7,7 +7,7 @@
   "use_mbasic": "Χρήση βασικής έκδοσης του Facebook",
   "use_mbasic_desc": "Λειτουργεί καλύτερα σε παλαιότερες συσκευές ή πιο αργές συνδέσεις",
   "recent_first": "Εμφάνιση πρόσφατων δημοσιεύσεων πρώτα",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Απόκρυψη ορισμένων διαφημίσεων (πειραματικό)",
   "style": "στυλ",
   "dark_theme": "Ενεργοποίηση σκούρου θέματος",

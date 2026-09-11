@@ -7,7 +7,7 @@
   "use_mbasic": "Використовувати базову версію Facebook",
   "use_mbasic_desc": "Працює краще на старих пристроях або при повільному підключенні до Інтернету",
   "recent_first": "Показувати останні записи першими",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Приховувати деякі рекламні оголошення (експериментальна функція)",
   "style": "стиль",
   "dark_theme": "Включити темний режим",

@@ -7,7 +7,7 @@
   "use_mbasic": "फेसबुकचे मूलभूत आवृत्ती वापरा",
   "use_mbasic_desc": "हिंडेरा विनंती किंवा संचार वेळाची माहिती संपूर्ण पाहण्यासाठी मूलभूत आवृत्ती चांगली काम करते",
   "recent_first": "नवीन संदेश पहिले दाखवा",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "काही प्रयोगशील प्रमाणावरती जाहिराती लपवा (प्रायोगिक)",
   "style": "शैली",
   "dark_theme": "हिरवा थीम सक्षम करा",

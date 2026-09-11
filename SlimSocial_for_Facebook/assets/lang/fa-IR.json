@@ -7,7 +7,7 @@
   "use_mbasic": "استفاده از نسخه پایه فیسبوک",
   "use_mbasic_desc": "بر روی  دستگاه‌های قدیمی‌تر یا اتصالات اینترنت با سرعت کم‌تر بهتر کار می‌کند",
   "recent_first": "نمایش پست‌های اخیر اول",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "پنهان کردن تبلیغات (آزمایشی)",
   "style": "سبک",
   "dark_theme": "فعال سازی تم تاریک",

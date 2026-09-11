@@ -7,7 +7,7 @@
   "use_mbasic": "Gebruik basiese weergawe van Facebook",
   "use_mbasic_desc": "Dit werk beter op ouer toestelle of stadiger verbindings",
   "recent_first": "Wys onlangse plasings eerste",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Versteek sommige advertensies (eksperimenteel)",
   "style": "styl",
   "dark_theme": "Aktiveer donker tema",

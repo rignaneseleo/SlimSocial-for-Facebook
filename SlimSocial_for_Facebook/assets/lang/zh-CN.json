@@ -7,7 +7,7 @@
   "use_mbasic": "使用Facebook基础版",
   "use_mbasic_desc": "对于旧设备或慢速连接来说更有效",
   "recent_first": "最新帖子优先显示",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "隐藏一些广告（实验性）",
   "style": "样式",
   "dark_theme": "启用黑暗主题",

@@ -7,7 +7,7 @@
   "use_mbasic": "Folosiți versiunea de bază a Facebook-ului",
   "use_mbasic_desc": "Funcționează mai bine pe dispozitivele mai vechi sau pentru conexiuni mai lente",
   "recent_first": "Afișați cele mai recente postări prima",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Ascundeți unele reclame (experimental)",
   "style": "Stil",
   "dark_theme": "Activați tema întunecată",

@@ -7,7 +7,7 @@
   "use_mbasic": "பேஸ்புகின் அடிப்படை பதிவைப் பயன்படுத்து",
   "use_mbasic_desc": "பழைய சாதனங்கள் அல்லது வேகம் குறைவான இணைய இணைப்பை சரிசெய்யும்",
   "recent_first": "புதிய பிளவுகளை முன்னோட்டுக் காட்டு",
-  "recent_first_desc": "Facebook's mobile layout ignores this. Turn on Use desktop site to get the chronological feed.",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "சில விளம்பரங்களை மறைக்கவும் (சோதனை)",
   "style": "பாணி",
   "dark_theme": "கரை தீமையை செயல்படுத்தவும்",
