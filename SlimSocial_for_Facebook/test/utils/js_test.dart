@@ -478,4 +478,93 @@ void main() {
       expect(js, contains('} catch (e) {}'));
     });
   });
+
+  group('CustomJs.keepPageBlobsFunc', () {
+    final js = CustomJs.keepPageBlobsFunc();
+
+    test('wraps both halves of the object-url lifecycle', () {
+      expect(js, contains('URL.createObjectURL = function'));
+      expect(js, contains('URL.revokeObjectURL = function'));
+      expect(js, contains('nativeCreate.apply(URL, arguments)'));
+      expect(js, contains('nativeRevoke.apply(URL, arguments)'));
+    });
+
+    test('keeps the Blob under the url it was given', () {
+      expect(js, contains('window.__slimBlobs = new Map()'));
+      expect(js, contains('window.__slimBlobs.set(url, obj)'));
+    });
+
+    test('does not drop the Blob when the page revokes its url', () {
+      // The whole point of #363: Facebook revokes the url on the line after it
+      // clicks its own download link, and the bytes are still wanted.
+      expect(js, isNot(contains('__slimBlobs.delete(url)')));
+    });
+
+    test('bounds what it holds on to', () {
+      // A Map iterates in insertion order, so the first key is the oldest.
+      expect(js, contains('window.__slimBlobs.size > KEEP'));
+      expect(js, contains('window.__slimBlobs.keys().next()'));
+      expect(js, contains('window.__slimBlobs.delete(oldest.value)'));
+    });
+
+    test('wraps the native functions only once', () {
+      // Injection runs on every page start, and wrapping an already-wrapped
+      // function on each in-page navigation builds a chain without limit.
+      expect(js, contains('if (window.__slimBlobKeep) return;'));
+      expect(js, contains('window.__slimBlobKeep = true;'));
+    });
+
+    test('runs as a self-invoking function that swallows its own failure', () {
+      expect(js.trim(), startsWith('(function () {'));
+      expect(js.trim(), endsWith('})();'));
+      expect(js, contains('} catch (e) {}'));
+    });
+  });
+
+  group('CustomJs.fetchBlobFunc', () {
+    const blobUrl = 'blob:https://www.facebook.com/1234-5678';
+    final js = CustomJs.fetchBlobFunc(blobUrl, 'SlimBlobDownload');
+
+    test('carries the url and the channel as string literals', () {
+      // A url is not ours to trust as source code.
+      expect(js, contains(jsonEncode(blobUrl)));
+      expect(js, contains(jsonEncode('SlimBlobDownload')));
+      expect(js, contains('window[channel].postMessage'));
+    });
+
+    test('reads the kept Blob before trying the url', () {
+      // By the time this runs the url is usually revoked already, so the fetch
+      // that used to be the only route rejects (#363).
+      expect(js, contains('window.__slimBlobs.get(url)'));
+      expect(
+        js.indexOf('__slimBlobs.get(url)'),
+        lessThan(js.indexOf('fetch(url)')),
+      );
+    });
+
+    test('still fetches when the page has no kept Blob', () {
+      // A blob created before the keep script was injected, or in a frame it
+      // did not reach, is worth one attempt.
+      expect(js, contains('fetch(url)'));
+      expect(js, contains('.then(read)'));
+    });
+
+    test('reports a failure instead of going quiet', () {
+      expect(js, contains("post({ error: 'unavailable' })"));
+      expect(js, contains('.catch(fail)'));
+      expect(js, contains('fr.onerror = fail;'));
+    });
+
+    test('says nothing about why it failed', () {
+      // The message crosses into Dart, and a page-supplied string is not
+      // something to carry over that line.
+      expect(js, isNot(contains('e.message')));
+      expect(js, isNot(contains('String(e)')));
+    });
+
+    test('posts the bytes as a data url', () {
+      expect(js, contains('fr.readAsDataURL(b)'));
+      expect(js, contains('post({ type: b.type, data: fr.result })'));
+    });
+  });
 }

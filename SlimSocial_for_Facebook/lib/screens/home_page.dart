@@ -170,6 +170,15 @@ class _HomePageState extends ConsumerState<HomePage> {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
             });
 
+            //first, and not wrapped in whenDomReady: this has to be in place
+            //before the page can create and revoke a blob url, which the photo
+            //viewer does the moment the reader taps Save (#363)
+            await runIsolatedJs(
+              'blob keep',
+              () => _controller.runJavaScript(CustomJs.keepPageBlobsFunc()),
+            );
+            if (!mounted) return;
+
             //inject the css as soon as the DOM is loaded
             await injectCss();
             if (!mounted) return;

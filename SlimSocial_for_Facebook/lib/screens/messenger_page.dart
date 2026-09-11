@@ -76,6 +76,12 @@ class _HomePageState extends ConsumerState<MessengerPage> {
             //still in flight, and context/ref are unusable once that happens
             if (!mounted) return;
 
+            //first, and not wrapped in whenDomReady: a photo in a chat saves
+            //through the same revoked-url race as one in the feed (#363), so
+            //the Blob has to be kept before the page can let go of it
+            await _controller.runJavaScript(CustomJs.keepPageBlobsFunc());
+            if (!mounted) return;
+
             //inject the css as soon as the DOM is loaded
             await injectCss();
             if (!mounted) return;

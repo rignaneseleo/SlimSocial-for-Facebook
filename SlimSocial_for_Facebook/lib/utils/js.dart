@@ -16,6 +16,14 @@ const List<String> kFeedGateHosts = [
   'www.facebook.com',
 ];
 
+/// How many of the page's Blobs [CustomJs.keepPageBlobsFunc] holds on to.
+///
+/// One is enough for the Save the reader just tapped; the rest is slack for a
+/// viewer that previews the next photo before the download is handed over.
+/// Small on purpose: every entry is a whole file the page itself has already
+/// let go of.
+const int _kKeptBlobs = 20;
+
 class CustomJs {
   /// Builds JavaScript that appends [css] to the document in a `<style>` tag.
   ///
@@ -346,6 +354,79 @@ class CustomJs {
 ''';
   }
 
+  /// Builds JavaScript that keeps a page's Blobs readable after the page has
+  /// finished with them.
+  ///
+  /// This is what #363 turned out to be. Facebook's photo viewer saves a photo
+  /// the way every page does: it makes a blob url, clicks an `<a download>` on
+  /// it, and revokes the url on the next line. Revoking is correct — the page
+  /// would otherwise hold the bytes for its whole life — but it breaks the only
+  /// route this app has to the file. The click arrives in Dart as a navigation,
+  /// Dart injects [fetchBlobFunc], and by the time that script evaluates the
+  /// url names nothing: `fetch` rejects, and the reader is left with the
+  /// "Downloading..." toast and no file.
+  ///
+  /// So the Blob itself is kept, not the url. `createObjectURL` is wrapped to
+  /// remember what it was handed, keyed by the url it returned, and
+  /// `revokeObjectURL` still revokes but deliberately drops nothing from that
+  /// store: revocation is precisely the moment the reader still needs the
+  /// bytes.
+  ///
+  /// The store is capped at [_kKeptBlobs] entries, oldest evicted first. A
+  /// `Map` iterates in insertion order, so the first key is the oldest. Without
+  /// the cap a long scroll through a photo album would pin every image the page
+  /// ever previewed in memory — the page revoked them, and we would be the only
+  /// thing still holding on.
+  ///
+  /// Guarded by `window.__slimBlobKeep` like the other listeners: injection
+  /// runs on every page start, and wrapping an already-wrapped function on each
+  /// in-page navigation builds a chain that grows without limit. Everything is
+  /// swallowed by a try/catch for the same reason as [unlockZoomFunc], and this
+  /// script touches no DOM, so it must be injected raw — waiting for
+  /// DOMContentLoaded would let the page create and revoke blobs first.
+  static String keepPageBlobsFunc() {
+    return '''
+(function () {
+  try {
+    if (window.__slimBlobKeep) return;
+    if (typeof URL === 'undefined') return;
+
+    var nativeCreate = URL.createObjectURL;
+    if (typeof nativeCreate !== 'function') return;
+
+    window.__slimBlobKeep = true;
+    window.__slimBlobs = new Map();
+    var KEEP = $_kKeptBlobs;
+
+    URL.createObjectURL = function (obj) {
+      var url = nativeCreate.apply(URL, arguments);
+      try {
+        if (typeof Blob !== 'undefined' && obj instanceof Blob) {
+          window.__slimBlobs.set(url, obj);
+          while (window.__slimBlobs.size > KEEP) {
+            var oldest = window.__slimBlobs.keys().next();
+            if (oldest.done) break;
+            window.__slimBlobs.delete(oldest.value);
+          }
+        }
+      } catch (e) {}
+      return url;
+    };
+
+    var nativeRevoke = URL.revokeObjectURL;
+    if (typeof nativeRevoke === 'function') {
+      URL.revokeObjectURL = function (url) {
+        // The url is genuinely revoked — the page's own behaviour is not ours
+        // to change. Nothing is removed from the store: the Blob outliving its
+        // url is the entire point.
+        return nativeRevoke.apply(URL, arguments);
+      };
+    }
+  } catch (e) {}
+})();
+''';
+  }
+
   /// Builds JavaScript that reads a `blob:` url and posts the file back.
   ///
   /// A blob url is a handle into the page's own memory. Nothing outside the
@@ -362,29 +443,66 @@ class CustomJs {
   /// script. Both arguments go through jsonEncode for the same reason as
   /// [injectCssFunc]: a url is not ours to trust as source code.
   ///
+  /// The store [keepPageBlobsFunc] fills is tried first, because by the time
+  /// this script runs the url has usually been revoked already and `fetch`
+  /// would reject — that is #363. The fetch is kept as the fallback: it is what
+  /// works for a blob this app never saw created, one made before the keep
+  /// script was injected or by a frame it did not reach.
+  ///
+  /// Every failure reports `{"error": ...}` on the same channel rather than
+  /// going quiet. The reader was told a download started; if nothing can be
+  /// delivered they have to be told that too, or the app looks like it simply
+  /// ignored the tap. That is what the old silent `catch (e) {}` on each path
+  /// did for six days of Sentry events.
+  ///
   /// Everything is swallowed by a try/catch, and the async failure paths get
-  /// their own: a throw here would surface as nothing on Android, and there is
-  /// no recovery to attempt — the reader has already been told the download
-  /// started.
+  /// their own: a throw here would surface as nothing on Android.
   static String fetchBlobFunc(String blobUrl, String channelName) {
     return '''
 (function (url, channel) {
+  function post(payload) {
+    try {
+      window[channel].postMessage(JSON.stringify(payload));
+    } catch (e) {}
+  }
+
+  function fail() {
+    // Deliberately says nothing about why: the message crosses into Dart, and
+    // a page-supplied string is not something to carry across that line.
+    post({ error: 'unavailable' });
+  }
+
+  function read(b) {
+    try {
+      var fr = new FileReader();
+      fr.onload = function () {
+        post({ type: b.type, data: fr.result });
+      };
+      fr.onerror = fail;
+      fr.readAsDataURL(b);
+    } catch (e) {
+      fail();
+    }
+  }
+
   try {
+    var kept = null;
+    try {
+      if (window.__slimBlobs) kept = window.__slimBlobs.get(url);
+    } catch (e) {}
+
+    if (kept) {
+      read(kept);
+      return;
+    }
+
     fetch(url)
       .then(function (r) { return r.blob(); })
-      .then(function (b) {
-        var fr = new FileReader();
-        fr.onload = function () {
-          try {
-            window[channel].postMessage(
-              JSON.stringify({ type: b.type, data: fr.result })
-            );
-          } catch (e) {}
-        };
-        fr.readAsDataURL(b);
-      })
-      .catch(function (e) {});
-  } catch (e) {}
+      .then(read)
+      .catch(fail);
+  } catch (e) {
+    fail();
+  }
 })(${jsonEncode(blobUrl)}, ${jsonEncode(channelName)});
 ''';
   }

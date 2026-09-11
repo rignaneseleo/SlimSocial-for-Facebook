@@ -116,11 +116,21 @@ Future<void> saveImageFromUrl(String url) async {
 /// rejected message is described, never quoted — `debugPrint` output is
 /// collected as a breadcrumb on whatever is reported next.
 void shareBlobDownload(String message) {
-  final blob = parseBlobDownloadMessage(message);
-  if (blob == null) {
+  final result = parseBlobDownloadMessage(message);
+
+  //the reader has already seen "Downloading...", so a download the page could
+  //not read has to end in a word rather than in nothing at all (#363). A
+  //message that is not ours at all still ends in silence: it is noise, and the
+  //reader is not waiting on it
+  if (result is BlobDownloadFailed) {
+    showToast("error_trylater".tr());
+    return;
+  }
+  if (result is! BlobDownloadFile) {
     debugPrint("ignored blob download: ${message.length} chars");
     return;
   }
+  final blob = result;
 
   //the file only ever exists inside the share sheet, so the name is just
   //something recognisable in whatever app receives it
