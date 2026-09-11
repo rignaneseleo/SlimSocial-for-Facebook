@@ -170,6 +170,15 @@ class _HomePageState extends ConsumerState<HomePage> {
               isScontentUrl = Uri.parse(url).host.contains("scontent");
             });
 
+            //first, and not wrapped in whenDomReady: this has to be in place
+            //before the page can create and revoke a blob url, which the photo
+            //viewer does the moment the reader taps Save (#363)
+            await runIsolatedJs(
+              'blob keep',
+              () => _controller.runJavaScript(CustomJs.keepPageBlobsFunc()),
+            );
+            if (!mounted) return;
+
             //inject the css as soon as the DOM is loaded
             await injectCss();
             if (!mounted) return;
@@ -499,7 +508,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         Telemetry.captureIssue('download.intercepted', data: {'kind': 'blob'});
         showToast("${"downloading".tr()}...");
         //the bytes come back on kBlobDownloadChannelName, asynchronously: see
-        //[onBlobDownloadMessage]
+        //[onBlobDownloadMessage]. Marking it pending first is what lets a
+        //failure reported on that channel be told apart from a page script
+        //posting one on its own
+        blobDownloadPending = true;
         await runIsolatedJs(
           'blob download',
           () => _controller.runJavaScript(

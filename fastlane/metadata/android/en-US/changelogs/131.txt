@@ -1,0 +1,3 @@
+- Saving a photo from Facebook's viewer works again (#363).
+- Hiding reels or stories no longer hides the top bar.
+- "Show recent posts first" now says it needs the desktop site (#366).

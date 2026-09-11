@@ -337,6 +337,48 @@ article {
       );
     });
 
+    test('the carousel rule cannot swallow the top bar', () {
+      // A Play Store review on 26.09.05 said hiding reels made the whole top
+      // bar disappear, so Marketplace was unreachable. On that layout the
+      // header is a direct child of the same vscroller and carries a "Reels"
+      // tab, so its aria-label matched. These guards name what a top bar has
+      // and a carousel does not. Reasoned from the review, not from a DOM.
+      for (final guard in _navigationGuards) {
+        expect(
+          CustomCss.hideReelsCss.code,
+          contains(guard),
+          reason: 'reels carousel rule needs the guard $guard',
+        );
+      }
+    });
+
+    test('the stories :has() rules cannot swallow the top bar', () {
+      // Identical shape, identical risk: a header with a "story" aria-label.
+      for (final selector in CustomCss.hideStoriesCss.code
+          .split(RegExp(r',|\{'))
+          .where((s) => s.contains(':has([aria-label'))) {
+        for (final guard in _navigationGuards) {
+          expect(selector, contains(guard), reason: '$guard missing: $selector');
+        }
+      }
+    });
+
+    test('the guards leave the reel-post rule alone', () {
+      // The guards belong on the carousel selector only. A reel post is not a
+      // navigation container, and guarding it would only cost matches.
+      final postRule = CustomCss.hideReelsCss.code
+          .split(',')
+          .firstWhere((s) => s.contains('[data-is-reels="true"]'));
+
+      expect(
+        postRule.trim(),
+        startsWith(
+          'div[data-tracking-duration-id]:has([data-is-reels="true"])',
+        ),
+      );
+      expect(postRule, isNot(contains(':not(')));
+    });
+
     test('both trays are offered as settings toggles', () {
       final keys = CustomCss.cssList.map((c) => c.key);
 
@@ -559,3 +601,14 @@ article {
     });
   });
 }
+
+/// The `:not(:has(...))` guards that keep a navigation container — the header
+/// or tab bar — out of the carousel and stories rules.
+const _navigationGuards = [
+  ':not(:has([role="tablist"]))',
+  ':not(:has([role="navigation"]))',
+  ':not(:has([role="tab"]))',
+  ':not(:has([aria-label*="search" i]))',
+  ':not(:has([role="search"]))',
+  ':not(:has(input))',
+];

@@ -76,10 +76,13 @@ void main() {
   });
 
   group('parseBlobDownloadMessage', () {
+    BlobDownloadFile? fileOf(String json) {
+      final result = parseBlobDownloadMessage(json);
+      return result is BlobDownloadFile ? result : null;
+    }
+
     test('decodes a base64 data url', () {
-      final blob = parseBlobDownloadMessage(
-        _blobMessage('data:image/png;base64,$_pngBase64'),
-      );
+      final blob = fileOf(_blobMessage('data:image/png;base64,$_pngBase64'));
 
       expect(blob, isNotNull);
       expect(blob!.mimeType, 'image/png');
@@ -88,49 +91,77 @@ void main() {
     });
 
     test('uses the data url own type when the field is missing', () {
-      final blob = parseBlobDownloadMessage(
+      final blob = fileOf(
         jsonEncode({'data': 'data:image/webp;base64,$_pngBase64'}),
       );
 
       expect(blob?.mimeType, 'image/webp');
     });
 
-    test('returns null on malformed JSON', () {
-      expect(parseBlobDownloadMessage('not json at all'), isNull);
+    test('reports a script that could not read the blob as failed', () {
+      // Facebook revokes the blob url as soon as it has clicked its own
+      // download link, so the fetch that used to be the only route rejects
+      // (#363). The script says so instead of going quiet, and the reader gets
+      // a word rather than a toast that leads nowhere.
+      expect(
+        parseBlobDownloadMessage(jsonEncode({'error': 'unavailable'})),
+        isA<BlobDownloadFailed>(),
+      );
     });
 
-    test('returns null when the payload is not a data url', () {
+    test('prefers a file over an error field on the same message', () {
+      // Any script on the page can post here: an `error` key alongside a real
+      // payload must not be a way to turn a download into a failure toast.
+      final blob = fileOf(
+        jsonEncode({
+          'type': 'image/png',
+          'data': 'data:image/png;base64,$_pngBase64',
+          'error': 'unavailable',
+        }),
+      );
+
+      expect(blob, isNotNull);
+    });
+
+    test('ignores malformed JSON', () {
+      expect(
+        parseBlobDownloadMessage('not json at all'),
+        isA<BlobDownloadIgnored>(),
+      );
+    });
+
+    test('ignores a payload that is not a data url', () {
       // Any script on the page can post here, so an address is not a file.
       expect(
         parseBlobDownloadMessage(
           _blobMessage('https://example.com/steal?q=$_pngBase64'),
         ),
-        isNull,
+        isA<BlobDownloadIgnored>(),
       );
     });
 
-    test('returns null on a data url that is not base64', () {
+    test('ignores a data url that is not base64', () {
       expect(
         parseBlobDownloadMessage(_blobMessage('data:text/plain,hello')),
-        isNull,
+        isA<BlobDownloadIgnored>(),
       );
     });
 
-    test('returns null on undecodable base64', () {
+    test('ignores undecodable base64', () {
       expect(
         parseBlobDownloadMessage(_blobMessage('data:image/png;base64,@@@@')),
-        isNull,
+        isA<BlobDownloadIgnored>(),
       );
     });
 
-    test('returns null on an empty payload', () {
+    test('ignores an empty payload', () {
       expect(
         parseBlobDownloadMessage(_blobMessage('data:image/png;base64,')),
-        isNull,
+        isA<BlobDownloadIgnored>(),
       );
     });
 
-    test('returns null above the size cap', () {
+    test('ignores anything above the size cap', () {
       // The bytes travel base64-encoded and are held in memory twice on the
       // way, so an unbounded payload is a way to kill the app from the page.
       final oversized = 'A' * (kMaxBlobDownloadBytes ~/ 3 * 4 + 8);
@@ -139,7 +170,7 @@ void main() {
         parseBlobDownloadMessage(
           _blobMessage('data:image/png;base64,$oversized'),
         ),
-        isNull,
+        isA<BlobDownloadIgnored>(),
       );
     });
   });

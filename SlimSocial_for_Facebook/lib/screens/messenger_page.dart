@@ -76,6 +76,20 @@ class _HomePageState extends ConsumerState<MessengerPage> {
             //still in flight, and context/ref are unusable once that happens
             if (!mounted) return;
 
+            //first, and not wrapped in whenDomReady: a photo in a chat saves
+            //through the same revoked-url race as one in the feed (#363), so
+            //the Blob has to be kept before the page can let go of it
+            //guarded like the blob fetch below: a platform throw out of
+            //runJavaScript used to take the rest of this callback with it, so
+            //one failed keep-script left the page with no css and no link menu
+            //— a visible break, for a helper that is only an optimisation
+            try {
+              await _controller.runJavaScript(CustomJs.keepPageBlobsFunc());
+            } on Object catch (e, stack) {
+              Telemetry.captureError(e, stack, hint: 'keep page blobs');
+            }
+            if (!mounted) return;
+
             //inject the css as soon as the DOM is loaded
             await injectCss();
             if (!mounted) return;
@@ -189,7 +203,10 @@ class _HomePageState extends ConsumerState<MessengerPage> {
       case DownloadKind.blob:
         Telemetry.captureIssue('download.intercepted', data: {'kind': 'blob'});
         showToast("${"downloading".tr()}...");
-        //the bytes come back on kBlobDownloadChannelName, asynchronously
+        //the bytes come back on kBlobDownloadChannelName, asynchronously.
+        //Marking it pending first is what lets a failure reported on that
+        //channel be told apart from a page script posting one on its own
+        blobDownloadPending = true;
         try {
           await _controller.runJavaScript(
             CustomJs.fetchBlobFunc(request.url, kBlobDownloadChannelName),

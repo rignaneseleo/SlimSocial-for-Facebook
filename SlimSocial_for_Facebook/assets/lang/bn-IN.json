@@ -7,6 +7,7 @@
   "use_mbasic": "ফেসবুকের বেসিক সংস্করণ ব্যবহার করুন",
   "use_mbasic_desc": "এটি পুরানো ডিভাইস বা ধীর সংযোগের ক্ষেত্রে ভালোভাবে কাজ করে",
   "recent_first": "সাম্প্রতিক পোস্টগুলি প্রথমে দেখান",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "কিছু বিজ্ঞাপন লুকান (পরীক্ষামূলক)",
   "style": "স্টাইল",
   "dark_theme": "অন্ধকার থিম সক্ষম করুন",

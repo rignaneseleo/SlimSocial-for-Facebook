@@ -159,6 +159,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   initialValue: sp.getBool(SpKeys.recentFirst),
                   leading: const Icon(Icons.rss_feed),
                   title: Text('recent_first'.tr()),
+                  // Facebook's current mobile layout drops `?sk=h_chr`, so the
+                  // toggle only reorders the feed on the desktop site (#366).
+                  description: (sp.getBool(SpKeys.useDesktopSite) ?? false)
+                      ? null
+                      : Text('recent_first_desc'.tr()),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) {

@@ -54,56 +54,98 @@ DownloadKind classifyDownloadRequest(Uri uri) {
 /// app from inside the page. A photo or a short video sits far below this.
 const int kMaxBlobDownloadBytes = 25 * 1024 * 1024;
 
+/// What the blob-download script posted back.
+///
+/// Three outcomes, not two, because "the page could not read the file" and
+/// "this is not a message the app accepts" call for different things: the
+/// first is a failed download the reader is waiting on, the second is noise
+/// any script on the page can post and must be dropped without a word.
+sealed class BlobDownloadResult {
+  const BlobDownloadResult();
+}
+
+/// A file, decoded and within the cap, ready for the share sheet.
+class BlobDownloadFile extends BlobDownloadResult {
+  const BlobDownloadFile({required this.bytes, required this.mimeType});
+
+  final Uint8List bytes;
+  final String mimeType;
+}
+
+/// The script said it could not produce the file.
+///
+/// The usual cause is the one #363 is about: Facebook revoked the blob url
+/// before the download could be read. The reader has already seen the
+/// "Downloading..." toast, so this has to be reported.
+class BlobDownloadFailed extends BlobDownloadResult {
+  const BlobDownloadFailed();
+}
+
+/// Not something to act on: malformed, not a data url, or over the cap.
+class BlobDownloadIgnored extends BlobDownloadResult {
+  const BlobDownloadIgnored();
+}
+
 /// Parses what the blob-download script posts back.
 ///
-/// The payload is `{"type": "<mime>", "data": "data:<mime>;base64,<bytes>"}`.
-/// Any script on the page can post on a channel the app registers, so this is
-/// treated as hostile input: anything that is not a decodable base64 data url
-/// within the size cap returns null and is dropped.
-({Uint8List bytes, String mimeType})? parseBlobDownloadMessage(String json) {
+/// The payload is `{"type": "<mime>", "data": "data:<mime>;base64,<bytes>"}`
+/// on success, or `{"error": "<word>"}` when the script could not read the
+/// blob. Any script on the page can post on a channel the app registers, so
+/// this is treated as hostile input: anything that is not a decodable base64
+/// data url within the size cap is [BlobDownloadIgnored]. The error field is
+/// only ever tested for presence — its value is never read, logged or shown.
+BlobDownloadResult parseBlobDownloadMessage(String json) {
   Object? decoded;
   try {
     decoded = jsonDecode(json);
   } on Object catch (_) {
-    return null;
+    return const BlobDownloadIgnored();
   }
-  if (decoded is! Map) return null;
+  if (decoded is! Map) return const BlobDownloadIgnored();
 
   final data = decoded['data'];
-  if (data is! String) return null;
+  if (data is! String) {
+    //checked after `data`, so a message carrying a real file is never thrown
+    //away because the page also put an `error` key on it
+    if (decoded.containsKey('error')) return const BlobDownloadFailed();
+    return const BlobDownloadIgnored();
+  }
 
   //only a data url, and only a base64 one: a `data:` url with percent-encoded
   //text in it is not a file the page just read for us
   final comma = data.indexOf(',');
-  if (comma < 0) return null;
+  if (comma < 0) return const BlobDownloadIgnored();
   final header = data.substring(0, comma);
-  if (!header.startsWith('data:')) return null;
-  if (!header.endsWith(';base64')) return null;
+  if (!header.startsWith('data:')) return const BlobDownloadIgnored();
+  if (!header.endsWith(';base64')) return const BlobDownloadIgnored();
 
   final payload = data.substring(comma + 1);
   //3 base64 characters carry at most 3 bytes, so this bounds the decode
   //without doing it first
-  if (payload.length > kMaxBlobDownloadBytes ~/ 3 * 4 + 4) return null;
+  if (payload.length > kMaxBlobDownloadBytes ~/ 3 * 4 + 4) {
+    return const BlobDownloadIgnored();
+  }
 
   Uint8List bytes;
   try {
     bytes = base64Decode(payload);
   } on Object catch (_) {
-    return null;
+    return const BlobDownloadIgnored();
   }
-  if (bytes.isEmpty) return null;
-  if (bytes.length > kMaxBlobDownloadBytes) return null;
+  if (bytes.isEmpty) return const BlobDownloadIgnored();
+  if (bytes.length > kMaxBlobDownloadBytes) return const BlobDownloadIgnored();
 
   //the mime type only ever names a file extension and is reported to nobody,
   //but it still comes from the page: fall back to the header's own type, and
   //to octet-stream, rather than trusting a free-form string
   final type = decoded['type'];
   final headerType = header.substring('data:'.length, header.length - 7);
-  final mimeType = type is String && type.isNotEmpty
-      ? type
-      : (headerType.isNotEmpty ? headerType : 'application/octet-stream');
+  final mimeType =
+      type is String && type.isNotEmpty
+          ? type
+          : (headerType.isNotEmpty ? headerType : 'application/octet-stream');
 
-  return (bytes: bytes, mimeType: mimeType);
+  return BlobDownloadFile(bytes: bytes, mimeType: mimeType);
 }
 
 /// File extension for [mimeType], for naming the file the share sheet hands on.

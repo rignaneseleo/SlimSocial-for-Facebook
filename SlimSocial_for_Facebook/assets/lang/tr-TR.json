@@ -7,6 +7,7 @@
   "use_mbasic": "Facebook'un temel sürümünü kullan",
   "use_mbasic_desc": "Daha eski cihazlarda veya yavaş bağlantılarda daha iyi çalışır",
   "recent_first": "En son gönderileri önce göster",
+  "recent_first_desc": "Works with the desktop site. Turn on \"Use desktop site\" to get the chronological feed.",
   "hide_ads": "Reklamların bazılarını gizle (deneysel)",
   "style": "stil",
   "dark_theme": "Karanlık tema kullan",
