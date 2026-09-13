@@ -348,9 +348,12 @@ class CustomCss {
   ///
   /// The replies row is the next sibling of the element wrapping the comment's
   /// `role="article"`, so the rule keys off that structure and the pill's
-  /// `role="button"` rather than off the hashed `x*` classes, which churn. Only
-  /// a comment that has a reaction count gets the padding; the rest keep their
-  /// spacing. The `aria-label` match is English: the pill has no
+  /// `role="button"` rather than off the hashed `x*` classes, which churn.
+  /// The sibling itself must also `:has(div[role="button"])` — measured on
+  /// Marisa Bennati (pill, no replies control), an empty following sibling
+  /// otherwise picked up 18px of blank space before the next comment. Only a
+  /// comment that has both a reaction count and a replies control gets the
+  /// padding. The `aria-label` match is English: the pill has no
   /// language-independent marker in the captured tree, so other locales keep
   /// the stock layout rather than a guess. A WebView without `:has()` drops
   /// the rule, which is also the stock layout.
@@ -362,7 +365,8 @@ class CustomCss {
     description: 'Keep reaction counts clear of the replies control',
     defaultEnabled: true,
     code: 'div:has(> div[role="article"] '
-        'div[role="button"][aria-label*="reactions"]) + div '
+        'div[role="button"][aria-label*="reactions"]) + '
+        'div:has(div[role="button"]) '
         '{ padding-top: 18px !important; }',
   );
 

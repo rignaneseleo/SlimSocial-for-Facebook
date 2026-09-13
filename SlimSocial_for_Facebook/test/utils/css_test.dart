@@ -620,7 +620,13 @@ article {
 
     test('pads the row after the comment, not the button inside it', () {
       // Padding the button would grow its hit area under the pill.
-      expect(code, contains(') + div {'));
+      expect(code, contains(') + div:has(div[role="button"]) {'));
+    });
+
+    test('skips pill comments that have no replies control', () {
+      // QA inject: Marisa Bennati had a reactions pill and an empty following
+      // sibling — padding that sibling added 18px of dead space.
+      expect(code, contains('+ div:has(div[role="button"])'));
     });
 
     test('survives the whitespace collapsing intact', () {
@@ -629,7 +635,8 @@ article {
       expect(
         code,
         'div:has(> div[role="article"] '
-        'div[role="button"][aria-label*="reactions"]) + div '
+        'div[role="button"][aria-label*="reactions"]) + '
+        'div:has(div[role="button"]) '
         '{ padding-top: 18px !important; }',
       );
     });
