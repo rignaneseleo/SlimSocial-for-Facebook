@@ -931,6 +931,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
       'slim-app-upsell': CustomCss.hideAppUpsellCss.code,
       'slim-selectable': CustomCss.selectableContentCss.code,
+      'slim-comment-reaction-replies':
+          CustomCss.commentReactionRepliesCss.code,
       'slim-ad-placeholder': CustomCss.adPlaceholderCss.code,
       'slim-user-sheet':
           CustomCss.buildFacebookCss(PrefController.getUserCustomCss()),
