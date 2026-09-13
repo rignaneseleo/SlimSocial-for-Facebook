@@ -330,6 +330,42 @@ class CustomCss {
         '{ pointer-events: auto !important; }',
   );
 
+  /// Keeps a comment's reaction count clear of the "View N replies" control
+  /// under it (#368).
+  ///
+  /// Measured on www comet at a 390px viewport: the count pill
+  /// (`40 reactions; see who reacted to this`) sits at the right edge of the
+  /// comment, 2px above the replies control, and that control's button runs
+  /// the full width of the row — under the pill. Any shift of the pill, which
+  /// the touch layout in the issue report shows, paints it over the label and
+  /// puts it in front of the tap target.
+  ///
+  /// The fix is space, not stacking. A `z-index` would decide which of the two
+  /// is drawn on top, but they would still share the same pixels, and a tap
+  /// there would still land on one of them by accident. Padding the replies
+  /// row — not the button inside it, which would only grow the button under
+  /// the pill — moves the whole hit area below the pill.
+  ///
+  /// The replies row is the next sibling of the element wrapping the comment's
+  /// `role="article"`, so the rule keys off that structure and the pill's
+  /// `role="button"` rather than off the hashed `x*` classes, which churn. Only
+  /// a comment that has a reaction count gets the padding; the rest keep their
+  /// spacing. The `aria-label` match is English: the pill has no
+  /// language-independent marker in the captured tree, so other locales keep
+  /// the stock layout rather than a guess. A WebView without `:has()` drops
+  /// the rule, which is also the stock layout.
+  ///
+  /// Deliberately not in [cssList]: like [selectableContentCss], this is a
+  /// structural fix rather than a preference.
+  static MyCss commentReactionRepliesCss = MyCss(
+    key: 'comment_reaction_replies',
+    description: 'Keep reaction counts clear of the replies control',
+    defaultEnabled: true,
+    code: 'div:has(> div[role="article"] '
+        'div[role="button"][aria-label*="reactions"]) + div '
+        '{ padding-top: 18px !important; }',
+  );
+
   static MyCss hideAdsAndPeopleYouMayKnowCss = MyCss(
     key: 'hideAdsAndPeopleYouMayKnow',
     description: 'Hide ads and people you may know',
