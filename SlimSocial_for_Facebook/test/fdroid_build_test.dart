@@ -35,7 +35,9 @@ void main() {
         if (file.path == kPlayImplPath) continue;
         final source = file.readAsStringSync();
         for (final package in kProprietaryPackages) {
-          if (source.contains('package:$package/')) {
+          //a prefix, so the federated halves (in_app_purchase_android)
+          //count as well
+          if (source.contains('package:$package')) {
             offenders.add('${file.path} imports $package');
           }
         }

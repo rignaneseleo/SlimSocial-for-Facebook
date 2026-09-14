@@ -65,8 +65,10 @@ rm -f "$PLAY_IMPL"
 
 # 3 — pubspec.yaml. Each of these is a single `  name: version` line; the
 # git-sourced dependencies in this file are indented deeper and are untouched.
+# Matched by prefix, like the lockfile below: in_app_purchase_android is named
+# directly too (the Play implementation reads its subscription types).
 for pkg in "${PROPRIETARY_PACKAGES[@]}"; do
-  sed -i -e "/^  ${pkg}:/d" pubspec.yaml
+  sed -i -e "/^  ${pkg}[a-z_]*:/d" pubspec.yaml
 done
 
 # 3 — pubspec.lock. Matched by *prefix*, not by exact name: each package pulls
@@ -91,7 +93,7 @@ for pkg in "${PROPRIETARY_PACKAGES[@]}"; do
 done
 
 imports_pattern="$(IFS='|'; echo "${PROPRIETARY_PACKAGES[*]}")"
-if grep -rnE --include='*.dart' "package:(${imports_pattern})/" lib/; then
+if grep -rnE --include='*.dart' "package:(${imports_pattern})[a-z_]*/" lib/; then
   fail "a proprietary import is still reachable from lib/ (see the lines above)"
 fi
 
