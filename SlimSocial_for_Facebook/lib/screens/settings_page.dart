@@ -21,9 +21,7 @@ import 'package:slimsocial_for_facebook/widgets/supporter_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
-  const SettingsPage({this.productId, super.key});
-  //this is used to make a shortcut for donations
-  final String? productId;
+  const SettingsPage({super.key});
 
   @override
   ConsumerState<SettingsPage> createState() => _SettingsPageState();
@@ -51,14 +49,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   void initState() {
     _updatePermissionsToggle();
 
-    //the donation deep link is only answerable where there is a store to
-    //answer it with; in the F-Droid build it is a link to nothing
-    if (storeServices.canPurchase && !widget.productId.isNullOrEmpty()) {
-      Future.delayed(const Duration(milliseconds: 1), () {
-        storeServices.donate(widget.productId!);
-      });
-    }
-
     _checkDev();
 
     //Play is the truth about the subscription: it may have lapsed or been
@@ -73,12 +63,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     setState(() {
       isDev = _isDev;
     });
-  }
-
-  @override
-  void dispose() {
-    storeServices.dispose();
-    super.dispose();
   }
 
   @override
