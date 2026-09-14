@@ -9,8 +9,9 @@ import 'package:slimsocial_for_facebook/widgets/supporter_heart.dart';
 
 /// "Keep SlimSocial free and independent": pick a yearly price and support.
 ///
-/// Nothing in the app is locked behind it. What it sells depends on the build
-/// ([SupporterKind]): a Play subscription, or a one-time PayPal donation.
+/// Nothing in the app is locked behind it. What it offers depends on the build
+/// ([SupporterKind]): a Play subscription, a pointer to the Play listing for a
+/// Play apk that did not come from Play, or a one-time donation on F-Droid.
 class SupporterPage extends StatefulWidget {
   const SupporterPage({super.key});
 
@@ -33,7 +34,24 @@ class _SupporterPageState extends State<SupporterPage> {
   @override
   void initState() {
     super.initState();
-    if (_prices == null) unawaited(_loadPrices());
+    //a purchase can land after support() gave up waiting (a slow payment
+    //sheet, a pending payment clearing): thank the user when it does
+    storeServices.isSupporter.addListener(_onSupporterChanged);
+    if (_prices == null && _kind == SupporterKind.subscription) {
+      unawaited(_loadPrices());
+    }
+  }
+
+  @override
+  void dispose() {
+    storeServices.isSupporter.removeListener(_onSupporterChanged);
+    super.dispose();
+  }
+
+  void _onSupporterChanged() {
+    if (storeServices.isSupporter.value && !_thanks && mounted) {
+      setState(() => _thanks = true);
+    }
   }
 
   Future<void> _loadPrices() async {
@@ -203,7 +221,7 @@ class _SupporterPageState extends State<SupporterPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _cta(palette, subscription),
+                        _cta(palette, _kind),
                         if (subscription) ...[
                           TextButton(
                             onPressed: _busy ? null : _tip,
@@ -245,6 +263,7 @@ class _SupporterPageState extends State<SupporterPage> {
 
   Widget _card(SupporterPalette palette, bool subscription) {
     final prices = _prices;
+    final installFromPlay = _kind == SupporterKind.installFromPlay;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: palette.card,
@@ -267,9 +286,9 @@ class _SupporterPageState extends State<SupporterPage> {
             ),
             const SizedBox(height: 4),
             Text(
-              (subscription
-                      ? 'supporter_cancel_any_time'
-                      : 'supporter_one_time_donation')
+              (_kind == SupporterKind.donation
+                      ? 'supporter_one_time_donation'
+                      : 'supporter_cancel_any_time')
                   .tr()
                   .toUpperCase(),
               textAlign: TextAlign.center,
@@ -281,7 +300,18 @@ class _SupporterPageState extends State<SupporterPage> {
               ),
             ),
             SupporterHeart(tier: _tier),
-            if (_pricesFailed)
+            if (installFromPlay) ...[
+              _InstallFromPlay(
+                palette: palette,
+                onOpen: () => storeServices.support(_tier),
+              ),
+              SupporterSlider(
+                tier: _tier,
+                prices: null,
+                palette: palette,
+                onChanged: (_) {},
+              ),
+            ] else if (_pricesFailed)
               _PricesFailed(palette: palette, onRetry: _loadPrices)
             else ...[
               const SizedBox(height: 4),
@@ -306,8 +336,9 @@ class _SupporterPageState extends State<SupporterPage> {
     );
   }
 
-  Widget _cta(SupporterPalette palette, bool subscription) {
-    final prices = _prices;
+  Widget _cta(SupporterPalette palette, SupporterKind kind) {
+    final subscription = kind == SupporterKind.subscription;
+    final prices = kind == SupporterKind.installFromPlay ? null : _prices;
     final Widget label;
     if (_busy) {
       label = SizedBox.square(
@@ -319,7 +350,9 @@ class _SupporterPageState extends State<SupporterPage> {
       );
     } else if (prices == null) {
       label = Text(
-        _pricesFailed ? 'supporter_tile_title'.tr() : 'supporter_loading'.tr(),
+        _pricesFailed || kind == SupporterKind.installFromPlay
+            ? 'supporter_tile_title'.tr()
+            : 'supporter_loading'.tr(),
       );
     } else {
       label = _CountingPrice(
@@ -721,6 +754,41 @@ class _StepLabel extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// In a Play apk that did not come from Play: why nothing can be bought, and
+/// the way to fix it.
+class _InstallFromPlay extends StatelessWidget {
+  const _InstallFromPlay({required this.palette, required this.onOpen});
+
+  final SupporterPalette palette;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Column(
+        children: [
+          Text(
+            'supporter_install_from_play'.tr(),
+            key: const ValueKey('supporter_install_from_play'),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13.5, height: 1.4, color: palette.ink),
+          ),
+          TextButton(
+            key: const ValueKey('supporter_open_play'),
+            onPressed: onOpen,
+            style: TextButton.styleFrom(
+              foregroundColor: palette.primary,
+              minimumSize: const Size(48, 48),
+            ),
+            child: Text('supporter_open_play'.tr()),
+          ),
+        ],
       ),
     );
   }

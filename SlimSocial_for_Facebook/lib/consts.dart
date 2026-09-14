@@ -126,11 +126,6 @@ const String kPlayStoreUrl =
 const String kFDroidStoreUrl =
     "https://f-droid.org/packages/it.rignanese.leo.slimfacebook/";
 
-/// Where donations go when in-app billing is not available: a non-Play
-/// install, or the F-Droid build, which has no billing compiled in at all.
-/// Same address as the `funding:` entry in pubspec.yaml.
-const String kPayPalDonationUrl = "https://www.paypal.me/LeonardoRignanese";
-
 /// The privacy policy: `Privacy.txt` at the root of the repository.
 const String kPrivacyPolicyUrl = "$kGithubProjectUrl/blob/master/Privacy.txt";
 

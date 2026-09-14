@@ -52,6 +52,29 @@ void main() {
       );
     });
 
+    test('no PayPal address outside the F-Droid store', () {
+      //Google Play forbids a Play app to offer a way to pay outside Play
+      //billing. The Play build never imports store_services_foss.dart, so an
+      //address kept there is not compiled into the Play apk; anywhere else it
+      //could be.
+      const allowed = 'lib/services/store_services_foss.dart';
+      final offenders = _dartFilesUnder('lib')
+          .where((f) => f.path != allowed)
+          .where((f) => f.readAsStringSync().contains('paypal.me'))
+          .map((f) => f.path)
+          .toList();
+      expect(offenders, isEmpty);
+    });
+
+    test("the Play implementation's own test goes with it", () {
+      //it imports the file the script deletes, so it would stop the F-Droid
+      //tree from compiling its tests
+      expect(
+        File(kScriptPath).readAsStringSync(),
+        contains('test/services/store_services_play_test.dart'),
+      );
+    });
+
     test('the script deletes the one file the guard above exempts', () {
       //the guard is only worth anything while the exemption it grants matches
       //the file the script actually removes

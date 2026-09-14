@@ -72,7 +72,12 @@ class FakeSubscriptionStore implements StoreServices {
     this.purchaseResult = SupporterPurchaseResult.purchased,
     this.restoreResult = SupporterRestoreResult.notFound,
     bool supporter = false,
+    this.kind = SupporterKind.subscription,
   }) : isSupporter = ValueNotifier(supporter);
+
+  /// [SupporterKind.installFromPlay] stands in for a Play apk that did not
+  /// come from Play.
+  final SupporterKind kind;
 
   Map<SupporterTier, SupporterPrice> prices;
   SupporterPurchaseResult purchaseResult;
@@ -87,7 +92,7 @@ class FakeSubscriptionStore implements StoreServices {
   final ValueNotifier<bool> isSupporter;
 
   @override
-  SupporterKind get supporterKind => SupporterKind.subscription;
+  SupporterKind get supporterKind => kind;
 
   @override
   Map<SupporterTier, SupporterPrice>? get knownSupporterPrices => null;

@@ -24,7 +24,7 @@
 #      is four lines and names the implementation the app uses; every screen
 #      goes through the StoreServices interface, never through a store SDK.
 #   2. Deletes lib/services/store_services_play.dart — the one file in lib/
-#      that imports either package.
+#      that imports either package — and its test, which imports it.
 #   3. Drops the two dependencies from pubspec.yaml and pubspec.lock, so
 #      `flutter pub get --enforce-lockfile` still resolves.
 #
@@ -43,6 +43,8 @@ cd "$(dirname "$0")/.."
 readonly BINDING="lib/services/store_binding.dart"
 readonly BINDING_FOSS="lib/services/store_binding_foss.dart"
 readonly PLAY_IMPL="lib/services/store_services_play.dart"
+# Its tests import it, so they cannot compile once it is gone.
+readonly PLAY_IMPL_TEST="test/services/store_services_play_test.dart"
 
 # The pub packages that must not reach the apk. Keep in step with
 # test/fdroid_build_test.dart, which asserts the same list is unreachable.
@@ -62,6 +64,7 @@ fail() {
 # 1 + 2 — source.
 cp "$BINDING_FOSS" "$BINDING"
 rm -f "$PLAY_IMPL"
+rm -f "$PLAY_IMPL_TEST"
 
 # 3 — pubspec.yaml. Each of these is a single `  name: version` line; the
 # git-sourced dependencies in this file are indented deeper and are untouched.

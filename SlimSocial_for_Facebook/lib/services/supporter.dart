@@ -6,7 +6,6 @@
 library;
 
 import 'package:flutter/foundation.dart';
-import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// The Play subscription product. One product, one base plan per price.
@@ -63,22 +62,18 @@ enum SupporterKind {
   /// A yearly Play subscription, with restore and a thank-you state.
   subscription,
 
-  /// A one-time PayPal donation at a fixed euro amount. No state afterwards.
+  /// The Play build, installed some other way than by the Play Store (adb,
+  /// Play's pre-launch report, a copied apk). Play's billing sheet crashes
+  /// there (SLIMSOCIAL-5), and a Play build may offer no other way to pay, so
+  /// the screen only points to the Play listing.
+  installFromPlay,
+
+  /// A one-time donation outside any store, at a fixed euro amount. F-Droid
+  /// only. No state afterwards.
   donation,
 }
 
-/// The fixed prices of a [SupporterKind.donation].
-const Map<SupporterTier, SupporterPrice> kDonationPrices = {
-  SupporterTier.small: SupporterPrice(formatted: '10 €', raw: 10),
-  SupporterTier.medium: SupporterPrice(formatted: '25 €', raw: 25),
-  SupporterTier.large: SupporterPrice(formatted: '50 €', raw: 50),
-};
-
-/// PayPal.me with the amount filled in, e.g. `.../LeonardoRignanese/25EUR`.
-Uri paypalDonationUri(SupporterTier tier) =>
-    Uri.parse('$kPayPalDonationUrl/${tier.nominalEuros}EUR');
-
-/// Opens [uri] in another app (the browser, or the PayPal app). False when
+/// Opens [uri] in another app, such as the browser or Google Play. False when
 /// nothing could open it. Never throws.
 Future<bool> openExternally(Uri uri) async {
   try {
@@ -103,7 +98,7 @@ enum SupporterPurchaseResult {
   /// Anything else. The user was not charged.
   error,
 
-  /// Handed off to an outside page (PayPal). The app cannot know the outcome.
+  /// Handed off to an outside page. The app cannot know the outcome.
   openedExternally,
 }
 

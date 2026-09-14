@@ -46,24 +46,23 @@ abstract interface class StoreServices {
 
   /// What the supporter screen sells in this build.
   ///
-  /// [SupporterKind.subscription] only in a Play build installed by the Play
-  /// Store. The F-Droid build has no billing, and a Play apk installed any
-  /// other way crashes in Play's billing sheet (SLIMSOCIAL-5): both take a
-  /// one-time PayPal donation instead.
+  /// [SupporterKind.subscription] in a Play build installed by the Play
+  /// Store, [SupporterKind.installFromPlay] in a Play build installed any
+  /// other way, and [SupporterKind.donation] in the F-Droid build.
   SupporterKind get supporterKind;
 
   /// Whether this install has an active supporter subscription.
   ///
   /// Starts from the value saved on the device, so it is right offline, and
   /// is corrected by [restoreSupporter] and by purchases as they arrive.
-  /// Always false for [SupporterKind.donation]: a PayPal payment cannot be
-  /// seen from the app.
+  /// Always false unless [supporterKind] is [SupporterKind.subscription].
   ValueListenable<bool> get isSupporter;
 
   /// The prices already known without asking the store, or null.
   ///
   /// Fixed euro amounts for a donation; for a subscription, the prices from
-  /// the last successful [supporterPrices] in this session.
+  /// the last successful [supporterPrices] in this session. Null for
+  /// [SupporterKind.installFromPlay], which shows no price.
   Map<SupporterTier, SupporterPrice>? get knownSupporterPrices;
 
   /// The localized price for every [SupporterTier].
@@ -73,8 +72,8 @@ abstract interface class StoreServices {
   /// throws.
   Future<Map<SupporterTier, SupporterPrice>> supporterPrices();
 
-  /// Starts support at [tier]: Play's subscription sheet, or the PayPal page
-  /// for a donation. Completes when the outcome is known. Never throws.
+  /// Starts support at [tier]: Play's subscription sheet, or the donation page
+  /// in the F-Droid build. Completes when the outcome is known. Never throws.
   Future<SupporterPurchaseResult> support(SupporterTier tier);
 
   /// Asks Play for this account's purchases, acknowledges a supporter
@@ -85,8 +84,10 @@ abstract interface class StoreServices {
   /// throws.
   Future<SupporterRestoreResult> restoreSupporter();
 
-  /// Drops anything the donation flow is still holding.
+  /// Stops listening for purchases.
   ///
-  /// Called from the settings screen's `dispose`. Safe to call more than once.
+  /// The store listens for the whole life of the app, because a purchase can
+  /// be confirmed after the screen that started it has closed. So no screen
+  /// calls this; it is for tests. Safe to call more than once.
   void dispose();
 }

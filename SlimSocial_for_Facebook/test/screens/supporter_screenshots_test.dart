@@ -180,6 +180,26 @@ void main() {
     await _shoot(tester, 'play_step25_text130_scrolled_light');
   });
 
+  for (final locale in ['de-DE', 'ru-RU']) {
+    testWidgets('play in $locale', skip: skip, (tester) async {
+      loadStrings(locale);
+      addTearDown(loadStrings);
+      setStoreServicesForTest(FakeSubscriptionStore(prices: _euroPrices));
+      await _pumpScreen(tester, const SupporterPage());
+      debugPrint('$locale scroll extent: ${_scrollExtent(tester)}');
+      await _shoot(tester, 'play_step25_${locale}_light');
+    });
+  }
+
+  testWidgets('play apk not installed by play', skip: skip, (tester) async {
+    setStoreServicesForTest(
+      FakeSubscriptionStore(kind: SupporterKind.installFromPlay),
+    );
+    await _pumpScreen(tester, const SupporterPage());
+    expect(_scrollExtent(tester), 0, reason: 'scrolls at default size');
+    await _shoot(tester, 'play_not_from_play_light');
+  });
+
   testWidgets('f-droid donation', skip: skip, (tester) async {
     setStoreServicesForTest(const FossStoreServices());
     await _pumpScreen(tester, const SupporterPage());
