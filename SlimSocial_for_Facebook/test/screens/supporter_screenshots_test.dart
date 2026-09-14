@@ -103,7 +103,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('supporter_step_large')));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 380));
+      await tester.pump(const Duration(milliseconds: 420));
       await _shoot(tester, 'play_step50_burst_$theme');
       await tester.pump(const Duration(milliseconds: 1400));
       await _shoot(tester, 'play_step50_$theme');

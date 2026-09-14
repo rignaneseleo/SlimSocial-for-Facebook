@@ -506,6 +506,15 @@ class _HeartPainter extends CustomPainter {
         ..translate(centre.dx, centre.dy)
         ..scale(unit)
         ..translate(-16, -7.5)
+        //a rim in the disc colour, so a small heart still reads while it
+        //crosses the big red one
+        ..drawPath(
+          heart,
+          Paint()
+            ..color = disc.withValues(alpha: opacity)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2.4 / unit,
+        )
         ..drawPath(
           heart,
           Paint()..color = kSupporterHeartRed.withValues(alpha: opacity),
