@@ -21,10 +21,7 @@
   "custom_css": "Sử dụng kiểu dáng CSS tùy chỉnh",
   "send_to_dev": "Gửi mã cho nhà phát triển",
   "send_to_dev_desc": "Nếu mã an toàn và hữu ích, nó sẽ được bao gồm trong bản phát hành tiếp theo của ứng dụng",
-  "donate": "tặng quà",
   "contribute": "đóng góp",
-  "buy_coffee": "Mua tôi một ly cà phê",
-  "buy_pizza": "Mua tôi một chiếc bánh pizza",
   "become_hero": "Trở thành anh hùng của tôi",
   "the_project": "Dự án",
   "follow_me": "Theo dõi tôi",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

@@ -21,10 +21,7 @@
   "custom_css": "استخدم نمط CSS مخصص",
   "send_to_dev": "إرسال الرمز إلى المطور",
   "send_to_dev_desc": "إذا كان الرمز آمنًا ومفيدًا ، فسيتم تضمينه في الإصدار القادم من التطبيق",
-  "donate": "تبرع",
   "contribute": "يسهم",
-  "buy_coffee": "اشتري لي قهوة",
-  "buy_pizza": "اشتري لي بيتزا",
   "become_hero": "كن بطلي",
   "the_project": "المشروع",
   "follow_me": "اتبعني",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

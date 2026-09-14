@@ -23,10 +23,7 @@
   "custom_css": "Χρήση προσαρμοσμένου στυλ CSS",
   "send_to_dev": "Στείλτε τον κώδικα στον προγραμματιστή",
   "send_to_dev_desc": "Αν ο κώδικας είναι ασφαλής και χρήσιμος, θα συμπεριληφθεί στην επόμενη έκδοση της εφαρμογής",
-  "donate": "δωρεά",
   "contribute": "συνεισφορά",
-  "buy_coffee": "Κεράστε με έναν καφέ",
-  "buy_pizza": "Κεράστε με μια πίτσα",
   "become_hero": "Γίνε ο ήρωάς μου",
   "the_project": "Το έργο",
   "follow_me": "Ακολουθήστε με",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

@@ -21,10 +21,7 @@
   "custom_css": "ใช้รูปแบบ CSS ที่กำหนดเอง",
   "send_to_dev": "ส่งโค้ดให้นักพัฒนา",
   "send_to_dev_desc": "หากโค้ดปลอดภัยและมีประโยชน์จะถูกส่งไปยังแอปพลิเคชันในรุ่นถัดไป",
-  "donate": "บริจาค",
   "contribute": "สนับสนุน",
-  "buy_coffee": "ให้ดื่มกาแฟ",
-  "buy_pizza": "ให้ซื้อพิซซ่า",
   "become_hero": "เป็นฮีโร่ของฉัน",
   "the_project": "โปรเจค",
   "follow_me": "ติดตามฉัน",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

@@ -21,10 +21,7 @@
   "custom_css": "使用自定义CSS样式",
   "send_to_dev": "将代码发送给开发者",
   "send_to_dev_desc": "如果代码安全而且有用，它将被包含在应用的下一个版本中",
-  "donate": "捐赠",
   "contribute": "贡献",
-  "buy_coffee": "请我喝杯咖啡",
-  "buy_pizza": "请我吃个比萨饼",
   "become_hero": "成为我的英雄",
   "the_project": "该项目",
   "follow_me": "关注我",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

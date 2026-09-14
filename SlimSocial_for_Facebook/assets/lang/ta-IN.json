@@ -21,10 +21,7 @@
   "custom_css": "தனிப்பயன் சிறுபான்மை பாணி பயன்படுத்தவும்",
   "send_to_dev": "குழு உறுதிப்படுத்தி கொடு",
   "send_to_dev_desc": "குறைவாக மற்றொரு வெளியீட்டிற்கு பயனுள்ளதாக இருக்க பலவீனமானது, அது பயன்படுத்தப்படும் அடிப்படையாக இருக்க முடியும்",
-  "donate": "நெருக்கக் கொடு",
   "contribute": "கூட்டாராகும்",
-  "buy_coffee": "ஒரு காபி வாங்கவும்",
-  "buy_pizza": "ஒரு பிஸ்ரா வாங்கவும்",
   "become_hero": "எனது நாயகமாக இரு",
   "the_project": "திட்டம்",
   "follow_me": "என்னை பின்தொடருங்கள்",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

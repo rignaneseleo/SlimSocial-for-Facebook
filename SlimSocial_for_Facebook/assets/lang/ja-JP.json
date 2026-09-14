@@ -21,10 +21,7 @@
   "custom_css": "カスタムCSSスタイルを使用する",
   "send_to_dev": "コードを開発者に送信する",
   "send_to_dev_desc": "コードが安全で役に立つ場合は、次のアプリのリリースに含まれます。",
-  "donate": "寄付する",
   "contribute": "貢献する",
-  "buy_coffee": "コーヒーを買ってください",
-  "buy_pizza": "ピザを買ってください",
   "become_hero": "私の英雄になってください",
   "the_project": "プロジェクト",
   "follow_me": "フォローする",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

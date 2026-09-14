@@ -21,10 +21,7 @@
   "custom_css": "Bruk tilpasset CSS-stil",
   "send_to_dev": "Send koden til utvikleren",
   "send_to_dev_desc": "Hvis koden er sikker og nyttig, vil den bli inkludert i neste utgivelse av appen",
-  "donate": "doner",
   "contribute": "bidra",
-  "buy_coffee": "Kjøp meg en kaffe",
-  "buy_pizza": "Kjøp meg en pizza",
   "become_hero": "Bli min helt",
   "the_project": "Prosjektet",
   "follow_me": "Følg meg",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

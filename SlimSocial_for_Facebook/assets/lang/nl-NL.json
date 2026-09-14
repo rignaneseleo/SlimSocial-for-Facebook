@@ -21,10 +21,7 @@
   "custom_css": "Gebruik een aangepaste CSS-stijl",
   "send_to_dev": "Stuur de code naar de ontwikkelaar",
   "send_to_dev_desc": "Als de code veilig en nuttig is, wordt deze opgenomen in de volgende versie van de app",
-  "donate": "donatie",
   "contribute": "bijdragen",
-  "buy_coffee": "Koop me een koffie",
-  "buy_pizza": "Koop me een pizza",
   "become_hero": "Word mijn held",
   "the_project": "Het project",
   "follow_me": "Volg mij",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

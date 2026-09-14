@@ -21,10 +21,7 @@
   "custom_css": "Egyéni CSS stílus használata",
   "send_to_dev": "Kód küldése a fejlesztőnek",
   "send_to_dev_desc": "Ha a kód biztonságos és hasznos, akkor be lesz építve az alkalmazás következő változatába",
-  "donate": "adományozni",
   "contribute": "hozzájárulás",
-  "buy_coffee": "Vegyél nekem kávét",
-  "buy_pizza": "Vegyél nekem egy pizzát",
   "become_hero": "Légy a hősöm",
   "the_project": "A projekt",
   "follow_me": "Kövess engem",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

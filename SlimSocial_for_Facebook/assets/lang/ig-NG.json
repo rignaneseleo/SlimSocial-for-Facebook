@@ -23,10 +23,7 @@
   "custom_css": "Jiri ụdị CSS nke gị",
   "send_to_dev": "Zigara onye mmepe koodu ahụ",
   "send_to_dev_desc": "Ọ bụrụ na koodu ahụ dị mma ma baa uru, a ga-etinye ya na ntọhapụ ọzọ nke ngwa a",
-  "donate": "nye onyinye",
   "contribute": "tinye aka",
-  "buy_coffee": "Zụtara m kọfị",
-  "buy_pizza": "Zụtara m pizza",
   "become_hero": "Bụrụ dike m",
   "the_project": "Ọrụ a",
   "follow_me": "Soro m",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

@@ -23,10 +23,7 @@
   "custom_css": "Utilitza un estil CSS personalitzat",
   "send_to_dev": "Envia el codi al desenvolupador",
   "send_to_dev_desc": "Si el codi és segur i útil, s'inclourà en la propera versió de l'aplicació",
-  "donate": "fes un donatiu",
   "contribute": "col·labora",
-  "buy_coffee": "Convida'm a un cafè",
-  "buy_pizza": "Convida'm a una pizza",
   "become_hero": "Converteix-te en el meu heroi",
   "the_project": "El projecte",
   "follow_me": "Segueix-me",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

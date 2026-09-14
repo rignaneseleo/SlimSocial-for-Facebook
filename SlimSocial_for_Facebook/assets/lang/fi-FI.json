@@ -21,10 +21,7 @@
   "custom_css": "Käytä mukautettua CSS-tyyliä",
   "send_to_dev": "Lähetä koodi kehittäjälle",
   "send_to_dev_desc": "Jos koodi on turvallinen ja hyödyllinen, se sisällytetään seuraavaan sovelluksen versioon",
-  "donate": "lahjoittaa",
   "contribute": "osallistua",
-  "buy_coffee": "Osta minulle kahvia",
-  "buy_pizza": "Osta minulle pizzaa",
   "become_hero": "Tule sankarikseni",
   "the_project": "Projekti",
   "follow_me": "Seuraa minua",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

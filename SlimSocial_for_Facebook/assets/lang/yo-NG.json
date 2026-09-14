@@ -23,10 +23,7 @@
   "custom_css": "Lo ìrísí CSS tìrẹ",
   "send_to_dev": "Fi koodu náà ránṣẹ́ sí olùdàgbàsókè",
   "send_to_dev_desc": "Bí koodu náà bá ní ààbò tí ó sì wúlò, a ó fi kún ẹ̀yà tí ó ń bọ̀ ti ìṣàmúlò yìí",
-  "donate": "ṣe ìtọrẹ",
   "contribute": "kópa",
-  "buy_coffee": "Ra kọfí fún mi",
-  "buy_pizza": "Ra pizza fún mi",
   "become_hero": "Di akọni mi",
   "the_project": "Iṣẹ́ náà",
   "follow_me": "Tẹ̀lé mi",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

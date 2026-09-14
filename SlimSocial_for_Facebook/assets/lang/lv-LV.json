@@ -21,10 +21,7 @@
   "custom_css": "Izmantot pielāgotu CSS stilu",
   "send_to_dev": "Nosūtīt kodu izstrādātājam",
   "send_to_dev_desc": "Ja kods ir drošs un noderīgs, tas tiks iekļauts nākamajā lietotnes versijā",
-  "donate": "ziedot",
   "contribute": "veikt ieguldījumu",
-  "buy_coffee": "Nopirkt man kafiju",
-  "buy_pizza": "Nopirkt man picu",
   "become_hero": "Kļūt par manu varoni",
   "the_project": "Projekts",
   "follow_me": "Seko man",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

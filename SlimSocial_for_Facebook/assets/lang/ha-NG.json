@@ -23,10 +23,7 @@
   "custom_css": "Yi amfani da salon CSS na musamman",
   "send_to_dev": "Aika lambar zuwa ga mai haɓakawa",
   "send_to_dev_desc": "Idan lambar tana da aminci kuma tana da amfani, za a saka ta a sigar manhaja ta gaba",
-  "donate": "bayar da gudummawa",
   "contribute": "taimaka",
-  "buy_coffee": "Saya mini kofi",
-  "buy_pizza": "Saya mini pizza",
   "become_hero": "Zama jarumina",
   "the_project": "Aikin",
   "follow_me": "Bi ni",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

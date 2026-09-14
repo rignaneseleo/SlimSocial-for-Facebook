@@ -21,10 +21,7 @@
   "custom_css": "사용자 지정 CSS 스타일 사용",
   "send_to_dev": "개발자에게 코드 전송",
   "send_to_dev_desc": "코드가 안전하고 유용하면 다음 앱 업데이트에서 포함됩니다.",
-  "donate": "기부",
   "contribute": "기여하기",
-  "buy_coffee": "커피 한 잔 사주기",
-  "buy_pizza": "피자 한 판 사주기",
   "become_hero": "슬림소셜 히어로가 되기",
   "the_project": "프로젝트 정보",
   "follow_me": "개발자 팔로우하기",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

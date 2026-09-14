@@ -147,6 +147,9 @@ void main() {
       'supporter_cta_paypal',
       'supporter_payment_failed',
       'supporter_thanks_title',
+      // The only way on for a Play apk that did not come from Play.
+      'supporter_install_from_play',
+      'supporter_open_play',
     ]) {
       expect(fallback.keys, contains(key), reason: '$key missing from en-US');
     }

@@ -21,10 +21,7 @@
   "custom_css": "कस्टम CSS स्टाइल का उपयोग करें",
   "send_to_dev": "डेवलपर को कोड भेजें",
   "send_to_dev_desc": "यदि कोड सुरक्षित और उपयोगी होता है, तो इसे अगले ऐप के रिलीज में शामिल किया जाएगा।",
-  "donate": "दान करें",
   "contribute": "योगदान दें",
-  "buy_coffee": "मुझे एक कॉफी खरीदें",
-  "buy_pizza": "मुझे एक पिज्जा खरीदें",
   "become_hero": "मेरा हीरो बनें",
   "the_project": "यह परियोजना",
   "follow_me": "मुझे फॉलो करें",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

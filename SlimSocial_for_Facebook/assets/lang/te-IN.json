@@ -21,10 +21,7 @@
   "custom_css": "కస్టమ్ CSS శైలిని ఉపయోగించండి",
   "send_to_dev": "కోడ్‌ను డెవలపర్‌కు పంపించండి",
   "send_to_dev_desc": "కోడ్ సురక్షితం మరియు ఉపయోగకరం అయితే, అది అప్లికేషన్ యొక్క తదుపరి విడుదలైన తరువాత ఉంటుంది",
-  "donate": "దానం చేయండి",
   "contribute": "పరిచర్య చేయండి",
-  "buy_coffee": "నాకు ఒక కాఫీ కొనండి",
-  "buy_pizza": "నాకు ఒక పిజ్జా కొనండి",
   "become_hero": "మా హీరో అవుటాయి",
   "the_project": "ప్రాజెక్ట్",
   "follow_me": "నాకు అనుసరించండి",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

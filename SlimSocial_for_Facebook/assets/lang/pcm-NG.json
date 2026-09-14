@@ -23,10 +23,7 @@
   "custom_css": "Use your own CSS style",
   "send_to_dev": "Send di code give di developer",
   "send_to_dev_desc": "If di code safe and e useful, we go add am for di next version of di app",
-  "donate": "donate",
   "contribute": "contribute",
-  "buy_coffee": "Buy coffee give me",
-  "buy_pizza": "Buy pizza give me",
   "become_hero": "Be my hero",
   "the_project": "Di project",
   "follow_me": "Follow me",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

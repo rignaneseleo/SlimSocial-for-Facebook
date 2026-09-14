@@ -21,10 +21,7 @@
   "custom_css": "Koristi prilagođeni CSS stil",
   "send_to_dev": "Pošalji kod razvojnom timu",
   "send_to_dev_desc": "Ako je kod siguran i koristan, bit će uključen u sljedeću verziju aplikacije",
-  "donate": "doniraj",
   "contribute": "doprinesi",
-  "buy_coffee": "Kupi mi kavu",
-  "buy_pizza": "Kupi mi pizzu",
   "become_hero": "Postani moj junak",
   "the_project": "Projekt",
   "follow_me": "Prati me",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

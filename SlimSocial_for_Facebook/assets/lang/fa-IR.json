@@ -21,10 +21,7 @@
   "custom_css": "استفاده از سبک CSS سفارشی",
   "send_to_dev": "ارسال کد به توسعه‌دهنده",
   "send_to_dev_desc": "اگر کد ایمن و مفید است، در نسخه بعدی برنامه قرار داده می‌شود.",
-  "donate": "کمک مالی",
   "contribute": "سهیم شدن",
-  "buy_coffee": "برای من یک قهوه بخرید",
-  "buy_pizza": "برای من یک پیتزا بخرید",
   "become_hero": "قهرمان من شوید",
   "the_project": "پروژه",
   "follow_me": "مرا دنبال کنید",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

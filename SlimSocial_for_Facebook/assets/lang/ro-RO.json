@@ -21,10 +21,7 @@
   "custom_css": "Utilizați stil CSS personalizat",
   "send_to_dev": "Trimiteți codul dezvoltatorului",
   "send_to_dev_desc": "Dacă codul este sigur și util, va fi inclus în următoarea lansare a aplicației",
-  "donate": "Donează",
   "contribute": "Contribuie",
-  "buy_coffee": "Cumpără-mi o cafea",
-  "buy_pizza": "Cumpără-mi o pizza",
   "become_hero": "Fii eroul meu",
   "the_project": "Proiectul",
   "follow_me": "Urmați-mă",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

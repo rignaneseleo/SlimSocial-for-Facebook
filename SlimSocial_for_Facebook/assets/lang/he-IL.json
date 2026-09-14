@@ -21,10 +21,7 @@
   "custom_css": "שימוש בסגנון CSS מותאם אישית",
   "send_to_dev": "שלח את הקוד למפתח",
   "send_to_dev_desc": "אם הקוד בטוח ומועיל, הוא יכלל בגרסה הבאה של האפליקציה",
-  "donate": "תרום",
   "contribute": "לתרום",
-  "buy_coffee": "קנה לי קפה",
-  "buy_pizza": "קנה לי פיצה",
   "become_hero": "הפוך לגיבור שלי",
   "the_project": "הפרויקט",
   "follow_me": "עקוב אחרי",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }

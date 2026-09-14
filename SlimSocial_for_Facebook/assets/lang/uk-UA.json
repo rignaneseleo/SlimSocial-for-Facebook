@@ -21,10 +21,7 @@
   "custom_css": "Використовувати користувацький CSS стиль",
   "send_to_dev": "Надіслати код розробнику",
   "send_to_dev_desc": "Якщо код безпечний та корисний, він буде доданий до наступного релізу додатку",
-  "donate": "пожертвування",
   "contribute": "спрямуйте зусилля на допомогу проекту",
-  "buy_coffee": "Купіть мені каву",
-  "buy_pizza": "Купіть мені піцу",
   "become_hero": "Стань моїм героєм",
   "the_project": "Проект",
   "follow_me": "Слідкуйте за мною",
@@ -134,5 +131,7 @@
   "supporter_manage_hint": "Manage or cancel any time in Google Play › Subscriptions.",
   "supporter_close": "Close",
   "supporter_one_time_donation": "One-time donation",
-  "supporter_cta_paypal": "Donate {} with PayPal"
+  "supporter_cta_paypal": "Donate {} with PayPal",
+  "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
+  "supporter_open_play": "Open Google Play"
 }
