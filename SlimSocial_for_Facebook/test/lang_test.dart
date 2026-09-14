@@ -144,7 +144,7 @@ void main() {
       'supporter_title',
       'supporter_story',
       'supporter_cta',
-      'supporter_cta_paypal',
+      'supporter_cta_donate',
       'supporter_payment_failed',
       'supporter_thanks_title',
       // The only way on for a Play apk that did not come from Play.
@@ -165,7 +165,7 @@ void main() {
       'error_proxy with {}:{}': 2,
       // The price goes in here; without the {} the button shows no price.
       'supporter_cta': 1,
-      'supporter_cta_paypal': 1,
+      'supporter_cta_donate': 1,
       'supporter_price_per_year': 1,
     };
 

@@ -360,7 +360,7 @@ class _SupporterPageState extends State<SupporterPage> {
         tier: _tier,
         builder:
             (price) => Text(
-              (subscription ? 'supporter_cta' : 'supporter_cta_paypal').tr(
+              (subscription ? 'supporter_cta' : 'supporter_cta_donate').tr(
                 args: [price],
               ),
               key: const ValueKey('supporter_cta_label'),

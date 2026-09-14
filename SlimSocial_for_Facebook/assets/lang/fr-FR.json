@@ -131,7 +131,7 @@
   "supporter_manage_hint": "Gérez ou résiliez à tout moment dans Google Play › Abonnements.",
   "supporter_close": "Fermer",
   "supporter_one_time_donation": "Don unique",
-  "supporter_cta_paypal": "Faire un don de {} avec PayPal",
+  "supporter_cta_donate": "Faire un don de {}",
   "supporter_install_from_play": "Installez SlimSocial depuis Google Play pour la soutenir.",
   "supporter_open_play": "Ouvrir Google Play"
 }

@@ -244,7 +244,7 @@ void main() {
     ) async {
       await _open(tester);
 
-      expect(_ctaText(tester), 'Donate 25 € with PayPal');
+      expect(_ctaText(tester), 'Donate 25 €');
       expect(find.text('ONE-TIME DONATION'), findsOneWidget);
       expect(find.text('Privacy'), findsOneWidget);
       //nothing that only makes sense for a subscription
@@ -270,7 +270,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('supporter_step_large')));
       await tester.pumpAndSettle();
-      expect(_ctaText(tester), 'Donate 50 € with PayPal');
+      expect(_ctaText(tester), 'Donate 50 €');
       await tester.tap(find.byKey(const ValueKey('supporter_cta')));
       await tester.pumpAndSettle();
       expect(

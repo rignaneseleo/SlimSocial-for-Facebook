@@ -131,7 +131,7 @@
   "supporter_manage_hint": "Управлять подпиской или отменить её можно в любое время: Google Play › Подписки.",
   "supporter_close": "Закрыть",
   "supporter_one_time_donation": "Разовое пожертвование",
-  "supporter_cta_paypal": "Пожертвовать {} через PayPal",
+  "supporter_cta_donate": "Пожертвовать {}",
   "supporter_install_from_play": "Установите SlimSocial из Google Play, чтобы поддержать приложение.",
   "supporter_open_play": "Открыть Google Play"
 }

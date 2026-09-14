@@ -131,7 +131,7 @@
   "supporter_manage_hint": "İstediğin zaman Google Play › Abonelikler bölümünden yönet veya iptal et.",
   "supporter_close": "Kapat",
   "supporter_one_time_donation": "Tek seferlik bağış",
-  "supporter_cta_paypal": "PayPal ile {} bağışla",
+  "supporter_cta_donate": "{} bağışla",
   "supporter_install_from_play": "Desteklemek için SlimSocial'ı Google Play'den yükle.",
   "supporter_open_play": "Google Play'i aç"
 }
