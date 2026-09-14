@@ -169,7 +169,7 @@ class _SupporterPageState extends State<SupporterPage> {
                       children: [
                         Align(
                           alignment: AlignmentDirectional.centerStart,
-                          //lines the icon's glyph up with the title below it
+                          //lines the icon's glyph up with the headline below
                           child: Transform.translate(
                             offset: const Offset(-12, 0),
                             child: IconButton(
@@ -180,40 +180,8 @@ class _SupporterPageState extends State<SupporterPage> {
                             ),
                           ),
                         ),
-                        Semantics(
-                          header: true,
-                          child: Text(
-                            'supporter_title'.tr(),
-                            style: TextStyle(
-                              fontSize: 24,
-                              height: 1.15,
-                              fontWeight: FontWeight.w700,
-                              color: palette.ink,
-                            ),
-                          ),
-                        ),
+                        _StoryHeader(palette: palette),
                         const SizedBox(height: 8),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(text: '${'supporter_story'.tr()} '),
-                              TextSpan(
-                                //never split from its dash
-                                text: 'supporter_signature'.tr().replaceAll(
-                                  ' ',
-                                  '\u00A0',
-                                ),
-                                style: TextStyle(color: palette.muted),
-                              ),
-                            ],
-                          ),
-                          style: TextStyle(
-                            fontSize: 14.5,
-                            height: 1.45,
-                            color: palette.ink,
-                          ),
-                        ),
-                        const SizedBox(height: 14),
                         _card(palette, subscription),
                         const SizedBox(height: 14),
                       ],
@@ -299,7 +267,13 @@ class _SupporterPageState extends State<SupporterPage> {
                 color: palette.muted,
               ),
             ),
-            SupporterHeart(tier: _tier),
+            //four fifths of the drawn size, so the story headline fits above
+            //the card on a 390x844 phone in German and Russian
+            SizedBox(
+              width: SupporterHeart.size.width * 0.8,
+              height: SupporterHeart.size.height * 0.8,
+              child: FittedBox(child: SupporterHeart(tier: _tier)),
+            ),
             if (installFromPlay) ...[
               _InstallFromPlay(
                 palette: palette,
@@ -755,6 +729,90 @@ class _StepLabel extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The top of the screen: the developer's story as the headline, then who
+/// wrote it.
+class _StoryHeader extends StatelessWidget {
+  const _StoryHeader({required this.palette});
+
+  final SupporterPalette palette;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    const headline = TextStyle(
+      fontSize: 26,
+      height: 1.15,
+      fontWeight: FontWeight.w700,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        //both lines are one heading for a screen reader
+        MergeSemantics(
+          child: Semantics(
+            header: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'supporter_headline'.tr(),
+                  key: const ValueKey('supporter_headline'),
+                  style: headline.copyWith(color: palette.ink),
+                ),
+                Text(
+                  'supporter_headline_accent'.tr(),
+                  style: headline.copyWith(color: palette.accent),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'supporter_body'.tr(),
+          style: TextStyle(
+            fontSize: 15,
+            height: 1.4,
+            color: scheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            ExcludeSemantics(
+              child: Container(
+                width: 28,
+                height: 28,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: palette.container,
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  'L',
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1,
+                    fontWeight: FontWeight.w700,
+                    color: palette.onContainer,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'supporter_signed'.tr(),
+                style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -43,7 +43,14 @@ void main() {
 
       expect(_ctaText(tester), r'Support for US$26.99 / year');
       expect(find.text('You keep SlimSocial independent.'), findsOneWidget);
-      expect(find.text('Keep SlimSocial free and independent'), findsOneWidget);
+      expect(
+        find.text('About 10 companies a week ask to buy SlimSocial.'),
+        findsOneWidget,
+      );
+      expect(find.text('I say no to all of them.'), findsOneWidget);
+      expect(find.text('Leo, developer of SlimSocial'), findsOneWidget);
+      //the Settings tile keeps that phrase; the screen no longer shows it
+      expect(find.text('Keep SlimSocial free and independent'), findsNothing);
       expect(find.text('CANCEL ANY TIME'), findsOneWidget);
       expect(find.text('Restore'), findsOneWidget);
       expect(find.text('Or leave a one-time tip'), findsOneWidget);
@@ -214,14 +221,38 @@ void main() {
       expect(_ctaText(tester), r'Support for US$52.99 / year');
     });
 
-    testWidgets('fits a 390x844 phone without scrolling', (tester) async {
+    testWidgets('the story headline is one heading for a screen reader', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
       await _open(tester);
 
-      final scrollable = tester.state<ScrollableState>(
-        find.byType(Scrollable).first,
+      final node = tester.getSemantics(
+        find.byKey(const ValueKey('supporter_headline')),
       );
-      expect(scrollable.position.maxScrollExtent, 0);
+      expect(node.flagsCollection.isHeader, isTrue);
+      expect(node.label, contains('About 10 companies a week'));
+      expect(node.label, contains('I say no to all of them.'));
+      semantics.dispose();
     });
+
+    for (final locale in ['en-US', 'it-IT', 'de-DE', 'ru-RU']) {
+      testWidgets('fits a 390x844 phone without scrolling ($locale)', (
+        tester,
+      ) async {
+        loadStrings(locale);
+        addTearDown(loadStrings);
+        //a status bar and a gesture bar, as on a phone
+        usePhone(tester, top: 28, bottom: 20);
+        await tester.pumpWidget(testApp(const SupporterPage()));
+        await tester.pumpAndSettle();
+
+        final scrollable = tester.state<ScrollableState>(
+          find.byType(Scrollable).first,
+        );
+        expect(scrollable.position.maxScrollExtent, 0);
+      });
+    }
   });
 
   group('SupporterPage on F-Droid', () {

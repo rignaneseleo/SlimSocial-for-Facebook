@@ -24,6 +24,7 @@ class SupporterPalette {
     required this.warm,
     required this.warmGround,
     required this.snackAction,
+    required this.accent,
   });
 
   factory SupporterPalette.of(BuildContext context) {
@@ -49,6 +50,9 @@ class SupporterPalette {
       warmGround: dark ? const Color(0xFF3A2A12) : const Color(0xFFFCEFD9),
       //M2 snackbars are dark on a light theme and light on a dark one
       snackAction: dark ? const Color(0xFF355CA8) : const Color(0xFFAFC6FF),
+      //the dark scheme's primary is almost the text colour, so text that has
+      //to stand out from the text around it takes a bluer tone
+      accent: dark ? const Color(0xFFAFC6FF) : scheme.primary,
     );
   }
 
@@ -65,6 +69,7 @@ class SupporterPalette {
   final Color warm;
   final Color warmGround;
   final Color snackAction;
+  final Color accent;
 }
 
 /// The heart on the supporter screen: a hand holding a heart, in a disc.

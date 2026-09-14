@@ -141,8 +141,10 @@ void main() {
       'sponsored_keyword_fb',
       // The supporter screen: a missing key here shows a raw slug on the one
       // screen that asks for money.
-      'supporter_title',
-      'supporter_story',
+      'supporter_headline',
+      'supporter_headline_accent',
+      'supporter_body',
+      'supporter_signed',
       'supporter_cta',
       'supporter_cta_donate',
       'supporter_payment_failed',

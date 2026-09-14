@@ -180,7 +180,7 @@ void main() {
     await _shoot(tester, 'play_step25_text130_scrolled_light');
   });
 
-  for (final locale in ['de-DE', 'ru-RU']) {
+  for (final locale in ['it-IT', 'de-DE', 'ru-RU']) {
     testWidgets('play in $locale', skip: skip, (tester) async {
       loadStrings(locale);
       addTearDown(loadStrings);
