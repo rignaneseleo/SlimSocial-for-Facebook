@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:slimsocial_for_facebook/services/supporter.dart';
+
 /// Everything this app asks an app store to do.
 ///
 /// The two things behind it — in-app billing and the store's own rating sheet
@@ -14,7 +17,7 @@ abstract interface class StoreServices {
   /// Whether donations can be taken inside the app.
   ///
   /// False in the F-Droid build, where the settings screen offers an external
-  /// donation link instead of the coffee and pizza tiles.
+  /// donation link instead of in-app billing.
   bool get canPurchase;
 
   /// Where to send someone who wants to install the app.
@@ -40,6 +43,47 @@ abstract interface class StoreServices {
   /// stream, and completing the purchase — because every part of it is
   /// proprietary. Does nothing when [canPurchase] is false, and never throws.
   Future<void> donate(String productId);
+
+  /// What the supporter screen sells in this build.
+  ///
+  /// [SupporterKind.subscription] only in a Play build installed by the Play
+  /// Store. The F-Droid build has no billing, and a Play apk installed any
+  /// other way crashes in Play's billing sheet (SLIMSOCIAL-5): both take a
+  /// one-time PayPal donation instead.
+  SupporterKind get supporterKind;
+
+  /// Whether this install has an active supporter subscription.
+  ///
+  /// Starts from the value saved on the device, so it is right offline, and
+  /// is corrected by [restoreSupporter] and by purchases as they arrive.
+  /// Always false for [SupporterKind.donation]: a PayPal payment cannot be
+  /// seen from the app.
+  ValueListenable<bool> get isSupporter;
+
+  /// The prices already known without asking the store, or null.
+  ///
+  /// Fixed euro amounts for a donation; for a subscription, the prices from
+  /// the last successful [supporterPrices] in this session.
+  Map<SupporterTier, SupporterPrice>? get knownSupporterPrices;
+
+  /// The localized price for every [SupporterTier].
+  ///
+  /// Empty when the prices could not be loaded, or when a tier is missing in
+  /// Play Console: the screen must not offer a price it cannot show. Never
+  /// throws.
+  Future<Map<SupporterTier, SupporterPrice>> supporterPrices();
+
+  /// Starts support at [tier]: Play's subscription sheet, or the PayPal page
+  /// for a donation. Completes when the outcome is known. Never throws.
+  Future<SupporterPurchaseResult> support(SupporterTier tier);
+
+  /// Asks Play for this account's purchases, acknowledges a supporter
+  /// subscription that was never acknowledged, and updates [isSupporter].
+  ///
+  /// Runs silently on app start and when Settings opens, and on demand from
+  /// the Restore link. [SupporterRestoreResult.failed] for a donation. Never
+  /// throws.
+  Future<SupporterRestoreResult> restoreSupporter();
 
   /// Drops anything the donation flow is still holding.
   ///
