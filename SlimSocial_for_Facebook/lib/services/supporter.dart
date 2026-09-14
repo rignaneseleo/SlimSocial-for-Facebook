@@ -62,10 +62,9 @@ enum SupporterKind {
   /// A yearly Play subscription, with restore and a thank-you state.
   subscription,
 
-  /// The Play build, installed some other way than by the Play Store (adb,
-  /// Play's pre-launch report, a copied apk). Play's billing sheet crashes
-  /// there (SLIMSOCIAL-5), and a Play build may offer no other way to pay, so
-  /// the screen only points to the Play listing.
+  /// The Play build, installed some other way than by the Play Store (for
+  /// example a copied apk). Play billing does not work there (SLIMSOCIAL-5),
+  /// so the screen points to the Play listing.
   installFromPlay,
 
   /// A one-time donation outside any store, at a fixed euro amount. F-Droid
