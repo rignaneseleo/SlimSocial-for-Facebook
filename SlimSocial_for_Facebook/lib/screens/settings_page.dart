@@ -17,12 +17,11 @@ import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/permission_gate.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
+import 'package:slimsocial_for_facebook/widgets/supporter_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
-  const SettingsPage({this.productId, super.key});
-  //this is used to make a shortcut for donations
-  final String? productId;
+  const SettingsPage({super.key});
 
   @override
   ConsumerState<SettingsPage> createState() => _SettingsPageState();
@@ -50,15 +49,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   void initState() {
     _updatePermissionsToggle();
 
-    //the donation deep link is only answerable where there is a store to
-    //answer it with; in the F-Droid build it is a link to nothing
-    if (storeServices.canPurchase && !widget.productId.isNullOrEmpty()) {
-      Future.delayed(const Duration(milliseconds: 1), () {
-        storeServices.donate(widget.productId!);
-      });
-    }
-
     _checkDev();
+
+    //Play is the truth about the subscription: it may have lapsed or been
+    //bought on another device since the flag was saved
+    unawaited(storeServices.restoreSupporter());
 
     super.initState();
   }
@@ -71,12 +66,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   @override
-  void dispose() {
-    storeServices.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr().capitalize())),
@@ -86,6 +75,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         top: false,
         child: SettingsList(
           sections: [
+            const CustomSettingsSection(child: SupporterTile()),
             SettingsSection(
               title: Text('SlimSocial'.tr()),
               tiles: <SettingsTile>[
@@ -475,9 +465,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     Share.share(storeServices.appListingUrl);
                   },
                 ),
-                //the store's own rating sheet, and billing, exist only where
-                //there is a store. The F-Droid build asks for neither and
-                //offers a plain donation link in their place.
+                //the store's own rating sheet exists only where there is a
+                //store; F-Droid has no ratings
                 if (storeServices.canRequestReview)
                   SettingsTile.navigation(
                     leading: const Icon(Icons.star),
@@ -486,28 +475,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       await storeServices.requestReview();
                     },
                   ),
-                if (storeServices.canPurchase) ...[
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.coffee),
-                    title: Text('buy_coffee'.tr()),
-                    onPressed: (BuildContext context) async {
-                      await storeServices.donate("donation_2".tr());
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.local_pizza_outlined),
-                    title: Text('buy_pizza'.tr()),
-                    onPressed: (BuildContext context) async {
-                      await storeServices.donate("donation_3".tr());
-                    },
-                  ),
-                ] else
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.coffee),
-                    title: Text('donate'.tr().capitalize()),
-                    onPressed: (BuildContext context) =>
-                        launchUrl(Uri.parse(kPayPalDonationUrl)),
-                  ),
+                //donations moved to the supporter tile at the top of this
+                //screen: a Play subscription with a one-time tip under it, or
+                //a PayPal donation where there is no Play billing
               ],
             ),
             SettingsSection(

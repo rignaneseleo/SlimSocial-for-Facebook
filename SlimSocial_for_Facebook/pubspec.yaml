@@ -44,6 +44,9 @@ dependencies:
   settings_ui: 2.0.2
   flutter_riverpod: 2.6.1
   in_app_purchase: ^3.3.0
+  # Named directly for the subscription base plans (GooglePlayProductDetails).
+  # Proprietary like its parent: scripts/fdroid_prepare.sh strips it too.
+  in_app_purchase_android: 0.5.2
   fluttertoast: 8.2.12
   easy_localization: ^3.0.8
   package_info_plus: 8.3.0

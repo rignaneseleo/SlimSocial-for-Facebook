@@ -35,7 +35,9 @@ void main() {
         if (file.path == kPlayImplPath) continue;
         final source = file.readAsStringSync();
         for (final package in kProprietaryPackages) {
-          if (source.contains('package:$package/')) {
+          //a prefix, so the federated halves (in_app_purchase_android)
+          //count as well
+          if (source.contains('package:$package')) {
             offenders.add('${file.path} imports $package');
           }
         }
@@ -47,6 +49,29 @@ void main() {
         reason: 'F-Droid builds by deleting $kPlayImplPath, so a proprietary '
             'import anywhere else stops the app compiling there. Put the call '
             'behind StoreServices instead.\n${offenders.join('\n')}',
+      );
+    });
+
+    test('no PayPal address outside the F-Droid store', () {
+      //Google Play forbids a Play app to offer a way to pay outside Play
+      //billing. The Play build never imports store_services_foss.dart, so an
+      //address kept there is not compiled into the Play apk; anywhere else it
+      //could be.
+      const allowed = 'lib/services/store_services_foss.dart';
+      final offenders = _dartFilesUnder('lib')
+          .where((f) => f.path != allowed)
+          .where((f) => f.readAsStringSync().contains('paypal.me'))
+          .map((f) => f.path)
+          .toList();
+      expect(offenders, isEmpty);
+    });
+
+    test("the Play implementation's own test goes with it", () {
+      //it imports the file the script deletes, so it would stop the F-Droid
+      //tree from compiling its tests
+      expect(
+        File(kScriptPath).readAsStringSync(),
+        contains('test/services/store_services_play_test.dart'),
       );
     });
 

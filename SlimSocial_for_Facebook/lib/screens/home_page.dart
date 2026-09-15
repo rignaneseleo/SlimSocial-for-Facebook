@@ -12,7 +12,7 @@ import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/screens/messenger_page.dart';
-import 'package:slimsocial_for_facebook/screens/settings_page.dart';
+import 'package:slimsocial_for_facebook/screens/supporter_page.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
@@ -754,8 +754,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (context) =>
-                          const SettingsPage(productId: "donation_1"),
+                      builder: (context) => const SupporterPage(),
                     ),
                   );
                   break;

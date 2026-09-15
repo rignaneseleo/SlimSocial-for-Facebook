@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/controllers/fb_controller.dart';
 import 'package:slimsocial_for_facebook/screens/home_page.dart';
 import 'package:slimsocial_for_facebook/screens/settings_page.dart';
+import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
@@ -39,6 +42,9 @@ Future<void> _startApp() async {
   //counted here rather than in the home screen: this runs exactly once per
   //cold start, while the screen can be rebuilt without the app restarting
   await sp.setInt(SpKeys.ratingOpens, (sp.getInt(SpKeys.ratingOpens) ?? 0) + 1);
+  //the saved supporter flag is only a cache: ask Play once per cold start,
+  //without holding up the first frame for it
+  unawaited(storeServices.restoreSupporter());
   final container = ProviderContainer();
 
   if (sp.getBool("custom_proxy_enabled") ?? false) _setupProxy();

@@ -139,6 +139,19 @@ void main() {
       'image_saved',
       'retry',
       'sponsored_keyword_fb',
+      // The supporter screen: a missing key here shows a raw slug on the one
+      // screen that asks for money.
+      'supporter_headline',
+      'supporter_headline_accent',
+      'supporter_body',
+      'supporter_signed',
+      'supporter_cta',
+      'supporter_cta_donate',
+      'supporter_payment_failed',
+      'supporter_thanks_title',
+      // The only way on for a Play apk that did not come from Play.
+      'supporter_install_from_play',
+      'supporter_open_play',
     ]) {
       expect(fallback.keys, contains(key), reason: '$key missing from en-US');
     }
@@ -152,6 +165,10 @@ void main() {
       'ads_blocked_count': 1,
       'Image saved to {}': 1,
       'error_proxy with {}:{}': 2,
+      // The price goes in here; without the {} the button shows no price.
+      'supporter_cta': 1,
+      'supporter_cta_donate': 1,
+      'supporter_price_per_year': 1,
     };
 
     for (final file in _allLangFiles()) {
