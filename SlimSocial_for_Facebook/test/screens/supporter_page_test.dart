@@ -153,7 +153,10 @@ void main() {
         findsOneWidget,
       );
       final button = tester.widget<ElevatedButton>(
-        find.byKey(const ValueKey('supporter_cta')),
+        find.descendant(
+          of: find.byKey(const ValueKey('supporter_cta')),
+          matching: find.byType(ElevatedButton),
+        ),
       );
       expect(button.onPressed, isNull);
 

@@ -174,11 +174,16 @@ Widget testApp(
   );
 }
 
-/// A 390x844 phone at 3x.
-void usePhone(WidgetTester tester, {double top = 0, double bottom = 0}) {
+/// A 390x844 phone at 3x, or a phone of [size].
+void usePhone(
+  WidgetTester tester, {
+  double top = 0,
+  double bottom = 0,
+  Size size = const Size(390, 844),
+}) {
   const ratio = 3.0;
   tester.view
-    ..physicalSize = const Size(390 * ratio, 844 * ratio)
+    ..physicalSize = size * ratio
     ..devicePixelRatio = ratio
     ..padding = FakeViewPadding(top: top * ratio, bottom: bottom * ratio)
     ..viewPadding = FakeViewPadding(top: top * ratio, bottom: bottom * ratio);

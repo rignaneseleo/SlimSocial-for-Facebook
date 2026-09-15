@@ -59,7 +59,12 @@ PurchaseDetails _emptyReport(PurchaseStatus status, {String? response}) =>
 Finder _cta() => find.byKey(const ValueKey('supporter_cta'));
 
 bool _ctaEnabled(WidgetTester tester) =>
-    tester.widget<ElevatedButton>(_cta()).onPressed != null;
+    tester
+        .widget<ElevatedButton>(
+          find.descendant(of: _cta(), matching: find.byType(ElevatedButton)),
+        )
+        .onPressed !=
+    null;
 
 void main() {
   setUpAll(() async {

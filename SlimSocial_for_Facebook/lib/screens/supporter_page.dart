@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/services/supporter.dart';
@@ -149,81 +150,73 @@ class _SupporterPageState extends State<SupporterPage> {
 
   Widget _offer(BuildContext context, SupporterPalette palette) {
     final subscription = _kind == SupporterKind.subscription;
-    return LayoutBuilder(
+    return CustomScrollView(
       key: const ValueKey('offer'),
-      builder:
-          (context, constraints) => SingleChildScrollView(
-            //scrolls only when it has to: large text on a small phone
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(22, 4, 22, 8),
-                //two groups pushed apart: the story on top, the actions at the
-                //bottom within thumb reach, whatever the phone's height
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          //lines the icon's glyph up with the headline below
-                          child: Transform.translate(
-                            offset: const Offset(-12, 0),
-                            child: IconButton(
-                              icon: const Icon(Icons.close),
-                              color: palette.muted,
-                              tooltip: 'supporter_close'.tr(),
-                              onPressed: () => Navigator.of(context).maybePop(),
-                            ),
-                          ),
-                        ),
-                        _StoryHeader(palette: palette),
-                        const SizedBox(height: 8),
-                        _card(palette, subscription),
-                        const SizedBox(height: 14),
-                      ],
+      slivers: [
+        //fills the screen when the content is shorter; the two spacers take
+        //the spare height and collapse to nothing when it is taller, and the
+        //page then scrolls (large text on a small phone)
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  //lines the icon's glyph up with the headline below
+                  child: Transform.translate(
+                    offset: const Offset(-12, 0),
+                    child: IconButton(
+                      icon: const Icon(Icons.close),
+                      color: palette.muted,
+                      tooltip: 'supporter_close'.tr(),
+                      onPressed: () => Navigator.of(context).maybePop(),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _cta(palette, _kind),
-                        if (subscription) ...[
-                          TextButton(
-                            onPressed: _busy ? null : _tip,
-                            style: TextButton.styleFrom(
-                              foregroundColor: palette.primary,
-                              minimumSize: const Size(48, 48),
-                              shape: const StadiumBorder(),
-                            ),
-                            child: Text(
-                              'supporter_tip'.tr(),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'supporter_renews'.tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: palette.muted,
-                            ),
-                          ),
-                        ] else
-                          const SizedBox(height: 4),
-                        _legal(palette, subscription),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                _StoryHeader(palette: palette),
+                const SizedBox(height: 16),
+                const Spacer(),
+                _card(palette, subscription),
+                const SizedBox(height: 24),
+                const Spacer(flex: 2),
+                _cta(palette, _kind),
+                const SizedBox(height: 4),
+                if (subscription) ...[
+                  TextButton(
+                    onPressed: _busy ? null : _tip,
+                    style: TextButton.styleFrom(
+                      foregroundColor: palette.primary,
+                      minimumSize: const Size(48, 48),
+                      shape: const StadiumBorder(),
+                      textStyle: SupporterType.forButton(
+                        context,
+                        SupporterType.tip,
+                      ),
+                    ),
+                    child: Text('supporter_tip'.tr()),
+                  ),
+                  Text(
+                    'supporter_renews'.tr(),
+                    textAlign: TextAlign.center,
+                    style: SupporterType.small.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: palette.muted,
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(0, -6),
+                    child: _legal(palette, subscription),
+                  ),
+                ] else
+                  _legal(palette, subscription),
+              ],
             ),
           ),
+        ),
+      ],
     );
   }
 
@@ -235,22 +228,16 @@ class _SupporterPageState extends State<SupporterPage> {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: palette.card,
-        border: Border.all(color: palette.line),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 2),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
         child: Column(
           children: [
             Text(
               'supporter_pay_what_you_want'.tr(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                height: 1.1,
-                fontWeight: FontWeight.w700,
-                color: palette.ink,
-              ),
+              style: SupporterType.title.copyWith(color: palette.ink),
             ),
             const SizedBox(height: 4),
             Text(
@@ -260,21 +247,12 @@ class _SupporterPageState extends State<SupporterPage> {
                   .tr()
                   .toUpperCase(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                letterSpacing: 1,
-                fontWeight: FontWeight.w700,
-                color: palette.muted,
-              ),
+              style: SupporterType.caption.copyWith(color: palette.muted),
             ),
-            //four fifths of the drawn size, so the story headline fits above
-            //the card on a 390x844 phone in German and Russian
-            SizedBox(
-              width: SupporterHeart.size.width * 0.8,
-              height: SupporterHeart.size.height * 0.8,
-              child: FittedBox(child: SupporterHeart(tier: _tier)),
-            ),
+            const SizedBox(height: 12),
+            _HeartDisc(tier: _tier),
             if (installFromPlay) ...[
+              const SizedBox(height: 8),
               _InstallFromPlay(
                 palette: palette,
                 onOpen: () => storeServices.support(_tier),
@@ -285,18 +263,20 @@ class _SupporterPageState extends State<SupporterPage> {
                 palette: palette,
                 onChanged: (_) {},
               ),
-            ] else if (_pricesFailed)
-              _PricesFailed(palette: palette, onRetry: _loadPrices)
-            else ...[
-              const SizedBox(height: 4),
+            ] else if (_pricesFailed) ...[
+              const SizedBox(height: 8),
+              _PricesFailed(palette: palette, onRetry: _loadPrices),
+            ] else ...[
+              const SizedBox(height: 8),
               _PriceLine(
                 prices: prices,
                 tier: _tier,
                 palette: palette,
                 yearly: subscription,
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               _Message(tier: _tier, palette: palette),
+              const SizedBox(height: 4),
               SupporterSlider(
                 tier: _tier,
                 prices: prices,
@@ -346,35 +326,20 @@ class _SupporterPageState extends State<SupporterPage> {
       );
     }
 
-    return ElevatedButton(
+    return SupporterPrimaryButton(
       key: const ValueKey('supporter_cta'),
+      palette: palette,
       onPressed: prices == null || _busy ? null : _support,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: palette.primary,
-        foregroundColor: palette.onPrimary,
-        disabledBackgroundColor: palette.primary.withValues(alpha: 0.38),
-        disabledForegroundColor: palette.onPrimary.withValues(alpha: 0.9),
-        minimumSize: const Size.fromHeight(52),
-        shape: const StadiumBorder(),
-        elevation: 0,
-        textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
       child: label,
     );
   }
 
   Widget _legal(SupporterPalette palette, bool subscription) {
     final style = TextButton.styleFrom(
-      foregroundColor: palette.primary,
+      foregroundColor: palette.muted,
       minimumSize: const Size(48, 48),
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-      ),
+      textStyle: SupporterType.forButton(context, SupporterType.small),
     );
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -385,7 +350,7 @@ class _SupporterPageState extends State<SupporterPage> {
           child: Text('supporter_privacy'.tr()),
         ),
         if (subscription) ...[
-          Text('·', style: TextStyle(fontSize: 12, color: palette.muted)),
+          Text('·', style: SupporterType.small.copyWith(color: palette.muted)),
           TextButton(
             key: const ValueKey('supporter_restore'),
             style: style,
@@ -441,6 +406,115 @@ class _CountingPriceState extends State<_CountingPrice> {
   }
 }
 
+/// The supporter screen's type scale: four sizes (26, 16, 14 and 15 for the
+/// body, 12), each with its weight and line height.
+abstract final class SupporterType {
+  static const TextStyle display = TextStyle(
+    fontSize: 26,
+    height: 1.10,
+    letterSpacing: -0.5,
+    fontWeight: FontWeight.w700,
+  );
+
+  static const TextStyle title = TextStyle(
+    fontSize: 16,
+    height: 1.2,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle body = TextStyle(fontSize: 15, height: 1.40);
+
+  static const TextStyle support = TextStyle(fontSize: 14, height: 1.40);
+
+  static const TextStyle tip = TextStyle(
+    fontSize: 14,
+    height: 1.40,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle caption = TextStyle(
+    fontSize: 12,
+    height: 1.2,
+    letterSpacing: 1.2,
+    fontWeight: FontWeight.w700,
+  );
+
+  static const TextStyle small = TextStyle(
+    fontSize: 12,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+  );
+
+  /// [style] for a button label. A button's text style replaces the inherited
+  /// one instead of merging with it, so the theme's font has to be put back.
+  static TextStyle forButton(BuildContext context, TextStyle style) =>
+      Theme.of(context).textTheme.bodyMedium!.merge(style);
+}
+
+/// The full-width filled button of the supporter screens.
+class SupporterPrimaryButton extends StatelessWidget {
+  const SupporterPrimaryButton({
+    required this.palette,
+    required this.onPressed,
+    required this.child,
+    super.key,
+  });
+
+  final SupporterPalette palette;
+  final VoidCallback? onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: palette.primary,
+        foregroundColor: palette.onPrimary,
+        disabledBackgroundColor: palette.primary.withValues(alpha: 0.38),
+        disabledForegroundColor: palette.onPrimary.withValues(alpha: 0.9),
+        minimumSize: const Size.fromHeight(52),
+        shape: const StadiumBorder(),
+        elevation: 0,
+        textStyle: SupporterType.forButton(context, SupporterType.title),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// The hand and heart, with the disc drawn 88dp wide (96 did not leave room
+/// for the Russian and Italian headline on a 390x844 phone).
+///
+/// The art is 120x128 with its disc at the bottom; the 8 units above the disc
+/// are room for the heart to rise into. Laid out as a square as wide as the
+/// disc, with that headroom drawn over the gap above it.
+class _HeartDisc extends StatelessWidget {
+  const _HeartDisc({required this.tier});
+
+  final SupporterTier tier;
+
+  static const double disc = 88;
+
+  @override
+  Widget build(BuildContext context) {
+    final scale = disc / SupporterHeart.size.width;
+    final art = SupporterHeart.size * scale;
+    return SizedBox(
+      width: disc,
+      height: disc,
+      child: OverflowBox(
+        alignment: Alignment.bottomCenter,
+        minWidth: art.width,
+        maxWidth: art.width,
+        minHeight: art.height,
+        maxHeight: art.height,
+        child: FittedBox(child: SupporterHeart(tier: tier)),
+      ),
+    );
+  }
+}
+
 class _PriceLine extends StatelessWidget {
   const _PriceLine({
     required this.prices,
@@ -459,33 +533,17 @@ class _PriceLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prices = this.prices;
-    final amount =
-        prices == null
-            ? Container(
-              key: const ValueKey('supporter_price_placeholder'),
-              width: 104,
-              height: 30,
-              decoration: BoxDecoration(
-                color: palette.line,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            )
-            : _CountingPrice(
-              prices: prices,
-              tier: tier,
-              builder:
-                  (price) => Text(
-                    price,
-                    key: const ValueKey('supporter_price'),
-                    style: TextStyle(
-                      fontSize: 30,
-                      height: 1,
-                      fontWeight: FontWeight.w700,
-                      color: palette.primary,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-                  ),
-            );
+    if (prices == null) {
+      return Container(
+        key: const ValueKey('supporter_price_placeholder'),
+        width: 104,
+        height: 28,
+        decoration: BoxDecoration(
+          color: palette.line,
+          borderRadius: BorderRadius.circular(8),
+        ),
+      );
+    }
 
     //scales down rather than overflowing: a long local price at large text
     return FittedBox(
@@ -495,16 +553,24 @@ class _PriceLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.alphabetic,
         children: [
-          amount,
+          _CountingPrice(
+            prices: prices,
+            tier: tier,
+            builder:
+                (price) => Text(
+                  price,
+                  key: const ValueKey('supporter_price'),
+                  style: SupporterType.display.copyWith(
+                    color: palette.primary,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+          ),
           if (yearly) ...[
-            const SizedBox(width: 5),
+            const SizedBox(width: 4),
             Text(
               'supporter_per_year'.tr(),
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: palette.muted,
-              ),
+              style: SupporterType.small.copyWith(color: palette.muted),
             ),
           ],
         ],
@@ -547,7 +613,7 @@ class _Message extends StatelessWidget {
           _keys[tier]!.tr(),
           key: ValueKey(tier),
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 13.5, height: 1.4, color: palette.muted),
+          style: SupporterType.support.copyWith(color: palette.muted),
         ),
       ),
     );
@@ -569,26 +635,34 @@ class SupporterSlider extends StatelessWidget {
   final SupporterPalette palette;
   final ValueChanged<SupporterTier> onChanged;
 
+  /// The whole amount when it has no cents ("25"), else Play's string.
+  static String tickText(SupporterPrice price) =>
+      price.raw == price.raw.roundToDouble()
+          ? price.raw.toInt().toString()
+          : price.formatted;
+
   @override
   Widget build(BuildContext context) {
     final prices = this.prices;
     final enabled = prices != null;
+    final inactiveDot = palette.ink.withValues(alpha: 0.3);
     return Column(
       children: [
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            trackHeight: 8,
+            trackHeight: 6,
             activeTrackColor: palette.primary,
             inactiveTrackColor: palette.track,
             disabledActiveTrackColor: palette.track,
             disabledInactiveTrackColor: palette.track,
             thumbColor: palette.primary,
             overlayColor: palette.primary.withValues(alpha: 0.12),
-            activeTickMarkColor: Colors.transparent,
-            inactiveTickMarkColor: Colors.transparent,
-            disabledActiveTickMarkColor: Colors.transparent,
-            disabledInactiveTickMarkColor: Colors.transparent,
-            trackShape: const RoundedRectSliderTrackShape(),
+            tickMarkShape: const RoundSliderTickMarkShape(tickMarkRadius: 2),
+            activeTickMarkColor: palette.onPrimary.withValues(alpha: 0.5),
+            inactiveTickMarkColor: inactiveDot,
+            disabledActiveTickMarkColor: inactiveDot,
+            disabledInactiveTickMarkColor: inactiveDot,
+            trackShape: const _EvenTrack(),
             thumbShape: _RingThumb(fill: palette.card, ring: palette.primary),
             overlayShape: const RoundSliderOverlayShape(),
             showValueIndicator: ShowValueIndicator.never,
@@ -613,52 +687,90 @@ class SupporterSlider extends StatelessWidget {
                     : null,
           ),
         ),
-        Transform.translate(
-          //the labels sit tight under the track; their 48dp targets overlap
-          //the slider's empty lower margin, not the thumb
-          offset: const Offset(0, -12),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              //each label centred under its stop. The track is inset by the
-              //thumb overlay's radius, as the slider lays it out
-              const inset = 24.0;
-              final width = constraints.maxWidth;
-              final gap =
-                  (width - 2 * inset) / (SupporterTier.values.length - 1);
-              final labelWidth = gap.clamp(48.0, 88.0);
-              final rtl = Directionality.of(context) == TextDirection.rtl;
-              return SizedBox(
-                height: 48,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    for (final step in SupporterTier.values)
-                      Positioned(
-                        left:
-                            (rtl
-                                ? width - inset - step.index * gap
-                                : inset + step.index * gap) -
-                            labelWidth / 2,
-                        width: labelWidth,
-                        top: 0,
-                        bottom: 0,
-                        child: _StepLabel(
-                          key: ValueKey('supporter_step_${step.name}'),
-                          price: prices?[step]?.formatted,
-                          selected: step == tier,
-                          palette: palette,
-                          onTap: enabled ? () => onChanged(step) : null,
-                        ),
-                      ),
-                  ],
+        _LiftedLabels(
+          textDirection: Directionality.of(context),
+          children: [
+            for (final step in SupporterTier.values)
+              LayoutId(
+                id: step,
+                child: _StepLabel(
+                  key: ValueKey('supporter_step_${step.name}'),
+                  price: prices?[step],
+                  selected: step == tier,
+                  palette: palette,
+                  onTap: enabled ? () => onChanged(step) : null,
                 ),
-              );
-            },
-          ),
+              ),
+          ],
         ),
       ],
     );
   }
+}
+
+/// The price labels: each a 48dp target centred under its stop, lifted 16dp
+/// into the slider's empty lower margin, so the row takes 32dp of height.
+class _LiftedLabels extends CustomMultiChildLayout {
+  _LiftedLabels({required TextDirection textDirection, required super.children})
+    : super(delegate: _LabelsDelegate(textDirection));
+
+  @override
+  RenderCustomMultiChildLayoutBox createRenderObject(BuildContext context) =>
+      _RenderLiftedLabels(delegate: delegate);
+}
+
+class _RenderLiftedLabels extends RenderCustomMultiChildLayoutBox {
+  _RenderLiftedLabels({required super.delegate});
+
+  //the lifted part of each target lies above this box; hit-test the children
+  //directly so a tap there still lands
+  @override
+  bool hitTest(BoxHitTestResult result, {required Offset position}) {
+    if (hitTestChildren(result, position: position)) {
+      result.add(BoxHitTestEntry(this, position));
+      return true;
+    }
+    return false;
+  }
+}
+
+class _LabelsDelegate extends MultiChildLayoutDelegate {
+  _LabelsDelegate(this.textDirection);
+
+  final TextDirection textDirection;
+
+  static const double _target = 48;
+  static const double _lift = 16;
+
+  //the slider insets its track by the overlay radius
+  static const double _inset = 24;
+
+  @override
+  Size getSize(BoxConstraints constraints) => constraints.constrain(
+    Size(
+      constraints.maxWidth.isFinite ? constraints.maxWidth : 0,
+      _target - _lift,
+    ),
+  );
+
+  @override
+  void performLayout(Size size) {
+    final gap = (size.width - 2 * _inset) / (SupporterTier.values.length - 1);
+    final width = gap.clamp(_target, 88.0);
+    final rtl = textDirection == TextDirection.rtl;
+    for (final step in SupporterTier.values) {
+      layoutChild(step, BoxConstraints.tightFor(width: width, height: _target));
+      final centre =
+          rtl
+              ? size.width - _inset - step.index * gap
+              : _inset + step.index * gap;
+      positionChild(step, Offset(centre - width / 2, -_lift));
+    }
+  }
+
+  @override
+  bool shouldRelayout(_LabelsDelegate oldDelegate) =>
+      oldDelegate.textDirection != textDirection;
 }
 
 class _StepLabel extends StatelessWidget {
@@ -670,63 +782,48 @@ class _StepLabel extends StatelessWidget {
     super.key,
   });
 
-  final String? price;
+  final SupporterPrice? price;
   final bool selected;
   final SupporterPalette palette;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final still = MediaQuery.disableAnimationsOf(context);
     final price = this.price;
     return Semantics(
       button: true,
       selected: selected,
       label:
-          price == null ? null : 'supporter_price_per_year'.tr(args: [price]),
+          price == null
+              ? null
+              : 'supporter_price_per_year'.tr(args: [price.formatted]),
       excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
         customBorder: const StadiumBorder(),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6),
-            child: Center(
-              child:
-                  price == null
-                      ? Container(
-                        width: 36,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: palette.line,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      )
-                      : FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: AnimatedScale(
-                          scale: selected ? 1.15 : 1,
-                          duration:
-                              still
-                                  ? Duration.zero
-                                  : const Duration(milliseconds: 200),
-                          child: Text(
-                            price,
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              fontWeight:
-                                  selected ? FontWeight.w700 : FontWeight.w500,
-                              color: selected ? palette.primary : palette.muted,
-                              fontFeatures: const [
-                                FontFeature.tabularFigures(),
-                              ],
-                            ),
-                          ),
-                        ),
+        child: Center(
+          child:
+              price == null
+                  ? Container(
+                    width: 24,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: palette.line,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  )
+                  : FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      SupporterSlider.tickText(price),
+                      style: SupporterType.small.copyWith(
+                        fontWeight:
+                            selected ? FontWeight.w700 : FontWeight.w500,
+                        color: selected ? palette.ink : palette.muted,
+                        fontFeatures: const [FontFeature.tabularFigures()],
                       ),
-            ),
-          ),
+                    ),
+                  ),
         ),
       ),
     );
@@ -743,11 +840,6 @@ class _StoryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    const headline = TextStyle(
-      fontSize: 26,
-      height: 1.15,
-      fontWeight: FontWeight.w700,
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -761,56 +853,57 @@ class _StoryHeader extends StatelessWidget {
                 Text(
                   'supporter_headline'.tr(),
                   key: const ValueKey('supporter_headline'),
-                  style: headline.copyWith(color: palette.ink),
+                  style: SupporterType.display.copyWith(color: palette.ink),
                 ),
                 Text(
                   'supporter_headline_accent'.tr(),
-                  style: headline.copyWith(color: palette.accent),
+                  style: SupporterType.display.copyWith(color: palette.accent),
                 ),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           'supporter_body'.tr(),
-          style: TextStyle(
-            fontSize: 15,
-            height: 1.4,
-            color: scheme.onSurfaceVariant,
-          ),
+          style: SupporterType.body.copyWith(color: scheme.onSurfaceVariant),
         ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            ExcludeSemantics(
-              child: Container(
-                width: 28,
-                height: 28,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: palette.container,
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  'L',
-                  style: TextStyle(
-                    fontSize: 13,
-                    height: 1,
-                    fontWeight: FontWeight.w700,
-                    color: palette.onContainer,
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 24,
+          child: Row(
+            children: [
+              ExcludeSemantics(
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: palette.container,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    'L',
+                    style: TextStyle(
+                      fontSize: 12,
+                      height: 1,
+                      fontWeight: FontWeight.w700,
+                      color: palette.onContainer,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                'supporter_signed'.tr(),
-                style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'supporter_signed'.tr(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SupporterType.support.copyWith(color: palette.muted),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -827,27 +920,25 @@ class _InstallFromPlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Column(
-        children: [
-          Text(
-            'supporter_install_from_play'.tr(),
-            key: const ValueKey('supporter_install_from_play'),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.5, height: 1.4, color: palette.ink),
+    return Column(
+      children: [
+        Text(
+          'supporter_install_from_play'.tr(),
+          key: const ValueKey('supporter_install_from_play'),
+          textAlign: TextAlign.center,
+          style: SupporterType.support.copyWith(color: palette.ink),
+        ),
+        TextButton(
+          key: const ValueKey('supporter_open_play'),
+          onPressed: onOpen,
+          style: TextButton.styleFrom(
+            foregroundColor: palette.primary,
+            minimumSize: const Size(48, 48),
+            textStyle: SupporterType.forButton(context, SupporterType.tip),
           ),
-          TextButton(
-            key: const ValueKey('supporter_open_play'),
-            onPressed: onOpen,
-            style: TextButton.styleFrom(
-              foregroundColor: palette.primary,
-              minimumSize: const Size(48, 48),
-            ),
-            child: Text('supporter_open_play'.tr()),
-          ),
-        ],
-      ),
+          child: Text('supporter_open_play'.tr()),
+        ),
+      ],
     );
   }
 }
@@ -861,20 +952,21 @@ class _PricesFailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 6),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Column(
         children: [
           Text(
             'supporter_prices_failed'.tr(),
             key: const ValueKey('supporter_prices_failed'),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.5, height: 1.4, color: palette.ink),
+            style: SupporterType.support.copyWith(color: palette.ink),
           ),
           TextButton(
             onPressed: onRetry,
             style: TextButton.styleFrom(
               foregroundColor: palette.primary,
               minimumSize: const Size(48, 48),
+              textStyle: SupporterType.forButton(context, SupporterType.tip),
             ),
             child: Text('retry'.tr()),
           ),
@@ -884,7 +976,41 @@ class _PricesFailed extends StatelessWidget {
   }
 }
 
-/// A slider thumb: a filled circle with a ring, like the design.
+/// The rounded track with the active part as tall as the inactive one.
+class _EvenTrack extends RoundedRectSliderTrackShape {
+  const _EvenTrack();
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    double additionalActiveTrackHeight = 2,
+  }) {
+    super.paint(
+      context,
+      offset,
+      parentBox: parentBox,
+      sliderTheme: sliderTheme,
+      enableAnimation: enableAnimation,
+      textDirection: textDirection,
+      thumbCenter: thumbCenter,
+      secondaryOffset: secondaryOffset,
+      isDiscrete: isDiscrete,
+      isEnabled: isEnabled,
+      additionalActiveTrackHeight: 0,
+    );
+  }
+}
+
+/// A slider thumb: a filled circle with a 3dp ring and no shadow.
 class _RingThumb extends SliderComponentShape {
   const _RingThumb({required this.fill, required this.ring});
 
@@ -892,6 +1018,7 @@ class _RingThumb extends SliderComponentShape {
   final Color ring;
 
   static const double _radius = 14;
+  static const double _ring = 3;
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
@@ -912,25 +1039,17 @@ class _RingThumb extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    final canvas = context.canvas;
     final radius = _radius * (1 + 0.12 * activationAnimation.value);
-    canvas
-      ..drawCircle(
-        center + const Offset(0, 2),
-        radius,
-        Paint()
-          ..color = const Color(0x40142A5A)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
-      )
+    context.canvas
       ..drawCircle(center, radius, Paint()..color = fill)
       ..drawCircle(
         center,
-        radius - 1.5,
+        radius - _ring / 2,
         Paint()
           ..color =
               enableAnimation.value > 0.5 ? ring : ring.withValues(alpha: 0.4)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 3,
+          ..strokeWidth = _ring,
       );
   }
 }
@@ -985,95 +1104,73 @@ class _SupporterThanksState extends State<SupporterThanks>
   @override
   Widget build(BuildContext context) {
     final palette = SupporterPalette.of(context);
-    return LayoutBuilder(
-      builder:
-          (context, constraints) => SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 92,
-                      height: 92,
-                      decoration: BoxDecoration(
-                        color: palette.warmGround,
-                        shape: BoxShape.circle,
-                      ),
-                      child: ScaleTransition(
-                        scale: _scale.animate(_beat),
-                        child: Icon(
-                          Icons.favorite,
-                          size: 46,
-                          color: palette.warm,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        'supporter_thanks_title'.tr(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 26,
-                          height: 1.1,
-                          fontWeight: FontWeight.w700,
-                          color: palette.ink,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'supporter_thanks_body'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.5,
-                        height: 1.45,
-                        color: palette.muted,
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    ElevatedButton(
-                      onPressed: () => Navigator.of(context).maybePop(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: palette.primary,
-                        foregroundColor: palette.onPrimary,
-                        minimumSize: const Size.fromHeight(52),
-                        shape: const StadiumBorder(),
-                        elevation: 0,
-                        textStyle: Theme.of(
-                          context,
-                        ).textTheme.labelLarge?.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      child: Text('supporter_back'.tr()),
-                    ),
-                    const SizedBox(height: 4),
-                    TextButton(
-                      onPressed:
-                          () => openExternally(Uri.parse(kSupporterManageUrl)),
-                      style: TextButton.styleFrom(
-                        foregroundColor: palette.muted,
-                        minimumSize: const Size(48, 48),
-                        textStyle: Theme.of(
-                          context,
-                        ).textTheme.labelLarge?.copyWith(fontSize: 12),
-                      ),
-                      child: Text(
-                        'supporter_manage_hint'.tr(),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
+    final scheme = Theme.of(context).colorScheme;
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 96,
+                  height: 96,
+                  decoration: BoxDecoration(
+                    color: palette.warmGround,
+                    shape: BoxShape.circle,
+                  ),
+                  child: ScaleTransition(
+                    scale: _scale.animate(_beat),
+                    child: Icon(Icons.favorite, size: 48, color: palette.warm),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 24),
+                Semantics(
+                  header: true,
+                  child: Text(
+                    'supporter_thanks_title'.tr(),
+                    textAlign: TextAlign.center,
+                    style: SupporterType.display.copyWith(color: palette.ink),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'supporter_thanks_body'.tr(),
+                  textAlign: TextAlign.center,
+                  style: SupporterType.body.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                SupporterPrimaryButton(
+                  palette: palette,
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  child: Text('supporter_back'.tr()),
+                ),
+                const SizedBox(height: 4),
+                TextButton(
+                  onPressed:
+                      () => openExternally(Uri.parse(kSupporterManageUrl)),
+                  style: TextButton.styleFrom(
+                    foregroundColor: palette.muted,
+                    minimumSize: const Size(48, 48),
+                    textStyle: SupporterType.forButton(
+                      context,
+                      SupporterType.small.copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  child: Text(
+                    'supporter_manage_hint'.tr(),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
+      ],
     );
   }
 }

@@ -50,8 +50,9 @@ Future<void> _pumpScreen(
   Widget child, {
   bool dark = false,
   double textScale = 1,
+  Size size = const Size(390, 844),
 }) async {
-  usePhone(tester, top: 28, bottom: 20);
+  usePhone(tester, top: 28, bottom: 20, size: size);
   await tester.pumpWidget(
     testApp(
       child,
@@ -190,6 +191,16 @@ void main() {
       await _shoot(tester, 'play_step25_${locale}_light');
     });
   }
+
+  testWidgets('play on a 412x915 phone', skip: skip, (tester) async {
+    setStoreServicesForTest(FakeSubscriptionStore(prices: _euroPrices));
+    await _pumpScreen(
+      tester,
+      const SupporterPage(),
+      size: const Size(412, 915),
+    );
+    await _shoot(tester, 'play_step25_412x915_light');
+  });
 
   testWidgets('play apk not installed by play', skip: skip, (tester) async {
     setStoreServicesForTest(

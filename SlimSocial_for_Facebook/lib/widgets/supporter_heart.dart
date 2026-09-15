@@ -30,14 +30,15 @@ class SupporterPalette {
   factory SupporterPalette.of(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final ground = theme.scaffoldBackgroundColor;
     final dark = scheme.brightness == Brightness.dark;
+    final ground = dark ? theme.scaffoldBackgroundColor : Colors.white;
     Color tint(double amount) =>
         Color.alphaBlend(scheme.primary.withValues(alpha: amount), ground);
 
     return SupporterPalette._(
       ground: ground,
-      card: dark ? tint(0.06) : Colors.white,
+      //a tonal surface, no border and no shadow
+      card: tint(dark ? 0.10 : 0.05),
       line: dark ? tint(0.16) : const Color(0xFFDCE1EC),
       ink: scheme.onSurface,
       muted: scheme.onSurface.withValues(alpha: dark ? 0.72 : 0.66),
@@ -45,7 +46,11 @@ class SupporterPalette {
       onPrimary: scheme.onPrimary,
       container: dark ? const Color(0xFF29457F) : scheme.primaryContainer,
       onContainer: dark ? scheme.primary : scheme.onPrimaryContainer,
-      track: dark ? const Color(0xFF5B6478) : const Color(0xFF8A93A8),
+      //the inactive track keeps 3:1 against the card in both themes
+      track:
+          dark
+              ? scheme.onSurface.withValues(alpha: 0.38)
+              : const Color(0xFF7D889F),
       warm: dark ? const Color(0xFFF0B55A) : const Color(0xFFC97F14),
       warmGround: dark ? const Color(0xFF3A2A12) : const Color(0xFFFCEFD9),
       //M2 snackbars are dark on a light theme and light on a dark one
