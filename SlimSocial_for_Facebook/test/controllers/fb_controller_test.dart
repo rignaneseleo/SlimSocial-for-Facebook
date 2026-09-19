@@ -122,6 +122,25 @@ void main() {
       expect(PrefController.getUserAgent(), 'my-agent');
     });
 
+    test('cleans line breaks out of a stored custom agent', () async {
+      await withPrefs({
+        SpKeys.customUserAgent: 'Mozilla/5.0\r\n(custom)\n',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      expect(PrefController.getUserAgent(), 'Mozilla/5.0 (custom)');
+    });
+
+    test('falls back to the default for a whitespace-only custom agent',
+        () async {
+      await withPrefs({
+        SpKeys.customUserAgent: '\r\n\t\n',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      expect(PrefController.getUserAgent(), kMobileUserAgent);
+    });
+
     test('ignores a custom agent that was saved but left disabled', () async {
       await withPrefs({SpKeys.customUserAgent: 'my-agent'});
 

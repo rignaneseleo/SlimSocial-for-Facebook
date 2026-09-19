@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart';
+import 'package:slimsocial_for_facebook/utils/user_agent.dart';
 
 class PrefController {
   static String getHomePage() {
@@ -36,11 +37,15 @@ class PrefController {
   /// agent, and Facebook answers that with the native-app interstitial.
   ///
   /// For the feed: a custom agent wins, then basic mode, then the desktop-site
-  /// setting, then the mobile default.
+  /// setting, then the mobile default. A custom agent with nothing left after
+  /// [sanitizeUserAgent] counts as unset.
   static String getUserAgent({UserAgentRole role = UserAgentRole.feed}) {
     if (role == UserAgentRole.messenger) return kFirefoxUserAgent;
 
-    final customUserAgent = _getOverride(SpKeys.customUserAgent);
+    //sanitised on every read, not only on save: a value stored by an older
+    //build can hold a line break, and the webview throws on it at startup
+    final customUserAgent =
+        sanitizeUserAgent(_getOverride(SpKeys.customUserAgent));
     if (customUserAgent != null) {
       debugPrint("Using custom user agent: $customUserAgent");
       return customUserAgent;
