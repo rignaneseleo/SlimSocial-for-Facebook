@@ -1,0 +1,2 @@
+- Saved photos now keep a normal .jpg name, so your gallery shows them (#379).
+- Fixed a startup crash with some custom user agents.

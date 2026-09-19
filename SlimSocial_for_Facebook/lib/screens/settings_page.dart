@@ -16,6 +16,7 @@ import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 import 'package:slimsocial_for_facebook/utils/permission_gate.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
+import 'package:slimsocial_for_facebook/utils/user_agent.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 import 'package:slimsocial_for_facebook/widgets/supporter_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -375,6 +376,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     await showTextInputDialog(
                       spKey: SpKeys.customUserAgent,
                       hint: PrefController.getUserAgent(),
+                      //line breaks are cleaned out on save, so the stored
+                      //value is one the webview accepts
+                      clean: (text) => sanitizeUserAgent(text) ?? '',
                     );
                     setState(() {});
                     if (PrefController.getUserAgent() != before) {
@@ -549,6 +553,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   Future<void> showTextInputDialog({
     required String spKey,
     String? hint,
+    String Function(String text)? clean,
   }) async {
     final spKeyEnabled = SpKeys.enabled(spKey);
 
@@ -605,7 +610,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               child: Text('save'.tr().capitalize()),
               onPressed: () {
                 setState(() {
-                  sp.setString(spKey, _textEditingController.text.trim());
+                  final text = _textEditingController.text;
+                  sp.setString(spKey, clean?.call(text) ?? text.trim());
                 });
                 Navigator.of(context).pop();
               },

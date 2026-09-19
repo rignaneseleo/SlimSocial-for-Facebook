@@ -163,3 +163,10 @@ String extensionForMimeType(String mimeType) {
   if (!RegExp(r'^[a-z0-9]{1,8}$').hasMatch(subtype)) return 'bin';
   return subtype;
 }
+
+/// Name for the file a `blob:` download is handed on as, taken at [now].
+///
+/// Always ends in the extension from [extensionForMimeType], so a jpeg is
+/// `.jpg` rather than the `.jpe` the `mime` package would pick for it.
+String blobShareFileName(String mimeType, DateTime now) =>
+    'facebook-${now.millisecondsSinceEpoch}.${extensionForMimeType(mimeType)}';

@@ -197,4 +197,21 @@ void main() {
       expect(extensionForMimeType(''), 'bin');
     });
   });
+
+  group('blobShareFileName', () {
+    final at = DateTime.fromMillisecondsSinceEpoch(1758000000000);
+
+    test('names a jpeg .jpg, not .jpe', () {
+      expect(blobShareFileName('image/jpeg', at), 'facebook-1758000000000.jpg');
+    });
+
+    test('keeps the ordinary extension for png and mp4', () {
+      expect(blobShareFileName('image/png', at), endsWith('.png'));
+      expect(blobShareFileName('video/mp4', at), endsWith('.mp4'));
+    });
+
+    test('always ends in an extension', () {
+      expect(blobShareFileName('', at), 'facebook-1758000000000.bin');
+    });
+  });
 }

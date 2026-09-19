@@ -154,14 +154,17 @@ void shareBlobDownload(String message) {
 
   //the file only ever exists inside the share sheet, so the name is just
   //something recognisable in whatever app receives it
-  final name = 'facebook-${DateTime.now().millisecondsSinceEpoch}'
-      '.${extensionForMimeType(blob.mimeType)}';
+  final name = blobShareFileName(blob.mimeType, DateTime.now());
 
   //the channel callback is synchronous, and there is nothing to do with the
-  //sheet's outcome: the reader either picks a target or dismisses it
+  //sheet's outcome: the reader either picks a target or dismisses it.
+  //`XFile.fromData` drops `name` outside the web, and share_plus then names
+  //the temp file `<uuid>.<extensionFromMime>`, which is `.jpe` for a jpeg
+  //(#379). `fileNameOverrides` is the name share_plus writes the file under.
   unawaited(
-    Share.shareXFiles([
-      XFile.fromData(blob.bytes, mimeType: blob.mimeType, name: name),
-    ]),
+    Share.shareXFiles(
+      [XFile.fromData(blob.bytes, mimeType: blob.mimeType, name: name)],
+      fileNameOverrides: [name],
+    ),
   );
 }
