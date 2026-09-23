@@ -575,8 +575,50 @@ article {
         'div[data-tracking-duration-id] .native-text * '
         '{ -webkit-user-select: text !important; '
         'user-select: text !important; } '
+        'div[data-tracking-duration-id] [role="button"], '
+        'div[data-tracking-duration-id] [role="button"] * '
+        '{ -webkit-user-select: none !important; '
+        'user-select: none !important; } '
         'div[data-tracking-duration-id] img '
         '{ pointer-events: auto !important; }',
+      );
+    });
+
+    test('keeps button labels inside a post unselectable', () {
+      // The Like button and the reaction picker label themselves with
+      // `.native-text`, so the selectable rule reaches them as well. A long
+      // press on Like then selected a label and opened the text-selection
+      // menu over the reaction picker.
+      final code = CustomCss.selectableContentCss.code;
+      const buttonRule = 'div[data-tracking-duration-id] [role="button"], '
+          'div[data-tracking-duration-id] [role="button"] * '
+          '{ -webkit-user-select: none !important; '
+          'user-select: none !important; }';
+
+      expect(code, contains(buttonRule));
+    });
+
+    test('puts the button rule after the selectable rule', () {
+      // `[role="button"] *` and `.native-text *` tie on specificity, and both
+      // are !important, so source order decides which one a label inside a
+      // button gets.
+      final code = CustomCss.selectableContentCss.code;
+      final selectable = code.indexOf('user-select: text');
+      final button = code.indexOf('[role="button"]');
+
+      expect(selectable, greaterThanOrEqualTo(0));
+      expect(button, greaterThan(selectable));
+    });
+
+    test('leaves post text outside buttons selectable', () {
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(
+        code,
+        contains('div[data-tracking-duration-id] .native-text, '
+            'div[data-tracking-duration-id] .native-text * '
+            '{ -webkit-user-select: text !important; '
+            'user-select: text !important; }'),
       );
     });
   });

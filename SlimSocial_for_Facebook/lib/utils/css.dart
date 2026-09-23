@@ -316,6 +316,13 @@ class CustomCss {
   /// [removeMessengerDownloadCss] already carries a far narrower version of the
   /// selection half, for `input` elements only.
   ///
+  /// Buttons inside the post are handed back to `user-select: none`. Their
+  /// labels are `.native-text` too, so the rule above made them selectable, and
+  /// a long press on Like — the gesture that opens the reaction picker — also
+  /// selected a label and opened the text-selection menu over the picker. The
+  /// button rule comes last and ties on specificity with the `.native-text *`
+  /// rule, so it wins by order: keep it after the selectable rule.
+  ///
   /// Deliberately not in [cssList]: like [hideAppUpsellCss], this is a
   /// structural fix rather than a preference, so there is nothing to toggle.
   static MyCss selectableContentCss = MyCss(
@@ -326,6 +333,10 @@ class CustomCss {
         'div[data-tracking-duration-id] .native-text * '
         '{ -webkit-user-select: text !important; '
         'user-select: text !important; } '
+        'div[data-tracking-duration-id] [role="button"], '
+        'div[data-tracking-duration-id] [role="button"] * '
+        '{ -webkit-user-select: none !important; '
+        'user-select: none !important; } '
         'div[data-tracking-duration-id] img '
         '{ pointer-events: auto !important; }',
   );
