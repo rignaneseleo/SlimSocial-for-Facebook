@@ -279,13 +279,26 @@ BackAction backActionFor({
   return BackAction.goHome;
 }
 
-/// First path segments that end a session rather than show a page.
+/// First path segments that are not a page to come back to: signing out, the
+/// external link redirect, and the share and compose dialogs.
 ///
 /// Not part of [isFacebookAuthUrl]: that one decides what the Messenger screen
-/// keeps, and signing out is not a step of signing in.
-const Set<String> _kLogoutFirstSegments = {
+/// keeps, and none of these is a step of signing in.
+const Set<String> _kNotRestorableFirstSegments = {
+  'composer',
+  'dialog',
+  'l.php',
   'logout',
   'logout.php',
+  'sharer',
+  'sharer.php',
+};
+
+/// Hosts of Facebook's external link redirect. Reopening one would send the
+/// reader out of the app to whatever link they last followed.
+const Set<String> _kLinkShimHosts = {
+  'l.facebook.com',
+  'lm.facebook.com',
 };
 
 /// The page a cold start should open, given [lastUrl], the last address the
@@ -302,6 +315,9 @@ const Set<String> _kLogoutFirstSegments = {
 ///   its own is not a page to come back to;
 /// - the sign-in, checkpoint, recovery and sign-out flows, which only make
 ///   sense in the session that started them;
+/// - the external link redirect (`l.facebook.com`, `lm.facebook.com`,
+///   `/l.php`) and the share and compose dialogs (`sharer`, `dialog`,
+///   `composer`), which are steps of an action rather than pages;
 /// - a Messenger address, which belongs to the Messenger screen, not the feed;
 /// - the feed itself, so a change to the "most recent first" setting since
 ///   the last run still applies;
@@ -322,17 +338,17 @@ Uri startUrlFor(String? lastUrl, {required Uri home, Uri? incoming}) {
       .any((other) => host == other || host.endsWith('.$other'));
   if (!isFacebook) return home;
 
-  final isMedia = host.contains('fbcdn') ||
-      host.split('.').any(
-            (label) => label.startsWith('scontent') || label.startsWith('video'),
-          );
-  if (isMedia) return home;
+  if (host.contains('fbcdn')) return home;
+  for (final label in host.split('.')) {
+    if (label.startsWith('scontent') || label.startsWith('video')) return home;
+  }
+  if (_kLinkShimHosts.contains(host)) return home;
 
   if (isFacebookAuthUrl(last)) return home;
 
   final segments = last.pathSegments.where((s) => s.isNotEmpty).toList();
   if (segments.isNotEmpty &&
-      _kLogoutFirstSegments.contains(segments.first.toLowerCase())) {
+      _kNotRestorableFirstSegments.contains(segments.first.toLowerCase())) {
     return home;
   }
 

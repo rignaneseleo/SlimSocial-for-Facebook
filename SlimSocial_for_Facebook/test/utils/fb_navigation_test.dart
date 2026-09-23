@@ -419,16 +419,18 @@ void main() {
       expect(start('https://www.facebook.com/messages/t/123/'), home);
     });
 
-    test('opens home, not the saved feed, so the feed order setting applies',
-        () {
-      final recent = Uri.parse('$kTouchFacebookHomeUrl$suffixRecentFirst');
+    test(
+      'opens home, not the saved feed, so the feed order setting applies',
+      () {
+        final recent = Uri.parse('$kTouchFacebookHomeUrl$suffixRecentFirst');
 
-      expect(
-        start('$kTouchFacebookHomeUrl$suffixDefault', homeUrl: recent),
-        recent,
-      );
-      expect(start('https://m.facebook.com/', homeUrl: recent), recent);
-    });
+        expect(
+          start('$kTouchFacebookHomeUrl$suffixDefault', homeUrl: recent),
+          recent,
+        );
+        expect(start('https://m.facebook.com/', homeUrl: recent), recent);
+      },
+    );
 
     test('opens home when basic mode was switched on since', () {
       expect(
@@ -445,6 +447,29 @@ void main() {
       const page = 'https://mbasic.facebook.com/groups/1/';
 
       expect(start(page, homeUrl: basicHome), Uri.parse(page));
+    });
+
+    test('opens home for the external link redirect', () {
+      expect(start('https://l.facebook.com/l.php?u=x'), home);
+      expect(start('https://lm.facebook.com/l.php?u=x'), home);
+      expect(start('https://m.facebook.com/l.php?u=x'), home);
+      expect(start('https://lm.facebook.com/'), home);
+    });
+
+    test('opens home for the share dialog', () {
+      expect(start('https://m.facebook.com/sharer.php?u=x'), home);
+      expect(start('https://m.facebook.com/sharer/sharer.php?u=x'), home);
+      expect(start('https://www.facebook.com/dialog/share?href=x'), home);
+    });
+
+    test('opens home for the composer', () {
+      expect(start('https://m.facebook.com/composer/mbasic/?av=1'), home);
+    });
+
+    test('reopens a page whose name only starts like a dialog', () {
+      const page = 'https://m.facebook.com/dialogues.club/';
+
+      expect(start(page), Uri.parse(page));
     });
 
     test('an incoming link wins over the saved page', () {

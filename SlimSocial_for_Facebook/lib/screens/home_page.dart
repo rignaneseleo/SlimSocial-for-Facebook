@@ -118,12 +118,14 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
   }
 
-  WebViewController _initWebViewController() {
+  /// Builds the feed's webview and starts it on [startUrl], or, when that is
+  /// null, on the page [startUrlFor] picks for a cold start.
+  WebViewController _initWebViewController({Uri? startUrl}) {
     //a link the app was opened with can reach the provider before this screen
     //listens to it, and then only this read sees it. The provider starts on
     //kTouchFacebookHomeUrl, so that value means no link arrived.
     final pending = ref.read(fbWebViewProvider);
-    final startUrl = startUrlFor(
+    startUrl ??= startUrlFor(
       sp.getString(SpKeys.lastFeedUrl),
       home: Uri.parse(PrefController.getHomePage()),
       incoming: pending == Uri.parse(kTouchFacebookHomeUrl) ? null : pending,
@@ -290,7 +292,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             unawaited(_rememberHistory(url));
             //saved as is: startUrlFor decides on the next cold start whether
             //it is a page worth reopening (#380)
-            unawaited(sp.setString(SpKeys.lastFeedUrl, url));
+            if (sp.getString(SpKeys.lastFeedUrl) != url) {
+              unawaited(sp.setString(SpKeys.lastFeedUrl, url));
+            }
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -773,7 +777,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 case "reset":
                   await _controller.clearCache();
                   await _controller.clearLocalStorage();
-                  _controller = _initWebViewController();
+                  //a reset always starts over on the home page: neither the
+                  //saved page nor a link still held by the provider applies
+                  await sp.remove(SpKeys.lastFeedUrl);
+                  _controller = _initWebViewController(
+                    startUrl: Uri.parse(PrefController.getHomePage()),
+                  );
                   break;
                 case "exit":
                   await SystemNavigator.pop();
