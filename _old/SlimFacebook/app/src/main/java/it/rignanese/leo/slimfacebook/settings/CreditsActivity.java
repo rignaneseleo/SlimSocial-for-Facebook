@@ -7,7 +7,7 @@ import android.preference.PreferenceFragment;
 import it.rignanese.leo.slimfacebook.R;
 
 /**
- * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
+ * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <slimsocial@leorigna.com>
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */

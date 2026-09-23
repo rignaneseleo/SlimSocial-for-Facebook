@@ -56,7 +56,7 @@ import it.rignanese.leo.slimfacebook.utility.Dimension;
 import it.rignanese.leo.slimfacebook.utility.MyAdvancedWebView;
 
 /**
- * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <rignanese.leo@gmail.com>
+ * SlimSocial for Facebook is an Open Source app realized by Leonardo Rignanese <slimsocial@leorigna.com>
  * GNU GENERAL PUBLIC LICENSE  Version 2, June 1991
  * GITHUB: https://github.com/rignaneseleo/SlimSocial-for-Facebook
  */

@@ -34,4 +34,4 @@ workflows:
     publishing:
       email:
         recipients:
-          - dev.rignanese.leo@gmail.com
+          - slimsocial@leorigna.com
