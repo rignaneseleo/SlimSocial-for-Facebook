@@ -320,7 +320,7 @@ fun SettingsScreen(
                 trailing = {},
                 onClick = {
                     val intent = Intent(Intent.ACTION_SENDTO).apply {
-                        data = Uri.parse("mailto:rignanese.leo@gmail.com")
+                        data = Uri.parse("mailto:slimsocial@leorigna.com")
                         putExtra(Intent.EXTRA_SUBJECT, sendToDevSubject)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }

@@ -181,7 +181,7 @@ internal fun LogViewerScreenContent(
                 onSendToDev = {
                     val intent = Intent(Intent.ACTION_SEND).apply {
                         setType("message/rfc822")
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf("rignanese.leo@gmail.com"))
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("slimsocial@leorigna.com"))
                         putExtra(Intent.EXTRA_SUBJECT, sendSubject)
                         putExtra(Intent.EXTRA_TEXT, vm.exportRedacted())
                     }
