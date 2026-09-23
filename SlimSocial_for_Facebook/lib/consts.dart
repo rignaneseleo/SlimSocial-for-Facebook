@@ -159,6 +159,10 @@ class SpKeys {
   /// Running total of feed items the filter has hidden, across all time.
   static const String adsBlockedTotal = "ads_blocked_total";
   static const String recentFirst = "recent_first";
+
+  /// The last address the feed was on, reopened on a cold start when
+  /// `startUrlFor` accepts it (#380). Unset opens the home page.
+  static const String lastFeedUrl = "last_feed_url";
   static const String useMbasic = "use_mbasic";
 
   /// When true, the feed uses the 119 desktop Firefox user agent.

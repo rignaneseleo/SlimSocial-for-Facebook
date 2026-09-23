@@ -278,3 +278,71 @@ BackAction backActionFor({
 
   return BackAction.goHome;
 }
+
+/// First path segments that end a session rather than show a page.
+///
+/// Not part of [isFacebookAuthUrl]: that one decides what the Messenger screen
+/// keeps, and signing out is not a step of signing in.
+const Set<String> _kLogoutFirstSegments = {
+  'logout',
+  'logout.php',
+};
+
+/// The page a cold start should open, given [lastUrl], the last address the
+/// feed was on (#380).
+///
+/// [incoming] is a link the app was opened with, and it always wins: the
+/// reader asked for that page by opening it.
+///
+/// [lastUrl] is only reopened when it is an ordinary Facebook page. Everything
+/// else gives [home]:
+/// - nothing saved, or an address that does not parse as http(s);
+/// - a host outside [kPermittedHostnamesFb], and any `scontent`, `fbcdn` or
+///   `video` host even under a permitted domain: a photo or a video file on
+///   its own is not a page to come back to;
+/// - the sign-in, checkpoint, recovery and sign-out flows, which only make
+///   sense in the session that started them;
+/// - a Messenger address, which belongs to the Messenger screen, not the feed;
+/// - the feed itself, so a change to the "most recent first" setting since
+///   the last run still applies;
+/// - a page on a different layout than [home] (basic mode on one side only),
+///   because basic mode serves a different site.
+Uri startUrlFor(String? lastUrl, {required Uri home, Uri? incoming}) {
+  if (incoming != null) return incoming;
+  if (lastUrl == null || lastUrl.isEmpty) return home;
+
+  final last = Uri.tryParse(lastUrl);
+  if (last == null) return home;
+  if (last.scheme != 'http' && last.scheme != 'https') return home;
+
+  final host = last.host.toLowerCase();
+  if (host.isEmpty) return home;
+
+  final isFacebook = kPermittedHostnamesFb
+      .any((other) => host == other || host.endsWith('.$other'));
+  if (!isFacebook) return home;
+
+  final isMedia = host.contains('fbcdn') ||
+      host.split('.').any(
+            (label) => label.startsWith('scontent') || label.startsWith('video'),
+          );
+  if (isMedia) return home;
+
+  if (isFacebookAuthUrl(last)) return home;
+
+  final segments = last.pathSegments.where((s) => s.isNotEmpty).toList();
+  if (segments.isNotEmpty &&
+      _kLogoutFirstSegments.contains(segments.first.toLowerCase())) {
+    return home;
+  }
+
+  if (messengerScreenTargetFor(last) != null) return home;
+  if (isHomeFeed(last, home)) return home;
+
+  const basicHost = 'mbasic.facebook.com';
+  if ((host == basicHost) != (home.host.toLowerCase() == basicHost)) {
+    return home;
+  }
+
+  return last;
+}

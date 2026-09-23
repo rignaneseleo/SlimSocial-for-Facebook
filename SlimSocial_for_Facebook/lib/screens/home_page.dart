@@ -119,7 +119,15 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   WebViewController _initWebViewController() {
-    final homepage = PrefController.getHomePage();
+    //a link the app was opened with can reach the provider before this screen
+    //listens to it, and then only this read sees it. The provider starts on
+    //kTouchFacebookHomeUrl, so that value means no link arrived.
+    final pending = ref.read(fbWebViewProvider);
+    final startUrl = startUrlFor(
+      sp.getString(SpKeys.lastFeedUrl),
+      home: Uri.parse(PrefController.getHomePage()),
+      incoming: pending == Uri.parse(kTouchFacebookHomeUrl) ? null : pending,
+    );
     final controller = WebViewController(
       onPermissionRequest: handleWebViewPermissionRequest,
     )
@@ -278,7 +286,11 @@ class _HomePageState extends ConsumerState<HomePage> {
           //still describe whatever page the app last loaded outright
           onUrlChange: (change) {
             final url = change.url;
-            if (url != null) unawaited(_rememberHistory(url));
+            if (url == null) return;
+            unawaited(_rememberHistory(url));
+            //saved as is: startUrlFor decides on the next cold start whether
+            //it is a page worth reopening (#380)
+            unawaited(sp.setString(SpKeys.lastFeedUrl, url));
           },
           onProgress: (int progress) {
             if (!mounted) return;
@@ -288,7 +300,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(homepage));
+      ..loadRequest(startUrl);
 
     if (Platform.isAndroid) {
       //debug builds only: lets `chrome://inspect` and the DevTools protocol
