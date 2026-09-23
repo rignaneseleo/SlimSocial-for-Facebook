@@ -7,6 +7,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/billing_client_wrappers.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slimsocial_for_facebook/consts.dart';
 import 'package:slimsocial_for_facebook/main.dart' show sp;
@@ -55,6 +57,43 @@ PurchaseDetails _emptyReport(PurchaseStatus status, {String? response}) =>
                 code: 'purchase_error',
                 message: response,
               );
+
+/// The subscription as Play returns it: one base plan per tier.
+List<ProductDetails> _playSubscription() =>
+    GooglePlayProductDetails.fromProductDetails(
+      ProductDetailsWrapper(
+        description: '',
+        name: 'Supporter',
+        productId: kSupporterProductId,
+        productType: ProductType.subs,
+        title: 'Supporter',
+        subscriptionOfferDetails: [
+          for (final tier in SupporterTier.values)
+            SubscriptionOfferDetailsWrapper(
+              basePlanId: tier.basePlanId,
+              offerTags: const [],
+              offerIdToken: 'token-${tier.basePlanId}',
+              pricingPhases: [
+                PricingPhaseWrapper(
+                  billingCycleCount: 0,
+                  billingPeriod: 'P1Y',
+                  formattedPrice: '€${tier.nominalEuros}.00',
+                  priceAmountMicros: tier.nominalEuros * 1000000,
+                  priceCurrencyCode: 'EUR',
+                  recurrenceMode: RecurrenceMode.infiniteRecurring,
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+
+/// What in_app_purchase_android reports when Play's product query returns
+/// nothing without raising: every requested id lands in notFoundIDs.
+ProductDetailsResponse _nothingFound() => ProductDetailsResponse(
+  productDetails: const [],
+  notFoundIDs: [kSupporterProductId],
+);
 
 Finder _cta() => find.byKey(const ValueKey('supporter_cta'));
 
@@ -135,6 +174,72 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('supporter_open_play')));
       await tester.pumpAndSettle();
       expect(opened, [Uri.parse(kPlayStoreUrl)]);
+    });
+  });
+
+  group('a Play install, loading the supporter prices', () {
+    late int queries;
+
+    PlayStoreServices storeAnswering(List<ProductDetailsResponse> answers) {
+      queries = 0;
+      return PlayStoreServices(
+        installedByPlay: () => true,
+        purchaseStream: const Stream.empty(),
+        productRetryDelay: Duration.zero,
+        queryProducts: (_) async => answers[queries++],
+      );
+    }
+
+    test('a query that finds nothing is tried once more', () async {
+      final store = storeAnswering([
+        _nothingFound(),
+        ProductDetailsResponse(
+          productDetails: _playSubscription(),
+          notFoundIDs: const [],
+        ),
+      ]);
+
+      final prices = await store.supporterPrices();
+
+      expect(queries, 2);
+      expect(prices.keys, unorderedEquals(SupporterTier.values));
+      expect(prices[SupporterTier.medium]?.formatted, '€25.00');
+    });
+
+    test('two queries that find nothing give no prices', () async {
+      final store = storeAnswering([_nothingFound(), _nothingFound()]);
+
+      expect(await store.supporterPrices(), isEmpty);
+      expect(queries, 2);
+    });
+
+    test('a query that finds the product is not repeated', () async {
+      final store = storeAnswering([
+        ProductDetailsResponse(
+          productDetails: _playSubscription(),
+          notFoundIDs: const [],
+        ),
+      ]);
+
+      expect(await store.supporterPrices(), hasLength(3));
+      expect(queries, 1);
+    });
+
+    test('a query that raised an error is not repeated', () async {
+      final store = storeAnswering([
+        ProductDetailsResponse(
+          productDetails: const [],
+          notFoundIDs: [kSupporterProductId],
+          error: IAPError(
+            source: 'google_play',
+            code: 'purchase_error',
+            message: 'x',
+          ),
+        ),
+      ]);
+
+      expect(await store.supporterPrices(), isEmpty);
+      expect(queries, 1);
     });
   });
 
