@@ -53,7 +53,15 @@ class PrefController {
 
     if (sp.getBool(SpKeys.useMbasic) ?? false) return kOperaMiniUserAgent;
 
-    if (sp.getBool(SpKeys.useDesktopSite) ?? false) return kFirefoxUserAgent;
+    // Chronological feed (`?sk=h_chr`) only takes effect on the desktop
+    // layout. Facebook's touch/weblite UI drops that query (#366), so turning
+    // "Show recent posts first" on also requests the desktop agent — same as
+    // the explicit "Use desktop site" switch. Custom agent and basic mode
+    // still win above.
+    if ((sp.getBool(SpKeys.useDesktopSite) ?? false) ||
+        (sp.getBool(SpKeys.recentFirst) ?? false)) {
+      return kFirefoxUserAgent;
+    }
 
     return kMobileUserAgent;
   }

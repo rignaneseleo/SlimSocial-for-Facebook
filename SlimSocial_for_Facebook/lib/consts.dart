@@ -53,14 +53,15 @@ const String suffixDefault = "?sk=h_nor";
 //agents it considers outdated, so if it ever rejects one of these, bump its
 //version numbers together with a device check on the feed — see the plan notes.
 
-/// Firefox for Android. Gets Facebook's touch layout.
+/// Chrome for Android (Pixel 7). Gets Facebook's touch layout.
 ///
-/// This exact string is a known-good production value: it is what serves the
-/// mobile feed correctly in the regions where a desktop agent gets a broken
-/// layout. The age of the version is not the point — the layout Facebook
-/// returns for it is — so do not "modernise" it without re-checking the feed.
+/// Pinned after #373 UA A/B: Firefox 70 / Android mobile decoded feed Reels at
+/// 360p; this Chrome 131 Mobile string keeps the same full-bleed touch surface
+/// and decodes 720p. Newer Firefox Android strings (133, 147) stayed on 360p.
+/// Do not swap it for another agent without re-checking touch layout + video
+/// decode on a signed-in feed.
 const String kMobileUserAgent =
-    "Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0";
+    "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36";
 
 /// Desktop Firefox on Windows. The Messenger screen's agent, and the feed's
 /// "Desktop site" option.

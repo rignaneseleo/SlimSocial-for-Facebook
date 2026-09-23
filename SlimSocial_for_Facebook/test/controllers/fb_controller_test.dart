@@ -157,6 +157,42 @@ void main() {
     });
   });
 
+  group('getUserAgent recentFirst', () {
+    test('recentFirst alone uses the desktop agent', () async {
+      // Touch/weblite drops ?sk=h_chr (#366). Chronological feed needs the
+      // desktop layout, so the toggle requests the desktop agent itself.
+      await withPrefs({SpKeys.recentFirst: true});
+
+      expect(PrefController.getUserAgent(), kFirefoxUserAgent);
+      expect(PrefController.usesDesktopLayout(), isTrue);
+    });
+
+    test('custom agent still wins over recentFirst', () async {
+      await withPrefs({
+        SpKeys.recentFirst: true,
+        SpKeys.customUserAgent: 'my-agent',
+        SpKeys.enabled(SpKeys.customUserAgent): true,
+      });
+
+      expect(PrefController.getUserAgent(), 'my-agent');
+    });
+
+    test('basic mode still wins over recentFirst', () async {
+      await withPrefs({SpKeys.recentFirst: true, SpKeys.useMbasic: true});
+
+      expect(PrefController.getUserAgent(), kOperaMiniUserAgent);
+    });
+
+    test('messenger stays on the desktop agent with recentFirst on', () async {
+      await withPrefs({SpKeys.recentFirst: true});
+
+      expect(
+        PrefController.getUserAgent(role: UserAgentRole.messenger),
+        kFirefoxUserAgent,
+      );
+    });
+  });
+
   group('getUserAgent roles', () {
     test('defaults to the feed agent', () {
       // The redundant-looking explicit role is the assertion: it pins the

@@ -225,15 +225,24 @@ article {
       // The rule `div.fixed-container.bottom:not(:has(<form control>)) {
       // display: none }` hid every bottom sheet without a form control: the
       // share menu (#336) and a dialog whose dimmer stayed behind (#339).
-      // Whether a container is the upsell is decided in JavaScript now, from
-      // its structure — see CustomJs.hideAppUpsellFunc.
+      // Whether a bottom container is the upsell is decided in JavaScript now,
+      // from its structure — see CustomJs.hideAppUpsellFunc.
       expect(
         CustomCss.hideAppUpsellCss.code,
         isNot(contains('fixed-container.bottom')),
       );
+    });
+
+    test('hides the header Open app pill by stable aria-label', () {
+      // bg-sN was unstable across renders; aria-label="Open app" is what the
+      // Chrome Mobile Reels header ships (#373 winner evidence).
       expect(
         CustomCss.hideAppUpsellCss.code,
-        isNot(contains('display: none')),
+        contains('[aria-label="Open app" i]'),
+      );
+      expect(
+        CustomCss.hideAppUpsellCss.code,
+        contains('display: none !important'),
       );
     });
 

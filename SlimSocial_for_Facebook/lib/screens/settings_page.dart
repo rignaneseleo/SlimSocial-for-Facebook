@@ -143,18 +143,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     setState(() {
                       sp.setBool(SpKeys.recentFirst, value);
                     });
-                    ref
-                        .read(fbWebViewProvider.notifier)
-                        .updateUrl(PrefController.getHomePage());
+                    // Changing this flips the feed user agent (desktop when
+                    // on), so the webview has to restart — same as the
+                    // desktop-site switch (#366).
+                    showToast("rebooting".tr());
+                    Restart.restartApp();
                   },
                   initialValue: sp.getBool(SpKeys.recentFirst),
                   leading: const Icon(Icons.rss_feed),
                   title: Text('recent_first'.tr()),
-                  // Facebook's current mobile layout drops `?sk=h_chr`, so the
-                  // toggle only reorders the feed on the desktop site (#366).
-                  description: (sp.getBool(SpKeys.useDesktopSite) ?? false)
-                      ? null
-                      : Text('recent_first_desc'.tr()),
+                  description: Text('recent_first_desc'.tr()),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) {

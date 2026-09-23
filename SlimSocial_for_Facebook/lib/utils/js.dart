@@ -218,8 +218,9 @@ class CustomJs {
 """;
   }
 
-  /// Builds JavaScript that hides the "Open app" bar Facebook pins to the
-  /// bottom of the feed — and nothing else that docks there.
+  /// Builds JavaScript that hides Facebook's install-the-app chrome: the
+  /// bottom "Open app" bar, and the header "Open app" pill — and nothing else
+  /// that docks in those places.
   ///
   /// This used to be a stylesheet rule: `div.fixed-container.bottom` without a
   /// form control inside it was `display: none`. The guard was written for the
@@ -249,10 +250,16 @@ class CustomJs {
 (function () {
   try {
     var MARK = 'data-slim-upsell';
+    var OPEN_MARK = 'data-slim-open-app';
     // A composer, a search box, or a feed post inside the container means it
     // is content, whatever else it looks like.
     var CONTENT = 'textarea, input, [contenteditable], $kPostSelector';
     var TAPPABLE = 'button, [role="button"], a[href]';
+    // Header pill label. English is what the Chrome Mobile UA Reels header
+    // ships; a few common localisations are included so a translated bar is
+    // not left behind. Matching is exact on the trimmed label — never a
+    // substring — so "Open Messenger" and similar stay visible.
+    var OPEN_APP_RE = /^(open app|open in app|get app|apri l['\\u2019]?app|ouvrir l['\\u2019]?app(lication)?|abrir (la )?aplicaci[o\\u00f3]n|app [o\\u00f6]ffnen)\$/i;
 
     function isUpsell(node) {
       if (node.querySelector(CONTENT)) return false;
@@ -260,6 +267,13 @@ class CustomJs {
       // more is a sheet of options.
       if (node.querySelectorAll(TAPPABLE).length !== 1) return false;
       return true;
+    }
+
+    function openAppLabel(node) {
+      var aria = (node.getAttribute('aria-label') || '').trim();
+      if (OPEN_APP_RE.test(aria)) return true;
+      var text = (node.textContent || '').replace(/\\s+/g, ' ').trim();
+      return OPEN_APP_RE.test(text);
     }
 
     function pass() {
@@ -275,6 +289,23 @@ class CustomJs {
           // Re-used for something with more in it: give it back.
           node.removeAttribute(MARK);
           node.style.display = '';
+        }
+      }
+
+      // Header / in-page "Open app" CTAs (Reels top bar under Chrome Mobile).
+      var ctas = document.querySelectorAll(
+        'a[href], button, [role="button"]'
+      );
+      for (var j = 0; j < ctas.length; j++) {
+        var cta = ctas[j];
+        var ctaHidden = cta.getAttribute(OPEN_MARK) === '1';
+        if (openAppLabel(cta)) {
+          if (ctaHidden) continue;
+          cta.setAttribute(OPEN_MARK, '1');
+          cta.style.display = 'none';
+        } else if (ctaHidden) {
+          cta.removeAttribute(OPEN_MARK);
+          cta.style.display = '';
         }
       }
     }
