@@ -251,42 +251,27 @@ class CustomCss {
     code: '#header-notices { display: none; }',
   );
 
-  /// The stylesheet half of hiding the "Open app" bar Facebook pins to the
-  /// bottom of the feed. The bar itself is hidden by
-  /// `CustomJs.hideAppUpsellFunc`; this only keeps the page scrollable.
+  /// The stylesheet half of hiding Facebook's install-the-app chrome.
   ///
-  /// The bar is an install upsell for the native app, which is the one thing a
-  /// user of this app has already decided against, and it covers the bottom
-  /// of every page until dismissed.
+  /// Bottom bar: hidden by `CustomJs.hideAppUpsellFunc` (structure: one
+  /// tappable, no form control). This half only unlocks page scroll — a
+  /// dialog Facebook opens locks `overflow` on the body, and if its chrome is
+  /// left incomplete the feed stops moving (#339).
   ///
-  /// It used to be hidden from here, by class: every `.fixed-container.bottom`
-  /// without a form control inside it. The guard was written for the comment
-  /// composer, which docks in the same container, and it was not enough —
-  /// the share menu (#336) and Facebook's own dialogs (#339) dock there too,
-  /// hold no form control, and vanished with the bar, leaving their dimmer
-  /// over a page with nothing left to tap. Telling the bar apart from a sheet
-  /// takes counting what is in it, which a stylesheet cannot do, so the
-  /// decision moved to JavaScript.
+  /// Header "Open app" pill: hidden here by the stable `aria-label="Open app"`
+  /// (case-insensitive). An earlier attempt keyed off a generated `bg-sN`
+  /// surface class and hid unrelated chrome; aria-label does not shuffle per
+  /// render. Measured on device with the Chrome Mobile UA on Reels (#373): the
+  /// blue pill in the top bar carries exactly that label. JS still re-hides it
+  /// after SPA navigations for locales / variants the attribute miss.
   ///
-  /// What stays here is the scroll unlock. A dialog Facebook opens locks
-  /// `overflow` on the body; if its chrome is ever left incomplete the feed
-  /// stops moving, and this puts it back.
-  ///
-  /// Deliberately not in [cssList]: like the other chrome removals above, it is
-  /// structural rather than a preference.
-  ///
-  /// The other upsell — the blue "Open app" pill in the header of the Reels and
-  /// video pages — is deliberately not covered. The only thing that told it
-  /// apart from the rest of that unsuffixed `.fixed-container` was a `bg-sN`
-  /// class, and those numbers are assigned per page render: the same number is
-  /// a brand blue on one load and a divider grey on the next, so the rule hid
-  /// unrelated chrome far more often than it hid the pill. See
-  /// lib/utils/dark_theme.dart for the measurements.
+  /// Deliberately not in [cssList]: structural rather than a preference.
   static MyCss hideAppUpsellCss = MyCss(
     key: 'hide_app_upsell',
     description: 'Hide the install-the-app bar',
     defaultEnabled: true,
-    code: 'html, body { overflow: auto !important; }',
+    code: 'html, body { overflow: auto !important; } '
+        '[aria-label="Open app" i] { display: none !important; }',
   );
 
   /// Hands the post text back to the reader: selectable, and so copyable.

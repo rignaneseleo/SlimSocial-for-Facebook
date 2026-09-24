@@ -51,19 +51,17 @@ void main() {
       // layout from the user agent.
       expect(kMobileUserAgent, contains('Android'));
       expect(kMobileUserAgent, contains('Mobile'));
-      expect(kMobileUserAgent, contains('Firefox/'));
+      expect(kMobileUserAgent, contains('Chrome/'));
     });
 
-    test('is pinned to the exact string known to serve the touch layout', () {
-      // Do not "modernise" this. The version numbers are load-bearing: this
-      // precise agent is what Facebook serves the mobile feed to across the
-      // regions where a desktop agent gets a broken layout. A newer Firefox
-      // is not automatically safer — it is untested against that behaviour.
-      // If Facebook ever rejects it as outdated (Task 10 Step 1 checks), bump
-      // `Gecko/` and `Firefox/` together and re-run the recon, in one commit.
+    test('is pinned to the Chrome 131 Pixel 7 string measured in #373', () {
+      // Firefox 70 / Android mobile kept touch layout but decoded Reels at
+      // 360p. Chrome 131 Mobile Pixel 7 kept touch and decoded 720p. Do not
+      // swap without re-checking both: touch surface + video decode.
       expect(
         kMobileUserAgent,
-        'Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
+        'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 '
+        '(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
       );
     });
   });

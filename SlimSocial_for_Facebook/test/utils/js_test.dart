@@ -354,6 +354,15 @@ void main() {
       expect(js, contains("display = 'none'"));
     });
 
+    test('also hides the header Open app pill by exact label', () {
+      // Chrome Mobile UA shows a blue "Open app" pill in the Reels header.
+      // Match the trimmed aria-label / text exactly so "Open Messenger" etc.
+      // stay. Re-checked each pass like the bottom bar.
+      expect(js, contains('data-slim-open-app'));
+      expect(js, contains('open app'));
+      expect(js, contains("getAttribute('aria-label')"));
+    });
+
     test('watches for the bar arriving after the first pass', () {
       // Facebook is a single-page app: the bar is inserted after load and on
       // every in-page navigation. One observer, kept on window like the ad
