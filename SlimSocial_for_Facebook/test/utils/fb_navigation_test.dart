@@ -339,4 +339,185 @@ void main() {
       expect(actionFor(null), BackAction.exit);
     });
   });
+
+  group('startUrlFor reopens the last page on a cold start (#380)', () {
+    final home = Uri.parse('$kTouchFacebookHomeUrl$suffixDefault');
+    final basicHome = Uri.parse('$kFacebookHomeBasicUrl$suffixDefault');
+
+    Uri start(
+      String? lastUrl, {
+      Uri? incoming,
+      Uri? homeUrl,
+      String? lastAgent = kMobileUserAgent,
+      String agent = kMobileUserAgent,
+    }) =>
+        startUrlFor(
+          lastUrl,
+          home: homeUrl ?? home,
+          userAgent: agent,
+          lastUserAgent: lastAgent,
+          incoming: incoming,
+        );
+
+    test('reopens an ordinary Facebook page', () {
+      const group = 'https://m.facebook.com/groups/12345/permalink/678/';
+
+      expect(start(group), Uri.parse(group));
+    });
+
+    test('keeps the query of the reopened page', () {
+      const post = 'https://touch.facebook.com/story.php?story_fbid=1&id=2';
+
+      expect(start(post), Uri.parse(post));
+    });
+
+    test('opens home when nothing was saved', () {
+      expect(start(null), home);
+      expect(start(''), home);
+    });
+
+    test('opens home for a host outside Facebook', () {
+      expect(start('https://example.com/groups/1/'), home);
+    });
+
+    test('opens home for a host that only ends in a Facebook name', () {
+      expect(start('https://notfacebook.com/groups/1/'), home);
+    });
+
+    test('opens home for the login page', () {
+      expect(start('https://m.facebook.com/login.php?next=%2Fhome.php'), home);
+      expect(start('https://m.facebook.com/login/'), home);
+    });
+
+    test('opens home for a checkpoint', () {
+      expect(start('https://m.facebook.com/checkpoint/start/'), home);
+      expect(start('https://m.facebook.com/checkpoint/'), home);
+      expect(start('https://m.facebook.com/login/checkpoint/'), home);
+    });
+
+    test('opens home for account recovery', () {
+      expect(start('https://m.facebook.com/recover/initiate/'), home);
+    });
+
+    test('opens home for sign-out', () {
+      expect(start('https://m.facebook.com/logout.php?h=abc'), home);
+      expect(start('https://m.facebook.com/logout/'), home);
+    });
+
+    test('opens home for a photo CDN url', () {
+      expect(
+        start('https://scontent.fmxp1-1.fna.fbcdn.net/v/t39.30808-6/1_n.jpg'),
+        home,
+      );
+    });
+
+    test('opens home for a media host under a Facebook domain', () {
+      expect(start('https://scontent.xx.facebook.com/v/1_n.jpg'), home);
+      expect(start('https://video.xx.facebook.com/v/1.mp4'), home);
+      expect(start('https://static.xx.fbcdn.facebook.com/rsrc.php'), home);
+    });
+
+    test('opens home for a malformed url', () {
+      expect(start('http://[::1'), home);
+      expect(start('not a url'), home);
+      expect(start('https://'), home);
+    });
+
+    test('opens home for a scheme other than http(s)', () {
+      expect(start('fb://fullscreen_video/123'), home);
+      expect(start('intent://m.facebook.com/groups/1/'), home);
+    });
+
+    test('opens home for a Messenger address', () {
+      expect(start('https://www.facebook.com/messages/t/123/'), home);
+    });
+
+    test(
+      'opens home, not the saved feed, so the feed order setting applies',
+      () {
+        final recent = Uri.parse('$kTouchFacebookHomeUrl$suffixRecentFirst');
+
+        expect(
+          start('$kTouchFacebookHomeUrl$suffixDefault', homeUrl: recent),
+          recent,
+        );
+        expect(start('https://m.facebook.com/', homeUrl: recent), recent);
+      },
+    );
+
+    test('opens home when basic mode was switched on since', () {
+      expect(
+        start('https://m.facebook.com/groups/1/', homeUrl: basicHome),
+        basicHome,
+      );
+    });
+
+    test('opens home when basic mode was switched off since', () {
+      expect(start('https://mbasic.facebook.com/groups/1/'), home);
+    });
+
+    test('reopens a basic mode page while basic mode is on', () {
+      const page = 'https://mbasic.facebook.com/groups/1/';
+
+      expect(start(page, homeUrl: basicHome), Uri.parse(page));
+    });
+
+    test('reopens a page saved under the same user agent', () {
+      const page = 'https://m.facebook.com/groups/1/';
+
+      expect(
+        start(page, lastAgent: kFirefoxUserAgent, agent: kFirefoxUserAgent),
+        Uri.parse(page),
+      );
+    });
+
+    test('opens home when the user agent changed since', () {
+      const page = 'https://m.facebook.com/groups/1/';
+
+      expect(start(page, agent: kFirefoxUserAgent), home);
+      expect(start(page, lastAgent: kFirefoxUserAgent), home);
+      expect(start(page, agent: 'Custom/1.0'), home);
+    });
+
+    test('opens home for a page saved with no user agent', () {
+      expect(start('https://m.facebook.com/groups/1/', lastAgent: null), home);
+    });
+
+    test('opens home for the external link redirect', () {
+      expect(start('https://l.facebook.com/l.php?u=x'), home);
+      expect(start('https://lm.facebook.com/l.php?u=x'), home);
+      expect(start('https://m.facebook.com/l.php?u=x'), home);
+      expect(start('https://lm.facebook.com/'), home);
+    });
+
+    test('opens home for the external link warning page', () {
+      expect(
+        start('https://m.facebook.com/flx/warn/?u=https%3A%2F%2Fexample.com'),
+        home,
+      );
+    });
+
+    test('opens home for the share dialog', () {
+      expect(start('https://m.facebook.com/sharer.php?u=x'), home);
+      expect(start('https://m.facebook.com/sharer/sharer.php?u=x'), home);
+      expect(start('https://www.facebook.com/dialog/share?href=x'), home);
+    });
+
+    test('opens home for the composer', () {
+      expect(start('https://m.facebook.com/composer/mbasic/?av=1'), home);
+    });
+
+    test('reopens a page whose name only starts like a dialog', () {
+      const page = 'https://m.facebook.com/dialogues.club/';
+
+      expect(start(page), Uri.parse(page));
+    });
+
+    test('an incoming link wins over the saved page', () {
+      final link = Uri.parse('https://www.facebook.com/groups/999/');
+
+      expect(start('https://m.facebook.com/groups/1/', incoming: link), link);
+      expect(start(null, incoming: link), link);
+    });
+  });
 }

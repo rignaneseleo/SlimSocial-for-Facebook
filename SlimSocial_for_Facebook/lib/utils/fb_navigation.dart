@@ -278,3 +278,103 @@ BackAction backActionFor({
 
   return BackAction.goHome;
 }
+
+/// First path segments that are not a page to come back to: signing out, the
+/// external link redirect and its warning page, and the share and compose
+/// dialogs.
+///
+/// Not part of [isFacebookAuthUrl]: that one decides what the Messenger screen
+/// keeps, and none of these is a step of signing in.
+const Set<String> _kNotRestorableFirstSegments = {
+  'composer',
+  'dialog',
+  'flx',
+  'l.php',
+  'logout',
+  'logout.php',
+  'sharer',
+  'sharer.php',
+};
+
+/// Hosts of Facebook's external link redirect. Reopening one would send the
+/// reader out of the app to whatever link they last followed.
+const Set<String> _kLinkShimHosts = {
+  'l.facebook.com',
+  'lm.facebook.com',
+};
+
+/// The page a cold start should open, given [lastUrl], the last address the
+/// feed was on (#380).
+///
+/// [incoming] is a link the app was opened with, and it always wins: the
+/// reader asked for that page by opening it.
+///
+/// [lastUrl] is only reopened when it is an ordinary Facebook page. Everything
+/// else gives [home]:
+/// - nothing saved, or an address that does not parse as http(s);
+/// - a host outside [kPermittedHostnamesFb], and any `scontent`, `fbcdn` or
+///   `video` host even under a permitted domain: a photo or a video file on
+///   its own is not a page to come back to;
+/// - the sign-in, checkpoint, recovery and sign-out flows, which only make
+///   sense in the session that started them;
+/// - the external link redirect (`l.facebook.com`, `lm.facebook.com`,
+///   `/l.php`) and its warning page (`/flx/warn/`), and the share and
+///   compose dialogs (`sharer`, `dialog`, `composer`), which are steps of an
+///   action rather than pages;
+/// - a Messenger address, which belongs to the Messenger screen, not the feed;
+/// - the feed itself, so a change to the "most recent first" setting since
+///   the last run still applies;
+/// - a page saved under a user agent other than [userAgent], or with no agent
+///   saved at all (an older build). The desktop-site setting and a custom
+///   agent restart the app to change the layout, and a page captured under
+///   the old agent would reopen in the old layout;
+/// - a page on a different layout than [home] (basic mode on one side only),
+///   because basic mode serves a different site. The agent check does not
+///   cover this: a custom agent wins over basic mode, so switching basic mode
+///   with one set changes the host but not the agent.
+Uri startUrlFor(
+  String? lastUrl, {
+  required Uri home,
+  required String userAgent,
+  String? lastUserAgent,
+  Uri? incoming,
+}) {
+  if (incoming != null) return incoming;
+  if (lastUrl == null || lastUrl.isEmpty) return home;
+  if (lastUserAgent != userAgent) return home;
+
+  final last = Uri.tryParse(lastUrl);
+  if (last == null) return home;
+  if (last.scheme != 'http' && last.scheme != 'https') return home;
+
+  final host = last.host.toLowerCase();
+  if (host.isEmpty) return home;
+
+  final isFacebook = kPermittedHostnamesFb
+      .any((other) => host == other || host.endsWith('.$other'));
+  if (!isFacebook) return home;
+
+  if (host.contains('fbcdn')) return home;
+  for (final label in host.split('.')) {
+    if (label.startsWith('scontent') || label.startsWith('video')) return home;
+  }
+  if (_kLinkShimHosts.contains(host)) return home;
+
+  if (isFacebookAuthUrl(last)) return home;
+
+  final segments = last.pathSegments.where((s) => s.isNotEmpty).toList();
+  if (segments.isNotEmpty &&
+      _kNotRestorableFirstSegments.contains(segments.first.toLowerCase())) {
+    return home;
+  }
+
+  if (messengerScreenTargetFor(last) != null) return home;
+  if (isHomeFeed(last, home)) return home;
+
+  const basicHost = 'mbasic.facebook.com';
+  if ((host == basicHost) != (home.host.toLowerCase() == basicHost)) {
+    return home;
+  }
+
+  return last;
+}

@@ -297,7 +297,10 @@ class CustomCss {
   /// paragraph, an address, a phone number posted in a group. The same layout
   /// sets `pointer-events: none` on feed images, which is why a long press on a
   /// photo never reaches the browser at all and it never offers to save or
-  /// share it.
+  /// share it. It sets `pointer-events: none` on `.native-text` as well, so a
+  /// touch on post text never reached the text: it landed on the unselectable
+  /// container, and `user-select: text` alone selected nothing. Post text and
+  /// images get `pointer-events: auto` back; buttons are not given any.
   ///
   /// Both prefixes are spelled out. Current Chromium reads the unprefixed
   /// `user-select`; older Android WebViews only ever knew
@@ -316,6 +319,13 @@ class CustomCss {
   /// [removeMessengerDownloadCss] already carries a far narrower version of the
   /// selection half, for `input` elements only.
   ///
+  /// Buttons inside the post are handed back to `user-select: none`. Their
+  /// labels are `.native-text` too, so the rule above made them selectable, and
+  /// a long press on Like — the gesture that opens the reaction picker — also
+  /// selected a label and opened the text-selection menu over the picker. The
+  /// button rule comes last and ties on specificity with the `.native-text *`
+  /// rule, so it wins by order: keep it after the selectable rule.
+  ///
   /// Deliberately not in [cssList]: like [hideAppUpsellCss], this is a
   /// structural fix rather than a preference, so there is nothing to toggle.
   static MyCss selectableContentCss = MyCss(
@@ -326,6 +336,12 @@ class CustomCss {
         'div[data-tracking-duration-id] .native-text * '
         '{ -webkit-user-select: text !important; '
         'user-select: text !important; } '
+        'div[data-tracking-duration-id] [role="button"], '
+        'div[data-tracking-duration-id] [role="button"] * '
+        '{ -webkit-user-select: none !important; '
+        'user-select: none !important; } '
+        'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text *, '
         'div[data-tracking-duration-id] img '
         '{ pointer-events: auto !important; }',
   );
