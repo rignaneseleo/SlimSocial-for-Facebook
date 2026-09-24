@@ -29,15 +29,25 @@ class PlayStoreServices implements StoreServices {
     @visibleForTesting Future<bool> Function(ProductDetails)? buySubscription,
     @visibleForTesting bool Function()? installedByPlay,
     @visibleForTesting Future<bool> Function(Uri)? openUrl,
+    @visibleForTesting
+    Future<ProductDetailsResponse> Function(Set<String>)? queryProducts,
+    @visibleForTesting Duration productRetryDelay = const Duration(seconds: 1),
   }) : _purchaseStream = purchaseStream,
        _buySubscription = buySubscription ?? _buyWithPlay,
        _installedByPlay = installedByPlay ?? _installerIsPlay,
-       _openUrl = openUrl ?? openExternally;
+       _openUrl = openUrl ?? openExternally,
+       _queryProducts = queryProducts ?? _queryWithPlay,
+       _productRetryDelay = productRetryDelay;
 
   final Stream<List<PurchaseDetails>>? _purchaseStream;
   final Future<bool> Function(ProductDetails) _buySubscription;
   final bool Function() _installedByPlay;
   final Future<bool> Function(Uri) _openUrl;
+  final Future<ProductDetailsResponse> Function(Set<String>) _queryProducts;
+  final Duration _productRetryDelay;
+
+  static Future<ProductDetailsResponse> _queryWithPlay(Set<String> ids) =>
+      InAppPurchase.instance.queryProductDetails(ids);
 
   static Future<bool> _buyWithPlay(ProductDetails product) =>
   //buyNonConsumable picks the base plan's offer token off the product
@@ -314,19 +324,28 @@ class PlayStoreServices implements StoreServices {
       ),
   };
 
+  static bool _isIncomplete(ProductDetailsResponse response) =>
+      response.notFoundIDs.isNotEmpty || response.productDetails.isEmpty;
+
   @override
   Future<Map<SupporterTier, SupporterPrice>> supporterPrices() async {
     if (!_fromPlay) return const {};
     try {
-      final response = await InAppPurchase.instance.queryProductDetails({
-        kSupporterProductId,
-      });
+      var response = await _queryProducts({kSupporterProductId});
+      //in_app_purchase_android drops Play's response code and lists every id
+      //it got nothing back for as not found, so a query that failed on the
+      //way (billing service reconnecting, network down) reads the same as a
+      //product that does not exist. A second query tells the two apart.
+      if (response.error == null && _isIncomplete(response)) {
+        await Future<void>.delayed(_productRetryDelay);
+        response = await _queryProducts({kSupporterProductId});
+      }
       if (response.error != null) {
         //mostly offline; not worth an issue per user
         Telemetry.addBreadcrumb('billing.supporter_query_failed');
         return const {};
       }
-      if (response.notFoundIDs.isNotEmpty) {
+      if (_isIncomplete(response)) {
         Telemetry.captureIssue('billing.supporter_product_missing');
         return const {};
       }
