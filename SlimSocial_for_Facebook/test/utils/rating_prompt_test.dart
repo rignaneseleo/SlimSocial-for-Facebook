@@ -91,10 +91,14 @@ void main() {
     /// One navigation, in the order the webview reports it. [failed] plays the
     /// Android sequence for a failed load: the error arrives first, and then
     /// the error page commits and finishes like any other document.
-    bool navigate({bool failed = false, bool isForMainFrame = true}) {
+    bool navigate({
+      bool failed = false,
+      bool isForMainFrame = true,
+      bool isAuthPage = false,
+    }) {
       counter.onNavigationStarted();
       if (failed) counter.onLoadError(isForMainFrame: isForMainFrame);
-      return counter.onNavigationFinished();
+      return counter.onNavigationFinished(isAuthPage: isAuthPage);
     }
 
     test('counts a load that finished with nothing reported against it', () {
@@ -149,6 +153,31 @@ void main() {
         counter.completed,
         greaterThanOrEqualTo(RatingPrompt.kLaterAskInteractions),
       );
+    });
+
+    test('does not count a sign-in or verification page', () {
+      expect(navigate(isAuthPage: true), isFalse);
+      expect(counter.completed, 0);
+    });
+
+    test('a multi-step sign-in does not reach the first-launch gate', () {
+      //login form, checkpoint, two-step verification pages, app handoff
+      const steps = RatingPrompt.kFirstAskInteractions + 2;
+      for (var step = 0; step < steps; step++) {
+        expect(navigate(isAuthPage: true), isFalse, reason: 'step $step');
+      }
+      expect(
+        counter.completed,
+        lessThan(RatingPrompt.kFirstAskInteractions),
+      );
+      navigate();
+      expect(counter.completed, 1);
+    });
+
+    test('a failure on a sign-in page is still cleared by the next start', () {
+      expect(navigate(failed: true, isAuthPage: true), isFalse);
+      expect(navigate(), isTrue);
+      expect(counter.completed, 1);
     });
   });
 }

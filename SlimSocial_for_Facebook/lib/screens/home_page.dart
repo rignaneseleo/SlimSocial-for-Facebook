@@ -274,7 +274,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             //asked before anything is awaited: a navigation starting while
             //runJs is outstanding belongs to the next page, and it would clear
             //the very failure this finish is reporting
-            final loadCompleted = _loadsThisSession.onNavigationFinished();
+            final loadCompleted = _loadsThisSession.onNavigationFinished(
+              isAuthPage: _isAuthUrl(url),
+            );
             _retryPolicy.onNavigationFinished();
             await runJs();
             if (!mounted) return;
@@ -1094,10 +1096,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     //dialog that throws
     _askingForRating = true;
     try {
+      //the page can have moved on while the load that started this was being
+      //processed; checked before the ask is written, so a skip costs nothing
+      if (await _isOnAuthPage()) return;
+      if (!mounted) return;
+
       //written before the dialog opens, so a crash or a force-quit mid-prompt
       //still costs this launch's single ask rather than looping on it
       await sp.setInt(SpKeys.ratingAsks, asks + 1);
       await sp.setInt(SpKeys.ratingLastAskedOpen, opens);
+      if (!mounted) return;
+      //and again right before showing, since the writes above await too
+      if (await _isOnAuthPage()) return;
       if (!mounted) return;
 
       await showRatingDialog(
@@ -1107,6 +1117,15 @@ class _HomePageState extends ConsumerState<HomePage> {
     } finally {
       _askingForRating = false;
     }
+  }
+
+  /// Whether the webview is on a Facebook sign-in or verification page now.
+  Future<bool> _isOnAuthPage() async =>
+      _isAuthUrl(await _controller.currentUrl());
+
+  static bool _isAuthUrl(String? url) {
+    final uri = url == null ? null : Uri.tryParse(url);
+    return uri != null && isFacebookAuthUrl(uri);
   }
 
 /*  JavascriptChannel _setupJavascriptChannel(BuildContext context) {

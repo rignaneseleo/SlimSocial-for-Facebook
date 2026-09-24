@@ -18,6 +18,7 @@ const Set<String> _kAuthFirstSegments = {
   'recover',
   'security',
   'two_factor',
+  'two_step_verification',
 };
 
 /// Two-segment prefixes of the same flow.
