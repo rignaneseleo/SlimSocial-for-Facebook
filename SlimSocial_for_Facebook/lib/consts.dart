@@ -55,11 +55,11 @@ const String suffixDefault = "?sk=h_nor";
 
 /// Chrome for Android (Pixel 7). Gets Facebook's touch layout.
 ///
-/// Pinned after #373 UA A/B: Firefox 70 / Android mobile decoded feed Reels at
-/// 360p; this Chrome 131 Mobile string keeps the same full-bleed touch surface
-/// and decodes 720p. Newer Firefox Android strings (133, 147) stayed on 360p.
-/// Do not swap it for another agent without re-checking touch layout + video
-/// decode on a signed-in feed.
+/// Pinned after an on-device user-agent comparison (#373): Firefox 70 /
+/// Android mobile decoded feed Reels at 360p; this Chrome 131 Mobile string
+/// keeps the same full-bleed touch surface and decodes 720p. Newer Firefox
+/// Android strings (133, 147) stayed on 360p. Do not swap it for another agent
+/// without re-checking touch layout + video decode on a signed-in feed.
 const String kMobileUserAgent =
     "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36";
 

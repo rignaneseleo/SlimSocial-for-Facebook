@@ -235,7 +235,7 @@ article {
 
     test('hides the header Open app pill by stable aria-label', () {
       // bg-sN was unstable across renders; aria-label="Open app" is what the
-      // Chrome Mobile Reels header ships (#373 winner evidence).
+      // Chrome Mobile Reels header ships (measured on device, #373).
       expect(
         CustomCss.hideAppUpsellCss.code,
         contains('[aria-label="Open app" i]'),

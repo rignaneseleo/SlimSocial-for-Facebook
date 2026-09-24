@@ -54,7 +54,7 @@ void main() {
       expect(kMobileUserAgent, contains('Chrome/'));
     });
 
-    test('is pinned to the Chrome 131 Pixel 7 string from the #373 A/B', () {
+    test('is pinned to the Chrome 131 Pixel 7 string measured in #373', () {
       // Firefox 70 / Android mobile kept touch layout but decoded Reels at
       // 360p. Chrome 131 Mobile Pixel 7 kept touch and decoded 720p. Do not
       // swap without re-checking both: touch surface + video decode.

@@ -261,9 +261,9 @@ class CustomCss {
   /// Header "Open app" pill: hidden here by the stable `aria-label="Open app"`
   /// (case-insensitive). An earlier attempt keyed off a generated `bg-sN`
   /// surface class and hid unrelated chrome; aria-label does not shuffle per
-  /// render. Measured on Chrome Mobile UA Reels (#373 winner): the blue pill
-  /// in the top bar carries exactly that label. JS still re-hides it after
-  /// SPA navigations for locales / variants the attribute miss.
+  /// render. Measured on device with the Chrome Mobile UA on Reels (#373): the
+  /// blue pill in the top bar carries exactly that label. JS still re-hides it
+  /// after SPA navigations for locales / variants the attribute miss.
   ///
   /// Deliberately not in [cssList]: structural rather than a preference.
   static MyCss hideAppUpsellCss = MyCss(
