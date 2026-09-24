@@ -280,13 +280,15 @@ BackAction backActionFor({
 }
 
 /// First path segments that are not a page to come back to: signing out, the
-/// external link redirect, and the share and compose dialogs.
+/// external link redirect and its warning page, and the share and compose
+/// dialogs.
 ///
 /// Not part of [isFacebookAuthUrl]: that one decides what the Messenger screen
 /// keeps, and none of these is a step of signing in.
 const Set<String> _kNotRestorableFirstSegments = {
   'composer',
   'dialog',
+  'flx',
   'l.php',
   'logout',
   'logout.php',
@@ -316,8 +318,9 @@ const Set<String> _kLinkShimHosts = {
 /// - the sign-in, checkpoint, recovery and sign-out flows, which only make
 ///   sense in the session that started them;
 /// - the external link redirect (`l.facebook.com`, `lm.facebook.com`,
-///   `/l.php`) and the share and compose dialogs (`sharer`, `dialog`,
-///   `composer`), which are steps of an action rather than pages;
+///   `/l.php`) and its warning page (`/flx/warn/`), and the share and
+///   compose dialogs (`sharer`, `dialog`, `composer`), which are steps of an
+///   action rather than pages;
 /// - a Messenger address, which belongs to the Messenger screen, not the feed;
 /// - the feed itself, so a change to the "most recent first" setting since
 ///   the last run still applies;

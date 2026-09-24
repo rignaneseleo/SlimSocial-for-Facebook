@@ -490,6 +490,13 @@ void main() {
       expect(start('https://lm.facebook.com/'), home);
     });
 
+    test('opens home for the external link warning page', () {
+      expect(
+        start('https://m.facebook.com/flx/warn/?u=https%3A%2F%2Fexample.com'),
+        home,
+      );
+    });
+
     test('opens home for the share dialog', () {
       expect(start('https://m.facebook.com/sharer.php?u=x'), home);
       expect(start('https://m.facebook.com/sharer/sharer.php?u=x'), home);
