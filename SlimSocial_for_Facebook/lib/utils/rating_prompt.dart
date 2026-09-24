@@ -94,8 +94,12 @@ class SessionLoadCounter {
   /// finished more than once, and a second finish arriving after an error is
   /// still that same broken page — counting it would put the prompt back over
   /// the error screen by another route.
-  bool onNavigationFinished() {
+  ///
+  /// A load of a sign-in or verification page ([isAuthPage]) is not counted:
+  /// a login with a second factor walks several such pages before the feed.
+  bool onNavigationFinished({bool isAuthPage = false}) {
     if (_navigationFailed) return false;
+    if (isAuthPage) return false;
     _completed++;
     return true;
   }

@@ -46,6 +46,19 @@ void main() {
       expect(isAuth('https://m.facebook.com/confirmemail.php'), isTrue);
     });
 
+    test('two-step verification and login approvals', () {
+      expect(
+        isAuth('https://m.facebook.com/two_step_verification/authentication/'),
+        isTrue,
+      );
+      expect(
+        isAuth('https://m.facebook.com/two_step_verification/two_factor/'),
+        isTrue,
+      );
+      expect(isAuth('https://m.facebook.com/login/approvals/'), isTrue);
+      expect(isAuth('https://m.facebook.com/checkpoint/block/'), isTrue);
+    });
+
     test('the consent and oauth interstitials', () {
       expect(isAuth('https://m.facebook.com/privacy/consent/gdp/'), isTrue);
       expect(isAuth('https://www.facebook.com/dialog/oauth?client_id=1'), isTrue);
@@ -96,6 +109,7 @@ void main() {
       expect(isAuth('https://m.facebook.com/loginhelp/'), isFalse);
       expect(isAuth('https://m.facebook.com/securityreview/'), isFalse);
       expect(isAuth('https://m.facebook.com/checkpoints/'), isFalse);
+      expect(isAuth('https://m.facebook.com/two_step/'), isFalse);
     });
 
     test('a two-segment prefix with only its first segment present', () {
