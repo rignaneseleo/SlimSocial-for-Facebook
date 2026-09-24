@@ -297,7 +297,10 @@ class CustomCss {
   /// paragraph, an address, a phone number posted in a group. The same layout
   /// sets `pointer-events: none` on feed images, which is why a long press on a
   /// photo never reaches the browser at all and it never offers to save or
-  /// share it.
+  /// share it. It sets `pointer-events: none` on `.native-text` as well, so a
+  /// touch on post text never reached the text: it landed on the unselectable
+  /// container, and `user-select: text` alone selected nothing. Post text and
+  /// images get `pointer-events: auto` back; buttons are not given any.
   ///
   /// Both prefixes are spelled out. Current Chromium reads the unprefixed
   /// `user-select`; older Android WebViews only ever knew
@@ -337,6 +340,8 @@ class CustomCss {
         'div[data-tracking-duration-id] [role="button"] * '
         '{ -webkit-user-select: none !important; '
         'user-select: none !important; } '
+        'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text *, '
         'div[data-tracking-duration-id] img '
         '{ pointer-events: auto !important; }',
   );

@@ -539,6 +539,21 @@ article {
       expect(code, contains('pointer-events: auto !important'));
     });
 
+    test('re-enables pointer events on post text', () {
+      // The touch layout sets pointer-events: none on `.native-text`, so a long
+      // press on post text lands on the unselectable container around it and
+      // user-select: text alone selects nothing.
+      final code = CustomCss.selectableContentCss.code;
+
+      expect(
+        code,
+        contains('div[data-tracking-duration-id] .native-text, '
+            'div[data-tracking-duration-id] .native-text *, '
+            'div[data-tracking-duration-id] img '
+            '{ pointer-events: auto !important; }'),
+      );
+    });
+
     test('scopes every selector to the post container', () {
       // A document-wide rule here is not a bigger fix, it is a different bug:
       // every mis-tap on the app's own chrome becomes a text selection with
@@ -579,6 +594,8 @@ article {
         'div[data-tracking-duration-id] [role="button"] * '
         '{ -webkit-user-select: none !important; '
         'user-select: none !important; } '
+        'div[data-tracking-duration-id] .native-text, '
+        'div[data-tracking-duration-id] .native-text *, '
         'div[data-tracking-duration-id] img '
         '{ pointer-events: auto !important; }',
       );
