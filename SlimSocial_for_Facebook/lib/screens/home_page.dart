@@ -125,9 +125,14 @@ class _HomePageState extends ConsumerState<HomePage> {
     //listens to it, and then only this read sees it. The provider starts on
     //kTouchFacebookHomeUrl, so that value means no link arrived.
     final pending = ref.read(fbWebViewProvider);
+    //read once: the webview keeps this agent for its whole life, so it is also
+    //the one saved next to each page below
+    final userAgent = PrefController.getUserAgent();
     startUrl ??= startUrlFor(
       sp.getString(SpKeys.lastFeedUrl),
       home: Uri.parse(PrefController.getHomePage()),
+      userAgent: userAgent,
+      lastUserAgent: sp.getString(SpKeys.lastFeedUserAgent),
       incoming: pending == Uri.parse(kTouchFacebookHomeUrl) ? null : pending,
     );
     final controller = WebViewController(
@@ -135,7 +140,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     )
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(FacebookColors.darkBlue)
-      ..setUserAgent(PrefController.getUserAgent())
+      ..setUserAgent(userAgent)
       //Facebook ships `maximum-scale=1, user-scalable=no` in its viewport, and
       //that meta tag is the only thing standing between the reader and pinch
       //zoom: the webview's own gesture is already on, because
@@ -294,6 +299,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             //it is a page worth reopening (#380)
             if (sp.getString(SpKeys.lastFeedUrl) != url) {
               unawaited(sp.setString(SpKeys.lastFeedUrl, url));
+            }
+            if (sp.getString(SpKeys.lastFeedUserAgent) != userAgent) {
+              unawaited(sp.setString(SpKeys.lastFeedUserAgent, userAgent));
             }
           },
           onProgress: (int progress) {
@@ -780,6 +788,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   //a reset always starts over on the home page: neither the
                   //saved page nor a link still held by the provider applies
                   await sp.remove(SpKeys.lastFeedUrl);
+                  await sp.remove(SpKeys.lastFeedUserAgent);
                   _controller = _initWebViewController(
                     startUrl: Uri.parse(PrefController.getHomePage()),
                   );

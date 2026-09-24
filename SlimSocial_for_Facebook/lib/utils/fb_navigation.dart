@@ -321,11 +321,24 @@ const Set<String> _kLinkShimHosts = {
 /// - a Messenger address, which belongs to the Messenger screen, not the feed;
 /// - the feed itself, so a change to the "most recent first" setting since
 ///   the last run still applies;
+/// - a page saved under a user agent other than [userAgent], or with no agent
+///   saved at all (an older build). The desktop-site setting and a custom
+///   agent restart the app to change the layout, and a page captured under
+///   the old agent would reopen in the old layout;
 /// - a page on a different layout than [home] (basic mode on one side only),
-///   because basic mode serves a different site.
-Uri startUrlFor(String? lastUrl, {required Uri home, Uri? incoming}) {
+///   because basic mode serves a different site. The agent check does not
+///   cover this: a custom agent wins over basic mode, so switching basic mode
+///   with one set changes the host but not the agent.
+Uri startUrlFor(
+  String? lastUrl, {
+  required Uri home,
+  required String userAgent,
+  String? lastUserAgent,
+  Uri? incoming,
+}) {
   if (incoming != null) return incoming;
   if (lastUrl == null || lastUrl.isEmpty) return home;
+  if (lastUserAgent != userAgent) return home;
 
   final last = Uri.tryParse(lastUrl);
   if (last == null) return home;

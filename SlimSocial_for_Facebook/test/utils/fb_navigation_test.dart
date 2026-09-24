@@ -344,8 +344,20 @@ void main() {
     final home = Uri.parse('$kTouchFacebookHomeUrl$suffixDefault');
     final basicHome = Uri.parse('$kFacebookHomeBasicUrl$suffixDefault');
 
-    Uri start(String? lastUrl, {Uri? incoming, Uri? homeUrl}) =>
-        startUrlFor(lastUrl, home: homeUrl ?? home, incoming: incoming);
+    Uri start(
+      String? lastUrl, {
+      Uri? incoming,
+      Uri? homeUrl,
+      String? lastAgent = kMobileUserAgent,
+      String agent = kMobileUserAgent,
+    }) =>
+        startUrlFor(
+          lastUrl,
+          home: homeUrl ?? home,
+          userAgent: agent,
+          lastUserAgent: lastAgent,
+          incoming: incoming,
+        );
 
     test('reopens an ordinary Facebook page', () {
       const group = 'https://m.facebook.com/groups/12345/permalink/678/';
@@ -379,6 +391,7 @@ void main() {
 
     test('opens home for a checkpoint', () {
       expect(start('https://m.facebook.com/checkpoint/start/'), home);
+      expect(start('https://m.facebook.com/checkpoint/'), home);
       expect(start('https://m.facebook.com/login/checkpoint/'), home);
     });
 
@@ -447,6 +460,27 @@ void main() {
       const page = 'https://mbasic.facebook.com/groups/1/';
 
       expect(start(page, homeUrl: basicHome), Uri.parse(page));
+    });
+
+    test('reopens a page saved under the same user agent', () {
+      const page = 'https://m.facebook.com/groups/1/';
+
+      expect(
+        start(page, lastAgent: kFirefoxUserAgent, agent: kFirefoxUserAgent),
+        Uri.parse(page),
+      );
+    });
+
+    test('opens home when the user agent changed since', () {
+      const page = 'https://m.facebook.com/groups/1/';
+
+      expect(start(page, agent: kFirefoxUserAgent), home);
+      expect(start(page, lastAgent: kFirefoxUserAgent), home);
+      expect(start(page, agent: 'Custom/1.0'), home);
+    });
+
+    test('opens home for a page saved with no user agent', () {
+      expect(start('https://m.facebook.com/groups/1/', lastAgent: null), home);
     });
 
     test('opens home for the external link redirect', () {
