@@ -123,6 +123,12 @@ class CustomJs {
   /// | before | `user-scalable=yes, initial-scale=1` | 393 |
   /// | after | `user-scalable=yes, width=980` | 980 |
   ///
+  /// [layoutWidth] is a minimum, not a fixed width. A screen that is already
+  /// wider, like a tablet in landscape, keeps its own width: forcing 980 there
+  /// scaled the page up and Facebook dropped its left column, so the desktop
+  /// layout jumped to a larger, narrower page a moment after it loaded. The
+  /// width is worked out again when the screen rotates.
+  ///
   /// Left null for the touch layout, which is built for the phone's width and
   /// must keep it.
   static String unlockZoomFunc({int? layoutWidth}) {
@@ -131,6 +137,14 @@ class CustomJs {
   try {
     var MARK = 'data-slim-zoom';
     var LAYOUT_WIDTH = ${layoutWidth ?? 'null'};
+
+    // The screen's own width in CSS pixels, when it is wider than
+    // LAYOUT_WIDTH. `screen.width` follows the orientation on Android and does
+    // not change with the page's zoom.
+    function layoutWidth() {
+      var screenWidth = Math.round((window.screen && window.screen.width) || 0);
+      return Math.max(LAYOUT_WIDTH, screenWidth);
+    }
 
     function unlockedContent(content) {
       var out = [];
@@ -151,7 +165,7 @@ class CustomJs {
         }
         if (LAYOUT_WIDTH) {
           if (key === 'width') {
-            out.push('width=' + LAYOUT_WIDTH);
+            out.push('width=' + layoutWidth());
             sawWidth = true;
             continue;
           }
@@ -162,7 +176,7 @@ class CustomJs {
         out.push(clause);
       }
       if (!sawUserScalable) out.push('user-scalable=yes');
-      if (LAYOUT_WIDTH && !sawWidth) out.push('width=' + LAYOUT_WIDTH);
+      if (LAYOUT_WIDTH && !sawWidth) out.push('width=' + layoutWidth());
       return out.join(', ');
     }
 
@@ -184,6 +198,23 @@ class CustomJs {
     }
 
     unlockAll();
+
+    // A rotation changes the screen's width, so the width clause has to be
+    // written again. The marks go first, or every tag is skipped.
+    if (LAYOUT_WIDTH && !window.slimViewportRotation) {
+      var rewrite = function () {
+        var metas = document.querySelectorAll('meta[name="viewport"]');
+        for (var i = 0; i < metas.length; i++) metas[i].removeAttribute(MARK);
+        unlockAll();
+      };
+      // Now and once more later: a WebView can report the old
+      // screen width while the rotation event is still being dispatched.
+      window.slimViewportRotation = function () {
+        rewrite();
+        setTimeout(rewrite, 300);
+      };
+      window.addEventListener('orientationchange', window.slimViewportRotation);
+    }
 
     // Kept on `window` for the same reason as the ad observer: a fresh
     // injection cannot otherwise tell that one is already watching, and every
