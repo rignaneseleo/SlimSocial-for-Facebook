@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
+import 'package:slimsocial_for_facebook/utils/download_request.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
 
 void main() {
@@ -539,6 +540,13 @@ void main() {
       expect(js, contains(jsonEncode(blobUrl)));
       expect(js, contains(jsonEncode('SlimBlobDownload')));
       expect(js, contains('window[channel].postMessage'));
+    });
+
+    test('refuses a Blob over the cap before reading it', () {
+      // The Dart cap alone is too late: the data url crosses the channel
+      // first and Android runs out of memory encoding it (SLIMSOCIAL-4V).
+      expect(js, contains('$kMaxBlobDownloadBytes'));
+      expect(js, contains('b.size > MAX_BYTES'));
     });
 
     test('reads the kept Blob before trying the url', () {

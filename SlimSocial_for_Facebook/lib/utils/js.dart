@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:slimsocial_for_facebook/utils/ad_filter.dart';
+import 'package:slimsocial_for_facebook/utils/download_request.dart';
 
 /// Hosts the feed gate treats as the home feed.
 ///
@@ -469,6 +470,10 @@ class CustomJs {
   /// a string and nothing else. That doubles the payload, which is why the Dart
   /// side caps what it accepts (`kMaxBlobDownloadBytes`).
   ///
+  /// The same cap is applied here as well, on `Blob.size`, before the file is
+  /// read. The Dart check alone is too late: the string crosses the channel
+  /// first, and Android runs out of memory encoding it.
+  ///
   /// [channelName] is the channel Dart registered; it is read off `window`
   /// rather than referenced by name so the identifier cannot be forged into the
   /// script. Both arguments go through jsonEncode for the same reason as
@@ -490,7 +495,7 @@ class CustomJs {
   /// their own: a throw here would surface as nothing on Android.
   static String fetchBlobFunc(String blobUrl, String channelName) {
     return '''
-(function (url, channel) {
+(function (url, channel, MAX_BYTES) {
   function post(payload) {
     try {
       window[channel].postMessage(JSON.stringify(payload));
@@ -505,6 +510,15 @@ class CustomJs {
 
   function read(b) {
     try {
+      // Checked here rather than only in Dart: the data url crosses the
+      // JavaScript channel as one string, and the platform channel encodes it
+      // into a ByteArrayOutputStream on the main thread before Dart can reject
+      // it. A long video therefore killed the app with an OutOfMemoryError
+      // while marshalling, never reaching the Dart cap (SLIMSOCIAL-4V).
+      if (b.size > MAX_BYTES) {
+        fail();
+        return;
+      }
       var fr = new FileReader();
       fr.onload = function () {
         post({ type: b.type, data: fr.result });
@@ -534,7 +548,7 @@ class CustomJs {
   } catch (e) {
     fail();
   }
-})(${jsonEncode(blobUrl)}, ${jsonEncode(channelName)});
+})(${jsonEncode(blobUrl)}, ${jsonEncode(channelName)}, $kMaxBlobDownloadBytes);
 ''';
   }
 
