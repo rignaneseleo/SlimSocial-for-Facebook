@@ -961,6 +961,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       'slim-messenger-download': CustomCss.removeMessengerDownloadCss.code,
       'slim-browser-notice': CustomCss.removeBrowserNotSupportedCss.code,
       'slim-app-upsell': CustomCss.hideAppUpsellCss.code,
+      //the desktop layout scrolls the window, not the body (#369)
+      if (!PrefController.usesDesktopLayout())
+        'slim-scroll-unlock': CustomCss.unlockPageScrollCss.code,
       'slim-selectable': CustomCss.selectableContentCss.code,
       'slim-comment-reaction-replies':
           CustomCss.commentReactionRepliesCss.code,

@@ -251,12 +251,32 @@ class CustomCss {
     code: '#header-notices { display: none; }',
   );
 
+  /// Unlocks page scroll if Facebook's install-the-app dialog is left behind.
+  ///
+  /// The dialog locks `overflow` on the body, and if its chrome is left
+  /// incomplete the feed stops moving (#339).
+  ///
+  /// Touch site only. With both `html` and `body` set to `overflow: auto`, the
+  /// body's overflow no longer carries over to the viewport, so the body
+  /// becomes its own scroll box. The desktop layout gives the body the
+  /// viewport's height, so the window stopped scrolling and the feed stopped
+  /// loading after one screen (#369). #339 was seen on the touch site, so the
+  /// home page injects this only when the desktop site is off.
+  ///
+  /// Deliberately not in [cssList]: structural rather than a preference.
+  static MyCss unlockPageScrollCss = MyCss(
+    key: 'unlock_page_scroll',
+    description: 'Unlock page scroll under a leftover install dialog',
+    defaultEnabled: true,
+    code: 'html, body { overflow: auto !important; }',
+  );
+
   /// The stylesheet half of hiding Facebook's install-the-app chrome.
   ///
   /// Bottom bar: hidden by `CustomJs.hideAppUpsellFunc` (structure: one
-  /// tappable, no form control). This half only unlocks page scroll — a
-  /// dialog Facebook opens locks `overflow` on the body, and if its chrome is
-  /// left incomplete the feed stops moving (#339).
+  /// tappable, no form control). The scroll unlock that goes with it is
+  /// [unlockPageScrollCss], kept apart because it must not run on the desktop
+  /// layout (#369).
   ///
   /// Header "Open app" pill: hidden here by the stable `aria-label="Open app"`
   /// (case-insensitive). An earlier attempt keyed off a generated `bg-sN`
@@ -270,8 +290,7 @@ class CustomCss {
     key: 'hide_app_upsell',
     description: 'Hide the install-the-app bar',
     defaultEnabled: true,
-    code: 'html, body { overflow: auto !important; } '
-        '[aria-label="Open app" i] { display: none !important; }',
+    code: '[aria-label="Open app" i] { display: none !important; }',
   );
 
   /// Hands the post text back to the reader: selectable, and so copyable.
