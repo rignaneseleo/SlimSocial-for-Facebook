@@ -1,0 +1,1 @@
+- With "Use desktop site" on, the feed and Marketplace scroll all the way down again and keep loading new posts (#369).

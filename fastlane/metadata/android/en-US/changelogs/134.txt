@@ -1,5 +1,0 @@
-- Videos and Reels now play in HD where Facebook offers it (#373).
-- The app reopens the page you were on (#380).
-- Long-press on Like opens the reactions, with no text selected. Post text can be selected and copied again.
-- The "Open app" button on Reels is gone.
-- No rating prompt while you sign in.
