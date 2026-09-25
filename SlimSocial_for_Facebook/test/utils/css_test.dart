@@ -272,9 +272,16 @@ article {
       // some devices (#339). Restoring overflow lets the feed move even when
       // Facebook's modal chrome is incomplete.
       expect(
-        CustomCss.hideAppUpsellCss.code,
+        CustomCss.unlockPageScrollCss.code,
         contains('overflow: auto !important'),
       );
+    });
+
+    test('keeps the scroll unlock out of the always-on upsell sheet', () {
+      // On the desktop layout `html, body { overflow: auto }` turns the body
+      // into its own scroll box, and the feed stops after one screen (#369).
+      // The unlock must be a sheet of its own so desktop mode can leave it out.
+      expect(CustomCss.hideAppUpsellCss.code, isNot(contains('overflow')));
     });
   });
 

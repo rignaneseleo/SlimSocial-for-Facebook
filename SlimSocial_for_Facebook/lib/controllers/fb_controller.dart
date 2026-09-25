@@ -69,8 +69,11 @@ class PrefController {
   /// is not enough: Facebook's viewport tag names an `initial-scale` and no
   /// width, which lays any page out at the phone's width, so a layout built
   /// for ~1000px arrived at 393px — overflowing sideways, impossible to pinch
-  /// out far enough to fit a post, and unable to scroll past the first screen
-  /// (#369).
+  /// out far enough to fit a post (#369).
+  ///
+  /// The home page also leaves out `CustomCss.unlockPageScrollCss` when this is
+  /// true: on the desktop layout it made the body its own scroll box, and the
+  /// feed could not scroll past the first screen (#369).
   static bool usesDesktopLayout() => getUserAgent() == kFirefoxUserAgent;
 
   /// Whether external links should open in the system browser app.
