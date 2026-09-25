@@ -1,0 +1,2 @@
+- On tablets, "Use desktop site" keeps the full desktop layout with the left menu, and the page no longer jumps to a larger size after it opens.
+- With "Use desktop site" on, the feed scrolls all the way down and keeps loading new posts.
