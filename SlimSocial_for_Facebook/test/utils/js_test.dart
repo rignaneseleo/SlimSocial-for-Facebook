@@ -127,7 +127,10 @@ void main() {
       final js = CustomJs.unlockZoomFunc();
 
       expect(js, contains('if (!window.slimViewportObserver) {'));
-      expect(js, contains('window.slimViewportObserver = new MutationObserver'));
+      expect(
+        js,
+        contains('window.slimViewportObserver = new MutationObserver'),
+      );
       expect('new MutationObserver'.allMatches(js), hasLength(1));
       expect('.observe('.allMatches(js), hasLength(1));
     });
@@ -193,7 +196,7 @@ void main() {
 
       expect(js, contains('var LAYOUT_WIDTH = 980;'));
       expect(js, contains("if (key === 'width') {"));
-      expect(js, contains("out.push('width=' + LAYOUT_WIDTH);"));
+      expect(js, contains("out.push('width=' + layoutWidth());"));
     });
 
     test('adds the width when the page names none', () {
@@ -209,6 +212,28 @@ void main() {
       final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
 
       expect(js, contains("if (key === 'initial-scale') continue;"));
+    });
+
+    test('keeps a screen wider than the layout width at its own width', () {
+      // A tablet in landscape is wider than 980. Forcing 980 there scaled the
+      // desktop page up and Facebook dropped its left column.
+      final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
+
+      expect(js, contains('return Math.max(LAYOUT_WIDTH, screenWidth);'));
+      expect(js, isNot(contains("'width=' + LAYOUT_WIDTH")));
+    });
+
+    test('works the width out again when the screen rotates', () {
+      final js = CustomJs.unlockZoomFunc(layoutWidth: 980);
+
+      expect(js, contains('if (LAYOUT_WIDTH && !window.slimViewportRotation)'));
+      expect(
+        js,
+        contains(
+          "window.addEventListener('orientationchange', "
+          'window.slimViewportRotation);',
+        ),
+      );
     });
   });
 
