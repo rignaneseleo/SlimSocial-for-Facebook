@@ -266,9 +266,7 @@ class CustomJs {
   ///
   /// The stylesheet cannot ask the question that separates the upsell from a
   /// sheet, which is *how many things there are to tap*. The upsell is one
-  /// label and one button (the structural test Nora uses, see
-  /// docs/research/2026-08-28-nora-comparative-study.md §2). A sheet is a
-  /// column of them. So a container is hidden only when it holds exactly one
+  /// label and one button. A sheet is a column of them. So a container is hidden only when it holds exactly one
   /// tappable element, no form control, and no feed post — and the verdict
   /// is re-checked on every pass, so a container that fills in later is put
   /// back.
