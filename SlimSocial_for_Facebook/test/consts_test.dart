@@ -51,17 +51,17 @@ void main() {
       // layout from the user agent.
       expect(kMobileUserAgent, contains('Android'));
       expect(kMobileUserAgent, contains('Mobile'));
-      expect(kMobileUserAgent, contains('Chrome/'));
+      expect(kMobileUserAgent, contains('Firefox/'));
     });
 
-    test('is pinned to the Chrome 131 Pixel 7 string measured in #373', () {
-      // Firefox 70 / Android mobile kept touch layout but decoded Reels at
-      // 360p. Chrome 131 Mobile Pixel 7 kept touch and decoded 720p. Do not
-      // swap without re-checking both: touch surface + video decode.
+    test('is pinned to the Firefox 70 string (#390)', () {
+      // The Chrome 131 Mobile Pixel 7 string (#373) decoded Reels at 720p but
+      // left the feed unscrollable with one finger on many phones (#390). Do
+      // not swap without re-checking one-finger scroll, touch layout and
+      // video decode.
       expect(
         kMobileUserAgent,
-        'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 '
-        '(KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+        'Mozilla/5.0 (Android 10; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
       );
     });
   });
