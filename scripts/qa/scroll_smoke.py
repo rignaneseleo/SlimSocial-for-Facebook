@@ -146,6 +146,12 @@ def main():
     ok = passed >= args.swipes - 1
     print(f"scroll smoke: {'PASS' if ok else 'FAIL'} "
           f"({passed}/{args.swipes} swipes scrolled the page)")
+    if not ok:
+        # A short page (login, checkpoint) and a stuck feed look the same in
+        # pixels, so a person has to look once.
+        where = f" in {args.out}" if args.out else " (pass --out to save them)"
+        print("Look at the screenshots" + where + ". If they show a login or "
+              "checkpoint page instead of the feed, sign in and run again.")
     return 0 if ok else 1
 
 

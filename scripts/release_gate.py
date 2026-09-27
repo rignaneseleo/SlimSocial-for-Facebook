@@ -2,8 +2,9 @@
 """Block a release while a fresh or confirmed bug report is untriaged.
 
 A release must not go out while users are reporting a bug that nobody has
-looked at. This script asks GitHub for open BUG / regression issues and fails
-when one of them:
+looked at. This script asks GitHub for open issues, except those labelled as
+a feature request, wontfix, duplicate or stale, and fails when one
+of them:
   - carries the `regression` label, or
   - has at least --min-reporters distinct people on it (the author plus
     everyone who commented, the repository owner excluded), or
@@ -18,6 +19,9 @@ Usage:
   scripts/release_gate.py --allow 375          # accept a known issue this run
   scripts/release_gate.py --as-of 2026-09-25T11:00:00Z   # replay a past date
 
+--as-of reads labels as they are now, not as they were then. A time without a
+timezone is UTC.
+
 Exit code 0 = clear to release, 1 = blocked, 2 = could not check.
 Needs the `gh` CLI, signed in.
 """
@@ -29,7 +33,9 @@ import sys
 
 REPO = "rignaneseleo/SlimSocial-for-Facebook"
 OWNER = "rignaneseleo"
-LABELS = ("BUG", "regression")
+# Issues with any of these labels are not bug reports. Unlabelled issues count:
+# users do not always pick the bug template.
+NOT_BUGS = ("FEAT", "wontfix", "duplicate", "stale")
 
 
 def gh(*args):
@@ -40,7 +46,10 @@ def gh(*args):
 
 
 def parse_time(value):
-    return dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=dt.timezone.utc)
+    return parsed
 
 
 def open_at(issue, as_of):
@@ -98,16 +107,14 @@ def main():
     as_of = parse_time(args.as_of) if args.as_of else now
     since = (as_of - dt.timedelta(days=args.days)).date().isoformat()
 
+    search = " ".join([f"created:>={since}"]
+                      + [f"-label:{label}" for label in NOT_BUGS])
     try:
-        issues = {}
-        for label in LABELS:
-            found = gh("issue", "list", "-R", REPO, "--state", "all",
-                       "--label", label, "--limit", "200",
-                       "--search", f"created:>={since}",
-                       "--json", "number,title,author,createdAt,closedAt,"
-                                 "labels,comments,url")
-            for issue in found:
-                issues[issue["number"]] = issue
+        found = gh("issue", "list", "-R", REPO, "--state", "all",
+                   "--limit", "300", "--search", search,
+                   "--json", "number,title,author,createdAt,closedAt,"
+                             "labels,comments,url")
+        issues = {issue["number"]: issue for issue in found}
     except (RuntimeError, json.JSONDecodeError) as err:
         print(f"release gate: could not read issues: {err}", file=sys.stderr)
         return 2
