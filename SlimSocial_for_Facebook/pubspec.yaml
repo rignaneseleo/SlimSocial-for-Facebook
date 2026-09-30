@@ -11,7 +11,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # tag from 117 onwards matches the value that was in this field at that commit.
 version: 26.09.28+138
 
-# Leonardo Rignanese <dev.rignaneseleo@gmail.com>
+# Leonardo Rignanese <x.com/leorigna>
 #
 # Not an `author:` field: pubspec dropped it, and `flutter analyze` raises
 # `deprecated_field` as a *warning* for it — the one warning in an otherwise
