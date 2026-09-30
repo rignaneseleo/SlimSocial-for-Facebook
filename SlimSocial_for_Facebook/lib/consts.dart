@@ -115,10 +115,10 @@ enum UserAgentRole {
 }
 
 const String kEmailToDevUrl =
-    "mailto:dev.rignaneseleo+slimsocial@gmail.com?subject=SlimSocial%20for%20Facebook%20feedback";
+    "mailto:slimsocial@leorigna.com?subject=SlimSocial%20for%20Facebook%20feedback";
 const String kGithubIssuesUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook/issues";
-const String kDevEmail = "dev.rignaneseleo+slimsocial@gmail.com";
+const String kDevEmail = "slimsocial@leorigna.com";
 const String kTwitterProfileUrl = "https://twitter.com/leorigna";
 const String kGithubProjectUrl =
     "https://github.com/rignaneseleo/SlimSocial-for-Facebook";

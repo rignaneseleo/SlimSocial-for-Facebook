@@ -14,7 +14,7 @@ At **SlimSocial for Facebook**, we are committed to providing a safe and respect
 
 If you encounter any content or behavior on Facebook that you believe violates child safety standards, please report it directly through Facebook's reporting tools. Detailed instructions on how to report can be found here: <https://about.meta.com/actions/safety/onlinechildprotection/reporting/>
 
-For concerns specifically related to SlimSocial's functionality, you can contact us at: <dev.rignaneseleo@gmail.com>
+For concerns specifically related to SlimSocial's functionality, you can contact us at: <slimsocial@leorigna.com>
 
 ---
 By adhering to this policy, SlimSocial for Facebook aims to support and uphold the child protection efforts established by Facebook, ensuring a safer online experience for all users
