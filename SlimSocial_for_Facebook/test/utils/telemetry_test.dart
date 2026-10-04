@@ -423,7 +423,7 @@ void main() {
     });
   });
 
-  group('sampling a success signal', () {
+  group('sampling a signal', () {
     test('a sampled-out kind sends nothing but still spends its slot', () {
       //49 out of 50 draws miss
       Telemetry.random = _FixedRandom(7);
@@ -447,11 +447,20 @@ void main() {
     test('an unsampled kind never draws from the random source', () {
       Telemetry.random = _ExplosiveRandom();
 
-      expect(Telemetry.allowSampled(kDiagNoPostsMatched, 1), isTrue);
+      expect(Telemetry.allowSampled(kDiagScriptThrew, 1), isTrue);
     });
 
-    test('only the success signal is sampled', () {
-      expect(kDiagSampleOneIn.keys, [kDiagPostsMatched]);
+    test('only the high-volume injection signals are sampled', () {
+      expect(kDiagSampleOneIn, {
+        kDiagPostsMatched: 50,
+        kDiagNoPostsMatched: 10,
+        kDiagFilterMissing: 10,
+      });
+    });
+
+    test('a rare failure reports in full', () {
+      expect(kDiagSampleOneIn.containsKey(kDiagScriptThrew), isFalse);
+      expect(kDiagSampleOneIn.containsKey(kDiagUserScriptThrew), isFalse);
     });
   });
 
