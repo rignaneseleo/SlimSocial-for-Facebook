@@ -197,11 +197,21 @@ class _HomePageState extends ConsumerState<MessengerPage> {
     //at, which is their browsing.
     switch (classifyDownloadRequest(uri)) {
       case DownloadKind.image:
-        Telemetry.captureIssue('download.intercepted', data: {'kind': 'image'});
+        Telemetry.captureIssue(
+          'download.intercepted',
+          data: {'kind': 'image'},
+          //a usage counter, not a failure: see [kDiagSampleOneIn]
+          sampleOneIn: 50,
+        );
         await saveImageFromUrl(request.url);
         return NavigationDecision.prevent;
       case DownloadKind.blob:
-        Telemetry.captureIssue('download.intercepted', data: {'kind': 'blob'});
+        Telemetry.captureIssue(
+          'download.intercepted',
+          data: {'kind': 'blob'},
+          //a usage counter, not a failure: see [kDiagSampleOneIn]
+          sampleOneIn: 50,
+        );
         showToast("${"downloading".tr()}...");
         //the bytes come back on kBlobDownloadChannelName, asynchronously.
         //Marking it pending first is what lets a failure reported on that

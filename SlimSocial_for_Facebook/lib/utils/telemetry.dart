@@ -255,9 +255,9 @@ abstract final class Telemetry {
   /// [kind] is a stable machine-readable slug like 'injection.no_posts_matched'.
   ///
   /// [sampleOneIn] above 1 sends the signal from only that fraction of the
-  /// processes that raise it. It is for success signals, which are counted in
-  /// the thousands and are only ever read as a denominator; a failure is
-  /// always reported in full.
+  /// processes that raise it. It is for signals that fire in a large share of
+  /// all sessions and are read as a rate, not event by event; a rare failure
+  /// is reported in full.
   static void captureIssue(
     String kind, {
     Map<String, Object?> data = const {},
