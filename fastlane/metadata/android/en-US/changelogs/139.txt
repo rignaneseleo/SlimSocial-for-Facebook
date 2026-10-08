@@ -1,0 +1,1 @@
+- Smoother, more reliable performance under the hood.
