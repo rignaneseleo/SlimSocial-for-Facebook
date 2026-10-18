@@ -14,6 +14,7 @@ import 'package:slimsocial_for_facebook/screens/settings_page.dart';
 import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/style/color_schemes.g.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
+import 'package:slimsocial_for_facebook/utils/notifications.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/utils.dart';
 
@@ -45,6 +46,10 @@ Future<void> _startApp() async {
   //the saved supporter flag is only a cache: ask Play once per cold start,
   //without holding up the first frame for it
   unawaited(storeServices.restoreSupporter());
+  //background notifications (#269): re-register the job, and dismiss the last
+  //notification now that the reader has the app open
+  unawaited(SlimNotifications.restore());
+  unawaited(SlimNotifications.clear());
   final container = ProviderContainer();
 
   if (sp.getBool("custom_proxy_enabled") ?? false) _setupProxy();

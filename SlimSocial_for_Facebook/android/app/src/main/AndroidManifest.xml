@@ -27,6 +27,9 @@
         android:required="false" />
     <!-- gps -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- background notifications (#269): shown only when the reader turns them
+         on in the settings; Android 13+ asks for this at that moment -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- to share pictures -->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
