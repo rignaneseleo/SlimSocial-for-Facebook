@@ -378,6 +378,22 @@ class CustomCss {
   /// the stock layout rather than a guess. A WebView without `:has()` drops
   /// the rule, which is also the stock layout.
   ///
+  /// ## Why the English-only match was not enough (#368 follow-up)
+  ///
+  /// The pill was matched by `aria-label*="reactions"`, which only exists in
+  /// English. In any other language the label is translated, the rule matched
+  /// nothing, and the overlap stayed - which is what a reporter running a
+  /// non-English Facebook saw after 26.09.28. The label always carries the
+  /// reaction *count* though, so the pill is now matched by "an aria-label
+  /// containing a digit" as well. Like/Reply/Translate buttons carry no digit.
+  /// If some other button inside a comment has a numeric label, the only
+  /// effect is the same 18px of space above its replies row.
+  ///
+  /// Where the stylesheet still cannot help (the pill is placed with a
+  /// transform or negative margin instead of being in flow), the script
+  /// [CustomJs.commentChipFixFunc] moves the pill back into flow when it is
+  /// measured to overlap another element.
+  ///
   /// Deliberately not in [cssList]: like [selectableContentCss], this is a
   /// structural fix rather than a preference.
   static MyCss commentReactionRepliesCss = MyCss(
@@ -385,7 +401,7 @@ class CustomCss {
     description: 'Keep reaction counts clear of the replies control',
     defaultEnabled: true,
     code: 'div:has(> div[role="article"] '
-        'div[role="button"][aria-label*="reactions"]) + '
+        'div[role="button"]:is($_reactionPillLabelMatch)) + '
         'div:has(div[role="button"]) '
         '{ padding-top: 18px !important; }',
   );
@@ -981,6 +997,14 @@ background-color: #080618 !important;
 """,
   );
 }
+
+/// `:is()` argument matching a comment's reaction-count pill in any language:
+/// the English label, or any label that contains a digit (the count).
+const String _reactionPillLabelMatch = '[aria-label*="reactions"], '
+    '[aria-label*="0"], [aria-label*="1"], [aria-label*="2"], '
+    '[aria-label*="3"], [aria-label*="4"], [aria-label*="5"], '
+    '[aria-label*="6"], [aria-label*="7"], [aria-label*="8"], '
+    '[aria-label*="9"]';
 
 class MyCss {
   MyCss({

@@ -220,6 +220,16 @@ class _HomePageState extends ConsumerState<HomePage> {
             );
             if (!mounted) return;
 
+            //a comment's reaction pill that lands on the next comment or on the
+            //"view replies" row (#368); decided by measuring, not by class name
+            await runIsolatedJs(
+              'comment chip fix',
+              () => _controller.runJavaScript(
+                CustomJs.whenDomReady(CustomJs.commentChipFixFunc()),
+              ),
+            );
+            if (!mounted) return;
+
             //the feed rule is gated on a class this script puts on <html>, and
             //not shipped as a plain rule: Facebook navigates in-page, so a
             //sheet injected on the home page is still there once the reader
