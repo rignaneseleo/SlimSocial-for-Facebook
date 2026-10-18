@@ -134,5 +134,7 @@
   "supporter_one_time_donation": "One-time donation",
   "supporter_cta_donate": "Donate {}",
   "supporter_install_from_play": "Install SlimSocial from Google Play to support it.",
-  "supporter_open_play": "Open Google Play"
+  "supporter_open_play": "Open Google Play",
+  "background_notifications": "Background notifications",
+  "background_notifications_desc": "Every 30 minutes, check Facebook for new notifications, messages and friend requests, even when the app is closed. Uses a little battery and data."
 }

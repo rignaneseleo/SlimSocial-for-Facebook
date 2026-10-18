@@ -149,6 +149,10 @@ class SpKeys {
 
   static const String textZoom = "text_zoom";
 
+  /// Whether the background check for new notifications / messages is on
+  /// (#269). Unset means off: it needs the notification permission.
+  static const String backgroundNotifications = "background_notifications";
+
   static const String enableMessenger = "enable_messenger";
 
   /// When true, a cold start opens the Messenger screen over the feed.

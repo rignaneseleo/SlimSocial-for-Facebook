@@ -84,6 +84,11 @@ android {
     }
 }
 
+dependencies {
+    // periodic background check for new notifications (#269)
+    implementation("androidx.work:work-runtime:2.9.0")
+}
+
 flutter {
     source = "../.."
 }

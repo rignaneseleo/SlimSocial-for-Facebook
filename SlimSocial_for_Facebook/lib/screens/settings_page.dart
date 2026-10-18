@@ -14,6 +14,7 @@ import 'package:slimsocial_for_facebook/main.dart';
 import 'package:slimsocial_for_facebook/services/store.dart';
 import 'package:slimsocial_for_facebook/utils/css.dart';
 import 'package:slimsocial_for_facebook/utils/js.dart';
+import 'package:slimsocial_for_facebook/utils/notifications.dart';
 import 'package:slimsocial_for_facebook/utils/permission_gate.dart';
 import 'package:slimsocial_for_facebook/utils/telemetry.dart';
 import 'package:slimsocial_for_facebook/utils/user_agent.dart';
@@ -245,6 +246,27 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   initialValue: sp.getBool(SpKeys.cameraPermission) ?? false,
                   leading: const Icon(Icons.camera_alt),
                   title: Text('camera_permission'.tr()),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    //turning on needs the OS permission (Android 13+); the
+                    //stored value is what the OS actually granted, and turning
+                    //off is always the reader's call (#269)
+                    var enable = value;
+                    if (value) {
+                      enable = await handlePermission(
+                        true,
+                        Permission.notification,
+                      );
+                    }
+                    await SlimNotifications.setEnabled(enable);
+                    if (!mounted) return;
+                    setState(() {});
+                  },
+                  initialValue: SlimNotifications.isEnabled,
+                  leading: const Icon(Icons.notifications_active_outlined),
+                  title: Text('background_notifications'.tr()),
+                  description: Text('background_notifications_desc'.tr()),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) async {
